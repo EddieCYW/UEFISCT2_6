@@ -118,6 +118,7 @@ COMPONENT_TYPE       = LIBRARY
   $(EDK_SOURCE)/Foundation/Library/Dxe/Include
 
 [libraries.common]
+  SctLib
 
 [libraries.ipf]
   CpuIa64Lib

@@ -52,25 +52,12 @@ Module Name:
 --*/
 
 #include "SCRTDriver.h"
+#include "SctLib.h"
 
 
 extern CHAR16                *gVarName;
 extern CHAR16                *gTestRecordName;
 extern EFI_RUNTIME_SERVICES  *VRT;
-
-VOID
-MemZero (
- VOID       *Addr,
- UINTN      Size
- )
-{
-  volatile UINT8   *Pointer;
-  Pointer = (UINT8*)Addr;
-  
-  while (Size-- != 0) {
-    *(Pointer++) = 0;
-  }
-}
 
 VOID
 InitVariableRecord (
@@ -97,7 +84,7 @@ Returns:
 
   VariableAttr = (EFI_VARIABLE_RUNTIME_ACCESS|EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS);
 
-  MemZero(&TestRecord,sizeof(TEST_RECORD));
+  SctZeroMem (&TestRecord,sizeof(TEST_RECORD));
   TestRecord.Request.TestData = (UINT16)ConfigData->InfoData;
   
   //
@@ -288,7 +275,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.SetVariable = 1;
     SetVariableRecord(&TestPoint);
   }
@@ -383,7 +370,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.GetVariable = 1;
     SetVariableRecord(&TestPoint);
   }
@@ -450,8 +437,8 @@ Returns:
       }
       else {
       	 AssertionType = EFI_TEST_ASSERTION_PASSED;
-        if ((EfiCompareMem (VariableName, L"UEFIRuntimeVariable", 19*sizeof(CHAR16)) == 0) &&
-           (EfiCompareMem (&VendorGuid, &VariableTestGuid, sizeof(EFI_GUID)) == 0)) {
+        if ((SctCompareMem (VariableName, L"UEFIRuntimeVariable", 19*sizeof(CHAR16)) == 0) &&
+           (SctCompareMem (&VendorGuid, &VariableTestGuid, sizeof(EFI_GUID)) == 0)) {
             RecordAssertion (
             AssertionType,
             gSCRTAssertionGuid32,        
@@ -498,7 +485,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.GetNextVariable = 1;
     SetVariableRecord(&TestPoint);
   }
@@ -533,7 +520,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.QueryVariable = 1;
     SetVariableRecord(&TestPoint);    
   }
@@ -595,7 +582,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.GetTime = 1;
     SetVariableRecord(&TestPoint);        
   }
@@ -652,7 +639,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.SetTime = 1;
     SetVariableRecord(&TestPoint);            
   }
@@ -712,7 +699,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.SetWakeupTime = 1;
     SetVariableRecord(&TestPoint);        
   }
@@ -746,7 +733,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.GetWakeupTime = 1;
     SetVariableRecord(&TestPoint);        
   }
@@ -829,7 +816,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.QueryCapsule = 1;
     SetVariableRecord(&TestPoint);            
   }
@@ -866,7 +853,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.UpdateCapsule = 1;
     SetVariableRecord(&TestPoint);            
   }
@@ -928,7 +915,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.GetNextCount = 1;
     SetVariableRecord(&TestPoint);            
   }
@@ -961,7 +948,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.ColdReset = 1;
     SetVariableRecord(&TestPoint);              
     Port80(0xC1);
@@ -989,7 +976,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.WarmReset = 1;
     SetVariableRecord(&TestPoint);              
     Port80(0xC2);
@@ -1017,7 +1004,7 @@ Returns:
     //
     // Record this step result.
     //
-    MemZero(&TestPoint,sizeof(TEST_RECORD));
+    SctZeroMem (&TestPoint,sizeof(TEST_RECORD));
     TestPoint.Result.BitMap.ShutDown = 1;
     SetVariableRecord(&TestPoint);              
     Port80(0xC3); 

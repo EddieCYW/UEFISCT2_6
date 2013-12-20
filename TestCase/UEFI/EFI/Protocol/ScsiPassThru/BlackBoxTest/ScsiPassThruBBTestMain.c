@@ -325,9 +325,9 @@ GetPresentTargetLun(
   	//
     // Initialize the Request Packet.
     //
-    EfiCommonLibZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-    EfiCommonLibZeroMem (Cdb, 6);
-    EfiCommonLibZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
+    SctZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+    SctZeroMem (Cdb, 6);
+    SctZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
   
     // Set to OP_INQUIRY.
     Cdb[0] = 0x12;

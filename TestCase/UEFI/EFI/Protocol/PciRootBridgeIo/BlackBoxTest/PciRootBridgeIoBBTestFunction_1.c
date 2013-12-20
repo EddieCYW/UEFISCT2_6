@@ -2527,7 +2527,7 @@ MemRead_Func (
     //the data read out must be the same as write into.
     //
 
-    if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }  else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2587,7 +2587,7 @@ MemRead_Func (
     //
     AssertionType = EFI_TEST_ASSERTION_PASSED;
     for (SubIndex = 0; SubIndex < Count; SubIndex++) {
-      if (CompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
         break;
       }
@@ -2612,7 +2612,7 @@ MemRead_Func (
     //set the readbuffer with all the unit value as the first unit value in Buffer.
     //
     for (SubIndex = 0; SubIndex < Count; SubIndex++) {
-      CopyMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength);
+      SctCopyMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength);
     }
 
     //
@@ -2656,12 +2656,12 @@ MemRead_Func (
 
     AssertionType = EFI_TEST_ASSERTION_PASSED;
 
-    if (CompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count -1) * UnitLength, UnitLength) != 0) {
+    if (SctCompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count -1) * UnitLength, UnitLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
 
     for (SubIndex = 1; SubIndex < Count; SubIndex++) {
-      if (CompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
         break;
       }
@@ -3199,7 +3199,7 @@ MemWrite_Func (
     //the data read out must be the same as write into.
     //
 
-    if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }  else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -3290,11 +3290,11 @@ MemWrite_Func (
 
     AssertionType = EFI_TEST_ASSERTION_PASSED;
 
-    if (CompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count - 1) * UnitLength, UnitLength) != 0) {
+    if (SctCompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count - 1) * UnitLength, UnitLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
     if (Count > 1) {
-      if (CompareMem ((UINT8 *)ReadBuffer + UnitLength, (UINT8 *)Buffer + UnitLength, AddressLength - UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + UnitLength, (UINT8 *)Buffer + UnitLength, AddressLength - UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
     }
@@ -3386,7 +3386,7 @@ MemWrite_Func (
     AssertionType = EFI_TEST_ASSERTION_PASSED;
 
     for (SubIndex = 0; SubIndex < Count; SubIndex++) {
-      if (CompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
         break;
       }
@@ -3923,7 +3923,7 @@ IoRead_Func (
     //the data read out must be the same as write into.
     //
 
-    if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }  else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -3980,7 +3980,7 @@ IoRead_Func (
     //
     AssertionType = EFI_TEST_ASSERTION_PASSED;
     for (SubIndex = 0; SubIndex < Count; SubIndex++) {
-      if (CompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
         break;
       }
@@ -4005,7 +4005,7 @@ IoRead_Func (
     //set the readbuffer with all the unit value as the first unit value in Buffer.
     //
     for (SubIndex = 0; SubIndex < Count; SubIndex++) {
-      CopyMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength);
+      SctCopyMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength);
     }
 
     //
@@ -4048,12 +4048,12 @@ IoRead_Func (
 
     AssertionType = EFI_TEST_ASSERTION_PASSED;
 
-    if (CompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count -1) * UnitLength, UnitLength) != 0) {
+    if (SctCompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count -1) * UnitLength, UnitLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
 
     for (SubIndex = 1; SubIndex < Count; SubIndex++) {
-      if (CompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
         break;
       }
@@ -4593,7 +4593,7 @@ IoWrite_Func (
     //the data read out must be the same as write into.
     //
 
-    if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }  else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -4688,11 +4688,11 @@ IoWrite_Func (
 
     AssertionType = EFI_TEST_ASSERTION_PASSED;
 
-    if (CompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count - 1) * UnitLength, UnitLength) != 0) {
+    if (SctCompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count - 1) * UnitLength, UnitLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
     if (Count > 1) {
-      if (CompareMem ((UINT8 *)ReadBuffer + UnitLength, (UINT8 *)Buffer + UnitLength, AddressLength - UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + UnitLength, (UINT8 *)Buffer + UnitLength, AddressLength - UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
     }
@@ -4787,7 +4787,7 @@ IoWrite_Func (
     AssertionType = EFI_TEST_ASSERTION_PASSED;
 
     for (SubIndex = 0; SubIndex < Count; SubIndex++) {
-      if (CompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + SubIndex * UnitLength, Buffer, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
         break;
       }

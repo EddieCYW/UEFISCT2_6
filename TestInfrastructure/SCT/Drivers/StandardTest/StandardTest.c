@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 #include "Efi.h"
+#include "SctLib.h"
 #include "EfiTest.h"
 #include "EfiPrintLib.h"
 #include "EfiDriverLib.h"
@@ -323,7 +324,7 @@ Returns:
     return Status;
   }
 
-  EfiZeroMem (Private, sizeof(TSL_INIT_PRIVATE_DATA));
+  SctZeroMem (Private, sizeof(TSL_INIT_PRIVATE_DATA));
   Private->Signature            = TSL_INIT_PRIVATE_DATA_SIGNATURE;
   Private->ImageHandle          = ImageHandle;
   Private->TslInit.Revision     = 0x10000;
@@ -470,7 +471,7 @@ Returns:
     return Status;
   }
 
-  EfiZeroMem (Private, sizeof(STANDARD_TEST_PRIVATE_DATA));
+  SctZeroMem (Private, sizeof(STANDARD_TEST_PRIVATE_DATA));
   Private->Signature                        = STANDARD_TEST_PRIVATE_DATA_SIGNATURE;
   Private->StandardTest.LibraryRevision     = 0x10000;
   Private->StandardTest.Name                = gStslName;
@@ -956,7 +957,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
 
-  EfiCopyMem (&Private->EntryId, Config->EntryId, sizeof(EFI_GUID));
+  SctCopyMem (&Private->EntryId, Config->EntryId, sizeof(EFI_GUID));
 
   Private->EntryName = StslStrDuplicate (Config->EntryName);
   if (Private->EntryName == NULL) {
@@ -1152,7 +1153,7 @@ Returns:
     StslWriteLogFile (Private, Buffer);
 
     Guid = Private->SupportProtocols;
-    while (EfiCompareMem (Guid, &gEfiNullGuid, sizeof(EFI_GUID) ) != 0) {
+    while (SctCompareMem (Guid, &gEfiNullGuid, sizeof(EFI_GUID) ) != 0) {
       SPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"  %g\n", Guid);
       StslWriteLogFile (Private, Buffer);
       Guid ++;
@@ -1838,7 +1839,7 @@ StslGuidsDuplicate (
   NoGuids = 0;
   Guid    = Guids;
 
-  while (EfiCompareMem (Guid, &gEfiNullGuid, sizeof(EFI_GUID)) != 0) {
+  while (SctCompareMem (Guid, &gEfiNullGuid, sizeof(EFI_GUID)) != 0) {
     NoGuids ++;
     Guid ++;
   }
@@ -1852,7 +1853,7 @@ StslGuidsDuplicate (
     return NULL;
   }
 
-  EfiCopyMem (Buffer, Guids, (NoGuids + 1) * sizeof(EFI_GUID));
+  SctCopyMem (Buffer, Guids, (NoGuids + 1) * sizeof(EFI_GUID));
 
   return Buffer;
 }

@@ -311,7 +311,7 @@ Returns:
   //
   // Initialize the items of Framework Table
   //
-  ZeroMem (gEasFT, sizeof (EFI_NETWORK_TEST_FRAMEWORK_TABLE));
+  SctZeroMem (gEasFT, sizeof (EFI_NETWORK_TEST_FRAMEWORK_TABLE));
 
   Status = BS->AllocatePool (
                 EfiBootServicesData,

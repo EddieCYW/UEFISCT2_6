@@ -2552,7 +2552,7 @@ MemRead_Func (
       //the data read out must be the same as write into.
       //
       AssertionType = EFI_TEST_ASSERTION_PASSED;
-      if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+      if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
 
@@ -2605,7 +2605,7 @@ MemRead_Func (
       //
       AssertionType = EFI_TEST_ASSERTION_PASSED;
       for (Index = 0; Index < Count; Index++) {
-        if (CompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
+        if (SctCompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
           break;
         }
@@ -2629,7 +2629,7 @@ MemRead_Func (
       //by force.
       //
       for (Index = 0; Index < Count; Index++) {
-        CopyMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength);
+        SctCopyMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength);
       }
 
       //
@@ -2670,12 +2670,12 @@ MemRead_Func (
       //and the other unit unchange.
       //
       AssertionType = EFI_TEST_ASSERTION_PASSED;
-      if (CompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count -1) * UnitLength, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count -1) * UnitLength, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
 
       for (Index = 1; Index < Count; Index++) {
-        if (CompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
+        if (SctCompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
           break;
         }
@@ -3200,7 +3200,7 @@ MemWrite_Func (
       //
       //the data read out must be the same as write into.
       //
-      if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+      if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
       //
@@ -3263,11 +3263,11 @@ MemWrite_Func (
       //the other data unchange.
       //
 
-      if (CompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count - 1) * UnitLength, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count - 1) * UnitLength, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
       if (Count > 1) {
-        if (CompareMem ((UINT8 *)ReadBuffer + UnitLength, (UINT8 *)Buffer + UnitLength, AddressLength - UnitLength) != 0) {
+        if (SctCompareMem ((UINT8 *)ReadBuffer + UnitLength, (UINT8 *)Buffer + UnitLength, AddressLength - UnitLength) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
         }
       }
@@ -3334,7 +3334,7 @@ MemWrite_Func (
       //all the data unit read out must be the first data unit in the address  space.
       //
       for (Index = 0; Index < Count; Index++) {
-        if (CompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
+        if (SctCompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
           break;
         }
@@ -3877,7 +3877,7 @@ IoRead_Func (
       //
       //
       AssertionType = EFI_TEST_ASSERTION_PASSED;
-      if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+      if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
 
@@ -3931,7 +3931,7 @@ IoRead_Func (
       AssertionType = EFI_TEST_ASSERTION_PASSED;
 
       for (Index = 0; Index < Count; Index++) {
-        if (CompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
+        if (SctCompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
           break;
         }
@@ -3954,7 +3954,7 @@ IoRead_Func (
       //by force.
       //
       for (Index = 0; Index < Count; Index++) {
-        CopyMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength);
+        SctCopyMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength);
       }
 
       //
@@ -3994,11 +3994,11 @@ IoRead_Func (
       //and the other unit unchange.
       //
       AssertionType = EFI_TEST_ASSERTION_PASSED;
-      if (CompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count -1) * UnitLength, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count -1) * UnitLength, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
       for (Index = 1; Index < Count; Index++) {
-        if (CompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
+        if (SctCompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
           break;
         }
@@ -4524,7 +4524,7 @@ IoWrite_Func (
       //
       //the data read out must be the same as write into.
       //
-      if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+      if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
 
@@ -4591,11 +4591,11 @@ IoWrite_Func (
       //the other data unchange.
       //
 
-      if (CompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count - 1) * UnitLength, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count - 1) * UnitLength, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
       if (Count > 1) {
-        if (CompareMem ((UINT8 *)ReadBuffer + UnitLength, (UINT8 *)Buffer + UnitLength, AddressLength - UnitLength) != 0) {
+        if (SctCompareMem ((UINT8 *)ReadBuffer + UnitLength, (UINT8 *)Buffer + UnitLength, AddressLength - UnitLength) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
         }
       }
@@ -4664,7 +4664,7 @@ IoWrite_Func (
       //
 
       for (Index = 0; Index < Count; Index++) {
-        if (CompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
+        if (SctCompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
           break;
         }

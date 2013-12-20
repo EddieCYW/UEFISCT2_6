@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EfiTest.h"
 #include "EfiDriverLib.h"
 #include "TestRecovery.h"
@@ -217,7 +217,7 @@ Returns:
     return Status;
   }
 
-  EfiZeroMem (Private, sizeof(TSL_INIT_PRIVATE_DATA));
+  SctZeroMem (Private, sizeof(TSL_INIT_PRIVATE_DATA));
   Private->Signature            = TSL_INIT_PRIVATE_DATA_SIGNATURE;
   Private->ImageHandle          = ImageHandle;
   Private->TslInit.Revision     = 0x10000;
@@ -359,7 +359,7 @@ Returns:
     return Status;
   }
 
-  EfiZeroMem (Private, sizeof(TEST_RECOVERY_PRIVATE_DATA));
+  SctZeroMem (Private, sizeof(TEST_RECOVERY_PRIVATE_DATA));
   Private->Signature = TEST_RECOVERY_PRIVATE_DATA_SIGNATURE;
   Private->TestRecovery.LibraryRevision     = 0x10000;
   Private->TestRecovery.Name                = gTrlName;

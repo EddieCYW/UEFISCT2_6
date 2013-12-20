@@ -275,7 +275,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (FileInfo, FileInfoSize);
+  SctZeroMem (FileInfo, FileInfoSize);
 
   Status = Handle->GetInfo (
                      Handle,
@@ -307,7 +307,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (TempBuffer, TempBufferSize);
+  SctZeroMem (TempBuffer, TempBufferSize);
 
   BS->FreePool (FileInfo);
 
@@ -502,7 +502,7 @@ Routine Description:
       return Status;
     }
 
-    ZeroMem (mReportBuffer, mReportBufferMaxSize * sizeof(CHAR16));
+    SctZeroMem (mReportBuffer, mReportBufferMaxSize * sizeof(CHAR16));
   }
 
   //
@@ -525,12 +525,12 @@ Routine Description:
       return Status;
     }
 
-    ZeroMem (TempBuffer, mReportBufferMaxSize * sizeof(CHAR16));
+    SctZeroMem (TempBuffer, mReportBufferMaxSize * sizeof(CHAR16));
 
     //
     // Copy the original data
     //
-    CopyMem (TempBuffer, mReportBuffer, mReportBufferUsedSize * sizeof(CHAR16));
+    SctCopyMem (TempBuffer, mReportBuffer, mReportBufferUsedSize * sizeof(CHAR16));
 
     //
     // Free the original buffer

@@ -173,7 +173,7 @@ DevicePathUtilitiesAppendDeviceNodeConformanceTest (
   pDevicePath4  = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath2);
 
   pDevicePath3  = DevicePathUtilities->AppendDeviceNode (NULL, pDevicePath2);
-  if ((pDevicePath3 != NULL) && (EfiCompareMem(pDevicePath3, pDevicePath4, DevicePathUtilities->GetDevicePathSize (pDevicePath3)) == 0)) {
+  if ((pDevicePath3 != NULL) && (SctCompareMem (pDevicePath3, pDevicePath4, DevicePathUtilities->GetDevicePathSize (pDevicePath3)) == 0)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -197,7 +197,7 @@ DevicePathUtilitiesAppendDeviceNodeConformanceTest (
   // TDS 3.4.2.2.2
   //
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath4, NULL);
-  if ((pDevicePath3 != NULL) && (EfiCompareMem(pDevicePath3, pDevicePath4, DevicePathUtilities->GetDevicePathSize (pDevicePath3)) == 0)) {
+  if ((pDevicePath3 != NULL) && (SctCompareMem (pDevicePath3, pDevicePath4, DevicePathUtilities->GetDevicePathSize (pDevicePath3)) == 0)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -224,7 +224,7 @@ DevicePathUtilitiesAppendDeviceNodeConformanceTest (
                 );
 
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (NULL, NULL);
-  if ((pDevicePath3 != NULL) && (EfiCompareMem(pDevicePath3, pDevicePath1, DevicePathUtilities->GetDevicePathSize (pDevicePath3)) == 0)) {
+  if ((pDevicePath3 != NULL) && (SctCompareMem (pDevicePath3, pDevicePath1, DevicePathUtilities->GetDevicePathSize (pDevicePath3)) == 0)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;

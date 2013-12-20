@@ -330,8 +330,8 @@ GetInvalidTargetLun(
   UINT8                       Switch = 0;
 
   
-  SetMem (MaxTarget, TARGET_MAX_BYTES, 0x00);
-  SetMem (TargetAddr, TARGET_MAX_BYTES, 0xFF);    
+  SctSetMem (MaxTarget, TARGET_MAX_BYTES, 0x00);
+  SctSetMem (TargetAddr, TARGET_MAX_BYTES, 0xFF);    
   
   Status = EFI_SUCCESS;
   while (!EFI_ERROR(Status)) { 
@@ -354,7 +354,7 @@ GetInvalidTargetLun(
       }
       if (Switch == 1) {
         Switch = 0;
-        CopyMem (MaxTarget, TargetAddr, TARGET_MAX_BYTES);
+        SctCopyMem (MaxTarget, TargetAddr, TARGET_MAX_BYTES);
       }
     }
   }
@@ -378,7 +378,7 @@ GetInvalidTargetLun(
       }
     }
 
-    CopyMem (TargetAddr, MaxTarget, TARGET_MAX_BYTES);	
+    SctCopyMem (TargetAddr, MaxTarget, TARGET_MAX_BYTES);	
 
     return EFI_SUCCESS;	
   }
@@ -413,9 +413,9 @@ GetPresentTargetLun(
     //
     // Initialize the Request Packet.
     //
-    ZeroMem (&Packet,sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-    ZeroMem (Cdb, 6);
-    ZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
+    SctZeroMem (&Packet,sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+    SctZeroMem (Cdb, 6);
+    SctZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
     
     // Set to OP_INQUIRY.
     Cdb[0] = 0x12;

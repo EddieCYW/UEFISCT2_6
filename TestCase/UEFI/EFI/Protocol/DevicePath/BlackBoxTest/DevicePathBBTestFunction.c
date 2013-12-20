@@ -826,7 +826,7 @@ BBTestDevicePathNodeConformanceAutoTest (
       // Assertion Point 3.1.2.26
       // Check Messaging Device Path: UART Flow Control Messaging Path
       //
-      if (CompareMem (&Vendor->Guid, &gEfiDevicePathMessagingUartFlowControlGuid, sizeof (EFI_GUID)) == 0) {
+      if (SctCompareMem (&Vendor->Guid, &gEfiDevicePathMessagingUartFlowControlGuid, sizeof (EFI_GUID)) == 0) {
         UartFlow = (UART_FLOW_CONTROL_DEVICE_PATH *) DevicePath;
         if ((Length == 24) && 
             (UartFlow->FlowControlMap == 0x0 ||
@@ -855,7 +855,7 @@ BBTestDevicePathNodeConformanceAutoTest (
       // Assertion Point 3.1.2.27
       // Check Messaging Device Path: Serial Attached SCSI (SAS) Device Path
       //
-      else if (CompareMem (&Vendor->Guid, &gEfiDevicePathMessagingSASGuid, sizeof (EFI_GUID)) == 0) {
+      else if (SctCompareMem (&Vendor->Guid, &gEfiDevicePathMessagingSASGuid, sizeof (EFI_GUID)) == 0) {
         if (Length == 44) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {

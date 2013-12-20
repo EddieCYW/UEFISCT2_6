@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EfiShellLib.h"
 #include "Rivl.h"
 #include "RivlCall.h"
@@ -126,7 +126,7 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  SetMem (&RivlCallFrame, sizeof (RIVL_CALL_FRAME), 0);
+  SctSetMem (&RivlCallFrame, sizeof (RIVL_CALL_FRAME), 0);
 
   //
   // Seperate the FuncBuf
@@ -261,7 +261,7 @@ Returns:
     //
     // It it value
     //
-    CopyMem (
+    SctCopyMem (
       Arg,
       *VarBaseAddress + Offset,
       Length

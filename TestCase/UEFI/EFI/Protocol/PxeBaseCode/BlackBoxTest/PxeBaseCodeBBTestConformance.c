@@ -2198,7 +2198,7 @@ BBTestArpConformanceAutoTest (
   // if Ip6 support test EFI_UNSUPPORT case
   //
   if (BcInterface->Mode->UsingIpv6 == TRUE) {
-    MemSet(IpAddr.v6.Addr, 0, sizeof(IpAddr.v6.Addr));
+    SctZeroMem (IpAddr.v6.Addr, sizeof(IpAddr.v6.Addr));
 
     Status = BcInterface->Arp(BcInterface, &IpAddr, NULL);
     if (Status == EFI_UNSUPPORTED) {

@@ -718,7 +718,7 @@ Returns:
   // check to see whether this devicepath
   // is one of that type
   //
-  gtBS->CopyMem(&TempGuid, &Vendor->Guid, sizeof (EFI_GUID));
+  gtBS->CopyMem (&TempGuid, &Vendor->Guid, sizeof (EFI_GUID));
 
   if (EfiCompareGuid (&TempGuid, &Guid[0])) {
     *Termi      = PC_ANSI;
@@ -749,7 +749,7 @@ Returns:
   Ptr   = Ptr - sizeof (UART_DEVICE_PATH) - sizeof (ACPI_HID_DEVICE_PATH);
   Acpi  = (ACPI_HID_DEVICE_PATH *) Ptr;
   Match = EISA_PNP_ID (0x0501);
-  if (EfiCompareMem (&Acpi->HID, &Match, sizeof (UINT32)) == 0) {
+  if (SctCompareMem (&Acpi->HID, &Match, sizeof (UINT32)) == 0) {
     gtBS->CopyMem (Com, &Acpi->UID, sizeof (UINT32));
   } else {
     return FALSE;

@@ -249,7 +249,7 @@ BBTestGetModeFunctionAutoTest (
                        );
         return Status;
       }
-      EfiZeroMem (BltBufferWhole, HorizontalResolution * VerticalResolution * sizeof (EFI_UGA_PIXEL));
+      SctZeroMem (BltBufferWhole, HorizontalResolution * VerticalResolution * sizeof (EFI_UGA_PIXEL));
 
       Status = UgaDraw->Blt (
                           UgaDraw,
@@ -416,7 +416,7 @@ BBTestGetModeFunctionAutoTest (
                    );
     return Status;
   }
-  EfiZeroMem (BltBuffer, MAX_SCREEN_WIDTH * MAX_SCREEN_HEIGHT * sizeof (EFI_UGA_PIXEL));
+  SctZeroMem (BltBuffer, MAX_SCREEN_WIDTH * MAX_SCREEN_HEIGHT * sizeof (EFI_UGA_PIXEL));
 
   Status = gtBS->AllocatePool (
                    EfiBootServicesData,
@@ -440,7 +440,7 @@ BBTestGetModeFunctionAutoTest (
     }
     return Status;
   }
-  EfiZeroMem (BltBuffer2, MAX_SCREEN_WIDTH * MAX_SCREEN_HEIGHT * sizeof (EFI_UGA_PIXEL));
+  SctZeroMem (BltBuffer2, MAX_SCREEN_WIDTH * MAX_SCREEN_HEIGHT * sizeof (EFI_UGA_PIXEL));
 
   Width                = 400;
   Height               = 300;
@@ -537,7 +537,7 @@ BBTestGetModeFunctionAutoTest (
                }
                return Status;
              }
-             EfiZeroMem (BltBufferWhole, HorizontalResolution * VerticalResolution * sizeof (EFI_UGA_PIXEL));
+             SctZeroMem (BltBufferWhole, HorizontalResolution * VerticalResolution * sizeof (EFI_UGA_PIXEL));
 
              Status = UgaDraw->Blt (
                                  UgaDraw,
@@ -914,7 +914,7 @@ BBTestEfiUgaVideoFillFunctionAutoTest (
                    );
     return Status;
   }
-  EfiZeroMem (BltBuffer, Size);
+  SctZeroMem (BltBuffer, Size);
 
   Status = gtBS->AllocatePool (
                    EfiBootServicesData,
@@ -937,7 +937,7 @@ BBTestEfiUgaVideoFillFunctionAutoTest (
     }
     return Status;
   }
-  EfiZeroMem (BltBuffer2, Size);
+  SctZeroMem (BltBuffer2, Size);
   //
   // for all demo mode, try it..
   //
@@ -1731,7 +1731,7 @@ BBTestEfiUgaVideoBltBufferFunctionAutoTest (
                      );
       return Status;
     }
-    EfiZeroMem (BltBuffer, Size);
+    SctZeroMem (BltBuffer, Size);
 
     Size = Width * Height * sizeof (EFI_UGA_PIXEL);
     Status = gtBS->AllocatePool (
@@ -1755,7 +1755,7 @@ BBTestEfiUgaVideoBltBufferFunctionAutoTest (
       }
       return Status;
     }
-    EfiZeroMem (BltBuffer2, Size);
+    SctZeroMem (BltBuffer2, Size);
 
     //
     // Delta should reflect the length of a row correctly
@@ -2440,7 +2440,7 @@ BBTestEfiUgaVideoToVideoFunctionAutoTest (
                      );
       return Status;
     }
-    EfiZeroMem (BltBuffer, Size);
+    SctZeroMem (BltBuffer, Size);
 
     Size = Width * Height * sizeof (EFI_UGA_PIXEL);
     Status = gtBS->AllocatePool (
@@ -2464,7 +2464,7 @@ BBTestEfiUgaVideoToVideoFunctionAutoTest (
       }
       return Status;
     }
-    EfiZeroMem (BltBuffer2, Size);
+    SctZeroMem (BltBuffer2, Size);
     //
     // Actually, should output screen with some picture.
     //

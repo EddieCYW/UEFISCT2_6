@@ -500,7 +500,7 @@ PciRead_Func (
     //the data read out must be the same as write into.
     //
     AssertionType = EFI_TEST_ASSERTION_PASSED;
-    if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
 
@@ -553,7 +553,7 @@ PciRead_Func (
     //
     AssertionType = EFI_TEST_ASSERTION_PASSED;
     for (Index = 0; Index < Count; Index++) {
-      if (CompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
         break;
       }
@@ -578,7 +578,7 @@ PciRead_Func (
     //
 
     for (Index = 0; Index < Count; Index++) {
-      CopyMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength);
+      SctCopyMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength);
     }
 
     //
@@ -618,12 +618,12 @@ PciRead_Func (
     //
     AssertionType = EFI_TEST_ASSERTION_PASSED;
 
-    if (CompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count -1) * UnitLength, UnitLength) != 0) {
+    if (SctCompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count -1) * UnitLength, UnitLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
 
     for (Index = 1; Index < Count; Index++) {
-      if (CompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
         break;
       }
@@ -1119,7 +1119,7 @@ PciWrite_Func (
     //
     //the data read out must be the same as write into.
 
-    if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
 
@@ -1183,11 +1183,11 @@ PciWrite_Func (
     //
     AssertionType = EFI_TEST_ASSERTION_PASSED;
 
-    if (CompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count - 1) * UnitLength, UnitLength) != 0) {
+    if (SctCompareMem ((UINT8 *)ReadBuffer, (UINT8 *)Buffer + (Count - 1) * UnitLength, UnitLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
     if (Count > 1) {
-      if (CompareMem ((UINT8 *)ReadBuffer + UnitLength, (UINT8 *)Buffer + UnitLength, AddressLength - UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + UnitLength, (UINT8 *)Buffer + UnitLength, AddressLength - UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
     }
@@ -1254,7 +1254,7 @@ PciWrite_Func (
     //
 
     for (Index = 0; Index < Count; Index++) {
-      if (CompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
+      if (SctCompareMem ((UINT8 *)ReadBuffer + Index * UnitLength, Buffer, UnitLength) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
         break;
       }
@@ -1328,7 +1328,7 @@ PciWrite_Func (
 }
 
 /**
- *  Entrypoint for PciIo->CopyMem() Interface automatically Test.
+ *  Entrypoint for PciIo->CopyMem () Interface automatically Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
  *  @param ClientInterface a pointer to the interface to be tested.
  *  @param TestLevel test "thoroughness" control.
@@ -1813,7 +1813,7 @@ CopyMem_Func (
                        );
 
         AssertionType = EFI_TEST_ASSERTION_PASSED;
-        if (CompareMem (ReadBuffer, Buffer, BufferSize) != 0) {
+        if (SctCompareMem (ReadBuffer, Buffer, BufferSize) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
         }
 
@@ -1900,7 +1900,7 @@ CopyMem_Func (
                        );
 
         AssertionType = EFI_TEST_ASSERTION_PASSED;
-        if (CompareMem (ReadBuffer, Buffer, BufferSize) != 0) {
+        if (SctCompareMem (ReadBuffer, Buffer, BufferSize) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
         }
 
@@ -1986,7 +1986,7 @@ CopyMem_Func (
                        );
 
         AssertionType = EFI_TEST_ASSERTION_PASSED;
-        if (CompareMem (ReadBuffer, Buffer, BufferSize) != 0) {
+        if (SctCompareMem (ReadBuffer, Buffer, BufferSize) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
         }
 
@@ -2111,7 +2111,7 @@ CopyMem_Func (
                        );
 
         AssertionType = EFI_TEST_ASSERTION_PASSED;
-        if (CompareMem (ReadBuffer, Buffer, BufferSize) != 0) {
+        if (SctCompareMem (ReadBuffer, Buffer, BufferSize) != 0) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
         }
 
@@ -2299,7 +2299,7 @@ Map_Func (
                  (UINT64)NumberOfBytes
                  );
 
-  if (CompareMem ((VOID *)Buffer, (VOID *)(UINTN)DeviceAddress, NumberOfBytes) != 0) {
+  if (SctCompareMem ((VOID *)Buffer, (VOID *)(UINTN)DeviceAddress, NumberOfBytes) != 0) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2564,7 +2564,7 @@ Map_Func (
                  );
 
   AssertionType = EFI_TEST_ASSERTION_PASSED;
-  if (CompareMem ((VOID *)Buffer, (VOID *)(UINTN)DeviceAddress, NumberOfBytes) != 0) {
+  if (SctCompareMem ((VOID *)Buffer, (VOID *)(UINTN)DeviceAddress, NumberOfBytes) != 0) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
@@ -2586,7 +2586,7 @@ Map_Func (
   gtBS->SetMem ((VOID *)(UINTN)DeviceAddress, NumberOfBytes, 0x1);
 
   AssertionType = EFI_TEST_ASSERTION_PASSED;
-  if (CompareMem ((VOID *)Buffer, (VOID *)(UINTN)DeviceAddress, NumberOfBytes) != 0) {
+  if (SctCompareMem ((VOID *)Buffer, (VOID *)(UINTN)DeviceAddress, NumberOfBytes) != 0) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
@@ -2609,7 +2609,7 @@ Map_Func (
   gtBS->SetMem (Buffer, NumberOfBytes, 0x0);
 
   AssertionType = EFI_TEST_ASSERTION_PASSED;
-  if (CompareMem ((VOID *)Buffer, (VOID *)(UINTN)DeviceAddress, NumberOfBytes) != 0) {
+  if (SctCompareMem ((VOID *)Buffer, (VOID *)(UINTN)DeviceAddress, NumberOfBytes) != 0) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
@@ -3051,7 +3051,7 @@ Unmap_Func (
   //
   gtBS->SetMem ((UINT8 *)(UINTN)DeviceAddress, NumberOfBytes, 0x01);
 
-  if (CompareMem (Buffer, (VOID *)(UINTN)DeviceAddress, NumberOfBytes) == 0) {
+  if (SctCompareMem (Buffer, (VOID *)(UINTN)DeviceAddress, NumberOfBytes) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;

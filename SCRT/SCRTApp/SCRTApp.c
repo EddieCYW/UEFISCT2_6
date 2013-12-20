@@ -312,7 +312,7 @@ Returns:
     }
   
     TempVirtualMemoryMap = VirtualMemoryMap;
-    ZeroMem ((VOID *) VirtualMemoryMap, MemoryMapSize);
+    SctZeroMem ((VOID *) VirtualMemoryMap, MemoryMapSize);
 
     //
     // Change Runtime Usage MemoryMap entry from physical address to virtual address.

@@ -232,7 +232,7 @@ Returns:
   //
   for (Index = 0; Index < (MemoryMapSize / DescriptorSize); Index++) {
     if ((MemoryMap->Attribute & EFI_MEMORY_RUNTIME) == EFI_MEMORY_RUNTIME) {
-      CopyMem ((VOID *) VirtualMemoryMap, (VOID *) MemoryMap, DescriptorSize);
+      SctCopyMem ((VOID *) VirtualMemoryMap, (VOID *) MemoryMap, DescriptorSize);
       *VirtualMapSize += DescriptorSize;
       //
       // if (physical address >= 2G) then virtual address = (physical address - 2G)

@@ -116,6 +116,7 @@ COMPONENT_TYPE  = LIBRARY
 
 
 [libraries.common]
+  SctLib
 
 [nmake.common]
   C_STD_INCLUDE=

@@ -84,6 +84,7 @@ EftpWRQ.c
   $(EFI_SOURCE)/SctPkg/library/netlib/include
 
 [libraries.common]
+  SctLib
   EfiDriverLib
   EfiProtocolLib
   EftpProtocolLib

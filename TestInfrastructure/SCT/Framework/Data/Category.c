@@ -559,7 +559,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (TempCategory, sizeof(EFI_SCT_CATEGORY_DATA));
+  SctZeroMem (TempCategory, sizeof(EFI_SCT_CATEGORY_DATA));
 
   //
   // Initialize the items of category data

@@ -485,7 +485,7 @@ Returns:
     return Status;
   }
 
-  EfiZeroMem (Blt, Wx * Hy * sizeof (EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  SctZeroMem (Blt, Wx * Hy * sizeof (EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
 
   for (IndexY = 0; IndexY < Hy / 3; IndexY++) {
     for (IndexX = 0; IndexX < Wx; IndexX++) {

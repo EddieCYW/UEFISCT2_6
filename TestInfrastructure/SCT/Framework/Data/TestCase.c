@@ -759,7 +759,7 @@ Returns:
         //
         // Initialize the items of test case
         //
-        CopyMem (&TestCase->Guid, &BbEntry->EntryId, sizeof(EFI_GUID));
+        SctCopyMem (&TestCase->Guid, &BbEntry->EntryId, sizeof(EFI_GUID));
         TestCase->Name = StrDuplicate (BbEntry->Name);
 
         //
@@ -789,7 +789,7 @@ Returns:
         //
         // Initialize the items of test case
         //
-        CopyMem (&TestCase->Guid, &WbEntry->EntryId, sizeof(EFI_GUID));
+        SctCopyMem (&TestCase->Guid, &WbEntry->EntryId, sizeof(EFI_GUID));
         TestCase->Name = StrDuplicate (WbEntry->Name);
 
         //
@@ -820,7 +820,7 @@ Returns:
         //
         // Initialize the items of test case
         //
-        CopyMem (&TestCase->Guid, &ApEntry->EntryId, sizeof(EFI_GUID));
+        SctCopyMem (&TestCase->Guid, &ApEntry->EntryId, sizeof(EFI_GUID));
         TestCase->Name = StrDuplicate (ApEntry->Name);
 
         //
@@ -1527,7 +1527,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (TempTestCase, sizeof(EFI_SCT_TEST_CASE));
+  SctZeroMem (TempTestCase, sizeof(EFI_SCT_TEST_CASE));
 
   //
   // Initialize the items of test case

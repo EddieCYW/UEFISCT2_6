@@ -839,9 +839,9 @@ BBTestPassThruConformanceAutoTest (
   // Assertion Point 4.5.2.1
   // Call PassThru() with too long TransferLength.
   //
-  EfiCommonLibZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  EfiCommonLibZeroMem (Cdb, 6);
-  EfiCommonLibZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -882,9 +882,9 @@ BBTestPassThruConformanceAutoTest (
                  Packet.TransferLength
                  );
 
-  EfiCommonLibZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  EfiCommonLibZeroMem (Cdb, 6);
-  EfiCommonLibZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -948,9 +948,9 @@ BBTestPassThruConformanceAutoTest (
     return Status;
   }  
   // Check Point 1. Invalid Target
-  EfiCommonLibZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  EfiCommonLibZeroMem (Cdb, 6);
-  EfiCommonLibZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -989,9 +989,9 @@ BBTestPassThruConformanceAutoTest (
                  );
 
 		EnterEvent = 0;
-  EfiCommonLibZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  EfiCommonLibZeroMem (Cdb, 6);
-  EfiCommonLibZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -1032,9 +1032,9 @@ BBTestPassThruConformanceAutoTest (
   //
   // Check Point 2. Invalid Lun
   //
-  EfiCommonLibZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  EfiCommonLibZeroMem (Cdb, 6);
-  EfiCommonLibZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -1073,9 +1073,9 @@ BBTestPassThruConformanceAutoTest (
                  );
 
   EnterEvent = 0;
-  EfiCommonLibZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  EfiCommonLibZeroMem (Cdb, 6);
-  EfiCommonLibZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -1116,7 +1116,7 @@ BBTestPassThruConformanceAutoTest (
   //
   // Check Point 3. Invalid ScsiRequestPacket.
   //
-  EfiCommonLibZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
 
   Status = ScsiPassThru->PassThru (ScsiPassThru, Target, Lun, &Packet, NULL);
 
@@ -1138,7 +1138,7 @@ BBTestPassThruConformanceAutoTest (
                  );
 
   EnterEvent = 0;
-  EfiCommonLibZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
 
   Status = ScsiPassThru->PassThru (ScsiPassThru, Target, Lun, &Packet, Event);
 

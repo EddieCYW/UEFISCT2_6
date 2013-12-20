@@ -829,7 +829,7 @@ BlockIo2MixedSyncAsyncWriteData (
       FreeAlignedPool(BufferSync);
       return Status;
     }
-    MemSet(BufferSync, SYNC_WRITE_TEST_PATTERN, BufferSize);
+    SctSetMem (BufferSync, SYNC_WRITE_TEST_PATTERN, BufferSize);
 
     //
     // Record  Sync execution Info to Block IO 2 entity 
@@ -1602,7 +1602,7 @@ END_WAIT:
      
           BlockIo2Entity->AssertionType = EFI_TEST_ASSERTION_FAILED;
           if (StatusSync == EFI_SUCCESS) {
-            BlockIo2Entity->ComparedVal = MemCmp(
+            BlockIo2Entity->ComparedVal = SctCompareMem (
                                             BlockIo2Entity->Buffer,
                                             BufferSync,
                                             BlockIo2Entity->BufferSize
@@ -1924,7 +1924,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint2(
                               (VOID*)Buffer
                               );
           if (Status == EFI_SUCCESS) {
-            CompareVal = MemCmp(BufferSync, Buffer, NewBufferSize);
+            CompareVal = SctCompareMem (BufferSync, Buffer, NewBufferSize);
             MemCompared = TRUE;
             if (CompareVal == 0) {
               AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2233,7 +2233,7 @@ END:
      
           BlockIo2Entity->AssertionType = EFI_TEST_ASSERTION_FAILED;
           if (StatusSync == EFI_SUCCESS) {
-            BlockIo2Entity->ComparedVal = MemCmp(
+            BlockIo2Entity->ComparedVal = SctCompareMem (
                                             BlockIo2Entity->Buffer,
                                             BufferSync,
                                             BlockIo2Entity->BufferSize
@@ -2497,7 +2497,7 @@ END_WAIT:
             if (BlockIo2Entity->MediaId == BlockIo2EntitySync->MediaId
              && BlockIo2Entity->LBA == BlockIo2EntitySync->LBA
              && BlockIo2Entity->BufferSize == BlockIo2EntitySync->BufferSize ) {
-              BlockIo2EntitySync->ComparedVal = MemCmp (
+              BlockIo2EntitySync->ComparedVal = SctCompareMem (
                                                   BlockIo2Entity->Buffer,
                                                   BlockIo2EntitySync->Buffer,
                                                   BlockIo2Entity->BufferSize
@@ -2964,7 +2964,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint1(
         //
         // Set test data pattern into Write Buffer  
         //
-        MemSet(WriteBuffer, ASYNC_WRITE_TEST_PATTERN, BlockIo2Entity->BufferSize);
+        SctSetMem (WriteBuffer, ASYNC_WRITE_TEST_PATTERN, BlockIo2Entity->BufferSize);
         //
         // Write specified buffer2 differ from buffer to the device
         // write info comes from previous read info list
@@ -3462,7 +3462,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint2(
         //
         // Set test data pattern into Write Buffer  
         //
-        MemSet(WriteBuffer, SYNC_WRITE_TEST_PATTERN, BlockIo2Entity->BufferSize);
+        SctSetMem (WriteBuffer, SYNC_WRITE_TEST_PATTERN, BlockIo2Entity->BufferSize);
         //
         // Write specified buffer2 differ from buffer to the device
         // write info comes from previous read info list
@@ -3805,7 +3805,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
           goto END;
         }
         
-        MemSet(BlockIo2WriteEntity->Buffer, ASYNC_WRITE_TEST_PATTERN, BlockIo2WriteEntity->BufferSize);
+        SctSetMem (BlockIo2WriteEntity->Buffer, ASYNC_WRITE_TEST_PATTERN, BlockIo2WriteEntity->BufferSize);
 
         //
         // Last list node handled
@@ -4189,7 +4189,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint4(
         //
         // Set test data pattern into Write Buffer  
         //
-        MemSet(WriteBuffer, ASYNC_WRITE_TEST_PATTERN, BlockIo2Entity->BufferSize);
+        SctSetMem (WriteBuffer, ASYNC_WRITE_TEST_PATTERN, BlockIo2Entity->BufferSize);
         //
         // Async & Sync Write specified buffer2 differ from buffer to the device
         // write info comes from previous read info list

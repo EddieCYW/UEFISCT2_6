@@ -888,7 +888,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (*TestFile, sizeof(EFI_SCT_TEST_FILE));
+  SctZeroMem (*TestFile, sizeof(EFI_SCT_TEST_FILE));
 
   //
   // Initialize the items of test file

@@ -323,7 +323,7 @@ Returns:
       Handle->Close (Handle);
       return Status;
     }
-    ZeroMem (OutputFile, sizeof(TEST_OUTPUT_FILE));
+    SctZeroMem (OutputFile, sizeof(TEST_OUTPUT_FILE));
 
     OutputFile->DevicePath = DuplicateDevicePath (DevicePath);
     if (OutputFile->DevicePath == NULL) {

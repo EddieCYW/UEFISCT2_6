@@ -60,6 +60,7 @@ Abstract:
 #include "Rivl.h"
 #include "RivlType.h"
 #include "RivlVariable.h"
+#include "SctLib.h"
 
 RIVL_TYPE           *gRivlTypeList = NULL;
 RIVL_INTERNAL_TYPE  gRivlInternalTypeArray[] = {
@@ -212,7 +213,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
 
-  ZeroMem (RivlMember, sizeof (RIVL_MEMBER) * (MemberNumber + 1));
+  SctZeroMem (RivlMember, sizeof (RIVL_MEMBER) * (MemberNumber + 1));
 
   for (MemberIndex = 0; MemberIndex < MemberNumber; MemberIndex++) {
     MemberName          = strtok_line (NULL, RIVL_SEP_SIG);
@@ -360,7 +361,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
 
-  ZeroMem (NewRivlType, sizeof (RIVL_TYPE));
+  SctZeroMem (NewRivlType, sizeof (RIVL_TYPE));
 
   //
   // Fill Type

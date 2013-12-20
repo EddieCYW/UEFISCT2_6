@@ -239,7 +239,7 @@ Returns:
     }
 
     VA_START (args, fmt);
-    ZeroMem (&ps, sizeof(ps));
+    SctZeroMem (&ps, sizeof(ps));
 
     ps.Output = _DbgOut;
     ps.fmt.Ascii = TRUE;
@@ -339,7 +339,7 @@ _SPrint (
     // Append the new text
     //
 
-    CopyMem (spc->str + spc->len, Buffer, len * sizeof(CHAR16));
+    SctCopyMem (spc->str + spc->len, Buffer, len * sizeof(CHAR16));
     spc->len += len;
 
     //
@@ -413,7 +413,7 @@ _PoolCatPrint (
 {
     PRINT_STATE         ps;
 
-    ZeroMem (&ps, sizeof(ps));
+    SctZeroMem (&ps, sizeof(ps));
     ps.Output  = Output;
     ps.Context = spc;
     ps.fmt.u.pw = fmt;
@@ -528,7 +528,7 @@ Returns:
     POOL_PRINT          spc;
     VA_LIST             args;
 
-    ZeroMem (&spc, sizeof(spc));
+    SctZeroMem (&spc, sizeof(spc));
     VA_START (args, fmt);
     _PoolCatPrint (fmt, args, &spc, _PoolPrint);
     return spc.str;
@@ -649,7 +649,7 @@ _IPrint (
 
     ASSERT(NULL != Out);
 
-    ZeroMem (&ps, sizeof(ps));
+    SctZeroMem (&ps, sizeof(ps));
     ps.Context = Out;
     ps.Output  = (INTN (*)(VOID *, CHAR16 *)) Out->OutputString;
     ps.SetAttr = (INTN (*)(VOID *, UINTN))  Out->SetAttribute;

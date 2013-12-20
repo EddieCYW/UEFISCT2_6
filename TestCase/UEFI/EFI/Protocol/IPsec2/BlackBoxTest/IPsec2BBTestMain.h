@@ -133,29 +133,6 @@ InitializeLib (
   );
 
 
-VOID
-MemZero (
- VOID       *Addr,
- UINTN      Size
- );
-
-
-INTN
-MemCmp(
-  VOID        *s1,
-  VOID        *s2,
-  UINTN       n
-  );
-
-
-VOID *
-MemCpy(
-  VOID        *dst,
-  VOID        *src,
-  UINTN       len
-  );
-
-
 EFI_STATUS 
 IP4ProcessPacket(
   IN  EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib,

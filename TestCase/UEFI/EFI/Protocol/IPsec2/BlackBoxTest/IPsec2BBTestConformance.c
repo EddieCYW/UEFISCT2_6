@@ -215,7 +215,7 @@ BBTestProcessExtConformanceTestCheckpoint1 (
                    );
     goto FUNC_EXIT;
   }
-  MemCpy (Ip4PacketTemp, Ip4Packet, Ip4PacketSize);
+  SctCopyMem (Ip4PacketTemp, Ip4Packet, Ip4PacketSize);
   
   // Create One IP4 Packet comprise of {IP4Head, OptionBuffer, FragmentTable}
   //

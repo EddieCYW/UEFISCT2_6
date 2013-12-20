@@ -730,7 +730,7 @@ Returns:
     return Status;
   }
 
-  ZeroMem (*TestFile, sizeof (EFI_NETWORK_TEST_FILE));
+  SctZeroMem (*TestFile, sizeof (EFI_NETWORK_TEST_FILE));
 
   //
   // Initialize the test file

@@ -428,9 +428,9 @@ BBTestExecuteScsiCommandFunctionAutoTest (
   //
   // Initialize the Request Packet.
   //
-  ZeroMem (&Packet,sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb,6);
-  ZeroMem (Data,ScsiIo->IoAlign + 96);
+  SctZeroMem (&Packet,sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb,6);
+  SctZeroMem (Data,ScsiIo->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -506,9 +506,9 @@ BBTestExecuteScsiCommandFunctionAutoTest (
   //
   // Initialize the Request Packet.
   //
-  ZeroMem (&Packet,sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb,6);
-  ZeroMem (Data,ScsiIo->IoAlign + 96);
+  SctZeroMem (&Packet,sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb,6);
+  SctZeroMem (Data,ScsiIo->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;

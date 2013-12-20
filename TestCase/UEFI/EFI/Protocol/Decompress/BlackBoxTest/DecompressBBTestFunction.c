@@ -905,7 +905,7 @@ Decompress_Func (
                    (UINTN)__LINE__,
                    Status
                    );
-    if (CompareMem (DecompressBuffer,
+    if (SctCompareMem (DecompressBuffer,
                     UncompressedFileBuffer, UncompressedFileSize) == 0) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {

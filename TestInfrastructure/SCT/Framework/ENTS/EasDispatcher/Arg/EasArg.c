@@ -185,7 +185,7 @@ Returns:
   //
   // It it value
   //
-  CopyMem (
+  SctCopyMem (
     ArgField->Data,
     *VarBaseAddress + Offset,
     Length

@@ -405,7 +405,7 @@ Returns:
   //
   // Copy the original IV table to the new RAM location
   //
-  CopyMem ((VOID *) mNewIva, (VOID *) OldIva, IVT_SIZE);
+  SctCopyMem ((VOID *) mNewIva, (VOID *) OldIva, IVT_SIZE);
 
   Dest2 = mNewIva + IVT_SIZE + SIZEOF_MEMMAP_TABLE + SIZEOF_STORAGE_AREA;
   Src1  = GetFunctionAddress (IvtStub);
@@ -416,7 +416,7 @@ Returns:
     //
     Dest1 = mNewIva + mHandler[i].IvtOffset;
     Count = GetFunctionAddress (IvtStubEnd) - Src1;
-    CopyMem ((VOID *) Dest1, (VOID *) Src1, Count);
+    SctCopyMem ((VOID *) Dest1, (VOID *) Src1, Count);
     Dest1 += Count;
 
     //
@@ -425,13 +425,13 @@ Returns:
     Src2  = GetFunctionAddress (mHandler[i].IntrHandlerBegin);
     Count = GetFunctionAddress (mHandler[i].IntrHandlerEnd) - Src2;
 
-    CopyMem ((VOID *) Dest2, (VOID *) Src2, Count);
+    SctCopyMem ((VOID *) Dest2, (VOID *) Src2, Count);
     Offset = Dest2 - mNewIva - mHandler[i].IvtOffset;
 
     //
     // Patch the IVT stub with the offset of the actual handler
     //
-    CopyMem ((VOID *) Dest1, (VOID *) (&Offset), sizeof (UINTN));
+    SctCopyMem ((VOID *) Dest1, (VOID *) (&Offset), sizeof (UINTN));
 
     Dest2 += Count;
   }
@@ -439,7 +439,7 @@ Returns:
   // The next block locations are used for storing the memory map
   // Zero that area to begin with
   //
-  SetMem ((VOID *) (mNewIva + IVT_SIZE), SIZEOF_MEMMAP_TABLE, 0);
+  SctSetMem ((VOID *) (mNewIva + IVT_SIZE), SIZEOF_MEMMAP_TABLE, 0);
 
   
   //
@@ -794,7 +794,7 @@ Returns:
       if (Index == StartIndex) {
         if (MapEntry->BaseAddress != BaseAddress) {
           BottomFlag = TRUE;
-          CopyMem (&BottomEntry, MapEntry, sizeof (MEMMAP_ENTRY));
+          SctCopyMem (&BottomEntry, MapEntry, sizeof (MEMMAP_ENTRY));
           BottomEntry.EndAddress  = BaseAddress - 1;
           BottomEntry.PageSize    = GetProperTlbPageSize (BottomEntry.BaseAddress, BottomEntry.EndAddress);
           MapEntry->BaseAddress   = BaseAddress;
@@ -819,7 +819,7 @@ Returns:
       if (Index == EndIndex) {
         if ((MapEntry->BaseAddress != BaseAddress + Length) && (MapEntry->EndAddress != BaseAddress + Length - 1)) {
           TopFlag  = TRUE;  
-          CopyMem (&TopEntry, MapEntry, sizeof (MEMMAP_ENTRY));
+          SctCopyMem (&TopEntry, MapEntry, sizeof (MEMMAP_ENTRY));
           MapEntry->EndAddress    = BaseAddress + Length - 1;
           MapEntry->PageSize      = GetProperTlbPageSize (MapEntry->BaseAddress, MapEntry->EndAddress);
           TopEntry.BaseAddress    = BaseAddress + Length;
@@ -847,25 +847,25 @@ Returns:
     //
     // BackUp MemoryMap Entries
     //
-    CopyMem(BackUpEntry, MapEntry, SIZEOF_MEMMAP_USING_TABLE);
-    SetMem(MapEntry, SIZEOF_MEMMAP_USING_TABLE, 0);
+    SctCopyMem (BackUpEntry, MapEntry, SIZEOF_MEMMAP_USING_TABLE);
+    SctSetMem (MapEntry, SIZEOF_MEMMAP_USING_TABLE, 0);
 
     //
     // Insert Bottom/TopEntry into MemoryMap Entries
     //
     for (Index = 0; Index < mMemMapNumber + 2; MapEntry++, Index++){
       if ((Index == StartIndex) && BottomFlag) {
-        CopyMem(MapEntry, &BottomEntry, sizeof (MEMMAP_ENTRY));
+        SctCopyMem (MapEntry, &BottomEntry, sizeof (MEMMAP_ENTRY));
       } else if ((Index == EndIndex + 2) && TopFlag) {
-        CopyMem(MapEntry, &TopEntry, sizeof (MEMMAP_ENTRY));
+        SctCopyMem (MapEntry, &TopEntry, sizeof (MEMMAP_ENTRY));
       } else {
-        CopyMem(MapEntry, BackUpEntry, sizeof (MEMMAP_ENTRY));
+        SctCopyMem (MapEntry, BackUpEntry, sizeof (MEMMAP_ENTRY));
         BackUpEntry++;
       } 
     }
 
     BackUpEntry   = mMemMapEntry + SIZEOF_MEMMAP_USING_TABLE;
-    SetMem(BackUpEntry, SIZEOF_MEMMAP_BACKUP_TABLE,0);
+    SctSetMem (BackUpEntry, SIZEOF_MEMMAP_BACKUP_TABLE,0);
     mMemMapNumber += 2;
     AttribChanged = FALSE;
   }  
@@ -932,5 +932,5 @@ Returns:
     InsertNewMemoryNode(mOldStoragePtr->PhysicalAddress, (mOldStoragePtr->PageNum)<< EFI_PAGE_SHIFT,MA_UC);
     mOldStoragePtr++;
   }
-  //SetMem(mOldStoragePtr, SIZEOF_STORAGE_AREA, 0); 
+  //SctSetMem (mOldStoragePtr, SIZEOF_STORAGE_AREA, 0); 
 }

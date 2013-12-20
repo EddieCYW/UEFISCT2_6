@@ -527,7 +527,7 @@ Returns:
         AssertionType = EFI_TEST_ASSERTION_PASSED;
       }
 
-      if (EfiCompareMem (
+      if (SctCompareMem (
           (void *) info,
           (void *) GraphicsOutput->Mode->Info,
           sizeof (EFI_GRAPHICS_OUTPUT_MODE_INFORMATION)

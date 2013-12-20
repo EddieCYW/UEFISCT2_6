@@ -186,33 +186,6 @@ CalculateCrc (
   UINTN Size
   );
 
-VOID
-ZeroMem (
-  IN VOID                           *Buffer,
-  IN UINTN                          Size
-  );
-
-VOID
-SetMem (
-  IN VOID                           *Buffer,
-  IN UINTN                          Size,
-  IN UINT8                          Value
-  );
-
-VOID
-CopyMem (
-  IN VOID                           *Dest,
-  IN VOID                           *Src,
-  IN UINTN                          len
-  );
-
-INTN
-CompareMem (
-  IN VOID                           *Dest,
-  IN VOID                           *Src,
-  IN UINTN                          len
-  );
-
 INTN
 StrCmp (
   IN CHAR16                         *s1,

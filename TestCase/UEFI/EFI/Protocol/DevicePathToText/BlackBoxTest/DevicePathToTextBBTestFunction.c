@@ -303,7 +303,7 @@ DevicePathToTextConvertDeviceNodeToTextFunctionTest (
   text     = DevicePathToText->ConvertDeviceNodeToText ((EFI_DEVICE_PATH *) pAcpiDevNode, FALSE, FALSE);
   pDevNode = SctConvertTextToDeviceNode(text);
 
-  if ((pDevNode != NULL) && (EfiCompareMem (pDevNode, pAcpiDevNode, DevicePathNodeLength((EFI_DEVICE_PATH *) pAcpiDevNode)) == 0)) {
+  if ((pDevNode != NULL) && (SctCompareMem (pDevNode, pAcpiDevNode, DevicePathNodeLength((EFI_DEVICE_PATH *) pAcpiDevNode)) == 0)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -333,7 +333,7 @@ DevicePathToTextConvertDeviceNodeToTextFunctionTest (
   text     = DevicePathToText->ConvertDeviceNodeToText ((EFI_DEVICE_PATH *) pPciDevNode, FALSE, FALSE);
   pDevNode = SctConvertTextToDeviceNode(text);
 
-  if ((pDevNode != NULL) && (EfiCompareMem (pDevNode, pPciDevNode, DevicePathNodeLength((EFI_DEVICE_PATH *) pPciDevNode)) == 0)) {
+  if ((pDevNode != NULL) && (SctCompareMem (pDevNode, pPciDevNode, DevicePathNodeLength((EFI_DEVICE_PATH *) pPciDevNode)) == 0)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -368,7 +368,7 @@ DevicePathToTextConvertDeviceNodeToTextFunctionTest (
   text     = DevicePathToText->ConvertDeviceNodeToText ((EFI_DEVICE_PATH *) pAtapiDevNode, FALSE, FALSE);
   pDevNode = SctConvertTextToDeviceNode(text);
 
-  if ((pDevNode != NULL) && (EfiCompareMem (pDevNode, pAtapiDevNode, DevicePathNodeLength((EFI_DEVICE_PATH *) pAtapiDevNode)) == 0)) {
+  if ((pDevNode != NULL) && (SctCompareMem (pDevNode, pAtapiDevNode, DevicePathNodeLength((EFI_DEVICE_PATH *) pAtapiDevNode)) == 0)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -471,7 +471,7 @@ DevicePathToTextConvertDevicePathToTextFunctionTest (
   text        = DevicePathToText->ConvertDevicePathToText (pDevicePath3, FALSE, FALSE);
   pDevicePath = SctConvertTextToDevicePath(text);
 
-  if ((pDevicePath != NULL) && (EfiCompareMem (pDevicePath, pDevicePath3, DevicePathNodeLength (pDevicePath3)) == 0)) {
+  if ((pDevicePath != NULL) && (SctCompareMem (pDevicePath, pDevicePath3, DevicePathNodeLength (pDevicePath3)) == 0)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -525,7 +525,7 @@ DevicePathToTextConvertDevicePathToTextFunctionTest (
   text        = DevicePathToText->ConvertDevicePathToText (pDevicePath3, FALSE, FALSE);
   pDevicePath = SctConvertTextToDevicePath(text);
 
-  if ((pDevicePath != NULL) && (EfiCompareMem (pDevicePath, pDevicePath3, DevicePathNodeLength(pDevicePath3)) == 0)) {
+  if ((pDevicePath != NULL) && (SctCompareMem (pDevicePath, pDevicePath3, DevicePathNodeLength(pDevicePath3)) == 0)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -578,7 +578,7 @@ DevicePathToTextConvertDevicePathToTextFunctionTest (
   text        = DevicePathToText->ConvertDevicePathToText (pDevicePath3, FALSE, FALSE);
   pDevicePath = SctConvertTextToDevicePath(text);
 
-  if ((pDevicePath != NULL) && (EfiCompareMem (pDevicePath, pDevicePath3, DevicePathNodeLength (pDevicePath3)) == 0)) {
+  if ((pDevicePath != NULL) && (SctCompareMem (pDevicePath, pDevicePath3, DevicePathNodeLength (pDevicePath3)) == 0)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;

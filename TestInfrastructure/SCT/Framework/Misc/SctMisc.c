@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 #include "Sct.h"
+#include "SctLib.h"
 
 //
 // Internal functions declaration
@@ -320,7 +321,7 @@ Routine Description:
   } else if (DevPathSize1 < DevPathSize2) {
     return -1;
   } else {
-    return CompareMem (DevicePath1, DevicePath2, DevPathSize1);
+    return SctCompareMem (DevicePath1, DevicePath2, DevPathSize1);
   }
 }
 
@@ -1457,7 +1458,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (*GuidArray, (NumberOfTokens + 1) * sizeof(EFI_GUID));
+  SctZeroMem (*GuidArray, (NumberOfTokens + 1) * sizeof(EFI_GUID));
 
   for (Index = 0; Index < NumberOfTokens; Index ++) {
     if (Tokens[Index][0] == L'\0') {
@@ -2000,7 +2001,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (TempTokens, Number * sizeof(CHAR16 *));
+  SctZeroMem (TempTokens, Number * sizeof(CHAR16 *));
 
   //
   // Set all pointers to tokens

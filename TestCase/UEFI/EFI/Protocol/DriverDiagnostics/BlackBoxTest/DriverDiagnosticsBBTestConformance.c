@@ -826,7 +826,7 @@ SearchNextUnsupportedLanguageCode (
 
     Pointer = SupportedLanguageCodeList;
     for (Indexj = 0; Indexj < SupportedNumber; Indexj++) {
-      if (EfiCompareMem (Pointer, IsoLatinTable[Indexi], 3) == 0) {
+      if (SctCompareMem (Pointer, IsoLatinTable[Indexi], 3) == 0) {
         break ;
       }
       Pointer += 3;

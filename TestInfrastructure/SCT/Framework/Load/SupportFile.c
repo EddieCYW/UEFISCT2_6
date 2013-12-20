@@ -869,7 +869,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (*SupportFile, sizeof(EFI_SCT_TEST_FILE));
+  SctZeroMem (*SupportFile, sizeof(EFI_SCT_TEST_FILE));
 
   //
   // Initialize the items of support file
@@ -1519,7 +1519,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (*ProxyFile, sizeof(EFI_SCT_TEST_FILE));
+  SctZeroMem (*ProxyFile, sizeof(EFI_SCT_TEST_FILE));
 
   //
   // Initialize the items of support file

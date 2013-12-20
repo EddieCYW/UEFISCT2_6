@@ -51,7 +51,7 @@ Module Name:
 
 --*/
 
-
+#include "SctLib.h"
 #include "EfiShellLib.h"
 
 

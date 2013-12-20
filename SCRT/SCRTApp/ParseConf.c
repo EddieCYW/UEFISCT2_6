@@ -53,77 +53,6 @@ Module Name:
 
 #include "ParseConf.h"
 
-
-STATIC
-VOID *
-MemSet (
-  OUT VOID    *Dest,
-  IN  UINTN   Char,
-  IN  UINTN   Count
-  )
-/*++
-
-Routine Description:
-  
-  Sets buffers to a specified character.
-  
-Arguments: 
-  
-  Dest      - Pointer to destination.
-  Char      - Character to set. 
-  Count     - Number of characters. 
-  
-Returns:
-
-  Return the value of Dest.
-
---*/  
-{
-  volatile UINT8  *Ptr;
-  
-  for (Ptr = Dest; Count > 0; Count--, Ptr++) {
-    *Ptr = (UINT8) Char;
-  }
-
-  return Dest;
-}
-
-
-STATIC
-VOID *
-MemCpy (
-  OUT VOID        *Dest,
-  IN  const VOID  *Src,
-  IN  UINTN       Count
-  )
-/*++
-
-Routine Description:
-  
-  Copies characters between buffers.
-  
-Arguments: 
-  
-  Dest    -  New buffer. 
-  Src     -  Buffer to copy from. 
-  Count   -  Number of characters to copy. 
-  
-Returns:
-
-  Return the value of Dest.
-  
---*/    
-{
-  volatile UINT8  *Ptr;
-  const    UINT8  *Source;
-  
-  for (Ptr = Dest, Source = Src; Count > 0; Count--, Source++, Ptr++) {
-    *Ptr = *Source;
-  }
-  return Dest;
-}
-
-
 STATIC
 UINT32
 InternalStrLen (
@@ -509,7 +438,7 @@ Returns:
   //
   // Copy the line.
   //
-  MemCpy (InputBuffer, InputFile->CurrentFilePointer, CharsToCopy);
+  SctCopyMem (InputBuffer, InputFile->CurrentFilePointer, CharsToCopy);
 
   //
   // Add the null termination over the 0x0D
@@ -772,7 +701,7 @@ Returns:
   //
   // Initialize Configuration info
   //
-  MemSet (FileInfo, 0, sizeof (CONF_INFO));
+  SctZeroMem (FileInfo, sizeof (CONF_INFO));
 
   FileInfo->BitMap.Signature = CONFIGURE_INFO_SIGNATURE;
   //

@@ -420,7 +420,7 @@ BBTestNewStringFunctionTestCheckpoint1 (
     //
     // Check the output String
     //
-    if ( CompareMem( OutString, String, ActuStringSize ) != 0 )
+    if ( SctCompareMem ( OutString, String, ActuStringSize ) != 0 )
       AssertionType = EFI_TEST_ASSERTION_FAILED;
 
     gtBS->FreePool( OutString );
@@ -528,8 +528,8 @@ BBTestGetStringFunctionTestCheckpoint1 (
                         NULL
                         );
   
-//  if ( EFI_SUCCESS != Status || CompareMem( GetString, String, ActuStringSize ) != 0 || StringSize != ActuStringSize ) {
-  if ( EFI_SUCCESS != Status || CompareMem( GetString, String, ActuStringSize ) != 0 ) {  	
+//  if ( EFI_SUCCESS != Status || SctCompareMem ( GetString, String, ActuStringSize ) != 0 || StringSize != ActuStringSize ) {
+  if ( EFI_SUCCESS != Status || SctCompareMem ( GetString, String, ActuStringSize ) != 0 ) {  	
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -684,7 +684,7 @@ BBTestSetStringFunctionTestCheckpoint1 (
     //
     // Check the output String
     //
-    if ( CompareMem( OutString, SetNewString, ActuStringSize ) != 0 )
+    if ( SctCompareMem ( OutString, SetNewString, ActuStringSize ) != 0 )
       AssertionType = EFI_TEST_ASSERTION_FAILED;
 
     gtBS->FreePool( OutString );

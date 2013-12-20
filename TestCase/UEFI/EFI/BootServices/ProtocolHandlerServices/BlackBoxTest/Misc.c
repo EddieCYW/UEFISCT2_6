@@ -464,7 +464,7 @@ IsNodeInDevicePath (
 
     Length = (UINTN)(DevPath->Length[1] << 8 | DevPath->Length[0]);
 
-    if (!CompareMem (DevPath, Node, Length)) {
+    if (!SctCompareMem (DevPath, Node, Length)) {
       return TRUE;
     }
 

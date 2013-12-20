@@ -199,7 +199,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (TempSkippedCase, sizeof(EFI_SCT_SKIPPED_CASE));
+  SctZeroMem (TempSkippedCase, sizeof(EFI_SCT_SKIPPED_CASE));
 
   //
   // Initialize the items of skipped case

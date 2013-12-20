@@ -285,13 +285,13 @@ Returns:
     Inst = DevicePathInstance (&Src1, &Size);
     while (Inst) {
 
-      CopyMem(DstPos, Inst, Size);
+      SctCopyMem (DstPos, Inst, Size);
       DstPos += Size - sizeof(EFI_DEVICE_PATH_PROTOCOL);
 
-      CopyMem(DstPos, Src2, Src2Size);
+      SctCopyMem (DstPos, Src2, Src2Size);
       DstPos += Src2Size - sizeof(EFI_DEVICE_PATH_PROTOCOL);
 
-      CopyMem(DstPos, EndInstanceDevicePath, sizeof(EFI_DEVICE_PATH_PROTOCOL));
+      SctCopyMem (DstPos, EndInstanceDevicePath, sizeof(EFI_DEVICE_PATH_PROTOCOL));
       DstPos += sizeof(EFI_DEVICE_PATH_PROTOCOL);
 
       Inst = DevicePathInstance (&Src1, &Size);
@@ -301,7 +301,7 @@ Returns:
     // Change last end marker
     //
     DstPos -= sizeof(EFI_DEVICE_PATH_PROTOCOL);
-    CopyMem(DstPos, EndDevicePath, sizeof(EFI_DEVICE_PATH_PROTOCOL));
+    SctCopyMem (DstPos, EndDevicePath, sizeof(EFI_DEVICE_PATH_PROTOCOL));
   }
 
   return Dst;
@@ -347,7 +347,7 @@ Returns:
     return NULL;
   }
 
-  CopyMem (Temp, Src2, Length);
+  SctCopyMem (Temp, Src2, Length);
   Eop = NextDevicePathNode(Temp);
   SetDevicePathEndNode(Eop);
 
@@ -402,7 +402,7 @@ Returns:
     FilePath->Header.Type = MEDIA_DEVICE_PATH;
     FilePath->Header.SubType = MEDIA_FILEPATH_DP;
     SetDevicePathNodeLength (&FilePath->Header, Size + SIZE_OF_FILEPATH_DEVICE_PATH);
-    CopyMem (FilePath->PathName, FileName, Size);
+    SctCopyMem (FilePath->PathName, FileName, Size);
     Eop = NextDevicePathNode(&FilePath->Header);
     SetDevicePathEndNode(Eop);
 
@@ -494,7 +494,7 @@ Returns:
   //
   NewDevPath = AllocatePool (Size);
   if (NewDevPath) {
-    CopyMem (NewDevPath, DevPath, Size);
+    SctCopyMem (NewDevPath, DevPath, Size);
   }
   return NewDevPath;
 }
@@ -556,7 +556,7 @@ Returns:
     Dest = NewPath;
     for (; ;) {
       Size = DevicePathNodeLength(Src);
-      CopyMem (Dest, Src, Size);
+      SctCopyMem (Dest, Src, Size);
       Size += ALIGN_SIZE(Size);
       SetDevicePathNodeLength (Dest, Size);
       Dest->Type |= EFI_DP_TYPE_UNPACKED;
@@ -612,7 +612,7 @@ Returns:
   DevPath = (EFI_DEVICE_PATH_PROTOCOL *)Ptr;
   ASSERT(DevPath);
 
-  CopyMem (Ptr, Src, SrcSize);
+  SctCopyMem (Ptr, Src, SrcSize);
 //    FreePool (Src);
 
   while (!IsDevicePathEnd(DevPath)) {
@@ -626,7 +626,7 @@ Returns:
   DevPath->SubType = END_INSTANCE_DEVICE_PATH_SUBTYPE;
 
   DevPath = NextDevicePathNode(DevPath);
-  CopyMem (DevPath, Instance, InstanceSize);
+  SctCopyMem (DevPath, Instance, InstanceSize);
   return (EFI_DEVICE_PATH_PROTOCOL *)Ptr;
 }
 
@@ -1277,7 +1277,7 @@ DevicePathToStr (
   VOID                        (*DumpNode)(POOL_PRINT *, VOID *);
   UINTN                       Index, NewSize;
 
-  ZeroMem(&Str, sizeof(Str));
+  SctZeroMem (&Str, sizeof(Str));
 
   if (DevPath == NULL) {
     goto Done;
@@ -1380,7 +1380,7 @@ Returns:
   DevicePath = Multi;
   DevicePathInst = DevicePathInstance (&DevicePath, &Size);
   while (DevicePathInst) {
-    if (CompareMem (Single, DevicePathInst, Size - sizeof(EFI_DEVICE_PATH_PROTOCOL)) == 0) {
+    if (SctCompareMem (Single, DevicePathInst, Size - sizeof(EFI_DEVICE_PATH_PROTOCOL)) == 0) {
       return TRUE;
     }
     DevicePathInst = DevicePathInstance (&DevicePath, &Size);

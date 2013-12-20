@@ -63,13 +63,6 @@ Abstract:
 #define  tolower(c)  (((c <= 'Z') && (c >= 'A')) ? (c - 'A' + 'a') : c)
 
 VOID *
-MemSet(
-  VOID        *b,
-  INTN        c,
-  UINTN       len
-  );
-
-VOID *
 Calloc(
   UINTN       NMemb,
   UINTN       MembSize
@@ -83,20 +76,6 @@ Malloc(
 VOID
 Free(
   VOID        *addr
-  );
-
-INTN
-MemCmp(
-  VOID        *s1,
-  VOID        *s2,
-  UINTN       n
-  );
-
-VOID *
-MemCpy(
-  VOID        *dst,
-  VOID        *src,
-  UINTN       len
   );
 
 INTN

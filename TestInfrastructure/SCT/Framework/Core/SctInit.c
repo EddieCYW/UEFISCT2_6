@@ -98,7 +98,7 @@ Returns:
     return Status;
   }
 
-  ZeroMem (gFT, sizeof(EFI_SCT_FRAMEWORK_TABLE));
+  SctZeroMem (gFT, sizeof(EFI_SCT_FRAMEWORK_TABLE));
 
   //
   // Initialize the items of framework table

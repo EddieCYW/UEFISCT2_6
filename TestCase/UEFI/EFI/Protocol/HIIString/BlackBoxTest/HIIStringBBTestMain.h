@@ -228,7 +228,7 @@ AllocateZeroPool (
   );
   
 INTN
-CompareMem (
+SctCompareMem (
   IN VOID                           *Dest,
   IN VOID                           *Src,
   IN UINTN                          len

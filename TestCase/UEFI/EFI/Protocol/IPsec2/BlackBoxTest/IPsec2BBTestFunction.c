@@ -265,10 +265,10 @@ BBTestProcessExtFunctionTest (
     // Reset InBound & OutBound Encrypt Key for AESCBC
     // they shoud be the same
     //
-    MemZero(InBoundEncKeyIp4Transport, 128);
-    MemCpy(InBoundEncKeyIp4Transport, "ipv4readylogo3aescbcout1", 24);   
-    MemZero(OutBoundEncKeyIp4Transport, 128);
-    MemCpy(OutBoundEncKeyIp4Transport, "ipv4readylogo3aescbcout1", 24);
+    SctZeroMem (InBoundEncKeyIp4Transport, 128);
+    SctCopyMem (InBoundEncKeyIp4Transport, "ipv4readylogo3aescbcout1", 24);
+    SctZeroMem (OutBoundEncKeyIp4Transport, 128);
+    SctCopyMem (OutBoundEncKeyIp4Transport, "ipv4readylogo3aescbcout1", 24);
 
     Print(L"Create InBound & OutBound SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Transport Mode.\n"); 
 
@@ -415,8 +415,8 @@ BBTestProcessExtFunctionTest (
     //
     // Reset InBound & OutBound Encrypt Key for AESCBC
     //
-    MemZero(EncKeyIp4Tunnel, 128);
-    MemCpy(EncKeyIp4Tunnel, "ipv4readylogo3aescbcout1", 24);   
+    SctZeroMem (EncKeyIp4Tunnel, 128);
+    SctCopyMem (EncKeyIp4Tunnel, "ipv4readylogo3aescbcout1", 24);
 
     
     Print(L"Create SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Tunnel Mode.\n"); 
@@ -581,10 +581,10 @@ BBTestProcessExtFunctionTest (
     // Reset InBound & OutBound Encrypt Key for AESCBC
     // they shoud be the same
     //
-    MemZero(InBoundEncKeyIp6Transport, 128);
-    MemCpy(InBoundEncKeyIp6Transport, "ipv6readylogo3aescbcout1", 24);   
-    MemZero(OutBoundEncKeyIp6Transport, 128);
-    MemCpy(OutBoundEncKeyIp6Transport, "ipv6readylogo3aescbcout1", 24);
+    SctZeroMem (InBoundEncKeyIp6Transport, 128);
+    SctCopyMem (InBoundEncKeyIp6Transport, "ipv6readylogo3aescbcout1", 24);
+    SctZeroMem (OutBoundEncKeyIp6Transport, 128);
+    SctCopyMem (OutBoundEncKeyIp6Transport, "ipv6readylogo3aescbcout1", 24);
 
     Print(L"Create InBound & OutBound SPD/SAD {SHA1HMAC, AESCBC} for Ip6 Transport Mode.\n"); 
 
@@ -731,8 +731,8 @@ BBTestProcessExtFunctionTest (
     //
     // Reset InBound & OutBound Encrypt Key for AESCBC
     //
-    MemZero(EncKeyIp6Tunnel, 128);
-    MemCpy(EncKeyIp6Tunnel, "ipv6readylogo3aescbcout1", 24);   
+    SctZeroMem (EncKeyIp6Tunnel, 128);
+    SctCopyMem (EncKeyIp6Tunnel, "ipv6readylogo3aescbcout1", 24);
 
     
     Print(L"Create SPD/SAD {SHA1HMAC, AESCBC} for Ip6 Tunnel Mode.\n"); 
@@ -851,7 +851,7 @@ BBTestProcessExtFunctionTestCheckpoint1 (
                    );
     goto FUNC_EXIT;
   }
-  MemCpy (Ip4PacketTemp, Ip4Packet, Ip4PacketSize);
+  SctCopyMem (Ip4PacketTemp, Ip4Packet, Ip4PacketSize);
 
   
   //
@@ -935,8 +935,8 @@ BBTestProcessExtFunctionTestCheckpoint1 (
       || Ip4HeadSrc->Fragmentation != Ip4Head->Fragmentation
       || Ip4HeadSrc->TimeToLive != Ip4Head->TimeToLive
       || Ip4Head->Protocol != IPSEC_ESP_PROTOCOL
-      || MemCmp(&(Ip4HeadSrc->DestinationAddress), &(Ip4Head->DestinationAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
-      || MemCmp(&(Ip4HeadSrc->SourceAddress), &(Ip4Head->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4HeadSrc->DestinationAddress), &(Ip4Head->DestinationAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4HeadSrc->SourceAddress), &(Ip4Head->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
       ) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
@@ -955,8 +955,8 @@ BBTestProcessExtFunctionTestCheckpoint1 (
     //
     // Switch IP SEC packet Src / Dest Address for inbound Decryption
     //
-    MemCpy (&(Ip4Head->SourceAddress), &(Ip4HeadSrc->DestinationAddress), sizeof(EFI_IPv4_ADDRESS));
-    MemCpy (&(Ip4Head->DestinationAddress), &(Ip4HeadSrc->SourceAddress), sizeof(EFI_IPv4_ADDRESS));
+    SctCopyMem (&(Ip4Head->SourceAddress), &(Ip4HeadSrc->DestinationAddress), sizeof(EFI_IPv4_ADDRESS));
+    SctCopyMem (&(Ip4Head->DestinationAddress), &(Ip4HeadSrc->SourceAddress), sizeof(EFI_IPv4_ADDRESS));
     
     //
     // Save Fragment Table address, Since ProcessExt will change its value 
@@ -1021,8 +1021,8 @@ BBTestProcessExtFunctionTestCheckpoint1 (
       || Ip4HeadSrc->TimeToLive != Ip4Head->TimeToLive
       || Ip4HeadSrc->Protocol != Ip4Head->Protocol
       || Ip4HeadSrc->Checksum != Ip4Head->Checksum
-      || MemCmp(&(Ip4HeadSrc->DestinationAddress), &(Ip4Head->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
-      || MemCmp(&(Ip4HeadSrc->SourceAddress), &(Ip4Head->DestinationAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4HeadSrc->DestinationAddress), &(Ip4Head->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4HeadSrc->SourceAddress), &(Ip4Head->DestinationAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
       ) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
@@ -1188,7 +1188,7 @@ BBTestProcessExtFunctionTestCheckpoint2 (
                    );
     goto FUNC_EXIT;
   }
-  MemCpy (Ip4PacketTemp, Ip4Packet, Ip4PacketSize);
+  SctCopyMem (Ip4PacketTemp, Ip4Packet, Ip4PacketSize);
 
   
   //
@@ -1272,8 +1272,8 @@ BBTestProcessExtFunctionTestCheckpoint2 (
       || Ip4HeadSrc->Fragmentation != Ip4Head->Fragmentation
       || Ip4HeadSrc->TimeToLive != Ip4Head->TimeToLive
       || Ip4Head->Protocol != IPSEC_ESP_PROTOCOL
-      || MemCmp(&(Ip4HeadSrc->DestinationAddress), &(Ip4Head->DestinationAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
-      || MemCmp(&(Ip4HeadSrc->SourceAddress), &(Ip4Head->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4HeadSrc->DestinationAddress), &(Ip4Head->DestinationAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4HeadSrc->SourceAddress), &(Ip4Head->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
       ) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
@@ -1292,8 +1292,8 @@ BBTestProcessExtFunctionTestCheckpoint2 (
     //
     // Switch IP SEC packet Src / Dest Address for inbound Decryption
     //
-    MemCpy (&(Ip4Head->SourceAddress), &(Ip4HeadSrc->DestinationAddress), sizeof(EFI_IPv4_ADDRESS));
-    MemCpy (&(Ip4Head->DestinationAddress), &(Ip4HeadSrc->SourceAddress), sizeof(EFI_IPv4_ADDRESS));
+    SctCopyMem (&(Ip4Head->SourceAddress), &(Ip4HeadSrc->DestinationAddress), sizeof(EFI_IPv4_ADDRESS));
+    SctCopyMem (&(Ip4Head->DestinationAddress), &(Ip4HeadSrc->SourceAddress), sizeof(EFI_IPv4_ADDRESS));
 
     
     //
@@ -1359,8 +1359,8 @@ BBTestProcessExtFunctionTestCheckpoint2 (
       || Ip4HeadSrc->TimeToLive != Ip4Head->TimeToLive
       || Ip4HeadSrc->Protocol != Ip4Head->Protocol
       || Ip4HeadSrc->Checksum != Ip4Head->Checksum
-      || MemCmp(&(Ip4HeadSrc->DestinationAddress), &(Ip4Head->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
-      || MemCmp(&(Ip4HeadSrc->SourceAddress), &(Ip4Head->DestinationAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4HeadSrc->DestinationAddress), &(Ip4Head->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4HeadSrc->SourceAddress), &(Ip4Head->DestinationAddress), sizeof(EFI_IPv4_ADDRESS)) != 0
       ) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
@@ -1529,7 +1529,7 @@ BBTestProcessExtFunctionTestCheckpoint3(
                    );
     goto FUNC_EXIT;
   }
-  MemCpy (Ip4PacketTemp, Ip4Packet, Ip4PacketSize);
+  SctCopyMem (Ip4PacketTemp, Ip4Packet, Ip4PacketSize);
 
   
   //
@@ -1612,8 +1612,8 @@ BBTestProcessExtFunctionTestCheckpoint3(
       || Ip4HeadSrc->Fragmentation != Ip4Head->Fragmentation
       || Ip4HeadSrc->TimeToLive != Ip4Head->TimeToLive
       || Ip4Head->Protocol != IPSEC_ESP_PROTOCOL
-      || MemCmp(&(Ip4Head->DestinationAddress), &TunnelRemoteAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
-      || MemCmp(&(Ip4Head->SourceAddress), &TunnelLocalAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4Head->DestinationAddress), &TunnelRemoteAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4Head->SourceAddress), &TunnelLocalAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
       ) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
@@ -1685,8 +1685,8 @@ BBTestProcessExtFunctionTestCheckpoint3(
     // Ip4Header should be set to reset to Zero
     //
    
-    ZeroMem (&ZeroIp4Head, sizeof (EFI_IP4_HEADER));
-    if ( MemCmp(Ip4Head, &ZeroIp4Head, sizeof(EFI_IP4_HEADER)) != 0 ) {
+    SctZeroMem (&ZeroIp4Head, sizeof (EFI_IP4_HEADER));
+    if ( SctCompareMem (Ip4Head, &ZeroIp4Head, sizeof(EFI_IP4_HEADER)) != 0 ) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
     
@@ -1737,8 +1737,8 @@ BBTestProcessExtFunctionTestCheckpoint3(
       || Ip4HeadSrc->Fragmentation != Ip4HeadInnerCpy->Fragmentation
       || Ip4HeadSrc->TimeToLive != Ip4HeadInnerCpy->TimeToLive
       || Ip4HeadSrc->Protocol != Ip4HeadInnerCpy->Protocol 
-      || MemCmp(&(Ip4HeadInnerCpy->DestinationAddress), &TunnelRemoteAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
-      || MemCmp(&(Ip4HeadInnerCpy->SourceAddress), &(Ip4HeadSrc->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0) {
+      || SctCompareMem (&(Ip4HeadInnerCpy->DestinationAddress), &TunnelRemoteAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4HeadInnerCpy->SourceAddress), &(Ip4HeadSrc->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } 
       
@@ -1948,7 +1948,7 @@ BBTestProcessExtFunctionTestCheckpoint4(
                    );
     goto FUNC_EXIT;
   }
-  MemCpy (Ip4PacketTemp, Ip4Packet, Ip4PacketSize);
+  SctCopyMem (Ip4PacketTemp, Ip4Packet, Ip4PacketSize);
 
   
   //
@@ -2030,8 +2030,8 @@ BBTestProcessExtFunctionTestCheckpoint4(
       || Ip4HeadSrc->Fragmentation != Ip4Head->Fragmentation
       || Ip4HeadSrc->TimeToLive != Ip4Head->TimeToLive
       || Ip4Head->Protocol != IPSEC_ESP_PROTOCOL
-      || MemCmp(&(Ip4Head->DestinationAddress), &TunnelRemoteAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
-      || MemCmp(&(Ip4Head->SourceAddress), &TunnelLocalAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4Head->DestinationAddress), &TunnelRemoteAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4Head->SourceAddress), &TunnelLocalAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
       ) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
@@ -2103,8 +2103,8 @@ BBTestProcessExtFunctionTestCheckpoint4(
     // Ip4Header should be set to reset to Zero
     //
    
-    ZeroMem (&ZeroIp4Head, sizeof (EFI_IP4_HEADER));
-    if ( MemCmp(Ip4Head, &ZeroIp4Head, sizeof(EFI_IP4_HEADER)) != 0 ) {
+    SctZeroMem (&ZeroIp4Head, sizeof (EFI_IP4_HEADER));
+    if ( SctCompareMem (Ip4Head, &ZeroIp4Head, sizeof(EFI_IP4_HEADER)) != 0 ) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
     
@@ -2155,8 +2155,8 @@ BBTestProcessExtFunctionTestCheckpoint4(
       || Ip4HeadSrc->Fragmentation != Ip4HeadInnerCpy->Fragmentation
       || Ip4HeadSrc->TimeToLive != Ip4HeadInnerCpy->TimeToLive
       || Ip4HeadSrc->Protocol != Ip4HeadInnerCpy->Protocol 
-      || MemCmp(&(Ip4HeadInnerCpy->DestinationAddress), &TunnelRemoteAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
-      || MemCmp(&(Ip4HeadInnerCpy->SourceAddress), &(Ip4HeadSrc->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0) {
+      || SctCompareMem (&(Ip4HeadInnerCpy->DestinationAddress), &TunnelRemoteAddressIp4, sizeof(EFI_IPv4_ADDRESS)) != 0
+      || SctCompareMem (&(Ip4HeadInnerCpy->SourceAddress), &(Ip4HeadSrc->SourceAddress), sizeof(EFI_IPv4_ADDRESS)) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } 
          
@@ -2366,7 +2366,7 @@ BBTestProcessExtFunctionTestCheckpoint5 (
                      );
       goto FUNC_EXIT;
     }
-    MemCpy (
+    SctCopyMem (
       Ip6PacketTemp, 
       IP6PacketBuffer[PacketIndex].Packet, 
       *(IP6PacketBuffer[PacketIndex].PacketSize)
@@ -2455,8 +2455,8 @@ BBTestProcessExtFunctionTestCheckpoint5 (
         || Ip6HeadSrc->FlowLabelL != Ip6Head->FlowLabelL
         || Ip6Head->NextHeader != IPSEC_ESP_PROTOCOL
         || Ip6HeadSrc->HopLimit != Ip6Head->HopLimit
-        || MemCmp(&(Ip6HeadSrc->DestinationAddress), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
-        || MemCmp(&(Ip6HeadSrc->SourceAddress), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6HeadSrc->DestinationAddress), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6HeadSrc->SourceAddress), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
         ) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
@@ -2476,8 +2476,8 @@ BBTestProcessExtFunctionTestCheckpoint5 (
       //
       // Switch IP SEC packet Src / Dest Address for inbound Decryption
       //
-      MemCpy (&(Ip6Head->SourceAddress), &(Ip6HeadSrc->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
-      MemCpy (&(Ip6Head->DestinationAddress), &(Ip6HeadSrc->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
+      SctCopyMem (&(Ip6Head->SourceAddress), &(Ip6HeadSrc->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
+      SctCopyMem (&(Ip6Head->DestinationAddress), &(Ip6HeadSrc->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
       
       //
       // Save Fragment Table address, Since ProcessExt will change its value 
@@ -2542,8 +2542,8 @@ BBTestProcessExtFunctionTestCheckpoint5 (
         || Ip6HeadSrc->PayloadLength != Ip6Head->PayloadLength
         || Ip6HeadSrc->NextHeader != Ip6Head->NextHeader
         || Ip6HeadSrc->HopLimit != Ip6Head->HopLimit
-        || MemCmp(&(Ip6HeadSrc->DestinationAddress), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
-        || MemCmp(&(Ip6HeadSrc->SourceAddress), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6HeadSrc->DestinationAddress), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6HeadSrc->SourceAddress), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
         ) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
@@ -2738,7 +2738,7 @@ BBTestProcessExtFunctionTestCheckpoint6 (
                      );
       goto FUNC_EXIT;
     }
-    MemCpy (
+    SctCopyMem (
       Ip6PacketTemp, 
       IP6PacketBuffer[PacketIndex].Packet, 
       *(IP6PacketBuffer[PacketIndex].PacketSize)
@@ -2827,8 +2827,8 @@ BBTestProcessExtFunctionTestCheckpoint6 (
         || Ip6HeadSrc->FlowLabelL != Ip6Head->FlowLabelL
         || Ip6Head->NextHeader != IPSEC_ESP_PROTOCOL
         || Ip6HeadSrc->HopLimit != Ip6Head->HopLimit
-        || MemCmp(&(Ip6HeadSrc->DestinationAddress), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
-        || MemCmp(&(Ip6HeadSrc->SourceAddress), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6HeadSrc->DestinationAddress), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6HeadSrc->SourceAddress), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
         ) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
@@ -2848,8 +2848,8 @@ BBTestProcessExtFunctionTestCheckpoint6 (
       //
       // Switch IP6 SEC packet Src / Dest Address for inbound Decryption
       //
-      MemCpy (&(Ip6Head->SourceAddress), &(Ip6HeadSrc->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
-      MemCpy (&(Ip6Head->DestinationAddress), &(Ip6HeadSrc->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
+      SctCopyMem (&(Ip6Head->SourceAddress), &(Ip6HeadSrc->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
+      SctCopyMem (&(Ip6Head->DestinationAddress), &(Ip6HeadSrc->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
   
       
       //
@@ -2914,8 +2914,8 @@ BBTestProcessExtFunctionTestCheckpoint6 (
         || Ip6HeadSrc->PayloadLength != Ip6Head->PayloadLength
         || Ip6HeadSrc->NextHeader != Ip6Head->NextHeader
         || Ip6HeadSrc->HopLimit != Ip6Head->HopLimit
-        || MemCmp(&(Ip6HeadSrc->DestinationAddress), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
-        || MemCmp(&(Ip6HeadSrc->SourceAddress), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6HeadSrc->DestinationAddress), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6HeadSrc->SourceAddress), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS)) != 0
         ) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
@@ -3110,7 +3110,7 @@ BBTestProcessExtFunctionTestCheckpoint7(
                      );
       goto FUNC_EXIT;
     }
-    MemCpy (
+    SctCopyMem (
       Ip6PacketTemp, 
       IP6PacketBuffer[PacketIndex].Packet, 
       *(IP6PacketBuffer[PacketIndex].PacketSize)
@@ -3199,8 +3199,8 @@ BBTestProcessExtFunctionTestCheckpoint7(
         || Ip6HeadSrc->FlowLabelL != Ip6Head->FlowLabelL
         || Ip6Head->NextHeader != IPSEC_ESP_PROTOCOL
         || Ip6HeadSrc->HopLimit != Ip6Head->HopLimit
-        || MemCmp(&(Ip6Head->DestinationAddress), &TunnelRemoteAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
-        || MemCmp(&(Ip6Head->SourceAddress), &TunnelLocalAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6Head->DestinationAddress), &TunnelRemoteAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6Head->SourceAddress), &TunnelLocalAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
         ) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
@@ -3274,8 +3274,8 @@ BBTestProcessExtFunctionTestCheckpoint7(
       // Ip6Header should be set to reset to Zero
       //
      
-      ZeroMem (&ZeroIp6Head, sizeof (EFI_IP6_HEADER));
-      if ( MemCmp(Ip6Head, &ZeroIp6Head, sizeof(EFI_IP6_HEADER)) != 0 ) {
+      SctZeroMem (&ZeroIp6Head, sizeof (EFI_IP6_HEADER));
+      if ( SctCompareMem (Ip6Head, &ZeroIp6Head, sizeof(EFI_IP6_HEADER)) != 0 ) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
       
@@ -3328,8 +3328,8 @@ BBTestProcessExtFunctionTestCheckpoint7(
         || Ip6HeadSrc->FlowLabelL != Ip6HeadInnerCpy->FlowLabelL
         || Ip6HeadSrc->NextHeader != Ip6HeadInnerCpy->NextHeader
         || Ip6HeadSrc->HopLimit != Ip6HeadInnerCpy->HopLimit
-        || MemCmp(&(Ip6HeadInnerCpy->DestinationAddress), &TunnelRemoteAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
-        || MemCmp(&(Ip6HeadInnerCpy->SourceAddress), &(Ip6HeadSrc->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0) {
+        || SctCompareMem (&(Ip6HeadInnerCpy->DestinationAddress), &TunnelRemoteAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6HeadInnerCpy->SourceAddress), &(Ip6HeadSrc->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       } 
         
@@ -3571,7 +3571,7 @@ BBTestProcessExtFunctionTestCheckpoint8(
                      );
       goto FUNC_EXIT;
     }
-    MemCpy (
+    SctCopyMem (
       Ip6PacketTemp, 
       IP6PacketBuffer[PacketIndex].Packet, 
       *(IP6PacketBuffer[PacketIndex].PacketSize)
@@ -3659,8 +3659,8 @@ BBTestProcessExtFunctionTestCheckpoint8(
         || Ip6HeadSrc->FlowLabelL != Ip6Head->FlowLabelL
         || Ip6Head->NextHeader != IPSEC_ESP_PROTOCOL
         || Ip6HeadSrc->HopLimit != Ip6Head->HopLimit
-        || MemCmp(&(Ip6Head->DestinationAddress), &TunnelRemoteAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
-        || MemCmp(&(Ip6Head->SourceAddress), &TunnelLocalAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6Head->DestinationAddress), &TunnelRemoteAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6Head->SourceAddress), &TunnelLocalAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
         ) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
@@ -3734,8 +3734,8 @@ BBTestProcessExtFunctionTestCheckpoint8(
       // Ip6Header should be set to reset to Zero
       //
      
-      ZeroMem (&ZeroIp6Head, sizeof (EFI_IP6_HEADER));
-      if ( MemCmp(Ip6Head, &ZeroIp6Head, sizeof(EFI_IP6_HEADER)) != 0 ) {
+      SctZeroMem (&ZeroIp6Head, sizeof (EFI_IP6_HEADER));
+      if (SctCompareMem (Ip6Head, &ZeroIp6Head, sizeof(EFI_IP6_HEADER)) != 0 ) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
       
@@ -3788,8 +3788,8 @@ BBTestProcessExtFunctionTestCheckpoint8(
         || Ip6HeadSrc->FlowLabelL != Ip6HeadInnerCpy->FlowLabelL
         || Ip6HeadSrc->NextHeader != Ip6HeadInnerCpy->NextHeader
         || Ip6HeadSrc->HopLimit != Ip6HeadInnerCpy->HopLimit
-        || MemCmp(&(Ip6HeadInnerCpy->DestinationAddress), &TunnelRemoteAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
-        || MemCmp(&(Ip6HeadInnerCpy->SourceAddress), &(Ip6HeadSrc->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0) {
+        || SctCompareMem (&(Ip6HeadInnerCpy->DestinationAddress), &TunnelRemoteAddressIp6, sizeof(EFI_IPv6_ADDRESS)) != 0
+        || SctCompareMem (&(Ip6HeadInnerCpy->SourceAddress), &(Ip6HeadSrc->SourceAddress), sizeof(EFI_IPv6_ADDRESS)) != 0) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       } 
            

@@ -444,7 +444,7 @@ BBTestSetPacketsConformanceTest (
 }
 
 #define COPY_IP_FILTER(Dest, Src)\
-  CopyMem(Dest, Src, sizeof(EFI_PXE_BASE_CODE_IP_FILTER))
+  SctCopyMem (Dest, Src, sizeof(EFI_PXE_BASE_CODE_IP_FILTER))
 
 
 EFI_STATUS
@@ -584,12 +584,6 @@ LogChar8String(
   IN UINTN                              Len
   );
 
-VOID *
-MemSet(
-  VOID        *b,
-  INTN        c,
-  UINTN       len
-  );
 //
 // Entry GUIDs
 //

@@ -451,7 +451,7 @@ GetCorrespondingRequest (
 	SingleResp = SingleRespPtr;
 	if (EfiStrStr(SingleResp, DevicePath) != NULL)
       break;
-	ZeroMem(SingleRespPtr, 2 * Len + 2);
+	SctZeroMem (SingleRespPtr, 2 * Len + 2);
 	if (*MultiConfigAltResp != 0)
       MultiConfigAltResp++;
   }
@@ -528,7 +528,7 @@ GetCorrespondingResp (
 	Resp = ReqPtr;
 	if (EfiStrStr(Resp, DevicePath) != NULL)
       break;
-	ZeroMem(ReqPtr, 2 * Len + 2);
+	SctZeroMem (ReqPtr, 2 * Len + 2);
 	if (*MultiConfigAltResp != 0)
       MultiConfigAltResp++;
   }

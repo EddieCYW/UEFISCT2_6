@@ -2609,7 +2609,7 @@ Returns:
         return FALSE;
       }
 
-      BS->SetMem(Context,sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT),0);
+      BS->SetMem (Context,sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT),0);
 
       Context->Handle   = ItemContext->Handle;
       Context->FileName = LogAppendFileName (

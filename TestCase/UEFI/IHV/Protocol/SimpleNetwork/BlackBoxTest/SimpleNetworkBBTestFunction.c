@@ -482,10 +482,10 @@ BBTestResetFunctionTest (
   // Assertion Point 4.4.2.1
   // Call Reset() function with ExtendedVerification is FALSE.
   //
-  EfiSetMem (&Mode, sizeof (EFI_SIMPLE_NETWORK_MODE), 0x0);
+  SctSetMem (&Mode, sizeof (EFI_SIMPLE_NETWORK_MODE), 0x0);
   EfiCommonLibCopyMem (&Mode, SnpInterface->Mode, sizeof (EFI_SIMPLE_NETWORK_MODE));
 
-  EfiSetMem (&StatisticsTable1, sizeof (EFI_NETWORK_STATISTICS), 0x0);
+  SctSetMem (&StatisticsTable1, sizeof (EFI_NETWORK_STATISTICS), 0x0);
   StatisticsSize1 = sizeof (EFI_NETWORK_STATISTICS);
   Status = SnpInterface->Statistics (SnpInterface, FALSE, &StatisticsSize1, &StatisticsTable1);
   if (EFI_ERROR(Status)) {
@@ -502,8 +502,8 @@ BBTestResetFunctionTest (
   if ((Mode.State != SnpInterface->Mode->State) ||
       (Mode.ReceiveFilterMask != SnpInterface->Mode->ReceiveFilterMask) ||
       (Mode.ReceiveFilterSetting != SnpInterface->Mode->ReceiveFilterSetting) ||
-      EfiCompareMem (&(Mode.CurrentAddress), &(SnpInterface->Mode->CurrentAddress), sizeof (EFI_MAC_ADDRESS)) ||
-      EfiCompareMem (&(Mode.PermanentAddress), &(SnpInterface->Mode->PermanentAddress), sizeof (EFI_MAC_ADDRESS))) {
+      SctCompareMem (Mode.CurrentAddress), &(SnpInterface->Mode->CurrentAddress), sizeof (EFI_MAC_ADDRESS)) ||
+      SctCompareMem (Mode.PermanentAddress), &(SnpInterface->Mode->PermanentAddress), sizeof (EFI_MAC_ADDRESS))) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
@@ -527,7 +527,7 @@ BBTestResetFunctionTest (
     }
   }
   
-  EfiSetMem (&StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS), 0x0);
+  SctSetMem (&StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS), 0x0);
   StatisticsSize2 = sizeof (EFI_NETWORK_STATISTICS);
   Status1 = SnpInterface->Statistics (SnpInterface, FALSE, &StatisticsSize2, &StatisticsTable2);
   if (EFI_ERROR(Status1)) {
@@ -535,7 +535,7 @@ BBTestResetFunctionTest (
   }
 
   if ((StatisticsSize1 != StatisticsSize2) ||
-      EfiCompareMem (&StatisticsTable1, &StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS))) {
+      SctCompareMem (&StatisticsTable1, &StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS))) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
@@ -776,7 +776,7 @@ BBTestReceiveFilterFunctionTest (
     ReceiveFilterMask = ReceiveFilterMask >> 1;
   }
 
-  EfiSetMem (&Mode, sizeof (EFI_SIMPLE_NETWORK_MODE), 0x0);
+  SctSetMem (&Mode, sizeof (EFI_SIMPLE_NETWORK_MODE), 0x0);
   EfiCommonLibCopyMem (&Mode, SnpInterface->Mode, sizeof (EFI_SIMPLE_NETWORK_MODE));
 
   if (SupportedFilter != 0) {
@@ -857,7 +857,7 @@ BBTestReceiveFilterFunctionTest (
   // Modify multicast receive filters list.
   //
   if ((SnpInterface->Mode->ReceiveFilterMask & EFI_SIMPLE_NETWORK_RECEIVE_MULTICAST) != 0) {
-    EfiSetMem (&MAC, sizeof (MAC), 0x00);
+    SctSetMem (&MAC, sizeof (MAC), 0x00);
     MAC.Addr[0] = 0x01;
     MAC.Addr[1] = 0x00;
     MAC.Addr[2] = 0x5e;
@@ -868,7 +868,7 @@ BBTestReceiveFilterFunctionTest (
     if ((Status == EFI_SUCCESS) &&
       (SnpInterface->Mode->State == EfiSimpleNetworkInitialized) &&
       (SnpInterface->Mode->MCastFilterCount == 1) &&
-      (!EfiCompareMem (SnpInterface->Mode->MCastFilter, &MAC, sizeof (EFI_MAC_ADDRESS)))) {
+      (!SctCompareMem (SnpInterface->Mode->MCastFilter, &MAC, sizeof (EFI_MAC_ADDRESS)))) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else if ((Status == EFI_INVALID_PARAMETER) && (SnpInterface->Mode->MaxMCastFilterCount == 0)) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1016,7 +1016,7 @@ BBTestStationAddressFunctionTest (
   // Call StationAddress to reset its MAC Address.
   //
   StatusBuf[0] = SnpInterface->StationAddress (SnpInterface, TRUE, NULL);
-  CheckPoint1 = EfiCompareMem (
+  CheckPoint1 = SctCompareMem (
                   &SnpInterface->Mode->CurrentAddress, 
                   &SnpInterface->Mode->PermanentAddress, 
                   sizeof (EFI_MAC_ADDRESS)
@@ -1027,11 +1027,11 @@ BBTestStationAddressFunctionTest (
   // Assertion Point 4.7.2.2
   // Call StationAddress to modify its MAC Address.
   //
-  EfiCopyMem (&BackMacAddress, &SnpInterface->Mode->CurrentAddress, sizeof (EFI_MAC_ADDRESS));
+  SctCopyMem (&BackMacAddress, &SnpInterface->Mode->CurrentAddress, sizeof (EFI_MAC_ADDRESS));
   
-  EfiSetMem (&MacAddress, sizeof (EFI_MAC_ADDRESS), 0x0);
+  SctSetMem (&MacAddress, sizeof (EFI_MAC_ADDRESS), 0x0);
   StatusBuf[1] = SnpInterface->StationAddress (SnpInterface, FALSE, &MacAddress);
-  CheckPoint2 = EfiCompareMem (
+  CheckPoint2 = SctCompareMem (
                   &SnpInterface->Mode->CurrentAddress, 
                   &MacAddress, 
                   sizeof (EFI_MAC_ADDRESS)
@@ -1198,17 +1198,17 @@ BBTestStatisticsFunctionTest (
   // Collect statistics information without reset the statistics.
   //
   StatisticsSize = sizeof (EFI_NETWORK_STATISTICS);
-  EfiSetMem (&StatisticsTable1, sizeof (EFI_NETWORK_STATISTICS), 0x0);
+  SctSetMem (&StatisticsTable1, sizeof (EFI_NETWORK_STATISTICS), 0x0);
   Status = SnpInterface->Statistics (SnpInterface, FALSE, &StatisticsSize, &StatisticsTable1);
   StatisticsSize = sizeof (EFI_NETWORK_STATISTICS);
-  EfiSetMem (&StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS), 0x0);
+  SctSetMem (&StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS), 0x0);
   Status = SnpInterface->Statistics (SnpInterface, FALSE, &StatisticsSize, &StatisticsTable2);
 
   LoggingLib->DumpBuf (LoggingLib, EFI_VERBOSE_LEVEL_DEFAULT, (CHAR16*)& (StatisticsTable1), sizeof (EFI_NETWORK_STATISTICS)/2, EFI_DUMP_HEX);
   LoggingLib->DumpBuf (LoggingLib, EFI_VERBOSE_LEVEL_DEFAULT, (CHAR16*)&(StatisticsTable2), sizeof (EFI_NETWORK_STATISTICS)/2, EFI_DUMP_HEX);
 
   if ((Status == EFI_SUCCESS) &&
-      (!EfiCompareMem (&StatisticsTable1, &StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS)))) {
+      (!SctCompareMem (&StatisticsTable1, &StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS)))) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1233,15 +1233,15 @@ BBTestStatisticsFunctionTest (
   // Assertion Point 4.8.2.1
   // Collect statistics information and reset the statistics.
   //
-  EfiSetMem (&StatisticsTable1, sizeof (EFI_NETWORK_STATISTICS), 0x0);
-  EfiSetMem (&StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS), 0x0);
+  SctSetMem (&StatisticsTable1, sizeof (EFI_NETWORK_STATISTICS), 0x0);
+  SctSetMem (&StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS), 0x0);
 
   Status = SnpInterface->Statistics (SnpInterface, TRUE, &StatisticsSize, &StatisticsTable1);
   LoggingLib->DumpBuf (LoggingLib, EFI_VERBOSE_LEVEL_DEFAULT, (CHAR16*)&(StatisticsTable1), sizeof (EFI_NETWORK_STATISTICS)/2, EFI_DUMP_HEX);
 
 
   if ((Status == EFI_SUCCESS) &&
-      (!EfiCompareMem (&StatisticsTable1, &StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS)))) {
+      (!SctCompareMem (&StatisticsTable1, &StatisticsTable2, sizeof (EFI_NETWORK_STATISTICS)))) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1353,8 +1353,8 @@ BBTestMCastIPtoMACFunctionTest (
   IP.v4.Addr[1] = 0;
   IP.v4.Addr[2] = 0;
   IP.v4.Addr[3] = 1;
-  EfiSetMem (&MAC1, sizeof (EFI_MAC_ADDRESS), 0x0);
-  EfiSetMem (&MAC2, sizeof (EFI_MAC_ADDRESS), 0x0);
+  SctSetMem (&MAC1, sizeof (EFI_MAC_ADDRESS), 0x0);
+  SctSetMem (&MAC2, sizeof (EFI_MAC_ADDRESS), 0x0);
   MAC2.Addr[0] = 0x01;
   MAC2.Addr[1] = 0x00;
   MAC2.Addr[2] = 0x5E;
@@ -1368,7 +1368,7 @@ BBTestMCastIPtoMACFunctionTest (
   // Do not check the MAC address, because this is based on ethernet.
   //
 
-  // if ((Status == EFI_SUCCESS) && (!EfiCompareMem(&MAC1, &MAC2, sizeof(EFI_MAC_ADDRESS)))) {
+  // if ((Status == EFI_SUCCESS) && (!SctCompareMem (&MAC1, &MAC2, sizeof(EFI_MAC_ADDRESS)))) {
   if (Status == EFI_SUCCESS) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -1511,7 +1511,7 @@ BBTestNVDataFunctionTest (
   //
 
   //Check Point A(0, n*NvRamAccessSize)
-  EfiSetMem (Buffer, SnpInterface->Mode->NvRamSize, 0x0);
+  SctSetMem (Buffer, SnpInterface->Mode->NvRamSize, 0x0);
   Status = SnpInterface->NvData (SnpInterface, TRUE, 0, SnpInterface->Mode->NvRamSize, Buffer);
   if (Status == EFI_UNSUPPORTED) {
   	StandardLib->RecordMessage(
@@ -1542,7 +1542,7 @@ BBTestNVDataFunctionTest (
   }
 
   //Check Point B(NvRamAccessSize, (n-1)*NvRamAccessSize)
-  EfiSetMem (Buffer, SnpInterface->Mode->NvRamSize, 0x0);
+  SctSetMem (Buffer, SnpInterface->Mode->NvRamSize, 0x0);
   Status = SnpInterface->NvData (SnpInterface, TRUE, SnpInterface->Mode->NvRamAccessSize, (SnpInterface->Mode->NvRamSize - SnpInterface->Mode->NvRamAccessSize), Buffer);
   if (Status == EFI_UNSUPPORTED) {
   	StandardLib->RecordMessage(
@@ -1571,7 +1571,7 @@ BBTestNVDataFunctionTest (
   }
 
   //Check Point C((n-1)*NvRamAccessSize, NvRamAccessSize)
-  EfiSetMem (Buffer, SnpInterface->Mode->NvRamSize, 0x0);
+  SctSetMem (Buffer, SnpInterface->Mode->NvRamSize, 0x0);
   Status = SnpInterface->NvData (SnpInterface, TRUE, (SnpInterface->Mode->NvRamSize - SnpInterface->Mode->NvRamAccessSize), SnpInterface->Mode->NvRamAccessSize, Buffer);
   if (Status == EFI_UNSUPPORTED) {
   	StandardLib->RecordMessage(
@@ -1604,8 +1604,8 @@ BBTestNVDataFunctionTest (
   // Write NVRam
   //
 
-  EfiSetMem (Buffer1, SnpInterface->Mode->NvRamSize, 0x0);
-  EfiSetMem (Buffer2, SnpInterface->Mode->NvRamSize, 0x0);
+  SctSetMem (Buffer1, SnpInterface->Mode->NvRamSize, 0x0);
+  SctSetMem (Buffer2, SnpInterface->Mode->NvRamSize, 0x0);
   // Save the NvData
   Status1 = SnpInterface->NvData (SnpInterface, TRUE, 0, SnpInterface->Mode->NvRamSize, Buffer2);
   if (EFI_ERROR(Status1)) {
@@ -1633,7 +1633,7 @@ BBTestNVDataFunctionTest (
                    Status
                    );
   } else {
-    if ((Status == EFI_SUCCESS) && (!EfiCompareMem (Buffer, Buffer1, SnpInterface->Mode->NvRamSize))) {
+    if ((Status == EFI_SUCCESS) && (!SctCompareMem (Buffer, Buffer1, SnpInterface->Mode->NvRamSize))) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1910,8 +1910,8 @@ BBTestTransmitFunctionTest (
   Buffer = NULL;
   HeaderSize = 0;
   BufferSize = 0;
-  EfiSetMem (&SrcAddr, sizeof (EFI_MAC_ADDRESS), 0xFF);
-  EfiSetMem (&DestAddr, sizeof (EFI_MAC_ADDRESS), 0xFF);
+  SctSetMem (&SrcAddr, sizeof (EFI_MAC_ADDRESS), 0xFF);
+  SctSetMem (&DestAddr, sizeof (EFI_MAC_ADDRESS), 0xFF);
   Protocol = 0;
   Status = gtBS->AllocatePool (EfiLoaderData, 1024, &Buffer);
   if (EFI_ERROR(Status)) {
@@ -1924,7 +1924,7 @@ BBTestTransmitFunctionTest (
   //
 
   //Need to put correct conten of a packet into the Buffer.
-  EfiSetMem (Buffer, 1024, 0x0);
+  SctSetMem (Buffer, 1024, 0x0);
   HeaderSize = SnpInterface->Mode->MediaHeaderSize;
   BufferSize = 128;
   StatisticsSize = sizeof (EFI_NETWORK_STATISTICS);
@@ -2210,15 +2210,15 @@ BBTestReceiveFunctionTest (
   Buffer = NULL;
   HeaderSize = 0;
   BufferSize = 0;
-  EfiSetMem (&SrcAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
-  EfiSetMem (&DestAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
+  SctSetMem (&SrcAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
+  SctSetMem (&DestAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
   Protocol = 0;
   Status = gtBS->AllocatePool (EfiLoaderData, 1024, &Buffer);
   if (EFI_ERROR(Status)) {
     return Status;
   }
 
-  EfiSetMem (Buffer, 1024, 0x0);
+  SctSetMem (Buffer, 1024, 0x0);
   StatisticsSize = sizeof (EFI_NETWORK_STATISTICS);
 
   //
@@ -2324,7 +2324,7 @@ BBTestReceiveFunctionTest (
   // Call Receive() with all optional parameters
   //
 
-  EfiSetMem (Buffer, 1024, 0x0);
+  SctSetMem (Buffer, 1024, 0x0);
   BufferSize = 1024;
   StatisticsSize = sizeof (EFI_NETWORK_STATISTICS);
 

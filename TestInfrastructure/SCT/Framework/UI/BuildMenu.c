@@ -556,7 +556,7 @@ Returns:
     return Status;
   }
 
-  BS->SetMem(MenuItem, sizeof (EFI_MENU_ITEM), 0);
+  BS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
 
   //
   // Menu item
@@ -660,7 +660,7 @@ Returns:
     return Status;
   }
 
-  BS->SetMem(MenuItem, sizeof (EFI_MENU_ITEM), 0);
+  BS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
 
   //
   // Menu item
@@ -765,7 +765,7 @@ Returns:
     return Status;
   }
 
-  BS->SetMem(MenuItem, sizeof (EFI_MENU_ITEM), 0);
+  BS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
 
   //
   // Menu item
@@ -922,7 +922,7 @@ Returns:
     return Status;
   }
 
-  BS->SetMem(MenuItem, sizeof (EFI_MENU_ITEM), 0);
+  BS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
 
   //
   // Menu item
@@ -1018,7 +1018,7 @@ Returns:
     return Status;
   }
 
-  BS->SetMem(MenuItem, sizeof (EFI_MENU_ITEM), 0);
+  BS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
 
   //
   // Menu item

@@ -130,7 +130,7 @@ Returns:
 
   p = AllocatePool (Size);
   if (p) {
-    ZeroMem (p, Size);
+    SctZeroMem (p, Size);
   }
 
   return p;
@@ -172,7 +172,7 @@ Returns:
 
   if (OldPool) {
     if (NewPool) {
-      CopyMem (NewPool, OldPool, OldSize < NewSize ? OldSize : NewSize);
+      SctCopyMem (NewPool, OldPool, OldSize < NewSize ? OldSize : NewSize);
     }
     FreePool (OldPool);
   }
@@ -202,145 +202,6 @@ Returns:
 --*/
 {
   tBS->FreePool (Buffer);
-}
-
-
-VOID
-ZeroMem (
-  IN VOID     *Buffer,
-  IN UINTN    Size
-  )
-/*++
-
-Routine Description:
-  Fills a buffer with zeros.
-
-Arguments:
-  Buffer                - A pointer to the buffer to fill with zeros.
-
-  Size                  - Number of bytes to zero in the buffer.
-
-Returns:
-
-  None
-
---*/
-{
-  INT8        *pt;
-
-  pt = Buffer;
-  while (Size--) {
-    *(pt++) = 0;
-  }
-}
-
-
-VOID
-SetMem (
-  IN VOID     *Buffer,
-  IN UINTN    Size,
-  IN UINT8    Value
-  )
-/*++
-
-Routine Description:
-  Fills a buffer with a value.
-
-Arguments:
-  Buffer                - A pointer to the buffer to free.
-
-  Size                  - The number of bytes in the buffer to fill.
-
-  Value                 - The value to fill Buffer with.
-
-Returns:
-
-  None
-
---*/
-{
-  INT8        *pt;
-
-  pt = Buffer;
-  while (Size--) {
-    *(pt++) = Value;
-  }
-}
-
-
-VOID
-CopyMem (
-  IN VOID     *Dest,
-  IN VOID     *Src,
-  IN UINTN    len
-  )
-/*++
-
-Routine Description:
-  Copies the contents of one buffer to another.
-
-Arguments:
-  Dest                - A pointer to the buffer to copy to
-
-  Src                 - A pointer to the buffer to copy from.
-
-  len                 - The number of bytes to copy.
-
-Returns:
-
-  None
-
---*/
-{
-  CHAR8    *d, *s;
-
-  d = Dest;
-  s = Src;
-  while (len--) {
-    *(d++) = *(s++);
-  }
-}
-
-
-INTN
-CompareMem (
-  IN VOID     *Dest,
-  IN VOID     *Src,
-  IN UINTN    len
-  )
-/*++
-
-Routine Description:
-  Compares the contents of one buffer to another.
-
-Arguments:
-  Dest                - A pointer to the buffer to compare
-
-  Src                 - A pointer to the buffer to compare
-
-  len                 - The number of bytes to compare
-
-Returns:
-
-  0                   - Dest is identical to Src for len bytes.
-  !=0                 - Dest is not identical to Src for len bytes.
-
---*/
-{
-  CHAR8    *d, *s;
-
-  d = Dest;
-  s = Src;
-  while (len--) {
-    if (*d != *s) {
-      return *d - *s;
-    }
-
-    d += 1;
-    s += 1;
-  }
-
-  return 0;
 }
 
 

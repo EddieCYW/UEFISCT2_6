@@ -300,9 +300,9 @@ BBTestExecuteScsiCommandConformanceAutoTest (
   //
   // Initialize the Request Packet.
   //
-  ZeroMem (&Packet, sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb, 6);
-  ZeroMem (Data, ScsiIo->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ScsiIo->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -370,9 +370,9 @@ BBTestExecuteScsiCommandConformanceAutoTest (
 
   EnterEvent = 0;
   
-  ZeroMem (&Packet, sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb, 6);
-  ZeroMem (Data, ScsiIo->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ScsiIo->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -421,7 +421,7 @@ BBTestExecuteScsiCommandConformanceAutoTest (
   //
   // Check Point 1. Invalid ScsiRequestPacket.
   //
-  ZeroMem (&Packet, sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
 
   Status = ScsiIo->ExecuteScsiCommand (ScsiIo, &Packet, NULL);
 
@@ -444,7 +444,7 @@ BBTestExecuteScsiCommandConformanceAutoTest (
 
   EnterEvent = 0;
 
-  ZeroMem (&Packet, sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
+  SctZeroMem (&Packet, sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
 
   Status = ScsiIo->ExecuteScsiCommand (ScsiIo, &Packet, Event);
 

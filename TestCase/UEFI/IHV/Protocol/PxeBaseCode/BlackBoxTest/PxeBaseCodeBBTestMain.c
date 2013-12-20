@@ -991,13 +991,13 @@ IsIpMaskEqual (
   )
 {
   if (NULL != NewStationIp){
-    if (FALSE == (0 == CompareMem (NewStationIp, OldStationIp, sizeof (EFI_IP_ADDRESS)))) {
+    if (FALSE == (0 == SctCompareMem (NewStationIp, OldStationIp, sizeof (EFI_IP_ADDRESS)))) {
       return FALSE;
     }
   }
 
   if (NULL != NewSubnetMask){
-    if (FALSE == (0 == CompareMem (NewSubnetMask, OldSubnetMask, sizeof (EFI_IP_ADDRESS)))){
+    if (FALSE == (0 == SctCompareMem (NewSubnetMask, OldSubnetMask, sizeof (EFI_IP_ADDRESS)))){
       return FALSE;
     }
   }
@@ -1018,7 +1018,7 @@ CopyPxePacket (
     return EFI_INVALID_PARAMETER;
   }
 
-  CopyMem (DestPacket, SrcPacket, sizeof (EFI_PXE_BASE_CODE_PACKET));
+  SctCopyMem (DestPacket, SrcPacket, sizeof (EFI_PXE_BASE_CODE_PACKET));
   return EFI_SUCCESS;
 }
 
@@ -1031,7 +1031,7 @@ IsPxePacketEqual (
   if (NULL == DestPacket && NULL == SrcPacket) {
     return TRUE;
   }
-  if (0==CompareMem (DestPacket, SrcPacket, sizeof (EFI_PXE_BASE_CODE_PACKET))){
+  if (0==SctCompareMem (DestPacket, SrcPacket, sizeof (EFI_PXE_BASE_CODE_PACKET))){
     return TRUE;
   }
   return FALSE;
@@ -1053,7 +1053,7 @@ IsIpFilterEqual (
       return FALSE;
     }
 
-    if (0==CompareMem (SrcIpFilter->IpList, DstIpFilter->IpList, sizeof (EFI_IP_ADDRESS) * SrcIpFilter->IpCnt)){
+    if (0==SctCompareMem (SrcIpFilter->IpList, DstIpFilter->IpList, sizeof (EFI_IP_ADDRESS) * SrcIpFilter->IpCnt)){
       return TRUE;
     }
   }
@@ -1122,28 +1122,10 @@ LogChar8String (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  EfiZeroMem (&TempBuffer, Len * sizeof (CHAR16));
+  SctZeroMem (&TempBuffer, Len * sizeof (CHAR16));
 
   LOG_CHAR16_ASCII_DFLT (LoggingLib, TempBuffer, Len);
 
   gtBS->FreePool (TempBuffer);
   return EFI_SUCCESS;
 }
-
-VOID *
-MemSet(
-  VOID        *b,
-  INTN        c,
-  UINTN       len
-  )
-{
-  CHAR8 *p;
-  UINTN i;
-
-  p = b;
-  for (i = 0; i < len; i++) {
-    p[i] = (CHAR8)c;
-  }
-  return (p);
-}
-

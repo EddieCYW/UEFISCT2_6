@@ -61,7 +61,7 @@ Abstract:
 //
 // Included files
 //
-#include "Tiano.h"
+#include "SctLib.h"
 #include "EfiDriverLib.h"
 
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
@@ -139,12 +139,12 @@ NetCommonLibSetMem (
 #define NetZeroMem(_Destination,_Length)\
                               NetCommonLibSetMem  ((_Destination), (_Length), 0)
 #else
-#define NetCopyMem            EfiCopyMem
+#define NetCopyMem            SctCopyMem
 #define NetZeroMem(_Destination,_Length)\
-                              EfiSetMem  ((_Destination), (_Length), 0)
+                              SctZeroMem ((_Destination), (_Length))
 #endif
 
-#define NetCompareMem         EfiCompareMem
+#define NetCompareMem         SctCompareMem
 
 
 
@@ -623,7 +623,7 @@ typedef struct _NET_HARDWARE_ADDRESS
 #define IS_EQUAL_NET_HARDWARE_ADDRESS( Addr1, Addr2 ) \
   ( ( (Addr1)->HardwareAddressType == (Addr2)->HardwareAddressType ) &&     \
     ( (Addr1)->HardwareAddressLen == (Addr2)->HardwareAddressLen ) &&       \
-    ( NetCompareMem( (Addr1)->HardwareAddress, (Addr2)->HardwareAddress, (Addr1)->HardwareAddressLen ) == 0 )  \
+    ( NetCompareMem ( (Addr1)->HardwareAddress, (Addr2)->HardwareAddress, (Addr1)->HardwareAddressLen ) == 0 )  \
   )
 
 #define NET_ETHER_HEADER_SIZE   sizeof(NET_ETHER_HEADER)
@@ -632,7 +632,7 @@ typedef struct _NET_HARDWARE_ADDRESS
 extern EFI_MAC_ADDRESS  BroadcastMacAddr;
 
 #define IS_BROADCAST_EFI_MAC_ADDR( Mac )  \
-  ( NetCompareMem( BroadcastMacAddr.Addr, (Mac)->Addr, NET_ETHER_ADDR_LEN ) == 0 )
+  ( NetCompareMem ( BroadcastMacAddr.Addr, (Mac)->Addr, NET_ETHER_ADDR_LEN ) == 0 )
 
 #define IS_MULTICAST_EFI_MAC_ADDR( Mac )  \
   (((*((UINT32*)Mac) & 0x00000001) == 0x00000001) && !IS_BROADCAST_EFI_MAC_ADDR(Mac))
@@ -640,7 +640,7 @@ extern EFI_MAC_ADDRESS  BroadcastMacAddr;
 
 
 #define IS_EQUAL_EFI_MAC_ADDR( Mac1, Mac2 ) \
-  ( NetCompareMem( (Mac1)->Addr, (Mac2)->Addr, NET_ETHER_ADDR_LEN ) == 0 )
+  ( NetCompareMem ( (Mac1)->Addr, (Mac2)->Addr, NET_ETHER_ADDR_LEN ) == 0 )
 /*
 #define IS_EQUAL_EFI_MAC_ADDR( Mac1, Mac2 ) \
   ( (Mac1)->Addr[0] == (Mac2)->Addr[0] &&   \
@@ -674,5 +674,5 @@ extern EFI_MAC_ADDRESS  BroadcastMacAddr;
   (((*((UINT32*)Mac) & 0x00000001) == 0x00000001) && !IS_BROADCAST_MAC_ADDR(Mac))
 
 #define IS_EQUAL_MAC_ADDR( Mac1, Mac2 ) \
-  ( NetCompareMem( (Mac1), (Mac2), NET_ETHER_ADDR_LEN ) == 0 )
+  ( NetCompareMem ( (Mac1), (Mac2), NET_ETHER_ADDR_LEN ) == 0 )
 #endif /* _EFI_NET_LIB_H */

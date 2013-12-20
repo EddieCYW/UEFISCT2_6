@@ -401,7 +401,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
 
-  SetMem (FileInfo, BufferSize, 0);
+  SctSetMem (FileInfo, BufferSize, 0);
 
   Status = FileHandle->GetInfo (
                         FileHandle,
@@ -424,7 +424,7 @@ Returns:
   }
 
   EntsFreePool (FileInfo);
-  SetMem (*FileBuffer, *FileSize, 0);
+  SctSetMem (*FileBuffer, *FileSize, 0);
 
   //
   // Read the data to the buffer
@@ -550,7 +550,7 @@ Returns:
     goto Cleanup2;
   }
 
-  CopyMem (ModeStr, "octet", 6);
+  SctCopyMem (ModeStr, "octet", 6);
 
   if (StrLen ((gEasFT->Cmd)->ComdArg) > MAX_FILENAME_LEN) {
     Print (L"Too long Filename.\n");
@@ -638,7 +638,7 @@ Operation_start:
     }
 
     Token.BufferSize = mRealFileSize;
-    CopyMem (Token.Buffer, mRealFileBuffer, (UINTN) mRealFileSize);
+    SctCopyMem (Token.Buffer, mRealFileBuffer, (UINTN) mRealFileSize);
 
     Print (L"Begin upload ... ");
     Status = EftpIo->WriteFile (EftpIo, &Token);

@@ -373,7 +373,7 @@ MemRead_Func (
     //
     //the data read out must be the same as previous.
     //
-    if (CompareMem (ReadBuffer, BackupBuffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, BackupBuffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }  else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -771,7 +771,7 @@ MemWrite_Func (
     //
     //the data read out must be the same as write into.
     //
-    if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }  else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1152,7 +1152,7 @@ IoRead_Func (
     //
     //the data read out must be the same as previous.
     //
-    if (CompareMem (ReadBuffer, BackupBuffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, BackupBuffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }  else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1552,7 +1552,7 @@ IoWrite_Func (
     //the data read out must be the same as write into.
     //
 
-    if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }  else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1912,7 +1912,7 @@ PciRead_Func (
     //the data read out must be the same as assigned data units
     //
 
-    if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }  else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2320,7 +2320,7 @@ PciWrite_Func (
     //the data read out must be the same as write into.
     //
 
-    if (CompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
+    if (SctCompareMem (ReadBuffer, Buffer, AddressLength) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }  else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2576,7 +2576,7 @@ Map_Func (
     // IO space from the CPU or from the device.
     //
     /*
-    if (CompareMem ((VOID*)Buffer, (VOID*)(UINTN)DeviceAddress, NumberOfBytes) != 0) {
+    if (SctCompareMem ((VOID*)Buffer, (VOID*)(UINTN)DeviceAddress, NumberOfBytes) != 0) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -3802,7 +3802,7 @@ PciDevicePath_Func (
 
     TempDevPathStr = DevicePathToStr (DevicePath);
 
-    if (CompareMem (TempDevPathStr,
+    if (SctCompareMem (TempDevPathStr,
                     DevIoDevicePathStr,
                     DevicePathStrLength * sizeof(CHAR16)) != 0) {
       gtBS->FreePool (TempDevPathStr);
@@ -3861,7 +3861,7 @@ PciDevicePath_Func (
 
     PciDevPathStr = DevicePathToStr (PciDevicePath);
 
-    if (CompareMem (TempDevPathStr,
+    if (SctCompareMem (TempDevPathStr,
                     PciDevPathStr,
                     StrLen(TempDevPathStr) * sizeof(CHAR16)) == 0) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;

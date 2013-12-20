@@ -455,7 +455,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (TempApTest, sizeof(EFI_AP_TEST_INTERFACE));
+  SctZeroMem (TempApTest, sizeof(EFI_AP_TEST_INTERFACE));
 
   //
   // Done
@@ -831,7 +831,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (TempApEntry, sizeof(EFI_AP_TEST_ENTRY));
+  SctZeroMem (TempApEntry, sizeof(EFI_AP_TEST_ENTRY));
 
   //
   // Done

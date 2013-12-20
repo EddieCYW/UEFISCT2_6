@@ -479,7 +479,7 @@ Returns:
     }
   }
 
-  EfiCommonLibCopyMem (Buffer, (CHAR8 *)FHand->Source + Offset, *ReadSize);
+  SctCopyMem (Buffer, (CHAR8 *)FHand->Source + Offset, *ReadSize);
   return EFI_SUCCESS;
 }
 
@@ -530,7 +530,7 @@ LoadEbcDriver (
   //
   // Create the dummy image handle
   //
-  EfiCommonLibZeroMem (&DummyImageProtocol, sizeof (DummyImageProtocol));
+  SctZeroMem (&DummyImageProtocol, sizeof (DummyImageProtocol));
   Status = gtBS->InstallProtocolInterface (
                    &gDummyImageHandle,
                    &gEfiLoadedImageProtocolGuid,
@@ -544,8 +544,8 @@ LoadEbcDriver (
   //
   // Init FHand and ImageContext
   //
-  EfiCommonLibZeroMem (&FHand, sizeof (IMAGE_FILE_HANDLE));
-  EfiCommonLibZeroMem (&ImageContext, sizeof (ImageContext));
+  SctZeroMem (&FHand, sizeof (IMAGE_FILE_HANDLE));
+  SctZeroMem (&ImageContext, sizeof (ImageContext));
   FHand.Signature = IMAGE_FILE_HANDLE_SIGNATURE;
   Status = ReadEbcDriver (&FHand.Source, &FHand.SourceSize);
   if ( EFI_ERROR(Status) ) {

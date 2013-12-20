@@ -2165,7 +2165,7 @@ AllFileSystemTested (
       //
       // match
       //
-      if (!EfiCompareMem (WholeDevicePathArray[Indexi],
+      if (!SctCompareMem (WholeDevicePathArray[Indexi],
                          TestedDevicePathArray[Indexj],
                          DevicePathSize (WholeDevicePathArray[Indexi]))) {
         MatchCount++;
@@ -2199,7 +2199,7 @@ IsDevicePathInRepository (
       break;
     }
 
-    if (!EfiCompareMem (DevicePathArray[Index],
+    if (!SctCompareMem (DevicePathArray[Index],
                         DevicePath,
                         DevicePathSize (DevicePathArray[Index]))) {
       return TRUE;

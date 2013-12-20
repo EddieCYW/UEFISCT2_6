@@ -1836,7 +1836,7 @@ Routine Description:
     return EFI_INVALID_PARAMETER;
   }
 
-  ZeroMem (ConfigData, sizeof(EFI_LIB_CONFIG_DATA));
+  SctZeroMem (ConfigData, sizeof(EFI_LIB_CONFIG_DATA));
 
   //
   // Get th full meta name of log files

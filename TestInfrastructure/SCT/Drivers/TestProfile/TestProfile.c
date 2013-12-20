@@ -383,7 +383,7 @@ Returns:
     return Status;
   }
 
-  EfiZeroMem (Private, sizeof(TSL_INIT_PRIVATE_DATA));
+  SctZeroMem (Private, sizeof(TSL_INIT_PRIVATE_DATA));
   Private->Signature            = TSL_INIT_PRIVATE_DATA_SIGNATURE;
   Private->ImageHandle          = ImageHandle;
   Private->TslInit.Revision     = 0x10000;
@@ -528,7 +528,7 @@ Returns:
     return Status;
   }
 
-  EfiZeroMem (Private, sizeof(TEST_PROFILE_PRIVATE_DATA));
+  SctZeroMem (Private, sizeof(TEST_PROFILE_PRIVATE_DATA));
   Private->Signature                        = TEST_PROFILE_PRIVATE_DATA_SIGNATURE;
   Private->TestProfile.LibraryRevision     = 0x10000;
   Private->TestProfile.Name                = gAtslName;
@@ -1637,7 +1637,7 @@ Returns:
   // if not, should add a new item
   //
   ptrNew = (INI *) Malloc (sizeof(INI));
-  MemSet (ptrNew, 0, sizeof(INI));
+  SctZeroMem (ptrNew, sizeof(INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1677,7 +1677,7 @@ Returns:
   ptrCur = ptrNew;
 
   ptrNew = (INI *) Malloc (sizeof(INI));
-  MemSet (ptrNew, 0, sizeof(INI));
+  SctZeroMem (ptrNew, sizeof(INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2032,7 +2032,7 @@ Returns:
   // if not, should add a new item
   //
   ptrNew = (INI *) Malloc(sizeof(INI));
-  MemSet (ptrNew, 0, sizeof(INI));
+  SctZeroMem (ptrNew, sizeof(INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2072,7 +2072,7 @@ Returns:
   ptrCur = ptrNew;
 
   ptrNew = (INI *)Malloc (sizeof(INI));
-  MemSet (ptrNew, 0, sizeof(INI));
+  SctZeroMem (ptrNew, sizeof(INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

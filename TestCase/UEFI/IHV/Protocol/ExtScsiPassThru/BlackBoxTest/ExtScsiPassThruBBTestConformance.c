@@ -143,7 +143,7 @@ BBTestGetNextTargetLunConformanceAutoTest (
   // Call GetNextTargetLun() with invalid parameter.
   //
   NewTargetAddr = &NewTarget[0];
-  SetMem (NewTarget, TARGET_MAX_BYTES, 0xFF);
+  SctSetMem (NewTarget, TARGET_MAX_BYTES, 0xFF);
   //
   // Get First legal Device Target and Lun.
   //
@@ -166,7 +166,7 @@ BBTestGetNextTargetLunConformanceAutoTest (
   // Check point 1, call GetNextTargetLun with invalid Target.
   //
   TargetAddr = &Target[0];
-  CopyMem (Target, InvalidTarget, TARGET_MAX_BYTES);
+  SctCopyMem (Target, InvalidTarget, TARGET_MAX_BYTES);
   Lun    = NewLun;
 
   BufToUHexString (Target2, &StringLength, Target, TARGET_MAX_BYTES);
@@ -193,7 +193,7 @@ BBTestGetNextTargetLunConformanceAutoTest (
   //
   // Check point 2, call GetNextTargetLun with invalid Lun.
   //
-  CopyMem (Target, NewTarget, TARGET_MAX_BYTES);
+  SctCopyMem (Target, NewTarget, TARGET_MAX_BYTES);
   Lun = InvalidLun;
 
   BufToUHexString (Target2, &StringLength, Target, TARGET_MAX_BYTES);
@@ -304,7 +304,7 @@ BBTestBuildDevicePathConformanceAutoTest (
   // Call BuildDevicePath() with invalid Target and invalid Lun.
   //
   NewTargetAddr = &NewTarget[0];
-  SetMem (NewTarget, TARGET_MAX_BYTES, 0xFF);  
+  SctSetMem (NewTarget, TARGET_MAX_BYTES, 0xFF);  
   Status = ExtScsiPassThru->GetNextTargetLun (ExtScsiPassThru, (UINT8 **)&NewTargetAddr, &NewLun);
   if (Status != EFI_SUCCESS){
     StandardLib->RecordAssertion (
@@ -324,8 +324,8 @@ BBTestBuildDevicePathConformanceAutoTest (
   // Check point 1, call BuildDevicePath with invalid Target.
   //
   TargetAddr = &Target[0];
-  //SetMem (Target, TARGET_MAX_BYTES, 0xFE);
-  CopyMem (Target, InvalidTarget, TARGET_MAX_BYTES);
+  //SctSetMem (Target, TARGET_MAX_BYTES, 0xFE);
+  SctCopyMem (Target, InvalidTarget, TARGET_MAX_BYTES);
   Lun = NewLun;
 
   BufToUHexString (Target2, &StringLength, Target, TARGET_MAX_BYTES);
@@ -353,7 +353,7 @@ BBTestBuildDevicePathConformanceAutoTest (
   //
   // Check point 2, call BuildDevicePath with invalid Lun.
   //
-  CopyMem (Target, NewTarget, TARGET_MAX_BYTES);
+  SctCopyMem (Target, NewTarget, TARGET_MAX_BYTES);
   Lun = InvalidLun;
 
   BufToUHexString (Target2, &StringLength, Target, TARGET_MAX_BYTES);
@@ -384,7 +384,7 @@ BBTestBuildDevicePathConformanceAutoTest (
   // Call BuildDevicePath() with NULL DevicePath.
   //
   NewTargetAddr = &NewTarget[0];
-  SetMem (NewTarget, TARGET_MAX_BYTES, 0xFF);  
+  SctSetMem (NewTarget, TARGET_MAX_BYTES, 0xFF);  
   
   Status =GetPresentTargetLun(ExtScsiPassThru, NewTargetAddr, &NewLun);
   if (Status != EFI_SUCCESS){
@@ -489,7 +489,7 @@ BBTestGetTargetLunConformanceAutoTest (
   // Call GetTargetLun()with NULL DevicePath, NULL Target and NULL Lun.
   //
   TargetAddr = &Target[0];
-  SetMem (Target, TARGET_MAX_BYTES, 0xFF);    
+  SctSetMem (Target, TARGET_MAX_BYTES, 0xFF);    
   Status =GetPresentTargetLun(ExtScsiPassThru, TargetAddr, &Lun);
   if (Status != EFI_SUCCESS){
   	StandardLib->RecordAssertion (
@@ -718,7 +718,7 @@ BBTestResetTargetLunConformanceAutoTest (
   // Get present Target and Lun
   //  
   NewTargetAddr = &NewTarget[0];
-  SetMem (NewTarget, TARGET_MAX_BYTES, 0xFF);  
+  SctSetMem (NewTarget, TARGET_MAX_BYTES, 0xFF);  
   Status =GetPresentTargetLun(ExtScsiPassThru, NewTargetAddr, &NewLun);
   if (Status != EFI_SUCCESS){
   	StandardLib->RecordAssertion (
@@ -739,8 +739,8 @@ BBTestResetTargetLunConformanceAutoTest (
   // Check point 1, call ResetTargetLun with invalid Target.
   //
   TargetAddr = &Target[0];
-  //SetMem (Target, TARGET_MAX_BYTES, 0xFE);
-  CopyMem (Target, InvalidTarget, TARGET_MAX_BYTES);
+  //SctSetMem (Target, TARGET_MAX_BYTES, 0xFE);
+  SctCopyMem (Target, InvalidTarget, TARGET_MAX_BYTES);
   Lun = NewLun;
 
   BufToUHexString (Target2, &StringLength, Target, TARGET_MAX_BYTES);
@@ -769,7 +769,7 @@ BBTestResetTargetLunConformanceAutoTest (
   //
   // Check point 2, call ResetTargetLun with invalid Lun.
   //
-  CopyMem (Target, NewTarget, TARGET_MAX_BYTES);  
+  SctCopyMem (Target, NewTarget, TARGET_MAX_BYTES);  
   Lun = InvalidLun;
 
   BufToUHexString (Target2, &StringLength, Target, TARGET_MAX_BYTES);
@@ -880,7 +880,7 @@ BBTestGetNextTargetConformanceAutoTest (
   // Call GetNextTargetLun() with invalid parameter.
   //
   NewTargetAddr = &NewTarget[0];
-  SetMem (NewTarget, TARGET_MAX_BYTES, 0xFF);  
+  SctSetMem (NewTarget, TARGET_MAX_BYTES, 0xFF);  
 
   //
   // Get First Device Target.
@@ -904,7 +904,7 @@ BBTestGetNextTargetConformanceAutoTest (
   // Check point 1, call GetNextTarget with invalid Target.
   //
   TargetAddr = &Target[0];
-  CopyMem (Target, InvalidTarget, TARGET_MAX_BYTES);
+  SctCopyMem (Target, InvalidTarget, TARGET_MAX_BYTES);
 
   BufToUHexString (Target2, &StringLength, Target, TARGET_MAX_BYTES);
   
@@ -1021,7 +1021,7 @@ BBTestPassThruConformanceAutoTest (
   // Get present Target and Lun
   //
   TargetAddr = &Target[0];
-  SetMem (Target, TARGET_MAX_BYTES, 0xFF);    
+  SctSetMem (Target, TARGET_MAX_BYTES, 0xFF);    
   Status =GetPresentTargetLun(ExtScsiPassThru, TargetAddr, &Lun);
   if (Status != EFI_SUCCESS){
   	StandardLib->RecordAssertion (
@@ -1047,9 +1047,9 @@ BBTestPassThruConformanceAutoTest (
   //
   // Initialize the Request Packet.
   //
-  ZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb, 6);
-  ZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -1096,9 +1096,9 @@ BBTestPassThruConformanceAutoTest (
   // Assertion Point 4.6.2.3
   // Call PassThru() with invalid parameter.
   //
-  ZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb, 6);
-  ZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -1123,8 +1123,8 @@ BBTestPassThruConformanceAutoTest (
   // Check Point 1. Invalid Target
   //
   NewTargetAddr = &NewTarget[0];
-  //SetMem (NewTarget, TARGET_MAX_BYTES, 0xFE);
-  CopyMem (NewTarget, InvalidTarget, TARGET_MAX_BYTES);
+  //SctSetMem (NewTarget, TARGET_MAX_BYTES, 0xFE);
+  SctCopyMem (NewTarget, InvalidTarget, TARGET_MAX_BYTES);
 
   BufToUHexString (Target2, &StringLength, NewTarget, TARGET_MAX_BYTES);
   
@@ -1152,9 +1152,9 @@ BBTestPassThruConformanceAutoTest (
   //
   // Check Point 2. Invalid Lun
   //
-  ZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb, 6);
-  ZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -1202,7 +1202,7 @@ BBTestPassThruConformanceAutoTest (
   //
   // Check Point 3. Invalid ScsiRequestPacket.
   //
-  ZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
 
   Status = ExtScsiPassThru->PassThru (ExtScsiPassThru, TargetAddr, Lun, &Packet, NULL);
 
@@ -1255,9 +1255,9 @@ BBTestPassThruConformanceAutoTest (
   //
   // Initialize the Request Packet.
   //
-  ZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb, 6);
-  ZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -1304,9 +1304,9 @@ BBTestPassThruConformanceAutoTest (
   // Assertion Point 4.6.2.3
   // Call PassThru() with invalid parameter.
   //
-  ZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb, 6);
-  ZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -1331,8 +1331,8 @@ BBTestPassThruConformanceAutoTest (
   // Check Point 1. Invalid Target
   //
   NewTargetAddr = &NewTarget[0];
-  //SetMem (NewTarget, TARGET_MAX_BYTES, 0xFE);
-  CopyMem (NewTarget, InvalidTarget, TARGET_MAX_BYTES);
+  //SctSetMem (NewTarget, TARGET_MAX_BYTES, 0xFE);
+  SctCopyMem (NewTarget, InvalidTarget, TARGET_MAX_BYTES);
 
   BufToUHexString (Target2, &StringLength, NewTarget, TARGET_MAX_BYTES);
   
@@ -1360,9 +1360,9 @@ BBTestPassThruConformanceAutoTest (
   //
   // Check Point 2. Invalid Lun
   //
-  ZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb, 6);
-  ZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -1410,7 +1410,7 @@ BBTestPassThruConformanceAutoTest (
   //
   // Check Point 3. Invalid ScsiRequestPacket.
   //
-  ZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (&Packet, sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
 
   Status = ExtScsiPassThru->PassThru (ExtScsiPassThru, TargetAddr, Lun, &Packet, Event);
 

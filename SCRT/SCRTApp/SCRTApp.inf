@@ -111,6 +111,7 @@ COMPONENT_TYPE       = APPLICATION
   $(EFI_SOURCE)/SctPkg/Include
 
 [libraries.common]
+  SctLib
   EfiShellLib
   
 [libraries.IA32]

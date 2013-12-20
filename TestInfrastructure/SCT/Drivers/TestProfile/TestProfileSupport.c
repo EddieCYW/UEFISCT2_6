@@ -60,23 +60,6 @@ Abstract:
 extern EFI_BOOT_SERVICES *gBS;
 
 VOID *
-MemSet(
-  VOID        *b,
-  INTN        c,
-  UINTN       len
-  )
-{
-  CHAR8 *p;
-  UINTN i;
-
-  p = b;
-  for (i = 0; i < len; i++) {
-    p[i] = (CHAR8)c;
-  }
-  return (p);
-}
-
-VOID *
 Calloc(
   UINTN       NMemb,
   UINTN       MembSize
@@ -88,7 +71,7 @@ Calloc(
   NewSize = NMemb * MembSize;
   NewMem = Malloc (NewSize);
   if (NewMem) {
-    MemSet (NewMem, 0, NewSize);
+    SctZeroMem (NewMem, NewSize);
   }
 
   return NewMem;
@@ -113,43 +96,6 @@ Free (
   )
 {
   gBS->FreePool (addr);
-}
-
-INTN
-MemCmp(
-  VOID        *s1,
-  VOID        *s2,
-  UINTN       n
-  )
-{
-  CHAR8 *p1, *p2;
-
-  p1 = s1;
-  p2 = s2;
-  if (n != 0) {
-    do {
-      if (*p1++ != *p2++)
-        return (*--p1 - *--p2);
-    } while (--n != 0);
-  }
-  return (0);
-}
-
-VOID *
-MemCpy(
-  VOID        *dst,
-  VOID        *src,
-  UINTN       len
-  )
-{
-  CHAR8 *d, *s;
-
-  d = dst;
-  s = src;
-  while (len--) {
-    *(d++) = *(s++);
-  }
-  return dst;
 }
 
 CHAR8 *

@@ -53,6 +53,7 @@ BASE_NAME       = SctLib
 COMPONENT_TYPE  = LIBRARY
 
 [sources.common]
+  Mem.c
 
 [includes.common]
   .

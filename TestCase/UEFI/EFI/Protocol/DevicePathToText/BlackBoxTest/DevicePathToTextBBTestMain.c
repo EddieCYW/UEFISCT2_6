@@ -1464,7 +1464,7 @@ BuildInfinibandDeviceNode (
   Status = GetNextRequiredParam(&TextDeviceNode, L"Guid", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
     StrToGuid (ParamIdentifierVal, &PortGid);
-    CopyMem (InfiniBand->PortGid, &PortGid, sizeof (EFI_GUID));
+    SctCopyMem (InfiniBand->PortGid, &PortGid, sizeof (EFI_GUID));
   } else {
   	goto InValidText;
   }
@@ -2574,7 +2574,7 @@ BuildHDDeviceNode (
     Status = GetNextRequiredParam(&TextDeviceNode, L"Signature", &ParamIdentifierStr, &ParamIdentifierVal);
     if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
       StrToGuid (ParamIdentifierVal, &SignatureGuid);
-      CopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
+      SctCopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
     } else {
       goto InValidText;
     }
@@ -2595,7 +2595,7 @@ BuildHDDeviceNode (
       Hd->SignatureType = SIGNATURE_TYPE_MBR;
       Hd->MBRType       = 0x01;
       Signature32       = (UINT32) StrToUInt (ParamIdentifierVal);
-      CopyMem (Hd->Signature, &Signature32, sizeof (UINT32));
+      SctCopyMem (Hd->Signature, &Signature32, sizeof (UINT32));
     } else if ((StrCmp(ParamIdentifierVal, L"2") == 0) || (StrCmp(ParamIdentifierVal, L"GPT") == 0)) {
       if ((ParamIdentifierStr != NULL) && (StrCmp(ParamIdentifierStr, L"Type") != 0)) {
         goto InValidText;
@@ -2603,7 +2603,7 @@ BuildHDDeviceNode (
       Hd->SignatureType = SIGNATURE_TYPE_GUID;
       Hd->MBRType       = 0x02;
       StrToGuid (ParamIdentifierVal, &SignatureGuid);
-      CopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
+      SctCopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
     } else {
       goto InValidText;
     }
@@ -2611,7 +2611,7 @@ BuildHDDeviceNode (
     Status = GetNextRequiredParam(&TextDeviceNode, L"Signature", &ParamIdentifierStr, &ParamIdentifierVal);
     if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
       StrToGuid (ParamIdentifierVal, &SignatureGuid);
-      CopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
+      SctCopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
     } else {
       goto InValidText;
     }
@@ -2642,7 +2642,7 @@ BuildHDDeviceNode (
     Status = GetNextRequiredParam(&TextDeviceNode, L"Signature", &ParamIdentifierStr, &ParamIdentifierVal);
     if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
       StrToGuid (ParamIdentifierVal, &SignatureGuid);
-      CopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
+      SctCopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
     } else {
       goto InValidText;
     }
@@ -2659,7 +2659,7 @@ BuildHDDeviceNode (
     Status = GetNextRequiredParam(&TextDeviceNode, L"Signature", &ParamIdentifierStr, &ParamIdentifierVal);
     if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
       StrToGuid (ParamIdentifierVal, &SignatureGuid);
-      CopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
+      SctCopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
     } else {
       goto InValidText;
     }
@@ -2704,7 +2704,7 @@ BuildHDDeviceNode (
     Status = GetNextRequiredParam(&TextDeviceNode, L"Signature", &ParamIdentifierStr, &ParamIdentifierVal);
     if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
       StrToGuid (ParamIdentifierVal, &SignatureGuid);
-      CopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
+      SctCopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
     } else {
       goto InValidText;
     }

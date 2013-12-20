@@ -563,53 +563,6 @@ BBTestStringToImageFunctionTestCheckpoint2 (
   return EFI_SUCCESS;
 }
 
-
-static INTN
-CompareMem (
-  IN VOID     *Dest,
-  IN VOID     *Src,
-  IN UINTN    len
-  )
-/*++
-
-Routine Description:
-  Compares the contents of one buffer to another.
-
-Arguments:
-  Dest                - A pointer to the buffer to compare
-
-  Src                 - A pointer to the buffer to compare
-
-  len                 - The number of bytes to compare
-
-Returns:
-
-  0                   - Dest is identical to Src for len bytes.
-  !=0                 - Dest is not identical to Src for len bytes.
-
---*/
-{
-  CHAR8 *d;
-
-  CHAR8 *s;
-
-  ASSERT (Dest != NULL);
-  ASSERT (Src != NULL);
-
-  d = Dest;
-  s = Src;
-  while (len--) {
-    if (*d != *s) {
-      return *d -*s;
-    }
-
-    d += 1;
-    s += 1;
-  }
-
-  return 0;
-}
-
 EFI_STATUS
 BBTestStringToImageFunctionTestCheckpoint3 (
   IN EFI_STANDARD_TEST_LIBRARY_PROTOCOL         *StandardLib,
@@ -727,7 +680,7 @@ BBTestStringToImageFunctionTestCheckpoint3 (
       //
       // Compare with the image buffer from GetGlyph & StringToImage
       //
-      if (CompareMem(
+      if (SctCompareMem (
       	     FontGlyphBlt->Image.Bitmap, 
       	     Blt->Image.Bitmap, 
       	     sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) * Blt->Width * Blt->Height)) {
@@ -957,7 +910,7 @@ BBTestStringToImageFunctionTestCheckpoint4 (
       //
       // Compare with the image buffer from GetGlyph & StringToImage
       //
-      if (CompareMem(
+      if (SctCompareMem (
             FontGlyphBlt->Image.Bitmap, 
             Blt->Image.Bitmap, 
             sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) * Blt->Width * Blt->Height)) {
@@ -2583,7 +2536,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   // check output buffer StringInfo background should be ignored according to EFI spec
   //
   if (EFI_SUCCESS == Status
-    && !CompareMem(
+    && !SctCompareMem (
           FontGlyphBlt->Image.Bitmap, 
           Blt->Image.Bitmap, 
           sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) * Blt->Width * Blt->Height)) {

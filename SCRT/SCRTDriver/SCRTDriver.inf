@@ -112,10 +112,13 @@ COMPONENT_TYPE       = RT_DRIVER
   $(EDK_SOURCE)/Foundation/Efi/Include
   $(EDK_SOURCE)/Foundation/Framework/Include
   $(EDK_SOURCE)/Foundation/Library/Dxe/Include
+  $(EFI_SOURCE)/SctPkg/Include
 
 [libraries.common]
+  SctLib
   EfiCommonLib
   EfiGuidLib
+  EfiTestUtilityLib
 
 [libraries.ARM, libraries.Aarch64]
   CompilerIntrinsicsLib

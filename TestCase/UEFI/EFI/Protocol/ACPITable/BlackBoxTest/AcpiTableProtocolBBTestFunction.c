@@ -274,7 +274,7 @@ BBTestInstallAcpiTableFunctionTestCheckpoint1 (
         NumberOfTableEntries = (XSDT->Length - sizeof(EFI_ACPI_DESCRIPTION_HEADER))/sizeof(UINT64);
 
         for (Index = 0; Index < NumberOfTableEntries; Index++) {
-          CopyMem (&Address, (UINT64 *)((UINTN)XSDT + sizeof(EFI_ACPI_DESCRIPTION_HEADER) + Index * sizeof(UINT64)), sizeof(UINT64));
+          SctCopyMem (&Address, (UINT64 *)((UINTN)XSDT + sizeof(EFI_ACPI_DESCRIPTION_HEADER) + Index * sizeof(UINT64)), sizeof(UINT64));
           LinkedTable = (EFI_ACPI_DESCRIPTION_HEADER*)(UINTN)Address;
           if (((EFI_ACPI_DESCRIPTION_HEADER *) LinkedTable)->Signature == UEFI_SCTT_TABLE_SIGNATURE)
             break;

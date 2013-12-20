@@ -403,7 +403,7 @@ _IPrint (
                               0x10000,
                               &Buffer);
 
-  //EfiZeroMem(Buffer, 0x10000);
+  //SctZeroMem (Buffer, 0x10000);
 
   CopyUnicodeString ((CHAR16*) Buffer, fmt);
   UgaDraw->GetMode (UgaDraw, &HorizontalResolution, &VerticalResolution, &ColorDepth, &RefreshRate);
@@ -481,7 +481,7 @@ _IPrint (
   }
   
   BufferSize=sizeof (EFI_GRAPHICS_OUTPUT_BLT_PIXEL) * HorizontalResolution * GLYPH_HEIGHT;
-  gtBS->CopyMem(LineBuffer,GopLineBuffer,BufferSize);
+  gtBS->CopyMem (LineBuffer,GopLineBuffer,BufferSize);
   //
   // Blt a character to the screen
   //

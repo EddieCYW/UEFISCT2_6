@@ -1184,7 +1184,7 @@ SearchNextUnsupportedLanguageCode (
 
     for (Indexj = 0; Indexj < SupportedNumber; Indexj++) {
 
-      if (EfiCompareMem (Pointer, IsoLatinTable[Indexi], 3)) {
+      if (SctCompareMem (Pointer, IsoLatinTable[Indexi], 3)) {
         *NextHandle = Indexi + 1;
         gtBS->CopyMem (UnsupportedLanguageCode, IsoLatinTable[Indexi], 3);
         return EFI_SUCCESS;

@@ -230,7 +230,7 @@ Returns:
     return;
   }
 
-  ZeroMem (InStr, StrLength * sizeof(CHAR16));
+  SctZeroMem (InStr, StrLength * sizeof(CHAR16));
   Done = FALSE;
   do {
     //
@@ -258,7 +258,7 @@ Returns:
         StrPos -= 1;
         Update = StrPos;
         Delete = 1;
-        CopyMem (InStr+StrPos, InStr+StrPos+1, sizeof(CHAR16) * (Len-StrPos));
+        SctCopyMem (InStr+StrPos, InStr+StrPos+1, sizeof(CHAR16) * (Len-StrPos));
 
         //
         // Adjust the current column and row
@@ -304,7 +304,7 @@ Returns:
         if (Len) {
           Update = StrPos;
           Delete = 1;
-          CopyMem (InStr+StrPos, InStr+StrPos+1, sizeof(CHAR16) * (Len-StrPos));
+          SctCopyMem (InStr+StrPos, InStr+StrPos+1, sizeof(CHAR16) * (Len-StrPos));
         }
         break;
 
@@ -382,7 +382,7 @@ Returns:
       Len = StrLen (InStr);
 
       if (Delete) {
-        SetMem(InStr+Len, Delete * sizeof(CHAR16), 0x00);
+        SctSetMem (InStr+Len, Delete * sizeof(CHAR16), 0x00);
       }
 
       if (StrPos > Len) {

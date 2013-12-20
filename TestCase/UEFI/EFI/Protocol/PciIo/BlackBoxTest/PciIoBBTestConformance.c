@@ -4469,7 +4469,7 @@ PciWrite_Conf (
 }
 
 /**
- *  Entrypoint for PciIo->CopyMem() conformance automatically Test.
+ *  Entrypoint for PciIo->CopyMem () conformance automatically Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
  *  @param ClientInterface a pointer to the interface to be tested.
  *  @param TestLevel test "thoroughness" control.
@@ -4676,7 +4676,7 @@ CopyMem_Conf (
                  StandardLib,
                  AssertionType,
                  gPciIoBBTestConformanceAssertionGuid057,
-                 L"EFI_PCI_IO_PROTOCOL.CopyMem() - With Width as EfiPciWidthFifoUintX the return Status must be EFI_INVALID_PARAMETER",
+                 L"EFI_PCI_IO_PROTOCOL.CopyMem () - With Width as EfiPciWidthFifoUintX the return Status must be EFI_INVALID_PARAMETER",
                  L"%a:%d:Status - %r",
                  __FILE__,
                  (UINTN)__LINE__,
@@ -4732,7 +4732,7 @@ CopyMem_Conf (
                  StandardLib,
                  AssertionType,
                  gPciIoBBTestConformanceAssertionGuid058,
-                 L"EFI_PCI_IO_PROTOCOL.CopyMem() - With Width as EfiPciWidthFillUintX the return Status must be EFI_INVALID_PARAMETER",
+                 L"EFI_PCI_IO_PROTOCOL.CopyMem () - With Width as EfiPciWidthFillUintX the return Status must be EFI_INVALID_PARAMETER",
                  L"%a:%d:Status - %r",
                  __FILE__,
                  (UINTN)__LINE__,
@@ -5150,7 +5150,7 @@ CopyMem_Conf (
                    StandardLib,
                    AssertionType,
                    gPciIoBBTestConformanceAssertionGuid109,
-                   L"EFI_PCI_IO_PROTOCOL.CopyMem() - With invalid Width the return Status must be EFI_INVALID_PARAMETER",
+                   L"EFI_PCI_IO_PROTOCOL.CopyMem () - With invalid Width the return Status must be EFI_INVALID_PARAMETER",
                    L"%a:%d:Status - %r, Width - %s",
                    __FILE__,
                    (UINTN)__LINE__,

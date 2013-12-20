@@ -778,13 +778,13 @@ BBTestPassThruFunctionAutoTest (
   //
   // Initialize ACB.
   //
-  ZeroMem (&Acb, sizeof (EFI_ATA_COMMAND_BLOCK));
+  SctZeroMem (&Acb, sizeof (EFI_ATA_COMMAND_BLOCK));
   Acb.AtaCommand    = 0xEC;
   Acb.AtaDeviceHead = (UINT8)((UINT8)(PortMultiplierPort) << 4);
   //
   // Initialize the Request Packet.
   //
-  ZeroMem (&Packet, sizeof (EFI_ATA_PASS_THRU_COMMAND_PACKET));
+  SctZeroMem (&Packet, sizeof (EFI_ATA_PASS_THRU_COMMAND_PACKET));
     
   if ((AtaPassThru->Mode->IoAlign == 0) || (AtaPassThru->Mode->IoAlign == 1)){
     Packet.Asb          = Asb;
@@ -852,15 +852,15 @@ BBTestPassThruFunctionAutoTest (
   //
   // Initialize ACB.
   //
-  ZeroMem (&Acb, sizeof (EFI_ATA_COMMAND_BLOCK));
+  SctZeroMem (&Acb, sizeof (EFI_ATA_COMMAND_BLOCK));
   Acb.AtaCommand    = 0xEC;
   Acb.AtaDeviceHead = (UINT8)((UINT8)(PortMultiplierPort) << 4);
   //
   // Initialize the Request Packet.
   //
-  ZeroMem (&Packet,sizeof (EFI_ATA_PASS_THRU_COMMAND_PACKET));
-  ZeroMem (Asb, AtaPassThru->Mode->IoAlign + sizeof(EFI_ATA_STATUS_BLOCK));
-  ZeroMem (InData, AtaPassThru->Mode->IoAlign + 512);
+  SctZeroMem (&Packet,sizeof (EFI_ATA_PASS_THRU_COMMAND_PACKET));
+  SctZeroMem (Asb, AtaPassThru->Mode->IoAlign + sizeof(EFI_ATA_STATUS_BLOCK));
+  SctZeroMem (InData, AtaPassThru->Mode->IoAlign + 512);
     
   if ((AtaPassThru->Mode->IoAlign == 0) || (AtaPassThru->Mode->IoAlign == 1)){
     Packet.Asb          = Asb;
@@ -957,15 +957,15 @@ BBTestPassThruFunctionAutoTest (
   //
   // Initialize ACB.
   //
-  ZeroMem (&Acb, sizeof (EFI_ATA_COMMAND_BLOCK));
+  SctZeroMem (&Acb, sizeof (EFI_ATA_COMMAND_BLOCK));
   Acb.AtaCommand    = 0xEC;
   Acb.AtaDeviceHead = (UINT8)((UINT8)(PortMultiplierPort) << 4);
   //
   // Initialize the Request Packet.
   //
-  ZeroMem (&Packet,sizeof (EFI_ATA_PASS_THRU_COMMAND_PACKET));
-  ZeroMem (Asb, AtaPassThru->Mode->IoAlign + sizeof(EFI_ATA_STATUS_BLOCK));
-  ZeroMem (InData, AtaPassThru->Mode->IoAlign + 512);
+  SctZeroMem (&Packet,sizeof (EFI_ATA_PASS_THRU_COMMAND_PACKET));
+  SctZeroMem (Asb, AtaPassThru->Mode->IoAlign + sizeof(EFI_ATA_STATUS_BLOCK));
+  SctZeroMem (InData, AtaPassThru->Mode->IoAlign + 512);
   
   if ((AtaPassThru->Mode->IoAlign == 0) || (AtaPassThru->Mode->IoAlign == 1)){
     Packet.Asb          = Asb;
@@ -1065,15 +1065,15 @@ BBTestPassThruFunctionAutoTest (
   //
   // Initialize ACB.
   //
-  ZeroMem (&Acb, sizeof (EFI_ATA_COMMAND_BLOCK));
+  SctZeroMem (&Acb, sizeof (EFI_ATA_COMMAND_BLOCK));
   Acb.AtaCommand    = 0xEC;
   Acb.AtaDeviceHead = (UINT8)((UINT8)(PortMultiplierPort) << 4);
   //
   // Initialize the Request Packet.
   //
-  ZeroMem (&Packet,sizeof (EFI_ATA_PASS_THRU_COMMAND_PACKET));
-  ZeroMem (Asb, AtaPassThru->Mode->IoAlign + sizeof(EFI_ATA_STATUS_BLOCK));
-  ZeroMem (InData, AtaPassThru->Mode->IoAlign + 512);
+  SctZeroMem (&Packet,sizeof (EFI_ATA_PASS_THRU_COMMAND_PACKET));
+  SctZeroMem (Asb, AtaPassThru->Mode->IoAlign + sizeof(EFI_ATA_STATUS_BLOCK));
+  SctZeroMem (InData, AtaPassThru->Mode->IoAlign + 512);
   
   if ((AtaPassThru->Mode->IoAlign == 0) || (AtaPassThru->Mode->IoAlign == 1)){
     Packet.Asb          = Asb;

@@ -155,8 +155,7 @@ Returns:
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
       if (Info != NULL) {
-        if (EfiCompareMem (
-            (void *) Info,
+        if (SctCompareMem ((VOID *) Info,
             (void *) GraphicsOutput->Mode->Info,
             sizeof (EFI_GRAPHICS_OUTPUT_MODE_INFORMATION)
             ) != 0) {
@@ -366,7 +365,7 @@ Returns:
       return Status;
     }
 
-    EfiZeroMem (BltBuffer, Size);
+    SctZeroMem (BltBuffer, Size);
     BltBuffer->Blue     = 0xFF;
     BltBuffer->Green    = 0;
     BltBuffer->Red      = 0;
@@ -553,7 +552,7 @@ Returns:
       return Status;
     }
 
-    EfiZeroMem (BltBuffer, Size);
+    SctZeroMem (BltBuffer, Size);
     BltBuffer->Blue     = 0xFF;
     BltBuffer->Green    = 0;
     BltBuffer->Red      = 0;
@@ -814,7 +813,7 @@ Returns:
       return Status;
     }
 
-    EfiZeroMem (BltBuffer, Size);
+    SctZeroMem (BltBuffer, Size);
 
     Status = gtBS->AllocatePool (
                      EfiBootServicesData,
@@ -835,7 +834,7 @@ Returns:
       return Status;
     }
 
-    EfiZeroMem (BltBuffer2, Size);
+    SctZeroMem (BltBuffer2, Size);
 
     //
     //  Allocate BltBuffer for Blt Operations Test
@@ -1141,7 +1140,7 @@ Returns:
       return Status;
     }
 
-    EfiZeroMem (BltBuffer, Size);
+    SctZeroMem (BltBuffer, Size);
 
     Size = Width * Height * sizeof (EFI_GRAPHICS_OUTPUT_BLT_PIXEL);
     Status = gtBS->AllocatePool (
@@ -1167,7 +1166,7 @@ Returns:
       return Status;
     }
 
-    EfiZeroMem (BltBuffer2, Size);
+    SctZeroMem (BltBuffer2, Size);
 
     //
     // Delta should reflect the length of a row correctly
@@ -1562,7 +1561,7 @@ Returns:
       return Status;
     }
 
-    EfiZeroMem (BltBuffer, Size);
+    SctZeroMem (BltBuffer, Size);
 
     Size = Width * Height * sizeof (EFI_GRAPHICS_OUTPUT_BLT_PIXEL);
     Status = gtBS->AllocatePool (
@@ -1588,7 +1587,7 @@ Returns:
       return Status;
     }
 
-    EfiZeroMem (BltBuffer2, Size);
+    SctZeroMem (BltBuffer2, Size);
 
     Blt           = BltBuffer;
     Blt->Blue     = 0xFF;

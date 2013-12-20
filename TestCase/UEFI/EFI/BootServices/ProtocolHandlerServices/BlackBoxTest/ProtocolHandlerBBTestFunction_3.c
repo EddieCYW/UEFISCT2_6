@@ -3291,7 +3291,7 @@ BBTestLocateDevicePathInterfaceTestCheckPoint1 (
         //
         ExpectedReturnedDevicePath =  (EFI_DEVICE_PATH_PROTOCOL*)((UINT8*)SavedDevicePath +
                                (AnotherIndex + 1) * sizeof (VENDOR_DEVICE_PATH));
-        if (!CompareMem (
+        if (!SctCompareMem (
                TempDevicePath,
                ExpectedReturnedDevicePath,
                DevicePathSize (TempDevicePath)

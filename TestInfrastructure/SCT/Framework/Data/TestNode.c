@@ -529,7 +529,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (TempTestNode, sizeof(EFI_SCT_TEST_NODE));
+  SctZeroMem (TempTestNode, sizeof(EFI_SCT_TEST_NODE));
 
   //
   // Initiailize the items of test node
@@ -761,7 +761,7 @@ Routine Description:
   TempTestNode->Name        = StrDuplicate (Name);
   TempTestNode->Description = StrDuplicate (Description);
   TempTestNode->Type        = Type;
-  CopyMem (&TempTestNode->Guid, Guid, sizeof(EFI_GUID));
+  SctCopyMem (&TempTestNode->Guid, Guid, sizeof(EFI_GUID));
 
   //
   // Add the test node into the test node list
@@ -1142,7 +1142,7 @@ Routine Description:
       // Recusion on vertical node (right node)
       //
       if (!IsListEmpty(TempLink1)){
-        CopyMem(PathName[TempLevel], TempNode->Name, StrSize(TempNode->Name));
+        SctCopyMem (PathName[TempLevel], TempNode->Name, StrSize(TempNode->Name));
         TempLevel++;
         
         Status = WalkThroughSave (

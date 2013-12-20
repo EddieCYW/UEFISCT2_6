@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EfiShellLib.h"
 #include "Eas.h"
 #include "EntsMonitorProtocol.h"
@@ -643,7 +643,7 @@ Returns:
     return Status;
   }
 
-  ZeroMem (*TestFile, sizeof (EFI_NETWORK_TEST_FILE));
+  SctZeroMem (*TestFile, sizeof (EFI_NETWORK_TEST_FILE));
 
   //
   // Initialize the test file

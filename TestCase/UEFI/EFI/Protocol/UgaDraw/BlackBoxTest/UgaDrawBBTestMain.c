@@ -353,7 +353,7 @@ _IPrint (
                    &Buffer
                    );
 
-  //EfiZeroMem(Buffer, 0x10000);
+  //SctZeroMem (Buffer, 0x10000);
 
   CopyUnicodeString ((CHAR16 *) Buffer, fmt);
   UgaDraw->GetMode (UgaDraw, &HorizontalResolution, &VerticalResolution, &ColorDepth, &RefreshRate);
@@ -786,7 +786,7 @@ LoadBmp (
   if (EFI_ERROR (Status)) {
     return Status;
   }
-  EfiZeroMem (Blt, Wx * Hy * sizeof (EFI_UGA_PIXEL));
+  SctZeroMem (Blt, Wx * Hy * sizeof (EFI_UGA_PIXEL));
 
   for (IndexY =0 ; IndexY < Hy / 3; IndexY++) {
     for (IndexX = 0; IndexX < Wx; IndexX++) {

@@ -160,7 +160,7 @@ InstallSct (
     SctFileVolume = AllocatePool (sizeof (SCT_FILE_VOLUME));
 
     // Save the filename
-    CopyMem (SctFileVolume->Name, FsName, StrSize (FsName));
+    SctCopyMem (SctFileVolume->Name, FsName, StrSize (FsName));
 
     // Ensure it is valid file system and it has enough free space
     Status = GetFreeSpace (SctFileVolume);

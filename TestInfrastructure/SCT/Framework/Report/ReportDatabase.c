@@ -309,7 +309,7 @@ Routine Description:
   //
   // Initialize
   //
-  ZeroMem (GenericGuidStr, EFI_SCT_GUID_LEN * sizeof(CHAR16));
+  SctZeroMem (GenericGuidStr, EFI_SCT_GUID_LEN * sizeof(CHAR16));
   SctGuidToStr (&gTestGenericFailureGuid, GenericGuidStr);
 
   *FileState = EFI_SCT_LOG_STATE_EMPTY;
@@ -530,10 +530,10 @@ Routine Description:
   //
   // Initialize
   //
-  ZeroMem (GenericGuidStr, EFI_SCT_GUID_LEN * sizeof(CHAR16));
+  SctZeroMem (GenericGuidStr, EFI_SCT_GUID_LEN * sizeof(CHAR16));
   SctGuidToStr (&gTestGenericFailureGuid, GenericGuidStr);
 
-  ZeroMem (SystemHangGuidStr, EFI_SCT_GUID_LEN * sizeof(CHAR16));
+  SctZeroMem (SystemHangGuidStr, EFI_SCT_GUID_LEN * sizeof(CHAR16));
   SctGuidToStr (&gEfiSystemHangAssertionGuid, SystemHangGuidStr);
 
   CaseGuidStr      = NULL;
@@ -1034,7 +1034,7 @@ Routine Description:
       return Status;
     }
 
-    ZeroMem (mGuidDatabase, mGuidDatabaseMaxSize * sizeof(EFI_SCT_GUID_DATABASE));
+    SctZeroMem (mGuidDatabase, mGuidDatabaseMaxSize * sizeof(EFI_SCT_GUID_DATABASE));
   }
 
   //
@@ -1054,12 +1054,12 @@ Routine Description:
       return Status;
     }
 
-    ZeroMem (TempGuidDatabase, mGuidDatabaseMaxSize * sizeof(EFI_SCT_GUID_DATABASE));
+    SctZeroMem (TempGuidDatabase, mGuidDatabaseMaxSize * sizeof(EFI_SCT_GUID_DATABASE));
 
     //
     // Copy the original data
     //
-    CopyMem (TempGuidDatabase, mGuidDatabase, mGuidDatabaseUsedSize * sizeof(EFI_SCT_GUID_DATABASE));
+    SctCopyMem (TempGuidDatabase, mGuidDatabase, mGuidDatabaseUsedSize * sizeof(EFI_SCT_GUID_DATABASE));
 
     //
     // Free the original buffer
@@ -1117,7 +1117,7 @@ Routine Description:
   //
   // Initialize
   //
-  ZeroMem (SystemHangGuidStr, EFI_SCT_GUID_LEN);
+  SctZeroMem (SystemHangGuidStr, EFI_SCT_GUID_LEN);
   SctGuidToStr (&gEfiSystemHangAssertionGuid, SystemHangGuidStr);
 
   *AssertionState = EFI_SCT_GUID_ASSERTION_STATE_NOT_FOUND;
@@ -1168,7 +1168,7 @@ Routine Description:
       return Status;
     }
 
-    ZeroMem (mGuidAssertion, mGuidAssertionMaxSize * sizeof(EFI_SCT_GUID_ASSERTION));
+    SctZeroMem (mGuidAssertion, mGuidAssertionMaxSize * sizeof(EFI_SCT_GUID_ASSERTION));
   }
 
   //
@@ -1188,12 +1188,12 @@ Routine Description:
       return Status;
     }
 
-    ZeroMem (mGuidAssertion, mGuidAssertionMaxSize * sizeof(EFI_SCT_GUID_ASSERTION));
+    SctZeroMem (mGuidAssertion, mGuidAssertionMaxSize * sizeof(EFI_SCT_GUID_ASSERTION));
 
     //
     // Copy the original data
     //
-    CopyMem (TempGuidAssertion, mGuidAssertion, mGuidAssertionUsedSize * sizeof(EFI_SCT_GUID_ASSERTION));
+    SctCopyMem (TempGuidAssertion, mGuidAssertion, mGuidAssertionUsedSize * sizeof(EFI_SCT_GUID_ASSERTION));
 
     //
     // Free the original buffer
@@ -1341,7 +1341,7 @@ Routine Description:
       return EFI_OUT_OF_RESOURCES;
     }
 
-    ZeroMem (NewReportItem, sizeof(EFI_SCT_REPORT_ITEM));
+    SctZeroMem (NewReportItem, sizeof(EFI_SCT_REPORT_ITEM));
 
     SctStrnCpy (NewReportItem->TestName, TestNameStr, EFI_SCT_NAME_LEN);
     SctStrnCpy (NewReportItem->TestCategory, TestCategoryStr, EFI_SCT_NAME_LEN);
@@ -1384,7 +1384,7 @@ Routine Description:
     return Status;
   }
 
-  ZeroMem (NewAssertionInfor, sizeof(EFI_SCT_ASSERTION_INFOR));
+  SctZeroMem (NewAssertionInfor, sizeof(EFI_SCT_ASSERTION_INFOR));
 
   //
   // Get the Title and Index from GUID database

@@ -2363,7 +2363,7 @@ Returns:
   if (Interface.InterfaceProtocol == USB_MASS_STORE_BOT) {
     UsbBot = AllocateZeroPool (sizeof (USB_BOT_PROTOCOL) + 2 * sizeof (EFI_USB_ENDPOINT_DESCRIPTOR));
  
-    ZeroMem (UsbBot, sizeof (USB_BOT_PROTOCOL) + 2 * sizeof (EFI_USB_ENDPOINT_DESCRIPTOR));
+    SctZeroMem (UsbBot, sizeof (USB_BOT_PROTOCOL) + 2 * sizeof (EFI_USB_ENDPOINT_DESCRIPTOR));
     
     UsbBot->UsbIo     = UsbIo;
     UsbBot->Interface = &Interface;
@@ -2382,14 +2382,14 @@ Returns:
        (UsbBot->BulkInEndpoint == NULL)) {
 
         UsbBot->BulkInEndpoint  = (EFI_USB_ENDPOINT_DESCRIPTOR *) (UsbBot + 1);
-        CopyMem(UsbBot->BulkInEndpoint, &EndPoint, sizeof (EndPoint));
+        SctCopyMem (UsbBot->BulkInEndpoint, &EndPoint, sizeof (EndPoint));
       }
 
       if (USB_IS_OUT_ENDPOINT (EndPoint.EndpointAddress) &&
        (UsbBot->BulkOutEndpoint == NULL)) {
 
         UsbBot->BulkOutEndpoint   = (EFI_USB_ENDPOINT_DESCRIPTOR *) (UsbBot + 1) + 1;
-        CopyMem (UsbBot->BulkOutEndpoint, &EndPoint, sizeof(EndPoint));
+        SctCopyMem (UsbBot->BulkOutEndpoint, &EndPoint, sizeof(EndPoint));
       }
     }
 
@@ -2416,7 +2416,7 @@ Returns:
     //
     // Fill in the command
     //
-    ZeroMem (&ReadCmd, sizeof (USB_BOOT_READ10_CMD));
+    SctZeroMem (&ReadCmd, sizeof (USB_BOOT_READ10_CMD));
 
     ReadCmd.OpCode  = USB_BOOT_READ10_OPCODE;
     ReadCmd.Lun     = 0;
@@ -2433,8 +2433,8 @@ Returns:
     Cbw.Lun       = 0;
     Cbw.CmdLen    = sizeof (USB_BOOT_READ10_CMD);
 
-    ZeroMem (Cbw.CmdBlock, USB_BOT_MAX_CMDLEN);
-    CopyMem (Cbw.CmdBlock, &ReadCmd, Cbw.CmdLen);
+    SctZeroMem (Cbw.CmdBlock, USB_BOT_MAX_CMDLEN);
+    SctCopyMem (Cbw.CmdBlock, &ReadCmd, Cbw.CmdLen);
 
     UsbStatus  = 0;
     DataLength = sizeof (USB_BOT_CBW);
@@ -2532,7 +2532,7 @@ Returns:
     //
     // CSW
     //
-    ZeroMem (&Csw, sizeof (USB_BOT_CSW));
+    SctZeroMem (&Csw, sizeof (USB_BOT_CSW));
      
     UsbStatus  = 0;
     DataLength = sizeof (USB_BOT_CSW);

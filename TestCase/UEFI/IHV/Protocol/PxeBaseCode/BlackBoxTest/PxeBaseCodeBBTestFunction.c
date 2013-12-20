@@ -1062,7 +1062,7 @@ BBTestNewSetIpFilterFunctionTest (
     return Status;
   }
 
-  EfiSetMem (&BcIpFilter, sizeof (BcIpFilter), 0);
+  SctSetMem (&BcIpFilter, sizeof (BcIpFilter), 0);
   BcIpFilter.Filters = EFI_PXE_BASE_CODE_IP_FILTER_STATION_IP;
   BcIpFilter.IpCnt = 2;
   SetIpAddress ((EFI_IP_ADDRESS *)&(BcIpFilter.IpList[0]), 0x12345678);
@@ -1140,7 +1140,7 @@ BBTestNewSetIpFilterFunctionTest (
       return Status;
     }
     
-    EfiSetMem (&BcIpFilter, sizeof (BcIpFilter), 0);
+    SctSetMem (&BcIpFilter, sizeof (BcIpFilter), 0);
     BcIpFilter.Filters = EFI_PXE_BASE_CODE_IP_FILTER_STATION_IP;
     BcIpFilter.IpCnt = 2;
     
@@ -2610,7 +2610,7 @@ BBTestSetIpFilterFunctionTest (
     return Status;
   }
 
-  EfiSetMem (&BcIpFilter, sizeof (BcIpFilter), 0);
+  SctSetMem (&BcIpFilter, sizeof (BcIpFilter), 0);
   BcIpFilter.Filters = EFI_PXE_BASE_CODE_IP_FILTER_STATION_IP;
   BcIpFilter.IpCnt = 2;
   SetIpAddress ((EFI_IP_ADDRESS *)&(BcIpFilter.IpList[0]), 0x12345678);
@@ -2824,7 +2824,7 @@ BBTestArpFunctionTest (
   }
 
   // Call ARP() to get the specified mac
-  EfiSetMem (&MacAddr, sizeof (MacAddr), 0);
+  SctSetMem (&MacAddr, sizeof (MacAddr), 0);
   Status = BcInterface->Arp (BcInterface, &IpAddr, &MacAddr);
   if (EFI_UNSUPPORTED == Status)
   {
@@ -4800,8 +4800,8 @@ BBTestSetStationIp (
     return Status;
   }
 
-  EfiCopyMem (&OldStationIp, &(This->Mode->StationIp), sizeof (EFI_IP_ADDRESS));
-  EfiCopyMem (&OldSubnetMask, &(This->Mode->SubnetMask), sizeof (EFI_IP_ADDRESS));
+  SctCopyMem (&OldStationIp, &(This->Mode->StationIp), sizeof (EFI_IP_ADDRESS));
+  SctCopyMem (&OldSubnetMask, &(This->Mode->SubnetMask), sizeof (EFI_IP_ADDRESS));
 
   LOG_BUF_HEX_DFLT(LoggingLib, (CHAR16*)(&OldStationIp), sizeof (EFI_IP_ADDRESS)/2);
   LOG_BUF_HEX_DFLT(LoggingLib, (CHAR16*)NewStationIp, sizeof (EFI_IP_ADDRESS)/2);

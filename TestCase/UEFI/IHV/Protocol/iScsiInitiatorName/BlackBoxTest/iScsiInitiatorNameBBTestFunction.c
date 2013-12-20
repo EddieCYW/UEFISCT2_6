@@ -95,7 +95,7 @@ BBTestGetFunctionTest (
   iScsiInitiatorName = (EFI_ISCSI_INITIATOR_NAME_PROTOCOL *)ClientInterface;
 
   BufferSize = ISCSI_INITIATORNAME_MAXIMUM_SIZE;
-  EfiZeroMem((VOID *)Buffer, BufferSize);
+  SctZeroMem ((VOID *)Buffer, BufferSize);
   Status[0] = iScsiInitiatorName->Get (iScsiInitiatorName, &BufferSize, &Buffer);
 
   if ( EFI_ERROR(Status[0]) ) {
@@ -133,12 +133,12 @@ BBTestGetFunctionTest (
   if ( (Status[0] == EFI_SUCCESS) && EFI_ERROR(Status[1]) ) {
   	OutBufferSize = ISCSI_INITIATORNAME_MAXIMUM_SIZE;
     Status[0] = iScsiInitiatorName->Get (iScsiInitiatorName, &OutBufferSize, &OutBuffer);
-    if ( (Status[0] != EFI_SUCCESS) || (OutBufferSize != InBufferSize0) || (CompareMem( InBuffer0, OutBuffer, OutBufferSize) != 0) )
+    if ( (Status[0] != EFI_SUCCESS) || (OutBufferSize != InBufferSize0) || (SctCompareMem ( InBuffer0, OutBuffer, OutBufferSize) != 0) )
       AssertionType = EFI_TEST_ASSERTION_FAILED;
   } else {
     Status[1] = iScsiInitiatorName->Get (iScsiInitiatorName, &OutBufferSize, &OutBuffer);
 	OutBufferSize = ISCSI_INITIATORNAME_MAXIMUM_SIZE;
-    if ( (Status[0] != EFI_SUCCESS) || (OutBufferSize != InBufferSize1) || (CompareMem( InBuffer1, OutBuffer, OutBufferSize) != 0) )
+    if ( (Status[0] != EFI_SUCCESS) || (OutBufferSize != InBufferSize1) || (SctCompareMem ( InBuffer1, OutBuffer, OutBufferSize) != 0) )
       AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
   
@@ -204,7 +204,7 @@ BBTestSetFunctionTest (
   iScsiInitiatorName = (EFI_ISCSI_INITIATOR_NAME_PROTOCOL *)ClientInterface;
 
   GetBufferSize = ISCSI_INITIATORNAME_MAXIMUM_SIZE;
-  EfiZeroMem((VOID *)GetBuffer, GetBufferSize);
+  SctZeroMem ((VOID *)GetBuffer, GetBufferSize);
   Status = iScsiInitiatorName->Get (iScsiInitiatorName, &GetBufferSize, (VOID *)GetBuffer);
 
   if (EFI_ERROR(Status)) {
@@ -221,7 +221,7 @@ BBTestSetFunctionTest (
 	return Status;
   }
 
-  EfiCopyMem ((VOID *)SetBuffer, (VOID *)GetBuffer, GetBufferSize);
+  SctCopyMem ((VOID *)SetBuffer, (VOID *)GetBuffer, GetBufferSize);
   SetBufferSize = GetBufferSize;
   Status = iScsiInitiatorName->Set (iScsiInitiatorName, &SetBufferSize, (VOID *)SetBuffer);
 
@@ -229,7 +229,7 @@ BBTestSetFunctionTest (
     AssertionType = EFI_TEST_ASSERTION_PASSED;
 	GetBufferSize = ISCSI_INITIATORNAME_MAXIMUM_SIZE;
 	Status = iScsiInitiatorName->Get (iScsiInitiatorName, &GetBufferSize, (VOID *)GetBuffer);
-	if ( (Status != EFI_SUCCESS) || (GetBufferSize != SetBufferSize) || (CompareMem( SetBuffer, GetBuffer, GetBufferSize) != 0) )
+	if ( (Status != EFI_SUCCESS) || (GetBufferSize != SetBufferSize) || (SctCompareMem ( SetBuffer, GetBuffer, GetBufferSize) != 0) )
       AssertionType = EFI_TEST_ASSERTION_FAILED;
   } else if ( (Status == EFI_DEVICE_ERROR) || (Status == EFI_UNSUPPORTED) ) {
     AssertionType = EFI_TEST_ASSERTION_WARNING;

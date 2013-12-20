@@ -595,7 +595,7 @@ Returns:
   //
   // Is it TEST_ABOUT
   //
-  if (CompareMem (Cmd->ComdName, EFI_NETWORK_ABORT_COMMAND, StrLen (EFI_NETWORK_ABORT_COMMAND) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_ABORT_COMMAND, StrLen (EFI_NETWORK_ABORT_COMMAND) * 2) == 0) {
     Cmd->CmdType = ABORT;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", EFI_NETWORK_ABORT_COMMAND));
     return EFI_SUCCESS;
@@ -603,7 +603,7 @@ Returns:
   //
   // Is it TEST_EXEC
   //
-  if (CompareMem (Cmd->ComdName, EFI_NETWORK_EXEC_COMMAND, StrLen (EFI_NETWORK_EXEC_COMMAND) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_EXEC_COMMAND, StrLen (EFI_NETWORK_EXEC_COMMAND) * 2) == 0) {
     Cmd->CmdType = EXECUTE;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", EFI_NETWORK_EXEC_COMMAND));
     return EFI_SUCCESS;
@@ -611,7 +611,7 @@ Returns:
   //
   // Is it GET_FILE
   //
-  if (CompareMem (Cmd->ComdName, EFI_NETWORK_GET_FILE, StrLen (EFI_NETWORK_GET_FILE) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_GET_FILE, StrLen (EFI_NETWORK_GET_FILE) * 2) == 0) {
     Cmd->CmdType = GET_FILE;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", EFI_NETWORK_GET_FILE));
     return EFI_SUCCESS;
@@ -619,7 +619,7 @@ Returns:
   //
   // Is it PUT_FILE
   //
-  if (CompareMem (Cmd->ComdName, EFI_NETWORK_PUT_FILE, StrLen (EFI_NETWORK_PUT_FILE) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_PUT_FILE, StrLen (EFI_NETWORK_PUT_FILE) * 2) == 0) {
     Cmd->CmdType = PUT_FILE;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", EFI_NETWORK_PUT_FILE));
     return EFI_SUCCESS;
@@ -627,7 +627,7 @@ Returns:
   //
   // Is it RIVL_DEFTYPE
   //
-  if (CompareMem (Cmd->ComdName, RIVL_DEFTYPE_CMD, StrLen (RIVL_DEFTYPE_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_DEFTYPE_CMD, StrLen (RIVL_DEFTYPE_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_DEFTYPE;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_DEFTYPE_CMD));
     return EFI_SUCCESS;
@@ -635,7 +635,7 @@ Returns:
   //
   // Is it RIVL_CRTVAR
   //
-  if (CompareMem (Cmd->ComdName, RIVL_CRTVAR_CMD, StrLen (RIVL_CRTVAR_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_CRTVAR_CMD, StrLen (RIVL_CRTVAR_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_CRTVAR;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_CRTVAR_CMD));
     return EFI_SUCCESS;
@@ -643,7 +643,7 @@ Returns:
   //
   // Is it RIVL_DELTYPE
   //
-  if (CompareMem (Cmd->ComdName, RIVL_DELTYPE_CMD, StrLen (RIVL_DELTYPE_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_DELTYPE_CMD, StrLen (RIVL_DELTYPE_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_DELTYPE;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_DELTYPE_CMD));
     return EFI_SUCCESS;
@@ -651,7 +651,7 @@ Returns:
   //
   // Is it RIVL_DELVAR
   //
-  if (CompareMem (Cmd->ComdName, RIVL_DELVAR_CMD, StrLen (RIVL_DELVAR_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_DELVAR_CMD, StrLen (RIVL_DELVAR_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_DELVAR;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_DELVAR_CMD));
     return EFI_SUCCESS;
@@ -659,7 +659,7 @@ Returns:
   //
   // Is it RIVL_SETVAR
   //
-  if (CompareMem (Cmd->ComdName, RIVL_SETVAR_CMD, StrLen (RIVL_SETVAR_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_SETVAR_CMD, StrLen (RIVL_SETVAR_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_SETVAR;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_SETVAR_CMD));
     return EFI_SUCCESS;
@@ -667,7 +667,7 @@ Returns:
   //
   // Is it RIVL_GETVAR
   //
-  if (CompareMem (Cmd->ComdName, RIVL_GETVAR_CMD, StrLen (RIVL_GETVAR_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_GETVAR_CMD, StrLen (RIVL_GETVAR_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_GETVAR;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_GETVAR_CMD));
     return EFI_SUCCESS;
@@ -905,8 +905,8 @@ Returns:
       return EFI_OUT_OF_RESOURCES;
     }
 
-    SetMem (Cmd->ComdName, Index * 2, 0);
-    CopyMem (Cmd->ComdName, BufferTmp, (Index - 1) * 2);
+    SctSetMem (Cmd->ComdName, Index * 2, 0);
+    SctCopyMem (Cmd->ComdName, BufferTmp, (Index - 1) * 2);
   }
   //
   // Get Cmd Input
@@ -922,7 +922,7 @@ Returns:
     //
     // Only pactch TEST_EXEC sct xxx command 
     //
-    if (CompareMem (Cmd->ComdName, 
+    if (SctCompareMem (Cmd->ComdName, 
     	               EFI_NETWORK_EXEC_COMMAND, 
     	               StrLen (EFI_NETWORK_EXEC_COMMAND) * 2) == 0
     	&& (TempCmdArg[0] == L's' || TempCmdArg[0] == L'S')
@@ -1483,7 +1483,7 @@ Returns:
   // Copy the value of ExecTime to the RIVL variable, it's the Caller's responsibility
   // to guarantee the Type of 'EXEC_TIME_NAME' should be UINT64
   //
-  CopyMem (ExecTimeVariable->Address, &ExecTime, ExecTimeVariable->TypeSize);
+  SctCopyMem (ExecTimeVariable->Address, &ExecTime, ExecTimeVariable->TypeSize);
   return ;
 }
 

@@ -59,8 +59,7 @@ Abstract:
 #define _PROTOCOL_HANDLER_BBTEST_H
 
 
-#include "Efi.h"
-#include "EfiTestUtilityLib.h"
+#include "SctLib.h"
 #include "EfiTestLib.h"
 #include "Guid.h"
 

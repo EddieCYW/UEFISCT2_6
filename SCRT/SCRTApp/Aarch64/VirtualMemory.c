@@ -170,7 +170,7 @@ Returns:
   //
   for (Index = 0; Index < (MemoryMapSize / DescriptorSize); Index++) {
     if ((MemoryMap->Attribute & EFI_MEMORY_RUNTIME) == EFI_MEMORY_RUNTIME) {
-      CopyMem ((VOID *) VirtualMemoryMap, (VOID *) MemoryMap, DescriptorSize);
+      SctCopyMem ((VOID *) VirtualMemoryMap, (VOID *) MemoryMap, DescriptorSize);
       VirtualMemoryMap->VirtualStart  = VirtualMemoryMap->PhysicalStart;
       *VirtualMapSize += DescriptorSize;
       VirtualMemoryMap = NextMemoryDescriptor (VirtualMemoryMap, DescriptorSize);

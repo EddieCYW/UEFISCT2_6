@@ -292,7 +292,7 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
   {
    { 0x69c65670, 0x2a2e, 0x427b, { 0x80, 0x8c, 0xa6, 0x66, 0x8c, 0xa5, 0x3d, 0x9c } },
    L"CopyMem_Conf",
-   L"Test whether CopyMem() performs enough parameter checking",
+   L"Test whether SctCopyMem () performs enough parameter checking",
    EFI_TEST_LEVEL_MINIMAL,
    gSupportProtocolGuid2,
    EFI_TEST_CASE_AUTO,

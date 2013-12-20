@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EfiShellLib.h"
 #include "Rivl.h"
 #include "RivlVariable.h"
@@ -270,7 +270,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
 
-  ZeroMem (NewRivlVariable, sizeof (RIVL_VARIABLE));
+  SctZeroMem (NewRivlVariable, sizeof (RIVL_VARIABLE));
 
   //
   // Fill Name
@@ -311,7 +311,7 @@ Returns:
       return EFI_OUT_OF_RESOURCES;
     }
 
-    ZeroMem (NewRivlVariable->Address, TotalSize);
+    SctZeroMem (NewRivlVariable->Address, TotalSize);
     break;
 
   case RIVL_VAR_ATTRIB_REFERENCE:
@@ -325,7 +325,7 @@ Returns:
       return EFI_OUT_OF_RESOURCES;
     }
 
-    ZeroMem (NewRivlVariable->Address, sizeof (VOID *));
+    SctZeroMem (NewRivlVariable->Address, sizeof (VOID *));
     break;
 
   default:
@@ -655,13 +655,13 @@ Returns:
     //
     if ((BufferFeature & RIVL_VAR_FEATURE_ADDRESS) == RIVL_VAR_FEATURE_ADDRESS) {
       Result = (INTN) (*BufferVarBaseAddress + BufferOffset);
-      CopyMem (
+      SctCopyMem (
         VarBaseAddress,
         &Result,
         sizeof (VOID *)
         );
     } else {
-      CopyMem (
+      SctCopyMem (
         VarBaseAddress,
         *BufferVarBaseAddress + BufferOffset,
         sizeof (VOID *)
@@ -733,13 +733,13 @@ Returns:
         //
         if ((BufferFeature & RIVL_VAR_FEATURE_ADDRESS) == RIVL_VAR_FEATURE_ADDRESS) {
           Result = (INTN) (*BufferVarBaseAddress + BufferOffset);
-          CopyMem (
+          SctCopyMem (
             *VarBaseAddress + Offset + RivlInternalType->Size * VarIndex,
             &Result,
             sizeof (INTN)
             );
         } else {
-          CopyMem (
+          SctCopyMem (
             *VarBaseAddress + Offset + RivlInternalType->Size * VarIndex,
             *BufferVarBaseAddress + BufferOffset,
             BufferLength
@@ -796,13 +796,13 @@ Returns:
       //
       if ((BufferFeature & RIVL_VAR_FEATURE_ADDRESS) == RIVL_VAR_FEATURE_ADDRESS) {
         Result = (INTN) (*BufferVarBaseAddress + BufferOffset);
-        CopyMem (
+        SctCopyMem (
           *VarBaseAddress + Offset,
           &Result,
           sizeof (INTN)
           );
       } else {
-        CopyMem (
+        SctCopyMem (
           *VarBaseAddress + Offset,
           *BufferVarBaseAddress + BufferOffset,
           BufferLength
@@ -865,7 +865,7 @@ Returns:
           goto Done;
         } else {
           TypeSize = Length / ArrayNumber;
-          CopyMem (
+          SctCopyMem (
             *VarBaseAddress + Offset + TypeSize * VarIndex,
             *BufferVarBaseAddress + BufferOffset,
             BufferLength
@@ -935,7 +935,7 @@ Returns:
           if ((BufferFeature & RIVL_VAR_FEATURE_ADDRESS) == RIVL_VAR_FEATURE_ADDRESS) {
             Status = EFI_INVALID_PARAMETER;
           } else {
-            CopyMem (
+            SctCopyMem (
               *VarBaseAddress + Offset,
               *BufferVarBaseAddress + BufferOffset,
               BufferLength
@@ -991,13 +991,13 @@ Returns:
 
         if ((BufferFeature & RIVL_VAR_FEATURE_ADDRESS) == RIVL_VAR_FEATURE_ADDRESS) {
           Result = (INTN) (*BufferVarBaseAddress + BufferOffset);
-          CopyMem (
+          SctCopyMem (
             *VarBaseAddress + Offset,
             &Result,
             sizeof (INTN)
             );
         } else {
-          CopyMem (
+          SctCopyMem (
             *VarBaseAddress + Offset + RivlMember->Offset,
             *BufferVarBaseAddress + BufferOffset,
             BufferLength

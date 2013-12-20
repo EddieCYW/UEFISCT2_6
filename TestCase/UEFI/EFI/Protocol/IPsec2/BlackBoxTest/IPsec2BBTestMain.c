@@ -144,58 +144,6 @@ UnloadIPsec2BBTest (
            );
 }
 
-VOID
-MemZero (
- VOID       *Addr,
- UINTN      Size
- )
-{
-  volatile UINT8   *Pointer;
-  Pointer = (UINT8*)Addr;
-  
-  while (Size-- != 0) {
-    *(Pointer++) = 0;
-  }
-}
-
-
-INTN
-MemCmp(
-  VOID        *s1,
-  VOID        *s2,
-  UINTN       n
-  )
-{
-  CHAR8 *p1, *p2;
-
-  p1 = s1;
-  p2 = s2;
-  if (n != 0) {
-    do {
-      if (*p1++ != *p2++)
-        return (*--p1 - *--p2);
-    } while (--n != 0);
-  }
-  return (0);
-}
-
-VOID *
-MemCpy(
-  VOID        *dst,
-  VOID        *src,
-  UINTN       len
-  )
-{
-  CHAR8 *d, *s;
-
-  d = dst;
-  s = src;
-  while (len--) {
-    *(d++) = *(s++);
-  }
-  return dst;
-}
-
 /**
   Process one IPv4 packet to create Ip4header, Optionbuffer and Fragment Table
 
@@ -264,7 +212,7 @@ IP4ProcessPacket(
   //
   // Copy Ip4 Packet header to a new buffer
   //
-  MemCpy(HeaderDst, HeaderSrc, sizeof(EFI_IP4_HEADER));
+  SctCopyMem (HeaderDst, HeaderSrc, sizeof(EFI_IP4_HEADER));
 
   //
   // Create OptionsBuffer, if necessary
@@ -296,7 +244,7 @@ IP4ProcessPacket(
     //
     // Copy Ip4 Packet Option buffer to a new buffer
     //
-    MemCpy(OptionDst, OptionSrc, OptionLen);
+    SctCopyMem (OptionDst, OptionSrc, OptionLen);
   }
 
   
@@ -427,7 +375,7 @@ IP6ProcessPacket(
   //
   // Copy Ip4 Packet header to a new buffer
   //
-  MemCpy(HeaderDst, HeaderSrc, sizeof(EFI_IP6_HEADER));
+  SctCopyMem (HeaderDst, HeaderSrc, sizeof(EFI_IP6_HEADER));
 
   //
   // Create ExtHdrs(OptionsBuffer), if necessary
@@ -689,13 +637,13 @@ Ip4InitIPsecConfigDataTunnel(
   SadIp4Tunnel.AlgoInfo.EspAlgoInfo.AuthKeyLength = 20;
   SadIp4Tunnel.AlgoInfo.EspAlgoInfo.AuthKey = AuthKeyIp4Tunnel;
 
-  MemCpy(
+  SctCopyMem (
     &SadIp4Tunnel.TunnelSourceAddress, 
     &TunnelLocalAddressIp4,
     sizeof(EFI_IP_ADDRESS)
     );
   
-  MemCpy(
+  SctCopyMem (
     &SadIp4Tunnel.TunnelDestinationAddress, 
     &TunnelRemoteAddressIp4 ,
     sizeof(EFI_IP_ADDRESS)
@@ -704,13 +652,13 @@ Ip4InitIPsecConfigDataTunnel(
 
 
   TunnelOptionIp4.DF = EfiIPsecTunnelCopyDf;
-  MemCpy(
+  SctCopyMem (
     &TunnelOptionIp4.LocalTunnelAddress, 
     &TunnelLocalAddressIp4,
     sizeof(EFI_IP_ADDRESS)
     );
 
-  MemCpy(
+  SctCopyMem (
     &TunnelOptionIp4.RemoteTunnelAddress, 
     &TunnelRemoteAddressIp4,
     sizeof(EFI_IP_ADDRESS)
@@ -740,17 +688,17 @@ Ip6InitIPsecConfigDataTransport(
   //
   // Address Configuration
   //
-  MemCpy (&(LocalAddressIp6Transport.Address.v6), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
+  SctCopyMem (&(LocalAddressIp6Transport.Address.v6), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
   LocalAddressIp6Transport.PrefixLength = 0x80;
 
-  MemCpy (&(RemoteAddressIp6Transport.Address.v6), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
+  SctCopyMem (&(RemoteAddressIp6Transport.Address.v6), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
   RemoteAddressIp6Transport.PrefixLength = 0x80;
 
   //
   // InBound & OutBound SPD
   //
-  MemCpy (&(OutBoundSpdIp6Transport.SaId[0].DestAddress.v6), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
-  MemCpy (&(InBoundSpdIp6Transport.SaId[0].DestAddress.v6), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
+  SctCopyMem (&(OutBoundSpdIp6Transport.SaId[0].DestAddress.v6), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
+  SctCopyMem (&(InBoundSpdIp6Transport.SaId[0].DestAddress.v6), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
 
   
   //
@@ -773,12 +721,12 @@ Ip6InitIPsecConfigDataTransport(
   //
   // InBound & OutBound SAD selector
   //
-  MemCpy (&(InBoundSadSelectorIp6Transport.SaId.DestAddress.v6), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
+  SctCopyMem (&(InBoundSadSelectorIp6Transport.SaId.DestAddress.v6), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
   InBoundSadSelectorIp6Transport.SaId.Proto = EfiIPsecESP;
   InBoundSadSelectorIp6Transport.SaId.Spi = 0;
 
   
-  MemCpy (&(OutBoundSadSelectorIp6Transport.SaId.DestAddress.v6), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
+  SctCopyMem (&(OutBoundSadSelectorIp6Transport.SaId.DestAddress.v6), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
   OutBoundSadSelectorIp6Transport.SaId.Proto = EfiIPsecESP;
   OutBoundSadSelectorIp6Transport.SaId.Spi = 0;
   
@@ -824,16 +772,16 @@ Ip6InitIPsecConfigDataTunnel(
   //
   // Address Configuration
   //
-  MemCpy(&(LocalAddressIp6Tunnel.Address.v6), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
+  SctCopyMem (&(LocalAddressIp6Tunnel.Address.v6), &(Ip6Head->SourceAddress), sizeof(EFI_IPv6_ADDRESS));
   LocalAddressIp6Tunnel.PrefixLength = 0x80;
 
-  MemCpy(&(RemoteAddressIp6Tunnel.Address.v6),&(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
+  SctCopyMem (&(RemoteAddressIp6Tunnel.Address.v6),&(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
   RemoteAddressIp6Tunnel.PrefixLength = 0x80;
 
   //
   //  SPD
   //
-  MemCpy(&(SpdIp6Tunnel.SaId[0].DestAddress.v6), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
+  SctCopyMem (&(SpdIp6Tunnel.SaId[0].DestAddress.v6), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
   
 
   //
@@ -846,13 +794,13 @@ Ip6InitIPsecConfigDataTunnel(
   SadIp6Tunnel.AlgoInfo.EspAlgoInfo.AuthKeyLength = 20;
   SadIp6Tunnel.AlgoInfo.EspAlgoInfo.AuthKey = AuthKeyIp6Tunnel;
 
-  MemCpy(
+  SctCopyMem (
     &SadIp6Tunnel.TunnelSourceAddress, 
     &TunnelLocalAddressIp6,
     sizeof(EFI_IP_ADDRESS)
     );
   
-  MemCpy(
+  SctCopyMem (
     &SadIp6Tunnel.TunnelDestinationAddress, 
     &TunnelRemoteAddressIp6 ,
     sizeof(EFI_IP_ADDRESS)
@@ -861,13 +809,13 @@ Ip6InitIPsecConfigDataTunnel(
 
 
   TunnelOptionIp6.DF = EfiIPsecTunnelCopyDf;
-  MemCpy(
+  SctCopyMem (
     &TunnelOptionIp6.LocalTunnelAddress, 
     &TunnelLocalAddressIp6,
     sizeof(EFI_IP_ADDRESS)
     );
 
-  MemCpy(
+  SctCopyMem (
     &TunnelOptionIp6.RemoteTunnelAddress, 
     &TunnelRemoteAddressIp6,
     sizeof(EFI_IP_ADDRESS)
@@ -877,7 +825,7 @@ Ip6InitIPsecConfigDataTunnel(
   //
   // SAD selector
   //
-  MemCpy(&(SadSelectorIp6Tunnel.SaId.DestAddress.v6), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
+  SctCopyMem (&(SadSelectorIp6Tunnel.SaId.DestAddress.v6), &(Ip6Head->DestinationAddress), sizeof(EFI_IPv6_ADDRESS));
   SadSelectorIp6Tunnel.SaId.Proto = EfiIPsecESP;
   SadSelectorIp6Tunnel.SaId.Spi = 0;
   

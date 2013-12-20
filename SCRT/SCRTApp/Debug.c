@@ -247,7 +247,7 @@ RuntimeHandOff (
   }
 
   *HandOffAddr =  (UINTN)HandOffPtr;
-  ZeroMem (HandOffPtr, sizeof(RUNTIME_HANDOFF));
+  SctZeroMem (HandOffPtr, sizeof(RUNTIME_HANDOFF));
   HandOffPtr->ConfigureInfo  = *ConfInfo;
 
   //

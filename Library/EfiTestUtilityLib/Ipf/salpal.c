@@ -97,7 +97,7 @@ LibInitSalAndPalProc (
     // Check signature, number of entries and size. Then checksum the table.
     //
 
-    if ( ((CompareMem(&mSalSystemTable->Signature, EFI_SAL_ST_HEADER_SIGNATURE, 4)) != 0) &&
+    if ( ((SctCompareMem (&mSalSystemTable->Signature, EFI_SAL_ST_HEADER_SIGNATURE, 4)) != 0) &&
          (mSalSystemTable->EntryCount == 0) &&
          (mSalSystemTable->Length == 0)) {
       return EFI_SUCCESS;

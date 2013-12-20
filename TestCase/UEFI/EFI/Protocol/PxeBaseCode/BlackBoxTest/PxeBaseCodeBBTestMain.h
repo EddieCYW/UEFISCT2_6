@@ -58,7 +58,7 @@ Abstract:
 #ifndef __PXE_BASE_CODE_BB_TEST_H__
 #define __PXE_BASE_CODE_BB_TEST_H__
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "Guid.h"
 #include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
@@ -441,7 +441,7 @@ BBTestSetPacketsConformanceTest (
 }
 
 #define COPY_IP_FILTER(Dest, Src)\
-  CopyMem(Dest, Src, sizeof(EFI_PXE_BASE_CODE_IP_FILTER))
+  SctCopyMem (Dest, Src, sizeof(EFI_PXE_BASE_CODE_IP_FILTER))
 
 
 EFI_STATUS
@@ -579,13 +579,6 @@ LogChar8String(
   IN EFI_TEST_LOGGING_LIBRARY_PROTOCOL *LoggingLib,
   IN CHAR8*                             Buffer,
   IN UINTN                              Len
-  );
-
-VOID *
-MemSet(
-  VOID        *b,
-  INTN        c,
-  UINTN       len
   );
 
 //

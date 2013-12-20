@@ -169,7 +169,7 @@ BBTestLoadFileFunctionTest (
   VOID                                 *Buffer;
   CHAR8                                 SampleBuffer[SAMPLE_BOOT_FILE_SIZE+1];
 
-  EfiCopyMem (SampleBuffer, "This is a Sample Boot File.", SAMPLE_BOOT_FILE_SIZE);
+  SctCopyMem (SampleBuffer, "This is a Sample Boot File.", SAMPLE_BOOT_FILE_SIZE);
 
   //
   // Get support library (Standard Lib, Profile Lib, Logging Lib)
@@ -374,7 +374,7 @@ BBTestLoadFileFunctionTest (
   // Check Received File (Name and Content)
   //
   if ((SAMPLE_BOOT_FILE_SIZE+1 == BufferSize) &&
-      (0 == EfiCompareMem (Buffer, SampleBuffer, SAMPLE_BOOT_FILE_SIZE))){
+      (0 == SctCompareMem (Buffer, SampleBuffer, SAMPLE_BOOT_FILE_SIZE))){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;

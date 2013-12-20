@@ -114,8 +114,7 @@ ParseCLPCommandLine(
 	CommandVerbLength++;
     }
 
-    gtBS->CopyMem(
-	              (VOID*)CLPCmd->CLPCmdVerb,
+    gtBS->CopyMem (VOID*)CLPCmd->CLPCmdVerb,
                      (VOID*)(EfiClpParameterBlock->CLPCommand),
                      sizeof(UINT8) * CommandVerbLength
                      );
@@ -139,8 +138,7 @@ ParseCLPCommandLine(
 	CommandOptionLength++;
     }
 
-    gtBS->CopyMem(
-	              (VOID*)CLPCmd->CLPCmdOption,
+    gtBS->CopyMem (VOID*)CLPCmd->CLPCmdOption,
                      (VOID*)(EfiClpParameterBlock->CLPCommand+CommandVerbLength),
                      sizeof(UINT8) * CommandOptionLength
                      );
@@ -163,8 +161,7 @@ ParseCLPCommandLine(
 	CLPCmdStr++;
 	CommandTargetLength++;
     }
-   gtBS->CopyMem(
-	              (VOID*)CLPCmd->CLPCmdTarget,
+   gtBS->CopyMem (VOID*)CLPCmd->CLPCmdTarget,
                      (VOID*)(EfiClpParameterBlock->CLPCommand+CommandVerbLength+CommandOptionLength),
                      sizeof(UINT8) * CommandTargetLength
                      );

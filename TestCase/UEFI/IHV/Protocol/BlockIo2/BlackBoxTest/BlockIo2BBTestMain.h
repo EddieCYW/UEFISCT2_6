@@ -275,19 +275,5 @@ FreeAlignedPool (
   IN VOID   *Buffer
   );
 
-INTN
-MemCmp(
-  VOID        *s1,
-  VOID        *s2,
-  UINTN       n
-  );
-
-VOID *
-MemSet(
-  VOID        *b,
-  INTN        c,
-  UINTN       len
-  );
-
 #endif
 

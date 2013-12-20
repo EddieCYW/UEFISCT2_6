@@ -253,7 +253,7 @@ Returns:
         return Status;
       }
 
-      EfiZeroMem (BltBuffer, Size);
+      SctZeroMem (BltBuffer, Size);
 
       Status = gtBS->AllocatePool (
                        EfiBootServicesData,
@@ -274,7 +274,7 @@ Returns:
         return Status;
       }              
                      
-      EfiZeroMem (BltBuffer2, Size);
+      SctZeroMem (BltBuffer2, Size);
 
       //
       //  Allocate BltBuffer for Blt Operations Test
@@ -719,7 +719,7 @@ Returns:
         return Status;
       }
 
-      EfiZeroMem (BltBuffer, Size);
+      SctZeroMem (BltBuffer, Size);
 
       Size = Width * Height * sizeof (EFI_GRAPHICS_OUTPUT_BLT_PIXEL);
       Status = gtBS->AllocatePool (
@@ -745,7 +745,7 @@ Returns:
         return Status;
       }
 
-      EfiZeroMem (BltBuffer2, Size);
+      SctZeroMem (BltBuffer2, Size);
       //
       // Delta should reflect the length of a row correctly
       //
@@ -1254,7 +1254,7 @@ Returns:
         return Status;
       }
 
-      EfiZeroMem (BltBuffer, Size);
+      SctZeroMem (BltBuffer, Size);
 
       Size = Width * Height * sizeof (EFI_GRAPHICS_OUTPUT_BLT_PIXEL);
       Status = gtBS->AllocatePool (
@@ -1280,7 +1280,7 @@ Returns:
         return Status;
       }
 
-      EfiZeroMem (BltBuffer2, Size);
+      SctZeroMem (BltBuffer2, Size);
 
       //
       // Call Blt() with BltOperation being EfiBltVideoToBltBuffer
@@ -3099,7 +3099,7 @@ Returns:
       return Status;
     }
 
-    EfiZeroMem (BltBufferWhole, Size);
+    SctZeroMem (BltBufferWhole, Size);
 
     Status = gtBS->AllocatePool (
                      EfiBootServicesData,
@@ -3130,7 +3130,7 @@ Returns:
       return Status;
     }
 
-    EfiZeroMem (BltBufferWhole2, Size);
+    SctZeroMem (BltBufferWhole2, Size);
 
     Status = GraphicsOutput->Blt (
                                GraphicsOutput,

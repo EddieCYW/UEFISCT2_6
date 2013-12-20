@@ -1792,7 +1792,7 @@ CompareAcpiResourceDescrptor (
     switch (Ptr1->Desc) {
 
       case ACPI_ADDRESS_SPACE_DESCRIPTOR:
-        if (CompareMem (Ptr1, Ptr2, sizeof (EFI_ACPI_ADDRESS_SPACE_DESCRIPTOR)) != 0) {
+        if (SctCompareMem (Ptr1, Ptr2, sizeof (EFI_ACPI_ADDRESS_SPACE_DESCRIPTOR)) != 0) {
           return FALSE;
         }
         Ptr1 = (EFI_ACPI_ADDRESS_SPACE_DESCRIPTOR *) ((UINT8*)Ptr1 + sizeof (EFI_ACPI_ADDRESS_SPACE_DESCRIPTOR));
@@ -1800,7 +1800,7 @@ CompareAcpiResourceDescrptor (
         break;
 
       case ACPI_END_TAG_DESCRIPTOR:
-        if (CompareMem (Ptr1, Ptr2, sizeof (EFI_ACPI_END_TAG_DESCRIPTOR)) != 0) {
+        if (SctCompareMem (Ptr1, Ptr2, sizeof (EFI_ACPI_END_TAG_DESCRIPTOR)) != 0) {
           return FALSE;
         } else {
           return TRUE;

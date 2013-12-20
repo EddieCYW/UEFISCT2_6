@@ -78,6 +78,7 @@ COMPONENT_TYPE       = BS_DRIVER
   $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
 
 [libraries.common]
+  SctLib
   EfiProtocolLib
   TestProtocolLib
   EfiDriverLib

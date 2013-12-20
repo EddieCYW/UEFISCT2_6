@@ -307,7 +307,7 @@ BBTestReadFunctionManualTest (
   // Call Read() to send data to debug port with enough time.
   //
   BufferSize = 1;
-  EfiCommonLibZeroMem ((VOID*)Buffer, sizeof(Buffer));
+  SctZeroMem ((VOID*)Buffer, sizeof(Buffer));
 
   //
   // Wait for the input data.

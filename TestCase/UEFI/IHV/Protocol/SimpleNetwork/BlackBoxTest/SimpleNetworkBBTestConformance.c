@@ -1193,7 +1193,7 @@ BBTestMCastIPtoMACConformanceTest (
   IP.v4.Addr[1] = 255;
   IP.v4.Addr[2] = 255;
   IP.v4.Addr[3] = 255;
-  EfiSetMem (&MAC, sizeof (EFI_MAC_ADDRESS), 0x0);
+  SctSetMem (&MAC, sizeof (EFI_MAC_ADDRESS), 0x0);
 
   Status = SnpInterface->MCastIPtoMAC(SnpInterface, FALSE, &IP, &MAC);
   if ((Status == EFI_NOT_STARTED) && (SnpInterface->Mode->State == EfiSimpleNetworkStopped)) {
@@ -1755,8 +1755,8 @@ BBTestTransmitConformanceTest (
   Buffer = NULL;
   HeaderSize = 0;
   BufferSize = SnpInterface->Mode->MediaHeaderSize;
-  EfiSetMem (&SrcAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
-  EfiSetMem (&DestAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
+  SctSetMem (&SrcAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
+  SctSetMem (&DestAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
   Protocol = SnpInterface->Mode->IfType;
   Status = gtBS->AllocatePool (EfiLoaderData, 2048, &Buffer);
   if (EFI_ERROR(Status)) {
@@ -2031,8 +2031,8 @@ BBTestReceiveConformanceTest (
   Buffer1 = NULL;
   HeaderSize = 0;
   BufferSize = 0;
-  EfiSetMem (&SrcAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
-  EfiSetMem (&DestAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
+  SctSetMem (&SrcAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
+  SctSetMem (&DestAddr, sizeof (EFI_MAC_ADDRESS), 0x0);
   Protocol = 0;
   Status = gtBS->AllocatePool (EfiLoaderData, 2048, &Buffer);
   if (EFI_ERROR(Status)) {

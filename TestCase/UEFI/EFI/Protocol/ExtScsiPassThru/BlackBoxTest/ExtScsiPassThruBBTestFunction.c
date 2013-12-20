@@ -121,7 +121,7 @@ BBTestGetNextTargetLunFunctionAutoTest (
   // Retrieve the list of legal Target IDs and LUNs for SCSI devices on a SCSI channel.
   //
   TargetAddr = &Target[0];
-  SetMem (Target, TARGET_MAX_BYTES, 0xFF);    
+  SctSetMem (Target, TARGET_MAX_BYTES, 0xFF);    
   
   Status = EFI_SUCCESS;
   while (!EFI_ERROR(Status)) {
@@ -220,7 +220,7 @@ BBTestBuildDevicePathFunctionAutoTest (
   // Call BuildDevicePath().
   //
   TargetAddr = &Target[0];
-  SetMem (Target, TARGET_MAX_BYTES, 0xFF);   
+  SctSetMem (Target, TARGET_MAX_BYTES, 0xFF);   
   Status =GetPresentTargetLun(ExtScsiPassThru, TargetAddr, &Lun);
   if (Status != EFI_SUCCESS){
   	StandardLib->RecordAssertion (
@@ -331,7 +331,7 @@ BBTestGetTargetLunFunctionAutoTest (
   // Call GetTargetLun().
   //
   TargetAddr = &Target[0];
-  SetMem (Target, TARGET_MAX_BYTES, 0xFF);   
+  SctSetMem (Target, TARGET_MAX_BYTES, 0xFF);   
   Status =GetPresentTargetLun(ExtScsiPassThru, TargetAddr, &Lun);
   if (Status != EFI_SUCCESS){
   	StandardLib->RecordAssertion (
@@ -378,7 +378,7 @@ BBTestGetTargetLunFunctionAutoTest (
   gtBS->FreePool (DevicePath);
 
   if ((!EFI_ERROR(Status)) && 
-      (0 == CompareMem (NewTargetAddr, TargetAddr, TARGET_MAX_BYTES)) && 
+      (0 == SctCompareMem (NewTargetAddr, TargetAddr, TARGET_MAX_BYTES)) && 
       (NewLun == Lun)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -539,7 +539,7 @@ BBTestResetTargetLunFunctionAutoTest (
   // Call ResetTargetLun().
   //
   TargetAddr = &Target[0];
-  SetMem (Target, TARGET_MAX_BYTES, 0xFF);   
+  SctSetMem (Target, TARGET_MAX_BYTES, 0xFF);   
   Status =GetPresentTargetLun(ExtScsiPassThru, TargetAddr, &Lun);
   if (Status != EFI_SUCCESS){
   	StandardLib->RecordAssertion (
@@ -641,7 +641,7 @@ BBTestGetNextTargetFunctionAutoTest (
   // Retrieve the list of legal Target IDs for SCSI devices on a SCSI channel.
   //
   TargetAddr = &Target[0];
-  SetMem (Target, TARGET_MAX_BYTES, 0xFF);
+  SctSetMem (Target, TARGET_MAX_BYTES, 0xFF);
   
   Status = EFI_SUCCESS;
   while (!EFI_ERROR(Status)) {
@@ -744,7 +744,7 @@ BBTestPassThruFunctionAutoTest (
   // Get valid Target and Lun
   //
   TargetAddr = &Target[0];
-  SetMem (Target, TARGET_MAX_BYTES, 0xFF);  
+  SctSetMem (Target, TARGET_MAX_BYTES, 0xFF);  
   Status =GetPresentTargetLun(ExtScsiPassThru, TargetAddr, &Lun);
   if (Status != EFI_SUCCESS){
   	StandardLib->RecordAssertion (
@@ -768,9 +768,9 @@ BBTestPassThruFunctionAutoTest (
   //
   // Initialize the Request Packet.
   //
-  ZeroMem (&Packet,sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb, 6);
-  ZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet,sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb, 6);
+  SctZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;
@@ -848,9 +848,9 @@ BBTestPassThruFunctionAutoTest (
   //
   // Initialize the Request Packet.
   //
-  ZeroMem (&Packet,sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
-  ZeroMem (Cdb,6);
-  ZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
+  SctZeroMem (&Packet,sizeof (EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
+  SctZeroMem (Cdb,6);
+  SctZeroMem (Data, ExtScsiPassThru->Mode->IoAlign + 96);
 
   // Set to OP_INQUIRY.
   Cdb[0] = 0x12;

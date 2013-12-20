@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EfiTest.h"
 #include "EfiDriverLib.h"
 #include "EfiPrintLib.h"
@@ -282,7 +282,7 @@ Returns:
     return Status;
   }
 
-  EfiZeroMem (Private, sizeof(TSL_INIT_PRIVATE_DATA));
+  SctZeroMem (Private, sizeof(TSL_INIT_PRIVATE_DATA));
   Private->Signature            = TSL_INIT_PRIVATE_DATA_SIGNATURE;
   Private->ImageHandle          = ImageHandle;
   Private->TslInit.Revision     = 0x10000;
@@ -425,7 +425,7 @@ Returns:
     return Status;
   }
 
-  EfiZeroMem (Private, sizeof(TEST_LOGGING_PRIVATE_DATA));
+  SctZeroMem (Private, sizeof(TEST_LOGGING_PRIVATE_DATA));
   Private->Signature                       = TEST_LOGGING_PRIVATE_DATA_SIGNATURE;
   Private->TestLogging.LibraryRevision     = 0x10000;
   Private->TestLogging.Name                = gTllName;
@@ -560,7 +560,7 @@ Returns:
   }
 
   if (VerboseLevel <= Private->VerboseLevel) {
-    EfiZeroMem (Buffer, sizeof(Buffer));
+    SctZeroMem (Buffer, sizeof(Buffer));
     for (Index = 0; Index < Length; Index ++) {
       Buffer[Index] = L'-';
     }
@@ -724,7 +724,7 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
   if (VerboseLevel <= Private->VerboseLevel) {
-    EfiZeroMem (Buffer, sizeof(Buffer));
+    SctZeroMem (Buffer, sizeof(Buffer));
     for (BitPos = 0; BitPos < Length; BitPos++) {
       if (BitMask & (1<<BitPos)) {
         if (Buffer[0] == L'\0') {
@@ -788,8 +788,8 @@ Returns:
   if ((Length == 0) || !((Flags & EFI_DUMP_HEX) || (Flags & EFI_DUMP_ASCII))) {
     return EFI_INVALID_PARAMETER;
   }
-  EfiZeroMem (HexBuffer, sizeof(HexBuffer));
-  EfiZeroMem (AsciiBuffer, sizeof(AsciiBuffer));
+  SctZeroMem (HexBuffer, sizeof(HexBuffer));
+  SctZeroMem (AsciiBuffer, sizeof(AsciiBuffer));
   if (VerboseLevel <= Private->VerboseLevel) {
     for (Index = 0; Index < Length; Index++) {
       //
@@ -824,8 +824,8 @@ Returns:
                   AsciiBuffer);
         }
         TllWriteLogFile (Private, OutBuffer);
-        EfiZeroMem (HexBuffer, sizeof(HexBuffer));
-        EfiZeroMem (AsciiBuffer, sizeof(AsciiBuffer));
+        SctZeroMem (HexBuffer, sizeof(HexBuffer));
+        SctZeroMem (AsciiBuffer, sizeof(AsciiBuffer));
       }
     }
     //
@@ -971,7 +971,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
 
-  EfiCopyMem (&Private->EntryId, Config->EntryId, sizeof(EFI_GUID));
+  SctCopyMem (&Private->EntryId, Config->EntryId, sizeof(EFI_GUID));
 
   Private->EntryName = TllStrDuplicate (Config->EntryName);
   if (Private->EntryName == NULL) {
@@ -1329,7 +1329,7 @@ TllGuidsDuplicate (
   NoGuids = 0;
   Guid    = Guids;
 
-  while (EfiCompareMem (Guid, &gEfiNullGuid, sizeof(EFI_GUID)) != 0) {
+  while (SctCompareMem (Guid, &gEfiNullGuid, sizeof(EFI_GUID)) != 0) {
     NoGuids ++;
     Guid ++;
   }
@@ -1343,7 +1343,7 @@ TllGuidsDuplicate (
     return NULL;
   }
 
-  EfiCopyMem (Buffer, Guids, (NoGuids + 1) * sizeof(EFI_GUID));
+  SctCopyMem (Buffer, Guids, (NoGuids + 1) * sizeof(EFI_GUID));
 
   return Buffer;
 }

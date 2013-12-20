@@ -497,7 +497,7 @@ Routine Description:
   //
   // Initialize the config data structure
   //
-  ZeroMem (ConfigData, sizeof(EFI_SCT_CONFIG_DATA));
+  SctZeroMem (ConfigData, sizeof(EFI_SCT_CONFIG_DATA));
 
   //
   // Initialize the items of config data

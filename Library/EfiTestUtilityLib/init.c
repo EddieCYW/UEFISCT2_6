@@ -201,7 +201,7 @@ Returns:
       // If this code matches, use this driver
       //
 
-      if (CompareMem (Languages+Position, LangCode, ISO_639_2_ENTRY_SIZE) == 0) {
+      if (SctCompareMem (Languages+Position, LangCode, ISO_639_2_ENTRY_SIZE) == 0) {
         UnicodeInterface = Ui;
         goto Done;
       }
