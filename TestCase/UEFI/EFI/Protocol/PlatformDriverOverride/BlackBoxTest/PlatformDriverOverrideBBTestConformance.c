@@ -184,7 +184,7 @@ BBTestGetDriverConformanceAutoTest (
   }
 
   if (Handles) {
-    FreePool (Handles);
+    SctFreePool (Handles);
   }
 
   return EFI_SUCCESS;
@@ -315,7 +315,7 @@ BBTestGetDriverPathConformanceAutoTest (
   }
 
   if (Handles) {
-    FreePool (Handles);
+    SctFreePool (Handles);
   }
 
   return EFI_SUCCESS;
@@ -548,7 +548,7 @@ BBTestDriverLoadedConformanceAutoTest (
                  );
 
   if (Handles) {
-    FreePool (Handles);
+    SctFreePool (Handles);
   }
 
   return EFI_SUCCESS;

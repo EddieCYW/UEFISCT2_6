@@ -223,7 +223,7 @@ Returns:
   
   Status = CreateFile (RootDir, FileName, &FileHandle);
   if (EFI_ERROR(Status)) {
-    FreePool (FileName);
+    SctFreePool (FileName);
     return Status;
   }
   FileHandle->Close (FileHandle);
@@ -278,7 +278,7 @@ FUNC_EXIT:
   }
 
   if (FileName != NULL) {
-    FreePool (FileName);
+    SctFreePool (FileName);
   }
   
   //
@@ -355,7 +355,7 @@ Returns:
   
   Status = CreateFile (RootDir, FileName, &FileHandle);
   if (EFI_ERROR(Status)) {
-  	 FreePool (FileName);
+  	 SctFreePool (FileName);
     return Status;
   }
   FileHandle->Close (FileHandle);
@@ -434,7 +434,7 @@ FUNC_EXIT:
   }
 
   if (FileName != NULL) {
-    FreePool (FileName);
+    SctFreePool (FileName);
   }
   
   //

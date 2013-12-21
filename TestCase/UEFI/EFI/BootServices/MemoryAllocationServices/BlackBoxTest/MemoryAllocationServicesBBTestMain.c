@@ -291,9 +291,7 @@ EFI_STATUS
 FreeMemoryMap (
   )
 {
-  gtBS->FreePool (
-          (VOID*)MemoryMap
-          );
+  gtBS->FreePool ((VOID*)MemoryMap);
   MemoryMap = NULL;
   MemoryMapSizeNeeded = 0;
   return EFI_SUCCESS;

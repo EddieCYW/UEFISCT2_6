@@ -306,7 +306,7 @@ AllocatePoolDbg (
 
   Size += sizeof (DBG_POOL_INFO);
 
-  Buffer = (UINT8 *) EfiLibAllocatePool (Size);
+  Buffer = (UINT8 *) SctAllocatePool (Size);
   if (Buffer != NULL) {
     Index             = 0;
     Info              = (DBG_POOL_INFO *) Buffer;

@@ -619,7 +619,7 @@ BBTestPassThruFunctionAutoTest (
   //
   // Initialize the Request Packet.
   //
-  Data = (UINT8 *)AllocatePool (ScsiPassThru->Mode->IoAlign + 96);
+  Data = (UINT8 *)SctAllocatePool (ScsiPassThru->Mode->IoAlign + 96);
 
   SctZeroMem (&Packet,sizeof (EFI_SCSI_PASS_THRU_SCSI_REQUEST_PACKET));
   SctZeroMem (Cdb,6);
@@ -758,7 +758,7 @@ BBTestPassThruFunctionAutoTest (
     return EFI_UNSUPPORTED;
   }
 
-  FreePool (Data);
+  SctFreePool (Data);
 
   return EFI_SUCCESS;
 }

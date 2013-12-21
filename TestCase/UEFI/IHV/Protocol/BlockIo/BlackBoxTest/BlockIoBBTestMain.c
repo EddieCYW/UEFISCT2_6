@@ -710,7 +710,7 @@ AllocateAlignedPool (
   //
   ASSERT (RealAllocationSize > AllocationSize); 
 
-  Status = (gtBS->AllocatePool) (PoolType, RealAllocationSize, &RawAddress);
+  Status = (gtBS->AllocatePool (PoolType, RealAllocationSize, &RawAddress);
   if (EFI_ERROR (Status)) {
     return NULL;
   }
@@ -755,7 +755,7 @@ FreeAlignedPool (
   FreePointer = (VOID **)((UINTN) Buffer - sizeof (RawAddress));
   RawAddress  = *FreePointer;
 
-  Status = (gtBS->FreePool) (RawAddress);
+  Status = (gtBS->FreePool (RawAddress);
 
   return Status;
 }

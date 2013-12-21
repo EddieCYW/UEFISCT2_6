@@ -120,11 +120,10 @@ EFI_STATUS GetAuthInfoTest( EFI_AUTHENTICATION_INFO_PROTOCOL *_this, EFI_HANDLE 
 		return EFI_UNSUPPORTED;
 	}
 	
-	if(info != NULL)
-		{
-			free(info);
-			info = NULL;
-		}
+	if (info != NULL) {
+      tBS->FreePool (info);
+      info = NULL;
+    }
 		
 	result = _this->Get(_this, NULL, &info);	
 	logMsg(gAuthenticationBBTestMainAssertionGuid004,

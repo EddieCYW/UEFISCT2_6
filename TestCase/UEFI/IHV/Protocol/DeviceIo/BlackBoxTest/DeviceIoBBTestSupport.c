@@ -136,12 +136,12 @@ CreateAllDevIoDevices (
     return EFI_ABORTED;
   }
 
-  gDevIoDevices = (DEVIO_DEVICE *)AllocateZeroPool (
+  gDevIoDevices = (DEVIO_DEVICE *)SctAllocateZeroPool (
                                     sizeof (DEVIO_DEVICE) * HandleNum
                                     );
 
   if (gDevIoDevices == NULL) {
-    FreePool (HandleBuffer);
+    SctFreePool (HandleBuffer);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -154,8 +154,8 @@ CreateAllDevIoDevices (
                      );
 
     if (EFI_ERROR(Status)) {
-      FreePool (HandleBuffer);
-      FreePool (gDevIoDevices);
+      SctFreePool (HandleBuffer);
+      SctFreePool (gDevIoDevices);
       return Status;
     }
 
@@ -168,8 +168,8 @@ CreateAllDevIoDevices (
                      );
 
     if (EFI_ERROR(Status)) {
-      FreePool (HandleBuffer);
-      FreePool (gDevIoDevices);
+      SctFreePool (HandleBuffer);
+      SctFreePool (gDevIoDevices);
       return Status;
     }
 
@@ -179,7 +179,7 @@ CreateAllDevIoDevices (
 
   gDevIoDevNumber = HandleNum;
 
-  FreePool (HandleBuffer);
+  SctFreePool (HandleBuffer);
 
   //
   //done successfully.
@@ -899,7 +899,7 @@ ConvertStringToHex (
   }
 
   TempBuffer = NULL;
-  TempBuffer = AllocatePool (Length);
+  TempBuffer = SctAllocatePool (Length);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

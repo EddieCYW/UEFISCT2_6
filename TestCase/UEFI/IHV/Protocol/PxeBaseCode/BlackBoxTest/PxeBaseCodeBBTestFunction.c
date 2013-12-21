@@ -3595,7 +3595,7 @@ BBTestTftpGetFileSize (
                  );
 
   // Free string, FileName
-  FreePool (FileName);
+  SctFreePool (FileName);
 
   return Status;
 }
@@ -3742,7 +3742,7 @@ BBTestTftpReadFile  (
                  );
 
   gtBS->FreePool (BufferPtr);
-  FreePool  (FileName);
+  SctFreePool (FileName);
 
   return Status;
 }
@@ -3873,7 +3873,7 @@ BBTestTftpWriteFile    (
                  );
 
   gtBS->FreePool (BufferPtr);
-  FreePool  (FileName);
+  SctFreePool (FileName);
   // Get Raw Data
   return EFI_SUCCESS;
 }
@@ -3987,7 +3987,7 @@ BBTestTftpReadDirectory (
                  );
 
   gtBS->FreePool (BufferPtr);
-  FreePool  (FileName);
+  SctFreePool (FileName);
 
   return Status;
 }
@@ -4096,7 +4096,7 @@ BBTestMtftpGetFileSize (
                  Status
                  );
 
-  FreePool  (FileName);
+  SctFreePool (FileName);
 
   return Status;
 }
@@ -4225,7 +4225,7 @@ BBTestMtftpReadFile (
                  );
 
   gtBS->FreePool (BufferPtr);
-  FreePool  (FileName);
+  SctFreePool (FileName);
 
   return Status;
 }
@@ -4359,7 +4359,7 @@ BBTestMtftpReadDirectory (
                  );
 
   gtBS->FreePool (BufferPtr);
-  FreePool  (FileName);
+  SctFreePool (FileName);
 
   return Status;
 }

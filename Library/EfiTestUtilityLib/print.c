@@ -381,7 +381,7 @@ _PoolPrint (
 
         newlen += PRINT_STRING_LEN;
         spc->maxlen = newlen;
-        spc->str = ReallocatePool (
+        spc->str = SctReallocatePool (
                         spc->str,
                         spc->len * sizeof(CHAR16),
                         spc->maxlen * sizeof(CHAR16)
@@ -911,8 +911,8 @@ Returns:
       return 0;
     }
 
-    Item.Scratch = AllocateZeroPool (sizeof (CHAR16) * PRINT_ITEM_BUFFER_LEN);
-    Buffer = AllocateZeroPool (sizeof (CHAR16) * PRINT_STRING_LEN);
+    Item.Scratch = SctAllocateZeroPool (sizeof (CHAR16) * PRINT_ITEM_BUFFER_LEN);
+    Buffer = SctAllocateZeroPool (sizeof (CHAR16) * PRINT_STRING_LEN);
 
     if (!Item.Scratch || !Buffer) {
       return EFI_OUT_OF_RESOURCES;
@@ -1118,8 +1118,8 @@ Returns:
     // Flush buffer
     PFLUSH (ps);
 
-    FreePool (Item.Scratch);
-    FreePool (Buffer);
+    SctFreePool (Item.Scratch);
+    SctFreePool (Buffer);
 
     return ps->Len;
 }

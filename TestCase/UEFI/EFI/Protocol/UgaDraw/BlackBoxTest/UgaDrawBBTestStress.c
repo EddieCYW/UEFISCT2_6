@@ -3512,7 +3512,7 @@ BBTestEfiUgaVideoBltBufferStressAutoTest (
         //
         // Allocate buffer for BltBuffer4
         //
-        //BltBuffer4 = AllocateZeroPool (Width * Height * sizeof (EFI_UGA_PIXEL));
+        //BltBuffer4 = SctAllocateZeroPool (Width * Height * sizeof (EFI_UGA_PIXEL));
         Size = Width * Height * sizeof (EFI_UGA_PIXEL);
         Status = gtBS->AllocatePool (
                          EfiBootServicesData,

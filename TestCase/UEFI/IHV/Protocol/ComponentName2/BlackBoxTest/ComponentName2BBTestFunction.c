@@ -172,7 +172,7 @@ BBTestGetDriverNameFuncTestCheckpoint1 (
   	return  EFI_UNSUPPORTED;
 
   StringLength = strlena (SupportedLanguages);
-  PoolAddress = (CHAR8 *) AllocateZeroPool (StringLength + 1);
+  PoolAddress = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL)
     return  EFI_UNSUPPORTED;
 
@@ -383,7 +383,7 @@ BBTestGetControllerNameFuncTestCheckpoint1 (
   }
   
   StringLength = strlena(SupportedLanguages);
-  PoolAddress = (CHAR8 *) AllocateZeroPool (StringLength + 1);
+  PoolAddress = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL) {
     gtBS->FreePool (ControllerHandleBuffer);
     return  EFI_UNSUPPORTED;
@@ -612,7 +612,7 @@ BBTestGetControllerNameFuncTestCheckpoint2 (
   }	
 
   StringLength = strlena(SupportedLanguages);
-  PoolAddress = (CHAR8 *) AllocateZeroPool (StringLength + 1);
+  PoolAddress = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL) {
     gtBS->FreePool (ControllerHandleBuffer);
     return  EFI_UNSUPPORTED;

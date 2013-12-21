@@ -57,47 +57,6 @@ Abstract:
 #include "SctLib.h"
 #include "TestProfileSupport.h"
 
-extern EFI_BOOT_SERVICES *tBS;
-
-VOID *
-Calloc(
-  UINTN       NMemb,
-  UINTN       MembSize
-  )
-{
-  UINTN NewSize;
-  VOID *NewMem;
-
-  NewSize = NMemb * MembSize;
-  NewMem = Malloc (NewSize);
-  if (NewMem) {
-    SctZeroMem (NewMem, NewSize);
-  }
-
-  return NewMem;
-}
-
-VOID*
-Malloc (
-  UINTN       size
-  )
-{
-  VOID  *pMem;
-
-  if (tBS->AllocatePool (EfiBootServicesData, size, &pMem) != EFI_SUCCESS) {
-    return NULL;
-  }
-  return pMem;
-}
-
-VOID
-Free (
-  VOID        *addr
-  )
-{
-  tBS->FreePool (addr);
-}
-
 CHAR8 *
 StrChr(
   CHAR8       *p,
@@ -199,7 +158,7 @@ StrDup(
   CHAR8 *copy;
 
   if (str != NULL) {
-    copy = Malloc(StrLen(str) + 1);
+    copy = SctAllocatePool (StrLen(str) + 1);
     if (copy != NULL)
       return StrCpy(copy, str);
   }
@@ -230,7 +189,7 @@ WcsDup (
   CHAR16 *copy;
 
   if (str != NULL) {
-    copy = Calloc(WcsLen(str) + 1, sizeof(CHAR16));
+    copy = SctAllocateZeroPool ( (WcsLen(str) + 1) * sizeof(CHAR16));
     if (copy != NULL)
       return WcsCpy(copy, str);
   }

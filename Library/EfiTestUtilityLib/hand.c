@@ -107,7 +107,7 @@ Returns:
   }
 
   if (Handles) {
-    FreePool (Handles);
+    SctFreePool (Handles);
   }
 
   return Status;

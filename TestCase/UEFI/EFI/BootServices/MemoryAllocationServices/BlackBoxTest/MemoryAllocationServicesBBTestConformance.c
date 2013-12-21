@@ -862,7 +862,7 @@ BBTestFreePagesConsistencyTest (
 }
 
 /**
- *  Entrypoint for gtBS->AllocatePool() Consistency Test.
+ *  Entrypoint for gtBS->AllocatePool () Consistency Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
  *  @param ClientInterface a pointer to the interface to be tested.
  *  @param TestLevel test "thoroughness" control.
@@ -1071,7 +1071,7 @@ BBTestAllocatePoolConsistencyTest (
 }
 
 /**
- *  Entrypoint for gtBS->FreePool() Consistency Test.
+ *  Entrypoint for gtBS->FreePool () Consistency Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
  *  @param ClientInterface a pointer to the interface to be tested.
  *  @param TestLevel test "thoroughness" control.

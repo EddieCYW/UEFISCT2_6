@@ -118,8 +118,8 @@ extern EFI_NET_DEBUG_CONFIG_PROTOCOL  *NetDebugConfigProtocol;
 #define NetAllocatePool(Size)       AllocatePoolDbg( Size, __WFILE__, __LINE__ )
 #define NetFreePool                 FreePoolDbg
 #else
-#define NetAllocateZeroPool   EfiLibAllocateZeroPool
-#define NetAllocatePool       EfiLibAllocatePool
+#define NetAllocateZeroPool   SctAllocateZeroPool
+#define NetAllocatePool       SctAllocatePool
 #define NetFreePool           tBS->FreePool
 #endif
 

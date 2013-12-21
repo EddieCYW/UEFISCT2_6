@@ -373,7 +373,7 @@ PollMemCheckPoint (
   //allocate a TIMER_EVENT_CONTEXT.
   //
   EventContext = NULL;
-  EventContext = AllocateZeroPool (sizeof (TIMER_EVENT_CONTEXT));
+  EventContext = SctAllocateZeroPool (sizeof (TIMER_EVENT_CONTEXT));
   if (EventContext == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1378,7 +1378,7 @@ PollIoCheckPoint (
   //allocate a TIMER_EVENT_CONTEXT.
   //
   EventContext = NULL;
-  EventContext = AllocateZeroPool (sizeof (TIMER_EVENT_CONTEXT));
+  EventContext = SctAllocateZeroPool (sizeof (TIMER_EVENT_CONTEXT));
   if (EventContext == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2383,7 +2383,7 @@ MemRead_Func (
                );
 
     if (EFI_ERROR(Status)) {
-      Buffer = (UINT8 *)AllocatePool (AddressLength);
+      Buffer = (UINT8 *)SctAllocatePool (AddressLength);
       if (Buffer == NULL) {
         gtBS->FreePool (PciDevicePathStr);
         ProfileLib->EfiIniClose (
@@ -2401,7 +2401,7 @@ MemRead_Func (
     //allocate read buffer.
     //
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (PciDevicePathStr);
@@ -2415,7 +2415,7 @@ MemRead_Func (
     //allocate BackupBuffer.
     //
     BackupBuffer = NULL;
-    BackupBuffer = AllocatePool (AddressLength);
+    BackupBuffer = SctAllocatePool (AddressLength);
     if (BackupBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (ReadBuffer);
@@ -3054,7 +3054,7 @@ MemWrite_Func (
                &Buffer
                );
     if (EFI_ERROR(Status)) {
-      Buffer = (UINT8 *)AllocatePool (AddressLength);
+      Buffer = (UINT8 *)SctAllocatePool (AddressLength);
       if (Buffer == NULL) {
         gtBS->FreePool (PciDevicePathStr);
         ProfileLib->EfiIniClose (
@@ -3071,7 +3071,7 @@ MemWrite_Func (
     //allocate read buffer.
     //
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (PciDevicePathStr);
@@ -3085,7 +3085,7 @@ MemWrite_Func (
     //allocate BackupBuffer.
     //
     BackupBuffer = NULL;
-    BackupBuffer = AllocatePool (AddressLength);
+    BackupBuffer = SctAllocatePool (AddressLength);
     if (BackupBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (ReadBuffer);
@@ -3710,7 +3710,7 @@ IoRead_Func (
                &Buffer
                );
     if (EFI_ERROR(Status)) {
-      Buffer = (UINT8 *)AllocatePool (AddressLength);
+      Buffer = (UINT8 *)SctAllocatePool (AddressLength);
       if (Buffer == NULL) {
         gtBS->FreePool (PciDevicePathStr);
         ProfileLib->EfiIniClose (
@@ -3728,7 +3728,7 @@ IoRead_Func (
     //
 
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (PciDevicePathStr);
@@ -3742,7 +3742,7 @@ IoRead_Func (
     //allocate BackupBuffer.
     //
     BackupBuffer = NULL;
-    BackupBuffer = AllocatePool (AddressLength);
+    BackupBuffer = SctAllocatePool (AddressLength);
     if (BackupBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (ReadBuffer);
@@ -4376,7 +4376,7 @@ IoWrite_Func (
                &Buffer
                );
     if (EFI_ERROR(Status)) {
-      Buffer = (UINT8 *)AllocatePool (AddressLength);
+      Buffer = (UINT8 *)SctAllocatePool (AddressLength);
       if (Buffer == NULL) {
         gtBS->FreePool (PciDevicePathStr);
         ProfileLib->EfiIniClose (
@@ -4394,7 +4394,7 @@ IoWrite_Func (
     //
 
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (PciDevicePathStr);
@@ -4408,7 +4408,7 @@ IoWrite_Func (
     //allocate BackupBuffer.
     //
     BackupBuffer = NULL;
-    BackupBuffer = AllocatePool (AddressLength);
+    BackupBuffer = SctAllocatePool (AddressLength);
     if (BackupBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (ReadBuffer);

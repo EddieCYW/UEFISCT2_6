@@ -291,7 +291,7 @@ BBTestExecuteScsiCommandConformanceAutoTest (
   }
 
   ScsiIo = (EFI_SCSI_IO_PROTOCOL *)ClientInterface;
-  Data = AllocatePool(ScsiIo->IoAlign + 96);
+  Data = SctAllocatePool (ScsiIo->IoAlign + 96);
 
   //
   // Assertion Point 3.2.3.2.1
@@ -472,7 +472,7 @@ BBTestExecuteScsiCommandConformanceAutoTest (
     return EFI_UNSUPPORTED;
   }
 
-  FreePool(Data);
+  SctFreePool (Data);
 
   return EFI_SUCCESS;
 }

@@ -679,7 +679,7 @@ BBTestGetStringConformanceTestCheckpoint2 (
   LanguageName = L"English(United States)";
   StringSize = 8;
   ActuStringSize = 44;
-  OutString = (EFI_STRING)AllocateZeroPool( StringSize );
+  OutString = (EFI_STRING)SctAllocateZeroPool ( StringSize );
   
   PackageList = (EFI_HII_PACKAGE_LIST_HEADER*)mPackageList1;
   //
@@ -692,7 +692,7 @@ BBTestGetStringConformanceTestCheckpoint2 (
                           &Handle
                           );
   if ( EFI_ERROR(Status) ) {
-    gtBS->FreePool( OutString );
+    gtBS->FreePool ( OutString );
     return Status;
   }
   
@@ -709,7 +709,7 @@ BBTestGetStringConformanceTestCheckpoint2 (
                         NULL
                         );
   if ( EFI_ERROR(Status) ) {
-    gtBS->FreePool( OutString );
+    gtBS->FreePool ( OutString );
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
                             Handle
@@ -757,7 +757,7 @@ BBTestGetStringConformanceTestCheckpoint2 (
   //
   // Release the resource of OutString
   //
-  gtBS->FreePool( OutString );
+  gtBS->FreePool ( OutString );
 
   return EFI_SUCCESS;
 }
@@ -827,7 +827,7 @@ BBTestGetStringConformanceTestCheckpoint3 (
     return Status;
   }
   
-  OutString = (EFI_STRING)AllocateZeroPool( StringSize );
+  OutString = (EFI_STRING)SctAllocateZeroPool ( StringSize );
   
   //
   // Call GetString with string is not in the specified Language
@@ -927,7 +927,7 @@ BBTestGetStringConformanceTestCheckpoint3 (
   //
   // Release the resource of OutString
   //
-  gtBS->FreePool( OutString );
+  gtBS->FreePool ( OutString );
 
   return EFI_SUCCESS;
 }
@@ -959,7 +959,7 @@ BBTestGetStringConformanceTestCheckpoint4 (
   String = L"This is a new string!";
   LanguageName = L"English(United States)";
   StringSize = 64;
-  OutString = (EFI_STRING)AllocateZeroPool( StringSize );
+  OutString = (EFI_STRING)SctAllocateZeroPool ( StringSize );
   
   PackageList = (EFI_HII_PACKAGE_LIST_HEADER*)mPackageList1;
   //
@@ -972,7 +972,7 @@ BBTestGetStringConformanceTestCheckpoint4 (
                           &Handle
                           );
   if ( EFI_ERROR(Status) ) {
-    gtBS->FreePool( OutString );
+    gtBS->FreePool ( OutString );
     return Status;
   }
   
@@ -989,7 +989,7 @@ BBTestGetStringConformanceTestCheckpoint4 (
                         NULL
                         );
   if ( EFI_ERROR(Status) ) {
-    gtBS->FreePool( OutString );
+    gtBS->FreePool ( OutString );
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
                             Handle
@@ -1124,7 +1124,7 @@ BBTestGetStringConformanceTestCheckpoint4 (
   //
   // Release the resource of OutString
   //
-  gtBS->FreePool( OutString );
+  gtBS->FreePool ( OutString );
 
   return EFI_SUCCESS;
 }
@@ -1362,7 +1362,7 @@ BBTestGetLanguagesConformanceTestCheckpoint1 (
   // Init Language and LanguagesSize
   //
   LanguagesSize = 512;
-  Languages = (CHAR8*)AllocateZeroPool( LanguagesSize );
+  Languages = (CHAR8*)SctAllocateZeroPool ( LanguagesSize );
   
   PackageList = (EFI_HII_PACKAGE_LIST_HEADER*)mPackageList1;
   //
@@ -1375,7 +1375,7 @@ BBTestGetLanguagesConformanceTestCheckpoint1 (
                           &Handle
                           );
   if ( EFI_ERROR(Status) ) {
-    gtBS->FreePool( Languages );
+    gtBS->FreePool ( Languages );
     return Status;
   }
   
@@ -1482,9 +1482,9 @@ BBTestGetLanguagesConformanceTestCheckpoint1 (
                  Status
                  );
   
-  gtBS->FreePool( Languages );
+  gtBS->FreePool ( Languages );
   LanguagesSize = 2;
-  Languages = (CHAR8*)AllocateZeroPool( LanguagesSize );
+  Languages = (CHAR8*)SctAllocateZeroPool ( LanguagesSize );
   
   //
   // Call GetLanguages with LanguagesSize indicates the Languages is too small
@@ -1553,7 +1553,7 @@ BBTestGetSecondaryLanguagesConformanceTestCheckpoint1 (
   // Init Language and LanguagesSize
   //
   SecondLanguagesSize = 512;
-  SecondLanguages = (CHAR8*)AllocateZeroPool( SecondLanguagesSize );
+  SecondLanguages = (CHAR8*)SctAllocateZeroPool ( SecondLanguagesSize );
   
   PackageList = (EFI_HII_PACKAGE_LIST_HEADER*)mPackageList1;
   //
@@ -1566,7 +1566,7 @@ BBTestGetSecondaryLanguagesConformanceTestCheckpoint1 (
                           &Handle
                           );
   if ( EFI_ERROR(Status) ) {
-    gtBS->FreePool( SecondLanguages );
+    gtBS->FreePool ( SecondLanguages );
     return Status;
   }
   
@@ -1775,7 +1775,7 @@ BBTestGetSecondaryLanguagesConformanceTestCheckpoint1 (
   //
   // Release the resource of Languages
   //
-  gtBS->FreePool( SecondLanguages );
+  gtBS->FreePool ( SecondLanguages );
 
   return EFI_SUCCESS;
 }

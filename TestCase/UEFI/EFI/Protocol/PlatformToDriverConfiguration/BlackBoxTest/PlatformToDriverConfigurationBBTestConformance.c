@@ -122,7 +122,7 @@ BBTestQueryConformanceAutoTest (
   ParameterTypeGuid = &gEfiPlatformToDriverConfigurationClpGuid;
   *ParameterClpBlockSize = sizeof( EFI_CONFIGURE_CLP_PARAMETER_BLK );
 
-  Status = gtBS->AllocatePool(EfiBootServicesData,*ParameterClpBlockSize,(VOID **)&ParameterClpBlock);
+  Status = gtBS->AllocatePool (EfiBootServicesData,*ParameterClpBlockSize,(VOID **)&ParameterClpBlock);
   if(EFI_ERROR(Status)){
      StandardLib->RecordAssertion (
                    StandardLib,
@@ -293,7 +293,7 @@ BBTestQueryConformanceAutoTest (
   }
 
   if (CtrlerHandles) {
-    FreePool (CtrlerHandles);
+    SctFreePool (CtrlerHandles);
   }
 
   return EFI_SUCCESS;
@@ -363,7 +363,7 @@ BBTestResponseConformanceAutoTest (
   ParameterTypeGuid = &gEfiPlatformToDriverConfigurationClpGuid;
   *ParameterClpBlockSize = sizeof( EFI_CONFIGURE_CLP_PARAMETER_BLK );
   
-  Status = gtBS->AllocatePool(EfiBootServicesData,*ParameterClpBlockSize,(VOID **)&ParameterClpBlock);
+  Status = gtBS->AllocatePool (EfiBootServicesData,*ParameterClpBlockSize,(VOID **)&ParameterClpBlock);
   if(EFI_ERROR(Status)){
      StandardLib->RecordAssertion (
                    StandardLib,
@@ -522,7 +522,7 @@ BBTestResponseConformanceAutoTest (
   }
 */
   if (CtrlerHandles) {
-    FreePool (CtrlerHandles);
+    SctFreePool (CtrlerHandles);
   }
 
   return EFI_SUCCESS;

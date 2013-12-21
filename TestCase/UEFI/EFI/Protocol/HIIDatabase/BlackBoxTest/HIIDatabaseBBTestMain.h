@@ -349,21 +349,4 @@ BBTestGetPackageListHandleFunctionTest (
   IN EFI_HANDLE                 SupportHandle
   );
   
-VOID *
-AllocatePool (
-  IN UINTN                          Size
-  );
-
-VOID *
-AllocateZeroPool (
-  IN UINTN                          Size
-  );
-  
-INTN
-SctCompareMem (
-  IN VOID                           *Dest,
-  IN VOID                           *Src,
-  IN UINTN                          len
-  );
-
 #endif

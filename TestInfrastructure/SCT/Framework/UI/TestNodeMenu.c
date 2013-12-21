@@ -618,7 +618,7 @@ Returns:
         );
     }
 
-    FreePool (TempString);
+    SctFreePool (TempString);
   }
 
   //
@@ -1487,7 +1487,7 @@ GetIterString(
           (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
           L"*"
           );
-        FreePool (TempString);
+        SctFreePool (TempString);
         return EFI_SUCCESS;
       } else {
         if (Count == 0) {
@@ -1508,7 +1508,7 @@ GetIterString(
               (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
               L"*"
               );
-            FreePool (TempString);
+            SctFreePool (TempString);
             return EFI_SUCCESS;
           }
         } // end if (Count == 0)
@@ -1532,6 +1532,6 @@ GetIterString(
       );
   }
 
-  FreePool (TempString);
+  SctFreePool (TempString);
   return EFI_SUCCESS;
 }

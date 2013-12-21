@@ -177,7 +177,7 @@ BBTestInstallAcpiTableFunctionTestCheckpoint1 (
   // with correct AcpiTable data.
   //
   AcpiTableBufferSize = 128;
-  AcpiTableBuffer = (CHAR8 *) AllocateZeroPool(AcpiTableBufferSize);
+  AcpiTableBuffer = (CHAR8 *) SctAllocateZeroPool (AcpiTableBufferSize);
   if( !AcpiTableBuffer )
     return EFI_OUT_OF_RESOURCES;
 
@@ -343,7 +343,7 @@ BBTestInstallAcpiTableFunctionTestCheckpoint1 (
   
 EXIT:
 
-  gtBS->FreePool(AcpiTableBuffer);
+  gtBS->FreePool (AcpiTableBuffer);
 
   return EFI_SUCCESS;
 }
@@ -365,7 +365,7 @@ BBTestUninstallAcpiTableFunctionTestCheckpoint1 (
   // with TableKey not refer to a table entry.
   //
   AcpiTableBufferSize = 128;
-  AcpiTableBuffer = (CHAR8 *) AllocateZeroPool(AcpiTableBufferSize);
+  AcpiTableBuffer = (CHAR8 *) SctAllocateZeroPool (AcpiTableBufferSize);
   if( !AcpiTableBuffer )
     return EFI_OUT_OF_RESOURCES;
 
@@ -383,7 +383,7 @@ BBTestUninstallAcpiTableFunctionTestCheckpoint1 (
                         &TableKey
                         );
   if( EFI_ERROR(Status) ) {
-    gtBS->FreePool(AcpiTableBuffer);
+    gtBS->FreePool (AcpiTableBuffer);
     return Status;
   }
   
@@ -410,7 +410,7 @@ BBTestUninstallAcpiTableFunctionTestCheckpoint1 (
                  Status
                  );
  
-  gtBS->FreePool(AcpiTableBuffer);
+  gtBS->FreePool (AcpiTableBuffer);
 
   return EFI_SUCCESS;
 }

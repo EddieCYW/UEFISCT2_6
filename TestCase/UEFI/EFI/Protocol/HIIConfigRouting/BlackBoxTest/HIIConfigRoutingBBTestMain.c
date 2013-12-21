@@ -278,7 +278,7 @@ MultiAltRespToMultiReq (
     return EFI_INVALID_PARAMETER;
   }
 
-  Pointer2 = (EFI_STRING) AllocateZeroPool (2 * StrLen(Resp) + 2);
+  Pointer2 = (EFI_STRING) SctAllocateZeroPool (2 * StrLen(Resp) + 2);
   if (Pointer2 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -359,7 +359,7 @@ MultiAltRespToMultiReq (
     Pointer1++;
   }
 
-  FreePool(FreePtr);
+  SctFreePool (FreePtr);
   
   return EFI_SUCCESS;
 }
@@ -382,7 +382,7 @@ MultiAltRespToMultiResp (
     return EFI_INVALID_PARAMETER;
   }
 
-  Pointer2 = (EFI_STRING) AllocateZeroPool (2 * StrLen(Resp1) + 2);
+  Pointer2 = (EFI_STRING) SctAllocateZeroPool (2 * StrLen(Resp1) + 2);
   if (Pointer2 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -462,7 +462,7 @@ MultiAltRespToMultiResp (
     Pointer1++;
   }
 
-  FreePool(FreePtr);
+  SctFreePool (FreePtr);
   
   return EFI_SUCCESS;
 }
@@ -483,7 +483,7 @@ MultiAltRespToReq(
     return EFI_INVALID_PARAMETER;
   }
   
-  Pointer3 = (EFI_STRING) AllocateZeroPool (2 * StrLen(Resp) + 2);
+  Pointer3 = (EFI_STRING) SctAllocateZeroPool (2 * StrLen(Resp) + 2);
   if (Pointer3 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -522,7 +522,7 @@ MultiAltRespToReq(
     }
   }
 
-  FreePool(FreePtr);
+  SctFreePool (FreePtr);
  
   return EFI_SUCCESS;
 }

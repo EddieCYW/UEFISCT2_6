@@ -348,7 +348,7 @@ EFI_STATUS
   If DevicePath is NULL, then EFI_INVALID_PARAMETER is returned. If there are not enough
   resources to allocate the device path node, then EFI_OUT_OF_RESOURCES is returned.
 
-  Otherwise, DevicePath is allocated with the boot service AllocatePool(), the contents of
+  Otherwise, DevicePath is allocated with the boot service SctAllocatePool (), the contents of
   DevicePath are initialized to describe the ATA device specified by Port and PortMultiplierPort,
   and EFI_SUCCESS is returned.
 
@@ -361,7 +361,7 @@ EFI_STATUS
   @param[in,out] DevicePath          A pointer to a single device path node that describes the ATA
                                      device specified by Port and PortMultiplierPort. This function
                                      is responsible for allocating the buffer DevicePath with the
-                                     boot service AllocatePool(). It is the caller's responsibility
+                                     boot service SctAllocatePool (). It is the caller's responsibility
                                      to free DevicePath when the caller is finished with DevicePath.
   @retval EFI_SUCCESS                The device path node that describes the ATA device specified by
                                      Port and PortMultiplierPort was allocated and returned in DevicePath.

@@ -115,29 +115,29 @@ BBTestUnitAutoTest (
   MultiAltResp = L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000acf&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff&GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000acf&ALTCFG=0037&A000=abcd&B000=efef&GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0039&PATH=000acf&A000=abcd&B000=efef&GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0039&PATH=000acf&ALTCFG=0037&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff";
   Len = StrLen (MultiAltResp);
 
-  MultiRequest = (EFI_STRING) AllocateZeroPool ( 2 * Len + 2);
+  MultiRequest = (EFI_STRING) SctAllocateZeroPool ( 2 * Len + 2);
   if (MultiRequest == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
 
-  MultiResp = (EFI_STRING) AllocateZeroPool ( 2 * Len + 2);
+  MultiResp = (EFI_STRING) SctAllocateZeroPool ( 2 * Len + 2);
   if (MultiResp == NULL) {
-  	FreePool(MultiRequest);
+  	SctFreePool (MultiRequest);
     return EFI_OUT_OF_RESOURCES;
   }  
 
-  Request = (EFI_STRING) AllocateZeroPool ( 2 * Len + 2);
+  Request = (EFI_STRING) SctAllocateZeroPool ( 2 * Len + 2);
   if (Request == NULL) {
-  	FreePool(MultiRequest);
-    FreePool(MultiResp);
+  	SctFreePool (MultiRequest);
+    SctFreePool (MultiResp);
     return EFI_OUT_OF_RESOURCES;
   }  
 
-  Resp = (EFI_STRING) AllocateZeroPool ( 2 * Len + 2);
+  Resp = (EFI_STRING) SctAllocateZeroPool ( 2 * Len + 2);
   if (Resp == NULL) {
-  	FreePool(MultiRequest);
-  	FreePool(MultiResp);
-    FreePool(Request);
+  	SctFreePool (MultiRequest);
+  	SctFreePool (MultiResp);
+    SctFreePool (Request);
     return EFI_OUT_OF_RESOURCES;
   }  
 
@@ -153,10 +153,10 @@ BBTestUnitAutoTest (
   // <MultiConfigAltResp> to <ConfigResp>
   Status = MultiAltRespToResp (MultiAltResp, Resp);  
 
-  FreePool(MultiRequest);
-  FreePool(MultiResp);
-  FreePool(Request);
-  FreePool(Resp);
+  SctFreePool (MultiRequest);
+  SctFreePool (MultiResp);
+  SctFreePool (Request);
+  SctFreePool (Resp);
   
   return Status;
 }
@@ -411,7 +411,7 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
   
   Len = StrLen (MultiConfigAltResp);
 
-  Request = (EFI_STRING) AllocateZeroPool (2 * Len + 2);
+  Request = (EFI_STRING) SctAllocateZeroPool (2 * Len + 2);
   if (Request == NULL) {
     goto FUNC_EXIT;
   }
@@ -474,15 +474,15 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
 FUNC_EXIT:
 
   if (Request != NULL) {
-    gtBS->FreePool(Request);
+    gtBS->FreePool (Request);
   }
 
   if (MultiConfigAltResp != NULL) {
-    gtBS->FreePool(MultiConfigAltResp);
+    gtBS->FreePool (MultiConfigAltResp);
   }
 
   if (Results != NULL) {
-    gtBS->FreePool(Results);
+    gtBS->FreePool (Results);
   }
 
   return EFI_SUCCESS;
@@ -511,7 +511,7 @@ BBTestExportConfigFunctionTestCheckpoint1 (
   if (EFI_SUCCESS == Status) {
     Len = StrLen (MultiConfigAltResp);
   
-    Request = (EFI_STRING) AllocateZeroPool (2 * Len + 2);
+    Request = (EFI_STRING) SctAllocateZeroPool (2 * Len + 2);
     if (Request == NULL) {
       return EFI_OUT_OF_RESOURCES;
     }
@@ -521,7 +521,7 @@ BBTestExportConfigFunctionTestCheckpoint1 (
     //
     StatusConvert = MultiAltRespToMultiReq (MultiConfigAltResp, Request);
 
-    gtBS->FreePool(Request);
+    gtBS->FreePool (Request);
   }
   
   if ( EFI_SUCCESS == Status ) {
@@ -544,7 +544,7 @@ BBTestExportConfigFunctionTestCheckpoint1 (
 
 
   if (NULL != MultiConfigAltResp) {
-    gtBS->FreePool(MultiConfigAltResp);
+    gtBS->FreePool (MultiConfigAltResp);
   }
   
   return EFI_SUCCESS;
@@ -575,9 +575,9 @@ BBTestRouteConfigFunctionTestCheckpoint1 (
   
   Len = StrLen (Resp1);
 
-  Resp2 = (EFI_STRING) AllocateZeroPool (2 * Len + 2);
+  Resp2 = (EFI_STRING) SctAllocateZeroPool (2 * Len + 2);
   if (Resp2 == NULL) {
-    gtBS->FreePool(Resp1);
+    gtBS->FreePool (Resp1);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -586,8 +586,8 @@ BBTestRouteConfigFunctionTestCheckpoint1 (
   //
   Status = MultiAltRespToMultiResp (Resp1, Resp2);
   if (Status != EFI_SUCCESS) {
-    gtBS->FreePool(Resp1);
-    gtBS->FreePool(Resp2);  
+    gtBS->FreePool (Resp1);
+    gtBS->FreePool (Resp2);  
     return EFI_UNSUPPORTED;
   }
 
@@ -616,8 +616,8 @@ BBTestRouteConfigFunctionTestCheckpoint1 (
                  Status
                  );
 
-  gtBS->FreePool(Resp1);
-  gtBS->FreePool(Resp2);
+  gtBS->FreePool (Resp1);
+  gtBS->FreePool (Resp2);
   
   return EFI_SUCCESS;
 }
@@ -770,7 +770,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
     }
     
     if (CfgResp != NULL) {
-      gtBS->FreePool(CfgResp);
+      gtBS->FreePool (CfgResp);
       CfgResp = NULL;
     }
 
@@ -810,7 +810,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
     }
     
     if (CfgResp != NULL) {
-      gtBS->FreePool(CfgResp);
+      gtBS->FreePool (CfgResp);
       CfgResp = NULL;
     }
   } else if ( EFI_OUT_OF_RESOURCES == Status ){
@@ -849,7 +849,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
     }
 
     if (CfgResp != NULL) {
-      gtBS->FreePool(CfgResp);
+      gtBS->FreePool (CfgResp);
       CfgResp = NULL;
     }
   } else if ( EFI_OUT_OF_RESOURCES == Status ){
@@ -888,7 +888,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
     }
 
     if (CfgResp != NULL) {
-      gtBS->FreePool(CfgResp);
+      gtBS->FreePool (CfgResp);
       CfgResp = NULL;
     }
   } else if ( EFI_OUT_OF_RESOURCES == Status ){
@@ -927,7 +927,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
     }
     
     if (CfgResp != NULL) {
-      gtBS->FreePool(CfgResp);
+      gtBS->FreePool (CfgResp);
       CfgResp = NULL;
     }
   } else if ( EFI_OUT_OF_RESOURCES == Status ){
@@ -966,7 +966,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
     }
     
     if (CfgResp != NULL) {
-      gtBS->FreePool(CfgResp);
+      gtBS->FreePool (CfgResp);
       CfgResp = NULL;
     }
   } else if ( EFI_OUT_OF_RESOURCES == Status ){
@@ -1010,7 +1010,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
     }
 
     if (CfgResp != NULL) {
-      gtBS->FreePool(CfgResp);
+      gtBS->FreePool (CfgResp);
       CfgResp = NULL;
     }
   } else if ( EFI_OUT_OF_RESOURCES == Status ){
@@ -1049,7 +1049,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
     }
 
     if (CfgResp != NULL) {
-      gtBS->FreePool(CfgResp);
+      gtBS->FreePool (CfgResp);
       CfgResp = NULL;
     }
   } else if ( EFI_OUT_OF_RESOURCES == Status ){
@@ -1088,7 +1088,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
     }
 
     if (CfgResp != NULL) {
-      gtBS->FreePool(CfgResp);
+      gtBS->FreePool (CfgResp);
       CfgResp = NULL;
     }
   } else if ( EFI_OUT_OF_RESOURCES == Status ){
@@ -1127,7 +1127,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
     }
 
     if (CfgResp != NULL) {
-      gtBS->FreePool(CfgResp);
+      gtBS->FreePool (CfgResp);
       CfgResp = NULL;
     }
   } else if ( EFI_OUT_OF_RESOURCES == Status ){

@@ -317,7 +317,7 @@ StrDuplicate (
     UINTN       Size;
 
     Size = StrSize(Src);
-    Dest = AllocatePool (Size);
+    Dest = SctAllocatePool (Size);
     if (Dest) {
         SctCopyMem (Dest, Src, Size);
     }

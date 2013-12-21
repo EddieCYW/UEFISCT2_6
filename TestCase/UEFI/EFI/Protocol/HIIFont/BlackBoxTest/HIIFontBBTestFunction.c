@@ -399,7 +399,7 @@ BBTestStringToImageFunctionTestCheckpoint1 (
     EFI_HII_IGNORE_LINE_BREAK,
     0
   };
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
     return  EFI_UNSUPPORTED;
   }
@@ -407,7 +407,7 @@ BBTestStringToImageFunctionTestCheckpoint1 (
   Blt->Width = 50;
   Blt->Height = 40;
   
-  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Blt->Image.Bitmap == NULL ){
   	gtBS->FreePool (Blt);
     return  EFI_UNSUPPORTED;
@@ -508,7 +508,7 @@ BBTestStringToImageFunctionTestCheckpoint2 (
     return EFI_UNSUPPORTED;
   }
 
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
     return  EFI_UNSUPPORTED;
   }
@@ -594,7 +594,7 @@ BBTestStringToImageFunctionTestCheckpoint3 (
     return EFI_UNSUPPORTED;
   }
 
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
   	 StandardLib->RecordAssertion (
                    StandardLib,
@@ -646,7 +646,7 @@ BBTestStringToImageFunctionTestCheckpoint3 (
       //
       Blt->Width = FontGlyphBlt->Width;
       Blt->Height = FontGlyphBlt->Height;
-      Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) * Blt->Width * Blt->Height);
+      Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) * Blt->Width * Blt->Height);
       StringInfo = NULL;
       BltX = 0;
       BltY = 0;
@@ -690,22 +690,22 @@ BBTestStringToImageFunctionTestCheckpoint3 (
     }while (0);
     
     if (FontGlyphBlt->Image.Bitmap != NULL) {
-      FreePool(FontGlyphBlt->Image.Bitmap);
+      SctFreePool (FontGlyphBlt->Image.Bitmap);
       FontGlyphBlt->Image.Bitmap = NULL;
     }
     
     if (FontGlyphBlt != NULL) {
-      FreePool(FontGlyphBlt);
+      SctFreePool (FontGlyphBlt);
       FontGlyphBlt = NULL;
     }   
 
     if ( RowInfoArray != NULL ) {
-      FreePool (RowInfoArray);
+      SctFreePool (RowInfoArray);
       RowInfoArray = NULL;
     }
      
     if (Blt->Image.Bitmap != NULL) {
-      FreePool(Blt->Image.Bitmap);
+      SctFreePool (Blt->Image.Bitmap);
       Blt->Image.Bitmap = NULL;
     }
     
@@ -731,7 +731,7 @@ BBTestStringToImageFunctionTestCheckpoint3 (
                    );
 
   if (Blt != NULL) {
-    FreePool (Blt);
+    SctFreePool (Blt);
   }
   
   return EFI_SUCCESS;
@@ -798,7 +798,7 @@ BBTestStringToImageFunctionTestCheckpoint4 (
   }
 
   InfoSize = sizeof (EFI_FONT_DISPLAY_INFO) - sizeof (CHAR16) + StrSize (L"testfont");
-  StringInfo = (EFI_FONT_DISPLAY_INFO *) AllocateZeroPool (InfoSize);
+  StringInfo = (EFI_FONT_DISPLAY_INFO *) SctAllocateZeroPool (InfoSize);
   if (StringInfo == NULL) {
   	 StandardLib->RecordAssertion (
                    StandardLib,
@@ -826,7 +826,7 @@ BBTestStringToImageFunctionTestCheckpoint4 (
   StringInfo->FontInfo.FontStyle = 0;  
   StrCpy (StringInfo->FontInfo.FontName, L"testfont");
   
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
   	 StandardLib->RecordAssertion (
                    StandardLib,
@@ -877,7 +877,7 @@ BBTestStringToImageFunctionTestCheckpoint4 (
       //
       Blt->Width = FontGlyphBlt->Width;
       Blt->Height = FontGlyphBlt->Height;
-      Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) * Blt->Width * Blt->Height);
+      Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) * Blt->Width * Blt->Height);
       BltX = 0;
       BltY = 0;
   
@@ -920,22 +920,22 @@ BBTestStringToImageFunctionTestCheckpoint4 (
     }while (0);
 
     if (FontGlyphBlt->Image.Bitmap != NULL) {
-      FreePool(FontGlyphBlt->Image.Bitmap);
+      SctFreePool (FontGlyphBlt->Image.Bitmap);
       FontGlyphBlt->Image.Bitmap = NULL;
     }
     
     if (FontGlyphBlt != NULL) {
-      FreePool(FontGlyphBlt);
+      SctFreePool (FontGlyphBlt);
       FontGlyphBlt = NULL;
     }   
 
     if ( RowInfoArray != NULL ) {
-      FreePool (RowInfoArray);
+      SctFreePool (RowInfoArray);
       RowInfoArray = NULL;
     }
      
     if (Blt->Image.Bitmap != NULL) {
-      FreePool(Blt->Image.Bitmap);
+      SctFreePool (Blt->Image.Bitmap);
       Blt->Image.Bitmap = NULL;
     }
     
@@ -972,11 +972,11 @@ EXIT:
   }
 
   if (StringInfo != NULL) {
-    FreePool (StringInfo);
+    SctFreePool (StringInfo);
   }
     
   if (Blt != NULL) {
-    FreePool (Blt);
+    SctFreePool (Blt);
   }
 
   return EFI_SUCCESS;
@@ -1053,13 +1053,13 @@ BBTestStringToImageFunctionTestCheckpoint5 (
 
   TestFontHeight = Blt->Height;
   TestFontWidth  = Blt->Width;
-  FreePool(Blt);
+  SctFreePool (Blt);
   Blt = NULL;
 
   //
   // Construct test string dynamically according to screen size  ( 4~5 charaters longer than screen width)
   // 
-  TestString = (EFI_STRING)AllocateZeroPool(sizeof(L'T') * (HorizontalResolution / TestFontWidth + 5));
+  TestString = (EFI_STRING)SctAllocateZeroPool (sizeof(L'T') * (HorizontalResolution / TestFontWidth + 5));
   if (TestString == NULL) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1078,7 +1078,7 @@ BBTestStringToImageFunctionTestCheckpoint5 (
     TestString[Index] = L'T';
   }
 
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
     goto EXIT;
   }
@@ -1096,7 +1096,7 @@ BBTestStringToImageFunctionTestCheckpoint5 (
   BltX = 0;
   BltY = VerticalResolution - 3 * TestFontHeight;
   
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -1141,12 +1141,12 @@ BBTestStringToImageFunctionTestCheckpoint5 (
                  (UINTN)__LINE__
                  );
   if (RowInfoArray != NULL) {
-    FreePool (RowInfoArray);
+    SctFreePool (RowInfoArray);
     RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
 
@@ -1179,7 +1179,7 @@ BBTestStringToImageFunctionTestCheckpoint5 (
   BltX = 0;
   BltY = VerticalResolution - TestFontHeight + 2;
   
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -1226,12 +1226,12 @@ BBTestStringToImageFunctionTestCheckpoint5 (
                  (UINTN)__LINE__
                  );
   if (RowInfoArray != NULL) {
-    FreePool (RowInfoArray);
+    SctFreePool (RowInfoArray);
     RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
 
@@ -1265,7 +1265,7 @@ BBTestStringToImageFunctionTestCheckpoint5 (
   BltX = 0;
   BltY = VerticalResolution - 2 * TestFontHeight;
 
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -1309,12 +1309,12 @@ BBTestStringToImageFunctionTestCheckpoint5 (
                  );
   
   if (RowInfoArray != NULL) {
-  	 FreePool (RowInfoArray);
+  	 SctFreePool (RowInfoArray);
   	 RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
 
@@ -1347,7 +1347,7 @@ BBTestStringToImageFunctionTestCheckpoint5 (
   BltX = 0;
   BltY = VerticalResolution - TestFontHeight + 3;
   
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -1390,12 +1390,12 @@ BBTestStringToImageFunctionTestCheckpoint5 (
                  );
   
   if (RowInfoArray != NULL) {
-     FreePool (RowInfoArray);
+     SctFreePool (RowInfoArray);
      RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
   
@@ -1435,7 +1435,7 @@ BBTestStringToImageFunctionTestCheckpoint5 (
   TestString[20] = (CHAR16)0x0020;    
   TestString[30] = (CHAR16)0x2013;
   
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -1479,12 +1479,12 @@ BBTestStringToImageFunctionTestCheckpoint5 (
                  );
 
   if (RowInfoArray != NULL) {
-     FreePool (RowInfoArray);
+     SctFreePool (RowInfoArray);
      RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
 
@@ -1522,7 +1522,7 @@ BBTestStringToImageFunctionTestCheckpoint5 (
   BltX = 0;
   BltY = VerticalResolution - 4*TestFontHeight;
   
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -1566,12 +1566,12 @@ BBTestStringToImageFunctionTestCheckpoint5 (
                  );
   
   if (RowInfoArray != NULL) {
-     FreePool (RowInfoArray);
+     SctFreePool (RowInfoArray);
      RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
 
@@ -1614,7 +1614,7 @@ BBTestStringToImageFunctionTestCheckpoint5 (
   BltX = 0;
   BltY = VerticalResolution - 4 * TestFontHeight;
   
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -1658,12 +1658,12 @@ BBTestStringToImageFunctionTestCheckpoint5 (
   
   
   if (RowInfoArray != NULL) {
-     FreePool (RowInfoArray);
+     SctFreePool (RowInfoArray);
      RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
    
@@ -1686,15 +1686,15 @@ EXIT:
                     );
 
   if (Blt != NULL) {
-    FreePool (Blt);
+    SctFreePool (Blt);
   }
   
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
   }
   
   if (TestString != NULL) {
-    FreePool (TestString);
+    SctFreePool (TestString);
   }
   
   return EFI_SUCCESS;
@@ -1769,7 +1769,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   }
 
   InfoSize = sizeof (EFI_FONT_DISPLAY_INFO) - sizeof (CHAR16) + StrSize (L"testfont");
-  StringInfo = (EFI_FONT_DISPLAY_INFO *) AllocateZeroPool (InfoSize);
+  StringInfo = (EFI_FONT_DISPLAY_INFO *) SctAllocateZeroPool (InfoSize);
   if (StringInfo == NULL) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1824,7 +1824,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
 
   TestFontHeight = Blt->Height;
   TestFontWidth  = Blt->Width;
-  FreePool(Blt);
+  SctFreePool (Blt);
   Blt = NULL;
 
   // 
@@ -1834,7 +1834,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   //
   // Construct test string dynamically according to screen size  ( 4~5 charaters longer than screen width)
   // 
-  TestString = (EFI_STRING)AllocateZeroPool(sizeof(L'T') * (HorizontalResolution / TestFontWidth + 5));
+  TestString = (EFI_STRING)SctAllocateZeroPool (sizeof(L'T') * (HorizontalResolution / TestFontWidth + 5));
   if (TestString == NULL) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1853,7 +1853,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
     TestString[Index] = L'T';
   }
 
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
     goto EXIT;
   }
@@ -1870,7 +1870,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   BltX = 0;
   BltY = VerticalResolution - 3 * TestFontHeight;
 
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -1915,12 +1915,12 @@ BBTestStringToImageFunctionTestCheckpoint6 (
                  (UINTN)__LINE__
                  );
   if (RowInfoArray != NULL) {
-    FreePool (RowInfoArray);
+    SctFreePool (RowInfoArray);
     RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
 
@@ -1954,7 +1954,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   BltY = VerticalResolution - TestFontHeight + 2;
 
   
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -2000,12 +2000,12 @@ BBTestStringToImageFunctionTestCheckpoint6 (
                  (UINTN)__LINE__
                  );
   if (RowInfoArray != NULL) {
-    FreePool (RowInfoArray);
+    SctFreePool (RowInfoArray);
     RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
 
@@ -2039,7 +2039,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   BltX = 0;
   BltY = VerticalResolution - 2 * TestFontHeight;
 
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -2083,12 +2083,12 @@ BBTestStringToImageFunctionTestCheckpoint6 (
                  );
   
   if (RowInfoArray != NULL) {
-    FreePool (RowInfoArray);
+    SctFreePool (RowInfoArray);
     RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
   
@@ -2120,7 +2120,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   BltX = 0;
   BltY = VerticalResolution - TestFontHeight + 3;
   
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -2163,12 +2163,12 @@ BBTestStringToImageFunctionTestCheckpoint6 (
                  );
   
   if (RowInfoArray != NULL) {
-    FreePool (RowInfoArray);
+    SctFreePool (RowInfoArray);
     RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
   
@@ -2207,7 +2207,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   TestString[20] = (CHAR16)0x0020; 
   TestString[30] = (CHAR16)0x2013;
 
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -2251,12 +2251,12 @@ BBTestStringToImageFunctionTestCheckpoint6 (
                  );
 
   if (RowInfoArray != NULL) {
-     FreePool (RowInfoArray);
+     SctFreePool (RowInfoArray);
      RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
 
@@ -2294,7 +2294,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   BltX = 0;
   BltY = VerticalResolution - 4*TestFontHeight;
 
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -2338,12 +2338,12 @@ BBTestStringToImageFunctionTestCheckpoint6 (
                  );
   
   if (RowInfoArray != NULL) {
-     FreePool (RowInfoArray);
+     SctFreePool (RowInfoArray);
      RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
   
@@ -2386,7 +2386,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   BltX = 0;
   BltY = VerticalResolution - 4 * TestFontHeight;
   
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -2430,12 +2430,12 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   
   
   if (RowInfoArray != NULL) {
-     FreePool (RowInfoArray);
+     SctFreePool (RowInfoArray);
      RowInfoArray = NULL;
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
 
@@ -2514,9 +2514,9 @@ BBTestStringToImageFunctionTestCheckpoint6 (
   //
   Blt->Width = FontGlyphBlt->Width;
   Blt->Height = FontGlyphBlt->Height;
-  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) * Blt->Width * Blt->Height); 
+  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) * Blt->Width * Blt->Height); 
   
-  ColumnInfoArray =(UINTN *) AllocateZeroPool (sizeof(UINTN) * StrLen);
+  ColumnInfoArray =(UINTN *) SctAllocateZeroPool (sizeof(UINTN) * StrLen);
   if ( ColumnInfoArray == NULL ){
     goto EXIT;
   }
@@ -2557,27 +2557,27 @@ BBTestStringToImageFunctionTestCheckpoint6 (
                  );
   
   if (FontGlyphBlt->Image.Bitmap != NULL) {
-    FreePool(FontGlyphBlt->Image.Bitmap);
+    SctFreePool (FontGlyphBlt->Image.Bitmap);
     FontGlyphBlt->Image.Bitmap = NULL;
   }
     
   if (FontGlyphBlt != NULL) {
-    FreePool(FontGlyphBlt);
+    SctFreePool (FontGlyphBlt);
     FontGlyphBlt = NULL;
   }   
 
   if (Blt->Image.Bitmap != NULL) {
-    FreePool(Blt->Image.Bitmap);
+    SctFreePool (Blt->Image.Bitmap);
     Blt->Image.Bitmap = NULL;
   }
   
   if (RowInfoArray != NULL) {
-    FreePool (RowInfoArray);
+    SctFreePool (RowInfoArray);
     RowInfoArray = NULL;
   }
    
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
     ColumnInfoArray = NULL;
   }
 
@@ -2610,19 +2610,19 @@ EXIT:
   }
 
   if (StringInfo != NULL) {
-    FreePool (StringInfo);
+    SctFreePool (StringInfo);
   }
 
   if (ColumnInfoArray != NULL) {
-    FreePool (ColumnInfoArray);
+    SctFreePool (ColumnInfoArray);
   }
 
   if (Blt != NULL) {
-    FreePool (Blt);
+    SctFreePool (Blt);
   }
 
   if (TestString != NULL) {
-    FreePool (TestString);
+    SctFreePool (TestString);
   }
   
   return EFI_SUCCESS;
@@ -2673,14 +2673,14 @@ BBTestStringIdToImageFunctionTestCheckpoint1 (
   //
   // Allocate Memory
   //
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
     return  EFI_UNSUPPORTED;
   }
 
   Blt->Width = 50;
   Blt->Height = 40;
-  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (Blt->Width *Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (Blt->Width *Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Blt->Image.Bitmap == NULL ){
   	gtBS->FreePool (Blt);
     return  EFI_UNSUPPORTED;
@@ -2865,7 +2865,7 @@ BBTestStringIdToImageFunctionTestCheckpoint2 (
   //
   // Allocate Memory
   //
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
     return  EFI_UNSUPPORTED;
   }
@@ -3005,7 +3005,7 @@ BBTestGetFontInfoFunctionTestCheckpoint1 (
   StringInfoOut = NULL;
   //
   // Init 
-  StringInfoIn = (EFI_FONT_DISPLAY_INFO *) AllocateZeroPool (sizeof(EFI_FONT_DISPLAY_INFO));
+  StringInfoIn = (EFI_FONT_DISPLAY_INFO *) SctAllocateZeroPool (sizeof(EFI_FONT_DISPLAY_INFO));
   if ( StringInfoIn == NULL ){
     return  EFI_UNSUPPORTED;
   }

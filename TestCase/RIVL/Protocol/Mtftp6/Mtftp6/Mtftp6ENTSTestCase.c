@@ -1520,7 +1520,7 @@ Returns:
 { 
   char *S;
   *(Length) = 10;
-  (* Buffer) = EfiLibAllocatePool( 10 );
+  (* Buffer) = SctAllocatePool( 10 );
   if ((* Buffer) == NULL)
 	  return EFI_ABORTED;
 

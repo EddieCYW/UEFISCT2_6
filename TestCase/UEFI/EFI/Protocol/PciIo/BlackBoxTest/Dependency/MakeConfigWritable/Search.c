@@ -134,7 +134,7 @@ FindTestCard (
   }
 
   if (HandleBuffer != NULL) {
-    FreePool (HandleBuffer);
+    SctFreePool (HandleBuffer);
   }
 
   return EfiStatus;
@@ -235,7 +235,7 @@ AllocateNewDevice (
   PCIDev            *NewDev;
 
   NewDev = NULL;
-  NewDev = (PCIDev *)AllocateZeroPool(sizeof (PCIDev));
+  NewDev = (PCIDev *)SctAllocateZeroPool (sizeof (PCIDev));
   if (NewDev == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

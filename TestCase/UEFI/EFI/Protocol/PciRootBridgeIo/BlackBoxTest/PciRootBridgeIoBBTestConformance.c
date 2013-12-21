@@ -166,7 +166,7 @@ PollMem_Conf (
   Mask         = 0xFF;
   TargetValue  = 0x01;
 
-  Result = AllocatePool (32);
+  Result = SctAllocatePool (32);
 
   //
   //Call PollMem with Width as EfiPciWidthMaximum.
@@ -388,7 +388,7 @@ PollMem_Conf (
   //
   //done successfully
   //
-  FreePool (Result);
+  SctFreePool (Result);
   return EFI_SUCCESS;
 }
 
@@ -486,7 +486,7 @@ PollIo_Conf (
   Mask         = 0xFF;
   TargetValue  = 0x01;
 
-  Result = AllocatePool (32);
+  Result = SctAllocatePool (32);
   //
   //Call PollIo with Width as EfiPciWidthMaximum.
   //
@@ -711,7 +711,7 @@ PollIo_Conf (
   //
   //done successfully
   //
-  FreePool (Result);
+  SctFreePool (Result);
   return EFI_SUCCESS;
 }
 
@@ -834,7 +834,7 @@ MemRead_Conf (
     return Status;
   }
 
-  DataBuffer = AllocatePool (32);
+  DataBuffer = SctAllocatePool (32);
   //
   //Call Mem.Read with Width as EfiPciWidthMaximum.
   //
@@ -946,7 +946,7 @@ MemRead_Conf (
   PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
-     FreePool (DataBuffer);
+     SctFreePool (DataBuffer);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -954,7 +954,7 @@ MemRead_Conf (
   FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
   }
@@ -975,7 +975,7 @@ MemRead_Conf (
   gtBS->FreePool (FilePath);
 
   if (EFI_ERROR(Status)) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return Status;
   }
@@ -992,7 +992,7 @@ MemRead_Conf (
 
   if (EFI_ERROR(Status)) {
     gtBS->FreePool (PciDevicePathStr);
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     ProfileLib->EfiIniClose (
                   ProfileLib,
                   FileHandle
@@ -1084,7 +1084,7 @@ MemRead_Conf (
                 FileHandle
                 );
 
-  FreePool (DataBuffer);
+  SctFreePool (DataBuffer);
   //
   //done successfully
   //
@@ -1209,7 +1209,7 @@ MemWrite_Conf (
     return Status;
   }
 
-  DataBuffer = AllocatePool (32);
+  DataBuffer = SctAllocatePool (32);
   //
   //Call Mem.Write with Width as EfiPciWidthMaximum.
   //
@@ -1320,7 +1320,7 @@ MemWrite_Conf (
   PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -1328,7 +1328,7 @@ MemWrite_Conf (
   FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1349,7 +1349,7 @@ MemWrite_Conf (
   gtBS->FreePool (FilePath);
 
   if (EFI_ERROR(Status)) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return Status;
   }
@@ -1365,7 +1365,7 @@ MemWrite_Conf (
                          );
 
   if (EFI_ERROR(Status)) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     ProfileLib->EfiIniClose (
                   ProfileLib,
@@ -1457,7 +1457,7 @@ MemWrite_Conf (
                 ProfileLib,
                 FileHandle
                 );
-  FreePool (DataBuffer);
+  SctFreePool (DataBuffer);
   //
   //done successfully
   //
@@ -1581,7 +1581,7 @@ IoRead_Conf (
     return Status;
   }
 
-  DataBuffer = AllocatePool (32);
+  DataBuffer = SctAllocatePool (32);
   //
   //Call Io.Read with Width as EfiPciWidthMaximum.
   //
@@ -1692,7 +1692,7 @@ IoRead_Conf (
   PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -1700,7 +1700,7 @@ IoRead_Conf (
   FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1721,7 +1721,7 @@ IoRead_Conf (
   gtBS->FreePool (FilePath);
 
   if (EFI_ERROR(Status)) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return Status;
   }
@@ -1737,7 +1737,7 @@ IoRead_Conf (
                          );
 
   if (EFI_ERROR(Status)) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     ProfileLib->EfiIniClose (
                   ProfileLib,
@@ -1830,7 +1830,7 @@ IoRead_Conf (
                 FileHandle
                 );
 
-  FreePool (DataBuffer);
+  SctFreePool (DataBuffer);
   //
   //done successfully
   //
@@ -1953,7 +1953,7 @@ IoWrite_Conf (
                    );
   return Status;
   }
-  DataBuffer = AllocatePool (32);
+  DataBuffer = SctAllocatePool (32);
   //
   //Call Io.Write with Width as EfiPciWidthMaximum.
   //
@@ -2064,7 +2064,7 @@ IoWrite_Conf (
   PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -2072,7 +2072,7 @@ IoWrite_Conf (
   FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2093,7 +2093,7 @@ IoWrite_Conf (
   gtBS->FreePool (FilePath);
 
   if (EFI_ERROR(Status)) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return Status;
   }
@@ -2109,7 +2109,7 @@ IoWrite_Conf (
                          );
 
   if (EFI_ERROR(Status)) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     ProfileLib->EfiIniClose (
                   ProfileLib,
@@ -2202,7 +2202,7 @@ IoWrite_Conf (
                 FileHandle
                 );
 
-  FreePool (DataBuffer);
+  SctFreePool (DataBuffer);
   //
   //done successfully
   //
@@ -2311,7 +2311,7 @@ PciRead_Conf (
   //
 
   Address = LShiftU64 (RBDev->PriBus, 24);
-  DataBuffer = AllocatePool (32);
+  DataBuffer = SctAllocatePool (32);
   //
   //Call Pci.Read with Width as EfiPciWidthMaximum.
   //
@@ -2423,7 +2423,7 @@ PciRead_Conf (
   PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -2431,7 +2431,7 @@ PciRead_Conf (
   FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2454,7 +2454,7 @@ PciRead_Conf (
   gtBS->FreePool (FilePath);
 
   if (EFI_ERROR(Status)) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return Status;
   }
@@ -2470,7 +2470,7 @@ PciRead_Conf (
                          );
 
   if (EFI_ERROR(Status)) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     ProfileLib->EfiIniClose (
                   ProfileLib,
@@ -2565,7 +2565,7 @@ PciRead_Conf (
                 FileHandle
                 );
 
-  FreePool (DataBuffer);
+  SctFreePool (DataBuffer);
   //
   //done successfully
   //
@@ -2673,7 +2673,7 @@ PciWrite_Conf (
   //
 
   Address = LShiftU64 (RBDev->PriBus, 24);
-  DataBuffer = AllocatePool (32);
+  DataBuffer = SctAllocatePool (32);
 
   //
   //Call Pci.Write with Width as EfiPciWidthMaximum.
@@ -2786,7 +2786,7 @@ PciWrite_Conf (
   PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -2794,7 +2794,7 @@ PciWrite_Conf (
   FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2817,7 +2817,7 @@ PciWrite_Conf (
   gtBS->FreePool (FilePath);
 
   if (EFI_ERROR(Status)) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     return Status;
   }
@@ -2833,7 +2833,7 @@ PciWrite_Conf (
                          );
 
   if (EFI_ERROR(Status)) {
-    FreePool (DataBuffer);
+    SctFreePool (DataBuffer);
     gtBS->FreePool (PciDevicePathStr);
     ProfileLib->EfiIniClose (
                   ProfileLib,
@@ -2922,7 +2922,7 @@ PciWrite_Conf (
 
   }
 
-  FreePool (DataBuffer);
+  SctFreePool (DataBuffer);
   gtBS->FreePool (PciDevicePathStr);
   ProfileLib->EfiIniClose (
                 ProfileLib,
@@ -3457,7 +3457,7 @@ Map_Conf (
 
   BufferSize = 4 * 1024;
   Buffer = NULL;
-  Buffer = (UINT8 *)AllocatePool (BufferSize);
+  Buffer = (UINT8 *)SctAllocatePool (BufferSize);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

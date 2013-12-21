@@ -58,153 +58,6 @@ Abstract:
 #include "lib.h"
 
 
-VOID *
-AllocatePool (
-  IN UINTN                Size
-  )
-/*++
-
-Routine Description:
-  Allocates pool memory.
-
-Arguments:
-  Size                 - Size in bytes of the pool being requested.
-
-Returns:
-
-  EFI_SUCEESS          - The requested number of bytes were allocated.
-
-  EFI_OUT_OF_RESOURCES - The pool requested could not be allocated.
-
---*/
-{
-  EFI_STATUS              Status;
-  VOID                    *p;
-
-  Status = tBS->AllocatePool (PoolAllocationType, Size, &p);
-  if (EFI_ERROR(Status)) {
-    DEBUG((EFI_D_ERROR, "AllocatePool: out of pool  %x\n", Status));
-    p = NULL;
-  }
-  return p;
-}
-
-VOID *
-AllocateCopyPool (
-  IN  UINTN   AllocationSize,
-  IN  VOID    *Buffer
-  )
-{
-  VOID  *Memory;
-
-  Memory = NULL;
-  tBS->AllocatePool (PoolAllocationType, AllocationSize, &Memory);
-  if (Memory != NULL) {
-    tBS->CopyMem (Memory, Buffer, AllocationSize);
-  }
-
-  return Memory;
-}
-
-VOID *
-AllocateZeroPool (
-  IN UINTN                Size
-  )
-/*++
-
-Routine Description:
-  Allocates pool memory and initializes the memory to zeros.
-
-Arguments:
-  Size                 - Size in bytes of the pool being requested.
-
-Returns:
-
-  EFI_SUCEESS          - The requested number of bytes were allocated.
-
-  EFI_OUT_OF_RESOURCES - The pool requested could not be allocated.
-
---*/
-{
-  VOID                    *p;
-
-  p = AllocatePool (Size);
-  if (p) {
-    SctZeroMem (p, Size);
-  }
-
-  return p;
-}
-
-
-VOID *
-ReallocatePool (
-  IN VOID                 *OldPool,
-  IN UINTN                OldSize,
-  IN UINTN                NewSize
-  )
-/*++
-
-Routine Description:
-  Adjusts the size of a previously allocated buffer.
-
-Arguments:
-  OldPool               - A pointer to the buffer whose size is being adjusted.
-  OldSize               - The size of the current buffer.
-  NewSize               - The size of the new buffer.
-
-Returns:
-
-  EFI_SUCEESS           - The requested number of bytes were allocated.
-
-  EFI_OUT_OF_RESOURCES  - The pool requested could not be allocated.
-
-  EFI_INVALID_PARAMETER - The buffer was invalid.
-
---*/
-{
-  VOID                    *NewPool;
-
-  NewPool = NULL;
-  if (NewSize) {
-    NewPool = AllocatePool (NewSize);
-  }
-
-  if (OldPool) {
-    if (NewPool) {
-      SctCopyMem (NewPool, OldPool, OldSize < NewSize ? OldSize : NewSize);
-    }
-    FreePool (OldPool);
-  }
-
-  return NewPool;
-}
-
-
-VOID
-FreePool (
-  IN VOID                 *Buffer
-  )
-/*++
-
-Routine Description:
-  Releases a previously allocated buffer.
-
-Arguments:
-  Buffer                - A pointer to the buffer to free.
-
-Returns:
-
-  EFI_SUCEESS           - The requested number of bytes were allocated.
-
-  EFI_INVALID_PARAMETER - The buffer was invalid.
-
---*/
-{
-  tBS->FreePool (Buffer);
-}
-
-
 BOOLEAN
 GrowBuffer(
   IN OUT EFI_STATUS   *Status,
@@ -252,10 +105,10 @@ Returns:
   if (*Status == EFI_BUFFER_TOO_SMALL) {
 
     if (*Buffer) {
-      FreePool (*Buffer);
+      SctFreePool (*Buffer);
     }
 
-    *Buffer = AllocatePool (BufferSize);
+    *Buffer = SctAllocatePool (BufferSize);
 
     if (*Buffer) {
       TryAgain = TRUE;
@@ -269,7 +122,7 @@ Returns:
   //
 
   if (!TryAgain && EFI_ERROR(*Status) && *Buffer) {
-    FreePool (*Buffer);
+    SctFreePool (*Buffer);
     *Buffer = NULL;
   }
 
@@ -511,7 +364,7 @@ LibScanHandleDatabase (
     goto Error;
   }
 
-  Status = tBS->AllocatePool(
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  *HandleCount * sizeof(UINT32),
                  (VOID **)HandleType
@@ -640,10 +493,10 @@ LibScanHandleDatabase (
               }
             }
           }
-          tBS->FreePool(OpenInfo);
+          tBS->FreePool (OpenInfo);
         }
       }
-      tBS->FreePool(ProtocolGuidArray);
+      tBS->FreePool (ProtocolGuidArray);
     }
   }
 
@@ -651,10 +504,10 @@ LibScanHandleDatabase (
 
 Error:
   if (*HandleType != NULL) {
-    tBS->FreePool(*HandleType);
+    tBS->FreePool (*HandleType);
   }
   if (*HandleBuffer != NULL) {
-    tBS->FreePool(*HandleBuffer);
+    tBS->FreePool (*HandleBuffer);
   }
   *HandleCount = 0;
   *HandleBuffer = NULL;
@@ -725,7 +578,7 @@ LibGetHandleDatabaseSubset (
   //
   // Allocate a handle buffer for the number of handles that matched the attributes in Mask
   //
-  Status = tBS->AllocatePool(
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  *MatchingHandleCount * sizeof (EFI_HANDLE),
                  (VOID **)MatchingHandleBuffer
@@ -752,11 +605,11 @@ Done:
   // Free the buffers alocated by LibScanHandleDatabase()
   //
   if (HandleBuffer != NULL) {
-    tBS->FreePool(HandleBuffer);
+    tBS->FreePool (HandleBuffer);
   }
 
   if (HandleType != NULL) {
-    tBS->FreePool(HandleType);
+    tBS->FreePool (HandleType);
   }
 
   return Status;

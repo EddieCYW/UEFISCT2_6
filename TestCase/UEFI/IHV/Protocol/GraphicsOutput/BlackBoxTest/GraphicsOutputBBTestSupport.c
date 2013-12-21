@@ -606,7 +606,7 @@ Returns:
       return FALSE;
     } else {
       PrintAt (Y + 40, X, Msg);
-      FreePool (Msg);
+      SctFreePool (Msg);
     }
 
     Status = gtBS->WaitForEvent (NoWait, WaitList, &WaitIndex);

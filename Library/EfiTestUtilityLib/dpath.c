@@ -239,7 +239,7 @@ Returns:
   // If both Src1 and Src2 are NULL end-of-device-path is returned. 
   //
   if ((Src1 == NULL) && (Src2 == NULL)) {
-    Dst = (EFI_DEVICE_PATH_PROTOCOL *) AllocatePool (END_DEVICE_PATH_LENGTH);
+    Dst = (EFI_DEVICE_PATH_PROTOCOL *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
     SetDevicePathEndNode (Dst);
     return Dst;
   }
@@ -275,7 +275,7 @@ Returns:
   Size = Src1Size * Src1Inst + Src2Size;
   Size -= Src1Inst * sizeof(EFI_DEVICE_PATH_PROTOCOL);
 
-  Dst = AllocatePool (Size);
+  Dst = SctAllocatePool (Size);
   if (Dst) {
     DstPos = (UINT8 *) Dst;
 
@@ -342,7 +342,7 @@ Returns:
   // Build a Src2 that has a terminator on it
   //
   Length = DevicePathNodeLength(Src2);
-  Temp = AllocatePool (Length + sizeof(EFI_DEVICE_PATH_PROTOCOL));
+  Temp = SctAllocatePool (Length + sizeof(EFI_DEVICE_PATH_PROTOCOL));
   if (!Temp) {
     return NULL;
   }
@@ -356,7 +356,7 @@ Returns:
   //
 
   Src1 = AppendDevicePath (Src1, Temp);
-  FreePool (Temp);
+  SctFreePool (Temp);
   return Src1;
 }
 
@@ -391,7 +391,7 @@ Returns:
   EFI_DEVICE_PATH_PROTOCOL    *Eop, *DevicePath;
 
   Size = StrSize(FileName);
-  FilePath = AllocateZeroPool (Size + SIZE_OF_FILEPATH_DEVICE_PATH + sizeof(EFI_DEVICE_PATH_PROTOCOL));
+  FilePath = SctAllocateZeroPool (Size + SIZE_OF_FILEPATH_DEVICE_PATH + sizeof(EFI_DEVICE_PATH_PROTOCOL));
   DevicePath = NULL;
 
   if (FilePath) {
@@ -415,7 +415,7 @@ Returns:
                         DevicePathFromHandle(Device),
                         DevicePath
                         );
-      FreePool(FilePath);
+      SctFreePool (FilePath);
     }
   }
 
@@ -492,7 +492,7 @@ Returns:
   //
   // Make a copy
   //
-  NewDevPath = AllocatePool (Size);
+  NewDevPath = SctAllocatePool (Size);
   if (NewDevPath) {
     SctCopyMem (NewDevPath, DevPath, Size);
   }
@@ -544,7 +544,7 @@ Returns:
   // Allocate space for the unpacked path
   //
 
-  NewPath = AllocateZeroPool (Size);
+  NewPath = SctAllocateZeroPool (Size);
   if (NewPath) {
 
     ASSERT (((UINTN)NewPath) % MIN_ALIGNMENT_SIZE == 0);
@@ -608,12 +608,12 @@ Returns:
   }
   SrcSize = DevicePathSize(Src);
   InstanceSize = DevicePathSize(Instance);
-  Ptr = AllocatePool (SrcSize + InstanceSize);
+  Ptr = SctAllocatePool (SrcSize + InstanceSize);
   DevPath = (EFI_DEVICE_PATH_PROTOCOL *)Ptr;
   ASSERT(DevPath);
 
   SctCopyMem (Ptr, Src, SrcSize);
-//    FreePool (Src);
+//    SctFreePool (Src);
 
   while (!IsDevicePathEnd(DevPath)) {
     DevPath = NextDevicePathNode(DevPath);
@@ -1339,10 +1339,10 @@ DevicePathToStr (
   // Shrink pool used for string allocation
   //
 
-  FreePool (DevPath);
+  SctFreePool (DevPath);
 Done:
   NewSize = (Str.len + 1) * sizeof(CHAR16);
-  Str.str = ReallocatePool (Str.str, NewSize, NewSize);
+  Str.str = SctReallocatePool (Str.str, NewSize, NewSize);
   Str.str[Str.len] = 0;
   return Str.str;
 }

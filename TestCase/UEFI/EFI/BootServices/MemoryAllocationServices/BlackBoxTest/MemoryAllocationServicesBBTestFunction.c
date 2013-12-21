@@ -1727,7 +1727,7 @@ BBTestFreePagesInterfaceTest (
 }
 
 /**
- *  Entrypoint for gtBS->AllocatePool() Interface Test.
+ *  Entrypoint for gtBS->AllocatePool () Interface Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
  *  @param ClientInterface a pointer to the interface to be tested.
  *  @param TestLevel test "thoroughness" control.
@@ -1843,7 +1843,7 @@ BBTestAllocatePoolInterfaceTest (
 }
 
 /**
- *  Entrypoint for gtBS->FreePool() Interface Test.
+ *  Entrypoint for gtBS->FreePool () Interface Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
  *  @param ClientInterface a pointer to the interface to be tested.
  *  @param TestLevel test "thoroughness" control.

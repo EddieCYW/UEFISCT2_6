@@ -342,7 +342,7 @@ CreateDeviceNode (
     return NULL;
   }
  
-  DevicePath = AllocateZeroPool (NodeLength);
+  DevicePath = SctAllocateZeroPool (NodeLength);
   if (DevicePath != NULL) {
      DevicePath->Type    = NodeType;
      DevicePath->SubType = NodeSubType;
@@ -1815,8 +1815,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -1841,8 +1841,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -1867,8 +1867,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -1893,8 +1893,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -1925,8 +1925,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -1955,8 +1955,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -1982,8 +1982,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2008,8 +2008,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2034,8 +2034,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2060,8 +2060,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2086,8 +2086,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2112,8 +2112,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2138,8 +2138,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2164,8 +2164,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2190,8 +2190,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2215,8 +2215,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2241,8 +2241,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2267,8 +2267,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2293,8 +2293,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2319,8 +2319,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2345,8 +2345,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2371,8 +2371,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2397,8 +2397,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2422,8 +2422,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2447,8 +2447,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2473,8 +2473,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2499,8 +2499,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2525,8 +2525,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2551,8 +2551,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2577,8 +2577,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2603,8 +2603,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2626,8 +2626,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2652,8 +2652,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2678,8 +2678,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2704,8 +2704,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2730,8 +2730,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2756,8 +2756,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2782,8 +2782,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2808,8 +2808,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2834,8 +2834,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2860,8 +2860,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2886,8 +2886,8 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -2999,7 +2999,7 @@ CreateFloppyDevicePath (
   EFI_DEVICE_PATH_PROTOCOL *pDevPathNode;
   EFI_DEVICE_PATH_PROTOCOL *pDevPath;
 
-  pDevPath = (EFI_DEVICE_PATH_PROTOCOL *) AllocatePool (END_DEVICE_PATH_LENGTH);
+  pDevPath = (EFI_DEVICE_PATH_PROTOCOL *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   SetDevicePathEndNode (pDevPath);
 
   pDevPathNode    = ConvertDevNodeFromTextPciRoot(DevicePathUtilities, L"PciRoot(0)");
@@ -3080,8 +3080,8 @@ DevicePathFromTextConvertTextToDevicePathCoverageTest (
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,

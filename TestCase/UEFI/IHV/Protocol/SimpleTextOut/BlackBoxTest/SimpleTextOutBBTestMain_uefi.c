@@ -677,7 +677,7 @@ AutoJudgeUga (
       return FALSE;
     } else {
       PrintXY(X, Y+20, NULL, NULL, Msg);
-      FreePool (Msg);
+      SctFreePool (Msg);
     }
 
     Status = gtBS->WaitForEvent (NoWait, WaitList, &WaitIndex);

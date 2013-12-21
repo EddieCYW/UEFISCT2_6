@@ -185,7 +185,7 @@ BBTestInstallAcpiTableConformanceTestCheckpoint2 (
   // with TableKey being NULL.
   //
   AcpiTableBufferSize = 128;
-  AcpiTableBuffer = (CHAR8 *) AllocateZeroPool(AcpiTableBufferSize);
+  AcpiTableBuffer = (CHAR8 *) SctAllocateZeroPool (AcpiTableBufferSize);
   if( !AcpiTableBuffer )
 	return EFI_OUT_OF_RESOURCES;
 
@@ -215,7 +215,7 @@ BBTestInstallAcpiTableConformanceTestCheckpoint2 (
                  Status
                  );
  
-  gtBS->FreePool(AcpiTableBuffer);
+  gtBS->FreePool (AcpiTableBuffer);
   
   return EFI_SUCCESS;
 }
@@ -235,7 +235,7 @@ BBTestInstallAcpiTableConformanceTestCheckpoint3 (
   // with AcpiTableBufferSize if different with the size field in AcpiTableBuffer.
   //
   AcpiTableBufferSize = 128;
-  AcpiTableBuffer = (CHAR8 *) AllocateZeroPool(AcpiTableBufferSize-1);
+  AcpiTableBuffer = (CHAR8 *) SctAllocateZeroPool (AcpiTableBufferSize-1);
   if( !AcpiTableBuffer )
 	return EFI_OUT_OF_RESOURCES;
  
@@ -265,7 +265,7 @@ BBTestInstallAcpiTableConformanceTestCheckpoint3 (
                  Status
                  );
 
-  gtBS->FreePool(AcpiTableBuffer);
+  gtBS->FreePool (AcpiTableBuffer);
  
   return EFI_SUCCESS;
 }
@@ -286,7 +286,7 @@ BBTestUninstallAcpiTableConformanceTestCheckpoint1 (
   // with TableKey not refer to a table entry.
   //
   AcpiTableBufferSize = 128;
-  AcpiTableBuffer = (CHAR8 *) AllocateZeroPool(AcpiTableBufferSize);
+  AcpiTableBuffer = (CHAR8 *) SctAllocateZeroPool (AcpiTableBufferSize);
   if( !AcpiTableBuffer )
 	return EFI_OUT_OF_RESOURCES;
 
@@ -304,7 +304,7 @@ BBTestUninstallAcpiTableConformanceTestCheckpoint1 (
                         &TableKey
                         );
   if( EFI_ERROR(Status) ) {
-	gtBS->FreePool(AcpiTableBuffer);
+	gtBS->FreePool (AcpiTableBuffer);
 	return Status;
   }
 
@@ -316,7 +316,7 @@ BBTestUninstallAcpiTableConformanceTestCheckpoint1 (
                         TableKey
                         );
   if( EFI_ERROR(Status) ) {
-    gtBS->FreePool(AcpiTableBuffer);
+    gtBS->FreePool (AcpiTableBuffer);
 	return Status;
   }  
   
@@ -344,7 +344,7 @@ BBTestUninstallAcpiTableConformanceTestCheckpoint1 (
                  Status
                  );
  
-  gtBS->FreePool(AcpiTableBuffer);
+  gtBS->FreePool (AcpiTableBuffer);
 
   return EFI_SUCCESS;
 }

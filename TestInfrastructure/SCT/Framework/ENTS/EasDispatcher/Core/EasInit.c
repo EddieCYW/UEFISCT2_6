@@ -627,7 +627,7 @@ Returns:
     }
   }
 
-  tBS->FreePool(HandleBuffer);
+  tBS->FreePool (HandleBuffer);
 
   gEasFT->Monitor = EntsMonitorInterface;
   Status          = EntsMonitorInterface->InitMonitor (EntsMonitorInterface);

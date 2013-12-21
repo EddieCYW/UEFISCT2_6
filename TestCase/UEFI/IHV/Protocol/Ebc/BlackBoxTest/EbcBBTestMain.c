@@ -370,7 +370,7 @@ ReadEbcDriver (
   // Get Ebc driver size
   //
   FileInfoSize = 1;
-  Status = gtBS->AllocatePool(
+  Status = gtBS->AllocatePool (
                    EfiBootServicesData,
                    FileInfoSize,
                    &FileInfo
@@ -390,8 +390,8 @@ ReadEbcDriver (
                      FileInfo
                      );
 
-  gtBS->FreePool(FileInfo);
-  Status = gtBS->AllocatePool(
+  gtBS->FreePool (FileInfo);
+  Status = gtBS->AllocatePool (
                    EfiBootServicesData,
                    FileInfoSize,
                    &FileInfo
@@ -408,12 +408,12 @@ ReadEbcDriver (
                      FileInfo
                      );
   FileSize = (UINTN)FileInfo->FileSize;
-  gtBS->FreePool(FileInfo);
+  gtBS->FreePool (FileInfo);
 
   //
   // Read the Ebc Driver
   //
-  Status = gtBS->AllocatePool(
+  Status = gtBS->AllocatePool (
                    EfiBootServicesData,
                    FileSize,
                    &FileBuffer
@@ -429,7 +429,7 @@ ReadEbcDriver (
                      FileBuffer
                      );
   if (EFI_ERROR ( Status ) ) {
-    gtBS->FreePool(FileBuffer);
+    gtBS->FreePool (FileBuffer);
   } else {
     *Buffer = FileBuffer;
     *Size = FileSize;

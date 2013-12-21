@@ -87,7 +87,7 @@ MakeConfigWritableEntryPoint (
     Print (L"Successfully make the configuration space writable.\r\n");
   }
 
-  FreePool (TestDev);
+  SctFreePool (TestDev);
 
   //
   //done successfully

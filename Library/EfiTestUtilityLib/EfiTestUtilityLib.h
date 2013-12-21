@@ -420,34 +420,6 @@ CompareGuid(
   IN EFI_GUID                       *Guid2
   );
 
-VOID *
-AllocatePool (
-  IN UINTN                          Size
-  );
-
-VOID *
-AllocateCopyPool (
-  IN  UINTN                         AllocationSize,
-  IN  VOID                          *Buffer
-  );
-
-VOID *
-AllocateZeroPool (
-  IN UINTN                          Size
-  );
-
-VOID *
-ReallocatePool (
-  IN VOID                           *OldPool,
-  IN UINTN                          OldSize,
-  IN UINTN                          NewSize
-  );
-
-VOID
-FreePool (
-  IN VOID                           *p
-  );
-
 VOID
 Output (
   IN CHAR16                         *Str

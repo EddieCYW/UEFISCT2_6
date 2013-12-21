@@ -249,7 +249,7 @@ EFI_STATUS
                             describes the SCSI device specified by
                             Target and Lun. This function is responsible
                             for allocating the buffer DevicePath with the boot
-                            service AllocatePool().  It is the caller's
+                            service SctAllocatePool ().  It is the caller's
                             responsibility to free DevicePath when the caller
                             is finished with DevicePath.
   Returns:

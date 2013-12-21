@@ -124,7 +124,6 @@ BBTestProcessExtFunctionTest (
   IN EFI_TEST_LEVEL             TestLevel,
   IN EFI_HANDLE                 SupportHandle
   );
-  
 
 EFI_STATUS 
 IP4ProcessPacket(

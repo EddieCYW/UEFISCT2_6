@@ -251,7 +251,7 @@ EFI_STATUS
     DevicePath - A pointer to a single device path node that describes the SCSI device
                  specified by Target and Lun. This function is responsible for
                  allocating the buffer DevicePath with the boot service
-                 AllocatePool(). It is the caller's responsibility to free
+                 SctAllocatePool (). It is the caller's responsibility to free
                  DevicePath when the caller is finished with DevicePath.
 
   Returns:

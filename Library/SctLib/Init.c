@@ -166,7 +166,7 @@ Done:
   //
 
   if (Handles) {
-    FreePool (Handles);
+    SctFreePool (Handles);
   }
 }
 
@@ -227,7 +227,7 @@ SctInitializeLib (
     // InitializeUnicodeSupport (LangCode);
     InitializeUnicodeSupport ("eng");
     if (LangCode) {
-      FreePool (LangCode);
+      SctFreePool (LangCode);
     }
   }
   return EFI_SUCCESS;

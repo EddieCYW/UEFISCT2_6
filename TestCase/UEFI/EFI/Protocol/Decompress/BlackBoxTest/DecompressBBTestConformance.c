@@ -318,7 +318,7 @@ Decompress_Conf (
     //
     //then read the Compresed File into memory.
     //
-    CompressedFileBuffer = AllocatePool (CompressedFileSize);
+    CompressedFileBuffer = SctAllocatePool (CompressedFileSize);
 
     if (CompressedFileBuffer == NULL) {
       CompressedFHandle->Close (CompressedFHandle);
@@ -375,7 +375,7 @@ Decompress_Conf (
     //
     //allocate decompress buffer and scratch buffer
     //
-    DecompressBuffer = AllocatePool ((DestinationSize == 0) ? 128 : DestinationSize);
+    DecompressBuffer = SctAllocatePool ((DestinationSize == 0) ? 128 : DestinationSize);
 
     if (DecompressBuffer == NULL) {
       gtBS->FreePool (CompressedFileBuffer);
@@ -383,7 +383,7 @@ Decompress_Conf (
       continue;
     }
 
-    ScratchBuffer = AllocatePool (ScratchSize);
+    ScratchBuffer = SctAllocatePool (ScratchSize);
 
     if (ScratchBuffer == NULL) {
       gtBS->FreePool (CompressedFileBuffer);
@@ -497,7 +497,7 @@ Decompress_Conf (
     //
     //then read the Compressed File into memory.
     //
-    CompressedFileBuffer = AllocatePool (CompressedFileSize);
+    CompressedFileBuffer = SctAllocatePool (CompressedFileSize);
 
     if (CompressedFileBuffer == NULL) {
       CompressedFHandle->Close (CompressedFHandle);
@@ -554,14 +554,14 @@ Decompress_Conf (
     //
     //allocate Decompess buffer and Decompress the compessed data.
     //
-    DecompressBuffer = AllocatePool ((DestinationSize == 0) ? 128 : DestinationSize);
+    DecompressBuffer = SctAllocatePool (DestinationSize == 0) ? 128 : DestinationSize);
     if (DecompressBuffer == NULL) {
       gtBS->FreePool (CompressedFileBuffer);
       Print (L"Can not allocate %xh buffer.\r\n", DestinationSize);
       continue;
     }
 
-    ScratchBuffer = AllocatePool (ScratchSize);
+    ScratchBuffer = SctAllocatePool (ScratchSize);
     if (ScratchBuffer == NULL) {
       gtBS->FreePool (CompressedFileBuffer);
       gtBS->FreePool (DecompressBuffer);

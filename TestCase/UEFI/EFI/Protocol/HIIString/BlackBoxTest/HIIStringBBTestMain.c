@@ -248,11 +248,11 @@ GetHIIDatabaseInterface (
                    HIIDatabase
                    );
   if ( EFI_ERROR(Status) ) {
-    gtBS->FreePool( HandleBuffer );
+    gtBS->FreePool ( HandleBuffer );
     return Status;
   }
   
-  gtBS->FreePool( HandleBuffer );
+  gtBS->FreePool ( HandleBuffer );
   
   return EFI_SUCCESS;
 }

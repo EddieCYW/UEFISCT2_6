@@ -202,7 +202,7 @@ Returns:
     //
     // Malloc memory for read file.
     //
-    FileBuffer = AllocatePool (CONF_FILE_SIZE);
+    FileBuffer = SctAllocatePool (CONF_FILE_SIZE);
     if (FileBuffer == NULL) {
       return EFI_OUT_OF_RESOURCES;
     }
@@ -227,7 +227,7 @@ Returns:
     //
     // Dont't use FileBuffer any more, Free it.
     //
-    FreePool (FileBuffer);
+    SctFreePool (FileBuffer);
   
 
     for (Index = 0; Index < tST->NumberOfTableEntries; Index++) {
@@ -276,7 +276,7 @@ Returns:
           (VOID *) &DescriptorVersion
           );
     //
-    // The memory size needs add a constant, because there are two AllocatePool()
+    // The memory size needs add a constant, because there are two SctAllocatePool ()
     // before the second GetMemoryMap(), the action of allocate pool will increase
     // the MemoryMapSize. The constant of 1024 is enough.
     //

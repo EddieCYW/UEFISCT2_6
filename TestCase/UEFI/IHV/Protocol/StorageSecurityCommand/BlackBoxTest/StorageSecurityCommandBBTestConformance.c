@@ -165,7 +165,7 @@ BBTestReceiveDataConformanceAutoTest (
   //
   // both ATA8-ACS & SPC-4 security protocol payload are in 512 incremenet
   //
-  DataBuffer = AllocateZeroPool(512);
+  DataBuffer = SctAllocateZeroPool (512);
   if (DataBuffer == NULL) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -208,11 +208,11 @@ BBTestReceiveDataConformanceAutoTest (
                                                   );
           if ((DevicePathNodeStr != NULL) && ((EfiStrStr(DevicePathNodeStr, L"Ata(") != NULL) || (EfiStrStr(DevicePathNodeStr, L"Sata(") != NULL))) {
             IsAtaDevice = TRUE;
-            FreePool(DevicePathNodeStr);
+            SctFreePool (DevicePathNodeStr);
             DevicePathNodeStr = NULL;
             break;
           }
-          FreePool(DevicePathNodeStr);
+          SctFreePool (DevicePathNodeStr);
           DevicePathNodeStr = NULL;
 
           DevPathNode = NextDevicePathNode(DevPathNode);
@@ -414,7 +414,7 @@ EXIT:
   }
   
   if (DataBuffer != NULL) {
-    gtBS->FreePool(DataBuffer);
+    gtBS->FreePool (DataBuffer);
   }
 
   return EFI_SUCCESS;
@@ -520,7 +520,7 @@ BBTestSendDataConformanceAutoTest (
   }
 
   
-  DataBuffer = AllocateZeroPool(512);
+  DataBuffer = SctAllocateZeroPool (512);
   if (DataBuffer == NULL) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -564,9 +564,9 @@ BBTestSendDataConformanceAutoTest (
   //
   // Free original buffer and allocate new buffer.
   //
-  FreePool(DataBuffer);
+  SctFreePool (DataBuffer);
   DataBuffer = NULL;
-  DataBuffer = AllocateZeroPool(Len);
+  DataBuffer = SctAllocateZeroPool (Len);
   if (DataBuffer == NULL) {
     StandardLib->RecordAssertion (
                     StandardLib,
@@ -735,7 +735,7 @@ EXIT:
   }
 
   if (DataBuffer != NULL) {
-    gtBS->FreePool(DataBuffer);
+    gtBS->FreePool (DataBuffer);
   }
 
   return EFI_SUCCESS;

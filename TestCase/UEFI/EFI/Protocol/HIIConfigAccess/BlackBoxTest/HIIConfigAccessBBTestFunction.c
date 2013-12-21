@@ -109,20 +109,20 @@ BBTestUnitTest (
   //
   HIIConfigAccess = (EFI_HII_CONFIG_ACCESS_PROTOCOL*)ClientInterface;
 
-  Request = (EFI_STRING) AllocateZeroPool(2 * StrLen(MultiConfigAltResp) + 2);
+  Request = (EFI_STRING) SctAllocateZeroPool (2 * StrLen(MultiConfigAltResp) + 2);
   if (Request == NULL)
   	return EFI_OUT_OF_RESOURCES;
 
-  Resp = (EFI_STRING) AllocateZeroPool(2 * StrLen(MultiConfigAltResp) + 2);
+  Resp = (EFI_STRING) SctAllocateZeroPool (2 * StrLen(MultiConfigAltResp) + 2);
   if (Resp == NULL) {
-  	gtBS->FreePool(Request);
+  	gtBS->FreePool (Request);
   	return EFI_OUT_OF_RESOURCES;
   }
 
   Status = GetDevicePath ( HIIConfigAccess, &DevicePath );
   if (EFI_ERROR(Status)) {
-    gtBS->FreePool(Resp);  
-  	gtBS->FreePool(Request);
+    gtBS->FreePool (Resp);  
+  	gtBS->FreePool (Request);
     return Status;
   }
   
@@ -130,9 +130,9 @@ BBTestUnitTest (
 
   Status = GetCorrespondingResp (MultiConfigAltResp, DevicePath, Resp);
 
-  gtBS->FreePool(Request);
-  gtBS->FreePool(Resp);
-  gtBS->FreePool(DevicePath);
+  gtBS->FreePool (Request);
+  gtBS->FreePool (Resp);
+  gtBS->FreePool (DevicePath);
 
   return EFI_SUCCESS;
 }
@@ -303,22 +303,22 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
 
   Status = GetDevicePath ( HIIConfigAccess, &DevicePath );
   if (EFI_ERROR(Status)) {
-    gtBS->FreePool(MultiConfigAltResp);
+    gtBS->FreePool (MultiConfigAltResp);
     return Status;
   }
 
-  Request = (EFI_STRING) AllocateZeroPool( 2 * StrLen(MultiConfigAltResp) + 2 );
+  Request = (EFI_STRING) SctAllocateZeroPool ( 2 * StrLen(MultiConfigAltResp) + 2 );
   if (Request == NULL) {
-    gtBS->FreePool(MultiConfigAltResp);
-    gtBS->FreePool(DevicePath);
+    gtBS->FreePool (MultiConfigAltResp);
+    gtBS->FreePool (DevicePath);
     return EFI_OUT_OF_RESOURCES;
   }
   
   Status = GetCorrespondingRequest (MultiConfigAltResp, DevicePath, Request);
   if (EFI_ERROR(Status)) {
-    gtBS->FreePool(MultiConfigAltResp);
-    gtBS->FreePool(DevicePath);
-    gtBS->FreePool(Request);
+    gtBS->FreePool (MultiConfigAltResp);
+    gtBS->FreePool (DevicePath);
+    gtBS->FreePool (Request);
     return Status;
   }
   
@@ -340,7 +340,7 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
       if (NULL == EfiStrStr(MultiConfigAltResp, Results)) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
-      gtBS->FreePool(Results);
+      gtBS->FreePool (Results);
     }
   } else if (EFI_OUT_OF_RESOURCES == Status) {
     AssertionType = EFI_TEST_ASSERTION_WARNING;  
@@ -397,7 +397,7 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
       if (NULL == EfiStrStr(Results, Request)) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
-      gtBS->FreePool(Results);
+      gtBS->FreePool (Results);
     }
   } else if (EFI_OUT_OF_RESOURCES == Status) {
     AssertionType = EFI_TEST_ASSERTION_WARNING;  
@@ -415,9 +415,9 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
                  Status
                  );
 
-  gtBS->FreePool(MultiConfigAltResp);
-  gtBS->FreePool(DevicePath);
-  gtBS->FreePool(Request);
+  gtBS->FreePool (MultiConfigAltResp);
+  gtBS->FreePool (DevicePath);
+  gtBS->FreePool (Request);
 
   return EFI_SUCCESS;
 } 
@@ -464,7 +464,7 @@ BBTestExtractConfigFunctionTestCheckpoint2 (
   } else if ( EFI_SUCCESS != Status ) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
     if (Results != NULL) {
-      gtBS->FreePool(Results);
+      gtBS->FreePool (Results);
     }
     return Status;
   } else {
@@ -490,7 +490,7 @@ BBTestExtractConfigFunctionTestCheckpoint2 (
   // build <MultiConfigRequest> out of <MultiConfigAltResp> 
   //
   Len = StrLen (MultiConfigAltResp);
-  Request = (EFI_STRING) AllocateZeroPool (2 * Len + 2);
+  Request = (EFI_STRING) SctAllocateZeroPool (2 * Len + 2);
   if (Request == NULL) {
     goto FUNC_EXIT;
   }
@@ -532,15 +532,15 @@ BBTestExtractConfigFunctionTestCheckpoint2 (
 FUNC_EXIT:
 
   if ( NULL != MultiConfigAltResp ){
-    gtBS->FreePool(MultiConfigAltResp);
+    gtBS->FreePool (MultiConfigAltResp);
   }
 
   if ( NULL !=Results ) {
-    gtBS->FreePool(Results);
+    gtBS->FreePool (Results);
   }
 
   if (NULL != Request) {
-    gtBS->FreePool(Request);  
+    gtBS->FreePool (Request);  
   }
   
   return EFI_SUCCESS;
@@ -573,22 +573,22 @@ BBTestRouteConfigFunctionTestCheckpoint1 (
 
   Status = GetDevicePath ( HIIConfigAccess, &DevicePath );
   if (EFI_ERROR(Status)) {
-  	gtBS->FreePool(MultiConfigAltResp);
+  	gtBS->FreePool (MultiConfigAltResp);
     return Status;
   }
 
-  Resp = (EFI_STRING) AllocateZeroPool( 2 * StrLen(MultiConfigAltResp) + 2 );
+  Resp = (EFI_STRING) SctAllocateZeroPool ( 2 * StrLen(MultiConfigAltResp) + 2 );
   if (Resp == NULL) {
-    gtBS->FreePool(MultiConfigAltResp);
-	gtBS->FreePool(DevicePath);
+    gtBS->FreePool (MultiConfigAltResp);
+	gtBS->FreePool (DevicePath);
 	return EFI_OUT_OF_RESOURCES;
   }
   
   Status = GetCorrespondingResp (MultiConfigAltResp, DevicePath, Resp);
   if (EFI_ERROR(Status)) {
-  	gtBS->FreePool(MultiConfigAltResp);
-	gtBS->FreePool(DevicePath);
-	gtBS->FreePool(Resp);
+  	gtBS->FreePool (MultiConfigAltResp);
+	gtBS->FreePool (DevicePath);
+	gtBS->FreePool (Resp);
     return Status;
   }
   
@@ -618,9 +618,9 @@ BBTestRouteConfigFunctionTestCheckpoint1 (
            Status
            );
   
-  gtBS->FreePool(MultiConfigAltResp);
-  gtBS->FreePool(DevicePath);
-  gtBS->FreePool(Resp);
+  gtBS->FreePool (MultiConfigAltResp);
+  gtBS->FreePool (DevicePath);
+  gtBS->FreePool (Resp);
 
   return EFI_SUCCESS;
 } 

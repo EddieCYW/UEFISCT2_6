@@ -156,8 +156,8 @@ DevicePathCmp(
   ASSERT(S1);
   ASSERT(S2);
 
-  Str1 = (CHAR16 *)AllocatePool(2 * StrLen(S1) + 2);
-  Str2 = (CHAR16 *)AllocatePool(2 * StrLen(S2) + 2);
+  Str1 = (CHAR16 *)SctAllocatePool (2 * StrLen(S1) + 2);
+  Str2 = (CHAR16 *)SctAllocatePool (2 * StrLen(S2) + 2);
   StrCpy(Str1, S1);
   StrCpy(Str2, S2);
 
@@ -237,8 +237,8 @@ DevicePathCmp(
     RetCode = 1;
   }
 
-  FreePool(Str1);
-  FreePool(Str2);
+  SctFreePool (Str1);
+  SctFreePool (Str2);
   return RetCode;
 }
 
@@ -320,9 +320,9 @@ DevicePathToTextConvertDeviceNodeToTextFunctionTest (
                 (UINTN)__LINE__,
                 text
                 );
-  FreePool (pAcpiDevNode);
-  FreePool (pDevNode);
-  FreePool (text);
+  SctFreePool (pAcpiDevNode);
+  SctFreePool (pDevNode);
+  SctFreePool (text);
 
   //
   // TDS 3.5.1.2.2
@@ -350,9 +350,9 @@ DevicePathToTextConvertDeviceNodeToTextFunctionTest (
                 (UINTN)__LINE__,
                 text
                 );
-  FreePool (pPciDevNode);
-  FreePool (pDevNode);
-  FreePool (text);
+  SctFreePool (pPciDevNode);
+  SctFreePool (pDevNode);
+  SctFreePool (text);
 
   //
   // TDS 3.5.1.2.3
@@ -385,9 +385,9 @@ DevicePathToTextConvertDeviceNodeToTextFunctionTest (
                 (UINTN)__LINE__,
                 text
                 );
-  FreePool (pAtapiDevNode);
-  FreePool (pDevNode);
-  FreePool (text);
+  SctFreePool (pAtapiDevNode);
+  SctFreePool (pDevNode);
+  SctFreePool (text);
 
   return EFI_SUCCESS;
 }
@@ -442,7 +442,7 @@ DevicePathToTextConvertDevicePathToTextFunctionTest (
   //
   // TDS 3.5.2.2.1
   //
-  pDevicePath1 = (EFI_DEVICE_PATH *) AllocatePool (END_DEVICE_PATH_LENGTH);
+  pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -452,22 +452,22 @@ DevicePathToTextConvertDevicePathToTextFunctionTest (
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->HID  = EFI_PNP_ID (0x0A03);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->UID  = 0;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath2);
-  FreePool (pDevicePath1);
-  FreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (PCINodeType, PCINodeSubType, PCINodeLength);
   ((PCI_DEVICE_PATH *) pDevicePath1)->Function  = 0x10;
   ((PCI_DEVICE_PATH *) pDevicePath1)->Device    = 0x00;
   pDevicePath2 = DevicePathUtilities->AppendDeviceNode (pDevicePath3, pDevicePath1);
-  FreePool (pDevicePath3);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath3);
+  SctFreePool (pDevicePath1);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (ACPINodeType, ACPINodeSubType, ACPINodeLength);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath1)->HID  = EFI_PNP_ID (0x0604);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath1)->UID  = 0;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath2, pDevicePath1);
-  FreePool (pDevicePath2);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
 
   text        = DevicePathToText->ConvertDevicePathToText (pDevicePath3, FALSE, FALSE);
   pDevicePath = SctConvertTextToDevicePath(text);
@@ -488,14 +488,14 @@ DevicePathToTextConvertDevicePathToTextFunctionTest (
                 (UINTN)__LINE__,
                 text
                 );
-  FreePool (pDevicePath3);
-  FreePool (pDevicePath);
-  FreePool (text);
+  SctFreePool (pDevicePath3);
+  SctFreePool (pDevicePath);
+  SctFreePool (text);
 
   //
   // TDS 3.5.2.2.2
   //
-  pDevicePath1 = (EFI_DEVICE_PATH *) AllocatePool (END_DEVICE_PATH_LENGTH);
+  pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -505,23 +505,23 @@ DevicePathToTextConvertDevicePathToTextFunctionTest (
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->HID  = EFI_PNP_ID (0x0A03);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->UID  = 0;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath2);
-  FreePool (pDevicePath1);
-  FreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (PCINodeType, PCINodeSubType, PCINodeLength);
   ((PCI_DEVICE_PATH *) pDevicePath1)->Function  = 0x10;
   ((PCI_DEVICE_PATH *) pDevicePath1)->Device    = 0x01;
   pDevicePath2 = DevicePathUtilities->AppendDeviceNode (pDevicePath3, pDevicePath1);
-  FreePool (pDevicePath3);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath3);
+  SctFreePool (pDevicePath1);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (ATAPINodeType, ATAPINodeSubType, ATAPINodeLength);
   ((ATAPI_DEVICE_PATH *) pDevicePath1)->PrimarySecondary  = 0x00;
   ((ATAPI_DEVICE_PATH *) pDevicePath1)->SlaveMaster       = 0x00;
   ((ATAPI_DEVICE_PATH *) pDevicePath1)->Lun               = 0x0000;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath2, pDevicePath1);
-  FreePool (pDevicePath2);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
 
   text        = DevicePathToText->ConvertDevicePathToText (pDevicePath3, FALSE, FALSE);
   pDevicePath = SctConvertTextToDevicePath(text);
@@ -542,14 +542,14 @@ DevicePathToTextConvertDevicePathToTextFunctionTest (
                 (UINTN)__LINE__,
                 text
                 );
-  FreePool (pDevicePath3);
-  FreePool (pDevicePath);
-  FreePool (text);
+  SctFreePool (pDevicePath3);
+  SctFreePool (pDevicePath);
+  SctFreePool (text);
 
   //
   // TDS 3.5.2.2.3
   //
-  pDevicePath1 = (EFI_DEVICE_PATH *) AllocatePool (END_DEVICE_PATH_LENGTH);
+  pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -559,22 +559,22 @@ DevicePathToTextConvertDevicePathToTextFunctionTest (
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->HID  = EFI_PNP_ID (0x0A03);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->UID  = 0;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath2);
-  FreePool (pDevicePath1);
-  FreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (PCINodeType, PCINodeSubType, PCINodeLength);
   ((PCI_DEVICE_PATH *) pDevicePath1)->Function  = 0x0C;
   ((PCI_DEVICE_PATH *) pDevicePath1)->Device    = 0x00;
   pDevicePath2 = DevicePathUtilities->AppendDeviceNode (pDevicePath3, pDevicePath1);
-  FreePool (pDevicePath3);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath3);
+  SctFreePool (pDevicePath1);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (PCINodeType, PCINodeSubType, PCINodeLength);
   ((PCI_DEVICE_PATH *) pDevicePath1)->Function  = 0x00;
   ((PCI_DEVICE_PATH *) pDevicePath1)->Device    = 0x00;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath2, pDevicePath1);
-  FreePool (pDevicePath2);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
 
   text        = DevicePathToText->ConvertDevicePathToText (pDevicePath3, FALSE, FALSE);
   pDevicePath = SctConvertTextToDevicePath(text);
@@ -595,9 +595,9 @@ DevicePathToTextConvertDevicePathToTextFunctionTest (
                 (UINTN)__LINE__,
                 text
                 );
-  FreePool (pDevicePath3);
-  FreePool (pDevicePath);
-  FreePool (text);
+  SctFreePool (pDevicePath3);
+  SctFreePool (pDevicePath);
+  SctFreePool (text);
 
   return EFI_SUCCESS;
 }

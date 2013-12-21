@@ -739,7 +739,7 @@ BBTestPassThruFunctionAutoTest (
 
   ExtScsiPassThru = (EFI_EXT_SCSI_PASS_THRU_PROTOCOL *)ClientInterface;
 
-  Data = AllocateZeroPool (ExtScsiPassThru->Mode->IoAlign + 96);
+  Data = SctAllocateZeroPool (ExtScsiPassThru->Mode->IoAlign + 96);
   
   //
   // Get valid Target and Lun
@@ -909,7 +909,7 @@ BBTestPassThruFunctionAutoTest (
     return EFI_UNSUPPORTED;
   }
 
-  FreePool(Data);
+  SctFreePool (Data);
 
   return EFI_SUCCESS;
 }

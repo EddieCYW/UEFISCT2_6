@@ -1403,7 +1403,7 @@ BBTestListPackageListsConformanceTestCheckpoint2 (
   //
   // Allocate the mem for Handle
   //
-  HandleBuffer = (EFI_HII_HANDLE*) AllocateZeroPool( 10 * sizeof(EFI_HII_HANDLE) );
+  HandleBuffer = (EFI_HII_HANDLE*) SctAllocateZeroPool ( 10 * sizeof(EFI_HII_HANDLE) );
   
   //
   // Call ListPackageLists with HandleBufferLength set to be NULL
@@ -1435,7 +1435,7 @@ BBTestListPackageListsConformanceTestCheckpoint2 (
   //
   // Release the resource of Handle
   //
-  gtBS->FreePool( HandleBuffer );
+  gtBS->FreePool ( HandleBuffer );
   
   //
   // Remove the package list associated with Handle from the HII database
@@ -1476,7 +1476,7 @@ BBTestListPackageListsConformanceTestCheckpoint3 (
   //
   // Allocate the mem for Handle
   //
-  Handle = (EFI_HII_HANDLE*) AllocateZeroPool( HandleBufferLength );
+  Handle = (EFI_HII_HANDLE*) SctAllocateZeroPool ( HandleBufferLength );
   
   //
   // Call ListPackageLists with no mathching handles were found
@@ -1492,8 +1492,8 @@ BBTestListPackageListsConformanceTestCheckpoint3 (
   // Check if the HandleBufferLength is too small
   //
   if ( EFI_BUFFER_TOO_SMALL == Status ) {
-    gtBS->FreePool( Handle );
-    Handle = (EFI_HII_HANDLE*) AllocateZeroPool( HandleBufferLength );
+    gtBS->FreePool ( Handle );
+    Handle = (EFI_HII_HANDLE*) SctAllocateZeroPool ( HandleBufferLength );
     Status = HIIDatabase->ListPackageLists(
                             HIIDatabase,
                             PackageType,
@@ -1522,7 +1522,7 @@ BBTestListPackageListsConformanceTestCheckpoint3 (
   //
   // Release the resource of Handle
   //
-  gtBS->FreePool( Handle );
+  gtBS->FreePool ( Handle );
   
   return EFI_SUCCESS;
 }
@@ -1583,7 +1583,7 @@ BBTestListPackageListsConformanceTestCheckpoint4 (
   //
   // Allocate the mem for Handle
   //
-  Handle = (EFI_HII_HANDLE*) AllocateZeroPool( HandleBufferLength );
+  Handle = (EFI_HII_HANDLE*) SctAllocateZeroPool ( HandleBufferLength );
   
   //
   // Call ListPackageLists with HandleBufferLength indicates the buffer is too small
@@ -1632,7 +1632,7 @@ BBTestListPackageListsConformanceTestCheckpoint4 (
   //
   // Release the resource of Handle
   //
-  gtBS->FreePool( Handle );
+  gtBS->FreePool ( Handle );
   
   //
   // Remove the PackageLists from the HII database
@@ -1674,7 +1674,7 @@ BBTestListPackageListsConformanceTestCheckpoint5 (
   //
   // Allocate the mem for Handle
   //
-  Handle = (EFI_HII_HANDLE*) AllocateZeroPool( HandleBufferLength );
+  Handle = (EFI_HII_HANDLE*) SctAllocateZeroPool ( HandleBufferLength );
   
   //
   // Call ListPackageLists with PackageType is not Guid and PackageGuid is not NULL
@@ -1690,8 +1690,8 @@ BBTestListPackageListsConformanceTestCheckpoint5 (
   // Check if the HandleBufferLength is too small
   //
   if ( EFI_BUFFER_TOO_SMALL == Status ) {
-    gtBS->FreePool( Handle );
-    Handle = (EFI_HII_HANDLE*) AllocateZeroPool( HandleBufferLength );
+    gtBS->FreePool ( Handle );
+    Handle = (EFI_HII_HANDLE*) SctAllocateZeroPool ( HandleBufferLength );
     Status = HIIDatabase->ListPackageLists(
                             HIIDatabase,
                             PackageType,
@@ -1720,7 +1720,7 @@ BBTestListPackageListsConformanceTestCheckpoint5 (
   //
   // Release the resource of Handle
   //
-  gtBS->FreePool( Handle );
+  gtBS->FreePool ( Handle );
 
   return EFI_SUCCESS;
 }
@@ -1748,7 +1748,7 @@ BBTestListPackageListsConformanceTestCheckpoint6 (
   //
   // Allocate the mem for Handle
   //
-  Handle = (EFI_HII_HANDLE*) AllocatePool( HandleBufferLength );
+  Handle = (EFI_HII_HANDLE*) SctAllocatePool ( HandleBufferLength );
   
   //
   // Call ListPackageLists with PackageType is EFI_HII_DATABASE_TYPE_GUID and PackageGuid is NULL
@@ -1764,8 +1764,8 @@ BBTestListPackageListsConformanceTestCheckpoint6 (
   // Check if the HandleBufferLength is too small
   //
   if ( EFI_BUFFER_TOO_SMALL == Status ) {
-    gtBS->FreePool( Handle );
-    Handle = (EFI_HII_HANDLE*) AllocatePool( HandleBufferLength );
+    gtBS->FreePool ( Handle );
+    Handle = (EFI_HII_HANDLE*) SctAllocatePool ( HandleBufferLength );
     Status = HIIDatabase->ListPackageLists(
                             HIIDatabase,
                             PackageType,
@@ -1794,7 +1794,7 @@ BBTestListPackageListsConformanceTestCheckpoint6 (
   //
   // Release the resource of Handle
   //
-  gtBS->FreePool( Handle );
+  gtBS->FreePool ( Handle );
 
   return EFI_SUCCESS;
 }
@@ -1826,7 +1826,7 @@ BBTestExportPackageListsConformanceTestCheckpoint1 (
   //
   // Allocate the mem for Buffer
   //
-  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) AllocateZeroPool( 1024 );
+  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) SctAllocateZeroPool ( 1024 );
   
   //
   // Call ExportPackageLists with BufferSize set to be NULL
@@ -1857,7 +1857,7 @@ BBTestExportPackageListsConformanceTestCheckpoint1 (
   //
   // Free the Buffer
   //
-  gtBS->FreePool( Buffer );
+  gtBS->FreePool ( Buffer );
   
   //
   // Remvoe the PackageList from the HII database
@@ -1978,7 +1978,7 @@ BBTestExportPackageListsConformanceTestCheckpoint3 (
   //
   // Allocate the mem for Buffer
   //
-  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) AllocateZeroPool( BufferSize );
+  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) SctAllocateZeroPool ( BufferSize );
   
   //
   // Call ExportPackageLists with BufferSize indicates the Buffer is too small
@@ -2016,7 +2016,7 @@ BBTestExportPackageListsConformanceTestCheckpoint3 (
   //
   // Free the Buffer
   //
-  gtBS->FreePool( Buffer );
+  gtBS->FreePool ( Buffer );
   
   return EFI_SUCCESS;
 }
@@ -2063,7 +2063,7 @@ BBTestExportPackageListsConformanceTestCheckpoint4 (
   // Allocate the mem for Buffer
   //
   BufferSize = PackageListLength;
-  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) AllocateZeroPool( BufferSize );
+  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) SctAllocateZeroPool ( BufferSize );
   if ( NULL == Buffer ){
     return Status;
   }
@@ -2097,7 +2097,7 @@ BBTestExportPackageListsConformanceTestCheckpoint4 (
   //
   // Free the Buffer
   //
-  gtBS->FreePool( Buffer );
+  gtBS->FreePool ( Buffer );
   
   return EFI_SUCCESS;
 }
@@ -2131,7 +2131,7 @@ BBTestExportPackageListsConformanceTestCheckpoint5 (
   // Allocate the mem for Buffer
   //
   BufferSize = PackageListLength;
-  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) AllocateZeroPool( BufferSize );
+  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) SctAllocateZeroPool ( BufferSize );
   if ( NULL == Buffer ){
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -2174,7 +2174,7 @@ BBTestExportPackageListsConformanceTestCheckpoint5 (
   //
   // Free the Buffer
   //
-  gtBS->FreePool( Buffer );
+  gtBS->FreePool ( Buffer );
   
   //
   // Remove the PackageList associated with Handle
@@ -2701,7 +2701,7 @@ BBTestFindKeyboardLayoutsConformanceTestCheckpoint3 (
   //
   KeyGuidBufferLength = 1 * sizeof(EFI_GUID);
 
-  KeyGuidBuffer = (EFI_GUID*) AllocateZeroPool( KeyGuidBufferLength );
+  KeyGuidBuffer = (EFI_GUID*) SctAllocateZeroPool ( KeyGuidBufferLength );
   
   //
   // Call FindKeyboardLayouts with KeyGuidBufferLength indicates the buffer is too small
@@ -2860,7 +2860,7 @@ BBTestGetKeyboardLayoutConformanceTestCheckpoint3 (
   // Init the KeyGuidBufferLength and KeyGuidBuffer
   //
   KeyboardLayoutLength = 32;
-  KeyboardLayout = (EFI_HII_KEYBOARD_LAYOUT*) AllocateZeroPool( KeyboardLayoutLength );
+  KeyboardLayout = (EFI_HII_KEYBOARD_LAYOUT*) SctAllocateZeroPool ( KeyboardLayoutLength );
   //
   // Call GetKeyboardLayout
   //
@@ -2889,7 +2889,7 @@ BBTestGetKeyboardLayoutConformanceTestCheckpoint3 (
                  Status
                  );
   
-  gtBS->FreePool( KeyboardLayout );
+  gtBS->FreePool ( KeyboardLayout );
 
   Status = HIIDatabase->RemovePackageList(
                           HIIDatabase,
@@ -2937,7 +2937,7 @@ BBTestGetKeyboardLayoutConformanceTestCheckpoint4 (
   // Init the KeyGuidBufferLength and KeyGuidBuffer
   //
   KeyboardLayoutLength = 1024 * 32;
-  KeyboardLayout = (EFI_HII_KEYBOARD_LAYOUT*) AllocateZeroPool( KeyboardLayoutLength );
+  KeyboardLayout = (EFI_HII_KEYBOARD_LAYOUT*) SctAllocateZeroPool ( KeyboardLayoutLength );
   //
   // Call GetKeyboardLayout with the requested keyboard layout not found
   //
@@ -2964,7 +2964,7 @@ BBTestGetKeyboardLayoutConformanceTestCheckpoint4 (
                  Status
                  );
   
-  gtBS->FreePool( KeyboardLayout );
+  gtBS->FreePool ( KeyboardLayout );
 
   Status = HIIDatabase->RemovePackageList(
                           HIIDatabase,

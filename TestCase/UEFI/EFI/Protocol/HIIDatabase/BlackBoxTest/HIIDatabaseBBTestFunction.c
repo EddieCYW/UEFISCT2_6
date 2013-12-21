@@ -668,7 +668,7 @@ BBTestRemovePackageListFunctionTestCheckpoint1 (
   // Call ExportPackageList to Check the PackageList has been removed
   //
   BufferSize = PackageList1Length;
-  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) AllocateZeroPool( BufferSize );
+  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) SctAllocateZeroPool ( BufferSize );
   
   Status = HIIDatabase->ExportPackageLists(
                           HIIDatabase,
@@ -695,7 +695,7 @@ BBTestRemovePackageListFunctionTestCheckpoint1 (
   //
   // Release the Buffer and resource of DriverHandle
   //
-  gtBS->FreePool( Buffer );
+  gtBS->FreePool ( Buffer );
   
   return EFI_SUCCESS;
 }
@@ -824,7 +824,7 @@ BBTestListPackageListsFunctionTestCheckpoint1 (
   PackageGuid = mPackageGuid;
   ReturnLength = 2 * sizeof(EFI_HII_HANDLE);
   HandleBufferLength = 5 * sizeof(EFI_HII_HANDLE);
-  HandleBuffer = (EFI_HII_HANDLE*) AllocateZeroPool(HandleBufferLength);
+  HandleBuffer = (EFI_HII_HANDLE*) SctAllocateZeroPool (HandleBufferLength);
   Status = HIIDatabase->ListPackageLists(
                           HIIDatabase,
                           PackageType,
@@ -867,7 +867,7 @@ BBTestListPackageListsFunctionTestCheckpoint1 (
   //
   // Release the Buffer and resource of DriverHandle and UpdateDriverHandle
   //
-  gtBS->FreePool( HandleBuffer );
+  gtBS->FreePool ( HandleBuffer );
   
   return EFI_SUCCESS;
 }
@@ -905,7 +905,7 @@ BBTestExportPackageListsFunctionTestCheckpoint1 (
   // Export the PackageList and compare the result
   //
   BufferSize = PackageList1Length;
-  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) AllocateZeroPool( BufferSize );
+  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) SctAllocateZeroPool ( BufferSize );
   
   Status = HIIDatabase->ExportPackageLists(
                           HIIDatabase,
@@ -947,7 +947,7 @@ BBTestExportPackageListsFunctionTestCheckpoint1 (
   //
   // Release Buffer and the resource of DriverHandle
   //
-  gtBS->FreePool( Buffer );
+  gtBS->FreePool ( Buffer );
 
   return EFI_SUCCESS;
 }
@@ -985,7 +985,7 @@ BBTestExportPackageListsFunctionTestCheckpoint2 (
   // Export the PackageList and compare the result
   //
   BufferSize = PackageList1Length;
-  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) AllocateZeroPool( BufferSize );
+  Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) SctAllocateZeroPool ( BufferSize );
   
   Status = HIIDatabase->ExportPackageLists(
                           HIIDatabase,
@@ -1008,8 +1008,8 @@ BBTestExportPackageListsFunctionTestCheckpoint2 (
   }
 
   if (EFI_BUFFER_TOO_SMALL == Status) {
-    gtBS->FreePool( Buffer );
-    Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) AllocateZeroPool( BufferSize );
+    gtBS->FreePool ( Buffer );
+    Buffer = (EFI_HII_PACKAGE_LIST_HEADER*) SctAllocateZeroPool ( BufferSize );
     Status = HIIDatabase->ExportPackageLists(
                             HIIDatabase,
                             NULL,
@@ -1044,7 +1044,7 @@ BBTestExportPackageListsFunctionTestCheckpoint2 (
   //
   // Release Buffer and the resource of DriverHandle
   //
-  gtBS->FreePool( Buffer );
+  gtBS->FreePool ( Buffer );
 
   return EFI_SUCCESS;
 }
@@ -1084,7 +1084,7 @@ BBTestFindKeyboardLayoutsFunctionTestCheckpoint1 (
   // Init the KeyGuidBufferLength and KeyGuidBuffer
   //
   KeyGuidBufferLength = 10 * sizeof(EFI_GUID);
-  KeyGuidBuffer = (EFI_GUID*) AllocateZeroPool( KeyGuidBufferLength );
+  KeyGuidBuffer = (EFI_GUID*) SctAllocateZeroPool ( KeyGuidBufferLength );
   //
   // Call FindKeyboardLayouts
   //
@@ -1098,8 +1098,8 @@ BBTestFindKeyboardLayoutsFunctionTestCheckpoint1 (
   //
   if ( EFI_BUFFER_TOO_SMALL == Status )
   {
-    gtBS->FreePool( KeyGuidBuffer );
-    KeyGuidBuffer = (EFI_GUID*) AllocateZeroPool( KeyGuidBufferLength );
+    gtBS->FreePool ( KeyGuidBuffer );
+    KeyGuidBuffer = (EFI_GUID*) SctAllocateZeroPool ( KeyGuidBufferLength );
     Status = HIIDatabase->FindKeyboardLayouts(
                             HIIDatabase,
                             &KeyGuidBufferLength,
@@ -1123,7 +1123,7 @@ BBTestFindKeyboardLayoutsFunctionTestCheckpoint1 (
                  Status
                  );
 
-  gtBS->FreePool( KeyGuidBuffer );
+  gtBS->FreePool ( KeyGuidBuffer );
 
   Status = HIIDatabase->RemovePackageList(
                           HIIDatabase,
@@ -1172,7 +1172,7 @@ BBTestGetKeyboardLayoutFunctionTestCheckpoint1 (
   // Init the KeyGuidBufferLength and KeyGuidBuffer
   //
   KeyboardLayoutLength = 1024 * 32;
-  KeyboardLayout = (EFI_HII_KEYBOARD_LAYOUT*) AllocateZeroPool( KeyboardLayoutLength );
+  KeyboardLayout = (EFI_HII_KEYBOARD_LAYOUT*) SctAllocateZeroPool ( KeyboardLayoutLength );
   //
   // Call GetKeyboardLayout
   //
@@ -1186,8 +1186,8 @@ BBTestGetKeyboardLayoutFunctionTestCheckpoint1 (
   // Check if the buffer too small
   //
   if ( EFI_BUFFER_TOO_SMALL == Status ){
-    gtBS->FreePool( KeyboardLayout );
-    KeyboardLayout = (EFI_HII_KEYBOARD_LAYOUT*) AllocateZeroPool( KeyboardLayoutLength );
+    gtBS->FreePool ( KeyboardLayout );
+    KeyboardLayout = (EFI_HII_KEYBOARD_LAYOUT*) SctAllocateZeroPool ( KeyboardLayoutLength );
     Status = HIIDatabase->GetKeyboardLayout(
                             HIIDatabase,
                             NULL,
@@ -1213,7 +1213,7 @@ BBTestGetKeyboardLayoutFunctionTestCheckpoint1 (
                  Status
                  );
   
-  gtBS->FreePool( KeyboardLayout );
+  gtBS->FreePool ( KeyboardLayout );
 
   Status = HIIDatabase->RemovePackageList(
                           HIIDatabase,
@@ -1245,7 +1245,7 @@ BBTestSetKeyboardLayoutFunctionTestCheckpoint1 (
   // retrieve current keyboard layout 
   //
   KeyboardLayoutLength = 1024 * 32;
-  KeyboardLayout = (EFI_HII_KEYBOARD_LAYOUT*) AllocateZeroPool( KeyboardLayoutLength );
+  KeyboardLayout = (EFI_HII_KEYBOARD_LAYOUT*) SctAllocateZeroPool ( KeyboardLayoutLength );
   if (KeyboardLayout == NULL)
     return EFI_UNSUPPORTED;
   
@@ -1256,7 +1256,7 @@ BBTestSetKeyboardLayoutFunctionTestCheckpoint1 (
                           KeyboardLayout
                           );
   if ( Status == EFI_NOT_FOUND ) {
-    gtBS->FreePool( KeyboardLayout );
+    gtBS->FreePool ( KeyboardLayout );
 	return EFI_UNSUPPORTED;
   }
   
@@ -1272,7 +1272,7 @@ BBTestSetKeyboardLayoutFunctionTestCheckpoint1 (
                           );
   
   if ( EFI_SUCCESS != Status ) { 
-    gtBS->FreePool( KeyboardLayout );
+    gtBS->FreePool ( KeyboardLayout );
     return Status;
   } 
   

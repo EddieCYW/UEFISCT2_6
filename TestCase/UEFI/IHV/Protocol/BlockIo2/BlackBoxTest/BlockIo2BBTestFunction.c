@@ -282,7 +282,7 @@ BlockIo2AsyncReadData (
   //
   // Allocate memory for one BlockIo2Entity
   //
-  Status = gtBS->AllocatePool(
+  Status = gtBS->AllocatePool (
                    EfiBootServicesData, 
                    sizeof(BlockIO2_Task), 
                    &BlockIo2Entity);
@@ -300,7 +300,7 @@ BlockIo2AsyncReadData (
                    &BlockIo2Entity->BlockIo2Token.Event
                    );
   if (Status != EFI_SUCCESS) {
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
     return Status;
   }
   
@@ -410,7 +410,7 @@ BlockIo2MixedSyncAsyncReadData (
   //
   // Allocate memory for one BlockIo2Entity
   //
-  Status = gtBS->AllocatePool(
+  Status = gtBS->AllocatePool (
                    EfiBootServicesData, 
                    sizeof(BlockIO2_Task), 
                    &BlockIo2Entity);
@@ -428,7 +428,7 @@ BlockIo2MixedSyncAsyncReadData (
                    &BlockIo2Entity->BlockIo2Token.Event
                    );
   if (Status != EFI_SUCCESS) {
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
     FreeAlignedPool(Buffer);
     return Status;
   }
@@ -499,7 +499,7 @@ BlockIo2MixedSyncAsyncReadData (
     //
     // Allocate memory for one BlockIo2Entity
     //
-    Status = gtBS->AllocatePool(
+    Status = gtBS->AllocatePool (
                      EfiBootServicesData, 
                      sizeof(BlockIO2_Task), 
                      &BlockIo2Entity);
@@ -607,7 +607,7 @@ BlockIo2AsyncWriteData (
   //
   // Allocate memory for one BlockIo2Entity
   //
-  Status = gtBS->AllocatePool(
+  Status = gtBS->AllocatePool (
                    EfiBootServicesData, 
                    sizeof(BlockIO2_Task), 
                    &BlockIo2Entity
@@ -626,7 +626,7 @@ BlockIo2AsyncWriteData (
                    &BlockIo2Entity->BlockIo2Token.Event
                    );
   if (Status != EFI_SUCCESS) {
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
     return Status;
   }
   
@@ -735,7 +735,7 @@ BlockIo2MixedSyncAsyncWriteData (
   //
   // Allocate memory for one BlockIo2Entity
   //
-  Status = gtBS->AllocatePool(
+  Status = gtBS->AllocatePool (
                    EfiBootServicesData, 
                    sizeof(BlockIO2_Task), 
                    &BlockIo2Entity
@@ -754,7 +754,7 @@ BlockIo2MixedSyncAsyncWriteData (
                    &BlockIo2Entity->BlockIo2Token.Event
                    );
   if (Status != EFI_SUCCESS) {
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
     FreeAlignedPool(Buffer);
     return Status;
   }
@@ -822,7 +822,7 @@ BlockIo2MixedSyncAsyncWriteData (
     //
     // Allocate memory for one BlockIo2Entity
     //
-    Status = gtBS->AllocatePool(
+    Status = gtBS->AllocatePool (
                      EfiBootServicesData, 
                      sizeof(BlockIO2_Task), 
                      &BlockIo2Entity);
@@ -1685,7 +1685,7 @@ END_WAIT:
     if (BlockIo2Entity->Buffer != NULL) {
       Status = FreeAlignedPool (BlockIo2Entity->Buffer);
     }
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
 
 
     AcquireLock(&gReadQueueLock);
@@ -1732,7 +1732,7 @@ END_WAIT:
        }
      }
  
-     gtBS->FreePool(BlockIo2Entity);
+     gtBS->FreePool (BlockIo2Entity);
   }
  
 
@@ -2132,7 +2132,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint3(
         //
         // Allocate memory for one BlockIo2Entity
         //
-        Status = gtBS->AllocatePool(
+        Status = gtBS->AllocatePool (
                          EfiBootServicesData, 
                          sizeof(BlockIO2_Task), 
                          &BlockIo2Entity
@@ -2330,7 +2330,7 @@ END:
       }
     }
  
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
   }
   
   return Status;
@@ -2553,7 +2553,7 @@ END_WAIT:
     if (BlockIo2Entity->Buffer != NULL) {
       Status = FreeAlignedPool (BlockIo2Entity->Buffer);
     }
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
   
   
     AcquireLock(&gMixedReadQueueLock);
@@ -2589,7 +2589,7 @@ END_WAIT:
     if (BlockIo2Entity->Buffer != NULL) {
       Status = FreeAlignedPool (BlockIo2Entity->Buffer);
     }
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
   
   }  
 
@@ -2620,7 +2620,7 @@ END_WAIT:
       FreeAlignedPool(BlockIo2EntitySync->Buffer);
     }
 
-    gtBS->FreePool(BlockIo2EntitySync);
+    gtBS->FreePool (BlockIo2EntitySync);
     
   }
 
@@ -2652,7 +2652,7 @@ END_WAIT:
      FreeAlignedPool(BlockIo2EntitySync->Buffer);
    }
 
-   gtBS->FreePool(BlockIo2EntitySync);
+   gtBS->FreePool (BlockIo2EntitySync);
     
   }
 
@@ -2897,7 +2897,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint1(
         //
         // Allocate memory for one BlockIo2Entity
         //
-        Status = gtBS->AllocatePool(
+        Status = gtBS->AllocatePool (
                          EfiBootServicesData, 
                          sizeof(BlockIO2_Task), 
                          &BlockIo2Entity
@@ -3144,7 +3144,7 @@ END:
       }
     }
 
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
   }
   
   //
@@ -3206,7 +3206,7 @@ END:
     if (BlockIo2Entity->Buffer != NULL) {
       Status = FreeAlignedPool (BlockIo2Entity->Buffer);
     }
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
    
     
     AcquireLock(&gWriteQueueLock);
@@ -3253,7 +3253,7 @@ END:
       }
     }
  
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
   }
   
 
@@ -3385,7 +3385,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint2(
         //
         // Allocate memory for one BlockIo2Entity
         //
-        Status = gtBS->AllocatePool(
+        Status = gtBS->AllocatePool (
                          EfiBootServicesData, 
                          sizeof(BlockIO2_Task), 
                          &BlockIo2Entity
@@ -3582,7 +3582,7 @@ END:
     // Free All memory
     //
     Status = FreeAlignedPool (BlockIo2Entity->Buffer);
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
   }
   
   return EFI_SUCCESS;
@@ -3711,7 +3711,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
         //
         // Allocate memory for one BlockIo2Entity
         //
-        Status = gtBS->AllocatePool(
+        Status = gtBS->AllocatePool (
                          EfiBootServicesData, 
                          sizeof(BlockIO2_Task), 
                          &BlockIo2RecordEntity
@@ -3773,7 +3773,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
         //
         // Allocate memory for one BlockIo2Entity
         //
-        Status = gtBS->AllocatePool(
+        Status = gtBS->AllocatePool (
                          EfiBootServicesData, 
                          sizeof(BlockIO2_Task), 
                          &BlockIo2WriteEntity
@@ -3960,7 +3960,7 @@ END:
       Status = FreeAlignedPool (BlockIo2RecordEntity->Buffer);
     }
  
-    gtBS->FreePool(BlockIo2RecordEntity);
+    gtBS->FreePool (BlockIo2RecordEntity);
   }
 
   //
@@ -4030,7 +4030,7 @@ END:
       }
     }
  
-    gtBS->FreePool(BlockIo2WriteEntity);
+    gtBS->FreePool (BlockIo2WriteEntity);
   }
  
   return Status;
@@ -4127,7 +4127,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint4(
         //
         // Allocate memory for one BlockIo2Entity
         //
-        Status = gtBS->AllocatePool(
+        Status = gtBS->AllocatePool (
                          EfiBootServicesData, 
                          sizeof(BlockIO2_Task), 
                          &BlockIo2Entity
@@ -4358,7 +4358,7 @@ END:
       }
     }
 
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
   }
   
   //
@@ -4397,7 +4397,7 @@ END:
     if (BlockIo2Entity->Buffer != NULL) {
       Status = FreeAlignedPool (BlockIo2Entity->Buffer);
     }
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
   
   }  
   
@@ -4449,7 +4449,7 @@ END:
     if (BlockIo2Entity->Buffer != NULL) {
       Status = FreeAlignedPool (BlockIo2Entity->Buffer);
     }
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
     
   }  
 
@@ -4478,7 +4478,7 @@ END:
       FreeAlignedPool(BlockIo2Entity->Buffer);
     }
  
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
   }
   
  
@@ -4500,7 +4500,7 @@ END:
     if (BlockIo2Entity->Buffer != NULL) {
       Status = FreeAlignedPool (BlockIo2Entity->Buffer);
     }
-    gtBS->FreePool(BlockIo2Entity);
+    gtBS->FreePool (BlockIo2Entity);
    
     
     AcquireLock(&gMixedWriteQueueLock);

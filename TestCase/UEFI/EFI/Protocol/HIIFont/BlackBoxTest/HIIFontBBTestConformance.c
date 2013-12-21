@@ -272,14 +272,14 @@ BBTestStringToImageConformanceTestCheckpoint1 (
   //
   // Allocate Memory
   //
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
     return  EFI_UNSUPPORTED;
   }
   
   Blt->Width = 50;
   Blt->Height = 40;  
-  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Blt->Image.Bitmap == NULL ){
   	gtBS->FreePool (Blt);
     return  EFI_UNSUPPORTED;
@@ -474,13 +474,13 @@ BBTestStringIdToImageConformanceTestCheckpoint1 (
   // Allocate Memory
   //
 
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
     return  EFI_UNSUPPORTED;
   }
   Blt->Width = 50;
   Blt->Height = 40;
-  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Blt->Image.Bitmap == NULL ){
   	gtBS->FreePool (Blt);
     return  EFI_UNSUPPORTED;
@@ -815,14 +815,14 @@ BBTestGetGlyphConformanceTestCheckpoint1 (
                  Status
                  );
 
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
     return  EFI_UNSUPPORTED;
   }
   
   Blt->Width = 50;
   Blt->Height = 40;  
-  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Blt->Image.Bitmap == NULL ){
   	gtBS->FreePool (Blt);
     return  EFI_UNSUPPORTED;
@@ -932,7 +932,7 @@ BBTestGetFontInfoConformanceTestCheckpoint1 (
   //
   // Call GetFontInfo with invalid Flags combination, EFI_INVALID_PARAMETER should be returned.
   //
-  StringInfoIn = (EFI_FONT_DISPLAY_INFO *) AllocateZeroPool (sizeof(EFI_FONT_DISPLAY_INFO));
+  StringInfoIn = (EFI_FONT_DISPLAY_INFO *) SctAllocateZeroPool (sizeof(EFI_FONT_DISPLAY_INFO));
   if ( StringInfoIn == NULL ){
     return  EFI_UNSUPPORTED;
   }

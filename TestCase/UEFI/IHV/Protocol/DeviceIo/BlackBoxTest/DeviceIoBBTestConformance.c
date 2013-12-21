@@ -149,7 +149,7 @@ MemRead_Conf (
   }
 
 
-  Buffer = AllocatePool (64);
+  Buffer = SctAllocatePool (64);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -439,7 +439,7 @@ MemWrite_Conf (
   }
 
 
-  Buffer = AllocatePool (64);
+  Buffer = SctAllocatePool (64);
   if (Buffer == NULL) {
     gtBS->FreePool (DevIoDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -730,7 +730,7 @@ IoRead_Conf (
   }
 
 
-  Buffer = AllocatePool (64);
+  Buffer = SctAllocatePool (64);
   if (Buffer == NULL) {
     gtBS->FreePool (DevIoDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -1023,7 +1023,7 @@ IoWrite_Conf (
   }
 
 
-  Buffer = AllocatePool (64);
+  Buffer = SctAllocatePool (64);
   if (Buffer == NULL) {
     gtBS->FreePool (DevIoDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -1315,7 +1315,7 @@ PciRead_Conf (
   }
 
 
-  Buffer = AllocatePool (64);
+  Buffer = SctAllocatePool (64);
   if (Buffer == NULL) {
     gtBS->FreePool (DevIoDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -1605,7 +1605,7 @@ PciWrite_Conf (
   }
 
 
-  Buffer = AllocatePool (64);
+  Buffer = SctAllocatePool (64);
   if (Buffer == NULL) {
     gtBS->FreePool (DevIoDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -1891,7 +1891,7 @@ Map_Conf (
   }
 
 
-  Buffer = AllocatePool (128);
+  Buffer = SctAllocatePool (128);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

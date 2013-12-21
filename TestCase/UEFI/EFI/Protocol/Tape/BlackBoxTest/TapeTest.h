@@ -117,10 +117,6 @@ extern void TapeTestWaitForAnyInput (void);
 #define my_printf(x)  Print	x
 #define my_logMsgPrintf  Print
 
-#define malloc EfiLibAllocatePool 
-#define free   tBS->FreePool
-
-
 #define logMsg(_guid,_title,_message,_result,_maskRes) \
   StandardLib->RecordAssertion (StandardLib,\
                     ( (_maskRes==_result) ? EFI_TEST_ASSERTION_PASSED : EFI_TEST_ASSERTION_FAILED ),\

@@ -201,7 +201,6 @@ BBTestUnregisterDataNotifyFunctionTest (
   IN EFI_HANDLE                 SupportHandle
   );
 
-
 VOID
 EventNotifyFunc (
   IN EFI_EVENT Event,

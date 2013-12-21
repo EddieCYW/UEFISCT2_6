@@ -151,8 +151,8 @@ DevicePathFromTextConvertTextToDeviceNodeFunctionTest (
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
-  FreePool (pDevicePath);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath);
+  SctFreePool (pDevicePath1);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -181,8 +181,8 @@ DevicePathFromTextConvertTextToDeviceNodeFunctionTest (
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
-  FreePool (pDevicePath);
-  FreePool (pDevicePath2);
+  SctFreePool (pDevicePath);
+  SctFreePool (pDevicePath2);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -216,8 +216,8 @@ DevicePathFromTextConvertTextToDeviceNodeFunctionTest (
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
-  FreePool (pDevicePath);
-  FreePool (pDevicePath3);
+  SctFreePool (pDevicePath);
+  SctFreePool (pDevicePath3);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -286,7 +286,7 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   //
   StrCpy (text1, L"PciRoot(0)/Pci(0,0x10)/Floppy(0)");
 
-  pDevicePath1 = (EFI_DEVICE_PATH *) AllocatePool (END_DEVICE_PATH_LENGTH);
+  pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -296,22 +296,22 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->HID  = EFI_PNP_ID (0x0A03);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->UID  = 0;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath2);
-  FreePool (pDevicePath1);
-  FreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (PCINodeType, PCINodeSubType, PCINodeLength);
   ((PCI_DEVICE_PATH *) pDevicePath1)->Device    = 0x00;
   ((PCI_DEVICE_PATH *) pDevicePath1)->Function  = 0x10;
   pDevicePath2 = DevicePathUtilities->AppendDeviceNode (pDevicePath3, pDevicePath1);
-  FreePool (pDevicePath3);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath3);
+  SctFreePool (pDevicePath1);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (ACPINodeType, ACPINodeSubType, ACPINodeLength);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath1)->HID  = EFI_PNP_ID (0x0604);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath1)->UID  = 0;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath2, pDevicePath1);
-  FreePool (pDevicePath2);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
 
   pDevicePath = DevicePathFromText->ConvertTextToDevicePath (text1);
 
@@ -321,8 +321,8 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
-  FreePool (pDevicePath);
-  FreePool (pDevicePath3);
+  SctFreePool (pDevicePath);
+  SctFreePool (pDevicePath3);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -339,7 +339,7 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   //
   StrCpy (text2, L"PciRoot(0)/Pci(1,0x10)/Ata(Primary,Master,0)");
 
-  pDevicePath1 = (EFI_DEVICE_PATH *) AllocatePool (END_DEVICE_PATH_LENGTH);
+  pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -349,23 +349,23 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->HID  = EFI_PNP_ID (0x0A03);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->UID  = 0;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath2);
-  FreePool (pDevicePath1);
-  FreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (PCINodeType, PCINodeSubType, PCINodeLength);
   ((PCI_DEVICE_PATH *) pDevicePath1)->Device    = 0x01;
   ((PCI_DEVICE_PATH *) pDevicePath1)->Function  = 0x10;
   pDevicePath2 = DevicePathUtilities->AppendDeviceNode (pDevicePath3, pDevicePath1);
-  FreePool (pDevicePath3);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath3);
+  SctFreePool (pDevicePath1);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (ATAPINodeType, ATAPINodeSubType, ATAPINodeLength);
   ((ATAPI_DEVICE_PATH *) pDevicePath1)->PrimarySecondary  = 0x00;
   ((ATAPI_DEVICE_PATH *) pDevicePath1)->SlaveMaster       = 0x00;
   ((ATAPI_DEVICE_PATH *) pDevicePath1)->Lun               = 0x0000;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath2, pDevicePath1);
-  FreePool (pDevicePath2);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
 
   pDevicePath = DevicePathFromText->ConvertTextToDevicePath (text2);
 
@@ -375,8 +375,8 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
-  FreePool (pDevicePath);
-  FreePool (pDevicePath3);
+  SctFreePool (pDevicePath);
+  SctFreePool (pDevicePath3);
 
   StandardLib->RecordAssertion (
                 StandardLib,
@@ -393,7 +393,7 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   //
   StrCpy (text3, L"PciRoot(0)/Pci(0,0xC)/Pci(0,0)");
 
-  pDevicePath1 = (EFI_DEVICE_PATH *) AllocatePool (END_DEVICE_PATH_LENGTH);
+  pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -403,22 +403,22 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->HID  = EFI_PNP_ID (0x0A03);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->UID  = 0;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath2);
-  FreePool (pDevicePath1);
-  FreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (PCINodeType, PCINodeSubType, PCINodeLength);
   ((PCI_DEVICE_PATH *) pDevicePath1)->Device    = 0x00;
   ((PCI_DEVICE_PATH *) pDevicePath1)->Function  = 0x0C;
   pDevicePath2 = DevicePathUtilities->AppendDeviceNode (pDevicePath3, pDevicePath1);
-  FreePool (pDevicePath3);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath3);
+  SctFreePool (pDevicePath1);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (PCINodeType, PCINodeSubType, PCINodeLength);
   ((PCI_DEVICE_PATH *) pDevicePath1)->Function  = 0x00;
   ((PCI_DEVICE_PATH *) pDevicePath1)->Device    = 0x00;
   pDevicePath3 = DevicePathUtilities->AppendDeviceNode (pDevicePath2, pDevicePath1);
-  FreePool (pDevicePath2);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
 
   pDevicePath = DevicePathFromText->ConvertTextToDevicePath (text3);
 
@@ -428,8 +428,8 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
-  FreePool (pDevicePath);
-  FreePool (pDevicePath3);
+  SctFreePool (pDevicePath);
+  SctFreePool (pDevicePath3);
 
   StandardLib->RecordAssertion (
                 StandardLib,

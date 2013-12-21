@@ -230,7 +230,7 @@ BBTestGetDriverNameConformanceTestCheckpoint1 (
   
   StringLength = strlena(SupportedLanguages);
   PoolAddress  = NULL;
-  PoolAddress  = (CHAR8 *) AllocateZeroPool (StringLength + 1);
+  PoolAddress  = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL){
     return  EFI_UNSUPPORTED;
   }	
@@ -345,7 +345,7 @@ BBTestGetDriverNameConformanceTestCheckpoint2 (
   
   StringLength = strlena(SupportedLanguages);
   PoolAddress  = NULL;
-  PoolAddress  = (CHAR8 *) AllocateZeroPool (StringLength + 1);
+  PoolAddress  = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL){
     return  EFI_UNSUPPORTED;
   }	
@@ -472,7 +472,7 @@ BBTestGetControllerNameConformanceTestCheckpoint1 (
   
   StringLength = strlena(SupportedLanguages);
   PoolAddress  = NULL;
-  PoolAddress  = (CHAR8 *) AllocateZeroPool (StringLength + 1);
+  PoolAddress  = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL){
     return  EFI_UNSUPPORTED;
   }	
@@ -657,7 +657,7 @@ BBTestGetControllerNameConformanceTestCheckpoint2 (
   
   StringLength = strlena(SupportedLanguages);
   PoolAddress  = NULL;
-  PoolAddress  = (CHAR8 *) AllocateZeroPool (StringLength + 1);
+  PoolAddress  = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL){
     return  EFI_UNSUPPORTED;
   }	
@@ -784,7 +784,7 @@ BBTestGetControllerNameConformanceTestCheckpoint3 (
 
   StringLength = strlena(SupportedLanguages);
   PoolAddress  = NULL;
-  PoolAddress  = (CHAR8 *) AllocateZeroPool (StringLength + 1);
+  PoolAddress  = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL){
     return  EFI_UNSUPPORTED;
   }	

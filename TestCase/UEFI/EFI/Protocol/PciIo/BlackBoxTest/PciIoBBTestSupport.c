@@ -1314,7 +1314,7 @@ ConvertStringToHex (
     ConvertBytes = Length;
   }
   TempBuffer = NULL;
-  TempBuffer = AllocatePool (Length);
+  TempBuffer = SctAllocatePool (Length);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1542,7 +1542,7 @@ InitializeCaseEnvironment (
   //
   // allocate buffer for Pci IO
   //
-  gPciIoDevices    = (PCI_IO_PROTOCOL_DEVICE *) AllocateZeroPool (HandleNum * sizeof (PCI_IO_PROTOCOL_DEVICE));
+  gPciIoDevices    = (PCI_IO_PROTOCOL_DEVICE *) SctAllocateZeroPool (HandleNum * sizeof (PCI_IO_PROTOCOL_DEVICE));
   if (gPciIoDevices == NULL) {
     return EFI_ABORTED;
   }

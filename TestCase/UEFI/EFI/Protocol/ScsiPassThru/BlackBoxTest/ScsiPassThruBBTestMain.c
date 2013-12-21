@@ -320,7 +320,7 @@ GetPresentTargetLun(
   EFI_STATUS                             Status = EFI_SUCCESS;
   
 
-  Data = (UINT8 *)AllocateZeroPool (ScsiPassThru->Mode->IoAlign + 96);
+  Data = (UINT8 *)SctAllocateZeroPool (ScsiPassThru->Mode->IoAlign + 96);
   
   while (EFI_NOT_FOUND != ScsiPassThru->GetNextDevice (ScsiPassThru, Target, Lun)) { 
   	//
@@ -353,7 +353,7 @@ GetPresentTargetLun(
 		break;
   }
 
-  FreePool(Data);
+  SctFreePool (Data);
 
   return Status;
 }

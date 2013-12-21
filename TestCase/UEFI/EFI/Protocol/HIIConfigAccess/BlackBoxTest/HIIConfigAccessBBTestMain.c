@@ -403,7 +403,7 @@ GetDevicePath (
   //
   Length = EfiDevicePathSize (DevicePath);
   PathHdrSize = (Length * 2 + 1) * sizeof (CHAR16);
-  *DevicePathStr = (EFI_STRING) AllocateZeroPool (PathHdrSize);
+  *DevicePathStr = (EFI_STRING) SctAllocateZeroPool (PathHdrSize);
   if (*DevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -439,7 +439,7 @@ GetCorrespondingRequest (
     return EFI_NOT_FOUND;
   }
 
-  SingleResp = (EFI_STRING) AllocateZeroPool( 2 * StrLen(MultiConfigAltResp) + 2 );
+  SingleResp = (EFI_STRING) SctAllocateZeroPool ( 2 * StrLen(MultiConfigAltResp) + 2 );
   if (SingleResp == NULL) {
 	return EFI_OUT_OF_RESOURCES;
   }
@@ -493,7 +493,7 @@ GetCorrespondingRequest (
 
   *Request = 0;
 
-  gtBS->FreePool(SingleRespPtr);
+  gtBS->FreePool (SingleRespPtr);
   return EFI_SUCCESS;
 }
 
@@ -575,11 +575,11 @@ GetHIIConfigRoutingInterface (
                    HIIConfigRouting
                    );
   if ( EFI_ERROR(Status) ) {
-    gtBS->FreePool( HandleBuffer );
+    gtBS->FreePool ( HandleBuffer );
     return Status;
   }
   
-  gtBS->FreePool( HandleBuffer );
+  gtBS->FreePool ( HandleBuffer );
   
   return EFI_SUCCESS;
 }
@@ -601,7 +601,7 @@ MultiAltRespToMultiReq (
     return EFI_INVALID_PARAMETER;
   }
 
-  Pointer2 = (EFI_STRING) AllocateZeroPool (2 * StrLen(Resp) + 2);
+  Pointer2 = (EFI_STRING) SctAllocateZeroPool (2 * StrLen(Resp) + 2);
   if (Pointer2 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -682,7 +682,7 @@ MultiAltRespToMultiReq (
 	Pointer1++;
   }
 
-  FreePool(FreePtr);
+  SctFreePool (FreePtr);
   
   return EFI_SUCCESS;
 }

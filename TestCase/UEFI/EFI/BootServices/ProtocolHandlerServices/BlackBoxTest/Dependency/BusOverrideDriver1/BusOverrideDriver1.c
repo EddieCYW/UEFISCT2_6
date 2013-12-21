@@ -453,12 +453,12 @@ LoadAndStartImage (
 
   EntireFileName = PoolPrint (L"%s\\%s\\%s", FilePath, DEPENDENCY_DIR_NAME, FileName);
 
-  FreePool (FilePath);
-  FreePool (DevicePath);
+  SctFreePool (FilePath);
+  SctFreePool (DevicePath);
 
   FileDevPath = FileDevicePath (LoadImage->DeviceHandle, EntireFileName);
 
-  FreePool (EntireFileName);
+  SctFreePool (EntireFileName);
 
   if (FileDevPath == NULL) {
     return EFI_OUT_OF_RESOURCES;

@@ -114,8 +114,8 @@ EFI_STATUS
     Buffer           - A buffer that contains a Null-terminated Unicode string
                        plus some additional data whose format is defined by
                        ErrorType.  Buffer is allocated by this function with
-                       AllocatePool(), and it is the caller's responsibility
-                       to free it with a call to FreePool().
+                       SctAllocatePool (), and it is the caller's responsibility
+                       to free it with a call to SctFreePool ().
 
   Returns:
     EFI_SUCCESS           - The controller specified by ControllerHandle and

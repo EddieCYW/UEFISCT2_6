@@ -933,7 +933,7 @@ Returns:
       //
       // screen output silent mode, add -v switch
       //
-      Cmd->ComdArg = (CHAR16 *) AllocateZeroPool(StrSize(TempCmdArg) + StrLen(L" -v"));
+      Cmd->ComdArg = (CHAR16 *) SctAllocateZeroPool (StrSize(TempCmdArg) + StrLen(L" -v"));
       if ( Cmd->ComdArg == NULL ){
       	 EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"GetCmdDispatch: EFI_OUT_OF_RESOURCES"));
         return  EFI_OUT_OF_RESOURCES;

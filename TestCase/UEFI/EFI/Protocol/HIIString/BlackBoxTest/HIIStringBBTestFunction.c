@@ -396,7 +396,7 @@ BBTestNewStringFunctionTestCheckpoint1 (
 	//
     // Allocate the OutString
     //
-    OutString = (EFI_STRING)AllocateZeroPool( StringSize );
+    OutString = (EFI_STRING)SctAllocateZeroPool ( StringSize );
     
     //
     // Call GetString to check
@@ -411,7 +411,7 @@ BBTestNewStringFunctionTestCheckpoint1 (
                           NULL
                           );
     if ( EFI_ERROR(Status) ) {
-      gtBS->FreePool( OutString );
+      gtBS->FreePool ( OutString );
       Status = HIIDatabase->RemovePackageList (
                               HIIDatabase,
                               Handle
@@ -424,7 +424,7 @@ BBTestNewStringFunctionTestCheckpoint1 (
     if ( SctCompareMem ( OutString, String, ActuStringSize ) != 0 )
       AssertionType = EFI_TEST_ASSERTION_FAILED;
 
-    gtBS->FreePool( OutString );
+    gtBS->FreePool ( OutString );
 
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -514,7 +514,7 @@ BBTestGetStringFunctionTestCheckpoint1 (
     return Status;
   }
 
-  GetString = (EFI_STRING)AllocateZeroPool( StringSize );
+  GetString = (EFI_STRING)SctAllocateZeroPool ( StringSize );
   
   //
   // Call GetString to with valid parameters
@@ -557,7 +557,7 @@ BBTestGetStringFunctionTestCheckpoint1 (
   //
   // Release the resource of GetString
   //
-  gtBS->FreePool( GetString );
+  gtBS->FreePool ( GetString );
 
   return EFI_SUCCESS;
 }
@@ -660,7 +660,7 @@ BBTestSetStringFunctionTestCheckpoint1 (
     //
     // Allocate the OutString
     //
-    OutString = (EFI_STRING)AllocateZeroPool( StringSize );
+    OutString = (EFI_STRING)SctAllocateZeroPool ( StringSize );
     
     //
     // Call GetString to check
@@ -675,7 +675,7 @@ BBTestSetStringFunctionTestCheckpoint1 (
                           NULL
                           );
     if ( EFI_ERROR(Status) ) {
-      gtBS->FreePool( OutString );
+      gtBS->FreePool ( OutString );
       Status = HIIDatabase->RemovePackageList (
                               HIIDatabase,
                               Handle
@@ -688,7 +688,7 @@ BBTestSetStringFunctionTestCheckpoint1 (
     if ( SctCompareMem ( OutString, SetNewString, ActuStringSize ) != 0 )
       AssertionType = EFI_TEST_ASSERTION_FAILED;
 
-    gtBS->FreePool( OutString );
+    gtBS->FreePool ( OutString );
 
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -733,7 +733,7 @@ BBTestGetLanguagesFunctionTestCheckpoint1 (
   // Init the Languages and LanguagesSize;
   //
   LanguagesSize = 128;
-  Languages = (CHAR8*)AllocateZeroPool( LanguagesSize );
+  Languages = (CHAR8*)SctAllocateZeroPool ( LanguagesSize );
   
   PackageList = (EFI_HII_PACKAGE_LIST_HEADER*)mPackageList1;
   //
@@ -749,7 +749,7 @@ BBTestGetLanguagesFunctionTestCheckpoint1 (
     //
     // Release the resource of Languages
     //
-    gtBS->FreePool( Languages );
+    gtBS->FreePool ( Languages );
     return Status;
   }
   
@@ -792,7 +792,7 @@ BBTestGetLanguagesFunctionTestCheckpoint1 (
   //
   // Release the resource of Languages
   //
-  gtBS->FreePool( Languages );
+  gtBS->FreePool ( Languages );
 
   return EFI_SUCCESS;
 }
@@ -819,7 +819,7 @@ BBTestGetSecondaryLanguagesFunctionTestCheckpoint1 (
   // Init Language and LanguagesSize
   //
   SecondLanguagesSize = 512;
-  SecondLanguages = (CHAR8*)AllocateZeroPool( SecondLanguagesSize );
+  SecondLanguages = (CHAR8*)SctAllocateZeroPool ( SecondLanguagesSize );
   
   PackageList = (EFI_HII_PACKAGE_LIST_HEADER*)mPackageList1;
   
@@ -834,7 +834,7 @@ BBTestGetSecondaryLanguagesFunctionTestCheckpoint1 (
                           );
   
   if ( EFI_ERROR(Status) ) {
-    gtBS->FreePool( SecondLanguages );
+    gtBS->FreePool ( SecondLanguages );
     return Status;
   }
   
@@ -876,7 +876,7 @@ BBTestGetSecondaryLanguagesFunctionTestCheckpoint1 (
   //
   // Release the resource of Languages
   //
-  gtBS->FreePool( SecondLanguages );
+  gtBS->FreePool ( SecondLanguages );
 
   return EFI_SUCCESS;
 

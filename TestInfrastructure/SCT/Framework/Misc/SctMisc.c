@@ -172,7 +172,7 @@ Routine Description:
   // Duplicate the full file name and remove the file system name from that
   //
   if (Arg->FullName == NULL) {
-    FreePool (*DevicePath);
+    SctFreePool (*DevicePath);
     ShellFreeFileList (&FileList);
     return EFI_INVALID_PARAMETER;
   }
@@ -184,7 +184,7 @@ Routine Description:
 
   *FileName = StrDuplicate (TempStr + 1);
   if (*FileName == NULL) {
-    FreePool (*DevicePath);
+    SctFreePool (*DevicePath);
     ShellFreeFileList (&FileList);
     return EFI_OUT_OF_RESOURCES;
   }

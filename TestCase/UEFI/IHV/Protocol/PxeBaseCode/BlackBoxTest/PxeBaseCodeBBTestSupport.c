@@ -516,7 +516,7 @@ GetAsciiStringFromFile (
 
   // Allocate Pool
   TempStr = NULL;
-  TempStr = AllocatePool (StrLen (Buffer)+1);
+  TempStr = SctAllocatePool (StrLen (Buffer)+1);
   if (TempStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

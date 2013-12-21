@@ -284,7 +284,7 @@ MemRead_Func (
     //
 
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       CloseTestIniFile (ProfileLib, FileHandle);
       gtBS->FreePool (DevIoDevicePathStr);
@@ -296,7 +296,7 @@ MemRead_Func (
     //
 
     BackupBuffer = NULL;
-    BackupBuffer = AllocatePool (AddressLength);
+    BackupBuffer = SctAllocatePool (AddressLength);
     if (BackupBuffer == NULL) {
       gtBS->FreePool (ReadBuffer);
       CloseTestIniFile (ProfileLib, FileHandle);
@@ -627,7 +627,7 @@ MemWrite_Func (
     //create data units by program.
     //
 
-    Buffer = (UINT8 *)AllocatePool (AddressLength + UnitLength);
+    Buffer = (UINT8 *)SctAllocatePool (AddressLength + UnitLength);
     if (Buffer == NULL) {
       CloseTestIniFile (ProfileLib, FileHandle);
       gtBS->FreePool (DevIoDevicePathStr);
@@ -644,7 +644,7 @@ MemWrite_Func (
     //
 
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       gtBS->FreePool (Buffer);
       CloseTestIniFile (ProfileLib, FileHandle);
@@ -657,7 +657,7 @@ MemWrite_Func (
     //
 
     BackupBuffer = NULL;
-    BackupBuffer = AllocatePool (AddressLength);
+    BackupBuffer = SctAllocatePool (AddressLength);
 
     if (BackupBuffer == NULL) {
       gtBS->FreePool (Buffer);
@@ -1061,7 +1061,7 @@ IoRead_Func (
     //
 
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       CloseTestIniFile (ProfileLib, FileHandle);
       gtBS->FreePool (DevIoDevicePathStr);
@@ -1073,7 +1073,7 @@ IoRead_Func (
     //
 
     BackupBuffer = NULL;
-    BackupBuffer = AllocatePool (AddressLength);
+    BackupBuffer = SctAllocatePool (AddressLength);
 
     if (BackupBuffer == NULL) {
       gtBS->FreePool (ReadBuffer);
@@ -1406,7 +1406,7 @@ IoWrite_Func (
     //create data units by program.
     //
 
-    Buffer = (UINT8 *)AllocatePool (AddressLength + UnitLength);
+    Buffer = (UINT8 *)SctAllocatePool (AddressLength + UnitLength);
     if (Buffer == NULL) {
       CloseTestIniFile (ProfileLib, FileHandle);
       gtBS->FreePool (DevIoDevicePathStr);
@@ -1423,7 +1423,7 @@ IoWrite_Func (
     //
 
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       gtBS->FreePool (Buffer);
       CloseTestIniFile (ProfileLib, FileHandle);
@@ -1436,7 +1436,7 @@ IoWrite_Func (
     //
 
     BackupBuffer = NULL;
-    BackupBuffer = AllocatePool (AddressLength);
+    BackupBuffer = SctAllocatePool (AddressLength);
 
     if (BackupBuffer == NULL) {
       gtBS->FreePool (Buffer);
@@ -1867,7 +1867,7 @@ PciRead_Func (
     //
 
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       gtBS->FreePool (Buffer);
       CloseTestIniFile (ProfileLib, FileHandle);
@@ -2192,7 +2192,7 @@ PciWrite_Func (
     //
 
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       gtBS->FreePool (Buffer);
       CloseTestIniFile (ProfileLib, FileHandle);
@@ -2205,7 +2205,7 @@ PciWrite_Func (
     //
 
     BackupBuffer = NULL;
-    BackupBuffer = AllocatePool (AddressLength);
+    BackupBuffer = SctAllocatePool (AddressLength);
 
     if (BackupBuffer == NULL) {
       gtBS->FreePool (Buffer);
@@ -2490,7 +2490,7 @@ Map_Func (
     //
 
     Buffer = NULL;
-    Buffer = (UINT8 *)AllocatePool (BufferSize);
+    Buffer = (UINT8 *)SctAllocatePool (BufferSize);
     if (Buffer == NULL) {
       return EFI_OUT_OF_RESOURCES;
     }
@@ -2634,7 +2634,7 @@ Map_Func (
     //
 
     Buffer = NULL;
-    Buffer = (UINT8 *)AllocatePool (BufferSize);
+    Buffer = (UINT8 *)SctAllocatePool (BufferSize);
     if (Buffer == NULL) {
       return EFI_OUT_OF_RESOURCES;
     }
@@ -2841,7 +2841,7 @@ Unmap_Func (
   //
   BufferSize = 2;
   Buffer = NULL;
-  Buffer = (UINT8 *)AllocatePool (BufferSize);
+  Buffer = (UINT8 *)SctAllocatePool (BufferSize);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2952,7 +2952,7 @@ Unmap_Func (
   //
   BufferSize = 2;
   Buffer = NULL;
-  Buffer = (UINT8 *)AllocatePool (BufferSize);
+  Buffer = (UINT8 *)SctAllocatePool (BufferSize);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

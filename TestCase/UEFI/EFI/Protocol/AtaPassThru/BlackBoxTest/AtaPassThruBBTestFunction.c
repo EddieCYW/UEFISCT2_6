@@ -760,8 +760,8 @@ BBTestPassThruFunctionAutoTest (
   //
   Asb    = NULL;
   InData = NULL;
-  Asb    = AllocateZeroPool (AtaPassThru->Mode->IoAlign + sizeof(EFI_ATA_STATUS_BLOCK));
-  InData = AllocateZeroPool (AtaPassThru->Mode->IoAlign + 512);
+  Asb    = SctAllocateZeroPool (AtaPassThru->Mode->IoAlign + sizeof(EFI_ATA_STATUS_BLOCK));
+  InData = SctAllocateZeroPool (AtaPassThru->Mode->IoAlign + 512);
   if ((Asb == NULL) || (InData == NULL)){
     Status = EFI_OUT_OF_RESOURCES;
     StandardLib->RecordAssertion (
@@ -1172,10 +1172,10 @@ BBTestPassThruFunctionAutoTest (
 
 Done:
   if (Asb != NULL) {
-    FreePool(Asb);
+    SctFreePool (Asb);
   }
   if (InData != NULL) {
-    FreePool(InData);
+    SctFreePool (InData);
   }
 
   return Status;

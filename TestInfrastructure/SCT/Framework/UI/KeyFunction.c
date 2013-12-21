@@ -869,8 +869,8 @@ Returns:
             break;
           }
 
-          FreePool (MaxValueStr);
-          FreePool (MinValueStr);
+          SctFreePool (MaxValueStr);
+          SctFreePool (MinValueStr);
         }
         if ((MenuPage->Body.CurrentSelected->ItemType & EFI_EDIT_SUB_TYPE_MASK)
                == EFI_ITEM_EDIT_NUMBER) {

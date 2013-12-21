@@ -107,7 +107,7 @@ GetFreeSpace (
   //
   SystemInfoSize = SIZE_OF_EFI_FILE_SYSTEM_INFO + 100;
 
-  SystemInfo = (EFI_FILE_SYSTEM_INFO *) AllocatePool (SystemInfoSize);
+  SystemInfo = (EFI_FILE_SYSTEM_INFO *) SctAllocatePool (SystemInfoSize);
   if (SystemInfo == NULL) {
     RootFs->Close (RootFs);
     return EFI_OUT_OF_RESOURCES;
@@ -120,14 +120,14 @@ GetFreeSpace (
                      SystemInfo
                      );
   if (EFI_ERROR (Status)) {
-    FreePool (SystemInfo);
+    SctFreePool (SystemInfo);
     RootFs->Close (RootFs);
     return Status;
   }
 
   FileVolume->FreeSpace = SystemInfo->FreeSpace;
 
-  FreePool (SystemInfo);
+  SctFreePool (SystemInfo);
   RootFs->Close (RootFs);
 
   //
@@ -168,7 +168,7 @@ DirFileExist (
 
   if (Status == EFI_INVALID_PARAMETER) {
     Print (L"Error: Could not execute \"%s\"\n", CmdLine);
-    FreePool (CmdLine);
+    SctFreePool (CmdLine);
     return Status;
   }
 
@@ -181,7 +181,7 @@ DirFileExist (
     *Exist = TRUE;
   }
 
-  FreePool (CmdLine);
+  SctFreePool (CmdLine);
 
   //
   // Done
@@ -228,7 +228,7 @@ CreateDir (
       //
       Status = DirFileExist (TmpName, &Exist);
       if (EFI_ERROR (Status)) {
-        FreePool (TmpName);
+        SctFreePool (TmpName);
         return Status;
       }
 
@@ -245,7 +245,7 @@ CreateDir (
                   TmpName
                   );
       if (CmdLine == NULL) {
-        FreePool (TmpName);
+        SctFreePool (TmpName);
         return EFI_OUT_OF_RESOURCES;
       }
 
@@ -259,17 +259,17 @@ CreateDir (
                  );
       if (EFI_ERROR (Status)) {
         Print (L"Error: Could not execute \"%s\"\n", CmdLine);
-        FreePool (CmdLine);
-        FreePool (TmpName);
+        SctFreePool (CmdLine);
+        SctFreePool (TmpName);
         return Status;
       }
 
-      FreePool (CmdLine);
+      SctFreePool (CmdLine);
       TmpName[Index] = L'\\';
     }
   }
 
-  FreePool (TmpName);
+  SctFreePool (TmpName);
 
   //
   // Done
@@ -307,11 +307,11 @@ RemoveDirFile (
              );
   if (EFI_ERROR (Status)) {
     Print (L"Error: Could not execute \"%s\"\n", CmdLine);
-    FreePool (CmdLine);
+    SctFreePool (CmdLine);
     return Status;
   }
 
-  FreePool (CmdLine);
+  SctFreePool (CmdLine);
 
   //
   // Done
@@ -368,18 +368,18 @@ BackupDirFile (
                 FileName
                 );
     if (TmpName == NULL) {
-      FreePool (PathName);
+      SctFreePool (PathName);
       return EFI_OUT_OF_RESOURCES;
     }
 
     Status = DirFileExist (TmpName, &Exist);
     if (EFI_ERROR (Status)) {
-      FreePool (TmpName);
-      FreePool (PathName);
+      SctFreePool (TmpName);
+      SctFreePool (PathName);
       return Status;
     }
 
-    FreePool (TmpName);
+    SctFreePool (TmpName);
 
     if (!Exist) {
       break;
@@ -390,7 +390,7 @@ BackupDirFile (
   // Check the latest backup number
   //
   if (Index == INSTALL_SCT_MAX_BACKUP) {
-    FreePool (PathName);
+    SctFreePool (PathName);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -405,11 +405,11 @@ BackupDirFile (
               FileName
               );
   if (CmdLine == NULL) {
-    FreePool (PathName);
+    SctFreePool (PathName);
     return EFI_OUT_OF_RESOURCES;
   }
 
-  FreePool (PathName);
+  SctFreePool (PathName);
 
   //
   // Execute shell command
@@ -421,11 +421,11 @@ BackupDirFile (
              );
   if (EFI_ERROR (Status)) {
     Print (L"Error: Could not execute \"%s\"\n", CmdLine);
-    FreePool (CmdLine);
+    SctFreePool (CmdLine);
     return Status;
   }
 
-  FreePool (CmdLine);
+  SctFreePool (CmdLine);
 
   //
   // Done
@@ -469,11 +469,11 @@ CopyDirFile (
   //
   Status = CreateDir (PathName);
   if (EFI_ERROR (Status)) {
-    FreePool (PathName);
+    SctFreePool (PathName);
     return Status;
   }
 
-  FreePool (PathName);
+  SctFreePool (PathName);
 
   //
   // Create command line to copy it
@@ -498,11 +498,11 @@ CopyDirFile (
              );
   if (EFI_ERROR (Status)) {
     Print (L"Error: Could not execute \"%s\"\n", CmdLine);
-    FreePool (CmdLine);
+    SctFreePool (CmdLine);
     return Status;
   }
 
-  FreePool (CmdLine);
+  SctFreePool (CmdLine);
 
   //
   // Done
@@ -573,7 +573,7 @@ ProcessExistingSctFile (
       }
     }
 
-    FreePool (Prompt);
+    SctFreePool (Prompt);
   }
 
   switch (mBackupPolicy) {
@@ -641,14 +641,14 @@ CheckForInstalledSct (
   // Exist or not?
   Status = DirFileExist (TmpName, &Exist);
   if (EFI_ERROR (Status)) {
-    FreePool (TmpName);
+    SctFreePool (TmpName);
     return Status;
   }
 
   if (Exist) {
     FileVolume->IsSctPresent |= SCT_STARTUP;
   }
-  FreePool (TmpName);
+  SctFreePool (TmpName);
 
   return EFI_SUCCESS;
 }

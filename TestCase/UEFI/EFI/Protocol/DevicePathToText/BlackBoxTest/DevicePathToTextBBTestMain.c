@@ -608,7 +608,7 @@ CreateDeviceNode (
     return NULL;
   }
  
-  DevicePath = AllocateZeroPool (NodeLength);
+  DevicePath = SctAllocateZeroPool (NodeLength);
   if (DevicePath != NULL) {
      DevicePath->Type    = NodeType;
      DevicePath->SubType = NodeSubType;
@@ -626,7 +626,7 @@ CreateEndDeviceNode(
 {
   EFI_DEVICE_PATH_PROTOCOL *DevPath;
 
-  DevPath = (EFI_DEVICE_PATH_PROTOCOL *) AllocateZeroPool (sizeof(EFI_DEVICE_PATH_PROTOCOL));
+  DevPath = (EFI_DEVICE_PATH_PROTOCOL *) SctAllocateZeroPool (sizeof(EFI_DEVICE_PATH_PROTOCOL));
   if (DevPath == NULL) {
     return NULL;
   }
@@ -695,7 +695,7 @@ ConvertFromTextAcpi (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Acpi;
 InValidText:
-  FreePool(Acpi);
+  SctFreePool (Acpi);
   return NULL;
 }
 
@@ -784,7 +784,7 @@ BuildPciDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Pci;
 InValidText:
-  FreePool(Pci);
+  SctFreePool (Pci);
   return NULL;
 }
 
@@ -813,7 +813,7 @@ BuildPcCardDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Pccard;
 InValidText:
-  FreePool(Pccard);
+  SctFreePool (Pccard);
   return NULL;
 }
 
@@ -856,7 +856,7 @@ BuildMemoryMappedDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) MemMap;
 InValidText:
-  FreePool(MemMap);
+  SctFreePool (MemMap);
   return NULL;
 }
 
@@ -885,7 +885,7 @@ BuildCtrlDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Controller;
 InValidText:
-  FreePool(Controller);
+  SctFreePool (Controller);
   return NULL;
 }
 
@@ -943,7 +943,7 @@ BuildAcpiDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Acpi;
 InValidText:
-  FreePool(Acpi);
+  SctFreePool (Acpi);
   return NULL;
 }
 
@@ -1140,7 +1140,7 @@ BuildAcpiAdrDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) AcpiAdr;
 InValidText:
-  FreePool(AcpiAdr);
+  SctFreePool (AcpiAdr);
   return NULL;
 }
 
@@ -1197,7 +1197,7 @@ BuildAtaDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Atapi;
 InValidText:
-  FreePool(Atapi);
+  SctFreePool (Atapi);
   return NULL;
 }
 
@@ -1233,7 +1233,7 @@ BuildScsiDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Scsi;
 InValidText:
-  FreePool(Scsi);
+  SctFreePool (Scsi);
   return NULL;
 }
 
@@ -1271,7 +1271,7 @@ BuildFibreDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Fibre;
 InValidText:
-  FreePool(Fibre);
+  SctFreePool (Fibre);
   return NULL;
 }
 
@@ -1309,7 +1309,7 @@ BuildFibreExDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) FibreEx;
 InValidText:
-  FreePool(FibreEx);
+  SctFreePool (FibreEx);
   return NULL;
 }
 
@@ -1340,7 +1340,7 @@ Build1394DeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) F1394;
 InValidText:
-  FreePool(F1394);
+  SctFreePool (F1394);
   return NULL;
 }
 
@@ -1375,7 +1375,7 @@ BuildUsbDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Usb;
 InValidText:
-  FreePool(Usb);
+  SctFreePool (Usb);
   return NULL;
 }
 
@@ -1404,7 +1404,7 @@ BuildI2ODeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) I2O;
 InValidText:
-  FreePool(I2O);
+  SctFreePool (I2O);
   return NULL;
 }
 
@@ -1433,7 +1433,7 @@ BuildVlanDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Vlan;
 InValidText:
-  FreePool(Vlan);
+  SctFreePool (Vlan);
   return NULL;
 }
 
@@ -1493,7 +1493,7 @@ BuildInfinibandDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) InfiniBand;
 InValidText:
-  FreePool(InfiniBand);
+  SctFreePool (InfiniBand);
   return NULL;
 }
 
@@ -1701,7 +1701,7 @@ BuildUartFlowCtrlDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) UartFlowControl;
 InValidText:
-  FreePool(UartFlowControl);
+  SctFreePool (UartFlowControl);
   return NULL;
 }
 
@@ -1772,7 +1772,7 @@ BuildMACDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) MAC;
 InValidText:
-  FreePool(MAC);
+  SctFreePool (MAC);
   return NULL;
 }
 
@@ -1854,7 +1854,7 @@ BuildIPv4DeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) IPv4;
 InValidText:
-  FreePool(IPv4);
+  SctFreePool (IPv4);
   return NULL;
 }
 
@@ -1940,7 +1940,7 @@ BuildIPv6DeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) IPv6;
 InValidText:
-  FreePool(IPv6);
+  SctFreePool (IPv6);
   return NULL;
 }
 
@@ -2048,7 +2048,7 @@ BuildUartDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Uart;
 InValidText:
-  FreePool(Uart);
+  SctFreePool (Uart);
   return NULL;
 }
 
@@ -2151,7 +2151,7 @@ ConvertFromTextUsbClass (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) UsbClass;
 InValidText:
-  FreePool(UsbClass);
+  SctFreePool (UsbClass);
   return NULL;
 }
 
@@ -2419,7 +2419,7 @@ BuildUnitDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) LogicalUnit;
 InValidText:
-  FreePool(LogicalUnit);
+  SctFreePool (LogicalUnit);
   return NULL;
 }
 
@@ -2542,7 +2542,7 @@ BuildiSCSIDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) iSCSI;
 InValidText:
-  FreePool(iSCSI);
+  SctFreePool (iSCSI);
   return NULL;
 }
 
@@ -2730,7 +2730,7 @@ BuildHDDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Hd;
 InValidText:
-  FreePool(Hd);
+  SctFreePool (Hd);
   return NULL;
 }
 
@@ -2786,7 +2786,7 @@ BuildCDROMDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) CDROM;
 InValidText:
-  FreePool(CDROM);
+  SctFreePool (CDROM);
   return NULL;
 }
 
@@ -2812,7 +2812,7 @@ BuildMediaDeviceNode (
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Media;
 InValidText:
-  FreePool(Media);
+  SctFreePool (Media);
   return NULL;
 }
 
@@ -3112,7 +3112,7 @@ BuildSASDeviceNode (
   return (EFI_DEVICE_PATH_PROTOCOL *) SAS;
 
 InValidText:
-  FreePool(SAS);
+  SctFreePool (SAS);
   return NULL;
 }
 
@@ -3262,7 +3262,7 @@ BuildSASExDeviceNode (
   return (EFI_DEVICE_PATH_PROTOCOL *) SASEx;
 
 InValidText:
-  FreePool(SASEx);
+  SctFreePool (SASEx);
   return NULL;
 }
 
@@ -3551,7 +3551,7 @@ SctConvertTextToDeviceNode (
 
   return DeviceNode;
 ConvertError:
-  FreePool(DeviceNodeStr);
+  SctFreePool (DeviceNodeStr);
   return NULL;
 }
 
@@ -3582,16 +3582,16 @@ SctConvertTextToDevicePath (
     }
 
     NewDevicePath = AppendDevicePathNode (DevicePath, DeviceNode);
-    FreePool (DevicePath);
-    FreePool (DeviceNode);
+    SctFreePool (DevicePath);
+    SctFreePool (DeviceNode);
     DevicePath    = NewDevicePath;
   }
 
-  FreePool (DevicePathStr);
+  SctFreePool (DevicePathStr);
 
   return DevicePath;
 ConvertError:
-  FreePool(DevicePathStr);
+  SctFreePool (DevicePathStr);
   return NULL;
 }
 

@@ -268,7 +268,7 @@ BBTestCLPCommandAutoTest (
   *ParameterBlockSize = sizeof(EFI_CONFIGURE_CLP_PARAMETER_BLK);
   ChildHandle =NULL;
   
-  Status = gtBS->AllocatePool(EfiBootServicesData,*ParameterBlockSize,(VOID **)&EfiClpParameterBlock);
+  Status = gtBS->AllocatePool (EfiBootServicesData,*ParameterBlockSize,(VOID **)&EfiClpParameterBlock);
   if(EFI_ERROR(Status)){
      StandardLib->RecordAssertion (
                    StandardLib,
@@ -352,7 +352,7 @@ BBTestCLPCommandAutoTest (
     // Suppose the EfiClpParameterBlock had been produced,verify the CLPCommand is correct.
     //
 
-   Status = gtBS->AllocatePool(EfiBootServicesData,sizeof(CLP_CMD),(VOID **)&CLPCmd);
+   Status = gtBS->AllocatePool (EfiBootServicesData,sizeof(CLP_CMD),(VOID **)&CLPCmd);
    if(EFI_ERROR(Status)){
      StandardLib->RecordAssertion (
                    StandardLib,
@@ -422,12 +422,12 @@ BBTestCLPCommandAutoTest (
                  EFI_SUCCESS
                  );
   } else{
-        gtBS->FreePool(EfiClpParameterBlock);
+        gtBS->FreePool (EfiClpParameterBlock);
 	 return EFI_UNSUPPORTED;
   }
 
-  gtBS->FreePool(CLPCmd);
-  gtBS->FreePool(EfiClpParameterBlock);
+  gtBS->FreePool (CLPCmd);
+  gtBS->FreePool (EfiClpParameterBlock);
   return EFI_SUCCESS;
 }
 
@@ -524,7 +524,7 @@ BBTestCLPReturnStringAutoTest (
   *ParameterBlockSize = sizeof(EFI_CONFIGURE_CLP_PARAMETER_BLK);
   ChildHandle =NULL;
   
-  Status = gtBS->AllocatePool(EfiBootServicesData,*ParameterBlockSize,(VOID **)&EfiClpParameterBlock);
+  Status = gtBS->AllocatePool (EfiBootServicesData,*ParameterBlockSize,(VOID **)&EfiClpParameterBlock);
   if(EFI_ERROR(Status)){
      StandardLib->RecordAssertion (
                    StandardLib,
@@ -638,7 +638,7 @@ BBTestCLPReturnStringAutoTest (
     // Suppose the EfiClpParameterBlock had been produced,verify the CLPReturnString is correct.
     //
 
-   Status = gtBS->AllocatePool(EfiBootServicesData,sizeof(CLP_CMD),(VOID **)&CLPCmd);
+   Status = gtBS->AllocatePool (EfiBootServicesData,sizeof(CLP_CMD),(VOID **)&CLPCmd);
    if(EFI_ERROR(Status)){
      StandardLib->RecordAssertion (
                    StandardLib,
@@ -697,11 +697,11 @@ BBTestCLPReturnStringAutoTest (
        }
   
   } else{
-     gtBS->FreePool(EfiClpParameterBlock);
+     gtBS->FreePool (EfiClpParameterBlock);
      return EFI_UNSUPPORTED;
   }
   
-  gtBS->FreePool(EfiClpParameterBlock);
+  gtBS->FreePool (EfiClpParameterBlock);
   return EFI_SUCCESS;
 }
 
@@ -797,7 +797,7 @@ BBTestCLPCmdStatusAutoTest (
   *ParameterBlockSize = sizeof(EFI_CONFIGURE_CLP_PARAMETER_BLK);
   ChildHandle =NULL;
   
-  Status = gtBS->AllocatePool(EfiBootServicesData,*ParameterBlockSize,(VOID **)&EfiClpParameterBlock);
+  Status = gtBS->AllocatePool (EfiBootServicesData,*ParameterBlockSize,(VOID **)&EfiClpParameterBlock);
   if(EFI_ERROR(Status)){
      StandardLib->RecordAssertion (
                    StandardLib,
@@ -1017,7 +1017,7 @@ BBTestCLPErrorValueAutoTest (
   *ParameterBlockSize = sizeof(EFI_CONFIGURE_CLP_PARAMETER_BLK);
   ChildHandle =NULL;
   
-  Status = gtBS->AllocatePool(EfiBootServicesData,*ParameterBlockSize,(VOID **)&EfiClpParameterBlock);
+  Status = gtBS->AllocatePool (EfiBootServicesData,*ParameterBlockSize,(VOID **)&EfiClpParameterBlock);
   if(EFI_ERROR(Status)){
      StandardLib->RecordAssertion (
                    StandardLib,
@@ -1278,7 +1278,7 @@ BBTestCLPMessageCodeAutoTest (
   *ParameterBlockSize = sizeof(EFI_CONFIGURE_CLP_PARAMETER_BLK);
   ChildHandle =NULL;
   
-  Status = gtBS->AllocatePool(EfiBootServicesData,*ParameterBlockSize,(VOID **)&EfiClpParameterBlock);
+  Status = gtBS->AllocatePool (EfiBootServicesData,*ParameterBlockSize,(VOID **)&EfiClpParameterBlock);
   if(EFI_ERROR(Status)){
      StandardLib->RecordAssertion (
                    StandardLib,

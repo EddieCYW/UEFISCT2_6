@@ -420,7 +420,7 @@ BBTestExecuteScsiCommandFunctionAutoTest (
   
   ScsiIo = (EFI_SCSI_IO_PROTOCOL *)ClientInterface;
 
-  Data = (UINT8 *)AllocatePool (ScsiIo->IoAlign + 96);
+  Data = (UINT8 *)SctAllocatePool (ScsiIo->IoAlign + 96);
   //
   // Assertion Point 3.1.5.2.1
   // Call ExecuteScsiCommand() with NULL Event.
@@ -556,7 +556,7 @@ BBTestExecuteScsiCommandFunctionAutoTest (
     return EFI_UNSUPPORTED;
   }
 
-  FreePool (Data);
+  SctFreePool (Data);
   
   return EFI_SUCCESS;
 }

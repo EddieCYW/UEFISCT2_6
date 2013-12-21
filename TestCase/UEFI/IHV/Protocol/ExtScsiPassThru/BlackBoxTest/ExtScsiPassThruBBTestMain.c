@@ -408,7 +408,7 @@ GetPresentTargetLun(
   UINT8                                      *Data;
   EFI_STATUS                                 Status = EFI_NOT_FOUND;
 
-  Data = AllocateZeroPool (ExtScsiPassThru->Mode->IoAlign + 96);
+  Data = SctAllocateZeroPool (ExtScsiPassThru->Mode->IoAlign + 96);
   
   while (EFI_NOT_FOUND != ExtScsiPassThru->GetNextTargetLun (ExtScsiPassThru, (UINT8 **)&TargetAddr, Lun)) { 
     //
@@ -444,7 +444,7 @@ GetPresentTargetLun(
     
   }
 
-  FreePool(Data);
+  SctFreePool (Data);
 
   return Status;
 }

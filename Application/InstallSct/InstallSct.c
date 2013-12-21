@@ -157,7 +157,7 @@ InstallSct (
     FsName = SI->Argv[SI->Argc - 1];
 
     // Allocate new SctFileVolume
-    SctFileVolume = AllocatePool (sizeof (SCT_FILE_VOLUME));
+    SctFileVolume = SctAllocatePool (sizeof (SCT_FILE_VOLUME));
 
     // Save the filename
     SctCopyMem (SctFileVolume->Name, FsName, StrSize (FsName));
@@ -167,14 +167,14 @@ InstallSct (
     if (Status == EFI_NOT_FOUND) {
       Print (L"'%s' is not a valid file system.\n", FsName);
       PrintUsage ();
-      FreePool (SctFileVolume);
+      SctFreePool (SctFileVolume);
       return Status;
     } else if (EFI_ERROR (Status)) {
       Print (L"Fail to get free space from file system '%s'.\n", FsName);
-      FreePool (SctFileVolume);
+      SctFreePool (SctFileVolume);
       return Status;
     } else if (SctFileVolume->FreeSpace < INSTALL_SCT_FREE_SPACE) {
-      FreePool (SctFileVolume);
+      SctFreePool (SctFileVolume);
       Print (L"The given file system '%s' is not big enough to install SCT (require %d MB).\n",
           FsName, INSTALL_SCT_FREE_SPACE_MB);
       return EFI_VOLUME_FULL;
@@ -229,7 +229,7 @@ InstallSct (
   }
 
   if (SI->Argc > 1) {
-    FreePool (SctFileVolume);
+    SctFreePool (SctFileVolume);
   }
 
   //
@@ -432,11 +432,11 @@ BackupSct (
       // Decide whether the file needs to be removed/backup
       Status = ProcessExistingSctFile (L"test", TmpName);
       if (EFI_ERROR (Status)) {
-        FreePool (TmpName);
+        SctFreePool (TmpName);
         return Status;
       }
 
-      FreePool (TmpName);
+      SctFreePool (TmpName);
     }
 
     //
@@ -452,11 +452,11 @@ BackupSct (
       // Decide whether the file needs to be removed/backup
       Status = ProcessExistingSctFile (L"startup script", TmpName);
       if (EFI_ERROR (Status)) {
-        FreePool (TmpName);
+        SctFreePool (TmpName);
         return Status;
       }
 
-      FreePool (TmpName);
+      SctFreePool (TmpName);
     }
   }
 
@@ -492,7 +492,7 @@ InstallTest (
     return Status;
   }
 
-  FreePool (DirName);
+  SctFreePool (DirName);
 
   //
   // Done
@@ -526,11 +526,11 @@ InstallStartup (
              FALSE                          // Not recursive
              );
   if (EFI_ERROR (Status)) {
-    FreePool (FileName);
+    SctFreePool (FileName);
     return Status;
   }
 
-  FreePool (FileName);
+  SctFreePool (FileName);
 
   //
   // Done

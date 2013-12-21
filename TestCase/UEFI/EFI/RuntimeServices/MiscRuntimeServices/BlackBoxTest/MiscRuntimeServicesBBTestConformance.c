@@ -96,7 +96,7 @@ BBTestUpdateCapsuleConformanceTest (
     return EFI_SUCCESS;
   }
 
-  AllocatedBuffer = (UINT8 *)AllocatePool (sizeof(EFI_CAPSULE_HEADER));
+  AllocatedBuffer = (UINT8 *)SctAllocatePool (sizeof(EFI_CAPSULE_HEADER));
   if (EFI_ERROR(Status)) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -242,7 +242,7 @@ BBTestUpdateCapsuleConformanceTest (
                  );
 
 
-  FreePool(AllocatedBuffer);
+  SctFreePool (AllocatedBuffer);
   return EFI_SUCCESS;
 }
 
@@ -283,7 +283,7 @@ BBTestQueryCapsuleCapabilitiesConformanceTest (
     return EFI_SUCCESS;
   }
 
-  AllocatedBuffer = (UINT8 *)AllocatePool (sizeof(EFI_CAPSULE_HEADER));
+  AllocatedBuffer = (UINT8 *)SctAllocatePool (sizeof(EFI_CAPSULE_HEADER));
   if (AllocatedBuffer == NULL) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -328,7 +328,7 @@ BBTestQueryCapsuleCapabilitiesConformanceTest (
                  Status
                  );
 
-  FreePool (AllocatedBuffer);
+  SctFreePool (AllocatedBuffer);
   return EFI_SUCCESS;
 }
 

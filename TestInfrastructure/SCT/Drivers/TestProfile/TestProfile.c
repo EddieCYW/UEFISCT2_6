@@ -373,7 +373,7 @@ Returns:
   //
   // Initialize the TslInit private data
   //
-  Status = tBS->AllocatePool(
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (TSL_INIT_PRIVATE_DATA),
                   (VOID **)&Private
@@ -518,7 +518,7 @@ Returns:
   //
   // Initialize the TestProfileLibrary private data
   //
-  Status = tBS->AllocatePool(
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (TEST_PROFILE_PRIVATE_DATA),
                   (VOID **)&Private
@@ -676,7 +676,7 @@ Returns:
   //
   // New and initialize a ini file
   //
-  NewIniFile = Malloc (sizeof(EFI_INI_FILE_PRIVATE_DATA));
+  NewIniFile = SctAllocatePool (sizeof(EFI_INI_FILE_PRIVATE_DATA));
   if (NewIniFile == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -896,7 +896,7 @@ Returns:
   //
   // New and initialize a ini file
   //
-  NewIniFile = Malloc (sizeof(EFI_INI_FILE_PRIVATE_DATA));
+  NewIniFile = SctAllocatePool (sizeof(EFI_INI_FILE_PRIVATE_DATA));
   if (NewIniFile == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1621,7 +1621,7 @@ Returns:
           if (tmpPtr == NULL) {
             return EFI_OUT_OF_RESOURCES;
           }
-          Free (ptrCur->ptrValue);
+          SctFreePool (ptrCur->ptrValue);
           ptrCur->ptrValue = tmpPtr;
           Private->Modified = TRUE;
         }
@@ -1635,7 +1635,7 @@ Returns:
   //
   // if not, should add a new item
   //
-  ptrNew = (INI *) Malloc (sizeof(INI));
+  ptrNew = (INI *) SctAllocatePool (sizeof(INI));
   SctZeroMem (ptrNew, sizeof(INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -1675,7 +1675,7 @@ Returns:
   //
   ptrCur = ptrNew;
 
-  ptrNew = (INI *) Malloc (sizeof(INI));
+  ptrNew = (INI *) SctAllocatePool (sizeof(INI));
   SctZeroMem (ptrNew, sizeof(INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -2017,7 +2017,7 @@ Returns:
         if (tmpPtr == NULL) {
           return EFI_OUT_OF_RESOURCES;
         }
-        Free (ptrCur->ptrValue);
+        SctFreePool (ptrCur->ptrValue);
         ptrCur->ptrValue = tmpPtr;
         Private->Modified = TRUE;
       }
@@ -2030,7 +2030,7 @@ Returns:
   //
   // if not, should add a new item
   //
-  ptrNew = (INI *) Malloc(sizeof(INI));
+  ptrNew = (INI *) SctAllocatePool (sizeof(INI));
   SctZeroMem (ptrNew, sizeof(INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -2070,7 +2070,7 @@ Returns:
   //
   ptrCur = ptrNew;
 
-  ptrNew = (INI *)Malloc (sizeof(INI));
+  ptrNew = (INI *)SctAllocatePool (sizeof(INI));
   SctZeroMem (ptrNew, sizeof(INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -2315,15 +2315,15 @@ Routine Description:
   IniFile->Handle.GetOrderNum        = NULL;
   IniFile->Handle.Flush              = NULL;
   if (IniFile->FileName != NULL) {
-    Free (IniFile->FileName);
+    SctFreePool (IniFile->FileName);
     IniFile->FileName = NULL;
   }
   if (IniFile->DevPath != NULL) {
-    Free (IniFile->DevPath);
+    SctFreePool (IniFile->DevPath);
     IniFile->DevPath = NULL;
   }
   _freePointer(IniFile);
-  Free (IniFile);
+  SctFreePool (IniFile);
 }
 
 VOID
@@ -2346,15 +2346,15 @@ Routine Description:
   ptrCur = IniFile->Head;
 
   while (ptrCur != NULL) {
-    Free (ptrCur->ptrSection);
-    Free (ptrCur->ptrEntry);
-    Free (ptrCur->ptrValue);
+    SctFreePool (ptrCur->ptrSection);
+    SctFreePool (ptrCur->ptrEntry);
+    SctFreePool (ptrCur->ptrValue);
     ptrCur = ptrCur->ptrNext;
   }
 
   while (IniFile->Head != NULL) {
     ptrTmp = IniFile->Head->ptrNext;
-    Free (IniFile->Head);
+    SctFreePool (IniFile->Head);
     IniFile->Head = ptrTmp;
   }
   IniFile->Tail = NULL;
@@ -2362,13 +2362,13 @@ Routine Description:
   ptrCommentCur = IniFile->CommentLineHead;
 
   while (ptrCommentCur != NULL) {
-    Free (ptrCommentCur->ptrComment);
+    SctFreePool (ptrCommentCur->ptrComment);
     ptrCommentCur = ptrCommentCur->ptrNext;
   }
 
   while (IniFile->CommentLineHead != NULL) {
     ptrCommentTmp = IniFile->CommentLineHead->ptrNext;
-    Free (IniFile->CommentLineHead);
+    SctFreePool (IniFile->CommentLineHead);
     IniFile->CommentLineHead = ptrCommentTmp;
   }
 }
@@ -2406,10 +2406,10 @@ Routine Description:
     _getentry (ptrLine, ptrEntry, ptrValue);
 
     if (*isSectionGot == TRUE) {
-      ptrItem = (INI *)Malloc (sizeof(INI));
-      ptrItem->ptrSection = (CHAR8 *) Calloc (StrLen(ptrSection) + 1, sizeof(CHAR8));
-      ptrItem->ptrEntry   = (CHAR8 *) Calloc (StrLen(ptrEntry) + 1, sizeof(CHAR8));
-      ptrItem->ptrValue   = (CHAR8 *) Calloc (StrLen(ptrValue) + 1, sizeof(CHAR8));
+      ptrItem = (INI *)SctAllocatePool (sizeof(INI));
+      ptrItem->ptrSection = (CHAR8 *) SctAllocateZeroPool (StrLen(ptrSection) + 1);
+      ptrItem->ptrEntry   = (CHAR8 *) SctAllocateZeroPool (StrLen(ptrEntry) + 1);
+      ptrItem->ptrValue   = (CHAR8 *) SctAllocateZeroPool (StrLen(ptrValue) + 1);
 
       ptrItem->commentNo = *commentNo;
       StrCpy (ptrItem->ptrSection, ptrSection);
@@ -2453,8 +2453,8 @@ Routine Description:
   }
   ptrStr[Index] = '\0';
 
-  ptrCommentLineNew = (COMMENTLINE *) Malloc (sizeof(COMMENTLINE));
-  ptrCommentLineNew->ptrComment = (CHAR8 *) Calloc (StrLen(ptrStr) + 1, sizeof(CHAR8));
+  ptrCommentLineNew = (COMMENTLINE *) SctAllocatePool (sizeof (COMMENTLINE));
+  ptrCommentLineNew->ptrComment = (CHAR8 *) SctAllocateZeroPool (StrLen (ptrStr) + 1);
 
   ptrCommentLineNew->commentNo = *commentNo;
   StrCpy (ptrCommentLineNew->ptrComment, ptrStr);
@@ -2506,11 +2506,11 @@ Routine Description:
     ptrSection[MAX_STRING_LEN] = '\0';
   }
 
-  ptrItem = (INI *)Malloc (sizeof(INI));
+  ptrItem = (INI *)SctAllocatePool (sizeof(INI));
 
-  ptrItem->ptrSection = (CHAR8 *) Calloc (StrLen(ptrSection) + 1, sizeof(CHAR8));
-  ptrItem->ptrEntry   = (CHAR8 *) Calloc (1, sizeof(CHAR8));
-  ptrItem->ptrValue   = (CHAR8 *) Calloc (1, sizeof(CHAR8));
+  ptrItem->ptrSection = (CHAR8 *) SctAllocateZeroPool (StrLen (ptrSection) + 1);
+  ptrItem->ptrEntry   = (CHAR8 *) SctAllocateZeroPool (sizeof(CHAR8));
+  ptrItem->ptrValue   = (CHAR8 *) SctAllocateZeroPool (sizeof(CHAR8));
 
   ptrItem->commentNo  = *commentNo;
   StrCpy (ptrItem->ptrSection, ptrSection);
@@ -2706,18 +2706,18 @@ Routine Description:
 --*/
 {
   if (ptrItem->ptrSection != NULL) {
-    Free (ptrItem->ptrSection);
+    SctFreePool (ptrItem->ptrSection);
     ptrItem->ptrSection = NULL;
   }
   if (ptrItem->ptrEntry != NULL) {
-    Free (ptrItem->ptrEntry);
+    SctFreePool (ptrItem->ptrEntry);
     ptrItem->ptrEntry = NULL;
   }
   if (ptrItem->ptrValue != NULL) {
-    Free (ptrItem->ptrValue);
+    SctFreePool (ptrItem->ptrValue);
     ptrItem->ptrValue = NULL;
   }
-  Free (ptrItem);
+  SctFreePool (ptrItem);
 }
 
 VOID
@@ -2735,8 +2735,8 @@ _rmComment (
   while (ptrCmtCur != NULL) {
     if (ptrCmtCur->commentNo == ptrItem->commentNo) {
       ptrCmtNext = ptrCmtCur->ptrNext;
-      Free (ptrCmtCur->ptrComment);
-      Free (ptrCmtCur);
+      SctFreePool (ptrCmtCur->ptrComment);
+      SctFreePool (ptrCmtCur);
       if (ptrCmtPrev == NULL) {
         *CmtHead = ptrCmtNext;
       } else {

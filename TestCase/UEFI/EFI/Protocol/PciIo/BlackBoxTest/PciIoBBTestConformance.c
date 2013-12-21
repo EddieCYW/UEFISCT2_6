@@ -1419,7 +1419,7 @@ MemRead_Conf (
   //first allocate a buffer.
   //
   Buffer = NULL;
-  Buffer = AllocatePool (Count);
+  Buffer = SctAllocatePool (Count);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1982,7 +1982,7 @@ MemWrite_Conf (
   //first allocate a buffer.
   //
   Buffer = NULL;
-  Buffer = AllocatePool (Count);
+  Buffer = SctAllocatePool (Count);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2543,7 +2543,7 @@ IoRead_Conf (
   //first allocate a buffer.
   //
   Buffer = NULL;
-  Buffer = AllocatePool (Count);
+  Buffer = SctAllocatePool (Count);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -3103,7 +3103,7 @@ IoWrite_Conf (
   //first allocate a buffer.
   //
   Buffer = NULL;
-  Buffer = AllocatePool (Count);
+  Buffer = SctAllocatePool (Count);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -3634,7 +3634,7 @@ PciRead_Conf (
   AddressOffset = 64;
   Count         = 8;
   Buffer        = NULL;
-  Buffer = AllocatePool (64);
+  Buffer = SctAllocatePool (64);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -4083,7 +4083,7 @@ PciWrite_Conf (
   AddressOffset = 64;
   Count         = 8;
   Buffer        = NULL;
-  Buffer = AllocatePool (64);
+  Buffer = SctAllocatePool (64);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -5235,7 +5235,7 @@ Map_Conf (
   //
   BufferSize = 4 * 1024;
   Buffer = NULL;
-  Buffer = (UINT8 *)AllocatePool (BufferSize);
+  Buffer = (UINT8 *)SctAllocatePool (BufferSize);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

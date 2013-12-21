@@ -192,7 +192,7 @@ IP4ProcessPacket(
   //
   // Create a IP4 Packet Header
   //
-  Status = gtBS->AllocatePool(
+  Status = gtBS->AllocatePool (
                    EfiBootServicesData, 
                    sizeof(EFI_IP4_HEADER), 
                    (VOID **)&HeaderDst
@@ -223,7 +223,7 @@ IP4ProcessPacket(
   if (OptionLen > 0) {
     OptionSrc = (UINT8 *) (HeaderSrc + 1);
 
-    Status = gtBS->AllocatePool(
+    Status = gtBS->AllocatePool (
                    EfiBootServicesData, 
                    OptionLen, 
                    (VOID **)&OptionDst
@@ -252,7 +252,7 @@ IP4ProcessPacket(
   //
   // Create FragmentTable from IP4 Packet Payload
   //
-  Status = gtBS->AllocatePool(
+  Status = gtBS->AllocatePool (
                    EfiBootServicesData, 
                    sizeof(EFI_IPSEC_FRAGMENT_DATA) * 1, 
                    (VOID **)&FragTable
@@ -355,7 +355,7 @@ IP6ProcessPacket(
   //
   // Create a IP4 Packet Header
   //
-  Status = gtBS->AllocatePool(
+  Status = gtBS->AllocatePool (
                    EfiBootServicesData, 
                    sizeof(EFI_IP6_HEADER), 
                    (VOID **)&HeaderDst
@@ -416,7 +416,7 @@ IP6ProcessPacket(
   //
   // Create FragmentTable from IP6 Packet Payload
   //
-  Status = gtBS->AllocatePool(
+  Status = gtBS->AllocatePool (
                    EfiBootServicesData, 
                    sizeof(EFI_IPSEC_FRAGMENT_DATA) * 1, 
                    (VOID **)&FragTable

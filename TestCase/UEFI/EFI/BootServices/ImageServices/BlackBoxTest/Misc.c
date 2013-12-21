@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 #include "Misc.h"
+#include "SctLib.h"
 
 EFI_FILE_HANDLE                         RootFs;
 EFI_DEVICE_PATH_PROTOCOL                *mLoadFileDevicePath = NULL;
@@ -1046,8 +1047,8 @@ InitializeGlobalData (
 
   mFilePath = PoolPrint (L"%s\\%s", FilePath, DEPENDENCY_DIR_NAME);
 
-  FreePool (FilePath);
-  FreePool (DevicePath);
+  SctFreePool (FilePath);
+  SctFreePool (DevicePath);
 
   return EFI_SUCCESS;
 }
@@ -1058,11 +1059,11 @@ ReleaseGlobalData (
   )
 {
   if (mLoadFileDevicePath != NULL) {
-    FreePool (mLoadFileDevicePath);
+    SctFreePool (mLoadFileDevicePath);
   }
 
   if (mFilePath != NULL) {
-    FreePool (mFilePath);
+    SctFreePool (mFilePath);
   }
 }
 
@@ -1260,7 +1261,7 @@ ImageTestComposeLoadFilePath (
 
   *FilePath = AppendDevicePathNode (mLoadFileDevicePath, TailPath);
 
-  FreePool (TailPath);
+  SctFreePool (TailPath);
 
   if (*FilePath == NULL) {
     return EFI_NOT_FOUND;

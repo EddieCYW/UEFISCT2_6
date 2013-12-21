@@ -63,19 +63,24 @@ Abstract:
 #define  tolower(c)  (((c <= 'Z') && (c >= 'A')) ? (c - 'A' + 'a') : c)
 
 VOID *
-Calloc(
-  UINTN       NMemb,
-  UINTN       MembSize
+MemSet(
+  VOID        *b,
+  INTN        c,
+  UINTN       len
   );
 
-VOID*
-Malloc(
-  UINTN       size
+INTN
+MemCmp(
+  VOID        *s1,
+  VOID        *s2,
+  UINTN       n
   );
 
-VOID
-Free(
-  VOID        *addr
+VOID *
+MemCpy(
+  VOID        *dst,
+  VOID        *src,
+  UINTN       len
   );
 
 INTN

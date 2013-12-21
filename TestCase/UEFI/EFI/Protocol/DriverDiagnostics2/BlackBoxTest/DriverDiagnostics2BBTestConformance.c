@@ -194,7 +194,7 @@ BBTestRunDiagnosticsConformanceTestCheckpoint1 (
   }
   
   StringLength = strlena(SupportedLanguages);
-  PoolAddress = (CHAR8 *) AllocatePool (StringLength + 1);
+  PoolAddress = (CHAR8 *) SctAllocatePool (StringLength + 1);
   SupportedLanguagesBackup = PoolAddress;
   if (SupportedLanguagesBackup ==NULL){
     return  EFI_UNSUPPORTED;
@@ -467,7 +467,7 @@ BBTestRunDiagnosticsConformanceTestCheckpoint2 (
   }
   
   StringLength = strlena(SupportedLanguages);
-  PoolAddress = (CHAR8 *) AllocatePool (StringLength + 1);
+  PoolAddress = (CHAR8 *) SctAllocatePool (StringLength + 1);
   SupportedLanguagesBackup = PoolAddress;
   if (SupportedLanguagesBackup ==NULL){
     return  EFI_UNSUPPORTED;
@@ -620,7 +620,7 @@ BBTestRunDiagnosticsConformanceTestCheckpoint3 (
   }
   
   StringLength = strlena(SupportedLanguages);
-  PoolAddress = (CHAR8 *) AllocatePool (StringLength + 1);
+  PoolAddress = (CHAR8 *) SctAllocatePool (StringLength + 1);
   SupportedLanguagesBackup = PoolAddress;
   if (SupportedLanguagesBackup ==NULL){
     return  EFI_UNSUPPORTED;

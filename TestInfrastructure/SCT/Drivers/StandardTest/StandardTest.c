@@ -312,7 +312,7 @@ Returns:
   //
   // Initialize the TslInit private data
   //
-  Status = tBS->AllocatePool(
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (TSL_INIT_PRIVATE_DATA),
                   (VOID **)&Private

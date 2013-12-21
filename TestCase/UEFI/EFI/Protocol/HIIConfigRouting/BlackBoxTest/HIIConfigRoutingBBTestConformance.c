@@ -678,9 +678,9 @@ BBTestExtractConfigConformanceTestCheckpoint4(
 
   Len = StrLen (Resp);
 
-  Request = (EFI_STRING) AllocateZeroPool (2 * Len + 2);
+  Request = (EFI_STRING) SctAllocateZeroPool (2 * Len + 2);
   if (Request == NULL) {
-  	gtBS->FreePool(Resp);
+  	gtBS->FreePool (Resp);
     return EFI_OUT_OF_RESOURCES;
   }
   
@@ -689,8 +689,8 @@ BBTestExtractConfigConformanceTestCheckpoint4(
   //
   Status = MultiAltRespToMultiReq (Resp, Request);
   if (Status != EFI_SUCCESS) {
-    gtBS->FreePool(Resp);
-    gtBS->FreePool(Request);	
+    gtBS->FreePool (Resp);
+    gtBS->FreePool (Request);	
 	return EFI_UNSUPPORTED;
   }
   
@@ -729,8 +729,8 @@ BBTestExtractConfigConformanceTestCheckpoint4(
                  Status
                  );
 
-  gtBS->FreePool(Resp);
-  gtBS->FreePool(Request);
+  gtBS->FreePool (Resp);
+  gtBS->FreePool (Request);
   
   return EFI_SUCCESS;
 }

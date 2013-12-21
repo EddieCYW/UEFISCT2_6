@@ -239,7 +239,7 @@ BBTestRunDiagnosticsFuncTestCheckpoint1 (
   }
   
   StringLength = strlena(SupportedLanguages);
-  PoolAddress = (CHAR8 *) AllocatePool (StringLength + 1);
+  PoolAddress = (CHAR8 *) SctAllocatePool (StringLength + 1);
   SupportedLanguagesBackup = PoolAddress;
   if (SupportedLanguagesBackup ==NULL){
     gtBS->FreePool (ControllerHandleBuffer);
@@ -477,7 +477,7 @@ BBTestRunDiagnosticsFuncTestCheckpoint2 (
   }	
 
   StringLength = strlena(SupportedLanguages);
-  PoolAddress = (CHAR8 *) AllocatePool (StringLength + 1);
+  PoolAddress = (CHAR8 *) SctAllocatePool (StringLength + 1);
   SupportedLanguagesBackup = PoolAddress;
   if (SupportedLanguagesBackup == NULL){
     gtBS->FreePool (ControllerHandleBuffer);

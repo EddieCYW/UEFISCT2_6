@@ -834,7 +834,7 @@ BBTestPassThruConformanceAutoTest (
   //
   // Initialize the Request Packet.
   //
-  Data = (UINT8 *)AllocatePool (ScsiPassThru->Mode->IoAlign + 96);
+  Data = (UINT8 *)SctAllocatePool (ScsiPassThru->Mode->IoAlign + 96);
   
   //
   // Assertion Point 4.5.2.1
@@ -1159,6 +1159,6 @@ BBTestPassThruConformanceAutoTest (
                  (UINTN)__LINE__,
                  Status
                  );
-  FreePool (Data);
+  SctFreePool (Data);
   return EFI_SUCCESS;
 }

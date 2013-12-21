@@ -305,7 +305,7 @@ Returns:
 --*/
 {
   if (mRealFileBuffer != NULL) {
-    FreePool (mRealFileBuffer);
+    SctFreePool (mRealFileBuffer);
     mRealFileBuffer = NULL;
   }
 
@@ -410,7 +410,7 @@ Returns:
                         (VOID *) FileInfo
                         );
   if (EFI_ERROR (Status)) {
-    FreePool (FileInfo);
+    SctFreePool (FileInfo);
     return Status;
   }
   //
@@ -419,7 +419,7 @@ Returns:
   *FileSize   = (UINTN) (FileInfo->FileSize);
   *FileBuffer = EntsAllocatePool (*FileSize);
   if (*FileBuffer == NULL) {
-    FreePool (FileInfo);
+    SctFreePool (FileInfo);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -605,7 +605,7 @@ Operation_start:
       }
 
       if (Token.Buffer != NULL) {
-        FreePool (Token.Buffer);
+        SctFreePool (Token.Buffer);
       }
 
     } else if (Status == EFI_BUFFER_TOO_SMALL) {

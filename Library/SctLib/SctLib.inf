@@ -55,6 +55,7 @@ COMPONENT_TYPE  = LIBRARY
 [sources.common]
   Debug.c
   Init.c
+  Alloc.c
   Mem.c
 
 [sources.Arm]

@@ -351,7 +351,7 @@ PciRead_Func (
                &Buffer
                );
     if (EFI_ERROR(Status)) {
-      Buffer = (UINT8 *)AllocatePool (AddressLength);
+      Buffer = (UINT8 *)SctAllocatePool (AddressLength);
       if (Buffer == NULL) {
         gtBS->FreePool (PciDevicePathStr);
         ProfileLib->EfiIniClose (
@@ -369,7 +369,7 @@ PciRead_Func (
     //
 
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (PciDevicePathStr);
@@ -381,7 +381,7 @@ PciRead_Func (
     }
 
     BackupBuffer = NULL;
-    BackupBuffer = AllocatePool (AddressLength);
+    BackupBuffer = SctAllocatePool (AddressLength);
     if (BackupBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (ReadBuffer);
@@ -983,7 +983,7 @@ PciWrite_Func (
                &Buffer
                );
     if (EFI_ERROR(Status)) {
-      Buffer = (UINT8 *)AllocatePool (AddressLength);
+      Buffer = (UINT8 *)SctAllocatePool (AddressLength);
       if (Buffer == NULL) {
         gtBS->FreePool (PciDevicePathStr);
         ProfileLib->EfiIniClose (
@@ -1001,7 +1001,7 @@ PciWrite_Func (
     //
 
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (AddressLength);
+    ReadBuffer = SctAllocatePool (AddressLength);
     if (ReadBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (PciDevicePathStr);
@@ -1016,7 +1016,7 @@ PciWrite_Func (
     //allocate BackupBuffer.
     //
     BackupBuffer = NULL;
-    BackupBuffer = AllocatePool (AddressLength);
+    BackupBuffer = SctAllocatePool (AddressLength);
 
     if (BackupBuffer == NULL) {
       gtBS->FreePool (Buffer);
@@ -1664,7 +1664,7 @@ CopyMem_Func (
                &Buffer
                );
     if (EFI_ERROR(Status)) {
-      Buffer = (UINT8 *)AllocatePool (BufferSize);
+      Buffer = (UINT8 *)SctAllocatePool (BufferSize);
       if (Buffer == NULL) {
         gtBS->FreePool (PciDevicePathStr);
         ProfileLib->EfiIniClose (
@@ -1684,7 +1684,7 @@ CopyMem_Func (
     //allocate read buffer.
     //
     ReadBuffer = NULL;
-    ReadBuffer = AllocatePool (BufferSize);
+    ReadBuffer = SctAllocatePool (BufferSize);
     if (ReadBuffer == NULL) {
       gtBS->FreePool (Buffer);
       gtBS->FreePool (PciDevicePathStr);
@@ -2237,7 +2237,7 @@ Map_Func (
   //
   BufferSize = 4 * 1024 + 1;
   Buffer = NULL;
-  Buffer = (UINT8 *)AllocatePool (BufferSize);
+  Buffer = (UINT8 *)SctAllocatePool (BufferSize);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2357,7 +2357,7 @@ Map_Func (
   //
   BufferSize = 4 * 1024 + 1;
   Buffer = NULL;
-  Buffer = (UINT8 *)AllocatePool (BufferSize);
+  Buffer = (UINT8 *)SctAllocatePool (BufferSize);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2765,7 +2765,7 @@ Unmap_Func (
   //
   BufferSize = 4 * 1024 + 1;
   Buffer = NULL;
-  Buffer = (UINT8 *)AllocatePool (BufferSize);
+  Buffer = (UINT8 *)SctAllocatePool (BufferSize);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2870,7 +2870,7 @@ Unmap_Func (
   //
   BufferSize = 4 * 1024 + 1;
   Buffer = NULL;
-  Buffer = (UINT8 *)AllocatePool (BufferSize);
+  Buffer = (UINT8 *)SctAllocatePool (BufferSize);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

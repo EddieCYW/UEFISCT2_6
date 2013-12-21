@@ -220,7 +220,7 @@ GetInfo_Func (
 
     gtBS->FreePool (FileName);
 
-    Buffer = AllocatePool (CompressedFileSize);
+    Buffer = SctAllocatePool (CompressedFileSize);
 
     if (Buffer == NULL) {
       CompressedFHandle->Close (CompressedFHandle);
@@ -565,7 +565,7 @@ Decompress_Func (
     //
     //then read the Compressed File into memory.
     //
-    CompressedFileBuffer = AllocatePool (CompressedFileSize);
+    CompressedFileBuffer = SctAllocatePool (CompressedFileSize);
 
     if (CompressedFileBuffer == NULL) {
       CompressedFHandle->Close (CompressedFHandle);
@@ -641,7 +641,7 @@ Decompress_Func (
       //
       // Fill the buffer with 0x00, and check whether the buffer is changed later
       //
-      DecompressBuffer = AllocateZeroPool (128);
+      DecompressBuffer = SctAllocateZeroPool (128);
 
       if (DecompressBuffer == NULL) {
         gtBS->FreePool (CompressedFileBuffer);
@@ -649,7 +649,7 @@ Decompress_Func (
         continue;
       }
 
-      ScratchBuffer = AllocatePool (ScratchSize);
+      ScratchBuffer = SctAllocatePool (ScratchSize);
 
       if (ScratchBuffer == NULL) {
         gtBS->FreePool (CompressedFileBuffer);
@@ -787,7 +787,7 @@ Decompress_Func (
     //
     //the Uncompressed file is not null so read it into memory.
     //
-    UncompressedFileBuffer = AllocatePool (UncompressedFileSize);
+    UncompressedFileBuffer = SctAllocatePool (UncompressedFileSize);
 
     if (UncompressedFileBuffer == NULL) {
       UncompressedFHandle->Close (UncompressedFHandle);
@@ -861,7 +861,7 @@ Decompress_Func (
     //
     //allocate Decompess buffer and Decompress the compessed data.
     //
-    DecompressBuffer = AllocatePool (DestinationSize);
+    DecompressBuffer = SctAllocatePool (DestinationSize);
     if (DecompressBuffer == NULL) {
       gtBS->FreePool (CompressedFileBuffer);
       gtBS->FreePool (UncompressedFileBuffer);
@@ -869,7 +869,7 @@ Decompress_Func (
       continue;
     }
 
-    ScratchBuffer = AllocatePool (ScratchSize);
+    ScratchBuffer = SctAllocatePool (ScratchSize);
     if (ScratchBuffer == NULL) {
       gtBS->FreePool (CompressedFileBuffer);
       gtBS->FreePool (UncompressedFileBuffer);

@@ -129,7 +129,7 @@ BBTestQueryFunctionAutoTest (
   *ParameterBlockSize = sizeof( EFI_CONFIGURE_CLP_PARAMETER_BLK );
   ChildHandle =NULL;
   
-  Status = gtBS->AllocatePool(EfiBootServicesData,*ParameterBlockSize,(VOID **)&ParameterClpBlock);
+  Status = gtBS->AllocatePool (EfiBootServicesData,*ParameterBlockSize,(VOID **)&ParameterClpBlock);
   if(EFI_ERROR(Status)){
      StandardLib->RecordAssertion (
                    StandardLib,
@@ -215,7 +215,7 @@ BBTestQueryFunctionAutoTest (
   }
 
   if (CtrlerHandles) {
-    FreePool (CtrlerHandles);
+    SctFreePool (CtrlerHandles);
   }
   
   return EFI_SUCCESS;
@@ -291,7 +291,7 @@ BBTestResponseFunctionAutoTest (
   *ParameterBlockSize = sizeof( EFI_CONFIGURE_CLP_PARAMETER_BLK );
   ChildHandle =NULL;
 
-  Status = gtBS->AllocatePool(EfiBootServicesData,*ParameterBlockSize,(VOID **)&ParameterClpBlock);
+  Status = gtBS->AllocatePool (EfiBootServicesData,*ParameterBlockSize,(VOID **)&ParameterClpBlock);
   if(EFI_ERROR(Status)){
      StandardLib->RecordAssertion (
                    StandardLib,
@@ -379,7 +379,7 @@ BBTestResponseFunctionAutoTest (
   }
 
   if (CtrlerHandles) {
-    FreePool (CtrlerHandles);
+    SctFreePool (CtrlerHandles);
   }
 
   return EFI_SUCCESS;

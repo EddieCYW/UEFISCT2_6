@@ -164,7 +164,7 @@ DevicePathUtilitiesAppendDeviceNodeConformanceTest (
   //
   // TDS 3.4.2.2.1
   //
-  pDevicePath1 = (EFI_DEVICE_PATH *) AllocatePool (END_DEVICE_PATH_LENGTH);
+  pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -181,7 +181,7 @@ DevicePathUtilitiesAppendDeviceNodeConformanceTest (
   }
 
   if (pDevicePath3 != NULL) {
-    FreePool (pDevicePath3);
+    SctFreePool (pDevicePath3);
   }
 
   StandardLib->RecordAssertion (
@@ -205,13 +205,13 @@ DevicePathUtilitiesAppendDeviceNodeConformanceTest (
   }
 
   if (pDevicePath2 != NULL) {
-    FreePool(pDevicePath2);
+    SctFreePool (pDevicePath2);
   }
   if (pDevicePath3 != NULL) {
-    FreePool(pDevicePath3);
+    SctFreePool (pDevicePath3);
   }
   if (pDevicePath4 != NULL) {
-    FreePool(pDevicePath4);
+    SctFreePool (pDevicePath4);
   }
 
   StandardLib->RecordAssertion (
@@ -231,9 +231,9 @@ DevicePathUtilitiesAppendDeviceNodeConformanceTest (
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
 
-  FreePool(pDevicePath1);
+  SctFreePool (pDevicePath1);
   if (pDevicePath3 != NULL) {
-    FreePool(pDevicePath3);
+    SctFreePool (pDevicePath3);
   }
 
   StandardLib->RecordAssertion (
@@ -288,19 +288,19 @@ DevicePathUtilitiesAppendDevicePathConformanceTest (
   //
   // TDS 3.4.3.2.1
   //
-  pDevicePath1 = (EFI_DEVICE_PATH *) AllocatePool (END_DEVICE_PATH_LENGTH);
+  pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   SetDevicePathEndNode (pDevicePath1);
 
   pDevicePath3  = DevicePathUtilities->CreateDeviceNode (USBNodeType, USBNodeSubType, USBNodeLength);
   pDevicePath4  = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath3);
-  FreePool (pDevicePath1);
-  FreePool (pDevicePath3);
+  SctFreePool (pDevicePath1);
+  SctFreePool (pDevicePath3);
   DevicePathLen2  = DevicePathUtilities->GetDevicePathSize (pDevicePath4);
 
   pDevicePath1    = DevicePathUtilities->AppendDevicePath (NULL, pDevicePath4);
-  FreePool (pDevicePath4);
+  SctFreePool (pDevicePath4);
   DevicePathLen3 = DevicePathUtilities->GetDevicePathSize (pDevicePath1);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath1);
 
   if (DevicePathLen2 == DevicePathLen3) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -321,7 +321,7 @@ DevicePathUtilitiesAppendDevicePathConformanceTest (
   //
   // TDS 3.4.3.2.2
   //
-  pDevicePath1 = (EFI_DEVICE_PATH *) AllocatePool (END_DEVICE_PATH_LENGTH);
+  pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -330,19 +330,19 @@ DevicePathUtilitiesAppendDevicePathConformanceTest (
 
   pDevicePath2    = DevicePathUtilities->CreateDeviceNode (PCIRootNodeType, PCIRootNodeSubType, PCIRootNodeLength);
   pDevicePath3    = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath2);
-  FreePool (pDevicePath1);
-  FreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (PCINodeType, PCINodeSubType, PCINodeLength);
   pDevicePath2  = DevicePathUtilities->AppendDeviceNode (pDevicePath3, pDevicePath1);
-  FreePool (pDevicePath3);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath3);
+  SctFreePool (pDevicePath1);
   DevicePathLen1  = DevicePathUtilities->GetDevicePathSize (pDevicePath2);
 
   pDevicePath1    = DevicePathUtilities->AppendDevicePath (pDevicePath2, NULL);
-  FreePool (pDevicePath2);
+  SctFreePool (pDevicePath2);
   DevicePathLen3 = DevicePathUtilities->GetDevicePathSize (pDevicePath1);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath1);
 
   if (DevicePathLen1 == DevicePathLen3) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -416,7 +416,7 @@ DevicePathUtilitiesAppendDevicePathInstanceConformanceTest (
   //
   // TDS 3.4.4.2.1
   //
-  pDevicePath1 = (EFI_DEVICE_PATH *) AllocatePool (END_DEVICE_PATH_LENGTH);
+  pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -424,16 +424,16 @@ DevicePathUtilitiesAppendDevicePathInstanceConformanceTest (
 
   pDevicePath2  = DevicePathUtilities->CreateDeviceNode (PCIRootNodeType, PCIRootNodeSubType, PCIRootNodeLength);
   pDevicePath3  = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath2);
-  FreePool (pDevicePath1);
-  FreePool (pDevicePath2);
+  SctFreePool (pDevicePath1);
+  SctFreePool (pDevicePath2);
 
   pDevicePath1  = DevicePathUtilities->CreateDeviceNode (PCINodeType, PCINodeSubType, PCINodeLength);
   pDevicePath2  = DevicePathUtilities->AppendDeviceNode (pDevicePath3, pDevicePath1);
-  FreePool (pDevicePath3);
-  FreePool (pDevicePath1);
+  SctFreePool (pDevicePath3);
+  SctFreePool (pDevicePath1);
 
   pDevicePath1 = DevicePathUtilities->AppendDevicePathInstance (pDevicePath2, NULL);
-  FreePool (pDevicePath2);
+  SctFreePool (pDevicePath2);
 
   if (pDevicePath1 == NULL) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;

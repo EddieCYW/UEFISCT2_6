@@ -211,21 +211,4 @@ GetHIIDatabaseInterface (
   OUT EFI_HII_DATABASE_PROTOCOL    **HIIDatabase
   );
   
-VOID *
-AllocatePool (
-  IN UINTN                          Size
-  );
-
-VOID *
-AllocateZeroPool (
-  IN UINTN                          Size
-  );
-  
-INTN
-SctCompareMem (
-  IN VOID                           *Dest,
-  IN VOID                           *Src,
-  IN UINTN                          len
-  );
-
 #endif

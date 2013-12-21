@@ -50,6 +50,38 @@
 #include "Efi.h"
 
 //
+// Allocation API
+//
+
+VOID *
+SctAllocatePool (
+  IN UINTN                          Size
+  );
+
+VOID *
+SctAllocateCopyPool (
+  IN  UINTN                         AllocationSize,
+  IN  VOID                          *Buffer
+  );
+
+VOID *
+SctAllocateZeroPool (
+  IN UINTN                          Size
+  );
+
+VOID *
+SctReallocatePool (
+  IN VOID                           *OldPool,
+  IN UINTN                          OldSize,
+  IN UINTN                          NewSize
+  );
+
+VOID
+SctFreePool (
+  IN VOID                           *p
+  );
+
+//
 // Public read-only data in the EFI library
 //
 

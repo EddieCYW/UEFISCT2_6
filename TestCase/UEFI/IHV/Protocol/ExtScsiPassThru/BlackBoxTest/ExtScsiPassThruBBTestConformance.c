@@ -625,7 +625,7 @@ BBTestGetTargetLunConformanceAutoTest (
                  );
   
   //Free the DevicePath.
-  FreePool(DevicePath);
+  SctFreePool (DevicePath);
   
   return EFI_SUCCESS;
 }
@@ -1016,7 +1016,7 @@ BBTestPassThruConformanceAutoTest (
     return Status;
   }
 
-  Data = AllocateZeroPool (ExtScsiPassThru->Mode->IoAlign + 96);
+  Data = SctAllocateZeroPool (ExtScsiPassThru->Mode->IoAlign + 96);
 
   //
   // Get present Target and Lun
@@ -1439,7 +1439,7 @@ BBTestPassThruConformanceAutoTest (
   }
 
   //Free Date
-  FreePool(Data);
+  SctFreePool (Data);
   
   return EFI_SUCCESS;
 }

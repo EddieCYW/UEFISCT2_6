@@ -1170,10 +1170,10 @@ EntsChooseNICAndSave (
 FreeAndReturn:
   for (Index = 0; Index < 0x20; Index++) {
   	if (NicDevicePathStr[Index] != NULL) {
-   	  gntBS->FreePool(NicDevicePathStr[Index]);
+   	  gntBS->FreePool (NicDevicePathStr[Index]);
     }
   }
-  gntBS->FreePool(NicHandleBuffer);
+  gntBS->FreePool (NicHandleBuffer);
   return;
 }
 

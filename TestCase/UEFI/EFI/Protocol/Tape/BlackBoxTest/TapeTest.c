@@ -83,7 +83,7 @@ EFI_STATUS prepareTapeTest(int initTestFileMarkCnt, int initTestBlockMarkCnt)
   EFI_INPUT_KEY Key;
   int index, ii;
   	
-  buffer = (char *)EfiLibAllocatePool(bufferSize);
+  buffer = (char *)SctAllocatePool (bufferSize);
   
   //  1.0 check input parameters
   if((buffer==NULL) || (gTapeIoProtocol==NULL))
@@ -165,7 +165,7 @@ EFI_STATUS prepareTapeTest(int initTestFileMarkCnt, int initTestBlockMarkCnt)
 
 prepareTapeTestEnd:     
   if(buffer!=NULL)
-  	tBS->FreePool(buffer);	  
+  	tBS->FreePool (buffer);	  
 
   logMsg(gTapeBBTestMainAssertionGuid02E,
   			"EFI_TAPE_IO_PROTOCOL Test", 
@@ -202,7 +202,7 @@ EFI_STATUS BBTestTapeFunctionRead(
   							L"%a:%d : EnterFunction",
   							__FILE__, (UINTN)__LINE__ );  
   							
-  buffer = (char *)EfiLibAllocatePool(bufferSize);
+  buffer = (char *)SctAllocatePool (bufferSize);
   
   //  1.0 check input parameters
   gTapeIoProtocol = (EFI_TAPE_IO_PROTOCOL *)ClientInterface;
@@ -319,7 +319,7 @@ EFI_STATUS BBTestTapeFunctionRead(
   		  
 BBTestTapeFunctionReadEnd:		
   if(buffer!=NULL)
-  	tBS->FreePool(buffer);					
+  	tBS->FreePool (buffer);
   //
   // Exit a function. It is put at the exit point of a function
   LogExitFunction( LoggingLib, 
@@ -354,7 +354,7 @@ BBTestTapeFunctionWrite (
   							L"%a:%d : EnterFunction",
   							__FILE__, (UINTN)__LINE__ );  
   							
-  buffer = (char *)EfiLibAllocatePool(bufferSize);
+  buffer = (char *)SctAllocatePool (bufferSize);
   
   //  2.0 check input parameters
   gTapeIoProtocol = (EFI_TAPE_IO_PROTOCOL *)ClientInterface;
@@ -457,7 +457,7 @@ BBTestTapeFunctionWrite (
   		  
 BBTestTapeFunctionWriteEnd:	
   if(buffer!=NULL)
-  	tBS->FreePool(buffer);		
+  	tBS->FreePool (buffer);		
   	    							
   //
   // Exit a function. It is put at the exit point of a function
@@ -1026,4 +1026,4 @@ void dumpTapeHeaderInfo(tape_header *tapeHdr)
 				"TapeTitle", 
 				tapeHdr->TapeTitle
 				));	
-}	
+}

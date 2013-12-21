@@ -441,11 +441,11 @@ Done:
   // release resource
   //
   if (EntireFileName != NULL) {
-    FreePool (EntireFileName);
+    SctFreePool (EntireFileName);
   }
 
   if (DevicePath != NULL) {
-    FreePool (DevicePath);
+    SctFreePool (DevicePath);
   }
 
   if (FileHandle != NULL) {

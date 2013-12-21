@@ -942,7 +942,7 @@ ConvertStringToHex (
   }
 
   TempBuffer = NULL;
-  TempBuffer = AllocatePool (Length);
+  TempBuffer = SctAllocatePool (Length);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1028,11 +1028,11 @@ InitializeCaseEnvironment (
     return EFI_ABORTED;
   }
 
-  gRootBridgeIoDevices = (EFI_PCI_ROOT_BRIDGE_IO_DEVICE *)AllocateZeroPool (
+  gRootBridgeIoDevices = (EFI_PCI_ROOT_BRIDGE_IO_DEVICE *)SctAllocateZeroPool (
                            sizeof (EFI_PCI_ROOT_BRIDGE_IO_DEVICE) * HandleNum);
 
   if (gRootBridgeIoDevices == NULL) {
-    FreePool (HandleBuffer);
+    SctFreePool (HandleBuffer);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -1045,8 +1045,8 @@ InitializeCaseEnvironment (
                      );
 
     if (EFI_ERROR(Status)) {
-      FreePool (HandleBuffer);
-      FreePool (gRootBridgeIoDevices);
+      SctFreePool (HandleBuffer);
+      SctFreePool (gRootBridgeIoDevices);
       return Status;
     }
 
@@ -1059,8 +1059,8 @@ InitializeCaseEnvironment (
                      );
 
     if (EFI_ERROR(Status)) {
-      FreePool (HandleBuffer);
-      FreePool (gRootBridgeIoDevices);
+      SctFreePool (HandleBuffer);
+      SctFreePool (gRootBridgeIoDevices);
       return Status;
     }
 
@@ -1072,8 +1072,8 @@ InitializeCaseEnvironment (
     Status = GetRootBridgeIoDeviceInfo (&gRootBridgeIoDevices[Index]);
 
     if (EFI_ERROR(Status)) {
-      FreePool (HandleBuffer);
-      FreePool (gRootBridgeIoDevices);
+      SctFreePool (HandleBuffer);
+      SctFreePool (gRootBridgeIoDevices);
       return Status;
     }
 
@@ -1081,7 +1081,7 @@ InitializeCaseEnvironment (
 
   gRootBridgeIoDevNumber = HandleNum;
 
-  FreePool (HandleBuffer);
+  SctFreePool (HandleBuffer);
   Initialized = TRUE;
   return EFI_SUCCESS;
 }

@@ -260,7 +260,7 @@ Returns:
                      (UINTN) info->PixelInformation.ReservedMask,
                      (UINTN) info->PixelsPerScanLine
                      );
-      gtBS->FreePool((VOID *)info);
+      gtBS->FreePool ((VOID *)info);
     }
   }
   //
@@ -564,7 +564,7 @@ Returns:
                        (UINTN) GraphicsOutput->Mode->Info->PixelInformation.ReservedMask,
                        (UINTN) GraphicsOutput->Mode->Info->PixelsPerScanLine
                        );
-        gtBS->FreePool(info);
+        gtBS->FreePool (info);
       }
     }
   }

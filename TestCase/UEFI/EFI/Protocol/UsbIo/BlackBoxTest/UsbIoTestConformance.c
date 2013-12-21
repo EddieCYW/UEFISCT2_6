@@ -2362,7 +2362,7 @@ Returns:
   }
 
   if (Interface.InterfaceProtocol == USB_MASS_STORE_BOT) {
-    UsbBot = AllocateZeroPool (sizeof (USB_BOT_PROTOCOL) + 2 * sizeof (EFI_USB_ENDPOINT_DESCRIPTOR));
+    UsbBot = SctAllocateZeroPool (sizeof (USB_BOT_PROTOCOL) + 2 * sizeof (EFI_USB_ENDPOINT_DESCRIPTOR));
  
     SctZeroMem (UsbBot, sizeof (USB_BOT_PROTOCOL) + 2 * sizeof (EFI_USB_ENDPOINT_DESCRIPTOR));
     

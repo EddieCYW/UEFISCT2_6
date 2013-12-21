@@ -186,27 +186,6 @@ BBTestGetFontInfoFunctionTest (
   IN EFI_HANDLE                 SupportHandle
   );
 
-VOID *
-AllocatePool (
-  IN UINTN                          Size
-  );
-
-VOID *
-AllocateZeroPool (
-  IN UINTN                          Size
-  );
-
-VOID
-FreePool (
-  IN VOID                           *p
-  );
-
-VOID
-InitializeUnicodeSupport (
-  CHAR8                             *LangCode
-  );
-
-
 EFI_STATUS
 GetGraphicsOutputInterface (
   OUT EFI_GRAPHICS_OUTPUT_PROTOCOL    **GraphicsOutput

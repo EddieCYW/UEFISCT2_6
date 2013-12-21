@@ -547,7 +547,7 @@ InitializeGlobalData ()
 
   mFilePath = PoolPrint (L"%s\\%s", FilePath, DEPENDENCY_DIR_NAME);
 
-  FreePool (FilePath);
+  SctFreePool (FilePath);
 
   return EFI_SUCCESS;
 }
@@ -556,10 +556,10 @@ VOID
 ReleaseGlobalData ()
 {
   if (mFilePath != NULL) {
-    FreePool (mFilePath);
+    SctFreePool (mFilePath);
   }
 
   if (mDevicePath != NULL) {
-    FreePool (mDevicePath);
+    SctFreePool (mDevicePath);
   }
 }

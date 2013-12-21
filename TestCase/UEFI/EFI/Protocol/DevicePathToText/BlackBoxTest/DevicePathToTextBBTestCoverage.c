@@ -195,7 +195,7 @@ ConvertStrToIPv4Addr (
   CHAR16  *AddrStart;
   CHAR16  *AddrEnd;
 
-  AddrStart = (CHAR16 *)AllocateCopyPool(StrLen(Str) * 2 + 2, Str);
+  AddrStart = (CHAR16 *)SctAllocateCopyPool (StrLen(Str) * 2 + 2, Str);
   for (Index = 0; Index < 4; Index++) {
     AddrEnd   = StrChr(AddrStart, L'.');
     if (AddrEnd != NULL) {
@@ -218,7 +218,7 @@ ConvertStrToIPv6Addr (
   CHAR16  *AddrEnd;
   UINT16  Data;
 
-  AddrStart = (CHAR16 *)AllocateCopyPool(StrLen(Str) * 2 + 2, Str);
+  AddrStart = (CHAR16 *)SctAllocateCopyPool (StrLen(Str) * 2 + 2, Str);
   for (Index = 0; Index < 8; Index++) {
     AddrEnd   = StrChr(AddrStart, L':');
     if (AddrEnd != NULL) {
@@ -303,13 +303,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -340,13 +340,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -377,13 +377,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -412,13 +412,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -453,13 +453,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -494,13 +494,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -535,13 +535,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -570,13 +570,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -606,13 +606,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -643,13 +643,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -679,13 +679,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -714,13 +714,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -754,13 +754,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -789,13 +789,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -825,13 +825,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -861,13 +861,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -903,13 +903,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -945,13 +945,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -984,13 +984,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1023,13 +1023,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1058,13 +1058,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1099,13 +1099,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1136,13 +1136,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1171,13 +1171,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1208,13 +1208,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1243,13 +1243,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1278,13 +1278,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
 
@@ -1314,13 +1314,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1349,13 +1349,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1384,13 +1384,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1419,13 +1419,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1454,13 +1454,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1506,13 +1506,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1546,13 +1546,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //
@@ -1599,13 +1599,13 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
+    SctFreePool (Text);
   }
 
   //

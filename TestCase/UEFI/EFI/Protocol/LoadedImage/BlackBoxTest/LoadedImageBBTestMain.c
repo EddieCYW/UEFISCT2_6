@@ -1071,9 +1071,9 @@ LoadedImageTestComposeSimpleFilePath (
 
   *FilePath = FileDevicePath (LoadImage->DeviceHandle, EntireFileName);
 
-  FreePool (DevicePath);
-  FreePool (FileNamePath);
-  FreePool (EntireFileName);
+  SctFreePool (DevicePath);
+  SctFreePool (FileNamePath);
+  SctFreePool (EntireFileName);
 
   if (*FilePath == NULL) {
     return EFI_OUT_OF_RESOURCES;

@@ -470,7 +470,7 @@ BBTestNewImageConformanceTestCheckpoint1 (
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
   	Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -484,7 +484,7 @@ BBTestNewImageConformanceTestCheckpoint1 (
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool (Image);
   	Status = HIIDatabase->RemovePackageList (
@@ -628,7 +628,7 @@ BBTestGetImageConformanceTestCheckpoint1 (
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -642,7 +642,7 @@ BBTestGetImageConformanceTestCheckpoint1 (
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool (Image);
     Status = HIIDatabase->RemovePackageList (
@@ -768,7 +768,7 @@ BBTestGetImageConformanceTestCheckpoint2 (
   // Init the Image
   //
 #if SWITCH_FLAG_EFI_IMAGE_INPUT
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -782,7 +782,7 @@ BBTestGetImageConformanceTestCheckpoint2 (
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool (Image);
     Status = HIIDatabase->RemovePackageList (
@@ -800,7 +800,7 @@ BBTestGetImageConformanceTestCheckpoint2 (
 #else
   Width = 50;
   Height = 60;
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT)+ Width * Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) - sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT)+ Width * Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) - sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Image == NULL ) {
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -922,7 +922,7 @@ BBTestGetImageConformanceTestCheckpoint3 (
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -936,7 +936,7 @@ BBTestGetImageConformanceTestCheckpoint3 (
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool (Image);
     Status = HIIDatabase->RemovePackageList (
@@ -1060,7 +1060,7 @@ BBTestGetImageConformanceTestCheckpoint4 (
   // Init the Image
   //
 #if SWITCH_FLAG_EFI_IMAGE_INPUT
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
      Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -1074,7 +1074,7 @@ BBTestGetImageConformanceTestCheckpoint4 (
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool (Image);
     Status = HIIDatabase->RemovePackageList (
@@ -1091,7 +1091,7 @@ BBTestGetImageConformanceTestCheckpoint4 (
 #else
   Width = 50;
   Height = 60;
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT)+ Width * Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) - sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT)+ Width * Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL) - sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Image == NULL ) {
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -1212,7 +1212,7 @@ BBTestGetImageConformanceTestCheckpoint5 (
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -1226,7 +1226,7 @@ BBTestGetImageConformanceTestCheckpoint5 (
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool (Image);
     Status = HIIDatabase->RemovePackageList (
@@ -1369,7 +1369,7 @@ BBTestSetImageConformanceTestCheckpoint1 (
   //
   // Init the Image1
   //
-  Image1 = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image1 = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image1 == NULL ) {
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -1383,7 +1383,7 @@ BBTestSetImageConformanceTestCheckpoint1 (
   Image1->Flags = 0;
   Image1->Width = 50;
   Image1->Height = 60;
-  Bitmap1 = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image1->Width * Image1->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap1 = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image1->Width * Image1->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap1 == NULL ) {
     gtBS->FreePool (Image1);
     Status = HIIDatabase->RemovePackageList (
@@ -1423,7 +1423,7 @@ BBTestSetImageConformanceTestCheckpoint1 (
   //
   // Init the Image2
   //
-  Image2 = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image2 = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image2 == NULL ) {
   	gtBS->FreePool (Bitmap1);
 	gtBS->FreePool (Image1);
@@ -1439,7 +1439,7 @@ BBTestSetImageConformanceTestCheckpoint1 (
   Image2->Flags = 0;
   Image2->Width = 30;
   Image2->Height = 40;
-  Bitmap2= (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image2->Width * Image2->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap2= (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image2->Width * Image2->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap2 == NULL ) {
   	gtBS->FreePool (Bitmap1);
 	gtBS->FreePool (Image1);
@@ -1534,7 +1534,7 @@ BBTestSetImageConformanceTestCheckpoint2 (
   //
   // Init the Image1
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -1548,7 +1548,7 @@ BBTestSetImageConformanceTestCheckpoint2 (
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool (Image);
     Status = HIIDatabase->RemovePackageList (
@@ -1664,7 +1664,7 @@ BBTestSetImageConformanceTestCheckpoint3 (
   //
   // Init the Image1
   //
-  Image1 = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image1 = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image1 == NULL ) {
     Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -1678,7 +1678,7 @@ BBTestSetImageConformanceTestCheckpoint3 (
   Image1->Flags = 0;
   Image1->Width = 50;
   Image1->Height = 60;
-  Bitmap1 = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image1->Width * Image1->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap1 = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image1->Width * Image1->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap1 == NULL ) {
     gtBS->FreePool ( Image1 );
     Status = HIIDatabase->RemovePackageList (
@@ -1716,7 +1716,7 @@ BBTestSetImageConformanceTestCheckpoint3 (
   //
   // Init the Image2
   //
-  Image2 = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image2 = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image2 == NULL ) {
   	gtBS->FreePool (Bitmap1);
 	gtBS->FreePool (Image1);
@@ -1732,7 +1732,7 @@ BBTestSetImageConformanceTestCheckpoint3 (
   Image2->Flags = 0;
   Image2->Width = 30;
   Image2->Height = 40;
-  Bitmap2= (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image2->Width * Image2->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap2= (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image2->Width * Image2->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap2 == NULL ) {
   	gtBS->FreePool (Bitmap1);
 	gtBS->FreePool (Image1);
@@ -1841,14 +1841,14 @@ BBTestDrawImageConformanceTestCheckpoint1 (
   BltX = 0;
   BltY = 0;
 
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if (Blt == NULL){
     return  EFI_UNSUPPORTED;
   }
 
   Blt->Width = 50;
   Blt->Height = 40;
-  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (Blt->Width *Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (Blt->Width *Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if (Blt->Image.Bitmap == NULL){
   	gtBS->FreePool (Blt);
     return  EFI_UNSUPPORTED;
@@ -1910,13 +1910,13 @@ BBTestDrawImageConformanceTestCheckpoint2 (
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL )
   	return EFI_UNSUPPORTED;
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool ( Image );
 	return EFI_UNSUPPORTED;
@@ -1984,14 +1984,14 @@ BBTestDrawImageConformanceTestCheckpoint3 (
   BltX = 0;
   BltY = 0;
 
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if (Blt == NULL){
     return  EFI_UNSUPPORTED;
   }
 
   Blt->Width = 50;
   Blt->Height = 40;
-  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (Blt->Width *Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (Blt->Width *Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if (Blt->Image.Bitmap == NULL){
   	gtBS->FreePool (Blt);
     return  EFI_UNSUPPORTED;
@@ -2000,7 +2000,7 @@ BBTestDrawImageConformanceTestCheckpoint3 (
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ){
   	gtBS->FreePool (Blt->Image.Bitmap);
 	gtBS->FreePool (Blt);
@@ -2009,7 +2009,7 @@ BBTestDrawImageConformanceTestCheckpoint3 (
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
   	gtBS->FreePool (Blt->Image.Bitmap);
 	gtBS->FreePool (Blt);
@@ -2083,13 +2083,13 @@ BBTestDrawImageConformanceTestCheckpoint4(
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL )
   	return EFI_UNSUPPORTED;
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool ( Image );
 	return EFI_UNSUPPORTED;
@@ -2159,13 +2159,13 @@ BBTestDrawImageConformanceTestCheckpoint5(
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL )
   	return EFI_UNSUPPORTED;
   Image->Flags = EFI_IMAGE_TRANSPARENT;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool ( Image );
 	return EFI_UNSUPPORTED;
@@ -2250,7 +2250,7 @@ BBTestDrawImageIdConformanceTestCheckpoint1(
   //
   // Init Blt
   //
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if (Blt == NULL){
   	Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -2264,7 +2264,7 @@ BBTestDrawImageIdConformanceTestCheckpoint1(
 
   Blt->Width = 50;
   Blt->Height = 40;
-  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if (Blt->Image.Bitmap == NULL){
   	gtBS->FreePool (Blt);
 	Status = HIIDatabase->RemovePackageList (
@@ -2281,7 +2281,7 @@ BBTestDrawImageIdConformanceTestCheckpoint1(
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
   	gtBS->FreePool (Blt->Image.Bitmap);
     gtBS->FreePool (Blt);
@@ -2297,7 +2297,7 @@ BBTestDrawImageIdConformanceTestCheckpoint1(
   Image->Flags= 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
   	gtBS->FreePool (Blt->Image.Bitmap);
     gtBS->FreePool (Blt);  	
@@ -2514,7 +2514,7 @@ BBTestDrawImageIdConformanceTestCheckpoint2(
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
 	Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -2528,7 +2528,7 @@ BBTestDrawImageIdConformanceTestCheckpoint2(
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool (Image);
 	Status = HIIDatabase->RemovePackageList (
@@ -2649,7 +2649,7 @@ BBTestDrawImageIdConformanceTestCheckpoint3(
   //
   // Init Blt
   //
-  Blt = (EFI_IMAGE_OUTPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
+  Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if (Blt == NULL){
   	Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -2663,7 +2663,7 @@ BBTestDrawImageIdConformanceTestCheckpoint3(
 
   Blt->Width = 50;
   Blt->Height = 40;
-  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)AllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Blt->Image.Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)SctAllocateZeroPool (Blt->Width * Blt->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if (Blt->Image.Bitmap == NULL){
   	gtBS->FreePool (Blt);
 	Status = HIIDatabase->RemovePackageList (
@@ -2680,7 +2680,7 @@ BBTestDrawImageIdConformanceTestCheckpoint3(
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
   	gtBS->FreePool (Blt->Image.Bitmap);
     gtBS->FreePool (Blt);
@@ -2696,7 +2696,7 @@ BBTestDrawImageIdConformanceTestCheckpoint3(
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
   	gtBS->FreePool (Blt->Image.Bitmap);
     gtBS->FreePool (Blt);  	
@@ -2825,7 +2825,7 @@ BBTestDrawImageIdConformanceTestCheckpoint4(
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
 	Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -2839,7 +2839,7 @@ BBTestDrawImageIdConformanceTestCheckpoint4(
   Image->Flags = 0;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool (Image);
 	Status = HIIDatabase->RemovePackageList (
@@ -2963,7 +2963,7 @@ BBTestDrawImageIdConformanceTestCheckpoint5(
   //
   // Init the Image
   //
-  Image = (EFI_IMAGE_INPUT *) AllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
+  Image = (EFI_IMAGE_INPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_INPUT));
   if ( Image == NULL ) {
 	Status = HIIDatabase->RemovePackageList (
                             HIIDatabase,
@@ -2977,7 +2977,7 @@ BBTestDrawImageIdConformanceTestCheckpoint5(
   Image->Flags = EFI_IMAGE_TRANSPARENT;
   Image->Width = 50;
   Image->Height = 60;
-  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) AllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  Bitmap = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *) SctAllocateZeroPool (Image->Width * Image->Height * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
   if ( Bitmap == NULL ) {
     gtBS->FreePool (Image);
 	Status = HIIDatabase->RemovePackageList (
