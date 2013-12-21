@@ -772,6 +772,10 @@ Returns:
     }
 
     break;
+
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
+    break;
   }
 
 }
@@ -1416,6 +1420,10 @@ Returns:
   case EFTP_TIME_WAIT:
     return EFI_ABORTED;
     break;
+
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
+    break;
   }
 
   return EFI_SUCCESS;
@@ -1518,6 +1526,10 @@ Returns:
   case EFTP_RRQ_CLOSEING:
   case EFTP_TIME_WAIT:
     return EFI_SUCCESS;
+    break;
+
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
     break;
   }
 
