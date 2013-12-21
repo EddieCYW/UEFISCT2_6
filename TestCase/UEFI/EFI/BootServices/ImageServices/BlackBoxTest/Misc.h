@@ -166,12 +166,6 @@ ImageTestNotifyFunctionForCombinationTest1 (
   IN OUT VOID      *Context
   );
 
-STATIC
-EFI_STATUS
-ImageTestAliasLocateHandleBuffer (
-  IN EFI_GUID  *Guid
-  );
-
 EFI_STATUS
 ImageTestCheckForCleanEnvironment (
   OUT UINTN                               *Numbers
