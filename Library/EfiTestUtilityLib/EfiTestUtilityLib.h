@@ -188,30 +188,6 @@ EFIDebugVariable (
   VOID
   );
 
-VOID
-SetCrc (
-  IN OUT EFI_TABLE_HEADER           *Hdr
-  );
-
-VOID
-SetCrcAltSize (
-  IN UINTN                          Size,
-  IN OUT EFI_TABLE_HEADER           *Hdr
-  );
-
-BOOLEAN
-CheckCrc (
-  IN UINTN                          MaxSize,
-  IN OUT EFI_TABLE_HEADER           *Hdr
-  );
-
-BOOLEAN
-CheckCrcAltSize (
-  IN UINTN                          MaxSize,
-  IN UINTN                          Size,
-  IN OUT EFI_TABLE_HEADER           *Hdr
-  );
-
 UINT32
 CalculateCrc (
   UINT8 *pt,
