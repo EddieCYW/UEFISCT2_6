@@ -749,12 +749,6 @@ LibFileSystemVolumeLabelInfo (
   );
 
 BOOLEAN
-ValidMBR(
-  IN  MASTER_BOOT_RECORD            *Mbr,
-  IN  EFI_BLOCK_IO_PROTOCOL         *BlkIo
-  );
-
-BOOLEAN
 LibMatchDevicePaths (
   IN  EFI_DEVICE_PATH_PROTOCOL      *Multi,
   IN  EFI_DEVICE_PATH_PROTOCOL      *Single
