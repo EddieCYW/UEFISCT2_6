@@ -86,7 +86,7 @@ BBTestReceiveDataConformanceAutoTest (
   EFI_DEVICE_PATH_PROTOCOL                      *DevicePath = NULL;
   EFI_DEVICE_PATH_PROTOCOL                      *DevPathNode = NULL;
   EFI_DEVICE_PATH_TO_TEXT_PROTOCOL              *DevicePathToText = NULL;
-  EFI_STRING                                    DevicePathNodeStr = NULL;
+  CHAR16                                        *DevicePathNodeStr = NULL;
   UINTN                                         Index;
   UINTN                                         NoHandles;
   EFI_HANDLE                                    *HandleBuffer = NULL;

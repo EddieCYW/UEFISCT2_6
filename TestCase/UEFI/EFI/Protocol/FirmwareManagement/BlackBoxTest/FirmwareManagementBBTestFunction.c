@@ -256,8 +256,8 @@ BBTestGetImageInfoFunctionTestCheckpoint1 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
 
   UINTN                                          ImageInfoSize;
@@ -268,15 +268,15 @@ BBTestGetImageInfoFunctionTestCheckpoint1 (
   UINT32                                         PackageVersion;
   CHAR16                                         *PackageVersionName;
 
-  EFI_STRING                                     Attribute[4];
+  CHAR16*                                        Attribute[4];
 
   UINTN                                          i;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *p;
 
 #if (DEBUG_ALL || DEBUG_GET_IMAGE_INFO)
 
-  EFI_STRING                                     BitField;
-  EFI_STRING                                     BitSetting;
+  CHAR16                                         *BitField;
+  CHAR16                                         *BitSetting;
 
   UINT64                                         j;
   UINTN                                          k;
@@ -547,8 +547,8 @@ BBTestGetImageFunctionTestCheckpoint1 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
   VOID                                           *BufferImage;
 
@@ -786,8 +786,8 @@ BBTestGetPackageInfoFunctionTestCheckpoint1 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
 
   UINT32                                         PackageVersion;
   CHAR16                                         *PackageVersionName;
@@ -795,12 +795,12 @@ BBTestGetPackageInfoFunctionTestCheckpoint1 (
   UINT64                                         AttributesSupported;
   UINT64                                         AttributesSetting;
                                                                    
-  EFI_STRING                                     Attribute[3];
+  CHAR16*                                        Attribute[3];
 
 #if (DEBUG_ALL || DEBUG_GET_PACKAGE_INFO)
 
-  EFI_STRING                                     BitField;
-  EFI_STRING                                     BitSetting;
+  CHAR16                                         *BitField;
+  CHAR16                                         *BitSetting;
 
   UINT64                                         j;
   UINTN                                          k;

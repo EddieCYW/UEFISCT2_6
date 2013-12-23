@@ -105,7 +105,7 @@ BBTestReadBlocksConformanceAutoTest (
   EFI_DEVICE_PATH_PROTOCOL             *DevicePath;
 
   CHAR16                               *DevicePathStr;
-  EFI_STRING                           ErrorOutput = L"";
+  CHAR16                               *ErrorOutput = L"";
 
 
   //
@@ -1180,7 +1180,7 @@ BBTestWriteBlocksConformanceAutoTest (
   EFI_DEVICE_PATH_PROTOCOL             *DevicePath;
 
   CHAR16                               *DevicePathStr;
-  EFI_STRING                           ErrorOutput = L"";
+  CHAR16                               *ErrorOutput = L"";
 
 
   //

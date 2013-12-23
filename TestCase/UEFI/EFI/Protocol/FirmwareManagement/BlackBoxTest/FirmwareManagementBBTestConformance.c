@@ -224,8 +224,8 @@ CheckForSupportGetImage (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
 
   UINT8                                          ImageIndex;
   VOID                                           *Image;
@@ -298,8 +298,8 @@ CheckForSupportSetImage (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
 
   UINT8                                          ImageIndex;
   VOID                                           *Image;
@@ -377,8 +377,8 @@ CheckForSupportCheckImage (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
 
   UINT8                                          ImageIndex;
   VOID                                           *Image;
@@ -449,8 +449,8 @@ CheckForSupportSetPackageInfo (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
 
   VOID                                           *Image;
   UINTN                                          ImageSize;
@@ -803,8 +803,8 @@ BBTestGetImageInfoConformanceTestCheckpoint1 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
 
   UINTN                                          ImageInfoSize;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *ImageInfo;
@@ -910,8 +910,8 @@ BBTestGetImageInfoConformanceTestCheckpoint2 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
 
   UINTN                                          ImageInfoSize;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *ImageInfo;
@@ -1011,8 +1011,8 @@ BBTestGetImageConformanceTestCheckpoint1 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
   VOID                                           *BufferImage;
 
@@ -1232,8 +1232,8 @@ BBTestGetImageConformanceTestCheckpoint2 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
 
   UINTN                                          ImageInfoSize;
@@ -1430,8 +1430,8 @@ BBTestGetImageConformanceTestCheckpoint3 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
   VOID                                           *BufferImage;
 
@@ -1630,8 +1630,8 @@ BBTestGetImageConformanceTestCheckpoint4 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
   VOID                                           *BufferImage;
 
@@ -1847,8 +1847,8 @@ BBTestSetImageConformanceTestCheckpoint1 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
 
   UINTN                                          ImageInfoSize;
@@ -2052,8 +2052,8 @@ BBTestSetImageConformanceTestCheckpoint2 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
   VOID                                           *BufferImage;
 
@@ -2276,8 +2276,8 @@ BBTestSetImageConformanceTestCheckpoint3 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
   VOID                                           *BufferImage;
 
@@ -2488,8 +2488,8 @@ BBTestSetImageConformanceTestCheckpoint4 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
   VOID                                           *BufferImage;
 
@@ -2711,8 +2711,8 @@ BBTestCheckImageConformanceTestCheckpoint1 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
 
   UINTN                                          ImageInfoSize;
@@ -2912,8 +2912,8 @@ BBTestCheckImageConformanceTestCheckpoint2 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
   EFI_FIRMWARE_IMAGE_DESCRIPTOR                  *BufferImageInfo;
   VOID                                           *BufferImage;
 
@@ -3131,8 +3131,8 @@ BBTestSetPackageInfoConformanceTestCheckpoint1 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
 
   UINT32                                         PackageVersion;
   CHAR16                                         *PackageVersionName;
@@ -3279,8 +3279,8 @@ BBTestSetPackageInfoConformanceTestCheckpoint2 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
 
   UINT32                                         PackageVersion;
   CHAR16                                         *PackageVersionName;
@@ -3404,8 +3404,8 @@ BBTestSetPackageInfoConformanceTestCheckpoint3 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
 
   UINT32                                         PackageVersion;
   CHAR16                                         *PackageVersionName;
@@ -3543,8 +3543,8 @@ BBTestSetPackageInfoConformanceTestCheckpoint4 (
   EFI_STATUS                                     Status;
   EFI_TEST_ASSERTION                             AssertionType;
   EFI_GUID                                       TestGuid;
-  EFI_STRING                                     ResultMessageLabel;
-  EFI_STRING                                     ResultMessageData;
+  CHAR16                                         *ResultMessageLabel;
+  CHAR16                                         *ResultMessageData;
 
   UINT32                                         PackageVersion;
   CHAR16                                         *PackageVersionName;

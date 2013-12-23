@@ -116,7 +116,7 @@ BBTestReadBlocksExConformanceAutoTest (
   CHAR16                               *DevicePathStr = NULL;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenSync;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenAsync;
-  EFI_STRING                           ErrorOutput = L"";
+  CHAR16                               *ErrorOutput = L"";
 
 
   //
@@ -1080,7 +1080,7 @@ BBTestWriteBlocksExConformanceAutoTest (
   CHAR16                               *DevicePathStr;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenSync;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenAsync;
-  EFI_STRING                           ErrorOutput = L"";
+  CHAR16                               *ErrorOutput = L"";
 
 
   //
