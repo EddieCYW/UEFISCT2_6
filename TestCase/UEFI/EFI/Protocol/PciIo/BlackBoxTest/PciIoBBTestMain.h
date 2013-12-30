@@ -61,6 +61,7 @@ Abstract:
 
 
 #include "Efi.h"
+#include "pci22.h"
 #include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "PciIoProtocol.h"

@@ -68,7 +68,6 @@ EFI Test Utility library functions
 #include "efipart.h"
 #include "efilibplat.h"
 #include "LinkedList.h"
-#include "pci22.h"
 #include "LibSmbios.h"
 #include "EfiUi.h"
 #include "Intload.h"
@@ -816,38 +815,6 @@ GetFilePathByName (
   IN CHAR16                       *Name,
   OUT EFI_DEVICE_PATH_PROTOCOL    **DevicePath,
   OUT CHAR16                      **FilePath
-  );
-
-//
-// BugBug: I need my own include files
-//
-typedef struct {
-  UINT8                             Register;
-  UINT8                             Function;
-  UINT8                             Device;
-  UINT8                             Bus;
-  UINT32                            Reserved;
-} EFI_ADDRESS;
-
-typedef union {
-  UINT64                            Address;
-  EFI_ADDRESS                       EfiAddress;
-} EFI_PCI_ADDRESS_UNION;
-
-
-EFI_STATUS
-PciFindDeviceClass (
-  IN OUT EFI_PCI_ADDRESS_UNION      *Address,
-  IN UINT8                          BaseClass,
-  IN UINT8                          SubClass
-  );
-
-EFI_STATUS
-PciFindDevice (
-  IN OUT EFI_PCI_ADDRESS_UNION      *DeviceAddress,
-  IN UINT16                         VendorId,
-  IN UINT16                         DeviceId,
-  IN OUT PCI_TYPE00                 *Pci
   );
 
 //
