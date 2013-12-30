@@ -804,35 +804,6 @@ GetFilePathByName (
   OUT CHAR16                      **FilePath
   );
 
-//
-// SIMPLE_READ_FILE object used to access files
-//
-
-typedef VOID                        *SIMPLE_READ_FILE;
-
-EFI_STATUS
-OpenSimpleReadFile (
-  IN BOOLEAN                        BootPolicy,
-  IN VOID                           *SourceBuffer   OPTIONAL,
-  IN UINTN                          SourceSize,
-  IN OUT EFI_DEVICE_PATH_PROTOCOL   **FilePath,
-  OUT EFI_HANDLE                    *DeviceHandle,
-  OUT SIMPLE_READ_FILE              *SimpleReadHandle
-  );
-
-EFI_STATUS
-ReadSimpleReadFile (
-  IN SIMPLE_READ_FILE               SimpleReadHandle,
-  IN UINTN                          Offset,
-  IN OUT UINTN                      *ReadSize,
-  OUT VOID                          *Buffer
-  );
-
-VOID
-CloseSimpleReadFile (
-  IN SIMPLE_READ_FILE               SimpleReadHandle
-  );
-
 EFI_STATUS
 LibGetSystemConfigurationTable(
   IN EFI_GUID                       *TableGuid,

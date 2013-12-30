@@ -75,7 +75,6 @@ COMPONENT_TYPE  = LIBRARY
   lock.c
   misc.c
   print.c
-  sread.c
   str.c
   rtdata.c
 
