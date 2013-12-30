@@ -879,16 +879,6 @@ CloseSimpleReadFile (
   IN SIMPLE_READ_FILE               SimpleReadHandle
   );
 
-UINT8
-DecimaltoBCD(
-  IN  UINT8                         DecValue
-  );
-
-UINT8
-BCDtoDecimal(
-  IN  UINT8                         BcdValue
-  );
-
 EFI_STATUS
 LibGetSystemConfigurationTable(
   IN EFI_GUID                       *TableGuid,

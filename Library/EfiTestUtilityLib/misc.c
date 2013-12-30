@@ -683,59 +683,6 @@ Returns:
   return Status;
 }
 
-UINT8
-DecimaltoBCD(
-  IN  UINT8 DecValue
-  )
-/*++
-
-Routine Description:
-  Function converts a decimal to a BCD value.
-
-Arguments:
-  DecValue         - An 8 bit decimal value
-
-Returns:
-
-  UINT8            - Returns the BCD value of the DecValue
-
---*/
-{
-  UINTN   High, Low;
-
-  High    = DecValue / 10;
-  Low     = DecValue - (High * 10);
-
-  return ((UINT8)(Low + (High << 4)));
-}
-
-
-UINT8
-BCDtoDecimal(
-  IN  UINT8 BcdValue
-  )
-/*++
-
-Routine Description:
-  Function converts a BCD to a decimal value.
-
-Arguments:
-  BcdValue         - An 8 bit BCD value
-
-Returns:
-
-  UINT8            - Returns the decimal value of the BcdValue
-
---*/
-{
-  UINTN   High, Low;
-
-  High    = BcdValue >> 4;
-  Low     = BcdValue - (High << 4);
-
-  return ((UINT8)(Low + (High * 10)));
-}
-
 EFI_STATUS
 LibGetSystemConfigurationTable(
   IN EFI_GUID *TableGuid,
