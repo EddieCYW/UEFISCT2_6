@@ -61,7 +61,6 @@ COMPONENT_TYPE  = LIBRARY
 
 [sources.common]
   perf.c
-  BoxDraw.c
   console.c
   crc.c
   data.c

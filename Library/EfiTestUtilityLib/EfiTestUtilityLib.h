@@ -753,23 +753,6 @@ LibGetSystemConfigurationTable(
   IN OUT VOID                       **Table
   );
 
-BOOLEAN
-LibIsValidTextGraphics (
-  IN  CHAR16                        Graphic,
-  OUT CHAR8                         *PcAnsi,    OPTIONAL
-  OUT CHAR8                         *Ascii      OPTIONAL
-  );
-
-BOOLEAN
-IsValidAscii (
-  IN  CHAR16                        Ascii
-  );
-
-BOOLEAN
-IsValidEfiCntlChar (
-  IN  CHAR16                        c
-  );
-
 CHAR16 *
 LibGetUiString (
   IN  EFI_HANDLE                    Handle,
