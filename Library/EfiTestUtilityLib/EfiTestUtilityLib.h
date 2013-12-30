@@ -786,20 +786,6 @@ LibScanHandleDatabase (
   );
 
 EFI_STATUS
-LibGetManagingDriverBindingHandles (
-  EFI_HANDLE  ControllerHandle,
-  UINTN       *DriverBindingHandleCount,
-  EFI_HANDLE  **DriverBindingHandleBuffer
-  );
-
-EFI_STATUS
-LibGetParentControllerHandles (
-  EFI_HANDLE  ControllerHandle,
-  UINTN       *ParentControllerHandleCount,
-  EFI_HANDLE  **ParentControllerHandleBuffer
-  );
-
-EFI_STATUS
 LibGetManagedChildControllerHandles (
   EFI_HANDLE  DriverBindingHandle,
   EFI_HANDLE  ControllerHandle,
@@ -812,13 +798,6 @@ LibGetManagedControllerHandles (
   EFI_HANDLE  DriverBindingHandle,
   UINTN       *ControllerHandleCount,
   EFI_HANDLE  **ControllerHandleBuffer
-  );
-
-EFI_STATUS
-LibGetChildControllerHandles (
-  EFI_HANDLE  ControllerHandle,
-  UINTN       *HandleCount,
-  EFI_HANDLE  **HandleBuffer
   );
 
 EFI_STATUS
