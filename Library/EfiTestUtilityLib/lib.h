@@ -113,11 +113,6 @@ LibMatchDevicePaths (
     IN  EFI_DEVICE_PATH_PROTOCOL *Single
     );
 
-EFI_DEVICE_PATH_PROTOCOL *
-LibDuplicateDevicePathInstance (
-    IN EFI_DEVICE_PATH_PROTOCOL  *DevPath
-    );
-
 
 //
 // Globals

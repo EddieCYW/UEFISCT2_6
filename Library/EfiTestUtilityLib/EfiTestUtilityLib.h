@@ -660,11 +660,6 @@ LibMatchDevicePaths (
   );
 
 EFI_DEVICE_PATH_PROTOCOL *
-LibDuplicateDevicePathInstance (
-  IN EFI_DEVICE_PATH_PROTOCOL       *DevPath
-  );
-
-EFI_DEVICE_PATH_PROTOCOL *
 DevicePathFromHandle (
   IN EFI_HANDLE                     Handle
   );

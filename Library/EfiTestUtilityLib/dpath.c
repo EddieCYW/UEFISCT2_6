@@ -1387,51 +1387,6 @@ Returns:
   return FALSE;
 }
 
-EFI_DEVICE_PATH_PROTOCOL *
-LibDuplicateDevicePathInstance (
-  IN EFI_DEVICE_PATH_PROTOCOL  *DevPath
-  )
-/*++
-
-Routine Description:
-  Function creates a device path data structure that identically matches the
-  device path passed in.
-
-Arguments:
-  DevPath      - A pointer to a device path data structure.
-
-Returns:
-
-  The new copy of DevPath is created to identically match the input.
-  Otherwise, NULL is returned.
-
---*/
-{
-  EFI_DEVICE_PATH_PROTOCOL    *NewDevPath,*DevicePathInst,*Temp;
-  UINTN                       Size;
-
-  //
-  // get the size of an instance from the input
-  //
-  Temp = DevPath;
-  DevicePathInst = DevicePathInstance (&Temp, &Size);
-
-  //
-  // Make a copy
-  //
-  NewDevPath = NULL;
-  if (Size) {
-    NewDevPath = AllocatePool (Size);
-  }
-
-  if (NewDevPath) {
-    CopyMem (NewDevPath, DevicePathInst, Size);
-//    Temp = NextDevicePathNode(NewDevPath);
-//    SetDevicePathEndNode(Temp);
-  }
-  return NewDevPath;
-}
-
 UINT16 *
 DevicePathStrFromProtocol (
   IN VOID        *Protocol,
