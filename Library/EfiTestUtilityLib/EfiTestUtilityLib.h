@@ -646,24 +646,6 @@ LibLocateHandleByDiskSignature (
   OUT EFI_HANDLE                    **Buffer
   );
 
-EFI_STATUS
-LibInstallProtocolInterfaces (
-  IN OUT EFI_HANDLE                 *Handle,
-  ...
-  );
-
-VOID
-LibUninstallProtocolInterfaces (
-  IN EFI_HANDLE                     Handle,
-  ...
-  );
-
-EFI_STATUS
-LibReinstallProtocolInterfaces (
-  IN OUT EFI_HANDLE                 *Handle,
-  ...
-  );
-
 EFI_EVENT
 LibCreateProtocolNotifyEvent (
   IN EFI_GUID                       *ProtocolGuid,
