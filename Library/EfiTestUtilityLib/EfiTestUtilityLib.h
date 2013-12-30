@@ -538,30 +538,7 @@ CatPrint (
   );
 
 UINTN
-PrintToken (
-  IN UINT16                         Token,
-  IN EFI_HII_HANDLE                 Handle,
-  ...
-  );
-
-UINTN
 PrintAt (
-  IN UINTN                          Column,
-  IN UINTN                          Row,
-  IN CHAR16                         *fmt,
-  ...
-  );
-
-UINTN
-IPrint (
-  IN EFI_SIMPLE_TEXT_OUT_PROTOCOL   *Out,
-  IN CHAR16                         *fmt,
-  ...
-  );
-
-UINTN
-IPrintAt (
-  IN EFI_SIMPLE_TEXT_OUT_PROTOCOL   *Out,
   IN UINTN                          Column,
   IN UINTN                          Row,
   IN CHAR16                         *fmt,

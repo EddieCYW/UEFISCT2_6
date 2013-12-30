@@ -603,88 +603,7 @@ Returns:
     VA_START (args, fmt);
     return _IPrint ((UINTN) -1, (UINTN) -1, tST->ConOut, fmt, NULL, args);
 }
-#if (EFI_SPECIFICATION_VERSION < 0x0002000A)
-UINTN
-PrintToken (
-    IN UINT16         Token,
-    IN EFI_HII_HANDLE Handle,
-    ...
-    )
-/*++
 
-Routine Description:
-
-    Prints a formatted unicode string to the default console
-
-Arguments:
-
-    fmt         - Format string
-
-Returns:
-
-    Length of string printed to the console
-
---*/
-{
-    VA_LIST             args;
-    CHAR16              *StringPtr;
-    UINTN              StringSize;
-    EFI_HII_PROTOCOL    *Hii;
-    UINTN               Value;
-    EFI_STATUS          Status;
-
-    StringSize = 0x1000;
-
-    //
-    // There should only be one HII protocol
-    //
-    Status= LibLocateProtocol (
-              &gEfiHiiProtocolGuid,
-              &Hii
-              );
-
-    if (EFI_ERROR (Status)) {
-      return Status;;
-    }
-
-    //
-    // Allocate BufferSize amount of memory
-    //
-    StringPtr = AllocatePool(StringSize);
-
-    if (!StringPtr) {
-      return EFI_OUT_OF_RESOURCES;
-    }
-
-    //
-    // Retrieve string from HII
-    //
-    Status = Hii->GetString(Hii, Handle, Token, FALSE, NULL, &StringSize, StringPtr);
-
-    if (EFI_ERROR (Status)) {
-      if (Status == EFI_BUFFER_TOO_SMALL) {
-        FreePool(StringPtr);
-        StringPtr = AllocatePool(StringSize);
-
-        //
-        // Retrieve string from HII
-        //
-        Status = Hii->GetString(Hii, Handle, Token, FALSE, NULL, &StringSize, StringPtr);
-
-        if (EFI_ERROR (Status)) {
-          return Status;
-        }
-      } else {
-        return Status;
-      }
-    }
-
-    VA_START (args, Handle);
-    Value =  _IPrint ((UINTN) -1, (UINTN) -1, tST->ConOut, StringPtr, NULL, args);
-    FreePool(StringPtr);
-    return Value;
-}
-#endif
 UINTN
 PrintAt (
     IN UINTN     Column,
@@ -719,73 +638,6 @@ Returns:
 
 
 UINTN
-IPrint (
-    IN EFI_SIMPLE_TEXT_OUT_PROTOCOL    *Out,
-    IN CHAR16                          *fmt,
-    ...
-    )
-/*++
-
-Routine Description:
-
-    Prints a formatted unicode string to the specified console
-
-Arguments:
-
-    Out         - The console to print the string too
-
-    fmt         - Format string
-
-Returns:
-
-    Length of string printed to the console
-
---*/
-{
-    VA_LIST     args;
-
-    VA_START (args, fmt);
-    return _IPrint ((UINTN) -1, (UINTN) -1, Out, fmt, NULL, args);
-}
-
-
-UINTN
-IPrintAt (
-    IN EFI_SIMPLE_TEXT_OUT_PROTOCOL     *Out,
-    IN UINTN                            Column,
-    IN UINTN                            Row,
-    IN CHAR16                           *fmt,
-    ...
-    )
-/*++
-
-Routine Description:
-
-    Prints a formatted unicode string to the specified console, at
-    the supplied cursor position
-
-Arguments:
-
-    Out         - The console to print the string too
-
-    Column, Row - The cursor position to print the string at
-
-    fmt         - Format string
-
-Returns:
-
-    Length of string printed to the console
-
---*/
-{
-    VA_LIST     args;
-
-    VA_START (args, fmt);
-    return _IPrint (Column, Row, tST->ConOut, fmt, NULL, args);
-}
-
-
-UINTN
 _IPrint (
     IN UINTN                            Column,
     IN UINTN                            Row,
@@ -794,7 +646,7 @@ _IPrint (
     IN CHAR8                            *fmta,
     IN VA_LIST                          args
     )
-// Display string worker for: Print, PrintAt, IPrint, IPrintAt
+// Display string worker for: Print, PrintAt
 {
     PRINT_STATE     ps;
     UINTN            back;
