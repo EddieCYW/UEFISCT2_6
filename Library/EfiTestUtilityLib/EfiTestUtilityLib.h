@@ -637,15 +637,6 @@ LibLocateHandle (
   OUT EFI_HANDLE                    **Buffer
   );
 
-EFI_STATUS
-LibLocateHandleByDiskSignature (
-  IN UINT8                          MBRType,
-  IN UINT8                          SignatureType,
-  IN VOID                           *Signature,
-  IN OUT UINTN                      *NoHandles,
-  OUT EFI_HANDLE                    **Buffer
-  );
-
 EFI_EVENT
 LibCreateProtocolNotifyEvent (
   IN EFI_GUID                       *ProtocolGuid,
@@ -679,16 +670,6 @@ LibOpenRoot (
 
 EFI_FILE_INFO *
 LibFileInfo (
-  IN EFI_FILE_HANDLE                FHand
-  );
-
-EFI_FILE_SYSTEM_INFO *
-LibFileSystemInfo (
-  IN EFI_FILE_HANDLE                FHand
-  );
-
-EFI_FILE_SYSTEM_VOLUME_LABEL_INFO *
-LibFileSystemVolumeLabelInfo (
   IN EFI_FILE_HANDLE                FHand
   );
 
