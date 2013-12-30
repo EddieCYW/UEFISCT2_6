@@ -637,30 +637,10 @@ LibLocateHandle (
   OUT EFI_HANDLE                    **Buffer
   );
 
-EFI_EVENT
-LibCreateProtocolNotifyEvent (
-  IN EFI_GUID                       *ProtocolGuid,
-  IN EFI_TPL                        NotifyTpl,
-  IN EFI_EVENT_NOTIFY               NotifyFunction,
-  IN VOID                           *NotifyContext,
-  OUT VOID                          *Registration
-  );
-
 EFI_STATUS
 WaitForSingleEvent (
   IN EFI_EVENT                      Event,
   IN UINT64                         Timeout OPTIONAL
-  );
-
-VOID
-WaitForEventWithTimeout (
-  IN  EFI_EVENT                     Event,
-  IN  UINTN                         Timeout,
-  IN  UINTN                         Row,
-  IN  UINTN                         Column,
-  IN  CHAR16                        *String,
-  IN  EFI_INPUT_KEY                 TimeoutKey,
-  OUT EFI_INPUT_KEY                 *Key
   );
 
 EFI_FILE_HANDLE
