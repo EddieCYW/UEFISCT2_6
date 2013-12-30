@@ -68,7 +68,6 @@ EFI Test Utility library functions
 #include "efipart.h"
 #include "efilibplat.h"
 #include "LinkedList.h"
-#include "LibSmbios.h"
 #include "EfiUi.h"
 #include "Intload.h"
 #include "AdapterDebug.h"
@@ -923,18 +922,6 @@ LibGetChildControllerHandles (
   EFI_HANDLE  ControllerHandle,
   UINTN       *HandleCount,
   EFI_HANDLE  **HandleBuffer
-  );
-
-CHAR8*
-LibGetSmbiosString (
-  IN  SMBIOS_STRUCTURE_POINTER      *Smbios,
-  IN  UINT16                        StringNumber
-  );
-
-EFI_STATUS
-LibGetSmbiosSystemGuidAndSerialNumber (
-  IN  EFI_GUID                      *SystemGuid,
-  OUT CHAR8                         **SystemSerialNumber
   );
 
 EFI_STATUS

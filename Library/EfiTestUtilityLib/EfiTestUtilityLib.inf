@@ -77,7 +77,6 @@ COMPONENT_TYPE  = LIBRARY
   print.c
   sread.c
   str.c
-  smbios.c
   rtdata.c
 
 [sources.Arm]
