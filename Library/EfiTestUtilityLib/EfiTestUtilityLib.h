@@ -624,18 +624,6 @@ LibGetVariableAndSize (
   );
 
 EFI_STATUS
-LibDeleteVariable (
-  IN CHAR16                         *VarName,
-  IN EFI_GUID                       *VarGuid
-  );
-
-EFI_STATUS
-LibInsertToTailOfBootOrder (
-  IN  UINT16                        BootOption,
-  IN  BOOLEAN                       OnlyInsertIfEmpty
-  );
-
-EFI_STATUS
 LibLocateProtocol (
   IN  EFI_GUID                      *ProtocolGuid,
   OUT VOID                          **Interface
