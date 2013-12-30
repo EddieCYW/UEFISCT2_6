@@ -600,66 +600,6 @@ Returns:
   return EFI_NOT_FOUND;
 }
 
-
-CHAR16 *
-LibGetUiString (
-  IN  EFI_HANDLE      Handle,
-  IN  UI_STRING_TYPE  StringType,
-  IN  ISO_639_2       *LangCode,
-  IN  BOOLEAN         ReturnDevicePathStrOnMismatch
-  )
-/*++
-
-Routine Description:
-
-
-Arguments:
-  Handle           - Handle of the device
-
-  StringType       - String type
-
-  LangCode         - Language Code
-
-  ReturnDevicePathStrOnMismatch - If error, return string value of devicepath.
-
-Returns:
-
-  If ReturnDevicePathStrOnMismatch = True, return Printable string version of Device Path
-
-  If ReturnDevicePathStrOnMismatch = False, return NULL
-
---*/
-{
-    UI_INTERFACE    *Ui;
-    UI_STRING_TYPE  Index;
-    UI_STRING_ENTRY *Array;
-    EFI_STATUS      Status;
-
-    Status = tBS->HandleProtocol (Handle, &tUiProtocol, (VOID *)&Ui);
-    if (EFI_ERROR(Status)) {
-        return (ReturnDevicePathStrOnMismatch) ? DevicePathToStr(DevicePathFromHandle(Handle)) : NULL;
-    }
-
-    //
-    // Skip the first strings
-    //
-    for (Index = UiDeviceString, Array = Ui->Entry; Index < StringType; Index++, Array++) {
-        while (Array->LangCode) {
-            Array++;
-        }
-    }
-
-    //
-    // Search for the match
-    //
-    while (Array->LangCode) {
-        if (strcmpa ((CHAR8*)Array->LangCode, (CHAR8*)LangCode) == 0) {
-            return Array->UiString;
-        }
-    }
-    return (ReturnDevicePathStrOnMismatch) ? DevicePathToStr(DevicePathFromHandle(Handle)) : NULL;
-}
-
 EFI_STATUS
 LibScanHandleDatabase (
   EFI_HANDLE  DriverBindingHandle,       OPTIONAL

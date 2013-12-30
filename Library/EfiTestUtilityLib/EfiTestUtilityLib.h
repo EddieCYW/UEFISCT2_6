@@ -725,14 +725,6 @@ LibGetSystemConfigurationTable(
   IN OUT VOID                       **Table
   );
 
-CHAR16 *
-LibGetUiString (
-  IN  EFI_HANDLE                    Handle,
-  IN  UI_STRING_TYPE                StringType,
-  IN  ISO_639_2                     *LangCode,
-  IN  BOOLEAN                       ReturnDevicePathStrOnMismatch
-  );
-
 #define EFI_HANDLE_TYPE_UNKNOWN                      0x000
 #define EFI_HANDLE_TYPE_IMAGE_HANDLE                 0x001
 #define EFI_HANDLE_TYPE_DRIVER_BINDING_HANDLE        0x002
