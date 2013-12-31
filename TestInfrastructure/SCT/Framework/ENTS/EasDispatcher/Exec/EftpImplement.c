@@ -108,33 +108,6 @@ Returns:
 
 STATIC
 EFI_STATUS
-EftpTimeoutCallback (
-  IN EFI_EFTP_PROTOCOL          *This,
-  IN EFI_EFTP_TOKEN             *Token
-  )
-/*++
-
-Routine Description:
-
-  Eftp callback function when timeout happened.
-
-Arguments:
-
-  This  - A pointer to the EFI_EFTP_PROTOCOL instance.
-  Token - Pointer to the EFI_EFTP_TOKEN structure.
-
-Returns:
-
-  EFI_SUCCESS - Operation succeeded.
-
---*/
-{
-  Print (L"Timeout happen!\n");
-  return EFI_SUCCESS;
-}
-
-STATIC
-EFI_STATUS
 OpenEftpProtocol (
   VOID
   )
