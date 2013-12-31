@@ -176,6 +176,7 @@ SctPkg/Protocol/EntsProtocol/EntsProtocolLib.inf
 SctPkg/Protocol/Eftp/EftpProtocolLib.inf
 SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas.inf
 SctPkg/Library/NetLib/Network/NetLib.inf
+SctPkg/Library/SctLib/SctLib.inf
 
 [Libraries.IPF]
   EdkCompatibilityPkg/Foundation/Cpu/Itanium/CpuIa64Lib/CpuIA64Lib.inf
