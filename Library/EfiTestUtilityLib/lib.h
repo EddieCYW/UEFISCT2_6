@@ -58,6 +58,7 @@ Abstract:
 #include "Efi.h"
 #include "EfiTestUtilityLib.h"
 #include "EfiCommonLib.h"
+#include "SctLibPlat.h"
 
 #include EFI_PROTOCOL_DEFINITION (UnicodeCollation)
 #include EFI_PROTOCOL_DEFINITION (SimpleTextOut)

@@ -47,23 +47,22 @@
 
 Module Name:
 
-  efilibplat.h
+  initplat.c
 
 Abstract:
 
-  IA32 specific defines
+  Functions to make SAL and PAL proc calls
 
 --*/
 
-#ifndef _EFI_LIB_PLAT_H_
-#define _EFI_LIB_PLAT_H_
-
-#define MIN_ALIGNMENT_SIZE  4
+#include "SctLibInternal.h"
+#include "libsalpal.h"
 
 VOID
 InitializeLibPlatform (
     IN EFI_HANDLE           ImageHandle,
     IN EFI_SYSTEM_TABLE     *SystemTable
-    );
-
-#endif
+    )
+{
+  LibInitSalAndPalProc ();
+}

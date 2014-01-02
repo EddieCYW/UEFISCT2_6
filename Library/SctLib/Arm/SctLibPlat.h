@@ -35,34 +35,29 @@
   DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF     
   THE POSSIBILITY OF SUCH DAMAGES.                              
                                                                 
-  Copyright 2006, 2007, 2008, 2009, 2010 Unified EFI, Inc. All  
+  Copyright 2006 - 2012 Unified EFI, Inc. All  
   Rights Reserved, subject to all existing rights in all        
   matters included within this Test Suite, to which United      
   EFI, Inc. makes no claim of right.                            
                                                                 
-  Copyright (c) 2010, Intel Corporation. All rights reserved.<BR>   
-   
+  Copyright (c) 2011 - 2012, ARM Ltd. All rights reserved.
+
 --*/
 /*++
 
 Module Name:
 
-  EfiLibPlat.c
+  SctLibPlat.h
 
 Abstract:
 
-  Math routines for compatibility with native EFI library routines.
+  ARM specific defines
 
 --*/
 
-#include "Efi.h"
+#ifndef _EFI_LIB_PLAT_H_
+#define _EFI_LIB_PLAT_H_
 
-VOID
-InitializeLibPlatform (
-    IN EFI_HANDLE           ImageHandle,
-    IN EFI_SYSTEM_TABLE     *SystemTable
-    )
+#define MIN_ALIGNMENT_SIZE  4
 
-{
-  // No platform-specific initializations
-}
+#endif

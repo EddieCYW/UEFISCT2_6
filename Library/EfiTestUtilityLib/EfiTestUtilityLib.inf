@@ -76,32 +76,6 @@ COMPONENT_TYPE  = LIBRARY
   str.c
   rtdata.c
 
-[sources.Arm]
-  Arm/EfiLibPlat.h
-  Arm/initplat.c
-
-[sources.Aarch64]
-  Aarch64/EfiLibPlat.h
-  Aarch64/initplat.c
-
-[sources.ia32]
-  ia32/EfiLibPlat.h
-  ia32/initplat.c
-
-[sources.ipf]
-  ipf/EfiLibPlat.h
-  ipf/initplat.c
-  ipf/salpal.c
-  ipf/libsalpal.h
-
-[sources.ebc]
-  ebc/EfiLibPlat.h
-  ebc/EfiLibPlat.c
-
-[sources.x64]
-  x64/EfiLibPlat.h
-  x64/EfiLibPlat.c
-
 [includes.common]
   .
   $(EDK_SOURCE)/Foundation
@@ -114,7 +88,24 @@ COMPONENT_TYPE  = LIBRARY
   $(EDK_SOURCE)/Foundation/Library/Dxe/Include
   $(EFI_SOURCE)/SctPkg/Include
 
+[includes.Arm]
+  $(EFI_SOURCE)/SctPkg/Library/SctLib/Arm
 
+[includes.Aarch64]
+  $(EFI_SOURCE)/SctPkg/Library/SctLib/Aarch64
+
+[includes.ia32]
+  $(EFI_SOURCE)/SctPkg/Library/SctLib/ia32
+
+[includes.ipf]
+  $(EFI_SOURCE)/SctPkg/Library/SctLib/ipf
+
+[includes.ebc]
+  $(EFI_SOURCE)/SctPkg/Library/SctLib/ebc
+
+[includes.x64]
+  $(EFI_SOURCE)/SctPkg/Library/SctLib/x64
+  
 [libraries.common]
   SctLib
 

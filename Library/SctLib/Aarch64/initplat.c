@@ -47,23 +47,22 @@
 
 Module Name:
 
-  efilibplat.h
+  initplat.c
 
 Abstract:
 
-  AArch64 specific defines
+  Math routines for compatibility with native EFI library routines.
 
 --*/
 
-#ifndef _EFI_LIB_PLAT_H_
-#define _EFI_LIB_PLAT_H_
-
-#define MIN_ALIGNMENT_SIZE  8
+#include "SctLibInternal.h"
 
 VOID
 InitializeLibPlatform (
     IN EFI_HANDLE           ImageHandle,
     IN EFI_SYSTEM_TABLE     *SystemTable
-    );
+    )
 
-#endif
+{
+  // No platform-specific initializations
+}

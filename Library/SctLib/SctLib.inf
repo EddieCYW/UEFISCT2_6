@@ -55,6 +55,32 @@ COMPONENT_TYPE  = LIBRARY
 [sources.common]
   Mem.c
 
+[sources.Arm]
+  Arm/SctLibPlat.h
+  Arm/initplat.c
+
+[sources.Aarch64]
+  Aarch64/SctLibPlat.h
+  Aarch64/initplat.c
+
+[sources.ia32]
+  ia32/SctLibPlat.h
+  ia32/initplat.c
+
+[sources.ipf]
+  ipf/SctLibPlat.h
+  ipf/initplat.c
+  ipf/salpal.c
+  ipf/libsalpal.h
+
+[sources.ebc]
+  ebc/SctLibPlat.h
+  ebc/EfiLibPlat.c
+
+[sources.x64]
+  x64/SctLibPlat.h
+  x64/EfiLibPlat.c
+
 [includes.common]
   .
   $(EDK_SOURCE)/Foundation

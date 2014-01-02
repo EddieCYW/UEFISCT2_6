@@ -47,22 +47,17 @@
 
 Module Name:
 
-  initplat.c
+  SctLibPlat.h
 
 Abstract:
 
-  Math routines for compatibility with native EFI library routines.
+  AArch64 specific defines
 
 --*/
 
-#include "lib.h"
+#ifndef _EFI_LIB_PLAT_H_
+#define _EFI_LIB_PLAT_H_
 
-VOID
-InitializeLibPlatform (
-    IN EFI_HANDLE           ImageHandle,
-    IN EFI_SYSTEM_TABLE     *SystemTable
-    )
+#define MIN_ALIGNMENT_SIZE  8
 
-{
-  // No platform-specific initializations
-}
+#endif
