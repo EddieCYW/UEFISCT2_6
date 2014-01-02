@@ -101,13 +101,14 @@ Routine Description:
     return EFI_OUT_OF_RESOURCES;
   }
 
-  Status = ShellExecute (
-             gFT->ImageHandle,
+  Status = SctShellExecute (
+             &gFT->ImageHandle,
              CmdLine,
-             FALSE
+             FALSE,
+             NULL, NULL
              );
   if (EFI_ERROR (Status)) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"ShellExecute: %s - %r", CmdLine, Status));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctShellExecute: %s - %r", CmdLine, Status));
     tBS->FreePool (CmdLine);
     return Status;
   }
@@ -134,13 +135,14 @@ Routine Description:
       return EFI_OUT_OF_RESOURCES;
     }
 
-    Status = ShellExecute (
-               gFT->ImageHandle,
+    Status = SctShellExecute (
+               &gFT->ImageHandle,
                CmdLine,
-               FALSE
+               FALSE,
+               NULL, NULL
                );
     if (EFI_ERROR (Status)) {
-      EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"ShellExecute: %s - %r", CmdLine, Status));
+      EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctShellExecute: %s - %r", CmdLine, Status));
       tBS->FreePool (CmdLine);
       return Status;
     }
@@ -161,17 +163,18 @@ Routine Description:
       return EFI_OUT_OF_RESOURCES;
     }
 
-    Status = ShellExecute (
-               gFT->ImageHandle,
+    Status = SctShellExecute (
+               &gFT->ImageHandle,
                CmdLine,
-               FALSE
+               FALSE,
+               NULL, NULL
                );
     if (EFI_ERROR (Status)) {
       //
       // Just record as a debug info. It is acceptable for this command return
       //  an error status
       //
-      EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"ShellExecute: %s - %r", CmdLine, Status));
+      EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"SctShellExecute: %s - %r", CmdLine, Status));
     }
 
     tBS->FreePool (CmdLine);

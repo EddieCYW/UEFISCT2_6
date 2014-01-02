@@ -80,14 +80,12 @@ StallForKey (
   //
   // Initialize libraries
   //
-  EFI_SHELL_APP_INIT (ImageHandle, SystemTable);
+  SctShellApplicationInit (ImageHandle, SystemTable);
 
   //
   // Process the arguments
   //
-  Argc = SI->Argc;
-  Argv = SI->Argv;
-
+  SctShellGetArguments (&Argc, &Argv);
   Seconds = DEFAULT_WAIT_TIME;
   if (Argc > 1) {
     Seconds = SctAtoi (Argv[1]);

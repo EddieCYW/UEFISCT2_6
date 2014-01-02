@@ -85,6 +85,8 @@ Returns:
 --*/
 {
   EFI_STATUS  Status;
+  CHAR16      **Argv;
+  CHAR16      *TempFilePathPtr;
 
   //
   // Allocate memory for the framework table
@@ -120,11 +122,18 @@ Returns:
   gFT->ImageHandle = ImageHandle;
   gFT->SystemTable = SystemTable;
 
-  Status = ExpandFilePath (
-             SI->Argv[0],
+  SctShellGetArguments (NULL, &Argv);
+  Status = SctGetFilesystemDevicePath (
+             Argv[0],
              &gFT->DevicePath,
-             &gFT->FilePath
+             &TempFilePathPtr
              );
+  gFT->FilePath = SctStrDuplicate (TempFilePathPtr);
+  if (gFT->FilePath == NULL) {
+    FreeFrameworkTable ();
+    return EFI_OUT_OF_RESOURCES;
+  }
+  Status = StripLastPathComponent (gFT->FilePath);
   if (EFI_ERROR (Status)) {
     FreeFrameworkTable ();
     return Status;
@@ -134,9 +143,7 @@ Returns:
   // Initialize the test data
   //
   gFT->Operations    = EFI_SCT_OPERATIONS_NONE;
-  gFT->SeqDevicePath = NULL;
   gFT->SeqFileName   = NULL;
-  gFT->RepDevicePath = NULL;
   gFT->RepFileName   = NULL;
 
   gFT->IsFirstTimeExecute = TRUE;
@@ -212,29 +219,16 @@ Routine Description:
   UnloadSupportFiles (&gFT->SupportFileList);
   UnloadProxyFiles (&gFT->ProxyFileList);
 
-  if (gFT->DevicePath != NULL) {
-    tBS->FreePool (gFT->DevicePath);
     gFT->DevicePath = NULL;
-  }
 
   if (gFT->FilePath != NULL) {
     tBS->FreePool (gFT->FilePath);
     gFT->FilePath = NULL;
   }
 
-  if (gFT->SeqDevicePath != NULL) {
-    tBS->FreePool (gFT->SeqDevicePath);
-    gFT->SeqDevicePath = NULL;
-  }
-
   if (gFT->SeqFileName != NULL) {
     tBS->FreePool (gFT->SeqFileName);
     gFT->SeqFileName = NULL;
-  }
-
-  if (gFT->RepDevicePath != NULL) {
-    tBS->FreePool (gFT->RepDevicePath);
-    gFT->RepDevicePath = NULL;
   }
 
   if (gFT->RepFileName != NULL) {

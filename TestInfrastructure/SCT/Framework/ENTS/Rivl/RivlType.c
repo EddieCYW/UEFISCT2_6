@@ -56,7 +56,6 @@ Abstract:
 --*/
 
 #include "Efi.h"
-#include "EfiShellLib.h"
 #include "Rivl.h"
 #include "RivlType.h"
 #include "RivlVariable.h"

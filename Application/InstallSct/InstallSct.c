@@ -119,16 +119,19 @@ InstallSct (
   SCT_FILE_VOLUME *SctFileVolume;
   UINTN            Index;
   CHAR16          *FsName;
+  UINTN	           Argc;
+  CHAR16         **Argv;
 
   //
   // Initialize library
   //
-  EFI_SHELL_APP_INIT (ImageHandle, SystemTable);
+  SctShellApplicationInit (ImageHandle, SystemTable);
 
   //
   // Check parameters
   //
-  if (SI->Argc > 3) {
+  SctShellGetArguments (&Argc, &Argv);
+  if (Argc > 3) {
     PrintUsage ();
     return EFI_SUCCESS;
   }
@@ -147,14 +150,14 @@ InstallSct (
   //
   // If the file system has not been given in the command line then request it
   //
-  if (SI->Argc == 1) {
+  if (Argc == 1) {
     Status = GetDestination (&SctFileVolume);
     if (EFI_ERROR (Status)) {
       return Status;
     }
   } else {
     // The file system must be the last argument
-    FsName = SI->Argv[SI->Argc - 1];
+    FsName = Argv[Argc - 1];
 
     // Allocate new SctFileVolume
     SctFileVolume = SctAllocatePool (sizeof (SCT_FILE_VOLUME));
@@ -187,13 +190,13 @@ InstallSct (
     // If not defined then SCT should not have been installed
     mBackupPolicy = BACKUP_POLICY_NONE;
 
-    for (Index = 1; Index < SI->Argc - 1; Index++) {
-      if (SctStrCmp (SI->Argv[Index], L"-b") == 0) {
+    for (Index = 1; Index < Argc - 1; Index++) {
+      if (SctStrCmp (Argv[Index], L"-b") == 0) {
         mBackupPolicy = BACKUP_POLICY_BACKUP_ALL;
-      } else if (SctStrCmp (SI->Argv[Index], L"-r") == 0) {
+      } else if (SctStrCmp (Argv[Index], L"-r") == 0) {
         mBackupPolicy = BACKUP_POLICY_REMOVE_ALL;
       } else {
-        SctPrint (L"'%s' is not a valid option.\n", SI->Argv[Index]);
+        SctPrint (L"'%s' is not a valid option.\n", Argv[Index]);
         PrintUsage ();
         return Status;
       }
@@ -228,7 +231,7 @@ InstallSct (
     return Status;
   }
 
-  if (SI->Argc > 1) {
+  if (Argc > 3) {
     SctFreePool (SctFileVolume);
   }
 

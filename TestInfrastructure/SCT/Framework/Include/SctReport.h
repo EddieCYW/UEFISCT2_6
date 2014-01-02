@@ -94,9 +94,8 @@ GetProtocolAssertion (
 
 EFI_STATUS
 GenerateReport (
-  IN EFI_DEVICE_PATH_PROTOCOL                         *LogDevicePath,
+  IN EFI_DEVICE_PATH_PROTOCOL                         *DevicePath,
   IN CHAR16                                           *LogFilePath,
-  IN EFI_DEVICE_PATH_PROTOCOL                         *ReportDevicePath,
   IN CHAR16                                           *ReportFileName
   );
 

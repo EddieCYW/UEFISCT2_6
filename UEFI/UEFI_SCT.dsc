@@ -75,7 +75,6 @@
   SUPPORTED_ARCHITECTURES        = IA32|X64|IPF|ARM|AARCH64
   BUILD_TARGETS                  = DEBUG|RELEASE
   SKUID_IDENTIFIER               = DEFAULT
-  EDK_GLOBAL SHELL_SOURCE        = EdkCompatibilityPkg/Other/Maintained/Application/Shell
   
   DEFINE GCC_VER_MACRO           = -D EFI_SPECIFICATION_VERSION=0x00020028 -D TIANO_RELEASE_VERSION=0x00080006  
   DEFINE MSFT_VER_MACRO          = /D EFI_SPECIFICATION_VERSION=0x00020028 /D TIANO_RELEASE_VERSION=0x00080006  
@@ -161,8 +160,6 @@ EdkCompatibilityPkg/Foundation/Framework/Protocol/EdkFrameworkProtocolLib.inf
 EdkCompatibilityPkg/Foundation/Efi/Protocol/EfiProtocolLib.inf
 EdkCompatibilityPkg/Foundation/Core/Dxe/ArchProtocol/ArchProtocolLib.inf
 EdkCompatibilityPkg/Foundation/Library/RuntimeDxe/EfiRuntimeLib/EfiRuntimeLib.inf
-
-EdkCompatibilityPkg/Other/Maintained/Application/Shell/Library/EfiShellLib.inf
 
 SctPkg/Protocol/TestProtocolLib.inf
 SctPkg/Library/EfiTestLib/EfiTestLib.inf

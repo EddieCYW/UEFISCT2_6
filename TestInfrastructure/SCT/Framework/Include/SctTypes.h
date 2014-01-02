@@ -302,9 +302,7 @@ typedef struct {
   // Test data
   //
   EFI_SCT_OPERATIONS                  Operations;
-  EFI_DEVICE_PATH_PROTOCOL            *SeqDevicePath;
   CHAR16                              *SeqFileName;
-  EFI_DEVICE_PATH_PROTOCOL            *RepDevicePath;
   CHAR16                              *RepFileName;
 
   BOOLEAN                             IsFirstTimeExecute;

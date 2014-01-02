@@ -627,9 +627,8 @@ Returns:
 
 EFI_STATUS
 GenerateReport (
-  IN EFI_DEVICE_PATH_PROTOCOL     *LogDevicePath,
+  IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *LogFilePath,
-  IN EFI_DEVICE_PATH_PROTOCOL     *ReportDevicePath,
   IN CHAR16                       *ReportFileName
   )
 /*++
@@ -640,9 +639,8 @@ Routine Description:
 
 Arguments:
 
-  LogDevicePath     - Device path of the key files.
+  DevicePath        - Device path of the report file.
   LogFilePath       - Path of the key files.
-  ReportDevicePath  - Device path of the report file.
   ReportFileName    - Name of the report file.
 
   EFI_SUCCESS       - Generate the test report successfully.
@@ -664,8 +662,7 @@ Arguments:
   //
   // Check parameters
   //
-  if ((LogDevicePath    == NULL) || (LogFilePath    == NULL) ||
-      (ReportDevicePath == NULL) || (ReportFileName == NULL)) {
+  if ((DevicePath    == NULL) || (LogFilePath == NULL) || (ReportFileName == NULL)) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -683,7 +680,7 @@ Arguments:
   //
   Status = SctReportConfig (
              &ConfigBufferSize,
-             (UINT8 **)&ConfigBuffer
+             (VOID **)&ConfigBuffer
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctReportConfig: %r", Status));
@@ -714,7 +711,7 @@ Arguments:
   // Load the assertion information from the log directory
   //
   Status = GetProtocolAssertion (
-             LogDevicePath,
+             DevicePath,
              LogFilePath,
              &PassNumber,
              &WarnNumber,
@@ -775,7 +772,7 @@ Arguments:
   // Create the report file
   //
   Status = SctCreateFileFromDevicePath (
-             ReportDevicePath,
+             DevicePath,
              ReportFileName,
              &Handle
              );

@@ -115,7 +115,8 @@ Returns:
   UINT32                  DescriptorVersion;
   VOID                    *FileBuffer;
   UINTN                   FileSize;
-  UINT32                  ArgIndex;
+  UINTN                   ArgIndex;
+  CHAR16                  **Argv;
   CHAR16                  InfFileName[200];
   BOOLEAN                 GenLogFlag;
   EFI_STATUS              Status;
@@ -143,9 +144,9 @@ Returns:
 
   ConfInfo.InfoData = 0;
 
-  EFI_SHELL_APP_INIT (ImageHandle, SystemTable);
+  SctShellApplicationInit (ImageHandle, SystemTable);
   
-  Status = LibFilterNullArgs ();
+  Status = SctShellFilterNullArgs ();
   if (EFI_ERROR (Status)) {
     return Status;
   }
@@ -158,14 +159,14 @@ Returns:
   //
   // Parse the arguments
   //
-  ArgIndex = (UINT32)SI->Argc;
+  SctShellGetArguments (&ArgIndex, &Argv);
 
-  if ((ArgIndex != 3) || ((SctStrCmp (SI->Argv[1], L"-f")) && (SctStrCmp(SI->Argv[1], L"-g")))) {
+  if ((ArgIndex != 3) || ((SctStrCmp (Argv[1], L"-f")) && (SctStrCmp(Argv[1], L"-g")))) {
     SctPrint(L"SCRTApp: invalid option\n");
     PrintUsage ();
     return EFI_INVALID_PARAMETER;
   } else {
-    SctStrCpy (InfFileName, SI->Argv[2]);
+    SctStrCpy (InfFileName, Argv[2]);
   }
 
 

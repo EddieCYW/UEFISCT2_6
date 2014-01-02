@@ -75,7 +75,6 @@
   SUPPORTED_ARCHITECTURES        = IA32|X64|IPF
   BUILD_TARGETS                  = DEBUG
   SKUID_IDENTIFIER               = DEFAULT
-  EDK_GLOBAL SHELL_SOURCE         =EdkCompatibilityPkg/Other/Maintained/Application/Shell
 
 ################################################################################
 #
@@ -117,8 +116,6 @@ EdkCompatibilityPkg/Foundation/Core/Dxe/ArchProtocol/ArchProtocolLib.inf
 EdkCompatibilityPkg/Foundation/Library/RuntimeDxe/EfiRuntimeLib/EfiRuntimeLib.inf
 EdkCompatibilityPkg/Foundation/Library/Dxe/Graphics/Graphics.inf
 EdkCompatibilityPkg/Foundation/Library/EdkIIGlueLib/Library/BaseLib/BaseLib.inf
-
-EdkCompatibilityPkg/Other/Maintained/Application/Shell/Library/EfiShellLib.inf
 
 SctPkg/Protocol/TestProtocolLib.inf
 SctPkg/Library/EfiTestLib/EfiTestLib.inf

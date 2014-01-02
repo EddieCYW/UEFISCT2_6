@@ -55,9 +55,7 @@ Module Name:
 #define _SCRTAPP_H_
 
 #include "SctLib.h"
-#include "EfiShellLib.h"
 #include "EfiDebug.h"
-#include "Mem.h"
 #include "EfiCommonLib.h"
 #include EFI_GUID_DEFINITION(GlobalVariable)
 

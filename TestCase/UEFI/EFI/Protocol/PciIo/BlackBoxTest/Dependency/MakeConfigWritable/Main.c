@@ -56,7 +56,6 @@ Abstract:
 --*/
 #include "Common.h"
 #include "Main.h"
-#include "EfiShellLib.h"
 
 EFI_DRIVER_ENTRY_POINT (MakeConfigWritableEntryPoint)
 
@@ -72,7 +71,7 @@ MakeConfigWritableEntryPoint (
   //
   //Initialize Libraries
   //
-  EFI_SHELL_APP_INIT (ImageHandle, SystemTable);
+  SctShellApplicationInit (ImageHandle, SystemTable);
 
   Status = FindTestCard (&TestDev);
   if (EFI_ERROR(Status)) {

@@ -56,7 +56,6 @@ Abstract:
 --*/
 
 #include "SctLib.h"
-#include "EfiShellLib.h"
 #include "Eas.h"
 #include "EntsMonitorProtocol.h"
 
@@ -796,7 +795,7 @@ Returns:
   }
 
   for (Index = 0; Index < AllHandleCount; Index++) {
-    if (GetExecutionBreak ()) {
+    if (SctShellGetExecutionBreak ()) {
       Status = EFI_ABORTED;
       goto Done;
     }

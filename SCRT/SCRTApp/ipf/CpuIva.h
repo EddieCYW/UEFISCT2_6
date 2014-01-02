@@ -55,10 +55,8 @@ Module Name:
 #define   _CPU_IVA_H_
 
 #include "Tiano.h"
-#include "EfiShellLib.h"
 #include "EfiRuntimeLib.h"
 #include "EfiDebug.h"
-#include "Mem.h"
 #include "LibSalPal.h"
 
 extern EFI_PLABEL     mPalProcPlabel;

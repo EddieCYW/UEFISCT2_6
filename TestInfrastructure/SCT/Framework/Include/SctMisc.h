@@ -63,17 +63,15 @@ Abstract:
 //
 
 EFI_STATUS
-ExpandFileName (
+GetFilesystemDevicePath (
   IN CHAR16                       *Name,
   OUT EFI_DEVICE_PATH_PROTOCOL    **DevicePath,
-  OUT CHAR16                      **FileName
+  OUT CHAR16                      **RemainingFilePath OPTIONAL
   );
 
 EFI_STATUS
-ExpandFilePath (
-  IN CHAR16                       *Name,
-  OUT EFI_DEVICE_PATH_PROTOCOL    **DevicePath,
-  OUT CHAR16                      **FilePath
+StripLastPathComponent (
+  IN OUT CHAR16                       *Name
   );
 
 EFI_STATUS

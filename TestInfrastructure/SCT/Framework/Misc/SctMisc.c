@@ -80,162 +80,34 @@ SctStrTokens (
 // External functions implementation
 //
 
+
 EFI_STATUS
-ExpandFileName (
-  IN CHAR16                       *Name,
-  OUT EFI_DEVICE_PATH_PROTOCOL    **DevicePath,
-  OUT CHAR16                      **FileName
+StripLastPathComponent (
+  IN OUT CHAR16                       *FilePath
   )
 /*++
-
+[]
 Routine Description:
 
-  Expand a file name to the device path and full file name.
+  Take a file path like "fs0:/foo/bar" and return the path of the parent
+  directory like "fs0:/foo".
 
 --*/
 {
-  EFI_STATUS                Status;
-  CONST CHAR16              *TempStr;
-  SCT_LIST_ENTRY            *FileList = NULL;
-  EFI_SHELL_FILE_INFO       *Arg;
-  EFI_DEVICE_PATH_PROTOCOL  *DeviceNode;
-
-  //
-  // Initialize
-  //
-  *DevicePath = NULL;
-  *FileName   = NULL;
-
-  //
-  // Expand the input file name
-  //
-  Status = ShellFileMetaArg (Name, &FileList);
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
-
-  //
-  // Empty file list is not acceptable
-  //
-  if (SctIsListEmpty (FileList)) {
-    return EFI_INVALID_PARAMETER;
-  }
-
-  //
-  // Multiple items file list is not acceptable
-  //
-  if (FileList->ForwardLink->ForwardLink != FileList) {
-    return EFI_INVALID_PARAMETER;
-  }
-
-  //
-  // Last status doesn't mean everything is ok, so do more check at here
-  //
-  Arg = (EFI_SHELL_FILE_INFO *) (SctGetFirstNode (FileList));
-
-  if (EFI_ERROR (Arg->Status) && (Arg->Status != EFI_NOT_FOUND)) {
-    ShellFreeFileList (&FileList);
-    return EFI_LOAD_ERROR;
-  }
-
-  //
-  // Duplicate the device path and remove the file path from that
-  //
-  *DevicePath = SctShellGetDevicePathFromFilePath ((CHAR16 *) Arg->FullName);
-  if (*DevicePath == NULL) {
-    ShellFreeFileList (&FileList);
-    return EFI_OUT_OF_RESOURCES;
-  }
-
-  DeviceNode = *DevicePath;
-  while (!IsDevicePathEnd (DeviceNode)) {
-    if ((DevicePathType (DeviceNode)    == MEDIA_DEVICE_PATH) &&
-        (DevicePathSubType (DeviceNode) == MEDIA_FILEPATH_DP)) {
-      SetDevicePathEndNode (DeviceNode);
-      break;
-    }
-    DeviceNode = NextDevicePathNode (DeviceNode);
-  }
-
-  //
-  // Duplicate the full file name and remove the file system name from that
-  //
-  if (Arg->FullName == NULL) {
-    SctFreePool (*DevicePath);
-    ShellFreeFileList (&FileList);
-    return EFI_INVALID_PARAMETER;
-  }
-
-  TempStr = Arg->FullName;
-  while ((*TempStr != L'\0') && (*TempStr != L':')) {
-    TempStr ++;
-  }
-
-  *FileName = SctStrDuplicate (TempStr + 1);
-  if (*FileName == NULL) {
-    SctFreePool (*DevicePath);
-    ShellFreeFileList (&FileList);
-    return EFI_OUT_OF_RESOURCES;
-  }
-
-  //
-  // Free resources
-  //
-  ShellFreeFileList (&FileList);
-
-  //
-  // Done
-  //
-  return EFI_SUCCESS;
-}
-
-
-EFI_STATUS
-ExpandFilePath (
-  IN CHAR16                       *Name,
-  OUT EFI_DEVICE_PATH_PROTOCOL    **DevicePath,
-  OUT CHAR16                      **FilePath
-  )
-/*++
-
-Routine Description:
-
-  Expand a file name to the device path and full file path.
-
---*/
-{
-  EFI_STATUS  Status;
   UINTN       Index;
-  CHAR16      *FileName;
 
-  //
-  // Expand to the device path and full name
-  //
-  Status = ExpandFileName (
-             Name,
-             DevicePath,
-             &FileName
-             );
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
 
   //
   // Remove the file name from full name
   //
-  for (Index = 0; Index < SctStrLen (FileName); Index++) {
-    if (FileName[SctStrLen (FileName) - Index - 1] == L'\\') {
-      FileName[SctStrLen (FileName) - Index - 1] = L'\0';
-      break;
+  for (Index = 0; Index < SctStrLen (FilePath); Index++) {
+    if (FilePath[SctStrLen (FilePath) - Index - 1] == L'\\') {
+      FilePath[SctStrLen (FilePath) - Index - 1] = L'\0';
+      return EFI_SUCCESS;
     }
   }
 
-  *FilePath = FileName;
-
-  //
-  // Done
-  //
-  return EFI_SUCCESS;
+  return EFI_INVALID_PARAMETER;
 }
 
 
@@ -416,13 +288,14 @@ Routine Description:
 --*/
 {
   EFI_DEVICE_PATH_PROTOCOL  *TempDevicePath;
+  EFI_STATUS                 Status;
 
   //
   // Get device path
   //
-  TempDevicePath = (EFI_DEVICE_PATH_PROTOCOL *) ShellGetMap (FilePath);
-  if (TempDevicePath == NULL) {
-    return EFI_NOT_FOUND;
+  Status = SctShellMapToDevicePath (FilePath, &TempDevicePath);
+  if (EFI_ERROR (Status)) {
+    return Status;
   }
 
   //
@@ -453,6 +326,7 @@ Routine Description:
   UINTN                     Index;
   CHAR16                    *TempFilePath;
   EFI_DEVICE_PATH_PROTOCOL  *TempDevicePath;
+  EFI_STATUS                Status;
 
   //
   // Why hard code? Currently we cannot get the file system name from the device
@@ -468,8 +342,8 @@ Routine Description:
       return EFI_OUT_OF_RESOURCES;
     }
 
-    TempDevicePath = (EFI_DEVICE_PATH_PROTOCOL *) ShellGetMap (TempFilePath);
-    if (TempDevicePath == NULL) {
+    Status = SctShellMapToDevicePath (TempFilePath, &TempDevicePath);
+    if (EFI_ERROR (Status)) {
       tBS->FreePool (TempFilePath);
       continue;
     }
@@ -491,8 +365,8 @@ Routine Description:
       return EFI_OUT_OF_RESOURCES;
     }
 
-    TempDevicePath = (EFI_DEVICE_PATH_PROTOCOL *) ShellGetMap (TempFilePath);
-    if (TempDevicePath == NULL) {
+    Status = SctShellMapToDevicePath (TempFilePath, &TempDevicePath);
+    if (EFI_ERROR (Status)) {
       tBS->FreePool (TempFilePath);
       continue;
     }
@@ -600,10 +474,11 @@ Routine Description:
     return EFI_OUT_OF_RESOURCES;
   }
 
-  Status = ShellExecute (
-             ImageHandle,
+  Status = SctShellExecute (
+             &ImageHandle,
              CmdLine,
-             FALSE
+             FALSE,
+             NULL, NULL
              );
   if (EFI_ERROR (Status)) {
     tBS->FreePool (CmdLine);

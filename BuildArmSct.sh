@@ -230,46 +230,6 @@ case `uname -m` in
 
 esac
 
-# SCT needs the shell sources.
-# First we'll try to use EdkShell. We need:
-#   - EdkShell sources. They will be checked out from the official svn repo
-#     if not found locally.
-#   - The patch on EdkShell sources adding architectural support.
-# If the patch is not present, we'll fallback to GccShell.
-if [ -f $WORKSPACE/EdkShellPkg/ShellR64.patch ]; then
-  EDKSHELL_REVISION=-r64
-  EDKSHELL_PATCH=$WORKSPACE/EdkShellPkg/ShellR64.patch
-elif [ -f $WORKSPACE/EdkShellPkg/ShellR61.patch ]; then
-  EDKSHELL_REVISION=-r61
-  EDKSHELL_PATCH=$WORKSPACE/EdkShellPkg/ShellR61.patch
-else
-  echo "Couldn't find a patch for EdkShell, falling back to GccShellPkg"
-fi
-
-if [ ! -d $EDK_SOURCE/Other/Maintained/Application/Shell ]; then
-    if [ -n "${EDKSHELL_PATCH:-}" -a -f $EDKSHELL_PATCH ]; then
-      # Checkout EdkShell sources to EdkCompatibility Pkg
-      echo "Checking out EdkShell sources..."
-      svn co --non-interactive --trust-server-cert https://svn.code.sf.net/p/efi-shell/code/trunk/Shell \
-        $EDK_SOURCE/Other/Maintained/Application/Shell $EDKSHELL_REVISION
-
-      echo "Patching EdkShell sources to add support for $SCT_TARGET_ARCH platform..."
-      echo "Using patch file $EDKSHELL_PATCH"
-      cd $EDK_SOURCE/Other/Maintained/Application/Shell
-      patch -N -p1 < $EDKSHELL_PATCH
-      if [ $? -ne 0 ]; then
-        echo "Couldn't apply patch."
-        exit 1
-      fi
-      cd -
-    else  # We do not have the patch for EdkShell
-      # Checkout GccShell sources to EdkCompatibility Pkg
-	echo "Checking out EFI shell source..."
-	svn co --non-interactive --trust-server-cert https://gcc-shell.svn.sourceforge.net/svnroot/gcc-shell/trunk/GccShellPkg \
-	    $EDK_SOURCE/Other/Maintained/Application/Shell
-    fi
-fi
-
 #
 # Build the SCT package
 #

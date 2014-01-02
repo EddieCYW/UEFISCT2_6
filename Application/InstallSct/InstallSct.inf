@@ -77,10 +77,7 @@ COMPONENT_TYPE       = APPLICATION
   $(EDK_SOURCE)/Foundation/Include/IndustryStandard
   $(EDK_SOURCE)/Foundation/Core/Dxe
   $(EFI_SOURCE)/SctPkg/Include
-  $(SHELL_SOURCE)/Inc
-  $(SHELL_SOURCE)/Library
   $(EDK_SOURCE)/Foundation/Library/Dxe/Include
-
 
 [libraries.common]
   SctLib

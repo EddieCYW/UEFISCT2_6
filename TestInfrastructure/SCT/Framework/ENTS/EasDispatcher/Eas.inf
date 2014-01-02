@@ -99,8 +99,6 @@ COMPONENT_TYPE       = LIBRARY
   $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
   $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
   $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
-  $(EDK_SOURCE)/Other/Maintained/Application/Shell/Library
-  $(EDK_SOURCE)/Other/Maintained/Application/Shell/Inc
   $(EFI_SOURCE)/SctPkg/Protocol/Eftp
   $(EFI_SOURCE)/SctPkg/Library/NetLib/Include
   $(EDK_SOURCE)/Foundation/Library/Dxe/Include

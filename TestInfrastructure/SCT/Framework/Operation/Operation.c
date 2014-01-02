@@ -655,7 +655,7 @@ Returns:
     // Try to create the report file
     //
     Status = SctCreateFileFromDevicePath (
-               gFT->RepDevicePath,
+               gFT->DevicePath,
                gFT->RepFileName,
                &Handle
                );
@@ -674,7 +674,6 @@ Returns:
     Status = GenerateReport (
                gFT->DevicePath,
                LogFilePath,
-               gFT->RepDevicePath,
                gFT->RepFileName
                );
     if (EFI_ERROR (Status)) {
@@ -1330,7 +1329,7 @@ Routine Description:
   // Load the test sequence
   //
   Status = LoadTestSequence (
-             gFT->SeqDevicePath,
+             gFT->DevicePath,
              gFT->SeqFileName,
              &gFT->TestCaseList
              );

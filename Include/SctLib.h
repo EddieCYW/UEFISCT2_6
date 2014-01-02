@@ -49,6 +49,9 @@
 
 #include "Efi.h"
 
+#include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
+#include EFI_PROTOCOL_DEFINITION (FileInfo)
+
 //
 // Allocation API
 //
@@ -617,6 +620,99 @@ SctScanHandleDatabase (
   UINT32      **HandleType
   );
 
+//
+// Shell API
+//
+
+typedef VOID *SHELL_FILE_HANDLE;
+
+typedef struct {
+  SCT_LIST_ENTRY    Link;       ///< Linked list members.
+  EFI_STATUS        Status;     ///< Status of opening the file.  Valid only if Handle != NULL.
+  CONST CHAR16      *FullName;  ///< Fully qualified filename.
+  CONST CHAR16      *FileName;  ///< name of this file.
+  SHELL_FILE_HANDLE Handle;     ///< Handle for interacting with the opened file or NULL if closed.
+  EFI_FILE_INFO     *Info;      ///< Pointer to the FileInfo struct for this file or NULL.
+} EFI_SHELL_FILE_INFO;
+
+EFI_STATUS
+SctShellApplicationInit (
+  IN EFI_HANDLE         ImageHandle,
+  IN EFI_SYSTEM_TABLE   *SystemTable
+  );
+
+EFI_STATUS
+SctShellGetArguments (
+  OUT UINTN           *Argc,
+  OUT CHAR16          ***Argv
+  );
+
+EFI_STATUS
+SctShellExecute (
+  IN EFI_HANDLE       *ImageHandle,
+  IN CHAR16           *CmdLine,
+  IN BOOLEAN          Output,
+  IN CHAR16           **EnvironmentVariables OPTIONAL,
+  OUT EFI_STATUS      *Status OPTIONAL
+  );
+
+EFI_STATUS
+SctShellMapToDevicePath (
+  IN  CHAR16                    *Name,
+  OUT EFI_DEVICE_PATH_PROTOCOL **DevicePath
+  );
+
+EFI_STATUS
+SctShellOpenFileMetaArg (
+  IN CHAR16                     *Arg,
+  IN UINT64                     OpenMode,
+  IN OUT SCT_LIST_ENTRY         **ListHead
+  );
+
+EFI_STATUS
+EFIAPI
+SctShellCloseFileMetaArg (
+  IN OUT SCT_LIST_ENTRY         **ListHead
+  );
+
+EFI_STATUS
+SctShellFreeFileList (
+  IN OUT SCT_LIST_ENTRY   *ListHead
+  );
+
+BOOLEAN
+SctShellGetExecutionBreak (
+  IN VOID
+  );
+
+EFI_STATUS
+SctShellFilterNullArgs (
+  VOID
+  );
+
+EFI_DEVICE_PATH_PROTOCOL *
+SctShellGetDevicePathFromFilePath (
+  IN CONST CHAR16   *Path
+  );
+
+CONST CHAR16*
+EFIAPI
+ShellGetCurrentDir (
+  IN CHAR16                     * CONST DeviceName OPTIONAL
+  );
+
+EFI_STATUS
+SctExpandRelativePath (
+  IN CHAR16                       *RelativePath,
+  OUT CHAR16                      **FileName
+  );
+
+EFI_STATUS
+SctGetFilesystemDevicePath (
+  IN CHAR16                      *FilePath,
+  OUT EFI_DEVICE_PATH_PROTOCOL  **DevicePath,
+  OUT CHAR16                    **RemainingFilePath OPTIONAL
+  );
 //
 // String API
 //

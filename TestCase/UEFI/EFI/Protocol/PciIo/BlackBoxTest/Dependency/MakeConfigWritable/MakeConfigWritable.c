@@ -57,7 +57,6 @@ Abstract:
 
 #include "Common.h"
 #include "Main.h"
-#include "EfiShellLib.h"
 
 EFI_STATUS
 MakeConfigWritable  (

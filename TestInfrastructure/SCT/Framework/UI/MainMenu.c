@@ -699,7 +699,6 @@ DisplayReportGenerator(
     Status = GenerateReport (
                gFT->DevicePath,
                LogFilePath,
-               DialogContext->DevicePath,
                FileName
                );
 
@@ -803,10 +802,11 @@ DisplayLog (
 
     CmdLine = SctPoolPrint (L"%s \"%s\"", gFT->ConfigData->EditCommandString, FileName);
     if (CmdLine != NULL) {
-      Status = ShellExecute (
-                 gFT->ImageHandle,
+      Status = SctShellExecute (
+                 &gFT->ImageHandle,
                  CmdLine,
-                 FALSE
+                 FALSE,
+                 NULL, NULL
                  );
       if (EFI_ERROR (Status)) {
         MsgDialogTitle = SctStrDuplicate (L"Cannot open the log file! Please check the edit command in the configuration page.");

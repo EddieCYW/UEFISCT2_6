@@ -401,7 +401,7 @@ Returns:
   // Execute Shell Command
   //
   tRT->GetTime (&StartTime, NULL);
-  Status = ShellExecute (mImageHandle, (gEasFT->Cmd)->ComdArg, FALSE);
+  Status = SctShellExecute (&mImageHandle, (gEasFT->Cmd)->ComdArg, FALSE, NULL, NULL);;
   tRT->GetTime (&EndTime, NULL);
   EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"dispatch:(%s)", (gEasFT->Cmd)->ComdArg));
   SctPrint (L"dispatch:(%s) - %r\n", (gEasFT->Cmd)->ComdArg, Status);
@@ -1535,7 +1535,7 @@ Returns:
   // Resume SCT execution by executing "sct -c" in sct passive mode.
   //
   tRT->GetTime (&StartTime, NULL);
-  Status = ShellExecute (mImageHandle, (gEasFT->Cmd)->ComdArg, FALSE);
+  Status = SctShellExecute (&mImageHandle, (gEasFT->Cmd)->ComdArg, FALSE, NULL, NULL);;
   tRT->GetTime (&EndTime, NULL);
   EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"dispatch:(%s)", (gEasFT->Cmd)->ComdArg));
   SctPrint (L"dispatch:(%s) - %r\n", (gEasFT->Cmd)->ComdArg, Status);

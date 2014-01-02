@@ -69,6 +69,7 @@ COMPONENT_TYPE  = LIBRARY
   Mem.c
   Misc.c
   Print.c
+  Shell.c
   String.c
   Unicode.c
 

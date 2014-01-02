@@ -57,7 +57,6 @@ Abstract:
 #include "Common.h"
 #include "Main.h"
 #include EFI_PROTOCOL_CONSUMER(PciIo)
-#include "EfiShellLib.h"
 
 //
 //function protype

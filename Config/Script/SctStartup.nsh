@@ -71,11 +71,6 @@ for %i in 0 1 2 3 4 5 6 7 8 9 A B C D E F
     FS%i:
     cd Sct
 
-    if %efishellmode%. == . then
-      echo The EFI SCT cannot run in the old shell environment.
-      goto Done
-    endif
-
     echo Press any key to stop the EFI SCT running
 
     stallforkey.efi 5

@@ -1751,10 +1751,11 @@ Routine Description:
       }
 
       if (CmdLine != NULL) {
-        TestStatus = ShellExecute (
-                       gFT->ImageHandle,
+        TestStatus = SctShellExecute (
+                       &gFT->ImageHandle,
                        CmdLine,
-                       FALSE
+                       FALSE,
+                       NULL, NULL
                        );
       }
     }

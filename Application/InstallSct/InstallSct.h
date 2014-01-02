@@ -64,7 +64,6 @@ Abstract:
 
 #include "Efi.h"
 #include "SctLib.h"
-#include "EfiShellLib.h"
 #include "InstallSctDef.h"
 #include "InstallSctSupport.h"
 

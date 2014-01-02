@@ -56,7 +56,6 @@ Abstract:
 --*/
 
 #include "SctLib.h"
-#include "EfiShellLib.h"
 #include "Rivl.h"
 #include "RivlVariable.h"
 #include "RivlType.h"

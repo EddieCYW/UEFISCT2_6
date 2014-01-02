@@ -132,7 +132,7 @@ Returns:
   //
   // Initialize libraries
   //
-  EFI_SHELL_APP_INIT (ImageHandle, SystemTable);
+  SctShellApplicationInit (ImageHandle, SystemTable);
 
   OldTPL = tBS->RaiseTPL(EFI_TPL_HIGH_LEVEL);
   if(OldTPL != EFI_TPL_APPLICATION) {
@@ -263,33 +263,17 @@ SctCmdLineGetReportName (
   )
 {
   EFI_STATUS                      Status;
+  CHAR16                          *RelativePath;
 
-  //
-  // The current working directory is "Report"
-  //
-  Status = SctChangeDirectory (ImageHandle, EFI_SCT_PATH_REPORT);
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
+  Status = EFI_SUCCESS;
 
-  Status = ExpandFileName (
-             ArgStr,
-             &gFT->RepDevicePath,
-             &gFT->RepFileName
-             );
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
+  RelativePath = SctPoolPrint (L"%s\\%s", EFI_SCT_PATH_REPORT, ArgStr);
 
-  //
-  // Restore the current working directory
-  //
-  Status = SctChangeDirectory (ImageHandle, L"..");
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
+  Status = SctExpandRelativePath (RelativePath, &gFT->RepFileName);
 
-  return EFI_SUCCESS;
+  SctFreePool (RelativePath);
+
+  return Status;
 }
 
 STATIC
@@ -316,33 +300,17 @@ SctCmdLineGetSequenceFileName (
   )
 {
   EFI_STATUS                      Status;
+  CHAR16                          *RelativePath;
 
-  //
-  // The current working directory is "Sequence"
-  //
-  Status = SctChangeDirectory (ImageHandle, EFI_SCT_PATH_SEQUENCE);
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
+  Status = EFI_SUCCESS;
 
-  Status = ExpandFileName (
-              ArgStr,
-              &gFT->SeqDevicePath,
-              &gFT->SeqFileName
-              );
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
+  RelativePath = SctPoolPrint (L"%s\\%s", EFI_SCT_PATH_SEQUENCE, ArgStr);
 
-  //
-  // Restore the current working directory
-  //
-  Status = SctChangeDirectory (ImageHandle, L"..");
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
+  Status = SctExpandRelativePath (RelativePath, &gFT->SeqFileName);
 
-  return EFI_SUCCESS;
+  SctFreePool (RelativePath);
+
+  return Status;
 }
 
 #define SCT_OPERATION_MASK(OP)    (gFT->Operations |= (OP))
@@ -361,8 +329,7 @@ ParseCommandLine (
   //
   // Get the parameters from the shell interface
   //
-  Argc = SI->Argc;
-  Argv = SI->Argv;
+  SctShellGetArguments (&Argc, &Argv);
 
   gFT->Operations = 0;
 

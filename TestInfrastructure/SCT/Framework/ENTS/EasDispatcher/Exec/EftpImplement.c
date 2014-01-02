@@ -55,11 +55,13 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "EfiShellLib.h"
+#include "SctLib.h"
 #include "Eftp.h"
 #include "Eas.h"
 #include "EftpImplement.h"
+
+#include EFI_PROTOCOL_DEFINITION (DriverBinding)
+#include EFI_PROTOCOL_DEFINITION (ManagedNetwork)
 
 STATIC EFI_FILE                     *mRealFileHandle      = NULL;
 STATIC UINTN                        mRealFileSize         = 0;

@@ -82,8 +82,6 @@ COMPONENT_TYPE       = BS_DRIVER
   $(EDK_SOURCE)/Foundation/Core/Dxe
   $(EDK_SOURCE)/Foundation/Library/Dxe/Include
   $(EDK_SOURCE)/Foundation/Library/Dxe/EfiIfrSupportLib
-  $(EDK_SOURCE)/Other/Maintained/Application/Shell/Library
-  $(EDK_SOURCE)/Other/Maintained/Application/Shell/Inc
   $(EFI_SOURCE)/SctPkg/Include
   $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
   $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol

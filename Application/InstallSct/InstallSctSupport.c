@@ -58,6 +58,8 @@ Abstract:
 
 #include "InstallSct.h"
 
+#include EFI_PROTOCOL_DEFINITION (FileSystemInfo)
+
 //
 // External function implementation
 //
@@ -77,9 +79,9 @@ GetFreeSpace (
   //
   // Get the device path of file system
   //
-  DevicePath = (EFI_DEVICE_PATH_PROTOCOL *) ShellGetMap (FileVolume->Name);
-  if (DevicePath == NULL) {
-    return EFI_NOT_FOUND;
+  Status = SctShellMapToDevicePath (FileVolume->Name, &DevicePath);
+  if (EFI_ERROR (Status)) {
+    return Status;
   }
 
   //
@@ -145,6 +147,7 @@ DirFileExist (
 {
   EFI_STATUS  Status;
   CHAR16      *CmdLine;
+  EFI_STATUS  CmdStatus;
 
   //
   // Create command line to list the directory or file
@@ -160,13 +163,14 @@ DirFileExist (
   //
   // Execute shell command
   //
-  Status = ShellExecute (
-             gImageHandle,
+  Status = SctShellExecute (&gImageHandle,
              CmdLine,
-             FALSE
+             FALSE,
+             NULL,
+             &CmdStatus
              );
 
-  if (Status == EFI_INVALID_PARAMETER) {
+  if (EFI_ERROR (Status)) {
     SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);
     SctFreePool (CmdLine);
     return Status;
@@ -175,7 +179,7 @@ DirFileExist (
   //
   // Exist or not?
   //
-  if (EFI_ERROR (Status)) {
+  if (EFI_ERROR (CmdStatus)) {
     *Exist = FALSE;
   } else {
     *Exist = TRUE;
@@ -201,6 +205,7 @@ CreateDir (
   UINTN       Index;
   BOOLEAN     Done;
   BOOLEAN     Exist;
+  EFI_STATUS  CmdStatus;
 
   //
   // Create the temp name
@@ -252,12 +257,14 @@ CreateDir (
       //
       // Execute shell command
       //
-      Status = ShellExecute (
-                 gImageHandle,
+      Status = SctShellExecute (
+                 &gImageHandle,
                  CmdLine,
-                 FALSE
+                 FALSE,
+                 NULL,
+                 &CmdStatus
                  );
-      if (EFI_ERROR (Status)) {
+      if (EFI_ERROR (Status) || EFI_ERROR (CmdStatus)) {
         SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);
         SctFreePool (CmdLine);
         SctFreePool (TmpName);
@@ -285,6 +292,7 @@ RemoveDirFile (
 {
   EFI_STATUS  Status;
   CHAR16      *CmdLine;
+  EFI_STATUS  CmdStatus;
 
   //
   // Create command line to delete this directory or file
@@ -300,12 +308,14 @@ RemoveDirFile (
   //
   // Execute this shell command
   //
-  Status = ShellExecute (
-             gImageHandle,
+  Status = SctShellExecute (
+             &gImageHandle,
              CmdLine,
-             FALSE
+             FALSE,
+             NULL,
+             &CmdStatus
              );
-  if (EFI_ERROR (Status)) {
+  if (EFI_ERROR (Status) || EFI_ERROR (CmdStatus)) {
     SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);
     SctFreePool (CmdLine);
     return Status;
@@ -326,6 +336,7 @@ BackupDirFile (
   )
 {
   EFI_STATUS  Status;
+  EFI_STATUS  CmdStatus;
   CHAR16      *CmdLine;
   CHAR16      *PathName;
   CHAR16      *FileName;
@@ -413,12 +424,14 @@ BackupDirFile (
   //
   // Execute shell command
   //
-  Status = ShellExecute (
-             gImageHandle,
+  Status = SctShellExecute (
+             &gImageHandle,
              CmdLine,
-             FALSE
+             FALSE,
+             NULL,
+             &CmdStatus
              );
-  if (EFI_ERROR (Status)) {
+  if (EFI_ERROR (Status) || EFI_ERROR (CmdStatus)) {
     SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);
     SctFreePool (CmdLine);
     return Status;
@@ -441,6 +454,7 @@ CopyDirFile (
   )
 {
   EFI_STATUS  Status;
+  EFI_STATUS  CmdStatus;
   CHAR16      *CmdLine;
   CHAR16      *PathName;
   UINTN       Index;
@@ -490,10 +504,12 @@ CopyDirFile (
   //
   // Execute shell command
   //
-  Status = ShellExecute (
-             gImageHandle,
+  Status = SctShellExecute (
+             &gImageHandle,
              CmdLine,
-             FALSE
+             FALSE,
+             NULL,
+             &CmdStatus
              );
   if (EFI_ERROR (Status)) {
     SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);

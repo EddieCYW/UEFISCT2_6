@@ -52,7 +52,6 @@ Module Name:
 --*/
 
 #include "SctLib.h"
-#include "EfiShellLib.h"
 
 
 #define CONF_FILE_NAME                    L"SCRT.conf"

@@ -139,8 +139,6 @@ COMPONENT_TYPE       = APPLICATION
   $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
   $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EASDispatcher/include
   $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/Report
-  $(SHELL_SOURCE)/Inc
-  $(SHELL_SOURCE)/Library
 
 [libraries.common]
   SctLib
