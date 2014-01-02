@@ -95,9 +95,9 @@ Routine Description:
 --*/
 {
   EFI_STATUS                Status;
-  CHAR16                    *TempStr;
-  EFI_LIST_ENTRY            FileList;
-  SHELL_FILE_ARG            *Arg;
+  CONST CHAR16              *TempStr;
+  SCT_LIST_ENTRY            *FileList = NULL;
+  EFI_SHELL_FILE_INFO       *Arg;
   EFI_DEVICE_PATH_PROTOCOL  *DeviceNode;
 
   //
@@ -105,7 +105,6 @@ Routine Description:
   //
   *DevicePath = NULL;
   *FileName   = NULL;
-  InitializeListHead (&FileList);
 
   //
   // Expand the input file name
@@ -118,21 +117,21 @@ Routine Description:
   //
   // Empty file list is not acceptable
   //
-  if (IsListEmpty (&FileList)) {
+  if (SctIsListEmpty (FileList)) {
     return EFI_INVALID_PARAMETER;
   }
 
   //
   // Multiple items file list is not acceptable
   //
-  if (FileList.Flink->Flink != &FileList) {
+  if (FileList->ForwardLink->ForwardLink != FileList) {
     return EFI_INVALID_PARAMETER;
   }
 
   //
   // Last status doesn't mean everything is ok, so do more check at here
   //
-  Arg = CR (FileList.Flink, SHELL_FILE_ARG, Link, SHELL_FILE_ARG_SIGNATURE);
+  Arg = (EFI_SHELL_FILE_INFO *) (SctGetFirstNode (FileList));
 
   if (EFI_ERROR (Arg->Status) && (Arg->Status != EFI_NOT_FOUND)) {
     ShellFreeFileList (&FileList);

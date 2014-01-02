@@ -654,7 +654,7 @@ typedef struct {
   UINT64                            SetPosition;
   UINT64                            PositionAfterRead;
   UINTN                             ReadLength;
-  EFI_LIST_ENTRY                    ListEntry;     
+  SCT_LIST_ENTRY                    ListEntry;     
   EFI_STATUS                        StatusAsync;
   EFI_TEST_ASSERTION                AssertionType;
 } FileIo_Task;
@@ -668,7 +668,7 @@ typedef struct {
   EFI_FILE_IO_TOKEN               	FileIoToken;
   EFI_TPL                           Tpl;
   UINTN                             Index;
-  EFI_LIST_ENTRY                    ListEntry;     
+  SCT_LIST_ENTRY                    ListEntry;     
   EFI_STATUS                        StatusAsync;
   EFI_TEST_ASSERTION                AssertionType;
 } FileIoDir_Task;

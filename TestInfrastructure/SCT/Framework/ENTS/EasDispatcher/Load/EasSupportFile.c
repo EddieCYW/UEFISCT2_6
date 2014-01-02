@@ -280,7 +280,7 @@ Returns:
           //
           // Add the test file to the test file list
           //
-          InsertTailList (&gEasFT->SupportList, &TestFile->Link);
+          SctInsertTailList (&gEasFT->SupportList, &TestFile->Link);
         }
       }
     } else {
@@ -328,7 +328,7 @@ Returns:
 
 EFI_STATUS
 EntsUnloadSupportFiles (
-  IN EFI_LIST_ENTRY               *TestAppList
+  IN SCT_LIST_ENTRY               *TestAppList
   )
 /*++
 
@@ -364,10 +364,10 @@ Returns:
   // Trace information
   //
   EFI_ENTS_STATUS ((L"Unload support files ..."));
-  while (!IsListEmpty (TestAppList)) {
-    TestFile = CR (TestAppList->Flink, EFI_NETWORK_TEST_FILE, Link, EFI_NETWORK_TEST_FILE_SIGNATURE);
+  while (!SctIsListEmpty (TestAppList)) {
+    TestFile = CR (TestAppList->ForwardLink, EFI_NETWORK_TEST_FILE, Link, EFI_NETWORK_TEST_FILE_SIGNATURE);
 
-    RemoveEntryList (&TestFile->Link);
+    SctRemoveEntryList (&TestFile->Link);
     Status = EntsUnloadSingleSupportFile (TestFile);
     if (EFI_ERROR (Status)) {
       return Status;
@@ -744,7 +744,7 @@ Returns:
   (*TestFile)->ImageHandle  = ImageHandle;
   (*TestFile)->Type         = Type;
   (*TestFile)->Context      = Context;
-  InitializeListHead (&(*TestFile)->Link);
+  SctInitializeListHead (&(*TestFile)->Link);
 
   //
   // Done

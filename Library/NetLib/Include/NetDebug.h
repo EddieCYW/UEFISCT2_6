@@ -183,7 +183,7 @@ NetDbgAssert(
 //structure to hold debug information
 typedef struct _DBG_POOL_INFO
 {
-  EFI_LIST_ENTRY          Entry;
+  SCT_LIST_ENTRY          Entry;
   UINT32                  Signature;
   CHAR16                  FileName[ NET_DEBUG_MAX_FILE_NAME ];
   UINTN                   Line;

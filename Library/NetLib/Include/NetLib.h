@@ -249,30 +249,30 @@ NetCommonLibSetMem (
 //double linked list operations
 //
 
-#define IS_LIST_EMPTY(ListHead)             IsListEmpty(ListHead)
+#define IS_LIST_EMPTY(ListHead)             SctIsListEmpty (ListHead)
 
-#define NET_LIST_ENTRY                      EFI_LIST_ENTRY
-#define LIST_INIT                           InitializeListHead
+#define NET_LIST_ENTRY                      SCT_LIST_ENTRY
+#define LIST_INIT                           SctInitializeListHead
 #define LIST_ENTRY(Entry,Type,Field)        _CR(Entry,Type,Field)
 #define LIST_ENTRY_S(Entry,Type,Field,Sig)  CR(Entry,Type,Field,Sig)
-#define LIST_INSERT_HEAD                    InsertHeadList    
-#define LIST_INSERT_TAIL                    InsertTailList
+#define LIST_INSERT_HEAD                    SctInsertHeadList
+#define LIST_INSERT_TAIL                    SctInsertTailList
 #define LIST_IS_EMPTY                       IS_LIST_EMPTY    
 #define LIST_FOR_EACH(Entry, ListHead)      for(Entry = (ListHead)->ForwardLink; Entry != (ListHead); Entry = Entry->ForwardLink)
 
 //
 //before using following LIST_ macro, make sure the list is not empty
 //
-#define LIST_REMOVE_ENTRY(Entry)            RemoveEntryList(Entry);
+#define LIST_REMOVE_ENTRY(Entry)            SctRemoveEntryList (Entry);
 
 #define LIST_REMOVE_HEAD(ListHead){     \
-  EFI_LIST_ENTRY *_Net_Entry;           \
+  SCT_LIST_ENTRY *_Net_Entry;           \
   _Net_Entry = (ListHead)->ForwardLink; \
   LIST_REMOVE_ENTRY(_Net_Entry);        \
 }
 
 #define LIST_REMOVE_TAIL(ListHead){     \
-  EFI_LIST_ENTRY *_Net_Entry;           \
+  SCT_LIST_ENTRY *_Net_Entry;           \
   _Net_Entry = (ListHead)->BackLink;    \
   LIST_REMOVE_ENTRY(_Net_Entry);        \
 }

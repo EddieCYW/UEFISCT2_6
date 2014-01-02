@@ -149,7 +149,7 @@ FreeTestConfigData (
 
 UINTN
 GetLibInstanceNo (
-  IN EFI_LIST_ENTRY        *LinkHead
+  IN SCT_LIST_ENTRY        *LinkHead
   );
 
 //
@@ -872,7 +872,7 @@ ExecuteMdeLibraryInstance (
   EFI_BB_TEST_PROTOCOL            *BbTest;
   UINTN                           Index;
   MDK_LIBRARY_INSTANCE            *MdkLibInstance;
-  EFI_LIST_ENTRY                  *Link;
+  SCT_LIST_ENTRY                  *Link;
   UINTN                           NoInstance;
   UINTN                           InstanceIndex;
 
@@ -907,7 +907,7 @@ ExecuteMdeLibraryInstance (
       //
 	  // Get library instance No.
       //
-      Link = (EFI_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable; 
+      Link = (SCT_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable; 
 
       NoInstance = GetLibInstanceNo(Link);
 
@@ -918,9 +918,9 @@ ExecuteMdeLibraryInstance (
         // Get the library instance from link list based on the InstanceIndex
         //
         InstanceIndex = 0;
-        Link = ((EFI_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable)->Flink;
+        Link = ((SCT_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable)->ForwardLink;
         for (InstanceIndex = 0; InstanceIndex < ExecuteInfo->Index; InstanceIndex ++) {
-          Link = Link->Flink;
+          Link = Link->ForwardLink;
         }
         MdkLibInstance = CR (Link, MDK_LIBRARY_INSTANCE, Link, MDK_LIBRARY_INSTANCE_SIGNATURE);
 
@@ -995,7 +995,7 @@ Routine Description:
   UINTN                 NoHandles;
   EFI_HANDLE            *HandleBuffer;
   EFI_GUID              *Guid;
-  EFI_LIST_ENTRY        *Link;
+  SCT_LIST_ENTRY        *Link;
   MDK_LIBRARY_INSTANCE  *MdkLibInstance;
   VOID                  *Interface;
   EFI_BB_TEST_PROTOCOL  *BbTest;
@@ -1259,7 +1259,7 @@ Routine Description:
         //
 	    // Get library instance No.
         //
-        Link = (EFI_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable; 
+        Link = (SCT_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable; 
         
         NoInstance = GetLibInstanceNo(Link);
 
@@ -1270,9 +1270,9 @@ Routine Description:
           // Get the library instance from link list based on the InstanceIndex
           //
           InstanceIndex = 0;
-          Link = ((EFI_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable)->Flink;
+          Link = ((SCT_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable)->ForwardLink;
           for (InstanceIndex = 0; InstanceIndex < ExecuteInfo->Index; InstanceIndex ++) {
-            Link = Link->Flink;
+            Link = Link->ForwardLink;
           }
           MdkLibInstance = CR (Link, MDK_LIBRARY_INSTANCE, Link, MDK_LIBRARY_INSTANCE_SIGNATURE);
 
@@ -2294,15 +2294,15 @@ Routine Description:
 
 UINTN
 GetLibInstanceNo (
-  IN EFI_LIST_ENTRY        *LinkHead
+  IN SCT_LIST_ENTRY        *LinkHead
   )
 {
   UINTN              Index;
-  EFI_LIST_ENTRY     *Link;
+  SCT_LIST_ENTRY     *Link;
 
   Index = 0;
   
-  for (Link = LinkHead->Flink; Link != LinkHead; Link = Link->Flink) { 
+  for (Link = LinkHead->ForwardLink; Link != LinkHead; Link = Link->ForwardLink) { 
     Index ++;
   }
 

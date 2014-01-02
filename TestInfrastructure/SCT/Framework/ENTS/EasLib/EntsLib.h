@@ -1076,79 +1076,79 @@ typedef struct udp_packet_struc {
 // List entry - doubly linked list
 // Redefined due to conflicts between Shell and EDK.
 //
-typedef struct _NET_EFI_LIST_ENTRY {
-  struct _NET_EFI_LIST_ENTRY  *Flink;
-  struct _NET_EFI_LIST_ENTRY  *Blink;
-} NET_EFI_LIST_ENTRY;
+typedef struct _NET_SCT_LIST_ENTRY {
+  struct _NET_SCT_LIST_ENTRY  *ForwardLink;
+  struct _NET_SCT_LIST_ENTRY  *Blink;
+} NET_SCT_LIST_ENTRY;
 
 #define NetInitializeListHead(ListHead) \
-  (ListHead)->Flink = ListHead; \
+  (ListHead)->ForwardLink = ListHead; \
   (ListHead)->Blink = ListHead;
 
-#define NetIsListEmpty(ListHead)  ((BOOLEAN) ((ListHead)->Flink == (ListHead)))
+#define NetIsListEmpty(ListHead)  ((BOOLEAN) ((ListHead)->ForwardLink == (ListHead)))
 
 #define _NetRemoveEntryList(Entry) { \
-    NET_EFI_LIST_ENTRY  *_Blink, *_Flink; \
-    _Flink        = (Entry)->Flink; \
+    NET_SCT_LIST_ENTRY  *_Blink, *_ForwardLink; \
+    _ForwardLink        = (Entry)->ForwardLink; \
     _Blink        = (Entry)->Blink; \
-    _Blink->Flink = _Flink; \
-    _Flink->Blink = _Blink; \
+    _Blink->ForwardLink = _ForwardLink; \
+    _ForwardLink->Blink = _Blink; \
   }
 
 #ifdef EFI_DEBUG
 #define NetRemoveEntryList(Entry) \
   _NetRemoveEntryList (Entry); \
-  (Entry)->Flink  = (NET_EFI_LIST_ENTRY *) EFI_BAD_POINTER; \
-  (Entry)->Blink  = (NET_EFI_LIST_ENTRY *) EFI_BAD_POINTER;
+  (Entry)->ForwardLink  = (NET_SCT_LIST_ENTRY *) EFI_BAD_POINTER; \
+  (Entry)->Blink  = (NET_SCT_LIST_ENTRY *) EFI_BAD_POINTER;
 #else
 #define NetRemoveEntryList(Entry) _NetRemoveEntryList (Entry);
 #endif
 
 #define NetInsertTailList(ListHead, Entry) { \
-    NET_EFI_LIST_ENTRY  *_ListHead, *_Blink; \
+    NET_SCT_LIST_ENTRY  *_ListHead, *_Blink; \
     _ListHead         = (ListHead); \
     _Blink            = _ListHead->Blink; \
-    (Entry)->Flink    = _ListHead; \
+    (Entry)->ForwardLink    = _ListHead; \
     (Entry)->Blink    = _Blink; \
-    _Blink->Flink     = (Entry); \
+    _Blink->ForwardLink     = (Entry); \
     _ListHead->Blink  = (Entry); \
   }
 
 #define NetInsertHeadList(ListHead, Entry) { \
-    NET_EFI_LIST_ENTRY  *_ListHead, *_Flink; \
+    NET_SCT_LIST_ENTRY  *_ListHead, *_ForwardLink; \
     _ListHead         = (ListHead); \
-    _Flink            = _ListHead->Flink; \
-    (Entry)->Flink    = _Flink; \
+    _ForwardLink            = _ListHead->ForwardLink; \
+    (Entry)->ForwardLink    = _ForwardLink; \
     (Entry)->Blink    = _ListHead; \
-    _Flink->Blink     = (Entry); \
-    _ListHead->Flink  = (Entry); \
+    _ForwardLink->Blink     = (Entry); \
+    _ListHead->ForwardLink  = (Entry); \
   }
 
 #define NetSwapListEntries(Entry1, Entry2) { \
-    NET_EFI_LIST_ENTRY  *Entry1Flink, *Entry1Blink; \
-    NET_EFI_LIST_ENTRY  *Entry2Flink, *Entry2Blink; \
-    Entry2Flink         = (Entry2)->Flink; \
+    NET_SCT_LIST_ENTRY  *Entry1ForwardLink, *Entry1Blink; \
+    NET_SCT_LIST_ENTRY  *Entry2ForwardLink, *Entry2Blink; \
+    Entry2ForwardLink         = (Entry2)->ForwardLink; \
     Entry2Blink         = (Entry2)->Blink; \
-    Entry1Flink         = (Entry1)->Flink; \
+    Entry1ForwardLink         = (Entry1)->ForwardLink; \
     Entry1Blink         = (Entry1)->Blink; \
-    Entry2Blink->Flink  = Entry2Flink; \
-    Entry2Flink->Blink  = Entry2Blink; \
-    (Entry2)->Flink     = Entry1; \
+    Entry2Blink->ForwardLink  = Entry2ForwardLink; \
+    Entry2ForwardLink->Blink  = Entry2Blink; \
+    (Entry2)->ForwardLink     = Entry1; \
     (Entry2)->Blink     = Entry1Blink; \
-    Entry1Blink->Flink  = (Entry2); \
+    Entry1Blink->ForwardLink  = (Entry2); \
     (Entry1)->Blink     = (Entry2); \
   }
 
 #define NetListEntry(Entry, Type, Field) _CR(Entry, Type, Field)
 #define NetListHead(ListHead, Type, Field) \
-        NetListEntry((ListHead)->Flink, Type, Field)
+        NetListEntry((ListHead)->ForwardLink, Type, Field)
 //
 // NET_DEBUG_CACHE_BUFFER
 //
 typedef struct _NET_DEBUG_CACHE_BUFFER {
   CHAR8 * Message;
   UINT16 MessageLen;
-  NET_EFI_LIST_ENTRY Entry;
+  NET_SCT_LIST_ENTRY Entry;
 } NET_DEBUG_CACHE_BUFFER;
 
 //

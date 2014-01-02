@@ -1121,10 +1121,10 @@ Routine Description:
 --*/
 {
   EFI_STATUS      Status;
-  EFI_LIST_ENTRY  *Link;
-  EFI_LIST_ENTRY  TestCaseList;
+  SCT_LIST_ENTRY  *Link;
+  SCT_LIST_ENTRY  TestCaseList;
 
-  InitializeListHead (&TestCaseList);
+  SctInitializeListHead (&TestCaseList);
 
   //
   // Create the test cases
@@ -1158,10 +1158,10 @@ Routine Description:
     return Status;
   }
 
-  while (!IsListEmpty (&TestCaseList)) {
-    Link = TestCaseList.Flink;
-    RemoveEntryList (Link);
-    InsertTailList (&gFT->TestCaseList, Link);
+  while (!SctIsListEmpty (&TestCaseList)) {
+    Link = TestCaseList.ForwardLink;
+    SctRemoveEntryList (Link);
+    SctInsertTailList (&gFT->TestCaseList, Link);
   }
 
   //
@@ -1211,10 +1211,10 @@ Routine Description:
 --*/
 {
   EFI_STATUS      Status;
-  EFI_LIST_ENTRY  *Link;
-  EFI_LIST_ENTRY  TestCaseList;
+  SCT_LIST_ENTRY  *Link;
+  SCT_LIST_ENTRY  TestCaseList;
 
-  InitializeListHead (&TestCaseList);
+  SctInitializeListHead (&TestCaseList);
 
   //
   // Create the test cases
@@ -1248,10 +1248,10 @@ Routine Description:
     return Status;
   }
 
-  while (!IsListEmpty (&TestCaseList)) {
-    Link = TestCaseList.Flink;
-    RemoveEntryList (Link);
-    InsertTailList (&gFT->TestCaseList, Link);
+  while (!SctIsListEmpty (&TestCaseList)) {
+    Link = TestCaseList.ForwardLink;
+    SctRemoveEntryList (Link);
+    SctInsertTailList (&gFT->TestCaseList, Link);
   }
 
   //
@@ -1274,10 +1274,10 @@ Routine Description:
 --*/
 {
   EFI_STATUS      Status;
-  EFI_LIST_ENTRY  *Link;
-  EFI_LIST_ENTRY  TestCaseList;
+  SCT_LIST_ENTRY  *Link;
+  SCT_LIST_ENTRY  TestCaseList;
 
-  InitializeListHead (&TestCaseList);
+  SctInitializeListHead (&TestCaseList);
 
   //
   // Create the test cases
@@ -1311,10 +1311,10 @@ Routine Description:
     return Status;
   }
 
-  while (!IsListEmpty (&TestCaseList)) {
-    Link = TestCaseList.Flink;
-    RemoveEntryList (Link);
-    InsertTailList (&gFT->TestCaseList, Link);
+  while (!SctIsListEmpty (&TestCaseList)) {
+    Link = TestCaseList.ForwardLink;
+    SctRemoveEntryList (Link);
+    SctInsertTailList (&gFT->TestCaseList, Link);
   }
 
   //
@@ -1359,10 +1359,10 @@ Routine Description:
 --*/
 {
   EFI_STATUS      Status;
-  EFI_LIST_ENTRY  *Link;
-  EFI_LIST_ENTRY  TestCaseList;
+  SCT_LIST_ENTRY  *Link;
+  SCT_LIST_ENTRY  TestCaseList;
 
-  InitializeListHead (&TestCaseList);
+  SctInitializeListHead (&TestCaseList);
 
   //
   // Create the test cases
@@ -1396,10 +1396,10 @@ Routine Description:
     return Status;
   }
 
-  while (!IsListEmpty (&TestCaseList)) {
-    Link = TestCaseList.Flink;
-    RemoveEntryList (Link);
-    InsertTailList (&gFT->TestCaseList, Link);
+  while (!SctIsListEmpty (&TestCaseList)) {
+    Link = TestCaseList.ForwardLink;
+    SctRemoveEntryList (Link);
+    SctInsertTailList (&gFT->TestCaseList, Link);
   }
 
   //

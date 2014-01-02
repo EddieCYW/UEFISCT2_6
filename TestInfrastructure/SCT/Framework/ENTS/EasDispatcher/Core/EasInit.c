@@ -54,7 +54,6 @@ Abstract:
 --*/
 
 #include "SctLib.h"
-#include "EfiShellLib.h"
 #include "Eas.h"
 #include "EntsMonitorProtocol.h"
 
@@ -441,7 +440,7 @@ Returns:
   EFI_STATUS  Status;
   CHAR16      *FilePath;
 
-  InitializeListHead (&gEasFT->SupportList);
+  SctInitializeListHead (&gEasFT->SupportList);
 
   //
   // Create the test file path
@@ -513,7 +512,7 @@ Returns:
   EFI_STATUS  Status;
   CHAR16      *FilePath;
 
-  InitializeListHead (&gEasFT->TestAppList);
+  SctInitializeListHead (&gEasFT->TestAppList);
 
   //
   // Create the test file path

@@ -67,7 +67,7 @@ typedef struct {
   UINT64                            SetPosition;
   UINT64                            PositionAfterWrite;
   UINTN                             WriteLength;
-  EFI_LIST_ENTRY                    ListEntry;     
+  SCT_LIST_ENTRY                    ListEntry;     
   EFI_STATUS                        StatusAsync;
   EFI_TEST_ASSERTION                AssertionType;
 } FileIoWrite_Task;
@@ -118,9 +118,9 @@ BBTestWriteExBasicTestCheckpoint4 (
 //
 // Async Write File Queue
 //
-EFI_LIST_ENTRY  AsyncWriteExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(AsyncWriteExecuteListHead);
-EFI_LIST_ENTRY  AsyncWriteFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(AsyncWriteFinishListHead);
-EFI_LIST_ENTRY  AsyncWriteFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(AsyncWriteFailListHead);
+SCT_LIST_ENTRY  AsyncWriteExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncWriteExecuteListHead);
+SCT_LIST_ENTRY  AsyncWriteFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncWriteFinishListHead);
+SCT_LIST_ENTRY  AsyncWriteFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncWriteFailListHead);
 
 //
 // Async Write File lock
@@ -130,9 +130,9 @@ FLOCK  gAsyncWriteQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 //
 // Async Write Multi Files Queue
 //
-EFI_LIST_ENTRY  AsyncWriteMultiExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(AsyncWriteMultiExecuteListHead);
-EFI_LIST_ENTRY  AsyncWriteMultiFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(AsyncWriteMultiFinishListHead);
-EFI_LIST_ENTRY  AsyncWriteMultiFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(AsyncWriteMultiFailListHead);
+SCT_LIST_ENTRY  AsyncWriteMultiExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncWriteMultiExecuteListHead);
+SCT_LIST_ENTRY  AsyncWriteMultiFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncWriteMultiFinishListHead);
+SCT_LIST_ENTRY  AsyncWriteMultiFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncWriteMultiFailListHead);
 
 //
 // Async Write Multi Files lock
@@ -170,8 +170,8 @@ EFIAPI FileIoWriteOneFileNotifyFunc (
   // All FileIoWriteOneFile Notify function run at Call Back level only once, So no locks required
   //
   AcquireLock(&gAsyncWriteQueueLock);
-  RemoveEntryList(&FileIoEntity->ListEntry);
-  InsertTailList(&AsyncWriteFinishListHead, &FileIoEntity->ListEntry);
+  SctRemoveEntryList(&FileIoEntity->ListEntry);
+  SctInsertTailList(&AsyncWriteFinishListHead, &FileIoEntity->ListEntry);
   ReleaseLock(&gAsyncWriteQueueLock);
 
   return EFI_SUCCESS;
@@ -247,7 +247,7 @@ FileIoAsyncWriteOneFile(
   }
 
   AcquireLock(&gAsyncWriteQueueLock);
-  InsertTailList(&AsyncWriteExecuteListHead, &FileIoEntity->ListEntry);
+  SctInsertTailList(&AsyncWriteExecuteListHead, &FileIoEntity->ListEntry);
   ReleaseLock(&gAsyncWriteQueueLock);
   
   //
@@ -262,8 +262,8 @@ FileIoAsyncWriteOneFile(
   
   if (EFI_ERROR (Status)) {
     AcquireLock(&gAsyncWriteQueueLock);
-    RemoveEntryList(&FileIoEntity->ListEntry);
-    InsertTailList(&AsyncWriteFailListHead, &FileIoEntity->ListEntry);    
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
+    SctInsertTailList(&AsyncWriteFailListHead, &FileIoEntity->ListEntry);    
     ReleaseLock(&gAsyncWriteQueueLock);
   }
 
@@ -307,8 +307,8 @@ EFIAPI FileIoWriteMultiFilesNotifyFunc (
   // All FileIoWriteMultiFiles Notify function run at Call Back level only once, So no locks required
   //
   AcquireLock(&gAsyncWriteMultiQueueLock);
-  RemoveEntryList(&FileIoEntity->ListEntry);
-  InsertTailList(&AsyncWriteMultiFinishListHead, &FileIoEntity->ListEntry);
+  SctRemoveEntryList(&FileIoEntity->ListEntry);
+  SctInsertTailList(&AsyncWriteMultiFinishListHead, &FileIoEntity->ListEntry);
   ReleaseLock(&gAsyncWriteMultiQueueLock);
   return EFI_SUCCESS;
 }
@@ -378,7 +378,7 @@ FileIoAsyncWriteMultiFiles (
   }
 
   AcquireLock(&gAsyncWriteMultiQueueLock);
-  InsertTailList(&AsyncWriteMultiExecuteListHead, &FileIoEntity->ListEntry);
+  SctInsertTailList(&AsyncWriteMultiExecuteListHead, &FileIoEntity->ListEntry);
   ReleaseLock(&gAsyncWriteMultiQueueLock);
   
   //
@@ -391,8 +391,8 @@ FileIoAsyncWriteMultiFiles (
   
   if (EFI_ERROR (Status)) {
     AcquireLock(&gAsyncWriteMultiQueueLock);
-    RemoveEntryList(&FileIoEntity->ListEntry);
-    InsertTailList(&AsyncWriteMultiFailListHead, &FileIoEntity->ListEntry);    
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
+    SctInsertTailList(&AsyncWriteMultiFailListHead, &FileIoEntity->ListEntry);    
     ReleaseLock(&gAsyncWriteMultiQueueLock);
   }
 
@@ -493,7 +493,7 @@ BBTestWriteExBasicTestCheckpoint1 (
   UINTN                     Index;
   UINTN                     IndexI;
   UINTN                     WaitIndex;
-  EFI_LIST_ENTRY            *ListEntry;
+  SCT_LIST_ENTRY            *ListEntry;
   FileIoWrite_Task          *FileIoEntity;
   UINT8                     BufferRead[100];
 
@@ -632,7 +632,7 @@ BBTestWriteExBasicTestCheckpoint1 (
   IndexI = 0;
     
   AcquireLock(&gAsyncWriteQueueLock);
-  while (!IsListEmpty(&AsyncWriteExecuteListHead) && IndexI < 120) {
+  while (!SctIsListEmpty(&AsyncWriteExecuteListHead) && IndexI < 120) {
     ReleaseLock(&gAsyncWriteQueueLock);
     
     gtBS->WaitForEvent (                   
@@ -656,8 +656,8 @@ BBTestWriteExBasicTestCheckpoint1 (
   // Here no logs should be wrote to this file device to keep data intact
   //
   AcquireLock(&gAsyncWriteQueueLock);
-  if (!IsListEmpty(&AsyncWriteFinishListHead)) {
-    for(ListEntry = GetFirstNode(&AsyncWriteFinishListHead); ; ListEntry = GetNextNode(&AsyncWriteFinishListHead, ListEntry)) {
+  if (!SctIsListEmpty(&AsyncWriteFinishListHead)) {
+    for(ListEntry = SctGetFirstNode(&AsyncWriteFinishListHead); ; ListEntry = SctGetNextNode(&AsyncWriteFinishListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
       ReleaseLock(&gAsyncWriteQueueLock);
 
@@ -764,7 +764,7 @@ BBTestWriteExBasicTestCheckpoint1 (
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&AsyncWriteFinishListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&AsyncWriteFinishListHead, ListEntry)) {
          break;
       }
     }
@@ -775,9 +775,9 @@ BBTestWriteExBasicTestCheckpoint1 (
   // Record All Finished Write case results
   //
   AcquireLock(&gAsyncWriteQueueLock);
-  while (!IsListEmpty(&AsyncWriteFinishListHead)) {
+  while (!SctIsListEmpty(&AsyncWriteFinishListHead)) {
     FileIoEntity = CR(AsyncWriteFinishListHead.ForwardLink, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);   
-    RemoveEntryList(&FileIoEntity->ListEntry);
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
     ReleaseLock(&gAsyncWriteQueueLock);
 
     StandardLib->RecordAssertion (
@@ -810,9 +810,9 @@ BBTestWriteExBasicTestCheckpoint1 (
   // If WriteFailListHead is not empty, which means some Async Calls are wrong 
   //
   AcquireLock(&gAsyncWriteQueueLock);
-  while(!IsListEmpty(&AsyncWriteFailListHead)) {
+  while(!SctIsListEmpty(&AsyncWriteFailListHead)) {
     FileIoEntity = CR(AsyncWriteFailListHead.ForwardLink, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-    RemoveEntryList(&FileIoEntity->ListEntry);
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
     ReleaseLock(&gAsyncWriteQueueLock);
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -846,8 +846,8 @@ BBTestWriteExBasicTestCheckpoint1 (
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
   AcquireLock(&gAsyncWriteQueueLock);
-  if (!IsListEmpty(&AsyncWriteExecuteListHead)) {
-    for(ListEntry = GetFirstNode(&AsyncWriteExecuteListHead); ; ListEntry = GetNextNode(&AsyncWriteExecuteListHead, ListEntry)) {
+  if (!SctIsListEmpty(&AsyncWriteExecuteListHead)) {
+    for(ListEntry = SctGetFirstNode(&AsyncWriteExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncWriteExecuteListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
       ReleaseLock(&gAsyncWriteQueueLock);
     
@@ -865,7 +865,7 @@ BBTestWriteExBasicTestCheckpoint1 (
                      );
 
       AcquireLock(&gAsyncWriteQueueLock);
-      if (IsNodeAtEnd(&AsyncWriteExecuteListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&AsyncWriteExecuteListHead, ListEntry)) {
         break;
       }
     }
@@ -1214,7 +1214,7 @@ BBTestWriteExBasicTestCheckpoint3 (
   UINTN                     Index;
   UINTN                     IndexI;
   UINTN                     WaitIndex;
-  EFI_LIST_ENTRY            *ListEntry;
+  SCT_LIST_ENTRY            *ListEntry;
   FileIoWrite_Task          *FileIoEntity;
   UINT8                     BufferRead[200];
   EFI_FILE_INFO             *FileInfo;
@@ -1378,7 +1378,7 @@ BBTestWriteExBasicTestCheckpoint3 (
   IndexI = 0;
       
   AcquireLock(&gAsyncWriteMultiQueueLock);
-  while (!IsListEmpty(&AsyncWriteMultiExecuteListHead) && IndexI < 120) {
+  while (!SctIsListEmpty(&AsyncWriteMultiExecuteListHead) && IndexI < 120) {
     ReleaseLock(&gAsyncWriteMultiQueueLock);
       
     gtBS->WaitForEvent (                   
@@ -1402,8 +1402,8 @@ BBTestWriteExBasicTestCheckpoint3 (
   // Here no logs should be wrote to this file device to keep data intact
   //
   AcquireLock(&gAsyncWriteMultiQueueLock);
-  if (!IsListEmpty(&AsyncWriteMultiFinishListHead)) {
-    for (ListEntry = GetFirstNode(&AsyncWriteMultiFinishListHead); ; ListEntry = GetNextNode(&AsyncWriteMultiFinishListHead, ListEntry)) {
+  if (!SctIsListEmpty(&AsyncWriteMultiFinishListHead)) {
+    for (ListEntry = SctGetFirstNode(&AsyncWriteMultiFinishListHead); ; ListEntry = SctGetNextNode(&AsyncWriteMultiFinishListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
       ReleaseLock(&gAsyncWriteMultiQueueLock);
 
@@ -1506,7 +1506,7 @@ BBTestWriteExBasicTestCheckpoint3 (
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&AsyncWriteMultiFinishListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&AsyncWriteMultiFinishListHead, ListEntry)) {
         break;
       }
     }
@@ -1517,9 +1517,9 @@ BBTestWriteExBasicTestCheckpoint3 (
   // Record All Finished Write case results
   //
   AcquireLock(&gAsyncWriteMultiQueueLock);
-  while (!IsListEmpty(&AsyncWriteMultiFinishListHead)) {
+  while (!SctIsListEmpty(&AsyncWriteMultiFinishListHead)) {
     FileIoEntity = CR(AsyncWriteMultiFinishListHead.ForwardLink, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);   
-    RemoveEntryList(&FileIoEntity->ListEntry);
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
     ReleaseLock(&gAsyncWriteMultiQueueLock);
       
     StandardLib->RecordAssertion (
@@ -1552,9 +1552,9 @@ BBTestWriteExBasicTestCheckpoint3 (
   // If WriteMultiFailListHead is not empty, which means some Async Calls are wrong 
   //
   AcquireLock(&gAsyncWriteMultiQueueLock);
-  while(!IsListEmpty(&AsyncWriteMultiFailListHead)) {
+  while(!SctIsListEmpty(&AsyncWriteMultiFailListHead)) {
     FileIoEntity = CR(AsyncWriteMultiFailListHead.ForwardLink, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-    RemoveEntryList(&FileIoEntity->ListEntry);
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
     ReleaseLock(&gAsyncWriteMultiQueueLock);
         
     StandardLib->RecordAssertion (
@@ -1590,8 +1590,8 @@ BBTestWriteExBasicTestCheckpoint3 (
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
   AcquireLock(&gAsyncWriteMultiQueueLock);
-  if (!IsListEmpty(&AsyncWriteMultiExecuteListHead)) {
-    for(ListEntry = GetFirstNode(&AsyncWriteMultiExecuteListHead); ; ListEntry = GetNextNode(&AsyncWriteMultiExecuteListHead, ListEntry)) {
+  if (!SctIsListEmpty(&AsyncWriteMultiExecuteListHead)) {
+    for(ListEntry = SctGetFirstNode(&AsyncWriteMultiExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncWriteMultiExecuteListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
       ReleaseLock(&gAsyncWriteMultiQueueLock);
       
@@ -1609,7 +1609,7 @@ BBTestWriteExBasicTestCheckpoint3 (
                      );
 
       AcquireLock(&gAsyncWriteMultiQueueLock);
-      if (IsNodeAtEnd(&AsyncWriteMultiExecuteListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&AsyncWriteMultiExecuteListHead, ListEntry)) {
         break;
       }
     }

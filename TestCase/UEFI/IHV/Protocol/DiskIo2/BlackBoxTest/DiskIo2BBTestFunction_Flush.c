@@ -95,9 +95,9 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint3(
 //
 // Async Flush Queue
 //
-EFI_LIST_ENTRY  AsyncFlushFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(AsyncFlushFinishListHead);
-EFI_LIST_ENTRY  AsyncFlushExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(AsyncFlushExecuteListHead);
-EFI_LIST_ENTRY  AsyncFlushFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(AsyncFlushFailListHead);
+SCT_LIST_ENTRY  AsyncFlushFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncFlushFinishListHead);
+SCT_LIST_ENTRY  AsyncFlushExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncFlushExecuteListHead);
+SCT_LIST_ENTRY  AsyncFlushFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncFlushFailListHead);
 
 //
 // Async Flush lock
@@ -128,8 +128,8 @@ EFIAPI DiskIo2FlushNotifyFunc (
   // All DiskIo2 Notify function run at Call Back level only once, So no locks required
   //
   AcquireLock(&gAsyncFlushQueueLock);
-  RemoveEntryList(&DiskIo2Entity->ListEntry);
-  InsertTailList(&AsyncFlushFinishListHead, &DiskIo2Entity->ListEntry);
+  SctRemoveEntryList(&DiskIo2Entity->ListEntry);
+  SctInsertTailList(&AsyncFlushFinishListHead, &DiskIo2Entity->ListEntry);
   ReleaseLock(&gAsyncFlushQueueLock);
 }
 
@@ -187,7 +187,7 @@ DiskIo2AsyncFlushData (
   // Acquire lock to add entity to Execution ListHead
   //
   AcquireLock(&gAsyncFlushQueueLock);
-  InsertTailList(&AsyncFlushExecuteListHead, &DiskIo2Entity->ListEntry);
+  SctInsertTailList(&AsyncFlushExecuteListHead, &DiskIo2Entity->ListEntry);
   ReleaseLock(&gAsyncFlushQueueLock);
   
 
@@ -207,11 +207,11 @@ DiskIo2AsyncFlushData (
     // Failed Status Event should never be signaled, so remove this entity from the list
     //
     AcquireLock(&gAsyncFlushQueueLock);
-    RemoveEntryList(&DiskIo2Entity->ListEntry);
+    SctRemoveEntryList(&DiskIo2Entity->ListEntry);
     // 
     // Put failure execution into fail List
     //
-    InsertTailList(&AsyncFlushFailListHead, &DiskIo2Entity->ListEntry);
+    SctInsertTailList(&AsyncFlushFailListHead, &DiskIo2Entity->ListEntry);
     ReleaseLock(&gAsyncFlushQueueLock);
 
     DiskIo2Entity->Buffer = NULL;
@@ -243,7 +243,7 @@ EFIAPI DiskIo2FlushBatchNotifyFunc (
   
   DiskIO2_Batch_Task_Context          *TaskContext;
   DiskIO2_Task                        *DiskIo2Entity = NULL;
-  EFI_LIST_ENTRY                      *CurrentTaskEntry = NULL;
+  SCT_LIST_ENTRY                      *CurrentTaskEntry = NULL;
   EFI_DISK_IO2_PROTOCOL               *DiskIo2 = NULL;
   EFI_STATUS                          Status;
 
@@ -252,7 +252,7 @@ EFIAPI DiskIo2FlushBatchNotifyFunc (
   CurrentTaskEntry = TaskContext->CurrentTaskEntry;
   DiskIo2          = TaskContext->DiskIo2;
 
-  if (!IsNodeAtEnd(TaskContext->TaskHeader, CurrentTaskEntry) ){
+  if (!SctIsNodeAtEnd(TaskContext->TaskHeader, CurrentTaskEntry) ){
     DiskIo2Entity = CR(CurrentTaskEntry->ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
 
     DiskIo2Entity->DiskIo2Token.Event = NULL;
@@ -328,7 +328,7 @@ STATIC
 EFI_STATUS
 DiskIo2AsyncBatchFlush (
   IN EFI_DISK_IO2_PROTOCOL           *DiskIo2,
-  IN EFI_LIST_ENTRY                  *ListHeader,
+  IN SCT_LIST_ENTRY                  *ListHeader,
   IN OUT EFI_DISK_IO2_TOKEN	         *Token
   )
 {
@@ -338,7 +338,7 @@ DiskIo2AsyncBatchFlush (
   
   ASSERT(Token != NULL && Token->Event != NULL);
   
-  if (!IsListEmpty(ListHeader)) {  
+  if (!SctIsListEmpty(ListHeader)) {  
     //
     // Task Context will be freed in DiskIo2ReadBatchNotifyFunc when all task finished
     //
@@ -557,7 +557,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
   
   DiskIO2_Task          *DiskIo2Entity = NULL;
   UINTN                 WaitIndex;
-  EFI_LIST_ENTRY        *ListEntry = NULL;
+  SCT_LIST_ENTRY        *ListEntry = NULL;
   
   //
   // Initialize variable
@@ -708,7 +708,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
       Index = 0;
       
       AcquireLock(&gAsyncFlushQueueLock);
-      while (!IsListEmpty(&AsyncFlushExecuteListHead) && Index < 60) {
+      while (!SctIsListEmpty(&AsyncFlushExecuteListHead) && Index < 60) {
         ReleaseLock(&gAsyncFlushQueueLock);
         
         gtBS->WaitForEvent (   
@@ -734,8 +734,8 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
     // Here no logs should be wrote to this disk device to keep data intact
     //
     AcquireLock(&gAsyncFlushQueueLock);
-    if (!IsListEmpty(&AsyncFlushFinishListHead)) {
-      for(ListEntry = GetFirstNode(&AsyncFlushFinishListHead); ; ListEntry = GetNextNode(&AsyncFlushFinishListHead, ListEntry)) {
+    if (!SctIsListEmpty(&AsyncFlushFinishListHead)) {
+      for(ListEntry = SctGetFirstNode(&AsyncFlushFinishListHead); ; ListEntry = SctGetNextNode(&AsyncFlushFinishListHead, ListEntry)) {
         DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
         ReleaseLock(&gAsyncFlushQueueLock);
            
@@ -753,7 +753,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&AsyncFlushFinishListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&AsyncFlushFinishListHead, ListEntry)) {
            break;
         }
       }
@@ -762,10 +762,10 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
     //
     // Record All Finished Flush case results
     //
-    while (!IsListEmpty(&AsyncFlushFinishListHead)) {
+    while (!SctIsListEmpty(&AsyncFlushFinishListHead)) {
       DiskIo2Entity = CR(AsyncFlushFinishListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
    
-      RemoveEntryList(&DiskIo2Entity->ListEntry);
+      SctRemoveEntryList(&DiskIo2Entity->ListEntry);
       ReleaseLock(&gAsyncFlushQueueLock);
    
       StandardLib->RecordAssertion (
@@ -789,9 +789,9 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
     //
     // If AsyncFlushFailListHead is not empty, which means some Async Calls are wrong 
     // 
-    while(!IsListEmpty(&AsyncFlushFailListHead)) {
+    while(!SctIsListEmpty(&AsyncFlushFailListHead)) {
       DiskIo2Entity = CR(AsyncFlushFailListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-      RemoveEntryList(&DiskIo2Entity->ListEntry);
+      SctRemoveEntryList(&DiskIo2Entity->ListEntry);
     
       StandardLib->RecordAssertion (
                      StandardLib,
@@ -817,8 +817,8 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
     // Be careful, All the entities in Execution List should NOT be freed here!
     //
     AcquireLock(&gAsyncFlushQueueLock);
-    if (!IsListEmpty(&AsyncFlushExecuteListHead)) {
-      for(ListEntry = GetFirstNode(&AsyncFlushExecuteListHead); ; ListEntry = GetNextNode(&AsyncFlushExecuteListHead, ListEntry)) {
+    if (!SctIsListEmpty(&AsyncFlushExecuteListHead)) {
+      for(ListEntry = SctGetFirstNode(&AsyncFlushExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncFlushExecuteListHead, ListEntry)) {
         DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
         ReleaseLock(&gAsyncFlushQueueLock);
            
@@ -839,7 +839,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&AsyncFlushExecuteListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&AsyncFlushExecuteListHead, ListEntry)) {
            break;
         }
       }
@@ -1091,8 +1091,8 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint3(
                             
      
      
-  EFI_LIST_ENTRY            ListHeader;
-  EFI_LIST_ENTRY            *ListEntry = NULL;
+  SCT_LIST_ENTRY            ListHeader;
+  SCT_LIST_ENTRY            *ListEntry = NULL;
   UINTN                     WaitIndex;
   DiskIO2_Task              *DiskIo2Entity = NULL;
   EFI_DISK_IO2_TOKEN        BatchFlushToken;
@@ -1307,8 +1307,8 @@ END:
   //
   // Verify all Async Flush Task Result 
   //
-  if (!IsListEmpty(&ListHeader) && MemoryAllocFail == FALSE) {
-    for(ListEntry = GetFirstNode(&ListHeader); ; ListEntry = GetNextNode(&ListHeader, ListEntry)) {
+  if (!SctIsListEmpty(&ListHeader) && MemoryAllocFail == FALSE) {
+    for(ListEntry = SctGetFirstNode(&ListHeader); ; ListEntry = SctGetNextNode(&ListHeader, ListEntry)) {
       DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
   
       //
@@ -1327,7 +1327,7 @@ END:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&ListHeader, ListEntry)) {
+      if (SctIsNodeAtEnd(&ListHeader, ListEntry)) {
          break;
       }
     }
@@ -1337,9 +1337,9 @@ END:
   //
   // Do logging & clean up 
   //
-  while(!IsListEmpty(&ListHeader)) {
+  while(!SctIsListEmpty(&ListHeader)) {
     DiskIo2Entity = CR(ListHeader.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2Entity->ListEntry);
+    SctRemoveEntryList(&DiskIo2Entity->ListEntry);
   
     if ( MemoryAllocFail == FALSE) { 
       StandardLib->RecordAssertion (

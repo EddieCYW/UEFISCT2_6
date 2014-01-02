@@ -126,7 +126,7 @@ struct {
   NULL
 };
 
-EFI_LIST_ENTRY          GuidList;
+SCT_LIST_ENTRY          GuidList;
 
 
 VOID

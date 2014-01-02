@@ -90,9 +90,9 @@ BBTestReadExBasicTestCheckpoint4 (
 //
 // Async Read File Queue
 //
-EFI_LIST_ENTRY  AsyncReadExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(AsyncReadExecuteListHead);
-EFI_LIST_ENTRY  AsyncReadFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(AsyncReadFinishListHead);
-EFI_LIST_ENTRY  AsyncReadFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(AsyncReadFailListHead);
+SCT_LIST_ENTRY  AsyncReadExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncReadExecuteListHead);
+SCT_LIST_ENTRY  AsyncReadFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncReadFinishListHead);
+SCT_LIST_ENTRY  AsyncReadFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncReadFailListHead);
 
 //
 // Async Read File lock
@@ -103,9 +103,9 @@ FLOCK  gAsyncReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 //
 // Async Read Directory Queue
 //
-EFI_LIST_ENTRY  AsyncReadDirExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(AsyncReadDirExecuteListHead);
-EFI_LIST_ENTRY  AsyncReadDirFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(AsyncReadDirFinishListHead);
-EFI_LIST_ENTRY  AsyncReadDirFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(AsyncReadDirFailListHead);
+SCT_LIST_ENTRY  AsyncReadDirExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncReadDirExecuteListHead);
+SCT_LIST_ENTRY  AsyncReadDirFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncReadDirFinishListHead);
+SCT_LIST_ENTRY  AsyncReadDirFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncReadDirFailListHead);
 
 //
 // Async Read Directory lock
@@ -131,8 +131,8 @@ EFIAPI FileIoReadNotifyFunc (
   // All FileIo Notify function run at Call Back level only once, So no locks required
   //
   AcquireLock(&gAsyncReadQueueLock);
-  RemoveEntryList(&FileIoEntity->ListEntry);
-  InsertTailList(&AsyncReadFinishListHead, &FileIoEntity->ListEntry);
+  SctRemoveEntryList(&FileIoEntity->ListEntry);
+  SctInsertTailList(&AsyncReadFinishListHead, &FileIoEntity->ListEntry);
 
   FileIoEntity->FileIo->GetPosition (FileIoEntity->FileIo, &FileIoEntity->PositionAfterRead);
   
@@ -204,7 +204,7 @@ FileIoAsyncReadData (
   
 
   AcquireLock(&gAsyncReadQueueLock);
-  InsertTailList(&AsyncReadExecuteListHead, &FileIoEntity->ListEntry);
+  SctInsertTailList(&AsyncReadExecuteListHead, &FileIoEntity->ListEntry);
   ReleaseLock(&gAsyncReadQueueLock);
   
   //
@@ -219,8 +219,8 @@ FileIoAsyncReadData (
   
   if (EFI_ERROR (Status)) {
     AcquireLock(&gAsyncReadQueueLock);
-    RemoveEntryList(&FileIoEntity->ListEntry);
-    InsertTailList(&AsyncReadFailListHead, &FileIoEntity->ListEntry);    
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
+    SctInsertTailList(&AsyncReadFailListHead, &FileIoEntity->ListEntry);    
     ReleaseLock(&gAsyncReadQueueLock);
 
     FileIoEntity->FileIoToken.Buffer = NULL;
@@ -253,8 +253,8 @@ EFIAPI FileIoReadDirNotifyFunc (
   // All FileIoReadDir Notify function run at Call Back level only once, So no locks required
   //
   AcquireLock(&gAsyncReadDirQueueLock);
-  RemoveEntryList(&FileIoReadDirEntity->ListEntry);
-  InsertTailList(&AsyncReadDirFinishListHead, &FileIoReadDirEntity->ListEntry);
+  SctRemoveEntryList(&FileIoReadDirEntity->ListEntry);
+  SctInsertTailList(&AsyncReadDirFinishListHead, &FileIoReadDirEntity->ListEntry);
   ReleaseLock(&gAsyncReadDirQueueLock);
 }
 
@@ -345,7 +345,7 @@ FileIoAsyncReadDir (
   }
 
   AcquireLock(&gAsyncReadDirQueueLock);
-  InsertTailList(&AsyncReadDirExecuteListHead, &FileIoReadDirEntity->ListEntry);
+  SctInsertTailList(&AsyncReadDirExecuteListHead, &FileIoReadDirEntity->ListEntry);
   ReleaseLock(&gAsyncReadDirQueueLock);
   
   //
@@ -360,8 +360,8 @@ FileIoAsyncReadDir (
 
   if (Status != EFI_SUCCESS) {
     AcquireLock(&gAsyncReadDirQueueLock);
-    RemoveEntryList(&FileIoReadDirEntity->ListEntry);
-    InsertTailList(&AsyncReadDirFailListHead, &FileIoReadDirEntity->ListEntry);    
+    SctRemoveEntryList(&FileIoReadDirEntity->ListEntry);
+    SctInsertTailList(&AsyncReadDirFailListHead, &FileIoReadDirEntity->ListEntry);    
     ReleaseLock(&gAsyncReadDirQueueLock);
   }
 
@@ -459,7 +459,7 @@ BBTestReadExBasicTestCheckpoint1 (
   UINTN                     Index;
   UINTN                     IndexI;
   UINTN                     WaitIndex;
-  EFI_LIST_ENTRY            *ListEntry;
+  SCT_LIST_ENTRY            *ListEntry;
   FileIo_Task               *FileIoEntity;
   UINT8                     *BufferRead;
   UINTN                     SetPosition[9] = {0, 0, 0, 100, 100, 100, 200, 200, 300};
@@ -636,7 +636,7 @@ BBTestReadExBasicTestCheckpoint1 (
     IndexI = 0;
       
     AcquireLock(&gAsyncReadQueueLock);
-    while (!IsListEmpty(&AsyncReadExecuteListHead) && IndexI < 120) {
+    while (!SctIsListEmpty(&AsyncReadExecuteListHead) && IndexI < 120) {
       ReleaseLock(&gAsyncReadQueueLock);
       
       gtBS->WaitForEvent (                   
@@ -660,8 +660,8 @@ BBTestReadExBasicTestCheckpoint1 (
     // Here no logs should be wrote to this file device to keep data intact
     //
     AcquireLock(&gAsyncReadQueueLock);
-    if (!IsListEmpty(&AsyncReadFinishListHead)) {
-      for(ListEntry = GetFirstNode(&AsyncReadFinishListHead); ; ListEntry = GetNextNode(&AsyncReadFinishListHead, ListEntry)) {
+    if (!SctIsListEmpty(&AsyncReadFinishListHead)) {
+      for(ListEntry = SctGetFirstNode(&AsyncReadFinishListHead); ; ListEntry = SctGetNextNode(&AsyncReadFinishListHead, ListEntry)) {
         FileIoEntity = CR(ListEntry, FileIo_Task, ListEntry, FILEIOENTITY_SIGNATURE);
         ReleaseLock(&gAsyncReadQueueLock);
 
@@ -702,7 +702,7 @@ BBTestReadExBasicTestCheckpoint1 (
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&AsyncReadFinishListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&AsyncReadFinishListHead, ListEntry)) {
           break;
         }
       }
@@ -713,9 +713,9 @@ BBTestReadExBasicTestCheckpoint1 (
     // Record All Finished Read case results
     //
     AcquireLock(&gAsyncReadQueueLock);
-    while (!IsListEmpty(&AsyncReadFinishListHead)) {
+    while (!SctIsListEmpty(&AsyncReadFinishListHead)) {
       FileIoEntity = CR(AsyncReadFinishListHead.ForwardLink, FileIo_Task, ListEntry, FILEIOENTITY_SIGNATURE);   
-      RemoveEntryList(&FileIoEntity->ListEntry);
+      SctRemoveEntryList(&FileIoEntity->ListEntry);
       ReleaseLock(&gAsyncReadQueueLock);
       
       StandardLib->RecordAssertion (
@@ -745,9 +745,9 @@ BBTestReadExBasicTestCheckpoint1 (
     // If ReadFailListHead is not empty, which means some Async Calls are wrong 
     //
     AcquireLock(&gAsyncReadQueueLock);
-    while(!IsListEmpty(&AsyncReadFailListHead)) {
+    while(!SctIsListEmpty(&AsyncReadFailListHead)) {
       FileIoEntity = CR(AsyncReadFailListHead.ForwardLink, FileIo_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-      RemoveEntryList(&FileIoEntity->ListEntry);
+      SctRemoveEntryList(&FileIoEntity->ListEntry);
       ReleaseLock(&gAsyncReadQueueLock);
         
       StandardLib->RecordAssertion (
@@ -779,8 +779,8 @@ BBTestReadExBasicTestCheckpoint1 (
     // Be careful, All the entities in Execution List should NOT be freed here!
     //
     AcquireLock(&gAsyncReadQueueLock);
-    if (!IsListEmpty(&AsyncReadExecuteListHead)) {
-      for(ListEntry = GetFirstNode(&AsyncReadExecuteListHead); ; ListEntry = GetNextNode(&AsyncReadExecuteListHead, ListEntry)) {
+    if (!SctIsListEmpty(&AsyncReadExecuteListHead)) {
+      for(ListEntry = SctGetFirstNode(&AsyncReadExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncReadExecuteListHead, ListEntry)) {
         FileIoEntity = CR(ListEntry, FileIo_Task, ListEntry, FILEIOENTITY_SIGNATURE);
         ReleaseLock(&gAsyncReadQueueLock);
       
@@ -800,7 +800,7 @@ BBTestReadExBasicTestCheckpoint1 (
                        );
 
         AcquireLock(&gAsyncReadQueueLock);
-        if (IsNodeAtEnd(&AsyncReadExecuteListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&AsyncReadExecuteListHead, ListEntry)) {
           break;
         }
       }
@@ -1108,7 +1108,7 @@ BBTestReadExBasicTestCheckpoint3 (
   UINTN                     Index;
   UINTN                     IndexI;
   UINTN                     WaitIndex;
-  EFI_LIST_ENTRY            *ListEntry;
+  SCT_LIST_ENTRY            *ListEntry;
   FileIoDir_Task            *FileIoReadDirEntity;  
 
   Root                = NULL;
@@ -1268,7 +1268,7 @@ BBTestReadExBasicTestCheckpoint3 (
   IndexI = 0;
     
   AcquireLock(&gAsyncReadQueueLock);
-  while (!IsListEmpty(&AsyncReadExecuteListHead) && IndexI < 120) {
+  while (!SctIsListEmpty(&AsyncReadExecuteListHead) && IndexI < 120) {
     ReleaseLock(&gAsyncReadQueueLock);
     
     gtBS->WaitForEvent (                   
@@ -1292,8 +1292,8 @@ BBTestReadExBasicTestCheckpoint3 (
   // Here no logs should be wrote to this file device to keep data intact
   //
   AcquireLock(&gAsyncReadDirQueueLock);
-    if (!IsListEmpty(&AsyncReadDirFinishListHead)) {
-      for(ListEntry = GetFirstNode(&AsyncReadDirFinishListHead); ; ListEntry = GetNextNode(&AsyncReadDirFinishListHead, ListEntry)) {
+    if (!SctIsListEmpty(&AsyncReadDirFinishListHead)) {
+      for(ListEntry = SctGetFirstNode(&AsyncReadDirFinishListHead); ; ListEntry = SctGetNextNode(&AsyncReadDirFinishListHead, ListEntry)) {
         FileIoReadDirEntity = CR(ListEntry, FileIoDir_Task, ListEntry, FILEIOENTITY_SIGNATURE);
         ReleaseLock(&gAsyncReadDirQueueLock);
       
@@ -1326,7 +1326,7 @@ BBTestReadExBasicTestCheckpoint3 (
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&AsyncReadDirFinishListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&AsyncReadDirFinishListHead, ListEntry)) {
           break;
         }
       }
@@ -1337,12 +1337,12 @@ BBTestReadExBasicTestCheckpoint3 (
   // Record All Finished Read Dir case results
   //
   AcquireLock(&gAsyncReadDirQueueLock);
-    while (!IsListEmpty(&AsyncReadDirFinishListHead)) {
+    while (!SctIsListEmpty(&AsyncReadDirFinishListHead)) {
       FileIoReadDirEntity = CR(AsyncReadDirFinishListHead.ForwardLink, FileIoDir_Task, ListEntry, FILEIOENTITY_SIGNATURE);   
 
       DirHandle = FileIoReadDirEntity->FileIo;
 
-      RemoveEntryList(&FileIoReadDirEntity->ListEntry);
+      SctRemoveEntryList(&FileIoReadDirEntity->ListEntry);
       ReleaseLock(&gAsyncReadDirQueueLock);
             
       StandardLib->RecordAssertion (
@@ -1377,13 +1377,13 @@ BBTestReadExBasicTestCheckpoint3 (
   // If ReadFailDirListHead is not empty, which means some Async Read Dir Calls are wrong 
   //
   AcquireLock(&gAsyncReadDirQueueLock);
-    while(!IsListEmpty(&AsyncReadDirFailListHead)) {
+    while(!SctIsListEmpty(&AsyncReadDirFailListHead)) {
 
       FileIoReadDirEntity = CR(AsyncReadDirFailListHead.ForwardLink, FileIoDir_Task, ListEntry, FILEIOENTITY_SIGNATURE);
 
       DirHandle = FileIoReadDirEntity->FileIo;
         
-      RemoveEntryList(&FileIoReadDirEntity->ListEntry);
+      SctRemoveEntryList(&FileIoReadDirEntity->ListEntry);
       ReleaseLock(&gAsyncReadDirQueueLock);
       if (FileIoReadDirEntity->StatusAsync == EFI_BUFFER_TOO_SMALL){
         StandardLib->RecordAssertion (
@@ -1437,8 +1437,8 @@ BBTestReadExBasicTestCheckpoint3 (
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
   AcquireLock(&gAsyncReadDirQueueLock);
-    if (!IsListEmpty(&AsyncReadDirExecuteListHead)) {
-      for(ListEntry = GetFirstNode(&AsyncReadDirExecuteListHead); ; ListEntry = GetNextNode(&AsyncReadDirExecuteListHead, ListEntry)) {
+    if (!SctIsListEmpty(&AsyncReadDirExecuteListHead)) {
+      for(ListEntry = SctGetFirstNode(&AsyncReadDirExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncReadDirExecuteListHead, ListEntry)) {
         FileIoReadDirEntity = CR(ListEntry, FileIoDir_Task, ListEntry, FILEIOENTITY_SIGNATURE);
         ReleaseLock(&gAsyncReadDirQueueLock);
         StandardLib->RecordAssertion (
@@ -1457,7 +1457,7 @@ BBTestReadExBasicTestCheckpoint3 (
                        );
         
         AcquireLock(&gAsyncReadDirQueueLock);
-        if (IsNodeAtEnd(&AsyncReadDirExecuteListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&AsyncReadDirExecuteListHead, ListEntry)) {
           break;
         }
       }

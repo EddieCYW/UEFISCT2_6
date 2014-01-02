@@ -111,7 +111,7 @@ typedef struct {
   UINT32                    Signature;
   UINT32                    Revision;
 
-  EFI_LIST_ENTRY            Link;
+  SCT_LIST_ENTRY            Link;
 
   UINTN                     Index;
   EFI_GUID                  CategoryGuid;
@@ -134,7 +134,7 @@ typedef struct {
   UINT32                    Signature;
   UINT32                    Revision;
 
-  EFI_LIST_ENTRY            Link;
+  SCT_LIST_ENTRY            Link;
 
   EFI_GUID                  Guid;
   CHAR16                    *Name;
@@ -168,7 +168,7 @@ typedef struct {
   UINT32                    Signature;
   UINT32                    Revision;
 
-  EFI_LIST_ENTRY            Link;
+  SCT_LIST_ENTRY            Link;
 
   EFI_DEVICE_PATH_PROTOCOL  *DevicePath;
   CHAR16                    *FileName;
@@ -195,8 +195,8 @@ typedef struct {
   UINT32                    Signature;
   UINT32                    Revision;
 
-  EFI_LIST_ENTRY            Link;
-  EFI_LIST_ENTRY            Child;
+  SCT_LIST_ENTRY            Link;
+  SCT_LIST_ENTRY            Child;
 
   UINTN                     Index;
   CHAR16                    *Name;
@@ -262,7 +262,7 @@ typedef struct {
   UINT32                              Signature;
   UINT32                              Revision;
   
-  EFI_LIST_ENTRY                      Link;
+  SCT_LIST_ENTRY                      Link;
   CHAR16                              *CaseName;
   EFI_GUID                            CaseGuid;
 
@@ -311,16 +311,16 @@ typedef struct {
 
   EFI_SCT_CONFIG_DATA                 *ConfigData;
 
-  EFI_LIST_ENTRY                      CategoryList;
+  SCT_LIST_ENTRY                      CategoryList;
 
-  EFI_LIST_ENTRY                      TestFileList;
-  EFI_LIST_ENTRY                      SupportFileList;
-  EFI_LIST_ENTRY                      ProxyFileList;
+  SCT_LIST_ENTRY                      TestFileList;
+  SCT_LIST_ENTRY                      SupportFileList;
+  SCT_LIST_ENTRY                      ProxyFileList;
 
-  EFI_LIST_ENTRY                      TestCaseList;
-  EFI_LIST_ENTRY                      TestNodeList;
+  SCT_LIST_ENTRY                      TestCaseList;
+  SCT_LIST_ENTRY                      TestNodeList;
 
-  EFI_LIST_ENTRY                      SkippedCaseList;
+  SCT_LIST_ENTRY                      SkippedCaseList;
   //
   // Test support data
   //
@@ -351,7 +351,7 @@ typedef struct {
   UINT32                    Signature;
   UINT32                    Revision;
 
-  EFI_LIST_ENTRY            Link;
+  SCT_LIST_ENTRY            Link;
 
   CHAR16                    *Name;
   VOID                      *Interface;

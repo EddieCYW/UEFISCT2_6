@@ -53,8 +53,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "EfiShellLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 #include "EntsMonitorProtocol.h"
 

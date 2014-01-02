@@ -69,7 +69,7 @@ Abstract:
 
 EFI_STATUS
 InsertSingleCategoryData (
-  IN OUT EFI_LIST_ENTRY           *CategoryList,
+  IN OUT SCT_LIST_ENTRY           *CategoryList,
   IN EFI_SCT_CATEGORY_DATA        *Category
   );
 
@@ -121,7 +121,7 @@ EFI_STATUS
 LoadCategoryData (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  OUT EFI_LIST_ENTRY              *CategoryList
+  OUT SCT_LIST_ENTRY              *CategoryList
   )
 /*++
 
@@ -235,7 +235,7 @@ Returns:
 
 EFI_STATUS
 FreeCategoryData (
-  IN EFI_LIST_ENTRY               *CategoryList
+  IN SCT_LIST_ENTRY               *CategoryList
   )
 /*++
 
@@ -266,10 +266,10 @@ Returns:
   //
   // Walk through all categories
   //
-  while (!IsListEmpty (CategoryList)) {
-    Category = CR (CategoryList->Flink, EFI_SCT_CATEGORY_DATA, Link, EFI_SCT_CATEGORY_DATA_SIGNATURE);
+  while (!SctIsListEmpty (CategoryList)) {
+    Category = CR (CategoryList->ForwardLink, EFI_SCT_CATEGORY_DATA, Link, EFI_SCT_CATEGORY_DATA_SIGNATURE);
 
-    RemoveEntryList (&Category->Link);
+    SctRemoveEntryList (&Category->Link);
     FreeSingleCategoryData (Category);
   }
 
@@ -304,8 +304,8 @@ Returns:
 
 --*/
 {
-  EFI_LIST_ENTRY          *CategoryList;
-  EFI_LIST_ENTRY          *Link;
+  SCT_LIST_ENTRY          *CategoryList;
+  SCT_LIST_ENTRY          *Link;
   EFI_SCT_CATEGORY_DATA   *TempCategory;
 
   //
@@ -320,7 +320,7 @@ Returns:
   //
   // Walk through all categories
   //
-  for (Link = CategoryList->Flink; Link != CategoryList; Link = Link->Flink) {
+  for (Link = CategoryList->ForwardLink; Link != CategoryList; Link = Link->ForwardLink) {
     TempCategory = CR (Link, EFI_SCT_CATEGORY_DATA, Link, EFI_SCT_CATEGORY_DATA_SIGNATURE);
 
     if (SctCompareGuid (Guid, &TempCategory->CategoryGuid) == 0) {
@@ -342,7 +342,7 @@ Returns:
 
 EFI_STATUS
 InsertSingleCategoryData (
-  IN OUT EFI_LIST_ENTRY           *CategoryList,
+  IN OUT SCT_LIST_ENTRY           *CategoryList,
   IN EFI_SCT_CATEGORY_DATA        *Category
   )
 /*++
@@ -353,20 +353,20 @@ Routine Description:
 
 --*/
 {
-  EFI_LIST_ENTRY          *Link;
+  SCT_LIST_ENTRY          *Link;
   EFI_SCT_CATEGORY_DATA   *OldCategory;
 
   //
   // Check whether there are duplicate category data. If yes, remove the old
   // data
   //
-  for (Link = CategoryList->Flink; Link != CategoryList; Link = Link->Flink) {
+  for (Link = CategoryList->ForwardLink; Link != CategoryList; Link = Link->ForwardLink) {
     OldCategory = CR (Link, EFI_SCT_CATEGORY_DATA, Link, EFI_SCT_CATEGORY_DATA_SIGNATURE);
 
     if (SctCompareGuid (&OldCategory->CategoryGuid, &Category->CategoryGuid) == 0) {
       EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Found duplicate category data (GUID = %g)", &Category->CategoryGuid));
 
-      RemoveEntryList (&OldCategory->Link);
+      SctRemoveEntryList (&OldCategory->Link);
       FreeSingleCategoryData (OldCategory);
 
       break;
@@ -376,7 +376,7 @@ Routine Description:
   //
   // Add this category data into the list
   //
-  InsertTailList (CategoryList, &Category->Link);
+  SctInsertTailList (CategoryList, &Category->Link);
 
   //
   // Done

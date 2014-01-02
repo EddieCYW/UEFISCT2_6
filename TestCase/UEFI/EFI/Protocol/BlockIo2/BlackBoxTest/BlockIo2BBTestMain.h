@@ -63,7 +63,7 @@ Abstract:
 // Includes
 //
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "Guid.h"
 #include "BlockIo2Protocol.h"
 #include "EfiTestUtilityLib.h"

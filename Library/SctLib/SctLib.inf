@@ -57,6 +57,7 @@ COMPONENT_TYPE  = LIBRARY
   Debug.c
   Handle.c
   Init.c
+  List.c
   Mem.c
   Misc.c
   String.c

@@ -96,15 +96,15 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
 //
 // Async Write Queue
 //
-EFI_LIST_ENTRY  AsyncWriteFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(AsyncWriteFinishListHead);
-EFI_LIST_ENTRY  AsyncWriteExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(AsyncWriteExecuteListHead);
-EFI_LIST_ENTRY  AsyncWriteFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(AsyncWriteFailListHead);
+SCT_LIST_ENTRY  AsyncWriteFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncWriteFinishListHead);
+SCT_LIST_ENTRY  AsyncWriteExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncWriteExecuteListHead);
+SCT_LIST_ENTRY  AsyncWriteFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncWriteFailListHead);
 
 
 //
 // Sync Read Data Queue for Async Write
 //
-EFI_LIST_ENTRY  SyncReadDataListHead = INITIALIZE_LIST_HEAD_VARIABLE(SyncReadDataListHead);
+SCT_LIST_ENTRY  SyncReadDataListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncReadDataListHead);
 
 //
 // Async Write lock
@@ -114,8 +114,8 @@ FLOCK gAsyncWriteQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 //
 //  Sync Write Queue
 //
-EFI_LIST_ENTRY  SyncWriteListHead     = INITIALIZE_LIST_HEAD_VARIABLE(SyncWriteListHead);
-EFI_LIST_ENTRY  SyncWriteFailListHead = INITIALIZE_LIST_HEAD_VARIABLE(SyncWriteFailListHead);
+SCT_LIST_ENTRY  SyncWriteListHead     = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncWriteListHead);
+SCT_LIST_ENTRY  SyncWriteFailListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncWriteFailListHead);
 
 
 
@@ -143,8 +143,8 @@ EFIAPI DiskIo2WriteNotifyFunc (
   // All DiskIo2 Notify function run at Call Back level only once, So no locks required
   //
   AcquireLock(&gAsyncWriteQueueLock);
-  RemoveEntryList(&DiskIo2Entity->ListEntry);
-  InsertTailList(&AsyncWriteFinishListHead, &DiskIo2Entity->ListEntry);
+  SctRemoveEntryList(&DiskIo2Entity->ListEntry);
+  SctInsertTailList(&AsyncWriteFinishListHead, &DiskIo2Entity->ListEntry);
   ReleaseLock(&gAsyncWriteQueueLock);
 }
 
@@ -213,7 +213,7 @@ DiskIo2AsyncWriteData (
   // Acquire lock to add entity to Write Execution ListHead
   //
   AcquireLock(&gAsyncWriteQueueLock);
-  InsertTailList(&AsyncWriteExecuteListHead, &DiskIo2Entity->ListEntry);
+  SctInsertTailList(&AsyncWriteExecuteListHead, &DiskIo2Entity->ListEntry);
   ReleaseLock(&gAsyncWriteQueueLock);
   
   DiskIo2Entity->Buffer      = Buffer;
@@ -243,12 +243,12 @@ DiskIo2AsyncWriteData (
     // Failed Status Event should never be signaled, so remove this entity from the list
     //
     AcquireLock(&gAsyncWriteQueueLock);
-    RemoveEntryList(&DiskIo2Entity->ListEntry);
+    SctRemoveEntryList(&DiskIo2Entity->ListEntry);
     
     // 
     // Put failure execution into fail List
     //
-    InsertTailList(&AsyncWriteFailListHead, &DiskIo2Entity->ListEntry);
+    SctInsertTailList(&AsyncWriteFailListHead, &DiskIo2Entity->ListEntry);
     ReleaseLock(&gAsyncWriteQueueLock);
 
     DiskIo2Entity->Buffer = NULL;
@@ -270,7 +270,7 @@ EFIAPI DiskIo2WriteBatchNotifyFunc (
   
   DiskIO2_Batch_Task_Context    *TaskContext;
   DiskIO2_Task                  *DiskIo2Entity    = NULL;
-  EFI_LIST_ENTRY                *CurrentTaskEntry = NULL;
+  SCT_LIST_ENTRY                *CurrentTaskEntry = NULL;
   EFI_DISK_IO2_PROTOCOL         *DiskIo2          = NULL;
   EFI_STATUS                    Status;
 
@@ -278,7 +278,7 @@ EFIAPI DiskIo2WriteBatchNotifyFunc (
   CurrentTaskEntry = TaskContext->CurrentTaskEntry;
   DiskIo2          = TaskContext->DiskIo2;
 
-  if (!IsNodeAtEnd(TaskContext->TaskHeader, CurrentTaskEntry) ){
+  if (!SctIsNodeAtEnd(TaskContext->TaskHeader, CurrentTaskEntry) ){
     DiskIo2Entity = CR(CurrentTaskEntry->ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
 
     DiskIo2Entity->DiskIo2Token.Event = NULL;
@@ -349,7 +349,7 @@ STATIC
 EFI_STATUS
 DiskIo2AsyncBatchWrite (
   IN EFI_DISK_IO2_PROTOCOL           *DiskIo2,
-  IN EFI_LIST_ENTRY                  *ListHeader,
+  IN SCT_LIST_ENTRY                  *ListHeader,
   IN OUT EFI_DISK_IO2_TOKEN	         *Token
 )
 {
@@ -359,7 +359,7 @@ DiskIo2AsyncBatchWrite (
   
   ASSERT(Token != NULL && Token->Event != NULL);
 
-  if (!IsListEmpty(ListHeader)) {
+  if (!SctIsListEmpty(ListHeader)) {
     //
     // Task Context will be freed in DiskIo2WriteBatchNotifyFunc when all task finished
     //
@@ -581,7 +581,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint1(
   EFI_STATUS            StatusWrite;
   DiskIO2_Task          *DiskIo2EntityWrite = NULL;
   DiskIO2_Task          *DiskIo2EntityRead  = NULL;
-  EFI_LIST_ENTRY        *ListEntry          = NULL;
+  SCT_LIST_ENTRY        *ListEntry          = NULL;
   
   UINTN                 WaitIndex;
   EFI_DISK_IO2_TOKEN    DiskIo2TokenSync;
@@ -777,7 +777,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint1(
         //
         // Add Read info to SyncReadDataList
         //
-        InsertTailList(&SyncReadDataListHead, &DiskIo2EntityRead->ListEntry);
+        SctInsertTailList(&SyncReadDataListHead, &DiskIo2EntityRead->ListEntry);
   
         DiskIo2EntityRead->Buffer = NULL;
         DiskIo2EntityRead->DiskIo2Token.Event = NULL;
@@ -820,8 +820,8 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint1(
     // 
     // do Asyn write call basing on read data result 
     //
-    if (!IsListEmpty(&SyncReadDataListHead)) {
-      for(ListEntry = GetFirstNode(&SyncReadDataListHead); ; ListEntry = GetNextNode(&SyncReadDataListHead, ListEntry)) {
+    if (!SctIsListEmpty(&SyncReadDataListHead)) {
+      for(ListEntry = SctGetFirstNode(&SyncReadDataListHead); ; ListEntry = SctGetNextNode(&SyncReadDataListHead, ListEntry)) {
   
         DiskIo2EntityRead = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
    
@@ -860,7 +860,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint1(
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&SyncReadDataListHead,ListEntry)) {
+        if (SctIsNodeAtEnd(&SyncReadDataListHead,ListEntry)) {
           break;
         }
       }
@@ -877,7 +877,7 @@ END_WAIT:
       IndexI = 0;
     
       AcquireLock(&gAsyncWriteQueueLock);
-      while (!IsListEmpty(&AsyncWriteExecuteListHead) && IndexI < 120) {
+      while (!SctIsListEmpty(&AsyncWriteExecuteListHead) && IndexI < 120) {
         ReleaseLock(&gAsyncWriteQueueLock);
  
         gtBS->WaitForEvent (
@@ -902,8 +902,8 @@ END_WAIT:
   // Here no logs should be wrote to this disk device to keep data intact
   //
   AcquireLock(&gAsyncWriteQueueLock);
-  if (!IsListEmpty(&AsyncWriteFinishListHead)) {
-    for(ListEntry = GetFirstNode(&AsyncWriteFinishListHead); ; ListEntry = GetNextNode(&AsyncWriteFinishListHead, ListEntry)) {
+  if (!SctIsListEmpty(&AsyncWriteFinishListHead)) {
+    for(ListEntry = SctGetFirstNode(&AsyncWriteFinishListHead); ; ListEntry = SctGetNextNode(&AsyncWriteFinishListHead, ListEntry)) {
       DiskIo2EntityWrite = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
       ReleaseLock(&gAsyncWriteQueueLock);
      
@@ -952,7 +952,7 @@ END_WAIT:
       }
   
       AcquireLock(&gAsyncWriteQueueLock);
-      if (IsNodeAtEnd(&AsyncWriteFinishListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&AsyncWriteFinishListHead, ListEntry)) {
         break;
       }
     }
@@ -964,9 +964,9 @@ END:
   // Clean up & free all record resources
   //
   Print (L"============ Restore All written disk ============= \n");
-  while (!IsListEmpty(&SyncReadDataListHead)) {
+  while (!SctIsListEmpty(&SyncReadDataListHead)) {
     DiskIo2EntityRead = CR(SyncReadDataListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2EntityRead->ListEntry);
+    SctRemoveEntryList(&DiskIo2EntityRead->ListEntry);
   
     if (DiskIo2EntityRead->Buffer != NULL && ReadCompleted == TRUE) {
       //
@@ -1011,10 +1011,10 @@ END:
   // Record All write finshed test logs
   //  
   AcquireLock(&gAsyncWriteQueueLock);
-  while (!IsListEmpty(&AsyncWriteFinishListHead)) {
+  while (!SctIsListEmpty(&AsyncWriteFinishListHead)) {
     DiskIo2EntityWrite = CR(AsyncWriteFinishListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
     
-    RemoveEntryList(&DiskIo2EntityWrite->ListEntry);
+    SctRemoveEntryList(&DiskIo2EntityWrite->ListEntry);
     ReleaseLock(&gAsyncWriteQueueLock);
     
      
@@ -1068,9 +1068,9 @@ END:
   //
   // If WriteFailListHead is not empty, which means some Async Calls are wrong 
   // 
-  while(!IsListEmpty(&AsyncWriteFailListHead)) {
+  while(!SctIsListEmpty(&AsyncWriteFailListHead)) {
     DiskIo2EntityWrite = CR(AsyncWriteFailListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2EntityWrite->ListEntry);
+    SctRemoveEntryList(&DiskIo2EntityWrite->ListEntry);
   
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1096,8 +1096,8 @@ END:
   // Be careful, All the entities in Execution list should NOT be freed here! 
   //
   AcquireLock(&gAsyncWriteQueueLock);
-  if (!IsListEmpty(&AsyncWriteExecuteListHead)) {
-    for(ListEntry = GetFirstNode(&AsyncWriteExecuteListHead); ; ListEntry = GetNextNode(&AsyncWriteExecuteListHead, ListEntry)) {
+  if (!SctIsListEmpty(&AsyncWriteExecuteListHead)) {
+    for(ListEntry = SctGetFirstNode(&AsyncWriteExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncWriteExecuteListHead, ListEntry)) {
       DiskIo2EntityWrite = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
       ReleaseLock(&gAsyncWriteQueueLock);
   
@@ -1117,7 +1117,7 @@ END:
                      );
   
       AcquireLock(&gAsyncWriteQueueLock);
-      if (IsNodeAtEnd(&AsyncWriteExecuteListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&AsyncWriteExecuteListHead, ListEntry)) {
         break;
       }
     }
@@ -1165,7 +1165,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint2(
   UINTN                 NewBufferSize;
   EFI_STATUS            StatusWrite;
   DiskIO2_Task          *DiskIo2EntityRead = NULL;
-  EFI_LIST_ENTRY        *ListEntry         = NULL;
+  SCT_LIST_ENTRY        *ListEntry         = NULL;
   EFI_DISK_IO2_TOKEN    DiskIo2TokenSync;
 
   //
@@ -1366,7 +1366,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint2(
       //
       // Add Read info to SyncReadDataList
       //
-      InsertTailList(&SyncReadDataListHead, &DiskIo2EntityRead->ListEntry);
+      SctInsertTailList(&SyncReadDataListHead, &DiskIo2EntityRead->ListEntry);
       
       DiskIo2EntityRead->Buffer     = NULL;
       DiskIo2EntityRead->Signature  = DISKIO2ENTITY_SIGNATURE;
@@ -1408,8 +1408,8 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint2(
     // 
     // do Asyn write call basing on read data result 
     //
-    if (!IsListEmpty(&SyncReadDataListHead)) {
-      for(ListEntry = GetFirstNode(&SyncReadDataListHead); ; ListEntry = GetNextNode(&SyncReadDataListHead, ListEntry)) {
+    if (!SctIsListEmpty(&SyncReadDataListHead)) {
+      for(ListEntry = SctGetFirstNode(&SyncReadDataListHead); ; ListEntry = SctGetNextNode(&SyncReadDataListHead, ListEntry)) {
         DiskIo2EntityRead = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
 
         WriteBuffer = NULL;
@@ -1485,7 +1485,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint2(
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
           break;
         }
       }
@@ -1497,8 +1497,8 @@ END:
   // Clean up & free all record resources
   //
   Print (L"Restore All written disk.\n");
-  if (!IsListEmpty(&SyncReadDataListHead)) {
-    for(ListEntry = GetFirstNode(&SyncReadDataListHead); ; ListEntry = GetNextNode(&SyncReadDataListHead, ListEntry)) {
+  if (!SctIsListEmpty(&SyncReadDataListHead)) {
+    for(ListEntry = SctGetFirstNode(&SyncReadDataListHead); ; ListEntry = SctGetNextNode(&SyncReadDataListHead, ListEntry)) {
       DiskIo2EntityRead = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
       
       if (DiskIo2EntityRead->Buffer != NULL) {
@@ -1530,7 +1530,7 @@ END:
         }
       }
     
-      if (IsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
         break;
       }
     }
@@ -1539,9 +1539,9 @@ END:
   //
   // Record all logs
   //
-  while (!IsListEmpty(&SyncReadDataListHead)) {
+  while (!SctIsListEmpty(&SyncReadDataListHead)) {
     DiskIo2EntityRead = CR(SyncReadDataListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2EntityRead->ListEntry);
+    SctRemoveEntryList(&DiskIo2EntityRead->ListEntry);
     
     if (DiskIo2EntityRead->MemCompared == TRUE) {
       StandardLib->RecordAssertion (
@@ -1624,9 +1624,9 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
   EFI_DISK_IO2_TOKEN    AsyncBatchWriteToken;
   EFI_DISK_IO2_TOKEN    DiskIo2TokenSync;
   
-  EFI_LIST_ENTRY        ReadListHeader;
-  EFI_LIST_ENTRY        WriteListHeader;
-  EFI_LIST_ENTRY        *ListEntry = NULL;
+  SCT_LIST_ENTRY        ReadListHeader;
+  SCT_LIST_ENTRY        WriteListHeader;
+  SCT_LIST_ENTRY        *ListEntry = NULL;
   UINTN                 WaitIndex;
   DiskIO2_Task          *DiskIo2EntityRead  = NULL;
   DiskIO2_Task          *DiskIo2EntityWrite = NULL;
@@ -1866,7 +1866,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
         //
         // Add Read info to SyncReadDataList
         //
-        InsertTailList(&ReadListHeader, &DiskIo2EntityRead->ListEntry);
+        SctInsertTailList(&ReadListHeader, &DiskIo2EntityRead->ListEntry);
          
         DiskIo2EntityRead->Buffer                         = NULL;
         DiskIo2EntityRead->DiskIo2Token.Event             = NULL;
@@ -1907,8 +1907,8 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
      
      
     Print (L" =================== Create Test Write Disk  =================== \n\n");
-    if (!IsListEmpty(&ReadListHeader)) {
-      for(ListEntry = GetFirstNode(&ReadListHeader); ; ListEntry = GetNextNode(&ReadListHeader, ListEntry)) {
+    if (!SctIsListEmpty(&ReadListHeader)) {
+      for(ListEntry = SctGetFirstNode(&ReadListHeader); ; ListEntry = SctGetNextNode(&ReadListHeader, ListEntry)) {
         
         DiskIo2EntityRead = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
         //
@@ -1931,7 +1931,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
         //
         // Add Read info to SyncReadDataList
         //
-        InsertTailList(&WriteListHeader, &DiskIo2EntityWrite->ListEntry);
+        SctInsertTailList(&WriteListHeader, &DiskIo2EntityWrite->ListEntry);
         
         DiskIo2EntityWrite->Buffer                         = NULL;
         DiskIo2EntityWrite->DiskIo2Token.Event             = NULL;
@@ -1956,7 +1956,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&ReadListHeader, ListEntry)) {
+        if (SctIsNodeAtEnd(&ReadListHeader, ListEntry)) {
           break;
         }
       }
@@ -2003,8 +2003,8 @@ END:
   //
   // Verify Async Write Task List Result 
   //
-  if (!IsListEmpty(&WriteListHeader) && MemoryAllocFail == FALSE) {
-    for(ListEntry = GetFirstNode(&WriteListHeader); ; ListEntry = GetNextNode(&WriteListHeader, ListEntry)) {
+  if (!SctIsListEmpty(&WriteListHeader) && MemoryAllocFail == FALSE) {
+    for(ListEntry = SctGetFirstNode(&WriteListHeader); ; ListEntry = SctGetNextNode(&WriteListHeader, ListEntry)) {
       DiskIo2EntityWrite = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
 
       DiskIo2EntityWrite->MemCompared = FALSE;
@@ -2053,7 +2053,7 @@ END:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&WriteListHeader, ListEntry)) {
+      if (SctIsNodeAtEnd(&WriteListHeader, ListEntry)) {
         break;
       }
     }
@@ -2062,9 +2062,9 @@ END:
   //
   // Restore written disk data & Clean up record list 
   //
-  while(!IsListEmpty(&ReadListHeader)) {
+  while(!SctIsListEmpty(&ReadListHeader)) {
     DiskIo2EntityRead = CR(ReadListHeader.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2EntityRead->ListEntry); 
+    SctRemoveEntryList(&DiskIo2EntityRead->ListEntry); 
     
     if (DiskIo2EntityRead->Buffer != NULL) {
       //
@@ -2108,9 +2108,9 @@ END:
   //
   // Do logging & clean up Write list
   //
-  while(!IsListEmpty(&WriteListHeader)) {
+  while(!SctIsListEmpty(&WriteListHeader)) {
     DiskIo2EntityWrite = CR(WriteListHeader.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2EntityWrite->ListEntry);
+    SctRemoveEntryList(&DiskIo2EntityWrite->ListEntry);
     
     if (MemoryAllocFail == FALSE) {
       if (DiskIo2EntityWrite->MemCompared == TRUE) {

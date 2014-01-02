@@ -55,8 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "EfiShellLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 #include "Cpu.h"
 
@@ -67,6 +66,8 @@ Abstract:
 #include "EntsMonitorProtocol.h"
 #include "EftpImplement.h"
 #include "Sct.h"
+
+#include EFI_ARCH_PROTOCOL_DEFINITION (Cpu)
 
 #define CURRENT_CHILD_NAME  L"CurrentChild"
 #define DELAY_TIME_NAME     L"DelayTime"

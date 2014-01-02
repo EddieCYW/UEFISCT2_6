@@ -74,7 +74,7 @@ typedef struct _EFI_NETWORK_TEST_FILE {
   UINT32                    Signature;
   UINTN                     Version;
 
-  EFI_LIST_ENTRY            Link;
+  SCT_LIST_ENTRY            Link;
 
   EFI_DEVICE_PATH_PROTOCOL  *DevicePath;
   CHAR16                    *FileName;
@@ -155,12 +155,12 @@ typedef struct _EFI_NETWORK_TEST_FRAMEWORK_TABLE {
   //
   // Test data
   //
-  EFI_LIST_ENTRY            TestAppList;
+  SCT_LIST_ENTRY            TestAppList;
 
   //
   // Test support list
   //
-  EFI_LIST_ENTRY            SupportList;
+  SCT_LIST_ENTRY            SupportList;
 
   //
   // Test support data

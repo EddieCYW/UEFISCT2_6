@@ -72,7 +72,7 @@ typedef struct {
   EFI_LBA                           LBA;
   UINTN                             BufferSize;
   VOID                              *Buffer;
-  EFI_LIST_ENTRY                    ListEntry;     
+  SCT_LIST_ENTRY                    ListEntry;     
   EFI_STATUS                        StatusAsync;
   BOOLEAN                           MemCompared;
   UINTN                             ComparedVal;
@@ -81,8 +81,8 @@ typedef struct {
 
 typedef struct {
   EFI_BLOCK_IO2_PROTOCOL            *BlockIo2;
-  EFI_LIST_ENTRY                    *TaskHeader; 
-  EFI_LIST_ENTRY                    *CurrentTaskEntry;
+  SCT_LIST_ENTRY                    *TaskHeader; 
+  SCT_LIST_ENTRY                    *CurrentTaskEntry;
   EFI_BLOCK_IO2_TOKEN               *Token;
 } BlockIO2_Batch_Task_Context;
 
@@ -165,9 +165,9 @@ BBTestFushBlocksExFunctionAutoTestCheckpoint2(
 //
 // Async Read Queue
 //
-EFI_LIST_ENTRY  ReadFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(ReadFinishListHead);
-EFI_LIST_ENTRY  ReadExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(ReadExecuteListHead);
-EFI_LIST_ENTRY  ReadFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(ReadFailListHead);
+SCT_LIST_ENTRY  ReadFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(ReadFinishListHead);
+SCT_LIST_ENTRY  ReadExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(ReadExecuteListHead);
+SCT_LIST_ENTRY  ReadFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(ReadFailListHead);
 //
 // Async Read lock
 //
@@ -177,14 +177,14 @@ FLOCK gReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 //
 // Mixed Async Read Queue
 //
-EFI_LIST_ENTRY  MixedReadFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(MixedReadFinishListHead);
-EFI_LIST_ENTRY  MixedReadExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(MixedReadExecuteListHead);
-EFI_LIST_ENTRY  MixedReadFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(MixedReadFailListHead);
+SCT_LIST_ENTRY  MixedReadFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedReadFinishListHead);
+SCT_LIST_ENTRY  MixedReadExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedReadExecuteListHead);
+SCT_LIST_ENTRY  MixedReadFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedReadFailListHead);
 //
 // Mixed Sync Read Queue
 //
-EFI_LIST_ENTRY  MixedSyncReadListHead     = INITIALIZE_LIST_HEAD_VARIABLE(MixedSyncReadListHead);
-EFI_LIST_ENTRY  MixedSyncReadFailListHead = INITIALIZE_LIST_HEAD_VARIABLE(MixedSyncReadFailListHead);
+SCT_LIST_ENTRY  MixedSyncReadListHead     = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedSyncReadListHead);
+SCT_LIST_ENTRY  MixedSyncReadFailListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedSyncReadFailListHead);
 
 
 //
@@ -196,13 +196,13 @@ FLOCK gMixedReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 //
 // Async Write Queue
 //
-EFI_LIST_ENTRY  WriteFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(WriteFinishListHead);
-EFI_LIST_ENTRY  WriteExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(WriteExecuteListHead);
-EFI_LIST_ENTRY  WriteFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(WriteFailListHead);
+SCT_LIST_ENTRY  WriteFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(WriteFinishListHead);
+SCT_LIST_ENTRY  WriteExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(WriteExecuteListHead);
+SCT_LIST_ENTRY  WriteFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(WriteFailListHead);
 //
 // Sync Read Data Queue for Async Write
 //
-EFI_LIST_ENTRY  SyncReadDataListHead = INITIALIZE_LIST_HEAD_VARIABLE(SyncReadDataListHead);
+SCT_LIST_ENTRY  SyncReadDataListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncReadDataListHead);
 
 //
 // Async Write lock
@@ -212,14 +212,14 @@ FLOCK gWriteQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 //
 // Mixed Async Write Queue
 //
-EFI_LIST_ENTRY  MixedWriteFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(MixedWriteFinishListHead);
-EFI_LIST_ENTRY  MixedWriteExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(MixedWriteExecuteListHead);
-EFI_LIST_ENTRY  MixedWriteFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(MixedWriteFailListHead);
+SCT_LIST_ENTRY  MixedWriteFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedWriteFinishListHead);
+SCT_LIST_ENTRY  MixedWriteExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedWriteExecuteListHead);
+SCT_LIST_ENTRY  MixedWriteFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedWriteFailListHead);
 //
 // Mixed Sync Write Queue
 //
-EFI_LIST_ENTRY  MixedSyncWriteListHead     = INITIALIZE_LIST_HEAD_VARIABLE(MixedSyncWriteListHead);
-EFI_LIST_ENTRY  MixedSyncWriteFailListHead = INITIALIZE_LIST_HEAD_VARIABLE(MixedSyncWriteFailListHead);
+SCT_LIST_ENTRY  MixedSyncWriteListHead     = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedSyncWriteListHead);
+SCT_LIST_ENTRY  MixedSyncWriteFailListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedSyncWriteFailListHead);
 
 //
 // Mixed Sync & Async Write lock
@@ -248,8 +248,8 @@ EFIAPI BlockIo2ReadNotifyFunc (
   // Remove entity from ReadExecuteListHead &  add entity to ReadFinishListHead
   // All BlockIo2 Notify function run at Call Back level only once, So no locks required
   //
-  RemoveEntryList(&BlockIo2Entity->ListEntry);
-  InsertTailList(&ReadFinishListHead, &BlockIo2Entity->ListEntry);
+  SctRemoveEntryList (&BlockIo2Entity->ListEntry);
+  SctInsertTailList (&ReadFinishListHead, &BlockIo2Entity->ListEntry);
 }
 
 
@@ -310,7 +310,7 @@ BlockIo2AsyncReadData (
   // Acquire lock to add entity to Execution ListHead
   //
   AcquireLock(&gReadQueueLock);
-  InsertTailList(&ReadExecuteListHead, &BlockIo2Entity->ListEntry);
+  SctInsertTailList (&ReadExecuteListHead, &BlockIo2Entity->ListEntry);
   ReleaseLock(&gReadQueueLock);
   
   BlockIo2Entity->Buffer = Buffer;
@@ -332,13 +332,13 @@ BlockIo2AsyncReadData (
     // Failed Status Event should never be signaled, so remove this entity from the list
     //
     AcquireLock(&gReadQueueLock);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
     ReleaseLock(&gReadQueueLock);
     
     // 
     // Put failure execution into fail List
     //
-    InsertTailList(&ReadFailListHead, &BlockIo2Entity->ListEntry);
+    SctInsertTailList (&ReadFailListHead, &BlockIo2Entity->ListEntry);
     BlockIo2Entity->Buffer = NULL;
   }
 
@@ -373,8 +373,8 @@ EFIAPI BlockIo2MixedReadNotifyFunc (
   // Remove entity from MixedReadFinishListHead &  add entity to MixedReadFinishListHead
   // All BlockIo2 Notify function run at Call Back level only once, So no locks required
   //
-  RemoveEntryList(&BlockIo2Entity->ListEntry);
-  InsertTailList(&MixedReadFinishListHead, &BlockIo2Entity->ListEntry);
+  SctRemoveEntryList (&BlockIo2Entity->ListEntry);
+  SctInsertTailList (&MixedReadFinishListHead, &BlockIo2Entity->ListEntry);
 }
 
 
@@ -439,7 +439,7 @@ BlockIo2MixedSyncAsyncReadData (
   // Acquire lock to add entity to Execution ListHead
   //
   AcquireLock(&gMixedReadQueueLock);
-  InsertTailList(&MixedReadExecuteListHead, &BlockIo2Entity->ListEntry);
+  SctInsertTailList (&MixedReadExecuteListHead, &BlockIo2Entity->ListEntry);
   ReleaseLock(&gMixedReadQueueLock);
   
   //
@@ -460,13 +460,13 @@ BlockIo2MixedSyncAsyncReadData (
     // Failed Status Event should never be signaled, so remove this entity from the list
     //
     AcquireLock(&gMixedReadQueueLock);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
     ReleaseLock(&gMixedReadQueueLock);
     
     // 
     // Put failure execution into fail List
     //
-    InsertTailList(&MixedReadFailListHead, &BlockIo2Entity->ListEntry);
+    SctInsertTailList (&MixedReadFailListHead, &BlockIo2Entity->ListEntry);
   }
 
   //
@@ -535,12 +535,12 @@ BlockIo2MixedSyncAsyncReadData (
       // 
       // Put success execution into Sync read List
       //
-      InsertTailList(&MixedSyncReadListHead, &BlockIo2Entity->ListEntry);
+      SctInsertTailList (&MixedSyncReadListHead, &BlockIo2Entity->ListEntry);
     } else {
       // 
       // Put failure execution into fail List
       //
-      InsertTailList(&MixedSyncReadFailListHead, &BlockIo2Entity->ListEntry);
+      SctInsertTailList (&MixedSyncReadFailListHead, &BlockIo2Entity->ListEntry);
     }
          
   }
@@ -562,8 +562,8 @@ EFIAPI BlockIo2WriteNotifyFunc (
   // Remove entity from WriteExecuteListHead &  add entity to WriteFinishListHead
   // All BlockIo2 Notify function run at Call Back level only once, So no locks required
   //
-  RemoveEntryList(&BlockIo2Entity->ListEntry);
-  InsertTailList(&WriteFinishListHead, &BlockIo2Entity->ListEntry);
+  SctRemoveEntryList (&BlockIo2Entity->ListEntry);
+  SctInsertTailList (&WriteFinishListHead, &BlockIo2Entity->ListEntry);
 }
 
 
@@ -636,7 +636,7 @@ BlockIo2AsyncWriteData (
   // Acquire lock to add entity to Write Execution ListHead
   //
   AcquireLock(&gWriteQueueLock);
-  InsertTailList(&WriteExecuteListHead, &BlockIo2Entity->ListEntry);
+  SctInsertTailList (&WriteExecuteListHead, &BlockIo2Entity->ListEntry);
   ReleaseLock(&gWriteQueueLock);
   
   BlockIo2Entity->Buffer = Buffer;
@@ -658,13 +658,13 @@ BlockIo2AsyncWriteData (
     // Failed Status Event should never be signaled, so remove this entity from the list
     //
     AcquireLock(&gWriteQueueLock);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
     ReleaseLock(&gWriteQueueLock);
     
     // 
     // Put failure execution into fail List
     //
-    InsertTailList(&WriteFailListHead, &BlockIo2Entity->ListEntry);
+    SctInsertTailList (&WriteFailListHead, &BlockIo2Entity->ListEntry);
     
     BlockIo2Entity->Buffer = NULL;
     
@@ -698,8 +698,8 @@ EFIAPI BlockIo2MixedWriteNotifyFunc (
   // Remove entity from MixedWriteExecuteListHead &  add entity to WriteFinishListHead
   // All BlockIo2 Notify function run at Call Back level only once, So no locks required
   //
-  RemoveEntryList(&BlockIo2Entity->ListEntry);
-  InsertTailList(&MixedWriteFinishListHead, &BlockIo2Entity->ListEntry);
+  SctRemoveEntryList (&BlockIo2Entity->ListEntry);
+  SctInsertTailList (&MixedWriteFinishListHead, &BlockIo2Entity->ListEntry);
 }
 
 
@@ -765,7 +765,7 @@ BlockIo2MixedSyncAsyncWriteData (
   // Acquire lock to add entity to MixedWrite Execution ListHead
   //
   AcquireLock(&gMixedWriteQueueLock);
-  InsertTailList(&MixedWriteExecuteListHead, &BlockIo2Entity->ListEntry);
+  SctInsertTailList (&MixedWriteExecuteListHead, &BlockIo2Entity->ListEntry);
   ReleaseLock(&gMixedWriteQueueLock);
   
   //
@@ -786,13 +786,13 @@ BlockIo2MixedSyncAsyncWriteData (
     // Failed Status Event should never be signaled, so remove this entity from the list
     //
     AcquireLock(&gMixedWriteQueueLock);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
     ReleaseLock(&gMixedWriteQueueLock);
     
     // 
     // Put failure execution into fail List
     //
-    InsertTailList(&MixedWriteFailListHead, &BlockIo2Entity->ListEntry);
+    SctInsertTailList (&MixedWriteFailListHead, &BlockIo2Entity->ListEntry);
   }
 
   //
@@ -859,12 +859,12 @@ BlockIo2MixedSyncAsyncWriteData (
       // 
       // Put success execution into Sync Write List
       //
-      InsertTailList(&MixedSyncWriteListHead, &BlockIo2Entity->ListEntry);
+      SctInsertTailList (&MixedSyncWriteListHead, &BlockIo2Entity->ListEntry);
     } else {
       // 
       // Put failure execution into fail List
       //
-      InsertTailList(&MixedSyncWriteFailListHead, &BlockIo2Entity->ListEntry);
+      SctInsertTailList (&MixedSyncWriteFailListHead, &BlockIo2Entity->ListEntry);
     }
          
   }
@@ -883,7 +883,7 @@ EFIAPI BlockIo2ReadBatchNotifyFunc (
   
   BlockIO2_Batch_Task_Context         *TaskContext;
   BlockIO2_Task                       *BlockIo2Entity = NULL;
-  EFI_LIST_ENTRY                      *CurrentTaskEntry = NULL;
+  SCT_LIST_ENTRY                      *CurrentTaskEntry = NULL;
   EFI_BLOCK_IO2_PROTOCOL              *BlockIo2 = NULL;
   EFI_STATUS                          Status;
 
@@ -892,7 +892,7 @@ EFIAPI BlockIo2ReadBatchNotifyFunc (
   CurrentTaskEntry = TaskContext->CurrentTaskEntry;
   BlockIo2 = TaskContext->BlockIo2;
 
-  if (!IsNodeAtEnd(TaskContext->TaskHeader, CurrentTaskEntry) ){
+  if (!SctIsNodeAtEnd(TaskContext->TaskHeader, CurrentTaskEntry) ){
     BlockIo2Entity = CR(CurrentTaskEntry->ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
 
     BlockIo2Entity->BlockIo2Token.Event = NULL;
@@ -966,7 +966,7 @@ STATIC
 EFI_STATUS
 BlockIo2AsyncBatchRead (
   IN EFI_BLOCK_IO2_PROTOCOL          *BlockIo2,
-  IN EFI_LIST_ENTRY                  *ListHeader,
+  IN SCT_LIST_ENTRY                  *ListHeader,
   IN OUT EFI_BLOCK_IO2_TOKEN	     *Token
 )
 {
@@ -976,7 +976,7 @@ BlockIo2AsyncBatchRead (
   
   ASSERT(Token != NULL && Token->Event != NULL);
   
-  if (!IsListEmpty(ListHeader)) {  
+  if (!SctIsListEmpty (ListHeader)) {  
     //
     // Task Context will be freed in BlockIo2ReadBatchNotifyFunc when all task finished
     //
@@ -1033,7 +1033,7 @@ EFIAPI BlockIo2WriteBatchNotifyFunc (
   
   BlockIO2_Batch_Task_Context         *TaskContext;
   BlockIO2_Task                       *BlockIo2Entity = NULL;
-  EFI_LIST_ENTRY                      *CurrentTaskEntry = NULL;
+  SCT_LIST_ENTRY                      *CurrentTaskEntry = NULL;
   EFI_BLOCK_IO2_PROTOCOL              *BlockIo2 = NULL;
   EFI_STATUS                          Status;
 
@@ -1042,7 +1042,7 @@ EFIAPI BlockIo2WriteBatchNotifyFunc (
   CurrentTaskEntry = TaskContext->CurrentTaskEntry;
   BlockIo2 = TaskContext->BlockIo2;
 
-  if (!IsNodeAtEnd(TaskContext->TaskHeader, CurrentTaskEntry) ){
+  if (!SctIsNodeAtEnd(TaskContext->TaskHeader, CurrentTaskEntry) ){
 
     BlockIo2Entity = CR(CurrentTaskEntry->ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
 
@@ -1118,7 +1118,7 @@ STATIC
 EFI_STATUS
 BlockIo2AsyncBatchWrite (
   IN EFI_BLOCK_IO2_PROTOCOL          *BlockIo2,
-  IN EFI_LIST_ENTRY                  *ListHeader,
+  IN SCT_LIST_ENTRY                  *ListHeader,
   IN OUT EFI_BLOCK_IO2_TOKEN	     *Token
 )
 {
@@ -1128,7 +1128,7 @@ BlockIo2AsyncBatchWrite (
   
   ASSERT(Token != NULL && Token->Event != NULL);
   
-  if (!IsListEmpty(ListHeader)) {
+  if (!SctIsListEmpty (ListHeader)) {
     //
     // Task Context will be freed in BlockIo2WriteBatchNotifyFunc when all task finished
     //
@@ -1467,7 +1467,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint1(
   EFI_LBA                              NewLba;
   BlockIO2_Task                        *BlockIo2Entity = NULL;
   UINTN                                WaitIndex;
-  EFI_LIST_ENTRY                       *ListEntry = NULL;
+  SCT_LIST_ENTRY                       *ListEntry = NULL;
   
   //
   // Initialize variable
@@ -1549,7 +1549,7 @@ END_WAIT:
     IndexI = 0;
     
     AcquireLock(&gReadQueueLock);
-    while (!IsListEmpty(&ReadExecuteListHead) && IndexI < 120) {
+    while (!SctIsListEmpty (&ReadExecuteListHead) && IndexI < 120) {
       ReleaseLock(&gReadQueueLock);
     
       gtBS->WaitForEvent (                   
@@ -1575,8 +1575,8 @@ END_WAIT:
   // Here no logs should be wrote to this block device to keep data intact
   //
   AcquireLock(&gReadQueueLock);
-  if (!IsListEmpty(&ReadFinishListHead)) {
-    for(ListEntry = GetFirstNode(&ReadFinishListHead); ; ListEntry = GetNextNode(&ReadFinishListHead, ListEntry)) {
+  if (!SctIsListEmpty (&ReadFinishListHead)) {
+    for(ListEntry = SctGetFirstNode(&ReadFinishListHead); ; ListEntry = SctGetNextNode(&ReadFinishListHead, ListEntry)) {
       BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
       ReleaseLock(&gReadQueueLock);
 
@@ -1631,7 +1631,7 @@ END_WAIT:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&ReadFinishListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&ReadFinishListHead, ListEntry)) {
          break;
       }
     }
@@ -1640,10 +1640,10 @@ END_WAIT:
   //
   // Record All Finished Read case results
   //
-  while (!IsListEmpty(&ReadFinishListHead)) {
+  while (!SctIsListEmpty (&ReadFinishListHead)) {
     BlockIo2Entity = CR(ReadFinishListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
        
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
     ReleaseLock(&gReadQueueLock);
     
     
@@ -1695,9 +1695,9 @@ END_WAIT:
   //
   // If ReadFailListHead is not empty, which means some Async Calls are wrong 
   // 
-  while(!IsListEmpty(&ReadFailListHead)) {
+  while(!SctIsListEmpty (&ReadFailListHead)) {
     BlockIo2Entity = CR(ReadFailListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
 
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1743,8 +1743,8 @@ END_WAIT:
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
   AcquireLock(&gReadQueueLock);
-  if (!IsListEmpty(&ReadExecuteListHead)) {
-    for(ListEntry = GetFirstNode(&ReadExecuteListHead); ; ListEntry = GetNextNode(&ReadExecuteListHead, ListEntry)) {
+  if (!SctIsListEmpty (&ReadExecuteListHead)) {
+    for(ListEntry = SctGetFirstNode(&ReadExecuteListHead); ; ListEntry = SctGetNextNode(&ReadExecuteListHead, ListEntry)) {
       BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
       ReleaseLock(&gReadQueueLock);
   
@@ -1767,7 +1767,7 @@ END_WAIT:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&ReadExecuteListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&ReadExecuteListHead, ListEntry)) {
          break;
       }
     }
@@ -2052,8 +2052,8 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint3(
   UINTN                                IndexI;
   UINTN                                NewBufferSize;
   EFI_LBA                              NewLba;
-  EFI_LIST_ENTRY                       ListHeader;
-  EFI_LIST_ENTRY                       *ListEntry = NULL;
+  SCT_LIST_ENTRY                       ListHeader;
+  SCT_LIST_ENTRY                       *ListEntry = NULL;
   UINTN                                WaitIndex;
   BlockIO2_Task                        *BlockIo2Entity = NULL;
   EFI_BLOCK_IO2_TOKEN                  BatchReadToken;
@@ -2145,7 +2145,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint3(
         //
         // Add Read info to SyncReadDataList
         //
-        InsertTailList(&ListHeader, &BlockIo2Entity->ListEntry);
+        SctInsertTailList (&ListHeader, &BlockIo2Entity->ListEntry);
         
         BlockIo2Entity->Buffer = NULL;
         BlockIo2Entity->BlockIo2Token.Event = NULL;
@@ -2206,8 +2206,8 @@ END:
   //
   // Verify all Async Read Task Result 
   //
-  if (!IsListEmpty(&ListHeader) && MemoryAllocFail == FALSE) {
-    for(ListEntry = GetFirstNode(&ListHeader); ; ListEntry = GetNextNode(&ListHeader, ListEntry)) {
+  if (!SctIsListEmpty (&ListHeader) && MemoryAllocFail == FALSE) {
+    for(ListEntry = SctGetFirstNode(&ListHeader); ; ListEntry = SctGetNextNode(&ListHeader, ListEntry)) {
       BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
 
       //
@@ -2261,7 +2261,7 @@ END:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&ListHeader, ListEntry)) {
+      if (SctIsNodeAtEnd(&ListHeader, ListEntry)) {
          break;
       }
     }
@@ -2271,9 +2271,9 @@ END:
   //
   // Do logging & clean up 
   //
-  while(!IsListEmpty(&ListHeader)) {
+  while(!SctIsListEmpty (&ListHeader)) {
     BlockIo2Entity = CR(ListHeader.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
 
     if ( MemoryAllocFail == FALSE) {
       if (BlockIo2Entity->MemCompared == TRUE) {
@@ -2371,8 +2371,8 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint4(
   BlockIO2_Task                        *BlockIo2Entity = NULL;
   BlockIO2_Task                        *BlockIo2EntitySync = NULL;
   UINTN                                WaitIndex;
-  EFI_LIST_ENTRY                       *ListEntry = NULL;
-  EFI_LIST_ENTRY                       *ListEntrySync = NULL;
+  SCT_LIST_ENTRY                       *ListEntry = NULL;
+  SCT_LIST_ENTRY                       *ListEntrySync = NULL;
 
   //
   // Initialize variable
@@ -2452,7 +2452,7 @@ END_WAIT:
     IndexI = 0;
     
     AcquireLock(&gMixedReadQueueLock);
-    while (!IsListEmpty(&MixedReadExecuteListHead) && IndexI < 120) {
+    while (!SctIsListEmpty (&MixedReadExecuteListHead) && IndexI < 120) {
       ReleaseLock(&gMixedReadQueueLock);
     
       gtBS->WaitForEvent (                   
@@ -2478,8 +2478,8 @@ END_WAIT:
   // Here no logs should be wrote to this block device to keep data intact
   //
   AcquireLock(&gMixedReadQueueLock);
-  if (!IsListEmpty(&MixedReadFinishListHead)) {
-    for(ListEntry = GetFirstNode(&MixedReadFinishListHead); ; ListEntry = GetNextNode(&MixedReadFinishListHead, ListEntry)) {
+  if (!SctIsListEmpty (&MixedReadFinishListHead)) {
+    for(ListEntry = SctGetFirstNode(&MixedReadFinishListHead); ; ListEntry = SctGetNextNode(&MixedReadFinishListHead, ListEntry)) {
       BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
       ReleaseLock(&gMixedReadQueueLock);
 
@@ -2490,8 +2490,8 @@ END_WAIT:
       // Using Block IO 2 Protocol Sync Read to verify data buffer consistency
       //
       if (BlockIo2Entity->BlockIo2Token.TransactionStatus == EFI_SUCCESS) {
-        if (!IsListEmpty(&MixedSyncReadListHead)) {
-          for(ListEntrySync = GetFirstNode(&MixedSyncReadListHead); ; ListEntrySync = GetNextNode(&MixedSyncReadListHead, ListEntrySync)) {
+        if (!SctIsListEmpty (&MixedSyncReadListHead)) {
+          for(ListEntrySync = SctGetFirstNode(&MixedSyncReadListHead); ; ListEntrySync = SctGetNextNode(&MixedSyncReadListHead, ListEntrySync)) {
 
             BlockIo2EntitySync = CR(ListEntrySync, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
   
@@ -2517,7 +2517,7 @@ END_WAIT:
             //
             // Last list node handled
             //
-            if (IsNodeAtEnd(&MixedSyncReadListHead, ListEntrySync)) {
+            if (SctIsNodeAtEnd(&MixedSyncReadListHead, ListEntrySync)) {
               break;
             }
           }
@@ -2530,7 +2530,7 @@ END_WAIT:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&MixedReadFinishListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&MixedReadFinishListHead, ListEntry)) {
          break;
       }
     }
@@ -2539,10 +2539,10 @@ END_WAIT:
   //
   // Record All Finished Read case results
   //
-  while (!IsListEmpty(&MixedReadFinishListHead)) {
+  while (!SctIsListEmpty (&MixedReadFinishListHead)) {
     BlockIo2Entity = CR(MixedReadFinishListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
        
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
     ReleaseLock(&gMixedReadQueueLock);
     
     
@@ -2564,10 +2564,10 @@ END_WAIT:
   //
   // Record All Failed Async Read case results
   //
-  while (!IsListEmpty(&MixedReadFailListHead)) {
+  while (!SctIsListEmpty (&MixedReadFailListHead)) {
     BlockIo2Entity = CR(MixedReadFailListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
        
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
     StandardLib->RecordAssertion (
                    StandardLib,
                    EFI_TEST_ASSERTION_FAILED,
@@ -2596,9 +2596,9 @@ END_WAIT:
   //
   // Mixed Sync Async function test logs
   // 
-  while (!IsListEmpty(&MixedSyncReadListHead)) {
+  while (!SctIsListEmpty (&MixedSyncReadListHead)) {
     BlockIo2EntitySync = CR(MixedSyncReadListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&BlockIo2EntitySync->ListEntry);
+    SctRemoveEntryList (&BlockIo2EntitySync->ListEntry);
 
     if (BlockIo2EntitySync->MemCompared == TRUE) {
       StandardLib->RecordAssertion (
@@ -2628,9 +2628,9 @@ END_WAIT:
   //
   // Mixed Sync Async function failed test logs
   // 
-  while (!IsListEmpty(&MixedSyncReadFailListHead)) {
+  while (!SctIsListEmpty (&MixedSyncReadFailListHead)) {
    BlockIo2EntitySync = CR(MixedSyncReadFailListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-   RemoveEntryList(&BlockIo2EntitySync->ListEntry);
+   SctRemoveEntryList (&BlockIo2EntitySync->ListEntry);
 
    if (BlockIo2EntitySync->MemCompared == TRUE) {
      StandardLib->RecordAssertion (
@@ -2841,7 +2841,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint1(
   EFI_LBA                              NewLba;
   EFI_STATUS                           StatusWrite;
   BlockIO2_Task                        *BlockIo2Entity = NULL;
-  EFI_LIST_ENTRY                       *ListEntry = NULL;
+  SCT_LIST_ENTRY                       *ListEntry = NULL;
   UINTN                                WaitIndex;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenSync;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenFlush;
@@ -2908,7 +2908,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint1(
         //
         // Add Read info to SyncReadDataList
         //
-        InsertTailList(&SyncReadDataListHead, &BlockIo2Entity->ListEntry);
+        SctInsertTailList (&SyncReadDataListHead, &BlockIo2Entity->ListEntry);
         
         BlockIo2Entity->Buffer = NULL;
         BlockIo2Entity->BlockIo2Token.Event = NULL;
@@ -2949,8 +2949,8 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint1(
     // 
     // do Asyn write call basing on read data result 
     //
-    if (!IsListEmpty(&SyncReadDataListHead)) {
-      for(ListEntry = GetFirstNode(&SyncReadDataListHead); ; ListEntry = GetNextNode(&SyncReadDataListHead, ListEntry)) {
+    if (!SctIsListEmpty (&SyncReadDataListHead)) {
+      for(ListEntry = SctGetFirstNode(&SyncReadDataListHead); ; ListEntry = SctGetNextNode(&SyncReadDataListHead, ListEntry)) {
         BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
       
         WriteBuffer = NULL;
@@ -2984,7 +2984,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint1(
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
           break;
         }
       }
@@ -3009,7 +3009,7 @@ END_WAIT:
       IndexI = 0;
       
       AcquireLock(&gWriteQueueLock);
-      while (!IsListEmpty(&WriteExecuteListHead) && IndexI < 120) {
+      while (!SctIsListEmpty (&WriteExecuteListHead) && IndexI < 120) {
         ReleaseLock(&gWriteQueueLock);
         
         gtBS->WaitForEvent (   
@@ -3042,8 +3042,8 @@ END:
   // Here no logs should be wrote to this block device to keep data intact
   //
   AcquireLock(&gWriteQueueLock);
-  if (!IsListEmpty(&WriteFinishListHead)) {
-    for(ListEntry = GetFirstNode(&WriteFinishListHead); ; ListEntry = GetNextNode(&WriteFinishListHead, ListEntry)) {
+  if (!SctIsListEmpty (&WriteFinishListHead)) {
+    for(ListEntry = SctGetFirstNode(&WriteFinishListHead); ; ListEntry = SctGetNextNode(&WriteFinishListHead, ListEntry)) {
       BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
       ReleaseLock(&gWriteQueueLock);
   
@@ -3098,7 +3098,7 @@ END:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&WriteFinishListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&WriteFinishListHead, ListEntry)) {
         break;
       }
     }
@@ -3109,9 +3109,9 @@ END:
   // Clean up & free all record resources
   //
   Print (L"============ Restore All written blocks ============= \n");
-  while (!IsListEmpty(&SyncReadDataListHead)) {
+  while (!SctIsListEmpty (&SyncReadDataListHead)) {
     BlockIo2Entity = CR(SyncReadDataListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
 
     if (BlockIo2Entity->Buffer != NULL) {
       //
@@ -3159,10 +3159,10 @@ END:
   // Record All write finshed test logs
   //  
   AcquireLock(&gWriteQueueLock);
-  while (!IsListEmpty(&WriteFinishListHead)) {
+  while (!SctIsListEmpty (&WriteFinishListHead)) {
     BlockIo2Entity = CR(WriteFinishListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
    
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
     ReleaseLock(&gWriteQueueLock);
    
     
@@ -3216,9 +3216,9 @@ END:
   //
   // If WriteFailListHead is not empty, which means some Async Calls are wrong 
   // 
-  while(!IsListEmpty(&WriteFailListHead)) {
+  while(!SctIsListEmpty (&WriteFailListHead)) {
     BlockIo2Entity = CR(WriteFailListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
 
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -3264,8 +3264,8 @@ END:
   // Be careful, All the entities in Execution list should NOT be freed here! 
   //
   AcquireLock(&gWriteQueueLock);
-  if (!IsListEmpty(&WriteExecuteListHead)) {
-    for(ListEntry = GetFirstNode(&WriteExecuteListHead); ; ListEntry = GetNextNode(&WriteExecuteListHead, ListEntry)) {
+  if (!SctIsListEmpty (&WriteExecuteListHead)) {
+    for(ListEntry = SctGetFirstNode(&WriteExecuteListHead); ; ListEntry = SctGetNextNode(&WriteExecuteListHead, ListEntry)) {
       BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
       ReleaseLock(&gWriteQueueLock);
       
@@ -3288,7 +3288,7 @@ END:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&WriteExecuteListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&WriteExecuteListHead, ListEntry)) {
         break;
       }
     }
@@ -3333,7 +3333,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint2(
   EFI_LBA                              NewLba;
   EFI_STATUS                           StatusWrite;
   BlockIO2_Task                        *BlockIo2Entity = NULL;
-  EFI_LIST_ENTRY                       *ListEntry = NULL;
+  SCT_LIST_ENTRY                       *ListEntry = NULL;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenSync;
 
   //
@@ -3396,7 +3396,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint2(
         //
         // Add Read info to SyncReadDataList
         //
-        InsertTailList(&SyncReadDataListHead, &BlockIo2Entity->ListEntry);
+        SctInsertTailList (&SyncReadDataListHead, &BlockIo2Entity->ListEntry);
 
         BlockIo2Entity->Buffer = NULL;
         BlockIo2Entity->BlockIo2Token.Event = NULL;
@@ -3437,8 +3437,8 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint2(
     // 
     // do Asyn write call basing on read data result 
     //
-    if (!IsListEmpty(&SyncReadDataListHead)) {
-      for(ListEntry = GetFirstNode(&SyncReadDataListHead); ; ListEntry = GetNextNode(&SyncReadDataListHead, ListEntry)) {
+    if (!SctIsListEmpty (&SyncReadDataListHead)) {
+      for(ListEntry = SctGetFirstNode(&SyncReadDataListHead); ; ListEntry = SctGetNextNode(&SyncReadDataListHead, ListEntry)) {
         BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
         
         WriteBuffer = NULL;
@@ -3508,7 +3508,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint2(
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
           break;
         }
       }
@@ -3520,8 +3520,8 @@ END:
   // Clean up & free all record resources
   //
   Print (L"Restore All written blocks.\n");
-  if (!IsListEmpty(&SyncReadDataListHead)) {
-    for(ListEntry = GetFirstNode(&SyncReadDataListHead); ; ListEntry = GetNextNode(&SyncReadDataListHead, ListEntry)) {
+  if (!SctIsListEmpty (&SyncReadDataListHead)) {
+    for(ListEntry = SctGetFirstNode(&SyncReadDataListHead); ; ListEntry = SctGetNextNode(&SyncReadDataListHead, ListEntry)) {
       BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
      
       if (BlockIo2Entity->Buffer != NULL) {
@@ -3551,7 +3551,7 @@ END:
                          );
         }
       }
-      if (IsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
         break;
       }
     }
@@ -3560,9 +3560,9 @@ END:
   //
   // Record all logs
   //
-  while (!IsListEmpty(&SyncReadDataListHead)) {
+  while (!SctIsListEmpty (&SyncReadDataListHead)) {
     BlockIo2Entity = CR(SyncReadDataListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
 
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -3621,9 +3621,9 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
   EFI_LBA                              NewLba;
   EFI_BLOCK_IO2_TOKEN                  BatchWriteToken;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenSync;
-  EFI_LIST_ENTRY                       RecordListHeader;
-  EFI_LIST_ENTRY                       WriteListHeader;
-  EFI_LIST_ENTRY                       *ListEntry = NULL;
+  SCT_LIST_ENTRY                       RecordListHeader;
+  SCT_LIST_ENTRY                       WriteListHeader;
+  SCT_LIST_ENTRY                       *ListEntry = NULL;
   UINTN                                WaitIndex;
   BlockIO2_Task                        *BlockIo2RecordEntity = NULL;
   BlockIO2_Task                        *BlockIo2WriteEntity = NULL;
@@ -3724,7 +3724,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
         //
         // Add Read info to SyncReadDataList
         //
-        InsertTailList(&RecordListHeader, &BlockIo2RecordEntity->ListEntry);
+        SctInsertTailList (&RecordListHeader, &BlockIo2RecordEntity->ListEntry);
         
         BlockIo2RecordEntity->Buffer = NULL;
         BlockIo2RecordEntity->BlockIo2Token.Event = NULL;
@@ -3762,8 +3762,8 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
 
 
     Print (L" =================== Create Test Write Blocks  =================== \n\n");
-    if (!IsListEmpty(&RecordListHeader)) {
-      for(ListEntry = GetFirstNode(&RecordListHeader); ; ListEntry = GetNextNode(&RecordListHeader, ListEntry)) {
+    if (!SctIsListEmpty (&RecordListHeader)) {
+      for(ListEntry = SctGetFirstNode(&RecordListHeader); ; ListEntry = SctGetNextNode(&RecordListHeader, ListEntry)) {
 
         BlockIo2RecordEntity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
         //
@@ -3786,7 +3786,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
         //
         // Add Read info to SyncReadDataList
         //
-        InsertTailList(&WriteListHeader, &BlockIo2WriteEntity->ListEntry);
+        SctInsertTailList (&WriteListHeader, &BlockIo2WriteEntity->ListEntry);
         
         BlockIo2WriteEntity->Buffer = NULL;
         BlockIo2WriteEntity->BlockIo2Token.Event = NULL;
@@ -3811,7 +3811,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&RecordListHeader, ListEntry)) {
+        if (SctIsNodeAtEnd(&RecordListHeader, ListEntry)) {
           break;
         }
       }
@@ -3866,8 +3866,8 @@ END:
   //
   // Verify Async Write Task List Result 
   //
-  if (!IsListEmpty(&WriteListHeader) && MemoryAllocFail == FALSE) {
-    for(ListEntry = GetFirstNode(&WriteListHeader); ; ListEntry = GetNextNode(&WriteListHeader, ListEntry)) {
+  if (!SctIsListEmpty (&WriteListHeader) && MemoryAllocFail == FALSE) {
+    for(ListEntry = SctGetFirstNode(&WriteListHeader); ; ListEntry = SctGetNextNode(&WriteListHeader, ListEntry)) {
       BlockIo2WriteEntity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
 
       if (BlockIo2WriteEntity->BlockIo2Token.TransactionStatus == EFI_SUCCESS) {
@@ -3917,7 +3917,7 @@ END:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&WriteListHeader, ListEntry)) {
+      if (SctIsNodeAtEnd(&WriteListHeader, ListEntry)) {
          break;
       }
     }
@@ -3926,9 +3926,9 @@ END:
   //
   // Restore written blocks data & Clean up record list 
   //
-  while(!IsListEmpty(&RecordListHeader)) {
+  while(!SctIsListEmpty (&RecordListHeader)) {
     BlockIo2RecordEntity = CR(RecordListHeader.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&BlockIo2RecordEntity->ListEntry); 
+    SctRemoveEntryList (&BlockIo2RecordEntity->ListEntry); 
 
     if (BlockIo2RecordEntity->Buffer != NULL) {
       //
@@ -3973,9 +3973,9 @@ END:
   //
   // Do logging & clean up Write list
   //
-  while(!IsListEmpty(&WriteListHeader)) {
+  while(!SctIsListEmpty (&WriteListHeader)) {
     BlockIo2WriteEntity = CR(WriteListHeader.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&BlockIo2WriteEntity->ListEntry);
+    SctRemoveEntryList (&BlockIo2WriteEntity->ListEntry);
 
     if (MemoryAllocFail == FALSE) {
       if (BlockIo2WriteEntity->MemCompared == TRUE) {
@@ -4072,7 +4072,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint4(
   EFI_LBA                              NewLba;
   EFI_STATUS                           StatusWrite;
   BlockIO2_Task                        *BlockIo2Entity = NULL;
-  EFI_LIST_ENTRY                       *ListEntry = NULL;
+  SCT_LIST_ENTRY                       *ListEntry = NULL;
   UINTN                                WaitIndex;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenSync;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenFlush;
@@ -4138,7 +4138,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint4(
         //
         // Add Read info to SyncReadDataList
         //
-        InsertTailList(&SyncReadDataListHead, &BlockIo2Entity->ListEntry);
+        SctInsertTailList (&SyncReadDataListHead, &BlockIo2Entity->ListEntry);
         
         BlockIo2Entity->Buffer = NULL;
         BlockIo2Entity->BlockIo2Token.Event = NULL;
@@ -4174,8 +4174,8 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint4(
       }
     }
 
-    if (!IsListEmpty(&SyncReadDataListHead)) {
-      for(ListEntry = GetFirstNode(&SyncReadDataListHead); ; ListEntry = GetNextNode(&SyncReadDataListHead, ListEntry)) {
+    if (!SctIsListEmpty (&SyncReadDataListHead)) {
+      for(ListEntry = SctGetFirstNode(&SyncReadDataListHead); ; ListEntry = SctGetNextNode(&SyncReadDataListHead, ListEntry)) {
         BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
     
         WriteBuffer = NULL;
@@ -4207,7 +4207,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint4(
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&SyncReadDataListHead, ListEntry)) {
           break;
         }
       }
@@ -4232,7 +4232,7 @@ END_WAIT:
       IndexI = 0;
       
       AcquireLock(&gMixedWriteQueueLock);
-      while (!IsListEmpty(&MixedWriteExecuteListHead) && IndexI < 120) {
+      while (!SctIsListEmpty (&MixedWriteExecuteListHead) && IndexI < 120) {
         ReleaseLock(&gMixedWriteQueueLock);
         
         gtBS->WaitForEvent (   
@@ -4262,8 +4262,8 @@ END:
   //
   // Compare all Sync Write results since Sync results always follows Async call
   //
-  if (!IsListEmpty(&MixedSyncWriteListHead)) {
-    for(ListEntry = GetFirstNode(&MixedSyncWriteListHead); ; ListEntry = GetNextNode(&MixedSyncWriteListHead, ListEntry)) {
+  if (!SctIsListEmpty (&MixedSyncWriteListHead)) {
+    for(ListEntry = SctGetFirstNode(&MixedSyncWriteListHead); ; ListEntry = SctGetNextNode(&MixedSyncWriteListHead, ListEntry)) {
       BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
   
       //
@@ -4313,7 +4313,7 @@ END:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&MixedSyncWriteListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&MixedSyncWriteListHead, ListEntry)) {
         break;
       }
     }
@@ -4323,9 +4323,9 @@ END:
   // Clean up & free all record resources
   //
   Print (L"============ Restore All written blocks ============ \n");
-  while (!IsListEmpty(&SyncReadDataListHead)) {
+  while (!SctIsListEmpty (&SyncReadDataListHead)) {
     BlockIo2Entity = CR(SyncReadDataListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
 
     if (BlockIo2Entity->Buffer != NULL) {
       //
@@ -4372,10 +4372,10 @@ END:
   //
   // Record All Failed Async Write case results
   //
-  while (!IsListEmpty(&MixedWriteFailListHead)) {
+  while (!SctIsListEmpty (&MixedWriteFailListHead)) {
     BlockIo2Entity = CR(MixedWriteFailListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
        
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
     StandardLib->RecordAssertion (
                    StandardLib,
                    EFI_TEST_ASSERTION_FAILED,
@@ -4404,10 +4404,10 @@ END:
   //
   // Record All Mixed  Sync Async write finshed test logs
   //  
-  while (!IsListEmpty(&MixedSyncWriteListHead)) {
+  while (!SctIsListEmpty (&MixedSyncWriteListHead)) {
     BlockIo2Entity = CR(MixedSyncWriteListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
    
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
    
     
     if (BlockIo2Entity->MemCompared == TRUE) {
@@ -4456,9 +4456,9 @@ END:
   //
   // Mixed Sync Async function failed test logs
   // 
-  while (!IsListEmpty(&MixedSyncWriteFailListHead)) {
+  while (!SctIsListEmpty (&MixedSyncWriteFailListHead)) {
     BlockIo2Entity = CR(MixedSyncWriteFailListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
 
      StandardLib->RecordAssertion (
                     StandardLib,
@@ -4486,9 +4486,9 @@ END:
   // Free All finished Async Write finshed test entity
   //  
   AcquireLock(&gMixedWriteQueueLock);
-  while (!IsListEmpty(&MixedWriteFinishListHead)) {
+  while (!SctIsListEmpty (&MixedWriteFinishListHead)) {
     BlockIo2Entity = CR(MixedWriteFinishListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&BlockIo2Entity->ListEntry);
+    SctRemoveEntryList (&BlockIo2Entity->ListEntry);
 
     ReleaseLock(&gMixedWriteQueueLock);
    

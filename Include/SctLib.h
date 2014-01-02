@@ -105,6 +105,67 @@ SctInitializeDriver (
   );
 
 //
+// List API
+//
+
+#define INITIALIZE_SCT_LIST_HEAD_VARIABLE(ListHead)  {&ListHead, &ListHead}
+
+typedef struct _SCT_LIST_ENTRY {
+  struct _SCT_LIST_ENTRY  *ForwardLink;
+  struct _SCT_LIST_ENTRY  *BackLink;
+} SCT_LIST_ENTRY;
+
+VOID
+SctInitializeListHead (
+  SCT_LIST_ENTRY       *List
+  );
+
+SCT_LIST_ENTRY *
+SctGetFirstNode (
+  CONST SCT_LIST_ENTRY  *List
+  );
+
+SCT_LIST_ENTRY *
+SctGetNextNode (
+  CONST SCT_LIST_ENTRY  *List,
+  CONST SCT_LIST_ENTRY  *Node
+  );
+
+BOOLEAN
+SctIsListEmpty (
+  CONST SCT_LIST_ENTRY  *List
+  );
+
+BOOLEAN
+SctIsNull (
+  CONST SCT_LIST_ENTRY  *List,
+  CONST SCT_LIST_ENTRY  *Node
+  );
+
+VOID
+SctRemoveEntryList (
+  SCT_LIST_ENTRY  *Entry
+  );
+
+VOID
+SctInsertTailList (
+  SCT_LIST_ENTRY  *ListHead,
+  SCT_LIST_ENTRY  *Entry
+  );
+
+VOID
+SctInsertHeadList (
+  SCT_LIST_ENTRY  *ListHead,
+  SCT_LIST_ENTRY  *Entry
+  );
+
+BOOLEAN
+SctIsNodeAtEnd (
+  CONST SCT_LIST_ENTRY  *List,
+  CONST SCT_LIST_ENTRY  *Node
+  );
+
+//
 // Memory API
 //
 

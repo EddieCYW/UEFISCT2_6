@@ -125,8 +125,8 @@ Returns:
 {
   EFI_SCT_SKIPPED_CASE    *TempSkippedCase;
   EFI_SCT_SKIPPED_CASE    *SkippedCase;
-  EFI_LIST_ENTRY          *SkippedCaseList;
-  EFI_LIST_ENTRY          *Link;
+  SCT_LIST_ENTRY          *SkippedCaseList;
+  SCT_LIST_ENTRY          *Link;
   EFI_STATUS              Status;
   UINT32                  Order = 0;
 
@@ -139,7 +139,7 @@ Returns:
   //
   SkippedCaseList = &gFT->SkippedCaseList;
 
-  for (Link = SkippedCaseList->Flink; Link != SkippedCaseList; Link = Link->Flink) {
+  for (Link = SkippedCaseList->ForwardLink; Link != SkippedCaseList; Link = Link->ForwardLink) {
     TempSkippedCase = CR (Link, EFI_SCT_SKIPPED_CASE, Link, EFI_SCT_SKIPPED_CASE_SIGNATURE);
 
 	if ( (SctStrCmp (TempSkippedCase->CaseName, ExecuteInfo->TestCase->Name) == 0) && \
@@ -157,7 +157,7 @@ Returns:
 
   ExecuteInfo->SkippedCase = SkippedCase;
 
-  InsertTailList (SkippedCaseList, &SkippedCase->Link);
+  SctInsertTailList (SkippedCaseList, &SkippedCase->Link);
   
   return Status;
 }
@@ -218,7 +218,7 @@ Routine Description:
 
 EFI_STATUS
 FreeSkippedCases (
-  IN EFI_LIST_ENTRY               *SkippedCaseList
+  IN SCT_LIST_ENTRY               *SkippedCaseList
   )
 /*++
 
@@ -249,10 +249,10 @@ Returns:
   //
   // Walk through all test nodes
   //
-  while (!IsListEmpty (SkippedCaseList)) {
-    SkippedCase = CR (SkippedCaseList->Flink, EFI_SCT_SKIPPED_CASE, Link, EFI_SCT_SKIPPED_CASE_SIGNATURE);
+  while (!SctIsListEmpty (SkippedCaseList)) {
+    SkippedCase = CR (SkippedCaseList->ForwardLink, EFI_SCT_SKIPPED_CASE, Link, EFI_SCT_SKIPPED_CASE_SIGNATURE);
 
-    RemoveEntryList (&SkippedCase->Link);
+    SctRemoveEntryList (&SkippedCase->Link);
     FreeSingleSkippedCase (SkippedCase);
   }
 
@@ -423,7 +423,7 @@ EFI_STATUS
 LoadSkippedCases (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  OUT EFI_LIST_ENTRY              *SkippedCaseList
+  OUT SCT_LIST_ENTRY              *SkippedCaseList
   )
 /*++
 
@@ -517,7 +517,7 @@ Returns:
     //
     // Add this skipped case into the skipped case list
     //
-    InsertTailList (SkippedCaseList, &SkippedCase->Link);
+    SctInsertTailList (SkippedCaseList, &SkippedCase->Link);
   }
 
   //

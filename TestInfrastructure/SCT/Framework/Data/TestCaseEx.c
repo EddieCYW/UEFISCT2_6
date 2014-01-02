@@ -64,7 +64,7 @@ Abstract:
 
 EFI_STATUS
 BuildTestCaseOrderFromNode (
-  IN EFI_LIST_ENTRY               *TestNodeList,
+  IN SCT_LIST_ENTRY               *TestNodeList,
   IN OUT UINT32                   *Order
   );
 
@@ -102,7 +102,7 @@ Returns:
 --*/
 {
   UINT32              Order;
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TestCase;
   EFI_SCT_TEST_CASE   *Target;
 
@@ -122,7 +122,7 @@ Returns:
   //
   // Walk through all test cases, find the largest order
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
@@ -193,7 +193,7 @@ Returns:
 --*/
 {
   UINT32              Order;
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TestCase;
   EFI_SCT_TEST_CASE   *Target;
 
@@ -213,7 +213,7 @@ Returns:
   //
   // Walk through all test cases, find the target test case
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
@@ -239,7 +239,7 @@ Returns:
   //
   // Walk through all test cases again, decrease the order
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (TestCase->Order != EFI_SCT_TEST_CASE_INVALID) {
@@ -286,7 +286,7 @@ Returns:
 --*/
 {
   EFI_STATUS          Status;
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TestCase;
 
   //
@@ -310,7 +310,7 @@ Returns:
   //
   // Walk through all test cases
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
@@ -359,7 +359,7 @@ Returns:
 
 --*/
 {
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TestCase;
 
   //
@@ -372,7 +372,7 @@ Returns:
   //
   // Walk through all test cases
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
@@ -411,7 +411,7 @@ Returns:
 
 --*/
 {
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TestCase;
 
   //
@@ -424,7 +424,7 @@ Returns:
   //
   // Walk through all test cases
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
@@ -463,7 +463,7 @@ Returns:
 
 --*/
 {
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TestCase;
 
   //
@@ -476,7 +476,7 @@ Returns:
   //
   // Walk through all test cases
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
@@ -516,7 +516,7 @@ Returns:
 
 --*/
 {
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TestCase;
 
   //
@@ -529,7 +529,7 @@ Returns:
   //
   // Walk through all test cases
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
@@ -572,7 +572,7 @@ Returns:
 --*/
 {
   UINT32              Order;
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TempTestCase;
   EFI_SCT_TEST_CASE   *Target;
 
@@ -592,7 +592,7 @@ Returns:
   //
   // Walk through all test cases
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TempTestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (TempTestCase->Order != EFI_SCT_TEST_CASE_INVALID) {
@@ -645,7 +645,7 @@ Returns:
 --*/
 {
   UINT32              Order;
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TempTestCase;
   EFI_SCT_TEST_CASE   *Target;
 
@@ -665,7 +665,7 @@ Returns:
   //
   // Walk through all test cases
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TempTestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (TempTestCase->Order != EFI_SCT_TEST_CASE_INVALID) {
@@ -699,7 +699,7 @@ GetTestCaseRemainNum (
   UINTN                             *Remain
   )
 {
-  EFI_LIST_ENTRY                    *Link;
+  SCT_LIST_ENTRY                    *Link;
   EFI_SCT_TEST_CASE                 *TestCase;
 
   if (Remain == NULL) {
@@ -708,7 +708,7 @@ GetTestCaseRemainNum (
 
   *Remain = 0;
 
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if ((TestCase->Order != EFI_SCT_TEST_CASE_INVALID) &&
@@ -770,13 +770,13 @@ Returns:
 
 --*/
 {
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TestCase;
 
   //
   // Walk through all test cases
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     TestCase->Order      = EFI_SCT_TEST_CASE_INVALID;
@@ -807,13 +807,13 @@ Returns:
 
 --*/
 {
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TestCase;
 
   //
   // Walk through all test cases
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (TestCase->Order != EFI_SCT_TEST_CASE_INVALID) {
@@ -846,13 +846,13 @@ Returns:
 
 --*/
 {
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TestCase;
 
   //
   // Walk through all test cases
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     TestCase->Order      = EFI_SCT_TEST_CASE_INVALID;
@@ -901,7 +901,7 @@ Arguments:
 
 EFI_STATUS
 BuildTestCaseOrderFromNode (
-  IN EFI_LIST_ENTRY               *TestNodeList,
+  IN SCT_LIST_ENTRY               *TestNodeList,
   IN OUT UINT32                   *Order
   )
 /*++
@@ -913,7 +913,7 @@ Routine Description:
 --*/
 {
   EFI_STATUS          Status;
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_NODE   *TestNode;
   EFI_SCT_TEST_CASE   *TestCase;
 
@@ -927,13 +927,13 @@ Routine Description:
   //
   // Walk through all test nodes
   //
-  for (Link = TestNodeList->Flink; Link != TestNodeList; Link = Link->Flink) {
+  for (Link = TestNodeList->ForwardLink; Link != TestNodeList; Link = Link->ForwardLink) {
     TestNode = CR (Link, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
 
     //
     // Check it is a leaf node or not
     //
-    if (IsListEmpty (&TestNode->Child)) {
+    if (SctIsListEmpty (&TestNode->Child)) {
       //
       // Leaf node
       //

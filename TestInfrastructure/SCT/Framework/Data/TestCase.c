@@ -69,7 +69,7 @@ Abstract:
 
 EFI_STATUS
 InsertSingleTestCase (
-  IN OUT EFI_LIST_ENTRY           *TestCaseList,
+  IN OUT SCT_LIST_ENTRY           *TestCaseList,
   IN EFI_SCT_TEST_CASE            *TestCase
   );
 
@@ -141,7 +141,7 @@ EFI_STATUS
 LoadTestCases (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  OUT EFI_LIST_ENTRY              *TestCaseList
+  OUT SCT_LIST_ENTRY              *TestCaseList
   )
 /*++
 
@@ -235,7 +235,7 @@ Returns:
     //
     // Add this test case into the test case list
     //
-    InsertTailList (TestCaseList, &TestCase->Link);
+    SctInsertTailList (TestCaseList, &TestCase->Link);
   }
 
   //
@@ -257,7 +257,7 @@ EFI_STATUS
 SaveTestCases (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  IN EFI_LIST_ENTRY               *TestCaseList
+  IN SCT_LIST_ENTRY               *TestCaseList
   )
 /*++
 
@@ -281,7 +281,7 @@ Returns:
   EFI_STATUS            Status;
   UINT32                Index;
   EFI_INI_FILE_HANDLE   IniFile;
-  EFI_LIST_ENTRY        *Link;
+  SCT_LIST_ENTRY        *Link;
   EFI_SCT_TEST_CASE     *TestCase;
 
   //
@@ -344,7 +344,7 @@ Returns:
   //
   Index = 0;
 
-  for (Link = TestCaseList->Flink; Link != TestCaseList; Link = Link->Flink) {
+  for (Link = TestCaseList->ForwardLink; Link != TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     //
@@ -382,7 +382,7 @@ EFI_STATUS
 LoadTestSequence (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  IN OUT EFI_LIST_ENTRY           *TestCaseList
+  IN OUT SCT_LIST_ENTRY           *TestCaseList
   )
 /*++
 
@@ -411,7 +411,7 @@ Returns:
   UINT32                Index;
   UINT32                NumberOfTestCases;
   EFI_INI_FILE_HANDLE   IniFile;
-  EFI_LIST_ENTRY        SequenceList;
+  SCT_LIST_ENTRY        SequenceList;
   EFI_SCT_TEST_CASE     *TestCase;
 
   //
@@ -426,7 +426,7 @@ Returns:
   //
   EFI_SCT_DEBUG ((EFI_SCT_D_TRACE, L"Load test sequence from <%s>", FileName));
 
-  InitializeListHead (&SequenceList);
+  SctInitializeListHead (&SequenceList);
 
   //
   // Open the file
@@ -475,7 +475,7 @@ Returns:
     //
     // Add this test case into the test sequence list
     //
-    InsertTailList (&SequenceList, &TestCase->Link);
+    SctInsertTailList (&SequenceList, &TestCase->Link);
   }
 
   //
@@ -512,7 +512,7 @@ EFI_STATUS
 SaveTestSequence (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  IN EFI_LIST_ENTRY               *TestCaseList
+  IN SCT_LIST_ENTRY               *TestCaseList
   )
 /*++
 
@@ -538,7 +538,7 @@ Returns:
   EFI_STATUS            Status;
   UINT32                Index;
   EFI_INI_FILE_HANDLE   IniFile;
-  EFI_LIST_ENTRY        *Link;
+  SCT_LIST_ENTRY        *Link;
   EFI_SCT_TEST_CASE     *TestCase;
 
   //
@@ -601,7 +601,7 @@ Returns:
   //
   Index = 0;
 
-  for (Link = TestCaseList->Flink; Link != TestCaseList; Link = Link->Flink) {
+  for (Link = TestCaseList->ForwardLink; Link != TestCaseList; Link = Link->ForwardLink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     //
@@ -637,7 +637,7 @@ Returns:
 
 EFI_STATUS
 FreeTestCases (
-  IN EFI_LIST_ENTRY               *TestCaseList
+  IN SCT_LIST_ENTRY               *TestCaseList
   )
 /*++
 
@@ -668,10 +668,10 @@ Returns:
   //
   // Walk through all test cases
   //
-  while (!IsListEmpty (TestCaseList)) {
-    TestCase = CR (TestCaseList->Flink, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
+  while (!SctIsListEmpty (TestCaseList)) {
+    TestCase = CR (TestCaseList->ForwardLink, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
-    RemoveEntryList (&TestCase->Link);
+    SctRemoveEntryList (&TestCase->Link);
     FreeSingleTestCase (TestCase);
   }
 
@@ -684,7 +684,7 @@ Returns:
 
 EFI_STATUS
 CreateTestCases (
-  OUT EFI_LIST_ENTRY              *TestCaseList
+  OUT SCT_LIST_ENTRY              *TestCaseList
   )
 /*++
 
@@ -704,8 +704,8 @@ Returns:
 --*/
 {
   EFI_STATUS              Status;
-  EFI_LIST_ENTRY          *TestFileList;
-  EFI_LIST_ENTRY          *Link;
+  SCT_LIST_ENTRY          *TestFileList;
+  SCT_LIST_ENTRY          *Link;
   EFI_SCT_TEST_CASE       *TestCase;
   EFI_SCT_TEST_FILE       *TestFile;
   EFI_BB_TEST_PROTOCOL    *BbTest;
@@ -732,7 +732,7 @@ Returns:
   //
   TestFileList = &gFT->TestFileList;
 
-  for (Link = TestFileList->Flink; Link != TestFileList; Link = Link->Flink) {
+  for (Link = TestFileList->ForwardLink; Link != TestFileList; Link = Link->ForwardLink) {
     TestFile = CR (Link, EFI_SCT_TEST_FILE, Link, EFI_SCT_TEST_FILE_SIGNATURE);
 
     //
@@ -849,8 +849,8 @@ Returns:
 
 EFI_STATUS
 MergeTestCases (
-  IN OUT EFI_LIST_ENTRY           *DstTestCaseList,
-  IN EFI_LIST_ENTRY               *SrcTestCaseList
+  IN OUT SCT_LIST_ENTRY           *DstTestCaseList,
+  IN SCT_LIST_ENTRY               *SrcTestCaseList
   )
 /*++
 
@@ -871,8 +871,8 @@ Returns:
 
 --*/
 {
-  EFI_LIST_ENTRY      *DstLink;
-  EFI_LIST_ENTRY      *SrcLink;
+  SCT_LIST_ENTRY      *DstLink;
+  SCT_LIST_ENTRY      *SrcLink;
   EFI_SCT_TEST_CASE   *DstTestCase;
   EFI_SCT_TEST_CASE   *SrcTestCase;
 
@@ -886,13 +886,13 @@ Returns:
   //
   // Walk through all test cases in the source test case list
   //
-  for (SrcLink = SrcTestCaseList->Flink; SrcLink != SrcTestCaseList; SrcLink = SrcLink->Flink) {
+  for (SrcLink = SrcTestCaseList->ForwardLink; SrcLink != SrcTestCaseList; SrcLink = SrcLink->ForwardLink) {
     SrcTestCase = CR (SrcLink, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     //
     // Walk through all test cases in the destination test case list
     //
-    for (DstLink = DstTestCaseList->Flink; DstLink != DstTestCaseList; DstLink = DstLink->Flink) {
+    for (DstLink = DstTestCaseList->ForwardLink; DstLink != DstTestCaseList; DstLink = DstLink->ForwardLink) {
       DstTestCase = CR (DstLink, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
       if (SctCompareGuid (&DstTestCase->Guid, &SrcTestCase->Guid) == 0) {
@@ -948,7 +948,7 @@ Returns:
 
 --*/
 {
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *TempTestCase;
 
   //
@@ -961,7 +961,7 @@ Returns:
   //
   // Walk through all test cases
   //
-  for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
+  for (Link = gFT->TestCaseList.ForwardLink; Link != &gFT->TestCaseList; Link = Link->ForwardLink) {
     TempTestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (SctCompareGuid (&TempTestCase->Guid, Guid) == 0) {
@@ -986,7 +986,7 @@ Returns:
 
 EFI_STATUS
 InsertSingleTestCase (
-  IN OUT EFI_LIST_ENTRY           *TestCaseList,
+  IN OUT SCT_LIST_ENTRY           *TestCaseList,
   IN EFI_SCT_TEST_CASE            *TestCase
   )
 /*++
@@ -997,14 +997,14 @@ Routine Description:
 
 --*/
 {
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_CASE   *OldTestCase;
 
   //
   // Check whether there are duplicate test cases. If yes, record a debug
   // message
   //
-  for (Link = TestCaseList->Flink; Link != TestCaseList; Link = Link->Flink) {
+  for (Link = TestCaseList->ForwardLink; Link != TestCaseList; Link = Link->ForwardLink) {
     OldTestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
     if (SctCompareGuid (&OldTestCase->Guid, &TestCase->Guid) == 0) {
@@ -1013,7 +1013,7 @@ Routine Description:
     }
   }
 
-  InsertTailList (TestCaseList, &TestCase->Link);
+  SctInsertTailList (TestCaseList, &TestCase->Link);
 
   //
   // Done

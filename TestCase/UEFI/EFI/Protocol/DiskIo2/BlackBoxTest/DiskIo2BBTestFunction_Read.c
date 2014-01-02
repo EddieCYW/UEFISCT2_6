@@ -97,9 +97,9 @@ BBTestReadDiskExFunctionAutoTestCheckpoint4(
 //
 // Async Read Queue
 //
-EFI_LIST_ENTRY  AsyncReadExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(AsyncReadExecuteListHead);
-EFI_LIST_ENTRY  AsyncReadFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(AsyncReadFinishListHead);
-EFI_LIST_ENTRY  AsyncReadFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(AsyncReadFailListHead);
+SCT_LIST_ENTRY  AsyncReadExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncReadExecuteListHead);
+SCT_LIST_ENTRY  AsyncReadFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncReadFinishListHead);
+SCT_LIST_ENTRY  AsyncReadFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncReadFailListHead);
 
 //
 // Async Read lock
@@ -109,15 +109,15 @@ FLOCK  gAsyncReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 //
 // Mixed Async Read Queue
 //
-EFI_LIST_ENTRY  MixedReadExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(MixedReadExecuteListHead);
-EFI_LIST_ENTRY  MixedReadFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(MixedReadFinishListHead);
-EFI_LIST_ENTRY  MixedReadFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(MixedReadFailListHead);
+SCT_LIST_ENTRY  MixedReadExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedReadExecuteListHead);
+SCT_LIST_ENTRY  MixedReadFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedReadFinishListHead);
+SCT_LIST_ENTRY  MixedReadFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(MixedReadFailListHead);
 
 //
 // Sync Read Queue
 //
-EFI_LIST_ENTRY  SyncReadListHead     = INITIALIZE_LIST_HEAD_VARIABLE(SyncReadListHead);
-EFI_LIST_ENTRY  SyncReadFailListHead = INITIALIZE_LIST_HEAD_VARIABLE(SyncReadFailListHead);
+SCT_LIST_ENTRY  SyncReadListHead     = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncReadListHead);
+SCT_LIST_ENTRY  SyncReadFailListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncReadFailListHead);
 
 //
 // Mixed Sync & Async Read lock
@@ -145,8 +145,8 @@ EFIAPI DiskIo2ReadNotifyFunc (
   // All DiskIo2 Notify function run at Call Back level only once, So no locks required
   //
   AcquireLock(&gAsyncReadQueueLock);
-  RemoveEntryList(&DiskIo2Entity->ListEntry);
-  InsertTailList(&AsyncReadFinishListHead, &DiskIo2Entity->ListEntry);
+  SctRemoveEntryList(&DiskIo2Entity->ListEntry);
+  SctInsertTailList(&AsyncReadFinishListHead, &DiskIo2Entity->ListEntry);
   ReleaseLock(&gAsyncReadQueueLock);
 }
 
@@ -206,7 +206,7 @@ DiskIo2AsyncReadData (
   DiskIo2Entity->Buffer                         = Buffer;
 
   AcquireLock(&gAsyncReadQueueLock);
-  InsertTailList(&AsyncReadExecuteListHead, &DiskIo2Entity->ListEntry);
+  SctInsertTailList(&AsyncReadExecuteListHead, &DiskIo2Entity->ListEntry);
   ReleaseLock(&gAsyncReadQueueLock);
   
   //
@@ -223,8 +223,8 @@ DiskIo2AsyncReadData (
   
   if (EFI_ERROR (Status)) {
     AcquireLock(&gAsyncReadQueueLock);
-    RemoveEntryList(&DiskIo2Entity->ListEntry);
-    InsertTailList(&AsyncReadFailListHead, &DiskIo2Entity->ListEntry);    
+    SctRemoveEntryList(&DiskIo2Entity->ListEntry);
+    SctInsertTailList(&AsyncReadFailListHead, &DiskIo2Entity->ListEntry);    
     ReleaseLock(&gAsyncReadQueueLock);
 
     DiskIo2Entity->Buffer = NULL;
@@ -260,7 +260,7 @@ EFIAPI DiskIo2AsyncReadBatchNotifyFunc (
   
   DiskIO2_Batch_Task_Context          *TaskContext;
   DiskIO2_Task                        *DiskIo2Entity    = NULL;
-  EFI_LIST_ENTRY                      *CurrentTaskEntry = NULL;
+  SCT_LIST_ENTRY                      *CurrentTaskEntry = NULL;
   EFI_DISK_IO2_PROTOCOL               *DiskIo2          = NULL;
   EFI_STATUS                          Status;
 
@@ -269,7 +269,7 @@ EFIAPI DiskIo2AsyncReadBatchNotifyFunc (
   CurrentTaskEntry = TaskContext->CurrentTaskEntry;
   DiskIo2          = TaskContext->DiskIo2;
 
-  if (!IsNodeAtEnd(TaskContext->TaskHeader, CurrentTaskEntry) ){
+  if (!SctIsNodeAtEnd(TaskContext->TaskHeader, CurrentTaskEntry) ){
     DiskIo2Entity = CR(CurrentTaskEntry->ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
 
     DiskIo2Entity->DiskIo2Token.Event = NULL;
@@ -324,7 +324,7 @@ STATIC
 EFI_STATUS
 DiskIo2AsyncBatchRead (
   IN EFI_DISK_IO2_PROTOCOL           *DiskIo2,
-  IN EFI_LIST_ENTRY                  *ListHeader,
+  IN SCT_LIST_ENTRY                  *ListHeader,
   IN OUT EFI_DISK_IO2_TOKEN	         *Token
 )
 {
@@ -334,7 +334,7 @@ DiskIo2AsyncBatchRead (
   
   ASSERT(Token != NULL && Token->Event != NULL);
   
-  if (!IsListEmpty(ListHeader)) {  
+  if (!SctIsListEmpty(ListHeader)) {  
     //
     // Task Context will be freed in DiskIo2ReadBatchNotifyFunc when all task finished
     //
@@ -395,8 +395,8 @@ EFIAPI DiskIo2MixedReadNotifyFunc (
   // Remove entity from MixedReadExecuteListHead &  add entity to MixedReadFinishListHead
   // All DiskIo2 Notify function run at Call Back level only once, So no locks required
   //
-  RemoveEntryList(&DiskIo2Entity->ListEntry);
-  InsertTailList(&MixedReadFinishListHead, &DiskIo2Entity->ListEntry);
+  SctRemoveEntryList(&DiskIo2Entity->ListEntry);
+  SctInsertTailList(&MixedReadFinishListHead, &DiskIo2Entity->ListEntry);
 }
 
 
@@ -471,7 +471,7 @@ DiskIo2MixedReadData (
   // Acquire lock to add entity to Execution ListHead
   //
   AcquireLock(&gMixedReadQueueLock);
-  InsertTailList(&MixedReadExecuteListHead, &DiskIo2Entity->ListEntry);
+  SctInsertTailList(&MixedReadExecuteListHead, &DiskIo2Entity->ListEntry);
   ReleaseLock(&gMixedReadQueueLock);
   
   //
@@ -497,8 +497,8 @@ DiskIo2MixedReadData (
     // Put failure execution into fail List
     //
     AcquireLock(&gMixedReadQueueLock);
-    RemoveEntryList(&DiskIo2Entity->ListEntry);
-    InsertTailList(&MixedReadFailListHead, &DiskIo2Entity->ListEntry);
+    SctRemoveEntryList(&DiskIo2Entity->ListEntry);
+    SctInsertTailList(&MixedReadFailListHead, &DiskIo2Entity->ListEntry);
     ReleaseLock(&gMixedReadQueueLock);
 
     gtBS->FreePool(Buffer);
@@ -562,9 +562,9 @@ DiskIo2MixedReadData (
                       DiskIo2EntitySync->Buffer
                       );
   if (!EFI_ERROR(Status)) {
-    InsertTailList(&SyncReadListHead, &DiskIo2EntitySync->ListEntry);
+    SctInsertTailList(&SyncReadListHead, &DiskIo2EntitySync->ListEntry);
   } else {
-    InsertTailList(&SyncReadFailListHead, &DiskIo2EntitySync->ListEntry);
+    SctInsertTailList(&SyncReadFailListHead, &DiskIo2EntitySync->ListEntry);
   }
 
   return Status;
@@ -848,7 +848,7 @@ BBTestReadDiskExFunctionAutoTestCheckpoint1(
 
   DiskIO2_Task      *DiskIo2Entity = NULL;
   UINTN             WaitIndex;
-  EFI_LIST_ENTRY    *ListEntry     = NULL;
+  SCT_LIST_ENTRY    *ListEntry     = NULL;
   
   //
   // Initialize variable
@@ -1071,7 +1071,7 @@ END_WAIT:
     IndexI = 0;
     
     AcquireLock(&gAsyncReadQueueLock);
-    while (!IsListEmpty(&AsyncReadExecuteListHead) && IndexI < 120) {
+    while (!SctIsListEmpty(&AsyncReadExecuteListHead) && IndexI < 120) {
       ReleaseLock(&gAsyncReadQueueLock);
     
       gtBS->WaitForEvent (                   
@@ -1096,8 +1096,8 @@ END_WAIT:
   // Here no logs should be wrote to this disk device to keep data intact
   //
   AcquireLock(&gAsyncReadQueueLock);
-  if (!IsListEmpty(&AsyncReadFinishListHead)) {
-    for(ListEntry = GetFirstNode(&AsyncReadFinishListHead); ; ListEntry = GetNextNode(&AsyncReadFinishListHead, ListEntry)) {
+  if (!SctIsListEmpty(&AsyncReadFinishListHead)) {
+    for(ListEntry = SctGetFirstNode(&AsyncReadFinishListHead); ; ListEntry = SctGetNextNode(&AsyncReadFinishListHead, ListEntry)) {
       DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
       ReleaseLock(&gAsyncReadQueueLock);
 
@@ -1153,7 +1153,7 @@ END_WAIT:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&AsyncReadFinishListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&AsyncReadFinishListHead, ListEntry)) {
          break;
       }
     }
@@ -1164,9 +1164,9 @@ END_WAIT:
   // Record All Finished Read case results
   //
   AcquireLock(&gAsyncReadQueueLock);
-  while (!IsListEmpty(&AsyncReadFinishListHead)) {
+  while (!SctIsListEmpty(&AsyncReadFinishListHead)) {
     DiskIo2Entity = CR(AsyncReadFinishListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);   
-    RemoveEntryList(&DiskIo2Entity->ListEntry);
+    SctRemoveEntryList(&DiskIo2Entity->ListEntry);
     ReleaseLock(&gAsyncReadQueueLock);
     
     if (DiskIo2Entity->MemCompared == TRUE) {
@@ -1215,9 +1215,9 @@ END_WAIT:
   // If ReadFailListHead is not empty, which means some Async Calls are wrong 
   //
   AcquireLock(&gAsyncReadQueueLock);
-  while(!IsListEmpty(&AsyncReadFailListHead)) {
+  while(!SctIsListEmpty(&AsyncReadFailListHead)) {
     DiskIo2Entity = CR(AsyncReadFailListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2Entity->ListEntry);
+    SctRemoveEntryList(&DiskIo2Entity->ListEntry);
     ReleaseLock(&gAsyncReadQueueLock);
     
     StandardLib->RecordAssertion (
@@ -1252,8 +1252,8 @@ END_WAIT:
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
   AcquireLock(&gAsyncReadQueueLock);
-  if (!IsListEmpty(&AsyncReadExecuteListHead)) {
-    for(ListEntry = GetFirstNode(&AsyncReadExecuteListHead); ; ListEntry = GetNextNode(&AsyncReadExecuteListHead, ListEntry)) {
+  if (!SctIsListEmpty(&AsyncReadExecuteListHead)) {
+    for(ListEntry = SctGetFirstNode(&AsyncReadExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncReadExecuteListHead, ListEntry)) {
       DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
       ReleaseLock(&gAsyncReadQueueLock);
   
@@ -1273,7 +1273,7 @@ END_WAIT:
                      );
   
       AcquireLock(&gAsyncReadQueueLock);
-      if (IsNodeAtEnd(&AsyncReadExecuteListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&AsyncReadExecuteListHead, ListEntry)) {
         break;
       }
     }
@@ -1677,8 +1677,8 @@ BBTestReadDiskExFunctionAutoTestCheckpoint3(
   UINT64                Offset;
   UINTN                 Remainder;
 
-  EFI_LIST_ENTRY        ListHeader;
-  EFI_LIST_ENTRY        *ListEntry = NULL;
+  SCT_LIST_ENTRY        ListHeader;
+  SCT_LIST_ENTRY        *ListEntry = NULL;
   UINTN                 WaitIndex;
   DiskIO2_Task          *DiskIo2Entity = NULL;
   EFI_DISK_IO2_TOKEN    AsyncBatchReadToken;
@@ -1907,7 +1907,7 @@ BBTestReadDiskExFunctionAutoTestCheckpoint3(
         //
         // Add Read info to SyncReadDataList
         //
-        InsertTailList(&ListHeader, &DiskIo2Entity->ListEntry);
+        SctInsertTailList(&ListHeader, &DiskIo2Entity->ListEntry);
         
         DiskIo2Entity->Buffer                         = NULL;
         DiskIo2Entity->DiskIo2Token.Event             = NULL;
@@ -1962,8 +1962,8 @@ END:
   //
   // Verify all Async Read Task Result 
   //
-  if (!IsListEmpty(&ListHeader) && MemoryAllocFail == FALSE) {
-    for(ListEntry = GetFirstNode(&ListHeader); ; ListEntry = GetNextNode(&ListHeader, ListEntry)) {
+  if (!SctIsListEmpty(&ListHeader) && MemoryAllocFail == FALSE) {
+    for(ListEntry = SctGetFirstNode(&ListHeader); ; ListEntry = SctGetNextNode(&ListHeader, ListEntry)) {
       DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
 
       //
@@ -2014,7 +2014,7 @@ END:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&ListHeader, ListEntry)) {
+      if (SctIsNodeAtEnd(&ListHeader, ListEntry)) {
          break;
       }
     }
@@ -2023,9 +2023,9 @@ END:
   //
   // Do logging & clean up 
   //
-  while(!IsListEmpty(&ListHeader)) {
+  while(!SctIsListEmpty(&ListHeader)) {
     DiskIo2Entity = CR(ListHeader.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2Entity->ListEntry);
+    SctRemoveEntryList(&DiskIo2Entity->ListEntry);
 
     if ( MemoryAllocFail == FALSE) {
 
@@ -2124,8 +2124,8 @@ BBTestReadDiskExFunctionAutoTestCheckpoint4(
   DiskIO2_Task      *DiskIo2Entity     = NULL;
   DiskIO2_Task      *DiskIo2EntitySync = NULL;
   UINTN              WaitIndex;
-  EFI_LIST_ENTRY    *ListEntry     = NULL;
-  EFI_LIST_ENTRY    *ListEntrySync = NULL;
+  SCT_LIST_ENTRY    *ListEntry     = NULL;
+  SCT_LIST_ENTRY    *ListEntrySync = NULL;
 
   //
   // Initialize variable
@@ -2337,7 +2337,7 @@ END_WAIT:
     IndexI = 0;
     
     AcquireLock(&gMixedReadQueueLock);
-    while (!IsListEmpty(&MixedReadExecuteListHead) && IndexI < 120) {
+    while (!SctIsListEmpty(&MixedReadExecuteListHead) && IndexI < 120) {
       ReleaseLock(&gMixedReadQueueLock);
     
       gtBS->WaitForEvent (                   
@@ -2361,8 +2361,8 @@ END_WAIT:
   // Here no logs should be wrote to this disk device to keep data intact
   //
   AcquireLock(&gMixedReadQueueLock);
-  if (!IsListEmpty(&MixedReadFinishListHead)) {
-    for(ListEntry = GetFirstNode(&MixedReadFinishListHead); ; ListEntry = GetNextNode(&MixedReadFinishListHead, ListEntry)) {
+  if (!SctIsListEmpty(&MixedReadFinishListHead)) {
+    for(ListEntry = SctGetFirstNode(&MixedReadFinishListHead); ; ListEntry = SctGetNextNode(&MixedReadFinishListHead, ListEntry)) {
       DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
       ReleaseLock(&gMixedReadQueueLock);
 
@@ -2374,8 +2374,8 @@ END_WAIT:
       //
       if (DiskIo2Entity->DiskIo2Token.TransactionStatus == EFI_SUCCESS) {
         DiskIo2Entity->AssertionType = EFI_TEST_ASSERTION_PASSED;
-        if (!IsListEmpty(&SyncReadListHead)) {
-          for(ListEntrySync = GetFirstNode(&SyncReadListHead); ; ListEntrySync = GetNextNode(&SyncReadListHead, ListEntrySync)) {
+        if (!SctIsListEmpty(&SyncReadListHead)) {
+          for(ListEntrySync = SctGetFirstNode(&SyncReadListHead); ; ListEntrySync = SctGetNextNode(&SyncReadListHead, ListEntrySync)) {
 
             DiskIo2EntitySync = CR(ListEntrySync, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
   
@@ -2407,7 +2407,7 @@ END_WAIT:
             //
             // Last list node handled
             //
-            if (IsNodeAtEnd(&SyncReadListHead, ListEntrySync)) {
+            if (SctIsNodeAtEnd(&SyncReadListHead, ListEntrySync)) {
               break;
             }
           }
@@ -2420,7 +2420,7 @@ END_WAIT:
       //
       // Last list node handled
       //
-      if (IsNodeAtEnd(&MixedReadFinishListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&MixedReadFinishListHead, ListEntry)) {
          break;
       }
     }
@@ -2432,9 +2432,9 @@ END_WAIT:
   // Record All Finished Read case results
   //
   AcquireLock(&gMixedReadQueueLock);
-  while (!IsListEmpty(&MixedReadFinishListHead)) {
+  while (!SctIsListEmpty(&MixedReadFinishListHead)) {
     DiskIo2Entity = CR(MixedReadFinishListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2Entity->ListEntry);
+    SctRemoveEntryList(&DiskIo2Entity->ListEntry);
     ReleaseLock(&gMixedReadQueueLock);
 
     StandardLib->RecordAssertion (
@@ -2468,10 +2468,10 @@ END_WAIT:
   //
   // Record All Failed Async Read case results
   //
-  while (!IsListEmpty(&MixedReadFailListHead)) {
+  while (!SctIsListEmpty(&MixedReadFailListHead)) {
     DiskIo2Entity = CR(MixedReadFailListHead.ForwardLink, DiskIO2_Task, ListEntry,DISKIO2ENTITY_SIGNATURE);
        
-    RemoveEntryList(&DiskIo2Entity->ListEntry);
+    SctRemoveEntryList(&DiskIo2Entity->ListEntry);
     StandardLib->RecordAssertion (
                    StandardLib,
                    EFI_TEST_ASSERTION_FAILED,
@@ -2494,9 +2494,9 @@ END_WAIT:
   //
   // Record no finished Async read list
   //
-  while (!IsListEmpty(&MixedReadExecuteListHead)) {
+  while (!SctIsListEmpty(&MixedReadExecuteListHead)) {
     DiskIo2Entity = CR(MixedReadExecuteListHead.ForwardLink, DiskIO2_Task, ListEntry,DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2Entity->ListEntry);
+    SctRemoveEntryList(&DiskIo2Entity->ListEntry);
 
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -2522,9 +2522,9 @@ END_WAIT:
   //
   // Record Sync Read function test logs
   // 
-  while (!IsListEmpty(&SyncReadListHead)) {
+  while (!SctIsListEmpty(&SyncReadListHead)) {
     DiskIo2EntitySync = CR(SyncReadListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2EntitySync->ListEntry);
+    SctRemoveEntryList(&DiskIo2EntitySync->ListEntry);
 
     if (DiskIo2EntitySync->MemCompared == TRUE) {
       StandardLib->RecordAssertion (
@@ -2552,9 +2552,9 @@ END_WAIT:
   //
   // Record Sync function failed test logs
   // 
-  while (!IsListEmpty(&SyncReadFailListHead)) {
+  while (!SctIsListEmpty(&SyncReadFailListHead)) {
     DiskIo2EntitySync = CR(SyncReadFailListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-    RemoveEntryList(&DiskIo2EntitySync->ListEntry);
+    SctRemoveEntryList(&DiskIo2EntitySync->ListEntry);
 
     StandardLib->RecordAssertion (
                     StandardLib,

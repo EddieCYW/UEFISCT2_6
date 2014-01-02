@@ -100,7 +100,7 @@ LoadTestFiles (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FilePath,
   IN BOOLEAN                      Recursive,
-  OUT EFI_LIST_ENTRY              *TestFileList
+  OUT SCT_LIST_ENTRY              *TestFileList
   )
 /*++
 
@@ -265,7 +265,7 @@ Returns:
         //
         // Add the test file to the test file list
         //
-        InsertTailList (TestFileList, &TestFile->Link);
+        SctInsertTailList (TestFileList, &TestFile->Link);
 
       } else if (SctStrEndWith (FileInfo->FileName, L".nsh")) {
         //
@@ -293,7 +293,7 @@ Returns:
         //
         // Add the test file to the test file list
         //
-        InsertTailList (TestFileList, &TestFile->Link);
+        SctInsertTailList (TestFileList, &TestFile->Link);
       }
 
     } else {
@@ -347,7 +347,7 @@ Returns:
 
 EFI_STATUS
 UnloadTestFiles (
-  IN EFI_LIST_ENTRY               *TestFileList
+  IN SCT_LIST_ENTRY               *TestFileList
   )
 /*++
 
@@ -383,10 +383,10 @@ Returns:
   //
   // Walk through all test files
   //
-  while (!IsListEmpty (TestFileList)) {
-    TestFile = CR (TestFileList->Flink, EFI_SCT_TEST_FILE, Link, EFI_SCT_TEST_FILE_SIGNATURE);
+  while (!SctIsListEmpty (TestFileList)) {
+    TestFile = CR (TestFileList->ForwardLink, EFI_SCT_TEST_FILE, Link, EFI_SCT_TEST_FILE_SIGNATURE);
 
-    RemoveEntryList (&TestFile->Link);
+    SctRemoveEntryList (&TestFile->Link);
     UnloadSingleTestFile (TestFile);
   }
 
@@ -425,7 +425,7 @@ Returns:
 
 --*/
 {
-  EFI_LIST_ENTRY          *Link;
+  SCT_LIST_ENTRY          *Link;
   EFI_SCT_TEST_FILE       *TempTestFile;
   EFI_BB_TEST_PROTOCOL    *BbTest;
   EFI_BB_TEST_ENTRY       *BbEntry;
@@ -445,7 +445,7 @@ Returns:
   //
   // Walk through all test files
   //
-  for (Link = gFT->TestFileList.Flink; Link != &gFT->TestFileList; Link = Link->Flink) {
+  for (Link = gFT->TestFileList.ForwardLink; Link != &gFT->TestFileList; Link = Link->ForwardLink) {
     TempTestFile = CR (Link, EFI_SCT_TEST_FILE, Link, EFI_SCT_TEST_FILE_SIGNATURE);
 
     //

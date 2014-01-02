@@ -125,7 +125,7 @@ LoadSupportFiles (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FilePath,
   IN BOOLEAN                      Recursive,
-  OUT EFI_LIST_ENTRY              *SupportFileList
+  OUT SCT_LIST_ENTRY              *SupportFileList
   )
 /*++
 
@@ -290,7 +290,7 @@ Returns:
         //
         // Add the support file to the support file list
         //
-        InsertTailList (SupportFileList, &SupportFile->Link);
+        SctInsertTailList (SupportFileList, &SupportFile->Link);
       }
     } else {
       //
@@ -346,7 +346,7 @@ Returns:
 
 EFI_STATUS
 UnloadSupportFiles (
-  IN EFI_LIST_ENTRY               *SupportFileList
+  IN SCT_LIST_ENTRY               *SupportFileList
   )
 /*++
 
@@ -382,10 +382,10 @@ Returns:
   //
   // Walk through all test support files
   //
-  while (!IsListEmpty (SupportFileList)) {
-    SupportFile = CR (SupportFileList->Flink, EFI_SCT_TEST_FILE, Link, EFI_SCT_TEST_FILE_SIGNATURE);
+  while (!SctIsListEmpty (SupportFileList)) {
+    SupportFile = CR (SupportFileList->ForwardLink, EFI_SCT_TEST_FILE, Link, EFI_SCT_TEST_FILE_SIGNATURE);
 
-    RemoveEntryList (&SupportFile->Link);
+    SctRemoveEntryList (&SupportFile->Link);
     UnloadSingleSupportFile (SupportFile);
   }
 
@@ -958,7 +958,7 @@ Routine Description:
 --*/
 {
   EFI_STATUS              Status;
-  EFI_LIST_ENTRY          *Link;
+  SCT_LIST_ENTRY          *Link;
   EFI_SCT_TEST_FILE       *SupportFile;
   EFI_TSL_INIT_INTERFACE  *TslInit;
   VOID                    *TempProtocol;
@@ -967,7 +967,7 @@ Routine Description:
   //
   // Walk through all support files
   //
-  for (Link = gFT->SupportFileList.Flink; Link != &gFT->SupportFileList; Link = Link->Flink) {
+  for (Link = gFT->SupportFileList.ForwardLink; Link != &gFT->SupportFileList; Link = Link->ForwardLink) {
     SupportFile = CR (Link, EFI_SCT_TEST_FILE, Link, EFI_SCT_TEST_FILE_SIGNATURE);
 
     //
@@ -1037,14 +1037,14 @@ Routine Description:
 --*/
 {
   EFI_STATUS              Status;
-  EFI_LIST_ENTRY          *Link;
+  SCT_LIST_ENTRY          *Link;
   EFI_SCT_TEST_FILE       *SupportFile;
   EFI_TSL_INIT_INTERFACE  *TslInit;
 
   //
   // Walk through all support files
   //
-  for (Link = gFT->SupportFileList.Flink; Link != &gFT->SupportFileList; Link = Link->Flink) {
+  for (Link = gFT->SupportFileList.ForwardLink; Link != &gFT->SupportFileList; Link = Link->ForwardLink) {
     SupportFile = CR (Link, EFI_SCT_TEST_FILE, Link, EFI_SCT_TEST_FILE_SIGNATURE);
 
     //
@@ -1083,7 +1083,7 @@ LoadProxyFiles (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FilePath,
   IN BOOLEAN                      Recursive,
-  OUT EFI_LIST_ENTRY              *ProxyFileList
+  OUT SCT_LIST_ENTRY              *ProxyFileList
   )
 /*++
 
@@ -1248,7 +1248,7 @@ Returns:
         //
         // Add the support file to the support file list
         //
-        InsertTailList (ProxyFileList, &ProxyFile->Link);
+        SctInsertTailList (ProxyFileList, &ProxyFile->Link);
       }
     } else {
       //
@@ -1304,7 +1304,7 @@ Returns:
 
 EFI_STATUS
 UnloadProxyFiles (
-  IN EFI_LIST_ENTRY               *ProxyFileList
+  IN SCT_LIST_ENTRY               *ProxyFileList
   )
 /*++
 
@@ -1340,10 +1340,10 @@ Returns:
   //
   // Walk through all test proxy files
   //
-  while (!IsListEmpty (ProxyFileList)) {
-    ProxyFile = CR (ProxyFileList->Flink, EFI_SCT_TEST_FILE, Link, EFI_SCT_TEST_FILE_SIGNATURE);
+  while (!SctIsListEmpty (ProxyFileList)) {
+    ProxyFile = CR (ProxyFileList->ForwardLink, EFI_SCT_TEST_FILE, Link, EFI_SCT_TEST_FILE_SIGNATURE);
 
-    RemoveEntryList (&ProxyFile->Link);
+    SctRemoveEntryList (&ProxyFile->Link);
     UnloadSingleProxyFile (ProxyFile);
   }
 

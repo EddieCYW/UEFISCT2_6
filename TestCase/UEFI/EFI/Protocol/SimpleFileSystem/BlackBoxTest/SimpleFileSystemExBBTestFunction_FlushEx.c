@@ -64,7 +64,7 @@ typedef struct {
   EFI_FILE_PROTOCOL     *FileIo;
   EFI_FILE_IO_TOKEN     FileIoToken;
   EFI_TPL               Tpl;
-  EFI_LIST_ENTRY        ListEntry;     
+  SCT_LIST_ENTRY        ListEntry;     
   EFI_STATUS            StatusAsync;
   EFI_TEST_ASSERTION    AssertionType;
 } FileIoFlush_Task;
@@ -113,9 +113,9 @@ InternalSetFileSizeFileIo2 (
 //
 // Async Flush File Queue
 //
-EFI_LIST_ENTRY  AsyncFlushFileExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(AsyncFlushFileExecuteListHead);
-EFI_LIST_ENTRY  AsyncFlushFileFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(AsyncFlushFileFinishListHead);
-EFI_LIST_ENTRY  AsyncFlushFileFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(AsyncFlushFileFailListHead);
+SCT_LIST_ENTRY  AsyncFlushFileExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncFlushFileExecuteListHead);
+SCT_LIST_ENTRY  AsyncFlushFileFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncFlushFileFinishListHead);
+SCT_LIST_ENTRY  AsyncFlushFileFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncFlushFileFailListHead);
 
 //
 // Async Flush File lock
@@ -126,9 +126,9 @@ FLOCK  gAsyncFlushFileQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK
 //
 // Async Flush Dir Queue
 //
-EFI_LIST_ENTRY  AsyncFlushDirExecuteListHead = INITIALIZE_LIST_HEAD_VARIABLE(AsyncFlushDirExecuteListHead);
-EFI_LIST_ENTRY  AsyncFlushDirFinishListHead  = INITIALIZE_LIST_HEAD_VARIABLE(AsyncFlushDirFinishListHead);
-EFI_LIST_ENTRY  AsyncFlushDirFailListHead    = INITIALIZE_LIST_HEAD_VARIABLE(AsyncFlushDirFailListHead);
+SCT_LIST_ENTRY  AsyncFlushDirExecuteListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncFlushDirExecuteListHead);
+SCT_LIST_ENTRY  AsyncFlushDirFinishListHead  = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncFlushDirFinishListHead);
+SCT_LIST_ENTRY  AsyncFlushDirFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(AsyncFlushDirFailListHead);
 
 //
 // Async Flush Dir lock
@@ -155,8 +155,8 @@ EFIAPI FileIoFlushFileNotifyFunc (
   // All FileIoFlushFile Notify function run at Call Back level only once, So no locks required
   //
   AcquireLock(&gAsyncFlushFileQueueLock);
-  RemoveEntryList(&FileIoEntity->ListEntry);
-  InsertTailList(&AsyncFlushFileFinishListHead, &FileIoEntity->ListEntry);
+  SctRemoveEntryList(&FileIoEntity->ListEntry);
+  SctInsertTailList(&AsyncFlushFileFinishListHead, &FileIoEntity->ListEntry);
   ReleaseLock(&gAsyncFlushFileQueueLock);
 }
 
@@ -215,7 +215,7 @@ FileIoAsyncFlushFileData (
   FileIoEntity->FileIoToken.Status     = EFI_NOT_READY;
 
   AcquireLock(&gAsyncFlushFileQueueLock);
-  InsertTailList(&AsyncFlushFileExecuteListHead, &FileIoEntity->ListEntry);
+  SctInsertTailList(&AsyncFlushFileExecuteListHead, &FileIoEntity->ListEntry);
   ReleaseLock(&gAsyncFlushFileQueueLock);
   
   //
@@ -230,8 +230,8 @@ FileIoAsyncFlushFileData (
   
   if (EFI_ERROR (Status)) {
     AcquireLock(&gAsyncFlushFileQueueLock);
-    RemoveEntryList(&FileIoEntity->ListEntry);
-    InsertTailList(&AsyncFlushFileFailListHead, &FileIoEntity->ListEntry);    
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
+    SctInsertTailList(&AsyncFlushFileFailListHead, &FileIoEntity->ListEntry);    
     ReleaseLock(&gAsyncFlushFileQueueLock);
   }
 
@@ -261,8 +261,8 @@ EFIAPI FileIoFlushDirNotifyFunc (
   // All FileIoFlushDir Notify function run at Call Back level only once, So no locks required
   //
   AcquireLock(&gAsyncFlushDirQueueLock);
-  RemoveEntryList(&FileIoEntity->ListEntry);
-  InsertTailList(&AsyncFlushDirFinishListHead, &FileIoEntity->ListEntry);
+  SctRemoveEntryList(&FileIoEntity->ListEntry);
+  SctInsertTailList(&AsyncFlushDirFinishListHead, &FileIoEntity->ListEntry);
   ReleaseLock(&gAsyncFlushDirQueueLock);
 }
 
@@ -320,7 +320,7 @@ FileIoAsyncFlushDirData (
   FileIoEntity->FileIoToken.Status     = EFI_NOT_READY;
 
   AcquireLock(&gAsyncFlushDirQueueLock);
-  InsertTailList(&AsyncFlushDirExecuteListHead, &FileIoEntity->ListEntry);
+  SctInsertTailList(&AsyncFlushDirExecuteListHead, &FileIoEntity->ListEntry);
   ReleaseLock(&gAsyncFlushDirQueueLock);
   
   //
@@ -335,8 +335,8 @@ FileIoAsyncFlushDirData (
   
   if (EFI_ERROR (Status)) {
     AcquireLock(&gAsyncFlushDirQueueLock);
-    RemoveEntryList(&FileIoEntity->ListEntry);
-    InsertTailList(&AsyncFlushDirFailListHead, &FileIoEntity->ListEntry);    
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
+    SctInsertTailList(&AsyncFlushDirFailListHead, &FileIoEntity->ListEntry);    
     ReleaseLock(&gAsyncFlushDirQueueLock);
     FileIoEntity->StatusAsync        = Status;
     return Status;
@@ -434,7 +434,7 @@ BBTestFlushExBasicTestCheckpoint1 (
   UINTN                BufferSize;
   UINTN                IndexI;
   UINTN                WaitIndex;
-  EFI_LIST_ENTRY       *ListEntry;
+  SCT_LIST_ENTRY       *ListEntry;
   FileIoFlush_Task     *FileIoEntity;
 
   Root         = NULL;
@@ -578,7 +578,7 @@ BBTestFlushExBasicTestCheckpoint1 (
   IndexI = 0;
     
   AcquireLock(&gAsyncFlushFileQueueLock);
-  while (!IsListEmpty(&AsyncFlushFileExecuteListHead) && IndexI < 120) {
+  while (!SctIsListEmpty(&AsyncFlushFileExecuteListHead) && IndexI < 120) {
     ReleaseLock(&gAsyncFlushFileQueueLock);
     
     gtBS->WaitForEvent (                   
@@ -601,8 +601,8 @@ BBTestFlushExBasicTestCheckpoint1 (
   // Here no logs should be wrote to this file device to keep data intact
   //
   AcquireLock(&gAsyncFlushFileQueueLock);
-    if (!IsListEmpty(&AsyncFlushFileFinishListHead)) {
-      for(ListEntry = GetFirstNode(&AsyncFlushFileFinishListHead); ; ListEntry = GetNextNode(&AsyncFlushFileFinishListHead, ListEntry)) {
+    if (!SctIsListEmpty(&AsyncFlushFileFinishListHead)) {
+      for(ListEntry = SctGetFirstNode(&AsyncFlushFileFinishListHead); ; ListEntry = SctGetNextNode(&AsyncFlushFileFinishListHead, ListEntry)) {
         FileIoEntity = CR(ListEntry, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
         ReleaseLock(&gAsyncFlushFileQueueLock);
 
@@ -618,7 +618,7 @@ BBTestFlushExBasicTestCheckpoint1 (
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&AsyncFlushFileFinishListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&AsyncFlushFileFinishListHead, ListEntry)) {
            break;
         } 
 
@@ -630,9 +630,9 @@ BBTestFlushExBasicTestCheckpoint1 (
   // Record All Finished Flush case results
   //
   AcquireLock(&gAsyncFlushFileQueueLock);
-  while (!IsListEmpty(&AsyncFlushFileFinishListHead)) {
+  while (!SctIsListEmpty(&AsyncFlushFileFinishListHead)) {
     FileIoEntity = CR(AsyncFlushFileFinishListHead.ForwardLink, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);   
-    RemoveEntryList(&FileIoEntity->ListEntry);
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
     ReleaseLock(&gAsyncFlushFileQueueLock);
 
     FileHandle = FileIoEntity->FileIo;
@@ -659,9 +659,9 @@ BBTestFlushExBasicTestCheckpoint1 (
   // If FlushFileFailListHead is not empty, which means some Async Calls are wrong 
   //
   AcquireLock(&gAsyncFlushFileQueueLock);
-  while(!IsListEmpty(&AsyncFlushFileFailListHead)) {
+  while(!SctIsListEmpty(&AsyncFlushFileFailListHead)) {
     FileIoEntity = CR(AsyncFlushFileFailListHead.ForwardLink, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-    RemoveEntryList(&FileIoEntity->ListEntry);
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
     ReleaseLock(&gAsyncFlushFileQueueLock);
 
     FileHandle = FileIoEntity->FileIo;
@@ -689,8 +689,8 @@ BBTestFlushExBasicTestCheckpoint1 (
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
   AcquireLock(&gAsyncFlushFileQueueLock);
-  if (!IsListEmpty(&AsyncFlushFileExecuteListHead)) {
-    for(ListEntry = GetFirstNode(&AsyncFlushFileExecuteListHead); ; ListEntry = GetNextNode(&AsyncFlushFileExecuteListHead, ListEntry)) {
+  if (!SctIsListEmpty(&AsyncFlushFileExecuteListHead)) {
+    for(ListEntry = SctGetFirstNode(&AsyncFlushFileExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncFlushFileExecuteListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
       ReleaseLock(&gAsyncFlushFileQueueLock);
 
@@ -707,7 +707,7 @@ BBTestFlushExBasicTestCheckpoint1 (
                      );
 
       AcquireLock(&gAsyncFlushFileQueueLock);
-      if (IsNodeAtEnd(&AsyncFlushFileExecuteListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&AsyncFlushFileExecuteListHead, ListEntry)) {
         break;
       }
     }
@@ -922,7 +922,7 @@ BBTestFlushExBasicTestCheckpoint3 (
   EFI_FILE_PROTOCOL         *FileHandle[TPL_ARRAY_SIZE];
   UINTN                     IndexI;
   UINTN                     WaitIndex;
-  EFI_LIST_ENTRY            *ListEntry;
+  SCT_LIST_ENTRY            *ListEntry;
   FileIoFlush_Task          *FileIoEntity;
 
   Root          = NULL;
@@ -1024,7 +1024,7 @@ BBTestFlushExBasicTestCheckpoint3 (
   IndexI = 0;
     
   AcquireLock(&gAsyncFlushDirQueueLock);
-  while (!IsListEmpty(&AsyncFlushDirExecuteListHead) && IndexI < 120) {
+  while (!SctIsListEmpty(&AsyncFlushDirExecuteListHead) && IndexI < 120) {
     ReleaseLock(&gAsyncFlushDirQueueLock);
     
     gtBS->WaitForEvent (                   
@@ -1047,8 +1047,8 @@ BBTestFlushExBasicTestCheckpoint3 (
   // Here no logs should be wrote to this file device to keep data intact
   //
   AcquireLock(&gAsyncFlushDirQueueLock);
-    if (!IsListEmpty(&AsyncFlushDirFinishListHead)) {
-      for(ListEntry = GetFirstNode(&AsyncFlushDirFinishListHead); ; ListEntry = GetNextNode(&AsyncFlushDirFinishListHead, ListEntry)) {
+    if (!SctIsListEmpty(&AsyncFlushDirFinishListHead)) {
+      for(ListEntry = SctGetFirstNode(&AsyncFlushDirFinishListHead); ; ListEntry = SctGetNextNode(&AsyncFlushDirFinishListHead, ListEntry)) {
         FileIoEntity = CR(ListEntry, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
         ReleaseLock(&gAsyncFlushDirQueueLock);
 
@@ -1064,7 +1064,7 @@ BBTestFlushExBasicTestCheckpoint3 (
         //
         // Last list node handled
         //
-        if (IsNodeAtEnd(&AsyncFlushDirFinishListHead, ListEntry)) {
+        if (SctIsNodeAtEnd(&AsyncFlushDirFinishListHead, ListEntry)) {
           break;
         } 
       }
@@ -1075,9 +1075,9 @@ BBTestFlushExBasicTestCheckpoint3 (
   // Record All Finished Flush case results
   //
   AcquireLock(&gAsyncFlushDirQueueLock);
-  while (!IsListEmpty(&AsyncFlushDirFinishListHead)) {
+  while (!SctIsListEmpty(&AsyncFlushDirFinishListHead)) {
     FileIoEntity = CR(AsyncFlushDirFinishListHead.ForwardLink, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);   
-    RemoveEntryList(&FileIoEntity->ListEntry);
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
     ReleaseLock(&gAsyncFlushDirQueueLock);
 	
     StandardLib->RecordAssertion (
@@ -1104,9 +1104,9 @@ BBTestFlushExBasicTestCheckpoint3 (
   // If FlushDirFailListHead is not empty, which means some Async Calls are wrong 
   //
   AcquireLock(&gAsyncFlushDirQueueLock);
-  while(!IsListEmpty(&AsyncFlushDirFailListHead)) {
+  while(!SctIsListEmpty(&AsyncFlushDirFailListHead)) {
     FileIoEntity = CR(AsyncFlushDirFailListHead.ForwardLink, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-    RemoveEntryList(&FileIoEntity->ListEntry);
+    SctRemoveEntryList(&FileIoEntity->ListEntry);
     ReleaseLock(&gAsyncFlushDirQueueLock);
 
     StandardLib->RecordAssertion (
@@ -1133,8 +1133,8 @@ BBTestFlushExBasicTestCheckpoint3 (
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
   AcquireLock(&gAsyncFlushDirQueueLock);
-  if (!IsListEmpty(&AsyncFlushDirExecuteListHead)) {
-    for(ListEntry = GetFirstNode(&AsyncFlushDirExecuteListHead); ; ListEntry = GetNextNode(&AsyncFlushDirExecuteListHead, ListEntry)) {
+  if (!SctIsListEmpty(&AsyncFlushDirExecuteListHead)) {
+    for(ListEntry = SctGetFirstNode(&AsyncFlushDirExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncFlushDirExecuteListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
       ReleaseLock(&gAsyncFlushDirQueueLock);
     
@@ -1150,7 +1150,7 @@ BBTestFlushExBasicTestCheckpoint3 (
                      );
 
       AcquireLock(&gAsyncFlushDirQueueLock);
-      if (IsNodeAtEnd(&AsyncFlushDirExecuteListHead, ListEntry)) {
+      if (SctIsNodeAtEnd(&AsyncFlushDirExecuteListHead, ListEntry)) {
         break;
       }
     }

@@ -91,7 +91,7 @@ AddRootTestNode (
   IN CHAR16                       *Name,
   IN CHAR16                       *Description,
   IN EFI_GUID                     *Guid,
-  IN OUT EFI_LIST_ENTRY           *TestNodeList,
+  IN OUT SCT_LIST_ENTRY           *TestNodeList,
   OUT EFI_SCT_TEST_NODE           **RootNode
   );
 
@@ -102,14 +102,14 @@ AddTestNode (
   IN CHAR16                       *Description,
   IN EFI_SCT_TEST_NODE_TYPE       Type,
   IN EFI_GUID                     *Guid,
-  IN OUT EFI_LIST_ENTRY           *TestNodeList,
+  IN OUT SCT_LIST_ENTRY           *TestNodeList,
   OUT EFI_SCT_TEST_NODE           **TestNode
   );
 
 EFI_STATUS
 FindTestNodeByName (
   IN CHAR16                       *Name,
-  IN EFI_LIST_ENTRY               *TestNodeList,
+  IN SCT_LIST_ENTRY               *TestNodeList,
   OUT EFI_SCT_TEST_NODE           **TestNode
   );
 
@@ -132,8 +132,8 @@ TestNodeSetString (
 EFI_STATUS
 WalkThroughSave (
   IN EFI_INI_FILE_HANDLE          IniFile,
-  IN EFI_LIST_ENTRY               *Root,
-  IN EFI_LIST_ENTRY               *Head
+  IN SCT_LIST_ENTRY               *Root,
+  IN SCT_LIST_ENTRY               *Head
   );
   
 //
@@ -142,7 +142,7 @@ WalkThroughSave (
 
 EFI_STATUS
 CreateTestNodes (
-  OUT EFI_LIST_ENTRY              *TestNodeList
+  OUT SCT_LIST_ENTRY              *TestNodeList
   )
 /*++
 
@@ -162,9 +162,9 @@ Returns:
 --*/
 {
   EFI_STATUS              Status;
-  EFI_LIST_ENTRY          *CategoryList;
-  EFI_LIST_ENTRY          *TestFileList;
-  EFI_LIST_ENTRY          *Link;
+  SCT_LIST_ENTRY          *CategoryList;
+  SCT_LIST_ENTRY          *TestFileList;
+  SCT_LIST_ENTRY          *Link;
   EFI_SCT_CATEGORY_DATA   *Category;
   EFI_SCT_TEST_FILE       *TestFile;
   EFI_BB_TEST_PROTOCOL    *BbTest;
@@ -191,7 +191,7 @@ Returns:
   CategoryList = &gFT->CategoryList;
   TestFileList = &gFT->TestFileList;
 
-  for (Link = TestFileList->Flink; Link != TestFileList; Link = Link->Flink) {
+  for (Link = TestFileList->ForwardLink; Link != TestFileList; Link = Link->ForwardLink) {
     TestFile = CR (Link, EFI_SCT_TEST_FILE, Link, EFI_SCT_TEST_FILE_SIGNATURE);
 
     //
@@ -314,7 +314,7 @@ Returns:
 
 EFI_STATUS
 FreeTestNodes (
-  IN EFI_LIST_ENTRY               *TestNodeList
+  IN SCT_LIST_ENTRY               *TestNodeList
   )
 /*++
 
@@ -345,12 +345,12 @@ Returns:
   //
   // Walk through all test nodes
   //
-  while (!IsListEmpty (TestNodeList)) {
-    TestNode = CR (TestNodeList->Flink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
+  while (!SctIsListEmpty (TestNodeList)) {
+    TestNode = CR (TestNodeList->ForwardLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
 
-    RemoveEntryList (&TestNode->Link);
+    SctRemoveEntryList (&TestNode->Link);
 
-    if (!IsListEmpty (&TestNode->Child)) {
+    if (!SctIsListEmpty (&TestNode->Child)) {
       FreeTestNodes (&TestNode->Child);
     }
 
@@ -537,7 +537,7 @@ Routine Description:
   TempTestNode->Signature = EFI_SCT_TEST_NODE_SIGNATURE;
   TempTestNode->Revision  = EFI_SCT_TEST_NODE_REVISION;
 
-  InitializeListHead (&TempTestNode->Child);
+  SctInitializeListHead (&TempTestNode->Child);
 
   //
   // Done
@@ -597,7 +597,7 @@ AddRootTestNode (
   IN CHAR16                       *Name,
   IN CHAR16                       *Description,
   IN EFI_GUID                     *Guid,
-  IN OUT EFI_LIST_ENTRY           *TestNodeList,
+  IN OUT SCT_LIST_ENTRY           *TestNodeList,
   OUT EFI_SCT_TEST_NODE           **RootNode
   )
 /*++
@@ -613,7 +613,7 @@ Routine Description:
   CHAR16              *TempName;
   CHAR16              *Token;
   CHAR16              *End;
-  EFI_LIST_ENTRY      *SubList;
+  SCT_LIST_ENTRY      *SubList;
   EFI_SCT_TEST_NODE   *TempRootNode;
 
   //
@@ -721,7 +721,7 @@ AddTestNode (
   IN CHAR16                       *Description,
   IN EFI_SCT_TEST_NODE_TYPE       Type,
   IN EFI_GUID                     *Guid,
-  IN OUT EFI_LIST_ENTRY           *TestNodeList,
+  IN OUT SCT_LIST_ENTRY           *TestNodeList,
   OUT EFI_SCT_TEST_NODE           **TestNode
   )
 /*++
@@ -733,7 +733,7 @@ Routine Description:
 --*/
 {
   EFI_STATUS          Status;
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_NODE   *Last;
   EFI_SCT_TEST_NODE   *TempTestNode;
 
@@ -766,7 +766,7 @@ Routine Description:
   //
   // Add the test node into the test node list
   //
-  for (Link = TestNodeList->Flink; Link != TestNodeList; Link = Link->Flink) {
+  for (Link = TestNodeList->ForwardLink; Link != TestNodeList; Link = Link->ForwardLink) {
     Last = CR (Link, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
 
     if (Last->Index > Index) {
@@ -778,7 +778,7 @@ Routine Description:
     }
   }
 
-  InsertTailList (Link, &TempTestNode->Link);
+  SctInsertTailList (Link, &TempTestNode->Link);
 
   //
   // Done
@@ -791,7 +791,7 @@ Routine Description:
 EFI_STATUS
 FindTestNodeByName (
   IN CHAR16                       *Name,
-  IN EFI_LIST_ENTRY               *TestNodeList,
+  IN SCT_LIST_ENTRY               *TestNodeList,
   OUT EFI_SCT_TEST_NODE           **TestNode
   )
 /*++
@@ -802,7 +802,7 @@ Routine Description:
 
 --*/
 {
-  EFI_LIST_ENTRY      *Link;
+  SCT_LIST_ENTRY      *Link;
   EFI_SCT_TEST_NODE   *TempTestNode;
 
   //
@@ -815,7 +815,7 @@ Routine Description:
   //
   // Walk through all test nodes on one layer
   //
-  for (Link = TestNodeList->Flink; Link != TestNodeList; Link = Link->Flink) {
+  for (Link = TestNodeList->ForwardLink; Link != TestNodeList; Link = Link->ForwardLink) {
     TempTestNode = CR (Link, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
 
     if (SctStriCmp (TempTestNode->Name, Name) == 0) {
@@ -837,7 +837,7 @@ EFI_STATUS
 SaveCaseTree (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  IN EFI_LIST_ENTRY               *Root
+  IN SCT_LIST_ENTRY               *Root
   )
 /*++
 
@@ -1073,8 +1073,8 @@ Routine Description:
 EFI_STATUS
 WalkThroughSave (
   IN EFI_INI_FILE_HANDLE          IniFile,
-  IN EFI_LIST_ENTRY               *Root,
-  IN EFI_LIST_ENTRY               *Head
+  IN SCT_LIST_ENTRY               *Root,
+  IN SCT_LIST_ENTRY               *Head
   )
 /*++
 
@@ -1087,8 +1087,8 @@ Routine Description:
   EFI_STATUS            Status;
   UINT32                LoopIndex;
   EFI_SCT_TEST_NODE     *TempNode;
-  EFI_LIST_ENTRY        *TempLink;
-  EFI_LIST_ENTRY        *TempLink1;
+  SCT_LIST_ENTRY        *TempLink;
+  SCT_LIST_ENTRY        *TempLink1;
   STATIC CHAR16         PathName[10][1024];
   CHAR16                TempFullName[1024];
   
@@ -1102,7 +1102,7 @@ Routine Description:
   if (Head == NULL) {
     Head = Root;
   }
-  TempLink = Root->Flink;
+  TempLink = Root->ForwardLink;
 
   //
   // Get current node.
@@ -1141,7 +1141,7 @@ Routine Description:
       //
       // Recusion on vertical node (right node)
       //
-      if (!IsListEmpty(TempLink1)){
+      if (!SctIsListEmpty (TempLink1)){
         SctCopyMem (PathName[TempLevel], TempNode->Name, SctStrSize (TempNode->Name));
         TempLevel++;
         

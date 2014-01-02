@@ -77,7 +77,7 @@ Abstract:
 // a globel variable indicating continue exec flag
 //
 BOOLEAN                gContinueExec;
-EFI_LIST_ENTRY         *TestTree;
+SCT_LIST_ENTRY         *TestTree;
 
 //
 // A variable imported from UI.c

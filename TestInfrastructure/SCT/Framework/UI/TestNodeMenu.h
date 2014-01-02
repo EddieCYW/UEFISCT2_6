@@ -76,7 +76,7 @@ Abstract:
 
 EFI_STATUS
 DisplayTestNodeMenu (
-  IN EFI_LIST_ENTRY               *Root,
+  IN SCT_LIST_ENTRY               *Root,
   IN EFI_MENU_PAGE                *ParentPage
   );
 
@@ -87,7 +87,7 @@ CalculatePassNumber (
 
 UINTN
 CalculateTotalPassNumber (
-  EFI_LIST_ENTRY                  *Root
+  SCT_LIST_ENTRY                  *Root
   );
 
 UINTN
@@ -97,7 +97,7 @@ CalculateFailNumber (
 
 UINTN
 CalculateTotalFailNumber (
-  EFI_LIST_ENTRY                  *Root
+  SCT_LIST_ENTRY                  *Root
   );
 
 UINT32

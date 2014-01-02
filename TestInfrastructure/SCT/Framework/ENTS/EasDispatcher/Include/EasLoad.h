@@ -90,7 +90,7 @@ Returns:
 
 EFI_STATUS
 EntsUnloadSupportFiles (
-  IN EFI_LIST_ENTRY               *TestAppList
+  IN SCT_LIST_ENTRY               *TestAppList
   )
 /*++
 
@@ -139,7 +139,7 @@ Returns:
 
 EFI_STATUS
 EntsUnloadTestFiles (
-  IN EFI_LIST_ENTRY               *TestAppList
+  IN SCT_LIST_ENTRY               *TestAppList
   )
 /*++
 

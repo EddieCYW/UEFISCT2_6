@@ -60,7 +60,7 @@ Abstract:
 #define _DISK_IO2_BBTEST_H_
 
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "DiskIo2Protocol.h"
 #include "Guid.h"
 #include "EfiTestUtilityLib.h"
@@ -202,7 +202,7 @@ typedef struct {
   UINT64                            Offset;
   UINTN                             BufferSize;
   VOID                              *Buffer;
-  EFI_LIST_ENTRY                    ListEntry;     
+  SCT_LIST_ENTRY                    ListEntry;
   EFI_STATUS                        StatusAsync;
   BOOLEAN                           MemCompared;
   UINTN                             ComparedVal;
@@ -212,8 +212,8 @@ typedef struct {
 
 typedef struct {
   EFI_DISK_IO2_PROTOCOL             *DiskIo2;
-  EFI_LIST_ENTRY                    *TaskHeader; 
-  EFI_LIST_ENTRY                    *CurrentTaskEntry;
+  SCT_LIST_ENTRY                    *TaskHeader;
+  SCT_LIST_ENTRY                    *CurrentTaskEntry;
   EFI_DISK_IO2_TOKEN                *Token;
 } DiskIO2_Batch_Task_Context;
 

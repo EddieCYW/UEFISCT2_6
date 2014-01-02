@@ -110,12 +110,12 @@ EFI_STATUS
 LoadCategoryData (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  OUT EFI_LIST_ENTRY              *CategoryList
+  OUT SCT_LIST_ENTRY              *CategoryList
   );
 
 EFI_STATUS
 FreeCategoryData (
-  IN EFI_LIST_ENTRY               *CategoryList
+  IN SCT_LIST_ENTRY               *CategoryList
   );
 
 EFI_STATUS
@@ -132,44 +132,44 @@ EFI_STATUS
 LoadTestCases (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  OUT EFI_LIST_ENTRY              *TestCaseList
+  OUT SCT_LIST_ENTRY              *TestCaseList
   );
 
 EFI_STATUS
 SaveTestCases (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  IN EFI_LIST_ENTRY               *TestCaseList
+  IN SCT_LIST_ENTRY               *TestCaseList
   );
 
 EFI_STATUS
 LoadTestSequence (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  IN OUT EFI_LIST_ENTRY           *TestCaseList
+  IN OUT SCT_LIST_ENTRY           *TestCaseList
   );
 
 EFI_STATUS
 SaveTestSequence (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  IN EFI_LIST_ENTRY               *TestCaseList
+  IN SCT_LIST_ENTRY               *TestCaseList
   );
 
 EFI_STATUS
 FreeTestCases (
-  IN EFI_LIST_ENTRY               *TestCaseList
+  IN SCT_LIST_ENTRY               *TestCaseList
   );
 
 EFI_STATUS
 CreateTestCases (
-  OUT EFI_LIST_ENTRY              *TestCaseList
+  OUT SCT_LIST_ENTRY              *TestCaseList
   );
 
 EFI_STATUS
 MergeTestCases (
-  IN OUT EFI_LIST_ENTRY           *DstTestCaseList,
-  IN EFI_LIST_ENTRY               *SrcTestCaseList
+  IN OUT SCT_LIST_ENTRY           *DstTestCaseList,
+  IN SCT_LIST_ENTRY               *SrcTestCaseList
   );
 
 EFI_STATUS
@@ -182,7 +182,7 @@ EFI_STATUS
 SaveCaseTree (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  IN EFI_LIST_ENTRY               *TestNodeList
+  IN SCT_LIST_ENTRY               *TestNodeList
   );
 
 EFI_STATUS
@@ -196,12 +196,12 @@ GenerateCaseTreeFile(
 
 EFI_STATUS
 CreateTestNodes (
-  OUT EFI_LIST_ENTRY              *TestNodeList
+  OUT SCT_LIST_ENTRY              *TestNodeList
   );
 
 EFI_STATUS
 FreeTestNodes (
-  IN EFI_LIST_ENTRY               *TestNodeList
+  IN SCT_LIST_ENTRY               *TestNodeList
   );
 
 //
@@ -215,7 +215,7 @@ RecordSkippedCases (
 
 EFI_STATUS
 FreeSkippedCases (
-  IN EFI_LIST_ENTRY               *SkippedCaseList
+  IN SCT_LIST_ENTRY               *SkippedCaseList
   );
 
 EFI_STATUS
@@ -229,7 +229,7 @@ EFI_STATUS
 LoadSkippedCases (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FileName,
-  OUT EFI_LIST_ENTRY              *SkippedCaseList
+  OUT SCT_LIST_ENTRY              *SkippedCaseList
   );
 
 #endif

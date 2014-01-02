@@ -72,12 +72,12 @@ LoadSupportFiles (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FilePath,
   IN BOOLEAN                      Recursive,
-  OUT EFI_LIST_ENTRY              *SupportFileList
+  OUT SCT_LIST_ENTRY              *SupportFileList
   );
 
 EFI_STATUS
 UnloadSupportFiles (
-  IN EFI_LIST_ENTRY               *SupportFileList
+  IN SCT_LIST_ENTRY               *SupportFileList
   );
 
 EFI_STATUS
@@ -85,12 +85,12 @@ LoadProxyFiles (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FilePath,
   IN BOOLEAN                      Recursive,
-  OUT EFI_LIST_ENTRY              *SupportFileList
+  OUT SCT_LIST_ENTRY              *SupportFileList
   );
 
 EFI_STATUS
 UnloadProxyFiles (
-  IN EFI_LIST_ENTRY               *SupportFileList
+  IN SCT_LIST_ENTRY               *SupportFileList
   );
 
 EFI_STATUS
@@ -122,12 +122,12 @@ LoadTestFiles (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
   IN CHAR16                       *FilePath,
   IN BOOLEAN                      Recursive,
-  OUT EFI_LIST_ENTRY              *TestFileList
+  OUT SCT_LIST_ENTRY              *TestFileList
   );
 
 EFI_STATUS
 UnloadTestFiles (
-  IN EFI_LIST_ENTRY               *TestFileList
+  IN SCT_LIST_ENTRY               *TestFileList
   );
 
 EFI_STATUS

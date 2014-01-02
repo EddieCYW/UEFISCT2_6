@@ -78,7 +78,7 @@ extern BOOLEAN          gContinueExec;
 
 EFI_STATUS
 DisplayTestNodeMenu (
-  IN EFI_LIST_ENTRY               *Root,
+  IN SCT_LIST_ENTRY               *Root,
   IN EFI_MENU_PAGE                *ParentPage
   );
 
@@ -152,7 +152,7 @@ GetIterString(
 
 EFI_STATUS
 DisplayTestNodeMenu (
-  IN EFI_LIST_ENTRY               *Root,
+  IN SCT_LIST_ENTRY               *Root,
   IN EFI_MENU_PAGE                *ParentPage
   )
 /*++
@@ -176,7 +176,7 @@ Returns:
   EFI_MENU_PAGE             *Page;
   EFI_MENU_ITEM             *MenuItem;
   EFI_SCT_TEST_NODE         *TestNode;
-  EFI_LIST_ENTRY            *TempLink;
+  SCT_LIST_ENTRY            *TempLink;
   CHAR16                    *EditBuffer;
 
   //
@@ -207,7 +207,7 @@ Returns:
     return Status;
   }
 
-  for (TempLink = Root->Flink; TempLink != Root; TempLink = TempLink->Flink) {
+  for (TempLink = Root->ForwardLink; TempLink != Root; TempLink = TempLink->ForwardLink) {
     TestNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
 
     //
@@ -475,7 +475,7 @@ Returns:
     return EFI_SUCCESS;
   }
 
-  if (IsListEmpty(&(TestNode->Child))) {
+  if (SctIsListEmpty (&(TestNode->Child))) {
     // No sub-node
 
     //
@@ -839,16 +839,16 @@ Returns:
 {
   EFI_ITEM_SELECT_STATUS    ItemSelectStatus;
   EFI_SCT_TEST_NODE        *SubNode;
-  EFI_LIST_ENTRY           *TempLink;
+  SCT_LIST_ENTRY           *TempLink;
   BOOLEAN                   SelectAll;
   BOOLEAN                   SelectNone;
   UINTN                     TestCaseStatus;
 
-  if (!IsListEmpty(&TestNode->Child)) {
+  if (!SctIsListEmpty (&TestNode->Child)) {
     ItemSelectStatus = EFI_ITEM_SELECT_NONE;
     SelectAll = TRUE;
     SelectNone = TRUE;
-    for (TempLink = (&TestNode->Child)->Flink; TempLink != &TestNode->Child; TempLink = TempLink->Flink) {
+    for (TempLink = (&TestNode->Child)->ForwardLink; TempLink != &TestNode->Child; TempLink = TempLink->ForwardLink) {
       SubNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
       ItemSelectStatus = GetItemSelectStatus (SubNode);
       if (ItemSelectStatus != EFI_ITEM_SELECT_ALL) {
@@ -899,10 +899,10 @@ Arguments:
 {
 
   EFI_SCT_TEST_NODE        *SubNode;
-  EFI_LIST_ENTRY           *TempLink;
+  SCT_LIST_ENTRY           *TempLink;
 
-  if (!IsListEmpty(&TestNode->Child)) {
-    for (TempLink = (&TestNode->Child)->Flink; TempLink != &TestNode->Child; TempLink = TempLink->Flink) {
+  if (!SctIsListEmpty (&TestNode->Child)) {
+    for (TempLink = (&TestNode->Child)->ForwardLink; TempLink != &TestNode->Child; TempLink = TempLink->ForwardLink) {
       SubNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
       SelectTestNode (SubNode, Iterations);
     }
@@ -931,10 +931,10 @@ Arguments:
 {
 
   EFI_SCT_TEST_NODE        *SubNode;
-  EFI_LIST_ENTRY           *TempLink;
+  SCT_LIST_ENTRY           *TempLink;
 
-  if (!IsListEmpty(&TestNode->Child)) {
-    for (TempLink = (&TestNode->Child)->Flink; TempLink != &TestNode->Child; TempLink = TempLink->Flink) {
+  if (!SctIsListEmpty (&TestNode->Child)) {
+    for (TempLink = (&TestNode->Child)->ForwardLink; TempLink != &TestNode->Child; TempLink = TempLink->ForwardLink) {
       SubNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
       SelectSomeTestNode (SubNode, Iterations);
     }
@@ -962,10 +962,10 @@ Arguments:
 --*/
 {
   EFI_SCT_TEST_NODE        *SubNode;
-  EFI_LIST_ENTRY           *TempLink;
+  SCT_LIST_ENTRY           *TempLink;
 
-  if (!IsListEmpty(&TestNode->Child)) {
-    for (TempLink = (&TestNode->Child)->Flink; TempLink != &TestNode->Child; TempLink = TempLink->Flink) {
+  if (!SctIsListEmpty (&TestNode->Child)) {
+    for (TempLink = (&TestNode->Child)->ForwardLink; TempLink != &TestNode->Child; TempLink = TempLink->ForwardLink) {
       SubNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
       UnSelectTestNode (SubNode);
     }
@@ -1185,7 +1185,7 @@ Returns:
 
 UINTN
 CalculateTotalPassNumber (
-  EFI_LIST_ENTRY                  *Root
+  SCT_LIST_ENTRY                  *Root
   )
 /*++
 
@@ -1197,12 +1197,12 @@ Routine Description:
 {
   UINTN            PassedNumber;
   EFI_SCT_TEST_NODE *SubNode;
-  EFI_LIST_ENTRY    *TempLink;
+  SCT_LIST_ENTRY    *TempLink;
 
   PassedNumber = 0;
 
-  if (!IsListEmpty(Root)) {
-    for (TempLink = Root->Flink; TempLink != Root; TempLink = TempLink->Flink) {
+  if (!SctIsListEmpty (Root)) {
+    for (TempLink = Root->ForwardLink; TempLink != Root; TempLink = TempLink->ForwardLink) {
       SubNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
       PassedNumber += CalculatePassNumber (SubNode);
     }
@@ -1226,12 +1226,12 @@ Routine Description:
 {
   UINTN             PassedNumber;
   EFI_SCT_TEST_NODE *SubNode;
-  EFI_LIST_ENTRY    *TempLink;
+  SCT_LIST_ENTRY    *TempLink;
 
   PassedNumber = 0;
 
-  if (!IsListEmpty(&TestNode->Child)) {
-    for (TempLink = (&TestNode->Child)->Flink; TempLink != &TestNode->Child; TempLink = TempLink->Flink) {
+  if (!SctIsListEmpty (&TestNode->Child)) {
+    for (TempLink = (&TestNode->Child)->ForwardLink; TempLink != &TestNode->Child; TempLink = TempLink->ForwardLink) {
       SubNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
       PassedNumber += CalculatePassNumber (SubNode);
     }
@@ -1244,7 +1244,7 @@ Routine Description:
 
 UINTN
 CalculateTotalFailNumber (
-  EFI_LIST_ENTRY                  *Root
+  SCT_LIST_ENTRY                  *Root
   )
 /*++
 
@@ -1256,12 +1256,12 @@ Routine Description:
 {
   UINTN             FailedNumber;
   EFI_SCT_TEST_NODE *SubNode;
-  EFI_LIST_ENTRY    *TempLink;
+  SCT_LIST_ENTRY    *TempLink;
 
   FailedNumber = 0;
 
-  if (!IsListEmpty(Root)) {
-    for (TempLink = Root->Flink; TempLink != Root; TempLink = TempLink->Flink) {
+  if (!SctIsListEmpty (Root)) {
+    for (TempLink = Root->ForwardLink; TempLink != Root; TempLink = TempLink->ForwardLink) {
       SubNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
       FailedNumber += CalculateFailNumber (SubNode);
     }
@@ -1285,12 +1285,12 @@ Routine Description:
 {
   UINTN             FailedNumber;
   EFI_SCT_TEST_NODE *SubNode;
-  EFI_LIST_ENTRY    *TempLink;
+  SCT_LIST_ENTRY    *TempLink;
 
   FailedNumber = 0;
 
-  if (!IsListEmpty(&TestNode->Child)) {
-    for (TempLink = (&TestNode->Child)->Flink; TempLink != &TestNode->Child; TempLink = TempLink->Flink) {
+  if (!SctIsListEmpty (&TestNode->Child)) {
+    for (TempLink = (&TestNode->Child)->ForwardLink; TempLink != &TestNode->Child; TempLink = TempLink->ForwardLink) {
       SubNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
       FailedNumber += CalculateFailNumber (SubNode);
     }
@@ -1315,13 +1315,13 @@ Routine Description:
 {
   BOOLEAN Running;
   EFI_SCT_TEST_NODE           *SubNode;
-  EFI_LIST_ENTRY              *TempLink;
+  SCT_LIST_ENTRY              *TempLink;
   EFI_SCT_TEST_STATE          TestState;
 
   Running = FALSE;
 
-  if (!IsListEmpty(&TestNode->Child)) {
-    for (TempLink = (&TestNode->Child)->Flink; TempLink != &TestNode->Child; TempLink = TempLink->Flink) {
+  if (!SctIsListEmpty (&TestNode->Child)) {
+    for (TempLink = (&TestNode->Child)->ForwardLink; TempLink != &TestNode->Child; TempLink = TempLink->ForwardLink) {
       SubNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
       Running = IsTestRunning (SubNode);
       if (Running) {
@@ -1354,13 +1354,13 @@ Routine Description:
 {
   BOOLEAN                     Finished;
   EFI_SCT_TEST_NODE           *SubNode;
-  EFI_LIST_ENTRY              *TempLink;
+  SCT_LIST_ENTRY              *TempLink;
   EFI_SCT_TEST_STATE          TestState;
 
   Finished = FALSE;
 
-  if (!IsListEmpty(&TestNode->Child)) {
-    for (TempLink = (&TestNode->Child)->Flink; TempLink != &TestNode->Child; TempLink = TempLink->Flink) {
+  if (!SctIsListEmpty (&TestNode->Child)) {
+    for (TempLink = (&TestNode->Child)->ForwardLink; TempLink != &TestNode->Child; TempLink = TempLink->ForwardLink) {
       SubNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
       Finished = IsTestCaseFinished (SubNode);
       if (Finished) {
@@ -1455,7 +1455,7 @@ GetIterString(
 {
   UINTN             IterNumber;
   EFI_SCT_TEST_NODE *SubNode;
-  EFI_LIST_ENTRY    *TempLink;
+  SCT_LIST_ENTRY    *TempLink;
   CHAR16            *TempString;
   UINT32            TempValue;
   UINTN             Count;
@@ -1474,8 +1474,8 @@ GetIterString(
     return EFI_OUT_OF_RESOURCES;
   }
 
-  if (!IsListEmpty(&TestNode->Child)) {
-    for (TempLink = (&TestNode->Child)->Flink; TempLink != &TestNode->Child; TempLink = TempLink->Flink) {
+  if (!SctIsListEmpty (&TestNode->Child)) {
+    for (TempLink = (&TestNode->Child)->ForwardLink; TempLink != &TestNode->Child; TempLink = TempLink->ForwardLink) {
       SubNode = CR (TempLink, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
       GetIterString (SubNode, TempString);
       if (TempString[0] == L'*') {

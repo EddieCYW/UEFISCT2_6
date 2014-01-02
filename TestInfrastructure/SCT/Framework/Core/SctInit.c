@@ -106,13 +106,13 @@ Returns:
   gFT->Signature = EFI_SCT_FRAMEWORK_TABLE_SIGNATURE;
   gFT->Revision  = EFI_SCT_FRAMEWORK_TABLE_REVISION;
 
-  InitializeListHead (&gFT->CategoryList);
-  InitializeListHead (&gFT->TestFileList);
-  InitializeListHead (&gFT->SupportFileList);
-  InitializeListHead (&gFT->ProxyFileList);
-  InitializeListHead (&gFT->TestCaseList);
-  InitializeListHead (&gFT->TestNodeList);
-  InitializeListHead (&gFT->SkippedCaseList);
+  SctInitializeListHead (&gFT->CategoryList);
+  SctInitializeListHead (&gFT->TestFileList);
+  SctInitializeListHead (&gFT->SupportFileList);
+  SctInitializeListHead (&gFT->ProxyFileList);
+  SctInitializeListHead (&gFT->TestCaseList);
+  SctInitializeListHead (&gFT->TestNodeList);
+  SctInitializeListHead (&gFT->SkippedCaseList);
 
   //
   // Initialize the image data
