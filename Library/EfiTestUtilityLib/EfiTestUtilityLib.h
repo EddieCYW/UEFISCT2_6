@@ -66,7 +66,7 @@ EFI Test Utility library functions
 #endif
 
 #include "efipart.h"
-#include "efilibplat.h"
+#include "EfiLibPlat.h"
 #include "LinkedList.h"
 #include "EfiUi.h"
 #include "Intload.h"

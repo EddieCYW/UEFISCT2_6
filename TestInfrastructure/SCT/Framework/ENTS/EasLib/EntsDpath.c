@@ -56,7 +56,7 @@ Abstract:
 --*/
 #include "Efi.h"
 #include "EntsLib.h"
-#include "EfiLibPlat.h"
+#include "EntsLibPlat.h"
 
 #define ALIGN_SIZE(a) ((a % MIN_ALIGNMENT_SIZE) ? MIN_ALIGNMENT_SIZE - (a % MIN_ALIGNMENT_SIZE) : 0)
 #define MAX_FILE_PATH 1024

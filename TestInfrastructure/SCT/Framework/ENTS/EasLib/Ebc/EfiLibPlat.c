@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 #include "Efi.h"
+#include "EntsLibPlat.h"
 
 UINT64
 RShiftU64 (

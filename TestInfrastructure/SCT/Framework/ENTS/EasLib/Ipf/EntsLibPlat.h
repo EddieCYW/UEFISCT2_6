@@ -47,16 +47,16 @@
 
 Module Name:
 
-  EfiLibPlat.h
+  EntsLibPlat.h
 
 Abstract:
 
-  X64 specific defines
+  IPF specific defines
 
 --*/
 
-#ifndef _EFI_LIB_PLAT_H_
-#define _EFI_LIB_PLAT_H_
+#ifndef _EFI_LIB_PLAT_H
+#define _EFI_LIB_PLAT_H
 
 #define MIN_ALIGNMENT_SIZE  8
 

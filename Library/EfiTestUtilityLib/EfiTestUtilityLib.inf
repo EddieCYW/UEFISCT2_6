@@ -77,11 +77,11 @@ COMPONENT_TYPE  = LIBRARY
   rtdata.c
 
 [sources.Arm]
-  Arm/efilibplat.h
+  Arm/EfiLibPlat.h
   Arm/initplat.c
 
 [sources.Aarch64]
-  Aarch64/efilibplat.h
+  Aarch64/EfiLibPlat.h
   Aarch64/initplat.c
 
 [sources.ia32]

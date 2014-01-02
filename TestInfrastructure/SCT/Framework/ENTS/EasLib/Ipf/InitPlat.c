@@ -55,8 +55,9 @@ Abstract:
 
 --*/
 
-#include "lib.h"
-#include "libsalpal.h"
+#include "Efi.h"
+#include "EntsLibPlat.h"
+#include "LibSalPal.h"
 
 VOID
 EntsInitializeLibPlatform (

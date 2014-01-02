@@ -47,18 +47,18 @@
 
 Module Name:
 
-  EfilibPlat.h
+  EntsLibPlat.h
 
 Abstract:
 
-  IA32 specific defines
+  X64 specific defines
 
 --*/
 
 #ifndef _EFI_LIB_PLAT_H_
 #define _EFI_LIB_PLAT_H_
 
-#define MIN_ALIGNMENT_SIZE  4
+#define MIN_ALIGNMENT_SIZE  8
 
 VOID
 EntsInitializeLibPlatform (

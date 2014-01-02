@@ -48,7 +48,7 @@
 
 Module Name:
 
-  EfilibPlat.h
+  EntsLibPlat.h
 
 Abstract:
 

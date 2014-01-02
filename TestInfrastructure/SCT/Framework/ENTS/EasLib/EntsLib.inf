@@ -75,29 +75,29 @@ COMPONENT_TYPE  = LIBRARY
   EntsContext.c
 
 [sources.ia32]
-  Ia32/EfiLibPlat.h
+  Ia32/EntsLibPlat.h
   Ia32/InitPlat.c
 
 [sources.ipf]
-  Ipf/EfiLibPlat.h
+  Ipf/EntsLibPlat.h
   Ipf/InitPlat.c
   Ipf/SalPal.c
   Ipf/LibSalPal.h
 
 [sources.ebc]
-  Ebc/EfiLibPlat.h
+  Ebc/EntsLibPlat.h
   Ebc/EfiLibPlat.c
 
 [sources.x64]
-  X64/EfiLibPlat.h
+  X64/EntsLibPlat.h
   X64/EfiLibPlat.c
   
 [sources.Arm]
-  Arm/EfiLibPlat.h
+  Arm/EntsLibPlat.h
   Arm/InitPlat.c
 
 [sources.Aarch64]
-  Aarch64/EfiLibPlat.h
+  Aarch64/EntsLibPlat.h
   Aarch64/InitPlat.c
 
 [includes.common]

@@ -56,7 +56,8 @@ Abstract:
 
 --*/
 
-#include "lib.h"
+#include "Efi.h"
+#include "EntsLibPlat.h"
 
 VOID
 EntsInitializeLibPlatform (
