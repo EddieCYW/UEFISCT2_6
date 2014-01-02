@@ -71,12 +71,6 @@ EFI_RUNTIME_SERVICES    *tRT;
 BOOLEAN  LibFwInstance;
 
 //
-// EFIDebug - Debug mask
-//
-
-UINTN    EFIDebug    = EFI_DBUG_MASK;
-
-//
 // LibRuntimeRaiseTPL, LibRuntimeRestoreTPL - pointers to Runtime functions from the
 //                                            Boot Services Table
 //

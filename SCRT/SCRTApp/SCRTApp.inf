@@ -115,15 +115,12 @@ COMPONENT_TYPE       = APPLICATION
   EfiShellLib
   
 [libraries.IA32]
-  EfiDriverLib
   PrintLib
 
 [libraries.x64]
-  EfiDriverLib
   PrintLib
 
 [libraries.IPF]
-  EfiDriverLib
   PrintLib
 
 [libraries.ARM, libraries.Aarch64]

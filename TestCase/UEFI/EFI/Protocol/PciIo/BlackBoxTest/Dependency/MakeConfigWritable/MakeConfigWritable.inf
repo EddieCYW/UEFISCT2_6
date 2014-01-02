@@ -93,12 +93,12 @@ COMPONENT_TYPE       = APPLICATION
   $(EDK_SOURCE)/Foundation/Library/Dxe/Include
 
 [libraries.common]
+  SctLib
   EfiGuidLib
   EfiProtocolLib
   EdkProtocolLib
   EdkFrameworkProtocolLib
   EdkFrameworkGuidLib
-  EfiShellLib
 
 [nmake.common]
   IMAGE_ENTRY_POINT=MakeConfigWritableEntryPoint

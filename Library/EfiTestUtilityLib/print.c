@@ -215,7 +215,7 @@ Routine Description:
 Arguments:
 
     mask        - Bit mask of debug string.  If a bit is set in the
-                  mask that is also set in EFIDebug the string is
+                  mask that is also set in EfiDebugMask the string is
                   printed; otherwise, the string is not printed
 
     fmt         - Format string
@@ -234,7 +234,7 @@ Returns:
     UINTN           SavedAttribute;
 
 
-    if (!(EFIDebug & mask)) {
+    if (!(EfiDebugMask & mask)) {
         return 0;
     }
 

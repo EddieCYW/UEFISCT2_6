@@ -90,10 +90,10 @@ COMPONENT_TYPE       = BS_DRIVER
   $(EFI_SOURCE)/SctPkg/Library/EfiTestUtilityLib
 
 [libraries.common]
+  SctLib
   TestProtocolLib
   EfiTestLib
   EfiTestUtilityLib
-  EfiDriverLib
 
 [nmake.common]
   IMAGE_ENTRY_POINT=InitializeBBTestPxeBCProtocol

@@ -174,11 +174,6 @@ InitializeUnicodeSupport (
   CHAR8                             *LangCode
   );
 
-VOID
-EFIDebugVariable (
-  VOID
-  );
-
 UINT32
 CalculateCrc (
   UINT8 *pt,
@@ -728,11 +723,6 @@ LibGetManagedControllerHandles (
   EFI_HANDLE  DriverBindingHandle,
   UINTN       *ControllerHandleCount,
   EFI_HANDLE  **ControllerHandleBuffer
-  );
-
-EFI_STATUS
-EfiDebugAssertInit (
-  VOID
   );
 
 EFI_STATUS

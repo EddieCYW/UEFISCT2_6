@@ -81,7 +81,6 @@ COMPONENT_TYPE       = BS_DRIVER
   SctLib
   EfiProtocolLib
   TestProtocolLib
-  EfiDriverLib
   PrintLib
   EntsLib
 

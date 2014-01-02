@@ -63,7 +63,6 @@ COMPONENT_TYPE  = LIBRARY
   console.c
   crc.c
   data.c
-  debug.c
   dpath.c
   error.c
   event.c

@@ -59,12 +59,6 @@ Abstract:
 
 
 VOID
-EFIDebugVariable (
-  VOID
-  );
-
-
-VOID
 InitializeLib (
   IN EFI_HANDLE           ImageHandle,
   IN EFI_SYSTEM_TABLE     *SystemTable
@@ -118,7 +112,7 @@ Returns:
       }
 
       EfiDebugAssertInit ();
-      EFIDebugVariable ();
+      EfiDebugVariable ();
     }
 
     //
@@ -215,36 +209,5 @@ Done:
 
   if (Handles) {
     FreePool (Handles);
-  }
-}
-
-VOID
-EFIDebugVariable (
-  VOID
-  )
-/*++
-
-Routine Description:
-  Initializes the EFIDebug variable for our build
-
-Arguments:
-
-  None
-
-Returns:
-
-  None
-
---*/
-{
-  EFI_STATUS      Status;
-  UINT32          Attributes;
-  UINTN           DataSize;
-  UINTN           NewEFIDebug;
-
-  DataSize = sizeof(EFIDebug);
-  Status = tRT->GetVariable(L"EFIDebug", &tEfiGlobalVariable, &Attributes, &DataSize, &NewEFIDebug);
-  if (!EFI_ERROR(Status)) {
-    EFIDebug = NewEFIDebug;
   }
 }

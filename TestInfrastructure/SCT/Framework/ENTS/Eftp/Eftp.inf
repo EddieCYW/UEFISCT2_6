@@ -85,7 +85,6 @@ EftpWRQ.c
 
 [libraries.common]
   SctLib
-  EfiDriverLib
   EfiProtocolLib
   EftpProtocolLib
   NetLib

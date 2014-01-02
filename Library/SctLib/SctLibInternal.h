@@ -56,5 +56,14 @@ InitializeLibPlatform (
     IN EFI_SYSTEM_TABLE     *SystemTable
     );
 
+VOID
+EfiDebugVariable (
+  VOID
+  );
+
+EFI_STATUS
+EfiDebugAssertInit (
+  VOID
+  );
 
 #endif
