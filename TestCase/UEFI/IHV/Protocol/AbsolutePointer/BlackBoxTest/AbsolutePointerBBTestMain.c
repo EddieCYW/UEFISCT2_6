@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "AbsolutePointerBBTestMain.h"
 
 EFI_EVENT              TimerEvent;
@@ -183,7 +184,7 @@ InitializeBBTestAbsolutePointer (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
 

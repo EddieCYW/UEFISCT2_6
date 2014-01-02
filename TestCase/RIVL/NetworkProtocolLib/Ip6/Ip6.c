@@ -53,7 +53,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "Ip6.h"
 
 EFI_GUID gEfiIp6ServiceBindingProtocolGuid = EFI_IP6_SERVICE_BINDING_PROTOCOL_GUID;

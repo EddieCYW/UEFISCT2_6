@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "VariableServicesBBTestMain.h"
 
 #define MULTIPLE_TEST_TIMES         50

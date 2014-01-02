@@ -180,7 +180,7 @@ InitializeBBTestDiskIo2 (
   EFI_STATUS Status;
 
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
 
   Status = gtBS->CreateEvent(EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);

@@ -55,6 +55,6 @@ Revision History
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "ServiceBinding.h"
 

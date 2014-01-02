@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "MiscellaneousRuntimeENTSTestCase.h"
 
 //
@@ -63,7 +64,7 @@ static EFI_STATUS     RTResetSystemResetStatus;
 static UINTN          RTResetSystemDataSize;
 static CHAR16         *RTResetSystemResetData;
 
-ENTS_ARG_FIELD        gRTResetSystemArgField[] = {
+ENTS_ARG_FIELD        tRTResetSystemArgField[] = {
   {
     OCTETN,
     &RTResetSystemResetType

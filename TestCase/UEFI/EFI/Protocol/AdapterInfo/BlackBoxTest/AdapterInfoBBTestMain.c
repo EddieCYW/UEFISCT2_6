@@ -212,7 +212,7 @@ InitializeAdapterInfoBBTest (
   // initialize test utility lib
   //
 
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

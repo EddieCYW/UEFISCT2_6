@@ -110,11 +110,11 @@ Returns:
                                &mLogFile
                                );
   if (EFI_ERROR(Status)) {
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Done
@@ -229,7 +229,7 @@ Routine Description:
                                  String
                                  );
     if (EFI_ERROR(Status)) {
-      BS->FreePool (String);
+      tBS->FreePool (String);
       return;
     }
   } else {
@@ -239,5 +239,5 @@ Routine Description:
     Print (String);
   }
 
-  BS->FreePool (String);
+  tBS->FreePool (String);
 }

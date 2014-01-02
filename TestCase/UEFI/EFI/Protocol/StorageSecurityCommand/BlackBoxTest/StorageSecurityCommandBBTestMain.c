@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "StorageSecurityCommandBBTestMain.h"
 
 EFI_EVENT TimerEvent = NULL;
@@ -126,7 +127,7 @@ InitializeBBTestStorageSecurityCommand (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,

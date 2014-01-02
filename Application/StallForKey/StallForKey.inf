@@ -75,11 +75,9 @@ COMPONENT_TYPE       = APPLICATION
   $(EDK_SOURCE)/Foundation/Include/IndustryStandard
   $(EDK_SOURCE)/Foundation/Core/Dxe
   $(EFI_SOURCE)/SctPkg/Include  
-  $(SHELL_SOURCE)/Inc
-  $(SHELL_SOURCE)/Library
 
 [libraries.common]
-  EfiShellLib
+  SctLib
 
 [libraries.ARM, libraries.AARCH64]
   CompilerIntrinsicsLib

@@ -65,7 +65,6 @@ Abstract:
 #include "Efi.h"
 #include "Guid.h"
 #include "EfiTestUtilityLib.h"
-#include "EfiDriverLib.h"
 #include "EfiTestLib.h"
 
 #include EFI_PROTOCOL_DEFINITION (ConsoleControl)

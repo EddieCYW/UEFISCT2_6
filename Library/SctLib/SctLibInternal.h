@@ -50,6 +50,15 @@
 #include "SctLib.h"
 #include "SctLibPlat.h"
 
+#include EFI_PROTOCOL_DEFINITION (UnicodeCollation)
+
+extern EFI_UNICODE_COLLATION_PROTOCOL   *UnicodeInterface;
+
+//
+// Default pool allocation type
+//
+extern EFI_MEMORY_TYPE PoolAllocationType;
+
 VOID
 InitializeLibPlatform (
     IN EFI_HANDLE           ImageHandle,

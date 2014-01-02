@@ -57,6 +57,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "FirmwareManagementBBTestMain.h"
 
 // ****************************************************************************
@@ -229,7 +230,7 @@ InitializeFirmwareManagementBBTest (
   // initialize test utility lib
   //
 
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

@@ -54,6 +54,7 @@ Abstract:
  Stress test case source file for Pci Root Bridge Io Protocol
 
 --*/
+#include "SctLib.h"
 #include "PciRootBridgeIoBBTestMain.h"
 #include "PciRootBridgeIoBBTestSupport.h"
 

@@ -487,7 +487,7 @@ CleanUp:
     // NULL, in this case we must not signal recycle signal, because
     // it will cause resource to be released for another times
     //
-    gBS->SignalEvent (RxData->RecycleEvent);
+    tBS->SignalEvent (RxData->RecycleEvent);
   }
 
   if (!EFI_ERROR (Status)) {
@@ -675,7 +675,7 @@ Returns:
     Private->NPendingPacket)
     );
 
-  gBS->CloseEvent (Private->TimeoutEvent);
+  tBS->CloseEvent (Private->TimeoutEvent);
   Private->TimeoutEvent   = NULL;
 
   Private->Token->Status  = Private->Result;
@@ -684,7 +684,7 @@ Returns:
 
   if (Private->Token->Event) {
     Private->UserEvtFired = TRUE;
-    gBS->SignalEvent (Private->Token->Event);
+    tBS->SignalEvent (Private->Token->Event);
   }
 
   Private->SynFinished  = TRUE;
@@ -1807,7 +1807,7 @@ Returns:
 
   Packet = Buf->Packet;
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EVT_NOTIFY_SIGNAL,
                   NET_TPL_EVENT,
                   EftpRrqTxCallback,

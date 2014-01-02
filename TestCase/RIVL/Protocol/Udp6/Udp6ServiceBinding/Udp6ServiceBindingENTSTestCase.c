@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Udp6ServiceBindingENTSTestCase.h"
 
 //
@@ -111,7 +112,7 @@ Returns:
     return EFI_SUCCESS;
   }
 
-  Status = gBS->LocateHandleBuffer (
+  Status = tBS->LocateHandleBuffer (
                   ByProtocol,
                   &gEfiEntsProtocolGuid,
                   NULL,
@@ -125,7 +126,7 @@ Returns:
   // Walk through each instance need to be tested
   //
   for (HandleIndex = 0; HandleIndex < NoHandles; HandleIndex++) {
-    Status = gBS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                     HandleBuffer[HandleIndex],
                     &gEfiEntsProtocolGuid,
                     &Interface
@@ -149,7 +150,7 @@ Returns:
   Status = EFI_NOT_FOUND;
 Done:
   if (HandleBuffer != NULL) {
-    gBS->FreePool(HandleBuffer);
+    tBS->FreePool(HandleBuffer);
   }
   return Status;
 }
@@ -210,7 +211,7 @@ Returns:
     return EFI_SUCCESS;
   }
 
-  Status = gBS->LocateHandleBuffer (
+  Status = tBS->LocateHandleBuffer (
                   ByProtocol,
                   &gEfiEntsProtocolGuid,
                   NULL,
@@ -224,7 +225,7 @@ Returns:
   // Walk through each instance need to be tested
   //
   for (HandleIndex = 0; HandleIndex < NoHandles; HandleIndex++) {
-    Status = gBS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                     HandleBuffer[HandleIndex],
                     &gEfiEntsProtocolGuid,
                     &Interface
@@ -253,7 +254,7 @@ Returns:
   Status = EFI_NOT_FOUND;
 Done:
   if (HandleBuffer != NULL) {
-    gBS->FreePool(HandleBuffer);
+    tBS->FreePool(HandleBuffer);
   }
   return Status;
 }

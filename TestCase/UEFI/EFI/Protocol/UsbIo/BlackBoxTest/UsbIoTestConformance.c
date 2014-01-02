@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "UsbIoTest.h"
 #ifndef EFIARM
 #include "EdkIIGlueBaseLib.h"

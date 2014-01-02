@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "SerialIoBBTestMain.h"
 
 #define MULTIPLE_TEST_TIMES     5

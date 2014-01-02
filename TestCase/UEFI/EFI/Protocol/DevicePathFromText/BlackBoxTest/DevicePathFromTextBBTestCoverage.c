@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "DevicePathFromTextBBTestMain.h"
 
 #include EFI_PROTOCOL_DEFINITION (DebugPort)

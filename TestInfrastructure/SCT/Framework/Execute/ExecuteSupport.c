@@ -342,7 +342,7 @@ Returns:
                 );
   if (*MetaName == NULL) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
-    BS->FreePool (*FilePath);
+    tBS->FreePool (*FilePath);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -410,8 +410,8 @@ Returns:
   TempName = PoolPrint (MetaName, L"%d", L"%d", L"%s");
   if (TempName == NULL) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
-    BS->FreePool (FilePath);
-    BS->FreePool (MetaName);
+    tBS->FreePool (FilePath);
+    tBS->FreePool (MetaName);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -421,18 +421,18 @@ Returns:
   *FullMetaName = PoolPrint (L"%s\\%s", FilePath, TempName);
   if (*FullMetaName == NULL) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
-    BS->FreePool (FilePath);
-    BS->FreePool (MetaName);
-    BS->FreePool (TempName);
+    tBS->FreePool (FilePath);
+    tBS->FreePool (MetaName);
+    tBS->FreePool (TempName);
     return EFI_OUT_OF_RESOURCES;
   }
 
   //
   // Free resources
   //
-  BS->FreePool (FilePath);
-  BS->FreePool (MetaName);
-  BS->FreePool (TempName);
+  tBS->FreePool (FilePath);
+  tBS->FreePool (MetaName);
+  tBS->FreePool (TempName);
 
   //
   // Done
@@ -496,8 +496,8 @@ Returns:
   TempName = PoolPrint (MetaName, L"%d", L"%d", L"ekl");
   if (TempName == NULL) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
-    BS->FreePool (FilePath);
-    BS->FreePool (MetaName);
+    tBS->FreePool (FilePath);
+    tBS->FreePool (MetaName);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -507,18 +507,18 @@ Returns:
   *FullMetaName = PoolPrint (L"%s\\%s", FilePath, TempName);
   if (*FullMetaName == NULL) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
-    BS->FreePool (FilePath);
-    BS->FreePool (MetaName);
-    BS->FreePool (TempName);
+    tBS->FreePool (FilePath);
+    tBS->FreePool (MetaName);
+    tBS->FreePool (TempName);
     return EFI_OUT_OF_RESOURCES;
   }
 
   //
   // Free resources
   //
-  BS->FreePool (FilePath);
-  BS->FreePool (MetaName);
-  BS->FreePool (TempName);
+  tBS->FreePool (FilePath);
+  tBS->FreePool (MetaName);
+  tBS->FreePool (TempName);
 
   //
   // Done
@@ -636,7 +636,7 @@ MatchHandleInterface (
   VOID        *Interface;
 
   for (Index = 0; Index < NoHandles; Index++) {
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                      HandleBuffer[Index],
                      ClientGuid,
                      &Interface
@@ -742,7 +742,7 @@ InsertChildHandles (
   //
   // Locate all protocols on the handle
   //
-  Status = BS->ProtocolsPerHandle (
+  Status = tBS->ProtocolsPerHandle (
                    Handle,
                    &ProtocolBuffer,
                    &ProtocolBufferCount
@@ -758,7 +758,7 @@ InsertChildHandles (
     //
     // Get the open protocol information
     //
-    Status = BS->OpenProtocolInformation (
+    Status = tBS->OpenProtocolInformation (
                      Handle,
                      ProtocolBuffer[Index1],
                      &EntryBuffer,
@@ -794,13 +794,13 @@ InsertChildHandles (
       }
     }
 
-    BS->FreePool (EntryBuffer);
+    tBS->FreePool (EntryBuffer);
   }
 
   //
   // Free resources
   //
-  BS->FreePool (ProtocolBuffer);
+  tBS->FreePool (ProtocolBuffer);
 }
 
 STATIC
@@ -828,7 +828,7 @@ GatherConfigHandles (
   //
   // Locate test profile library protocol
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                    SupportHandle,
                    &gEfiTestProfileLibraryGuid,
                    (VOID **)&ProfileLib
@@ -851,12 +851,12 @@ GatherConfigHandles (
 
   ConfigFilePath = PoolPrint (L"%s\\%s", FilePath, EFI_SCT_FILE_DEVICE_CONFIG);
   if (ConfigFilePath == NULL) {
-    BS->FreePool (DevicePath);
-    BS->FreePool (FilePath);
+    tBS->FreePool (DevicePath);
+    tBS->FreePool (FilePath);
     return EFI_OUT_OF_RESOURCES;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Open the device configuration file
@@ -868,13 +868,13 @@ GatherConfigHandles (
                          &IniFile
                          );
   if (EFI_ERROR (Status)) {
-    BS->FreePool (DevicePath);
-    BS->FreePool (ConfigFilePath);
+    tBS->FreePool (DevicePath);
+    tBS->FreePool (ConfigFilePath);
     return Status;
   }
 
-  BS->FreePool (DevicePath);
-  BS->FreePool (ConfigFilePath);
+  tBS->FreePool (DevicePath);
+  tBS->FreePool (ConfigFilePath);
 
   //
   // Get the number of device configuration data
@@ -891,7 +891,7 @@ GatherConfigHandles (
   //
   // Get all handles
   //
-  Status = BS->LocateHandleBuffer (
+  Status = tBS->LocateHandleBuffer (
                    AllHandles,
                    NULL,
                    NULL,
@@ -908,14 +908,14 @@ GatherConfigHandles (
   //
   *NoConfigHandles = 0;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    sizeof(EFI_HANDLE) * NoHandles,
                    (VOID **)ConfigHandleBuffer
                    );
   if (EFI_ERROR (Status)) {
     ProfileLib->EfiIniClose (ProfileLib, IniFile);
-    BS->FreePool (HandleBuffer);
+    tBS->FreePool (HandleBuffer);
     return Status;
   }
 
@@ -940,7 +940,7 @@ GatherConfigHandles (
     // Search the matched device path in the system
     //
     for (Index = 0; Index < NoHandles; Index++) {
-      Status = BS->HandleProtocol (
+      Status = tBS->HandleProtocol (
                        HandleBuffer[Index],
                        &gEfiDevicePathProtocolGuid,
                        (VOID **)&DevicePath
@@ -952,11 +952,11 @@ GatherConfigHandles (
       DevicePathStr = LibDevicePathToStr (DevicePath);
 
       if (StrCmp (Buffer, DevicePathStr) == 0) {
-        BS->FreePool (DevicePathStr);
+        tBS->FreePool (DevicePathStr);
         break;
       }
 
-      BS->FreePool (DevicePathStr);
+      tBS->FreePool (DevicePathStr);
     }
 
     //
@@ -974,7 +974,7 @@ GatherConfigHandles (
   //
   // Free resources
   //
-  BS->FreePool (HandleBuffer);
+  tBS->FreePool (HandleBuffer);
 
   //
   // Close the device configuration file
@@ -1024,7 +1024,7 @@ IhvInterfaceFilter (
   //
   // Free sources
   //
-  BS->FreePool (ConfigHandleBuffer);
+  tBS->FreePool (ConfigHandleBuffer);
 
   //
   // Done

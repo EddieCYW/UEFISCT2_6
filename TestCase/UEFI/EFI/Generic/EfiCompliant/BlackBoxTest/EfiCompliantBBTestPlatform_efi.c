@@ -59,6 +59,7 @@ Abstract:
 // Includes
 //
 
+#include "SctLib.h"
 #include "EfiCompliantBbTestMain_efi.h"
 #include EFI_PROTOCOL_DEFINITION (SimpleTextIn)
 #include EFI_PROTOCOL_DEFINITION (SimpleTextOut)

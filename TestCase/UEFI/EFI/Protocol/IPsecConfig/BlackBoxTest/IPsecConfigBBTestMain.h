@@ -203,12 +203,6 @@ BBTestUnregisterDataNotifyFunctionTest (
 
 
 VOID
-InitializeLib (
-  IN EFI_HANDLE                     ImageHandle,
-  IN EFI_SYSTEM_TABLE               *SystemTable
-  );
-
-VOID
 EventNotifyFunc (
   IN EFI_EVENT Event,
   IN VOID      *Context

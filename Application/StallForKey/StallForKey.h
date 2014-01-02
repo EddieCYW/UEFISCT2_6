@@ -62,8 +62,7 @@ Abstract:
 // Includes
 //
 
-#include "Efi.h"
-#include "EfiShellLib.h"
+#include "SctLib.h"
 
 //
 // Global definitions

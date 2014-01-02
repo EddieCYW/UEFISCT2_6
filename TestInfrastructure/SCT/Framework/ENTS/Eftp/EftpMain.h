@@ -75,8 +75,8 @@ EFI_FORWARD_DECLARATION (EFTP_IO_PRIVATE);
 #define EFTP_IO_PRIVATE_SIGNATURE     EFI_SIGNATURE_32 ('M', 'T', 'F', 'T')
 #define EFTP_IO_PRIVATE_FROM_THIS(a)  CR ((a), EFTP_IO_PRIVATE, Eftp, EFTP_IO_PRIVATE_SIGNATURE)
 
-#define NET_RAISE_TPL(x)          (gBS->RaiseTPL (x))
-#define NET_RESTORE_TPL(x)        (gBS->RestoreTPL (x))
+#define NET_RAISE_TPL(x)          (tBS->RaiseTPL (x))
+#define NET_RESTORE_TPL(x)        (tBS->RestoreTPL (x))
 
 extern UINT32                       mEftpDebugLevel;
 extern EFI_DRIVER_BINDING_PROTOCOL  gEftpDriverBinding;

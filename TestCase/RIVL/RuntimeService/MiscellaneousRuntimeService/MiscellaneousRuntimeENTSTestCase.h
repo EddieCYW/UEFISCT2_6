@@ -56,8 +56,7 @@ Abstract:
 #ifndef _MISCELLANEOUS_RUNTIME_ENTS_TESTCASE_H_
 #define _MISCELLANEOUS_RUNTIME_ENTS_TESTCASE_H_
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 
 EFI_STATUS
@@ -84,6 +83,6 @@ Returns:
 extern CHAR16         *gRuntimeServiceRuntimeInfo;
 extern UINTN          gRuntimeServiceRuntimeInfoSize;
 
-extern ENTS_ARG_FIELD gRTResetSystemArgField[];
+extern ENTS_ARG_FIELD tRTResetSystemArgField[];
 
 #endif

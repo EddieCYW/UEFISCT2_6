@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "TimeServicesBBTestMain.h"
 
 #define MAX_REPEAT_TIMES 100

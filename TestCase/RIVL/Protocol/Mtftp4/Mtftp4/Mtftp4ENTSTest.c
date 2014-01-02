@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Mtftp4ENTSTestCase.h"
 
 static CHAR16     gMtftp4ProtocolName[]       = L"Mtftp4";
@@ -139,10 +140,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -150,7 +151,7 @@ Returns:
 
   LoadedImage->Unload = Mtftp4ENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gMtftp4EntsProtocolInterface
@@ -168,7 +169,7 @@ Returns:
   gMtftp4EntsProtocolInterface->RuntimeInfo       = gMtftp4EntsRuntimeInfo;
   gMtftp4EntsProtocolInterface->RuntimeInfoSize   = gMtftp4EntsRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gMtftp4EntsProtocolInterface,
@@ -182,7 +183,7 @@ Returns:
 
 Error:
   if (gMtftp4EntsProtocolInterface != NULL) {
-    gBS->FreePool (gMtftp4EntsProtocolInterface);
+    tBS->FreePool (gMtftp4EntsProtocolInterface);
   }
 
   return Status;
@@ -211,7 +212,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gMtftp4EntsProtocolInterface,
@@ -219,7 +220,7 @@ Returns:
                   );
 
   if (gMtftp4EntsProtocolInterface != NULL) {
-    gBS->FreePool (gMtftp4EntsProtocolInterface);
+    tBS->FreePool (gMtftp4EntsProtocolInterface);
   }
 
   return Status;

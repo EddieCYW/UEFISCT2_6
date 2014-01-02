@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 
+#include "SctLib.h"
 #include "UnicodeCollation2BBTestMain.h"
 
 CHAR8                                                EngUpperMap[0x100];

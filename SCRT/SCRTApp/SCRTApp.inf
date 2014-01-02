@@ -112,7 +112,6 @@ COMPONENT_TYPE       = APPLICATION
 
 [libraries.common]
   SctLib
-  EfiShellLib
   
 [libraries.IA32]
   PrintLib

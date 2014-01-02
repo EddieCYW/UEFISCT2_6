@@ -54,8 +54,8 @@ Abstract:
   This driver supports platform authtest service
 
 --*/
-#include "Tiano.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
+#include "SctLib.h"
 #include "AuthTest.h"
 #include "EfiTestLib.h"
 #include "AuthenticationGuid.h"

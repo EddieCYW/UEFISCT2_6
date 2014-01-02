@@ -52,6 +52,7 @@ Abstract:
   Source file for USB2 host controller conformance testing.
 
 --*/
+#include "SctLib.h"
 #include "Usb2HcTest.h"
 
 //

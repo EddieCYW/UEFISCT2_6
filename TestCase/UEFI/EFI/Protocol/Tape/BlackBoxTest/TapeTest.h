@@ -118,7 +118,7 @@ extern void TapeTestWaitForAnyInput (void);
 #define my_logMsgPrintf  Print
 
 #define malloc EfiLibAllocatePool 
-#define free   gBS->FreePool
+#define free   tBS->FreePool
 
 
 #define logMsg(_guid,_title,_message,_result,_maskRes) \

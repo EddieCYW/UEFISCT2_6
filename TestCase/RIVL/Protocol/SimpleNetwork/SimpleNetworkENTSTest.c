@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "SimpleNetworkENTSTestCase.h"
 
 static CHAR16     gSimpleNetworkProtocolName[]      = L"SimpleNetwork";
@@ -183,10 +184,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -194,7 +195,7 @@ Returns:
 
   LoadedImage->Unload = SimpleNetworkENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gSimpleNetworkEntsProtocolInterface
@@ -212,7 +213,7 @@ Returns:
   gSimpleNetworkEntsProtocolInterface->RuntimeInfo        = gSimpleNetworkEntsRuntimeInfo;
   gSimpleNetworkEntsProtocolInterface->RuntimeInfoSize    = gSimpleNetworkEntsRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gSimpleNetworkEntsProtocolInterface,
@@ -226,7 +227,7 @@ Returns:
 
 Error:
   if (gSimpleNetworkEntsProtocolInterface != NULL) {
-    gBS->FreePool (gSimpleNetworkEntsProtocolInterface);
+    tBS->FreePool (gSimpleNetworkEntsProtocolInterface);
   }
 
   return Status;
@@ -255,7 +256,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gSimpleNetworkEntsProtocolInterface,
@@ -263,7 +264,7 @@ Returns:
                   );
 
   if (gSimpleNetworkEntsProtocolInterface != NULL) {
-    gBS->FreePool (gSimpleNetworkEntsProtocolInterface);
+    tBS->FreePool (gSimpleNetworkEntsProtocolInterface);
   }
 
   return Status;

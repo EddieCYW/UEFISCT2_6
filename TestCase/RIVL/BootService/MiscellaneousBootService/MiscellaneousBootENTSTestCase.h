@@ -56,8 +56,7 @@ Abstract:
 #ifndef _MISCELLANEOUS_BOOT_ENTS_TESTCASE_H_
 #define _MISCELLANEOUS_BOOT_ENTS_TESTCASE_H_
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 
 EFI_STATUS
@@ -147,9 +146,9 @@ Returns:
 extern CHAR16         *gRuntimeServiceRuntimeInfo;
 extern UINTN          gRuntimeServiceRuntimeInfoSize;
 
-extern ENTS_ARG_FIELD gBSSetWatchdogTimerArgField[];
-extern ENTS_ARG_FIELD gBSStallArgField[];
-extern ENTS_ARG_FIELD gBSCopyMemArgField[];
-extern ENTS_ARG_FIELD gBSSetMemArgField[];
+extern ENTS_ARG_FIELD BSSetWatchdogTimerArgField[];
+extern ENTS_ARG_FIELD BSStallArgField[];
+extern ENTS_ARG_FIELD BSCopyMemArgField[];
+extern ENTS_ARG_FIELD BSSetMemArgField[];
 
 #endif

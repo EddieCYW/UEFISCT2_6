@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "MnpENTSTestCase.h"
 
 static CHAR16     gMnpProtocolName[] = L"Mnp";
@@ -154,10 +155,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -165,7 +166,7 @@ Returns:
 
   LoadedImage->Unload = MnpENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gMnpEntsProtocolInterface
@@ -183,7 +184,7 @@ Returns:
   gMnpEntsProtocolInterface->RuntimeInfo        = gMnpRuntimeInfo;
   gMnpEntsProtocolInterface->RuntimeInfoSize    = gMnpRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gMnpEntsProtocolInterface,
@@ -197,7 +198,7 @@ Returns:
 
 Error:
   if (gMnpEntsProtocolInterface != NULL) {
-    gBS->FreePool (gMnpEntsProtocolInterface);
+    tBS->FreePool (gMnpEntsProtocolInterface);
   }
 
   return Status;
@@ -224,14 +225,14 @@ Returns:
 
 --*/
 {
-  gBS->UninstallMultipleProtocolInterfaces (
+  tBS->UninstallMultipleProtocolInterfaces (
         ImageHandle,
         &gEfiEntsProtocolGuid,
         gMnpEntsProtocolInterface,
         NULL
         );
   if (gMnpEntsProtocolInterface != NULL) {
-    gBS->FreePool (gMnpEntsProtocolInterface);
+    tBS->FreePool (gMnpEntsProtocolInterface);
   }
 
   return EFI_SUCCESS;

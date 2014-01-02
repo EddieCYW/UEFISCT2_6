@@ -56,8 +56,7 @@ Abstract:
 #ifndef _TCP4_ENTS_TESTCASE_H_
 #define _TCP4_ENTS_TESTCASE_H_
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 #include "Tcp4.h"
 

@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "DebugSupportBBTestMain.h"
 
 
@@ -153,7 +154,7 @@ InitializeBBTestDebugSupport (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
 
   return EfiInitAndInstallBBTestInterface (

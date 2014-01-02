@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "HIIDatabaseBBTestMain.h"
 
 
@@ -304,7 +305,7 @@ InitializeHIIDatabaseBBTest (
   // initialize test utility lib
   //
 
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

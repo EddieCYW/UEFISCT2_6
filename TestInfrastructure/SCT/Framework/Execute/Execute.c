@@ -516,11 +516,11 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Save test cases - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Done
@@ -585,11 +585,11 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Get instance assertion - %r", Status));
-    BS->FreePool (FullMetaName);
+    tBS->FreePool (FullMetaName);
     return Status;
   }
 
-  BS->FreePool (FullMetaName);
+  tBS->FreePool (FullMetaName);
 
   //
   // Start the execution
@@ -620,11 +620,11 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Save test cases - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Done
@@ -858,7 +858,7 @@ Routine Description:
   }
 
 Done:
-  BS->FreePool (FullMetaName);
+  tBS->FreePool (FullMetaName);
   return EFI_SUCCESS;
 }
 
@@ -902,12 +902,12 @@ ExecuteMdeLibraryInstance (
   //
   // Search this GUID from configuration table
   //
-  for (Index = 0; Index < ST->NumberOfTableEntries; Index++) {
-    if (CompareGuid (Guid, &ST->ConfigurationTable[Index].VendorGuid) == 0) {
+  for (Index = 0; Index < tST->NumberOfTableEntries; Index++) {
+    if (CompareGuid (Guid, &tST->ConfigurationTable[Index].VendorGuid) == 0) {
       //
 	  // Get library instance No.
       //
-      Link = (EFI_LIST_ENTRY *) ST->ConfigurationTable[Index].VendorTable; 
+      Link = (EFI_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable; 
 
       NoInstance = GetLibInstanceNo(Link);
 
@@ -918,7 +918,7 @@ ExecuteMdeLibraryInstance (
         // Get the library instance from link list based on the InstanceIndex
         //
         InstanceIndex = 0;
-        Link = ((EFI_LIST_ENTRY *) ST->ConfigurationTable[Index].VendorTable)->Flink;
+        Link = ((EFI_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable)->Flink;
         for (InstanceIndex = 0; InstanceIndex < ExecuteInfo->Index; InstanceIndex ++) {
           Link = Link->Flink;
         }
@@ -1080,7 +1080,7 @@ Routine Description:
       //
       // Start the test case with BS interface
       //
-      Status = ExecuteBbTestInstance (ExecuteInfo, BS, NULL);
+      Status = ExecuteBbTestInstance (ExecuteInfo, tBS, NULL);
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Execute a BB test instance - %r", Status));
         return Status;
@@ -1111,7 +1111,7 @@ Routine Description:
       //
       // Start the test case with RT interface
       //
-      Status = ExecuteBbTestInstance (ExecuteInfo, RT, NULL);
+      Status = ExecuteBbTestInstance (ExecuteInfo, tRT, NULL);
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Execute a BB test instance - %r", Status));
         return Status;
@@ -1125,7 +1125,7 @@ Routine Description:
     //
     // Protocol test
     //
-    Status = BS->LocateHandleBuffer (
+    Status = tBS->LocateHandleBuffer (
                    ByProtocol,
                    Guid,
                    NULL,
@@ -1157,11 +1157,11 @@ Routine Description:
                    );
         if (EFI_ERROR (Status)) {
           EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Save skipped cases - %r", Status));
-          BS->FreePool (FileName);
+          tBS->FreePool (FileName);
           return Status;
         }
         
-        BS->FreePool (FileName);
+        tBS->FreePool (FileName);
       
       }
     }
@@ -1174,7 +1174,7 @@ Routine Description:
         // Add one new logic to filter the SerialIo Protocol
         //
         if (CompareGuid (Guid, &gEfiSerialIoProtocolGuid) == 0) {
-          Status = BS->OpenProtocol (
+          Status = tBS->OpenProtocol (
                          HandleBuffer[HandleIndex],
                          Guid,
                          &Interface,
@@ -1187,7 +1187,7 @@ Routine Description:
             return Status;
           }
         } else {
-          Status = BS->HandleProtocol (
+          Status = tBS->HandleProtocol (
                          HandleBuffer[HandleIndex],
                          Guid,
                          &Interface
@@ -1235,7 +1235,7 @@ Routine Description:
         }
 
 		if (CompareGuid (Guid, &gEfiSerialIoProtocolGuid) == 0) {
-          Status = BS->CloseProtocol (
+          Status = tBS->CloseProtocol (
                          HandleBuffer[HandleIndex],
                          Guid,
                          HandleBuffer[HandleIndex],
@@ -1254,12 +1254,12 @@ Routine Description:
     //
     // Search this GUID from configuration table
     //
-    for (Index = 0; Index < ST->NumberOfTableEntries; Index++) {
-      if (CompareGuid (Guid, &ST->ConfigurationTable[Index].VendorGuid) == 0) {
+    for (Index = 0; Index < tST->NumberOfTableEntries; Index++) {
+      if (CompareGuid (Guid, &tST->ConfigurationTable[Index].VendorGuid) == 0) {
         //
 	    // Get library instance No.
         //
-        Link = (EFI_LIST_ENTRY *) ST->ConfigurationTable[Index].VendorTable; 
+        Link = (EFI_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable; 
         
         NoInstance = GetLibInstanceNo(Link);
 
@@ -1270,7 +1270,7 @@ Routine Description:
           // Get the library instance from link list based on the InstanceIndex
           //
           InstanceIndex = 0;
-          Link = ((EFI_LIST_ENTRY *) ST->ConfigurationTable[Index].VendorTable)->Flink;
+          Link = ((EFI_LIST_ENTRY *) tST->ConfigurationTable[Index].VendorTable)->Flink;
           for (InstanceIndex = 0; InstanceIndex < ExecuteInfo->Index; InstanceIndex ++) {
             Link = Link->Flink;
           }
@@ -1556,8 +1556,8 @@ Routine Description:
       //
       // Free 1 second to let all flush works done
       //
-      BS->Stall (1000000);
-      RT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
+      tBS->Stall (1000000);
+      tRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
     }
   }
 
@@ -1669,8 +1669,8 @@ Routine Description:
       //
       // Free 1 second to let all flush works done
       //
-      BS->Stall (1000000);
-      RT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
+      tBS->Stall (1000000);
+      tRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
     }
   }
 
@@ -1793,8 +1793,8 @@ Routine Description:
       //
       // Free 1 second to let all flush works done
       //
-      BS->Stall (1000000);
-      RT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
+      tBS->Stall (1000000);
+      tRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
     }
   }
 
@@ -1993,7 +1993,7 @@ Routine Description:
   //
   // Free resources
   //
-  BS->FreePool (FullMetaName);
+  tBS->FreePool (FullMetaName);
 
   //
   // Check error
@@ -2032,32 +2032,32 @@ Routine Description:
   // Free the items of test configuration data
   //
   if (ConfigData->SystemLogFile.FileName != NULL) {
-    BS->FreePool (ConfigData->SystemLogFile.FileName);
+    tBS->FreePool (ConfigData->SystemLogFile.FileName);
     ConfigData->SystemLogFile.FileName = NULL;
   }
 
   if (ConfigData->SystemKeyFile.FileName != NULL) {
-    BS->FreePool (ConfigData->SystemKeyFile.FileName);
+    tBS->FreePool (ConfigData->SystemKeyFile.FileName);
     ConfigData->SystemKeyFile.FileName = NULL;
   }
 
   if (ConfigData->CaseLogFile.FileName != NULL) {
-    BS->FreePool (ConfigData->CaseLogFile.FileName);
+    tBS->FreePool (ConfigData->CaseLogFile.FileName);
     ConfigData->CaseLogFile.FileName = NULL;
   }
 
   if (ConfigData->CaseKeyFile.FileName != NULL) {
-    BS->FreePool (ConfigData->CaseKeyFile.FileName);
+    tBS->FreePool (ConfigData->CaseKeyFile.FileName);
     ConfigData->CaseKeyFile.FileName = NULL;
   }
 
   if (ConfigData->TestCategory != NULL) {
-    BS->FreePool (ConfigData->TestCategory);
+    tBS->FreePool (ConfigData->TestCategory);
     ConfigData->TestCategory = NULL;
   }
 
   if (ConfigData->DevicePath != NULL) {
-    BS->FreePool (ConfigData->DevicePath);
+    tBS->FreePool (ConfigData->DevicePath);
     ConfigData->DevicePath = NULL;
   }
 
@@ -2200,7 +2200,7 @@ Routine Description:
   //
   // Set the watchdog timer for recovery
   //
-  Status = BS->SetWatchdogTimer (
+  Status = tBS->SetWatchdogTimer (
                  gFT->ConfigData->TestCaseMaxRunTime,
                  0,
                  0,
@@ -2246,7 +2246,7 @@ Routine Description:
   //
   // Reset the watchdog timer
   //
-  Status = BS->SetWatchdogTimer (
+  Status = tBS->SetWatchdogTimer (
                  0,
                  0,
                  0,

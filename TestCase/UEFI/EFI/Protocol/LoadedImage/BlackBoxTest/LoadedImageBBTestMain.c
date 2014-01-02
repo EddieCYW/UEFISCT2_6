@@ -54,6 +54,7 @@ Abstract:
   for Loaded Image Protocol Black Box Test
 
 --*/
+#include "SctLib.h"
 #include "LoadedImageBBTest.h"
 
 //
@@ -120,7 +121,7 @@ InitializeBBTestLoadedImageProtocol (
   //
   // initialize test utility lib
   //
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

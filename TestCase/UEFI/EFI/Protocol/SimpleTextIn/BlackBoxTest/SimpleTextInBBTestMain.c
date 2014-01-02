@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 
+#include "SctLib.h"
 #include "SimpleTextInBBTestMain.h"
 
 EFI_EVENT              TimerEvent;
@@ -181,7 +182,7 @@ InitializeBBTestSimpleTextIn (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
 

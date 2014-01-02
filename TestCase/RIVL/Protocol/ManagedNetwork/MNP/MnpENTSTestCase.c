@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "MnpENTSTestCase.h"
 
 typedef struct _MNP_TEST_RXINFO {
@@ -420,8 +421,8 @@ Returns:
   Mnp = (EFI_MANAGED_NETWORK_PROTOCOL *) ClientInterface;
 
   for (i = 0; i < *MnpTransmitMultiPacketCnt; i++) {
-    gBS->Stall (20);
-    Status = gBS->CreateEvent (
+    tBS->Stall (20);
+    Status = tBS->CreateEvent (
                     EFI_EVENT_NOTIFY_SIGNAL,
                     EFI_TPL_CALLBACK,
                     BSCallBackFunc[CallBackIndex],
@@ -442,7 +443,7 @@ Returns:
                     );
     if (EFI_ERROR (Status)) {
       *MnpTransmitMultiPacketStatus = Status;
-      gBS->CloseEvent (MnpTransmitMultiPacketToken->Event);
+      tBS->CloseEvent (MnpTransmitMultiPacketToken->Event);
       return EFI_SUCCESS;
     }
 
@@ -450,7 +451,7 @@ Returns:
       Status = Mnp->Poll (Mnp);
       if (EFI_ERROR (Status)) {
         *MnpTransmitMultiPacketStatus = Status;
-        gBS->CloseEvent (MnpTransmitMultiPacketToken->Event);
+        tBS->CloseEvent (MnpTransmitMultiPacketToken->Event);
         return EFI_SUCCESS;
       }
     }
@@ -459,7 +460,7 @@ Returns:
     //
     if (MnpTransmitMultiPacketToken->Status == EFI_SUCCESS) {
       CntOfXMit++;
-      gBS->CloseEvent (MnpTransmitMultiPacketToken->Event);
+      tBS->CloseEvent (MnpTransmitMultiPacketToken->Event);
     } else if (MnpTransmitMultiPacketToken->Status == EFI_TIMEOUT) {
       continue;
     } else if (MnpTransmitMultiPacketToken->Status == EFI_DEVICE_ERROR) {
@@ -489,7 +490,7 @@ RegenerateToken (
   RxIndex = (UINTN) Context;
   RxInfo.ReceivedNumber++;
 
-  gBS->SignalEvent (RxInfo.Token[RxIndex].Packet.RxData->RecycleEvent);
+  tBS->SignalEvent (RxInfo.Token[RxIndex].Packet.RxData->RecycleEvent);
 
   if (RxInfo.ReceivedNumber < RxInfo.TotalNumber) {
     RxInfo.Mnp->Receive (RxInfo.Mnp, &RxInfo.Token[RxIndex]);
@@ -637,7 +638,7 @@ Returns:
   // Create 100 token
   //
   for (Index = 0; Index < 100; Index++) {
-    gBS->CreateEvent (
+    tBS->CreateEvent (
           EFI_EVENT_NOTIFY_SIGNAL,
           EFI_TPL_CALLBACK,
           RegenerateToken,
@@ -659,14 +660,14 @@ Returns:
     }
   }
 
-  Status = gBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = tBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR (Status)) {
     *MnpReceiveMultiPacketStatus          = Status;
     *MnpReceiveMultiPacketReceivedNumbber = RxInfo.ReceivedNumber;
     return EFI_SUCCESS;
   }
 
-  Status = gBS->SetTimer (
+  Status = tBS->SetTimer (
                   TimerEvent,
                   TimerPeriodic,
                   (UINT64) (MnpReceiveMultiPacketPollTime * 1000000)
@@ -683,7 +684,7 @@ Returns:
     *MnpReceiveMultiPacketStatus = Mnp->Poll (Mnp);
   }
 
-  Status = gBS->CloseEvent (TimerEvent);
+  Status = tBS->CloseEvent (TimerEvent);
   if (EFI_ERROR (Status)) {
     *MnpReceiveMultiPacketReceivedNumbber = RxInfo.ReceivedNumber;
     return EFI_SUCCESS;
@@ -777,20 +778,20 @@ Returns:
   int                           run;
 
   Mnp     = (EFI_MANAGED_NETWORK_PROTOCOL *) ClientInterface;
-  Status  = gBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status  = tBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR (Status)) {
     *MnpPollPattern1Status = Status;
     return EFI_SUCCESS;
   }
 
-  Status = gBS->SetTimer (
+  Status = tBS->SetTimer (
                   TimerEvent,
                   TimerPeriodic,
                   (UINT64) (MnpPollPattern1Timeout * 10000000)
                   );
   if (EFI_ERROR (Status)) {
     *MnpPollPattern1Status = Status;
-    gBS->CloseEvent (TimerEvent);
+    tBS->CloseEvent (TimerEvent);
     return EFI_SUCCESS;
   }
   //
@@ -799,14 +800,14 @@ Returns:
   run = 1;
   while (run) {
     *MnpPollPattern1Status = Mnp->Poll (Mnp);
-    if (!EFI_ERROR (gBS->CheckEvent (TimerEvent))) {
+    if (!EFI_ERROR (tBS->CheckEvent (TimerEvent))) {
       run = 0;
     }
   }
   //
   // Done, cancle periodic timer
   //
-  Status = gBS->SetTimer (TimerEvent, TimerCancel, 0);
+  Status = tBS->SetTimer (TimerEvent, TimerCancel, 0);
   if (EFI_ERROR (Status)) {
     return EFI_SUCCESS;
   }

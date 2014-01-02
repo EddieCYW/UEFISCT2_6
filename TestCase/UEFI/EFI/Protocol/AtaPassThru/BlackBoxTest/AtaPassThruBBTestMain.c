@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "AtaPassThruBBTestMain.h"
 
 UINT8    EnterEvent;
@@ -242,7 +243,7 @@ InitializeBBTestAtaPassThru (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
 
   return EfiInitAndInstallBBTestInterface (

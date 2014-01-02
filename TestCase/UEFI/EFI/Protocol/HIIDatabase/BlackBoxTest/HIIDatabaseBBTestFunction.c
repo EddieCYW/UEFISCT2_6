@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver HII Database Protocol's function Test
 
 --*/
+#include "SctLib.h"
 #include "HIIDatabaseBBTestMain.h"
 
 extern UINT8 mPackageList1[];

@@ -210,7 +210,7 @@ Returns:
   //
   Status = ConfigGetString (IniFile, L"BiosId", Buffer);
   if (!EFI_ERROR (Status)) {
-    BS->FreePool (ConfigData->BiosId);
+    tBS->FreePool (ConfigData->BiosId);
     ConfigData->BiosId = StrDuplicate (Buffer);
   }
 
@@ -235,7 +235,7 @@ Returns:
   //
   Status = ConfigGetString (IniFile, L"ScenarioString", Buffer);
   if (!EFI_ERROR (Status)) {
-    BS->FreePool (ConfigData->ScenarioString);
+    tBS->FreePool (ConfigData->ScenarioString);
     ConfigData->ScenarioString = StrDuplicate (Buffer);
   }
 
@@ -244,7 +244,7 @@ Returns:
   //
   Status = ConfigGetString (IniFile, L"EditCommandString", Buffer);
   if (!EFI_ERROR (Status)) {
-    BS->FreePool (ConfigData->EditCommandString);
+    tBS->FreePool (ConfigData->EditCommandString);
     ConfigData->EditCommandString = StrDuplicate (Buffer);
   }
 
@@ -450,17 +450,17 @@ Returns:
   // Free the items of configuration data
   //
   if (ConfigData->BiosId != NULL) {
-    BS->FreePool (ConfigData->BiosId);
+    tBS->FreePool (ConfigData->BiosId);
     ConfigData->BiosId = NULL;
   }
 
   if (ConfigData->ScenarioString != NULL) {
-    BS->FreePool (ConfigData->ScenarioString);
+    tBS->FreePool (ConfigData->ScenarioString);
     ConfigData->ScenarioString = NULL;
   }
 
   if (ConfigData->EditCommandString != NULL) {
-    BS->FreePool (ConfigData->EditCommandString);
+    tBS->FreePool (ConfigData->EditCommandString);
     ConfigData->EditCommandString = NULL;
   }
 

@@ -72,7 +72,7 @@ NetDbgGetCfg (
   EFI_STATUS  Status;
 
   if (NULL == NetDebugConfigProtocol) {
-    Status = gBS->LocateProtocol (
+    Status = tBS->LocateProtocol (
                     &gEfiNetDebugConfigProtocolGuid,
                     NULL,
                     &NetDebugConfigProtocol
@@ -129,7 +129,7 @@ NetDbgCheck (
 {
   EFI_STATUS  Status;
   if (NULL == NetDebugConfigProtocol) {
-    Status = gBS->LocateProtocol (
+    Status = tBS->LocateProtocol (
                     &gEfiNetDebugConfigProtocolGuid,
                     NULL,
                     &NetDebugConfigProtocol
@@ -154,7 +154,7 @@ NetDbgAssert (
   CHAR16      *Header;
 
   if (NULL == NetDebugConfigProtocol) {
-    Status = gBS->LocateProtocol (
+    Status = tBS->LocateProtocol (
                     &gEfiNetDebugConfigProtocolGuid,
                     NULL,
                     &NetDebugConfigProtocol
@@ -172,7 +172,7 @@ NetDbgAssert (
 
   NetDebugConfigProtocol->NetPrint (EFI_NETWORK_DEBUGLEVEL_ERROR, Header, Description);
 
-  gBS->FreePool (Header);
+  tBS->FreePool (Header);
 
   EFI_BREAKPOINT ();
 
@@ -197,13 +197,13 @@ NetDbgOutput (
   }
 
   if (NULL == NetDebugConfigProtocol) {
-    Status = gBS->LocateProtocol (
+    Status = tBS->LocateProtocol (
                     &gEfiNetDebugConfigProtocolGuid,
                     NULL,
                     &NetDebugConfigProtocol
                     );
     if (EFI_ERROR (Status)) {
-      gBS->FreePool (Description);
+      tBS->FreePool (Description);
       return -1;
     }
   }
@@ -217,14 +217,14 @@ NetDbgOutput (
                                         );
 
   if (MsgHeader == NULL) {
-    gBS->FreePool (Description);
+    tBS->FreePool (Description);
     return -1;
   }
 
   NetDebugConfigProtocol->NetPrint (Level, MsgHeader, Description);
 
-  gBS->FreePool (MsgHeader);
-  gBS->FreePool (Description);
+  tBS->FreePool (MsgHeader);
+  tBS->FreePool (Description);
 
   return 0;
 }
@@ -241,7 +241,7 @@ NetDbgSPrint (
 
   Buffer = NULL;
   if (NULL == NetDebugConfigProtocol) {
-    Status = gBS->LocateProtocol (
+    Status = tBS->LocateProtocol (
                     &gEfiNetDebugConfigProtocolGuid,
                     NULL,
                     &NetDebugConfigProtocol
@@ -280,7 +280,7 @@ AllocatePoolDbg (
   //  Locate the EFI_NET_DEBUG_CONFIG_PROTOCOL interface
   //
   if (NetDebugConfigProtocol == NULL) {
-    Status = gBS->LocateProtocol (
+    Status = tBS->LocateProtocol (
                     &gEfiNetDebugConfigProtocolGuid,
                     NULL,
                     &NetDebugConfigProtocol
@@ -375,13 +375,13 @@ FreePoolDbg (
     ASSERT (Info->Size != 0);
     LIST_REMOVE_ENTRY (&Info->Entry);
 
-    gBS->FreePool (Info);
+    tBS->FreePool (Info);
   } else {
     //
     //  Should not go here
     //
     ASSERT (FALSE);
-    gBS->FreePool (Buffer);
+    tBS->FreePool (Buffer);
   }
 
   return ;

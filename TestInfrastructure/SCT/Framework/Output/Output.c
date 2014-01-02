@@ -174,7 +174,7 @@ Returns:
     //
     //  Determine device handle for fs protocol on specified device path
     //
-    Status = BS->LocateDevicePath (
+    Status = tBS->LocateDevicePath (
                    &gEfiSimpleFileSystemProtocolGuid,
                    &PreDevicePath,
                    &DeviceHandle
@@ -186,7 +186,7 @@ Returns:
     //
     //  Determine volume for file system on device handle
     //
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                    DeviceHandle,
                    &gEfiSimpleFileSystemProtocolGuid,
                    (VOID*)&Vol
@@ -314,7 +314,7 @@ Returns:
     //
     // Add the opened file to the OutputFileList
     //
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    sizeof(TEST_OUTPUT_FILE),
                    (VOID **)&OutputFile
@@ -328,14 +328,14 @@ Returns:
     OutputFile->DevicePath = DuplicateDevicePath (DevicePath);
     if (OutputFile->DevicePath == NULL) {
       Handle->Close (Handle);
-      BS->FreePool (OutputFile);
+      tBS->FreePool (OutputFile);
       return EFI_OUT_OF_RESOURCES;
     }
     OutputFile->FileName = StrDuplicate (FileName);
     if (OutputFile->FileName == NULL) {
       Handle->Close (Handle);
-      BS->FreePool (OutputFile->DevicePath);
-      BS->FreePool (OutputFile);
+      tBS->FreePool (OutputFile->DevicePath);
+      tBS->FreePool (OutputFile);
       return EFI_OUT_OF_RESOURCES;
     }
 
@@ -414,9 +414,9 @@ Returns:
     // Delete the item
     //
     FileHandle->Close (FileHandle);
-    BS->FreePool (OutputFile->DevicePath);
-    BS->FreePool (OutputFile->FileName);
-    BS->FreePool (OutputFile);
+    tBS->FreePool (OutputFile->DevicePath);
+    tBS->FreePool (OutputFile->FileName);
+    tBS->FreePool (OutputFile);
   }
 
   return EFI_SUCCESS;

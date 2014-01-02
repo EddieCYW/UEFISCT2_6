@@ -58,47 +58,6 @@ Abstract:
 #include "lib.h"
 
 //
-// LibInitialized - TRUE once InitializeLib() is called for the first time
-//
-
-BOOLEAN  LibInitialized = FALSE;
-
-//
-// ST - pointer to the EFI system table
-//
-
-EFI_SYSTEM_TABLE        *tST;
-
-//
-// BS - pointer to the boot services table
-//
-
-EFI_BOOT_SERVICES       *tBS;
-
-
-//
-// Default pool allocation type
-//
-
-EFI_MEMORY_TYPE PoolAllocationType = EfiBootServicesData;
-
-//
-// Unicode collation functions that are in use
-//
-
-EFI_UNICODE_COLLATION_PROTOCOL   LibStubUnicodeInterface = {
-    LibStubStriCmp,
-    LibStubMetaiMatch,
-    LibStubStrLwrUpr,
-    LibStubStrLwrUpr,
-    NULL,   // FatToStr
-    NULL,   // StrToFat
-    NULL    // SupportedLanguages
-};
-
-EFI_UNICODE_COLLATION_PROTOCOL   *UnicodeInterface = &LibStubUnicodeInterface;
-
-//
 // Root device path
 //
 

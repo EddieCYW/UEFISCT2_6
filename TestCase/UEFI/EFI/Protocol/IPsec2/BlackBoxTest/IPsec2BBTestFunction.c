@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver IPsec2 Protocol's function Test
 
 --*/
+#include "SctLib.h"
 #include "IPsec2BBTestMain.h"
 
 static IP_PACKET IP6PacketBuffer[] = {

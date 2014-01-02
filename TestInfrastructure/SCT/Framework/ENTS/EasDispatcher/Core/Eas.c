@@ -338,7 +338,7 @@ DelaySctAgentCmdPost (
   }
   SctAgentCmdDelayedPost->CmdReturn      = CmdReturn;
   SctAgentCmdDelayedPost->Cmd.ComdResult = CmdResult;
-  RT->GetTime (&SctAgentCmdDelayedPost->StartTime, NULL);
+  tRT->GetTime (&SctAgentCmdDelayedPost->StartTime, NULL);
 
   return Status;
 }
@@ -355,7 +355,7 @@ PostSctAgentDelayedCmd (
     return EFI_SUCCESS;
   }
 
-  RT->GetTime (&SctAgentCmdDelayedPost->EndTime, NULL);
+  tRT->GetTime (&SctAgentCmdDelayedPost->EndTime, NULL);
 
   Status = RecordMessage (
             &SctAgentCmdDelayedPost->Cmd.ComdRuntimeInfo,

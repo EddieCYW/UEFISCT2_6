@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 
+#include "SctLib.h"
 #include "StorageSecurityCommandBBTestMain.h"
 
 

@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "PciIoBBTestMain.h"
 #include "PciIoBBTestSupport.h"
 #include "Acpi.h"

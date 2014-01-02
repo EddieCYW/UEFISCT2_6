@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "DeviceIoBBTestMain.h"
 #include "DeviceIoBBTestSupport.h"
 
@@ -290,7 +291,7 @@ Returns:
 --*/
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
   GetSystemDevicePathAndFilePath (ImageHandle);
 
   return  EfiInitAndInstallBBTestInterface (

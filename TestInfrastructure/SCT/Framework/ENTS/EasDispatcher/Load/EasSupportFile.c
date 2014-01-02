@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EfiShellLib.h"
 #include "Eas.h"
 #include "EntsMonitorProtocol.h"
@@ -156,7 +156,7 @@ Returns:
   //
   RemainderPath = DevicePath;
 
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                 &gEfiSimpleFileSystemProtocolGuid,
                 &RemainderPath,
                 &DeviceHandle
@@ -168,7 +168,7 @@ Returns:
   //
   // Locate the volume of the file system
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                 DeviceHandle,
                 &gEfiSimpleFileSystemProtocolGuid,
                 (VOID **)&Vol
@@ -207,7 +207,7 @@ Returns:
   //
   FileInfoSize = sizeof (EFI_FILE_INFO) + ENTS_MAX_BUFFER_SIZE * 4;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                 EfiBootServicesData,
                 FileInfoSize,
                 (VOID **)&FileInfo
@@ -257,7 +257,7 @@ Returns:
           Status = EntsLoadSingleDriverFile (DevicePath, FileName);
           if (EFI_ERROR (Status)) {
             EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"Load Eftp support driver (%s) - %r", FileName, Status));
-            BS->FreePool (FileName);
+            tBS->FreePool (FileName);
             continue;
           }
         } else {
@@ -272,11 +272,11 @@ Returns:
 
           if (EFI_ERROR (Status)) {
             EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"Load a test file(%s) - %r", FileName, Status));
-            BS->FreePool (FileName);
+            tBS->FreePool (FileName);
             continue;
           }
 
-          BS->FreePool (FileName);
+          tBS->FreePool (FileName);
           //
           // Add the test file to the test file list
           //
@@ -306,18 +306,18 @@ Returns:
                   Recursive
                   );
         if (EFI_ERROR (Status)) {
-          BS->FreePool (SubDir);
+          tBS->FreePool (SubDir);
           continue;
         }
 
-        BS->FreePool (SubDir);
+        tBS->FreePool (SubDir);
       }
     }
   }
   //
   // Free resources
   //
-  BS->FreePool (FileInfo);
+  tBS->FreePool (FileInfo);
   TestDir->Close (TestDir);
 
   //
@@ -356,7 +356,7 @@ Returns:
   // Unload Eftp Driver
   //
   if (mEftpTargetHandle != NULL) {
-    BS->UnloadImage (mEftpTargetHandle);
+    tBS->UnloadImage (mEftpTargetHandle);
     mEftpTargetHandle = NULL;
   }
 
@@ -432,16 +432,16 @@ Returns:
 
   FilePath = AppendDevicePath (DevicePath, FileNode);
   if (FilePath == NULL) {
-    BS->FreePool (FileNode);
+    tBS->FreePool (FileNode);
     return EFI_OUT_OF_RESOURCES;
   }
 
-  BS->FreePool (FileNode);
+  tBS->FreePool (FileNode);
 
   //
   // Load the test file
   //
-  Status = BS->LoadImage (
+  Status = tBS->LoadImage (
                 FALSE,
                 gEasFT->ImageHandle,
                 FilePath,
@@ -450,16 +450,16 @@ Returns:
                 &ImageHandle
                 );
   if (EFI_ERROR (Status)) {
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Verify the image is a driver or not
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                 ImageHandle,
                 &gEfiLoadedImageProtocolGuid,
                 (VOID **)&LoadedImage
@@ -472,7 +472,7 @@ Returns:
     //
     // It is a driver
     //
-    Status = BS->StartImage (
+    Status = tBS->StartImage (
                   ImageHandle,
                   &ExitDataSize,
                   &ExitData
@@ -481,7 +481,7 @@ Returns:
       return Status;
     }
 
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                   ImageHandle,
                   &gEfiEntsMonitorProtocolGuid,
                   (VOID **)&EntsMonitorProtocol
@@ -559,16 +559,16 @@ Returns:
 
   FilePath = AppendDevicePath (DevicePath, FileNode);
   if (FilePath == NULL) {
-    BS->FreePool (FileNode);
+    tBS->FreePool (FileNode);
     return EFI_OUT_OF_RESOURCES;
   }
 
-  BS->FreePool (FileNode);
+  tBS->FreePool (FileNode);
 
   //
   // Load the driver file
   //
-  Status = BS->LoadImage (
+  Status = tBS->LoadImage (
                 FALSE,
                 gEasFT->ImageHandle,
                 FilePath,
@@ -577,16 +577,16 @@ Returns:
                 &ImageHandle
                 );
   if (EFI_ERROR (Status)) {
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Verify the image is a driver or not
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                 ImageHandle,
                 &gEfiLoadedImageProtocolGuid,
                 (VOID **)&LoadedImage
@@ -599,7 +599,7 @@ Returns:
     //
     // It is a driver
     //
-    Status = BS->StartImage (
+    Status = tBS->StartImage (
                   ImageHandle,
                   &ExitDataSize,
                   &ExitData
@@ -647,27 +647,27 @@ Returns:
   // Free the items of the test file
   //
   if (TestFile->DevicePath != NULL) {
-    BS->FreePool (TestFile->DevicePath);
+    tBS->FreePool (TestFile->DevicePath);
     TestFile->DevicePath = NULL;
   }
 
   if (TestFile->FileName != NULL) {
-    BS->FreePool (TestFile->FileName);
+    tBS->FreePool (TestFile->FileName);
     TestFile->FileName = NULL;
   }
 
   if (TestFile->CmdName != NULL) {
-    BS->FreePool (TestFile->CmdName);
+    tBS->FreePool (TestFile->CmdName);
     TestFile->CmdName = NULL;
   }
 
   if (TestFile->Type == EFI_NETWORK_TEST_FILE_DRIVER) {
-    BS->UnloadImage (TestFile->ImageHandle);
+    tBS->UnloadImage (TestFile->ImageHandle);
   }
   //
   // Free the test file itself
   //
-  BS->FreePool (TestFile);
+  tBS->FreePool (TestFile);
 
   //
   // Done
@@ -720,7 +720,7 @@ Returns:
   //
   // Allocate memory for the test file
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                 EfiBootServicesData,
                 sizeof (EFI_NETWORK_TEST_FILE),
                 (VOID **)TestFile
@@ -835,7 +835,7 @@ Returns:
 
       if (!Parent) {
         if (HandleType[Index] & EFI_HANDLE_TYPE_DEVICE_HANDLE) {
-          Status = BS->ConnectController (
+          Status = tBS->ConnectController (
                         AllHandleBuffer[Index],
                         NULL,
                         NULL,
@@ -845,11 +845,11 @@ Returns:
       }
     }
 
-    BS->FreePool(HandleBuffer);
-	BS->FreePool(HandleType);
+    tBS->FreePool (HandleBuffer);
+	tBS->FreePool (HandleType);
   }
 
 Done:
-  BS->FreePool(AllHandleBuffer);
+  tBS->FreePool (AllHandleBuffer);
   return Status;
 }

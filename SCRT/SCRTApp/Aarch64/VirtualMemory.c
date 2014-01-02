@@ -118,7 +118,7 @@ Returns:
   //
   AllocateMemory = PhysicalFunc;
 
-  Status = BS->AllocatePages (
+  Status = tBS->AllocatePages (
                   AllocateMaxAddress,
                   EfiRuntimeServicesData,
                   1,

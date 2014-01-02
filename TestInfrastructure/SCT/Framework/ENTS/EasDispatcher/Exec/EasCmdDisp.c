@@ -166,9 +166,9 @@ Returns:
   //
   // Perform EFTP operation.
   //
-  RT->GetTime (&StartTime, NULL);
+  tRT->GetTime (&StartTime, NULL);
   Status = EftpDispatchFileTransferComd (FileCmdType);
-  RT->GetTime (&EndTime, NULL);
+  tRT->GetTime (&EndTime, NULL);
 
   if (Status == EFI_OUT_OF_RESOURCES) {
     return EFI_OUT_OF_RESOURCES;
@@ -399,9 +399,9 @@ Returns:
   //
   // Execute Shell Command
   //
-  RT->GetTime (&StartTime, NULL);
+  tRT->GetTime (&StartTime, NULL);
   Status = ShellExecute (mImageHandle, (gEasFT->Cmd)->ComdArg, FALSE);
-  RT->GetTime (&EndTime, NULL);
+  tRT->GetTime (&EndTime, NULL);
   EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"dispatch:(%s)", (gEasFT->Cmd)->ComdArg));
   Print (L"dispatch:(%s) - %r\n", (gEasFT->Cmd)->ComdArg, Status);
   if (Status == EFI_OUT_OF_RESOURCES) {
@@ -1035,16 +1035,16 @@ Returns:
     FilePath = AppendDevicePath (gEasFT->DevicePath, FileNode);
     if (FilePath == NULL) {
       EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"in ExecElet:Append file device path - %r", EFI_OUT_OF_RESOURCES));
-      BS->FreePool (FileNode);
+      tBS->FreePool (FileNode);
       return EFI_OUT_OF_RESOURCES;
     }
 
-    BS->FreePool (FileNode);
+    tBS->FreePool (FileNode);
 
     //
     // Load the test file
     //
-    Status = BS->LoadImage (
+    Status = tBS->LoadImage (
                   FALSE,
                   gEasFT->ImageHandle,
                   FilePath,
@@ -1054,24 +1054,24 @@ Returns:
                   );
     if (EFI_ERROR (Status)) {
       EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"in ExecElet:Load image - %r", Status));
-      BS->FreePool (FilePath);
+      tBS->FreePool (FilePath);
       return Status;
     }
 
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     EFI_ENTS_STATUS ((L"in ExecElet: Finish Loading image file <%s>", TestFile->FileName));
 
     //
     // Verify the image is an application or not
     //
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                   ImageHandle,
                   &gEfiLoadedImageProtocolGuid,
                   (void **)&LoadedImage
                   );
     if (EFI_ERROR (Status)) {
       EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"in ExecElet: HandleProtocol - %r", Status));
-	  BS->UnloadImage(ImageHandle);
+	  tBS->UnloadImage(ImageHandle);
       return Status;
     }
 
@@ -1084,7 +1084,7 @@ Returns:
 #else 
       StartTick = EfiReadTsc ();
 #endif
-      Status = BS->StartImage (
+      Status = tBS->StartImage (
                     ImageHandle,
                     &ExitDataSize,
                     &ExitData
@@ -1102,7 +1102,7 @@ Returns:
       EFI_ENTS_DEBUG ((EFI_ENTS_D_WARNING, L"Unsupported test file"));
       Status = EFI_UNSUPPORTED;
     }
-	BS->UnloadImage(ImageHandle);
+	tBS->UnloadImage(ImageHandle);
 	return Status;
   } else if ((TestFile->Type == EFI_NETWORK_TEST_FILE_DRIVER) && (TestNodeName != NULL)) {
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"in ExecElet:begin exe (%s->%s)", TestFile->CmdName, TestNodeName));
@@ -1179,7 +1179,7 @@ Returns:
   //
   DelayTimeVariable = SearchRivlVariable (DELAY_TIME_NAME);
   if (DelayTimeVariable != NULL) {
-    BS->Stall (*(UINTN *) DelayTimeVariable->Address);
+    tBS->Stall (*(UINTN *) DelayTimeVariable->Address);
   }
   //
   // Call the entry point
@@ -1203,7 +1203,7 @@ Returns:
       return EFI_OUT_OF_RESOURCES;
     }
     (gEasFT->Cmd)->ComdRuntimeInfoSize = (StrLen (EntsProtocol->RuntimeInfo) + 1) * 2;
-    BS->FreePool (EntsProtocol->RuntimeInfo);
+    tBS->FreePool (EntsProtocol->RuntimeInfo);
 	EntsProtocol->RuntimeInfo = NULL;
 	EntsProtocol->RuntimeInfoSize = 0;
   }
@@ -1247,7 +1247,7 @@ Returns:
   //
   // Locate EntsProtocol
   //
-  Status = BS->LocateHandleBuffer (
+  Status = tBS->LocateHandleBuffer (
                 ByProtocol,
                 &gEfiEntsProtocolGuid,
                 NULL,
@@ -1262,7 +1262,7 @@ Returns:
   // Walk through each instance need to be tested
   //
   for (HandleIndex = 0; HandleIndex < NoHandles; HandleIndex++) {
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                   HandleBuffer[HandleIndex],
                   &gEfiEntsProtocolGuid,
                   (VOID **)&Interface
@@ -1282,12 +1282,12 @@ Returns:
 
       switch (Interface->ClientAttribute) {
       case ENTS_PROTOCOL_ATTRIBUTE_BOOT_SERVICE:
-        Interface->ClientInterface = BS;
+        Interface->ClientInterface = tBS;
         Status = EFI_SUCCESS;
         goto ExitLocateEntsProtocol;
 
       case ENTS_PROTOCOL_ATTRIBUTE_RUNTIME_SERVICE:
-        Interface->ClientInterface = RT;
+        Interface->ClientInterface = tRT;
         Status = EFI_SUCCESS;
         goto ExitLocateEntsProtocol;
 
@@ -1307,7 +1307,7 @@ Returns:
 
       case ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL:
         if (Interface->ClientHandle != NULL) {
-          Status = BS->HandleProtocol (
+          Status = tBS->HandleProtocol (
                         Interface->ClientHandle,
                         Interface->ClientGuid,
                         &Interface->ClientInterface
@@ -1325,7 +1325,7 @@ Returns:
           return Status;
         }
 
-        Status = BS->HandleProtocol (
+        Status = tBS->HandleProtocol (
                        Interface->ClientHandle,
                        Interface->ClientGuid,
                        &Interface->ClientInterface
@@ -1346,7 +1346,7 @@ Returns:
 
 ExitLocateEntsProtocol:
   if(NULL != HandleBuffer) {
-    BS->FreePool(HandleBuffer);
+    tBS->FreePool (HandleBuffer);
   }
   return Status;
 }
@@ -1449,7 +1449,7 @@ Returns:
     //
     // Locate CpuArch protocol
     //
-    Status = BS->LocateProtocol (&gEfiCpuArchProtocolGuid, NULL, (VOID **)&Cpu);
+    Status = tBS->LocateProtocol (&gEfiCpuArchProtocolGuid, NULL, (VOID **)&Cpu);
     if (EFI_ERROR (Status)) {
       Print (L"Locate CpuArch protocol error\n");
     }
@@ -1533,9 +1533,9 @@ Returns:
   //
   // Resume SCT execution by executing "sct -c" in sct passive mode.
   //
-  RT->GetTime (&StartTime, NULL);
+  tRT->GetTime (&StartTime, NULL);
   Status = ShellExecute (mImageHandle, (gEasFT->Cmd)->ComdArg, FALSE);
-  RT->GetTime (&EndTime, NULL);
+  tRT->GetTime (&EndTime, NULL);
   EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"dispatch:(%s)", (gEasFT->Cmd)->ComdArg));
   Print (L"dispatch:(%s) - %r\n", (gEasFT->Cmd)->ComdArg, Status);
   if (Status == EFI_OUT_OF_RESOURCES) {

@@ -292,7 +292,7 @@ Returns:
     // and traverse the packet again. Otherwise return the status.
     //
     if (NOption && OptionList && (*OptionList == NULL)) {
-      Status = gBS->AllocatePool (
+      Status = tBS->AllocatePool (
                       EfiBootServicesData,
                       NOption * sizeof (EFI_EFTP_OPTION),
                       (VOID **) OptionList
@@ -579,7 +579,7 @@ Returns:
     // memory allocated to accomoderate partial options
     //
     if (OptionList) {
-      gBS->FreePool (OptionList);
+      tBS->FreePool (OptionList);
 
     }
 
@@ -634,6 +634,6 @@ Returns:
   }
 
 OnExit:
-  gBS->FreePool (OptionList);
+  tBS->FreePool (OptionList);
   return Status;
 }

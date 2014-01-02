@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "TimeENTSTestCase.h"
 
 //
@@ -62,7 +63,7 @@ static EFI_TIME               *RTGetTimeTime;
 static EFI_TIME_CAPABILITIES  *RTGetTimeCapabilities;
 static EFI_STATUS             *RTGetTimeStatus;
 
-ENTS_ARG_FIELD                gRTGetTimeArgField[] = {
+ENTS_ARG_FIELD                tRTGetTimeArgField[] = {
   {
     POINTER,
     &RTGetTimeTime
@@ -115,7 +116,7 @@ Returns:
 static EFI_TIME   *RTSetTimeTime;
 static EFI_STATUS *RTSetTimeStatus;
 
-ENTS_ARG_FIELD    gRTSetTimeArgField[] = {
+ENTS_ARG_FIELD    tRTSetTimeArgField[] = {
   {
     POINTER,
     &RTSetTimeTime
@@ -163,7 +164,7 @@ static BOOLEAN    *RTGetWakeupTimePending;
 static EFI_TIME   *RTGetWakeupTimeTime;
 static EFI_STATUS *RTGetWakeupTimeStatus;
 
-ENTS_ARG_FIELD    gRTGetWakeupTimeArgField[] = {
+ENTS_ARG_FIELD    tRTGetWakeupTimeArgField[] = {
   {
     POINTER,
     &RTGetWakeupTimeEnabled
@@ -222,7 +223,7 @@ static BOOLEAN    RTSetWakeupTimeEnabled;
 static EFI_TIME   *RTSetWakeupTimeTime;
 static EFI_STATUS *RTSetWakeupTimeStatus;
 
-ENTS_ARG_FIELD    gRTSetWakeupTimeArgField[] = {
+ENTS_ARG_FIELD    tRTSetWakeupTimeArgField[] = {
   {
     BOOL,
     &RTSetWakeupTimeEnabled

@@ -742,17 +742,17 @@ Returns:
   //
   //enable cursor
   //
-  ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+  tST->ConOut->EnableCursor (tST->ConOut, TRUE);
 
   //
   //
   //White color is better
   //
-  ST->ConOut->SetAttribute (
-            ST->ConOut,
+  tST->ConOut->SetAttribute (
+            tST->ConOut,
             EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
             );
-  ST->ConOut->SetCursorPosition (ST->ConOut, XLeft, Ypos);
+  tST->ConOut->SetCursorPosition (tST->ConOut, XLeft, Ypos);
 
   if (InKey != NULL && (InKey->ScanCode != 0 || InKey->UnicodeChar != 0)) {
     Key.ScanCode    = InKey->ScanCode;
@@ -771,12 +771,12 @@ Returns:
         //
         //White color is better
         //
-        ST->ConOut->SetAttribute (
-                  ST->ConOut,
+        tST->ConOut->SetAttribute (
+                  tST->ConOut,
                   EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                   );
-        ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+        tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft,
                 Ypos
                 );
@@ -824,8 +824,8 @@ Returns:
             MenuPageRefresh (MenuPage);
             WAITING = TRUE;
 
-            ST->ConOut->SetAttribute (
-                      ST->ConOut,
+            tST->ConOut->SetAttribute (
+                      tST->ConOut,
                       EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                       );
             Status = TestPrintAt (XLeft, Ypos, Buffer);
@@ -856,16 +856,16 @@ Returns:
               LastInDisplay = 0;
             }
 
-            ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+            tST->ConOut->EnableCursor (tST->ConOut, TRUE);
 
             //
             //White color is better
             //
-            ST->ConOut->SetAttribute (
-                      ST->ConOut,
+            tST->ConOut->SetAttribute (
+                      tST->ConOut,
                       EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                       );
-            ST->ConOut->SetCursorPosition (ST->ConOut, XLeft, Ypos);
+            tST->ConOut->SetCursorPosition (tST->ConOut, XLeft, Ypos);
             break;
           }
 
@@ -908,17 +908,17 @@ Returns:
           //
           //White color is better
           //
-          ST->ConOut->SetAttribute (
-                    ST->ConOut,
+          tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                     );
-          ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft,
                 Ypos
                 );
         } else {
-          ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+          tST->ConOut->EnableCursor (tST->ConOut, FALSE);
           InKey->ScanCode    = Key.ScanCode;
           InKey->UnicodeChar = Key.UnicodeChar;
         }
@@ -938,12 +938,12 @@ Returns:
           //
           //White color is better
           //
-          ST->ConOut->SetAttribute (
-                    ST->ConOut,
+          tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                     );
-          ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft + XOffSetInScreen,
                 Ypos
                 );
@@ -963,14 +963,14 @@ Returns:
           //
           //refresh display in screen
           //
-          BS->CopyMem (
+          tBS->CopyMem (
             TempStr,
             Buffer + FirstInDisplay,
             EFI_MAX_ITEM_VALUE_LENGTH * sizeof(CHAR16)
             );
           TempStr[EFI_MAX_ITEM_VALUE_LENGTH] = L'\0';
-          ST->ConOut->SetAttribute (
-                        ST->ConOut,
+          tST->ConOut->SetAttribute (
+                        tST->ConOut,
                         EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                         );
           Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -981,12 +981,12 @@ Returns:
           //
           //White color is better
           //
-          ST->ConOut->SetAttribute (
-                    ST->ConOut,
+          tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                     );
-          ST->ConOut->SetCursorPosition (
-                        ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                        tST->ConOut,
                         XLeft + XOffSetInScreen,
                         Ypos
                         );
@@ -1007,13 +1007,13 @@ Returns:
             //
             //set cursor
             //
-            ST->ConOut->SetAttribute (
-                  ST->ConOut,
+            tST->ConOut->SetAttribute (
+                  tST->ConOut,
                   EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                   );
 
-            ST->ConOut->SetCursorPosition (
-                  ST->ConOut,
+            tST->ConOut->SetCursorPosition (
+                  tST->ConOut,
                   XLeft + XOffSetInScreen,
                   Ypos
                   );
@@ -1026,14 +1026,14 @@ Returns:
               //
               //refresh edit area.
               //
-              BS->CopyMem (
+              tBS->CopyMem (
                 TempStr,
                 Buffer + FirstInDisplay,
                 EFI_MAX_ITEM_VALUE_LENGTH * sizeof(CHAR16)
                 );
               TempStr[EFI_MAX_ITEM_VALUE_LENGTH] = L'\0';
-              ST->ConOut->SetAttribute (
-                            ST->ConOut,
+              tST->ConOut->SetAttribute (
+                            tST->ConOut,
                             EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                             );
               Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -1043,12 +1043,12 @@ Returns:
               //
               //reset cursor position
               //
-              ST->ConOut->SetAttribute (
-                            ST->ConOut,
+              tST->ConOut->SetAttribute (
+                            tST->ConOut,
                             EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                             );
-              ST->ConOut->SetCursorPosition (
-                            ST->ConOut,
+              tST->ConOut->SetCursorPosition (
+                            tST->ConOut,
                             XLeft + XOffSetInScreen,
                             Ypos
                             );
@@ -1064,8 +1064,8 @@ Returns:
               //
               //refresh edit area
               //
-              ST->ConOut->SetAttribute (
-                            ST->ConOut,
+              tST->ConOut->SetAttribute (
+                            tST->ConOut,
                             EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                             );
               Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -1075,12 +1075,12 @@ Returns:
               //
               //reset cursor
               //
-              ST->ConOut->SetAttribute (
-                    ST->ConOut,
+              tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                     );
-              ST->ConOut->SetCursorPosition (
-                            ST->ConOut,
+              tST->ConOut->SetCursorPosition (
+                            tST->ConOut,
                             XLeft + XOffSetInScreen,
                             Ypos
                             );
@@ -1110,8 +1110,8 @@ Returns:
           //
           //refresh the edit area in screen
           //
-          ST->ConOut->SetAttribute (
-                ST->ConOut,
+          tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                 );
           Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -1121,12 +1121,12 @@ Returns:
           //
           //reset cursor position.
           //
-          ST->ConOut->SetAttribute (
-                ST->ConOut,
+          tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                 );
-          ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft + XOffSetInScreen,
                 Ypos
                 );
@@ -1155,8 +1155,8 @@ Returns:
             TempStr[Index] = L' ';
           }
           TempStr[Index] = L'\0';
-          ST->ConOut->SetAttribute (
-                ST->ConOut,
+          tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                 );
           Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -1167,8 +1167,8 @@ Returns:
             TempStr[Index] = Buffer[Index + FirstInDisplay];
           }
           TempStr[Index] = L'\0';
-          ST->ConOut->SetAttribute (
-                ST->ConOut,
+          tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                 );
           Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -1178,12 +1178,12 @@ Returns:
           //
           //reset cusor.
           //
-          ST->ConOut->SetAttribute (
-                ST->ConOut,
+          tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                 );
-          ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft + XOffSetInScreen,
                 Ypos
                 );
@@ -1210,8 +1210,8 @@ Returns:
               TempStr[Index] = L' ';
             }
             TempStr[Index] = L'\0';
-            ST->ConOut->SetAttribute (
-                  ST->ConOut,
+            tST->ConOut->SetAttribute (
+                  tST->ConOut,
                   EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                   );
             Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -1226,8 +1226,8 @@ Returns:
             TempStr[Index] = Buffer[Index + FirstInDisplay];
           }
           TempStr[Index] = L'\0';
-          ST->ConOut->SetAttribute (
-                ST->ConOut,
+          tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                 );
           Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -1237,12 +1237,12 @@ Returns:
           //
           //set cursor
           //
-          ST->ConOut->SetAttribute (
-                ST->ConOut,
+          tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                 );
-          ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft + XOffSetInScreen,
                 Ypos
                 );
@@ -1277,8 +1277,8 @@ Returns:
                   TempStr[Index] = L' ';
                 }
                 TempStr[Index] = L'\0';
-                ST->ConOut->SetAttribute (
-                      ST->ConOut,
+                tST->ConOut->SetAttribute (
+                      tST->ConOut,
                       EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                       );
                 Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -1296,8 +1296,8 @@ Returns:
                   TempStr[Index] = Buffer[Index + FirstInDisplay];
                 }
                 TempStr[Index] = L'\0';
-                ST->ConOut->SetAttribute (
-                      ST->ConOut,
+                tST->ConOut->SetAttribute (
+                      tST->ConOut,
                       EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                       );
                 Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -1307,12 +1307,12 @@ Returns:
                 //
                 //set cursor
                 //
-                ST->ConOut->SetAttribute (
-                      ST->ConOut,
+                tST->ConOut->SetAttribute (
+                      tST->ConOut,
                       EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                       );
-                ST->ConOut->SetCursorPosition (
-                      ST->ConOut,
+                tST->ConOut->SetCursorPosition (
+                      tST->ConOut,
                       XLeft + XOffSetInScreen,
                       Ypos
                       );
@@ -1380,20 +1380,20 @@ Returns:
                   TempStr[Index] = Buffer[Index + FirstInDisplay];
                 }
                 TempStr[Index] = L'\0';
-                ST->ConOut->SetAttribute (
-                      ST->ConOut,
+                tST->ConOut->SetAttribute (
+                      tST->ConOut,
                       EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                       );
                 Status = TestPrintAt (XLeft, Ypos, TempStr);
                 if (EFI_ERROR (Status)) {
                   return Status;
                 }
-                ST->ConOut->SetAttribute (
-                      ST->ConOut,
+                tST->ConOut->SetAttribute (
+                      tST->ConOut,
                       EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                       );
-                ST->ConOut->SetCursorPosition (
-                      ST->ConOut,
+                tST->ConOut->SetCursorPosition (
+                      tST->ConOut,
                       XLeft + XOffSetInScreen,
                       Ypos
                       );
@@ -1423,20 +1423,20 @@ Returns:
                   TempStr[Index] = Buffer[Index + FirstInDisplay];
                 }
                 TempStr[Index] = L'\0';
-                ST->ConOut->SetAttribute (
-                      ST->ConOut,
+                tST->ConOut->SetAttribute (
+                      tST->ConOut,
                       EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                       );
                 Status = TestPrintAt (XLeft, Ypos, TempStr);
                 if (EFI_ERROR (Status) ) {
                   return Status;
                 }
-                ST->ConOut->SetAttribute (
-                      ST->ConOut,
+                tST->ConOut->SetAttribute (
+                      tST->ConOut,
                       EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                       );
-                ST->ConOut->SetCursorPosition (
-                      ST->ConOut,
+                tST->ConOut->SetCursorPosition (
+                      tST->ConOut,
                       XLeft + XOffSetInScreen,
                       Ypos
                       );
@@ -1452,9 +1452,9 @@ Returns:
 
     if (WAITING) {
 
-      Status = BS->WaitForEvent (1, &(ST->ConIn->WaitForKey), (UINTN *)&Index);
+      Status = tBS->WaitForEvent (1, &(tST->ConIn->WaitForKey), (UINTN *)&Index);
       if (!EFI_ERROR(Status)) {
-        Status = ST->ConIn->ReadKeyStroke (ST->ConIn, &Key);
+        Status = tST->ConIn->ReadKeyStroke (tST->ConIn, &Key);
       }
 
       if ( EFI_ERROR(Status)) {
@@ -1806,13 +1806,13 @@ Returns:
     //
     //waiting for key press event
     //
-    Status=BS->WaitForEvent (1, &(ST->ConIn->WaitForKey), (UINTN *)&Index);
+    Status=tBS->WaitForEvent (1, &(tST->ConIn->WaitForKey), (UINTN *)&Index);
     if (!EFI_ERROR(Status)) {
 
       //
       //read pressed key
       //
-      Status = ST->ConIn->ReadKeyStroke (ST->ConIn, &Key);
+      Status = tST->ConIn->ReadKeyStroke (tST->ConIn, &Key);
       if (!EFI_ERROR(Status)) {
         if (gMenuPage->HasFooter) {
           //
@@ -1959,7 +1959,7 @@ Returns:
         }
         Status = TestPrintAt (CurrentXpos, CurrentYpos, TempStr);
         if (EFI_ERROR(Status)) {
-          BS->FreePool (Buffer);
+          tBS->FreePool (Buffer);
           return Status;
         }
         CurrentXpos = CurrentXpos + StrLen (TempStr) + 1 ;
@@ -1969,28 +1969,28 @@ Returns:
         //if one line can not display the string
         //it will displayed in several lines.
         //
-        Status = BS->AllocatePool (
+        Status = tBS->AllocatePool (
                        EfiBootServicesData,
                        (X1 - X0 + 2) * sizeof(CHAR16),
                        (VOID*)&OneLine
                        );
         if (EFI_ERROR(Status)) {
-          BS->FreePool (Buffer);
+          tBS->FreePool (Buffer);
           return EFI_OUT_OF_RESOURCES;
         }
 
-        BS->SetMem (OneLine, (X1 - X0 + 2) * sizeof(CHAR16), 0);
+        tBS->SetMem (OneLine, (X1 - X0 + 2) * sizeof(CHAR16), 0);
 
         if (CurrentXpos < X1) {
-          BS->CopyMem (OneLine, TempStr, (X1 - CurrentXpos) * sizeof(CHAR16));
+          tBS->CopyMem (OneLine, TempStr, (X1 - CurrentXpos) * sizeof(CHAR16));
 
           OneLine[X1 - CurrentXpos]    = L'-';
           OneLine[X1- CurrentXpos + 1] = L'\0';
 
           Status = TestPrintAt (CurrentXpos, CurrentYpos, OneLine);
           if (EFI_ERROR(Status)) {
-            BS->FreePool (Buffer);
-            BS->FreePool (OneLine);
+            tBS->FreePool (Buffer);
+            tBS->FreePool (OneLine);
             return Status;
           }
 
@@ -2008,14 +2008,14 @@ Returns:
 
         while ((StrLen (TempStr) > X1 - X0 + 1)&& CurrentYpos <= Y1 ) {
 
-          BS->CopyMem (OneLine, TempStr, (X1 - X0) * sizeof(CHAR16));
+          tBS->CopyMem (OneLine, TempStr, (X1 - X0) * sizeof(CHAR16));
           OneLine[X1 - X0]     = L'-';
           OneLine[X1 - X0 + 1] = L'\0';
 
           Status = TestPrintAt (CurrentXpos, CurrentYpos, OneLine);
           if (EFI_ERROR(Status)) {
-            BS->FreePool (Buffer);
-            BS->FreePool (OneLine);
+            tBS->FreePool (Buffer);
+            tBS->FreePool (OneLine);
             return Status;
           }
 
@@ -2029,12 +2029,12 @@ Returns:
 
         Status = TestPrintAt (CurrentXpos, CurrentYpos, TempStr);
         if (EFI_ERROR(Status)) {
-          BS->FreePool (Buffer);
-          BS->FreePool (OneLine);
+          tBS->FreePool (Buffer);
+          tBS->FreePool (OneLine);
           return Status;
         }
 
-        BS->FreePool (OneLine);
+        tBS->FreePool (OneLine);
         CurrentXpos = CurrentXpos + StrLen (TempStr) + 1 ;
       }
     } else {
@@ -2043,7 +2043,7 @@ Returns:
       //
       Status = TestPrintAt (CurrentXpos, CurrentYpos, TempStr);
       if (EFI_ERROR(Status)) {
-        BS->FreePool (Buffer);
+        tBS->FreePool (Buffer);
         return Status;
       }
       CurrentXpos = CurrentXpos + StrLen (TempStr) + 1;
@@ -2062,7 +2062,7 @@ Returns:
   //
   //all the message have been displayed so return EFI_SUCCESS
   //
-  BS->FreePool (Buffer);
+  tBS->FreePool (Buffer);
 
   return EFI_SUCCESS;
 }
@@ -2113,7 +2113,7 @@ Returns:
 
   BufLen  = 0;
   Page    = (EFI_MENU_PAGE *)Context;
-  Attrib  = ST->ConOut->Mode->Attribute;
+  Attrib  = tST->ConOut->Mode->Attribute;
   X0      = Column;
   Y0      = Row;
   X1      = Page->Body.BodyRect.BottomRight.Col - 1;
@@ -2135,8 +2135,8 @@ Returns:
       //
       //Display the string.
       //
-      Status = ST->ConOut->SetAttribute (
-                     ST->ConOut,
+      Status = tST->ConOut->SetAttribute (
+                     tST->ConOut,
                      EFI_ITEM_DESC_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                      );
       if (EFI_ERROR(Status)) {
@@ -2145,7 +2145,7 @@ Returns:
 
       Status = DisplayMessage (X0, Y0, X1, Y1, Buffer);
 
-      Status = ST->ConOut->SetAttribute (ST->ConOut, Attrib);
+      Status = tST->ConOut->SetAttribute (tST->ConOut, Attrib);
       return Status;
     }
   } else {
@@ -2155,15 +2155,15 @@ Returns:
     //
     //clear the display area.
     //
-    Status = ST->ConOut->SetAttribute (
-                   ST->ConOut,
+    Status = tST->ConOut->SetAttribute (
+                   tST->ConOut,
                    EFI_MENUPAGE_BODY_BGCOLOR >> 4 | EFI_MENUPAGE_BODY_BGCOLOR
                    );
     if (EFI_ERROR(Status)) {
       return Status;
     }
     BufLen = (X1 - X0 + 2) * sizeof(CHAR16);
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    BufLen,
                    (VOID *)&Buffer
@@ -2180,12 +2180,12 @@ Returns:
 
       Status = TestPrintAt (X0, Index, Buffer);
       if (EFI_ERROR(Status)) {
-        BS->FreePool (Buffer);
+        tBS->FreePool (Buffer);
         return Status;
       }
     }
 
-    BS->FreePool (Buffer);
+    tBS->FreePool (Buffer);
     //
     //done successfully return Status code EFI_SUCCESS
     //
@@ -2272,16 +2272,16 @@ Returns:
   //
   //enable cursor
   //
-  ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+  tST->ConOut->EnableCursor (tST->ConOut, TRUE);
 
   //
   //White color is better
   //
-  ST->ConOut->SetAttribute (
-              ST->ConOut,
+  tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
               );
-  ST->ConOut->SetCursorPosition (ST->ConOut, XLeft, Ypos);
+  tST->ConOut->SetCursorPosition (tST->ConOut, XLeft, Ypos);
 
   if (InKey != NULL && (InKey->ScanCode != 0 || InKey->UnicodeChar != 0)) {
     Key.ScanCode    = InKey->ScanCode;
@@ -2301,12 +2301,12 @@ Returns:
         //
         //White color is better
         //
-        ST->ConOut->SetAttribute (
-              ST->ConOut,
+        tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
               );
-        ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+        tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft,
                 Ypos
                 );
@@ -2338,8 +2338,8 @@ Returns:
         //
         //refresh edit area
         //
-        ST->ConOut->SetAttribute (
-                      ST->ConOut,
+        tST->ConOut->SetAttribute (
+                      tST->ConOut,
                       EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                       );
         Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -2360,12 +2360,12 @@ Returns:
           //
           //White color is better
           //
-          ST->ConOut->SetAttribute (
-              ST->ConOut,
+          tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
               );
-          ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft,
                 Ypos
                 );
@@ -2388,12 +2388,12 @@ Returns:
           //
           //White color is better
           //
-          ST->ConOut->SetAttribute (
-              ST->ConOut,
+          tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
               );
-          ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft + XOffSetInBuffer,
                 Ypos
                 );
@@ -2415,12 +2415,12 @@ Returns:
             //
             //White color is better
             //
-            ST->ConOut->SetAttribute (
-                          ST->ConOut,
+            tST->ConOut->SetAttribute (
+                          tST->ConOut,
                           EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                           );
-            ST->ConOut->SetCursorPosition (
-                  ST->ConOut,
+            tST->ConOut->SetCursorPosition (
+                  tST->ConOut,
                   XLeft + XOffSetInBuffer,
                   Ypos
                   );
@@ -2441,12 +2441,12 @@ Returns:
           //
           //White color is better
           //
-          ST->ConOut->SetAttribute (
-                    ST->ConOut,
+          tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                     );
-          ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft + XOffSetInBuffer,
                 Ypos
                 );
@@ -2464,12 +2464,12 @@ Returns:
           //
           //White color is better
           //
-          ST->ConOut->SetAttribute (
-                    ST->ConOut,
+          tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                     );
-          ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft + XOffSetInBuffer,
                 Ypos
                 );
@@ -2492,11 +2492,11 @@ Returns:
             TempStr[Index] = L' ';
           }
           TempStr[Index] = L'\0';
-          ST->ConOut->SetAttribute (
-                ST->ConOut,
+          tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                 );
-          ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+          tST->ConOut->EnableCursor (tST->ConOut, FALSE);
           Status = TestPrintAt (XLeft, Ypos, TempStr);
           if (EFI_ERROR (Status)) {
             return Status;
@@ -2509,8 +2509,8 @@ Returns:
             TempStr[Index] = Buffer[Index];
           }
           TempStr[Index] = L'\0';
-          ST->ConOut->SetAttribute (
-                ST->ConOut,
+          tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                 );
           Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -2521,16 +2521,16 @@ Returns:
           //
           //White color is better
           //
-          ST->ConOut->SetAttribute (
-                    ST->ConOut,
+          tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                     );
-          ST->ConOut->SetCursorPosition (
-                ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                tST->ConOut,
                 XLeft + XOffSetInBuffer,
                 Ypos
                 );
-          ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+          tST->ConOut->EnableCursor (tST->ConOut, TRUE);
           CurrentLength--;
           BufferChanged = TRUE;
         }
@@ -2554,13 +2554,13 @@ Returns:
             //
             //refresh edit area
             //
-            ST->ConOut->SetAttribute (
-                          ST->ConOut,
+            tST->ConOut->SetAttribute (
+                          tST->ConOut,
                           EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                           );
-            ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+            tST->ConOut->EnableCursor (tST->ConOut, FALSE);
             Status = TestPrintAt (XLeft, Ypos, TempStr);
-            ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+            tST->ConOut->EnableCursor (tST->ConOut, TRUE);
             if (EFI_ERROR (Status)) {
               return Status;
             }
@@ -2590,11 +2590,11 @@ Returns:
                 TempStr[Index] = L' ';
               }
               TempStr[Index] = L'\0';
-              ST->ConOut->SetAttribute (
-                    ST->ConOut,
+              tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                     );
-              ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+              tST->ConOut->EnableCursor (tST->ConOut, FALSE);
               Status = TestPrintAt (XLeft, Ypos, TempStr);
               if (EFI_ERROR (Status)) {
                 return Status;
@@ -2607,8 +2607,8 @@ Returns:
                 TempStr[Index] = Buffer[Index];
               }
 
-              ST->ConOut->SetAttribute (
-                    ST->ConOut,
+              tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                     );
               Status = TestPrintAt (XLeft, Ypos, TempStr);
@@ -2619,16 +2619,16 @@ Returns:
               //
               //White color is better
               //
-              ST->ConOut->SetAttribute (
-                        ST->ConOut,
+              tST->ConOut->SetAttribute (
+                        tST->ConOut,
                         EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                         );
-              ST->ConOut->SetCursorPosition (
-                    ST->ConOut,
+              tST->ConOut->SetCursorPosition (
+                    tST->ConOut,
                     XLeft + XOffSetInBuffer,
                     Ypos
                     );
-              ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+              tST->ConOut->EnableCursor (tST->ConOut, TRUE);
               CurrentLength--;
               BufferChanged = TRUE;
             }
@@ -2682,11 +2682,11 @@ Returns:
                   TempStr[Index] = Buffer[Index];
                 }
                 TempStr[Index] = L'\0';
-                ST->ConOut->SetAttribute (
-                      ST->ConOut,
+                tST->ConOut->SetAttribute (
+                      tST->ConOut,
                       EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                       );
-                ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+                tST->ConOut->EnableCursor (tST->ConOut, FALSE);
                 Status = TestPrintAt (XLeft, Ypos, TempStr);
                 if (EFI_ERROR (Status)) {
                   return Status;
@@ -2695,16 +2695,16 @@ Returns:
                 //
                 //White color is better
                 //
-                ST->ConOut->SetAttribute (
-                          ST->ConOut,
+                tST->ConOut->SetAttribute (
+                          tST->ConOut,
                           EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                           );
-                ST->ConOut->SetCursorPosition (
-                      ST->ConOut,
+                tST->ConOut->SetCursorPosition (
+                      tST->ConOut,
                       XLeft + XOffSetInBuffer,
                       Ypos
                       );
-                ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+                tST->ConOut->EnableCursor (tST->ConOut, TRUE);
                 BufferChanged = TRUE;
               }
             }
@@ -2725,7 +2725,7 @@ Returns:
           Buffer
           );
       TempValue = (UINT32) Atoi(Buffer);
-      ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+      tST->ConOut->EnableCursor (tST->ConOut, FALSE);
       Status = UpdateIter (MenuPage, MenuItem, TempValue);
       if (EFI_ERROR (Status)) {
         return Status;
@@ -2734,23 +2734,23 @@ Returns:
       //
       //White color is better
       //
-      ST->ConOut->SetAttribute (
-                ST->ConOut,
+      tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                 );
-      ST->ConOut->SetCursorPosition (
-                    ST->ConOut,
+      tST->ConOut->SetCursorPosition (
+                    tST->ConOut,
                     XLeft + XOffSetInBuffer,
                     Ypos
                     );
-      ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+      tST->ConOut->EnableCursor (tST->ConOut, TRUE);
     }
 
     if (WAITING) {
 
-      Status = BS->WaitForEvent (1, &(ST->ConIn->WaitForKey), (UINTN *)&Index);
+      Status = tBS->WaitForEvent (1, &(tST->ConIn->WaitForKey), (UINTN *)&Index);
       if (!EFI_ERROR(Status)) {
-        Status = ST->ConIn->ReadKeyStroke (ST->ConIn, &Key);
+        Status = tST->ConIn->ReadKeyStroke (tST->ConIn, &Key);
       }
 
       if ( EFI_ERROR(Status)) {

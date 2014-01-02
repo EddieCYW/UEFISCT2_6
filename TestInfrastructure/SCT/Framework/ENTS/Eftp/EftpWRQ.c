@@ -423,7 +423,7 @@ CleanUp:
   }
 
   if (RxData) {
-    gBS->SignalEvent (RxData->RecycleEvent);
+    tBS->SignalEvent (RxData->RecycleEvent);
   }
 
   if (!EFI_ERROR (Status)) {
@@ -1078,7 +1078,7 @@ Returns:
 
       EFTP_DEBUG_ERROR ((L"EftpWrqReadBlk: PacketNeeded returns a block of %d, sick\n", DataLen));
 
-      gBS->FreePool (DataBuf);
+      tBS->FreePool (DataBuf);
       Private->Result = EFI_ABORTED;
       return EFI_ABORTED;
 
@@ -1091,7 +1091,7 @@ Returns:
     Buf->PacketSize = DataLen + EFTP_HEADER_LEN;
     NetCopyMem ((UINT8 *) Pkt + EFTP_HEADER_LEN, DataBuf, DataLen);
 
-    gBS->FreePool (DataBuf);
+    tBS->FreePool (DataBuf);
   }
 
   Pkt->Hdr.OpCode   = HTONS (EFI_EFTP_OPCODE_DATA);
@@ -1183,7 +1183,7 @@ Returns:
 
   }
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EVT_NOTIFY_SIGNAL,
                   NET_TPL_EVENT,
                   EftpWrqTxCallback,
@@ -1250,7 +1250,7 @@ Returns:
     Private->NPendingPacket)
     );
 
-  gBS->CloseEvent (Private->TimeoutEvent);
+  tBS->CloseEvent (Private->TimeoutEvent);
   Private->TimeoutEvent   = NULL;
 
   Private->Token->Status  = Private->Result;
@@ -1258,7 +1258,7 @@ Returns:
   ASSERT (!Private->UserEvtFired && !Private->SynFinished);
 
   if (Private->Token->Event) {
-    gBS->SignalEvent (Private->Token->Event);
+    tBS->SignalEvent (Private->Token->Event);
     Private->UserEvtFired = TRUE;
   }
 

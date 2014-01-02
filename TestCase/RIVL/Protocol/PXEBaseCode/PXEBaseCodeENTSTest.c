@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "PXEBaseCodeENTSTestCase.h"
 
 static CHAR16     gPXEBaseCodeProtocolName[]      = L"PXEBaseCode";
@@ -173,10 +174,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -184,7 +185,7 @@ Returns:
 
   LoadedImage->Unload = PXEBaseCodeENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gPXEBaseCodeEntsProtocolInterface
@@ -202,7 +203,7 @@ Returns:
   gPXEBaseCodeEntsProtocolInterface->RuntimeInfo        = gPXEBaseCodeEntsRuntimeInfo;
   gPXEBaseCodeEntsProtocolInterface->RuntimeInfoSize    = gPXEBaseCodeEntsRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gPXEBaseCodeEntsProtocolInterface,
@@ -216,7 +217,7 @@ Returns:
 
 Error:
   if (gPXEBaseCodeEntsProtocolInterface != NULL) {
-    gBS->FreePool (gPXEBaseCodeEntsProtocolInterface);
+    tBS->FreePool (gPXEBaseCodeEntsProtocolInterface);
   }
 
   return Status;
@@ -245,7 +246,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gPXEBaseCodeEntsProtocolInterface,
@@ -253,7 +254,7 @@ Returns:
                   );
 
   if (gPXEBaseCodeEntsProtocolInterface != NULL) {
-    gBS->FreePool (gPXEBaseCodeEntsProtocolInterface);
+    tBS->FreePool (gPXEBaseCodeEntsProtocolInterface);
   }
 
   return Status;

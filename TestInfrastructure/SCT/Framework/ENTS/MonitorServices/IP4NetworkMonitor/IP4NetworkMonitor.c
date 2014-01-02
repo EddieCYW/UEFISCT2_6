@@ -55,9 +55,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EntsLib.h"
-#include "EfiDriverLib.h"
 #include "IP4NetworkMonitor.h"
 
 #define EAS_QUERY_MSG           "EAS_QURY"
@@ -245,11 +244,11 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
   mImageHandle = ImageHandle;
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -257,7 +256,7 @@ Returns:
 
   LoadedImage->Unload = IP4NetworkMonitorUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_MONITOR_PROTOCOL),
                   (VOID **)&gIP4NetworkMonitorInterface
@@ -275,7 +274,7 @@ Returns:
   gIP4NetworkMonitorInterface->MonitorSaveContext    = IP4NetworkSaveContext;
   gIP4NetworkMonitorInterface->MonitorRestoreContext = IP4NetworkRestoreContext;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsMonitorProtocolGuid,
                   gIP4NetworkMonitorInterface,
@@ -289,7 +288,7 @@ Returns:
 
 Error:
   if (gIP4NetworkMonitorInterface != NULL) {
-    gBS->FreePool (gIP4NetworkMonitorInterface);
+    tBS->FreePool (gIP4NetworkMonitorInterface);
   }
 
   return Status;
@@ -318,7 +317,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsMonitorProtocolGuid,
                   gIP4NetworkMonitorInterface,
@@ -326,7 +325,7 @@ Returns:
                   );
 
   if (gIP4NetworkMonitorInterface != NULL) {
-    gBS->FreePool (gIP4NetworkMonitorInterface);
+    tBS->FreePool (gIP4NetworkMonitorInterface);
   }
 
   return Status;
@@ -364,7 +363,7 @@ Returns:
   //
   // Find IP4 service binding protocol
   //
-  Status = gBS->LocateProtocol (
+  Status = tBS->LocateProtocol (
                   &gEfiIp4ServiceBindingProtocolGuid,
                   NULL,
                   &Ip4Sb
@@ -390,7 +389,7 @@ Returns:
   //
   // Open the IP4 Protocol from ChildHandle
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   mIp4InstanceHandle,
                   &gEfiIp4ProtocolGuid,
                   &Ip4,
@@ -412,7 +411,7 @@ Returns:
   //
   DataSize = sizeof (EFI_IPv4_ADDRESS);
   EntsSetMem (&Data, sizeof (EFI_IPv4_ADDRESS), 0);
-  Status = gRT->GetVariable (
+  Status = tRT->GetVariable (
                   ENTS_SERVER_IPV4_ADDRESS_NAME,
                   &gEntsVendorGuid,
                   NULL,
@@ -472,7 +471,7 @@ Returns:
   //
   // Close the IP4 Protocol from ChildHandle
   //
-  Status = gBS->CloseProtocol (
+  Status = tBS->CloseProtocol (
                   mIp4InstanceHandle,
                   &gEfiIp4ProtocolGuid,
                   mImageHandle,
@@ -485,7 +484,7 @@ Returns:
   //
   // Find IP4 service binding protocol
   //
-  Status = gBS->LocateProtocol (
+  Status = tBS->LocateProtocol (
                   &gEfiIp4ServiceBindingProtocolGuid,
                   NULL,
                   &Ip4Sb
@@ -497,11 +496,11 @@ Returns:
   //
   // Close all the events
   //
-  gBS->CloseEvent (TxToken.Event);
-  gBS->CloseEvent (RxToken.Event);
-  gBS->CloseEvent (TxLLToken.Event);
+  tBS->CloseEvent (TxToken.Event);
+  tBS->CloseEvent (RxToken.Event);
+  tBS->CloseEvent (TxLLToken.Event);
   CancelResendTimer ();
-  gBS->CloseEvent (ResendTimeEvent);
+  tBS->CloseEvent (ResendTimeEvent);
 
   //
   // Destroy IP4 instance
@@ -540,7 +539,7 @@ Returns:
 
 --*/
 {
-  gBS->SignalEvent (RxToken.Packet.RxData->RecycleSignal);
+  tBS->SignalEvent (RxToken.Packet.RxData->RecycleSignal);
   return ;
 }
 
@@ -568,7 +567,7 @@ Returns:
     return ;
   }
 
-  gBS->FreePool (TxData.FragmentTable[0].FragmentBuffer);
+  tBS->FreePool (TxData.FragmentTable[0].FragmentBuffer);
   TxData.FragmentTable[0].FragmentBuffer  = NULL;
   TxData.FragmentTable[0].FragmentLength  = 0;
   return ;
@@ -604,7 +603,7 @@ IP4NetworkSaveContext(
 {
   EFI_STATUS    Status;
 
-  Status = gRT->SetVariable (
+  Status = tRT->SetVariable (
                   ENTS_LINK_SEQUENCE_NAME,
                   &gEntsVendorGuid,
                   EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
@@ -632,7 +631,7 @@ IP4NetworkRestoreContext(
   // get the LinkSequence (From EFI Management Side) into variable for restart use.
   //
   DataSize = sizeof(UINT32);
-  Status = gRT->GetVariable (
+  Status = tRT->GetVariable (
                   ENTS_LINK_SEQUENCE_NAME,
                   &gEntsVendorGuid,
                   NULL,
@@ -746,7 +745,7 @@ Returns:
     return EFI_ACCESS_DENIED;
   }
 
-  gBS->Stall (1000);
+  tBS->Stall (1000);
 
   BufferSize = EntsStrLen(Buffer);
   BufferTmp = EntsAllocatePool(BufferSize + 1);
@@ -779,7 +778,7 @@ Returns:
   TxData.FragmentTable[0].FragmentLength  = (UINT32) (PacketLength + sizeof (EAS_IP4_FRAG_FLAG));
   TxData.FragmentTable[0].FragmentBuffer  = EntsAllocatePool (PacketLength + sizeof (EAS_IP4_FRAG_FLAG));
   if (TxData.FragmentTable[0].FragmentBuffer == NULL) {
-    gBS->FreePool (BufferTmp);
+    tBS->FreePool (BufferTmp);
     EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"EntsAllocatePool Error"));
     return EFI_OUT_OF_RESOURCES;
   }
@@ -789,7 +788,7 @@ Returns:
     (CHAR8 *) BufferTmp,
     PacketLength
     );
-  gBS->FreePool (BufferTmp);
+  tBS->FreePool (BufferTmp);
 
   EntsCopyMem (TxData.FragmentTable[0].FragmentBuffer, &FragFlag.LLFlag, sizeof (EAS_IP4_FRAG_FLAG));
 
@@ -856,7 +855,7 @@ Returns:
   RxToken.Packet.RxData = NULL;
   RxToken.Event         = NULL;
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EFI_EVENT_NOTIFY_SIGNAL,
                   EFI_TPL_CALLBACK,
                   NotifyFunctionListen,
@@ -868,7 +867,7 @@ Returns:
     return Status;
   }
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EFI_EVENT_NOTIFY_SIGNAL,
                   EFI_TPL_CALLBACK,
                   NotifyFunctionSend,
@@ -877,11 +876,11 @@ Returns:
                   );
   if (EFI_ERROR (Status)) {
     EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"CreateEvent Error"));
-    gBS->CloseEvent (RxToken.Event);
+    tBS->CloseEvent (RxToken.Event);
     return Status;
   }
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EFI_EVENT_NOTIFY_SIGNAL,
                   EFI_TPL_CALLBACK,
                   NotifyFunctionSend,
@@ -890,8 +889,8 @@ Returns:
                   );
   if (EFI_ERROR (Status)) {
     EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"CreateEvent Error"));
-    gBS->CloseEvent (RxToken.Event);
-    gBS->CloseEvent (TxToken.Event);
+    tBS->CloseEvent (RxToken.Event);
+    tBS->CloseEvent (TxToken.Event);
     return Status;
   }
 
@@ -906,12 +905,12 @@ Returns:
   Status = Ip4->Receive (Ip4, &RxToken);
   if (EFI_ERROR (Status)) {
     EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"Ip4 Receive Error"));
-    gBS->CloseEvent (RxToken.Event);
-    gBS->CloseEvent (TxToken.Event);
+    tBS->CloseEvent (RxToken.Event);
+    tBS->CloseEvent (TxToken.Event);
     return Status;
   }
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
                   EFI_TPL_CALLBACK,
                   ReSendTimer,
@@ -1177,7 +1176,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->SetTimer (
+  Status = tBS->SetTimer (
                   ResendTimeEvent,
                   TimerPeriodic,
                   uSec * 10
@@ -1208,7 +1207,7 @@ Returns:
 --*/
 {
   EFI_STATUS  Status;
-  Status = gBS->SetTimer (
+  Status = tBS->SetTimer (
                   ResendTimeEvent,
                   TimerCancel,
                   0

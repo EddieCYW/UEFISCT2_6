@@ -67,7 +67,6 @@ References:
 #include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "GraphicsOutputProtocol.h"
-#include "EfiDriverLib.h"
 
 #define EFI_GRAPHICS_OUTPUT_BB_TEST_REVISION  0x00010000
 

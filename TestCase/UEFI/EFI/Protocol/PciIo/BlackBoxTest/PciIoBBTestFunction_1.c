@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "PciIoBBTestMain.h"
 #include "PciIoBBTestSupport.h"
 
@@ -397,7 +398,7 @@ PollMemCheckPoint (
     StandardLib->RecordMessage (
                    StandardLib,
                    EFI_VERBOSE_LEVEL_DEFAULT,
-                   L"BS->CreateEvent() error().\r\n"
+                   L"tBS->CreateEvent() error().\r\n"
                    L"%a:%d.\r\n",
                    __FILE__,
                    (UINTN)__LINE__
@@ -468,7 +469,7 @@ PollMemCheckPoint (
     StandardLib->RecordMessage (
                    StandardLib,
                    EFI_VERBOSE_LEVEL_DEFAULT,
-                   L"error with BS->SetTimer().\r\n"
+                   L"error with tBS->SetTimer().\r\n"
                    L"%a:%d:Status - %r\r\n",
                    __FILE__,
                    (UINTN)__LINE__,
@@ -1404,7 +1405,7 @@ PollIoCheckPoint (
     StandardLib->RecordMessage (
                    StandardLib,
                    EFI_VERBOSE_LEVEL_DEFAULT,
-                   L"BS->CreateEvent() error().\r\n"
+                   L"tBS->CreateEvent() error().\r\n"
                    L"%a:%d.\r\n",
                    __FILE__,
                    (UINTN)__LINE__
@@ -1474,7 +1475,7 @@ PollIoCheckPoint (
     StandardLib->RecordMessage (
                    StandardLib,
                    EFI_VERBOSE_LEVEL_DEFAULT,
-                   L"error with BS->SetTimer().\r\n"
+                   L"error with tBS->SetTimer().\r\n"
                    L"%a:%d:Status - %r\r\n",
                    __FILE__,
                    (UINTN)__LINE__,

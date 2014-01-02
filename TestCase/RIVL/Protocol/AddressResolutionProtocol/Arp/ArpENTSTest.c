@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "ArpENTSTestCase.h"
 
 static CHAR16     gArpProtocolName[] = L"Arp";
@@ -134,10 +135,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -145,7 +146,7 @@ Returns:
 
   LoadedImage->Unload = ArpENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gArpEntsProtocolInterface
@@ -163,7 +164,7 @@ Returns:
   gArpEntsProtocolInterface->RuntimeInfo        = gArpRuntimeInfo;
   gArpEntsProtocolInterface->RuntimeInfoSize    = gArpRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gArpEntsProtocolInterface,
@@ -177,7 +178,7 @@ Returns:
 
 Error:
   if (gArpEntsProtocolInterface != NULL) {
-    gBS->FreePool (gArpEntsProtocolInterface);
+    tBS->FreePool (gArpEntsProtocolInterface);
   }
 
   return Status;
@@ -206,7 +207,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gArpEntsProtocolInterface,
@@ -214,7 +215,7 @@ Returns:
                   );
 
   if (gArpEntsProtocolInterface != NULL) {
-    gBS->FreePool (gArpEntsProtocolInterface);
+    tBS->FreePool (gArpEntsProtocolInterface);
   }
 
   return Status;

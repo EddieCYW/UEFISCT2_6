@@ -189,18 +189,18 @@ FreeFileSystemDialogItemContext (
   //free device path string and file name string
   //
   if (ItemContext->DevicePathStr != NULL) {
-    BS->FreePool (ItemContext->DevicePathStr);
+    tBS->FreePool (ItemContext->DevicePathStr);
     ItemContext->DevicePathStr = NULL;
   }
   if (ItemContext->FileName != NULL) {
-    BS->FreePool (ItemContext->FileName);
+    tBS->FreePool (ItemContext->FileName);
     ItemContext->FileName = NULL;
   }
 
   //
   //free item context
   //
-  BS->FreePool (ItemContext);
+  tBS->FreePool (ItemContext);
   return EFI_SUCCESS;
 }
 
@@ -233,7 +233,7 @@ Returns:
   }
 
   if (Dialog->Title != NULL) {
-    BS->FreePool (Dialog->Title);
+    tBS->FreePool (Dialog->Title);
     Dialog->Title = NULL;
   }
 
@@ -251,12 +251,12 @@ Returns:
       //
       //free item name
       //
-      BS->FreePool (DialogItem->ItemName);
+      tBS->FreePool (DialogItem->ItemName);
     }
     //
     //free dialog item
     //
-    BS->FreePool (DialogItem);
+    tBS->FreePool (DialogItem);
     DialogItem = TempDialogItem;
   }
 
@@ -264,14 +264,14 @@ Returns:
   //free file name
   //
   if (Dialog->FileName != NULL) {
-    BS->FreePool (Dialog->FileName);
+    tBS->FreePool (Dialog->FileName);
     Dialog->FileName = NULL;
   }
 
   //
   //at last free the Dialog
   //
-  BS->FreePool (Dialog);
+  tBS->FreePool (Dialog);
 
   return EFI_SUCCESS;
 
@@ -318,32 +318,32 @@ Returns:
       //free device path.
       //
       if (ItemContext->DevicePath != NULL) {
-        BS->FreePool (ItemContext->DevicePath);
+        tBS->FreePool (ItemContext->DevicePath);
         ItemContext->DevicePath = NULL;
       }
       //
       //free device path string and file name string.
       //
       if (ItemContext->DevicePathStr != NULL) {
-        BS->FreePool (ItemContext->DevicePathStr);
+        tBS->FreePool (ItemContext->DevicePathStr);
         ItemContext->DevicePathStr = NULL;
       }
       if (ItemContext->FileName != NULL) {
-        BS->FreePool (ItemContext->FileName);
+        tBS->FreePool (ItemContext->FileName);
         ItemContext->FileName = NULL;
       }
-      BS->FreePool (ItemContext);
+      tBS->FreePool (ItemContext);
     }
 
     if (DialogItem->ItemName != NULL) {
       //
       //free item name
       //
-      BS->FreePool (DialogItem->ItemName);
+      tBS->FreePool (DialogItem->ItemName);
       DialogItem->ItemName = NULL;
     }
 
-    BS->FreePool (DialogItem);
+    tBS->FreePool (DialogItem);
 
     DialogItem = TempDialogItem;
   }
@@ -417,18 +417,18 @@ Returns:
   //
   if (TempDialogItem == FileDialog->CurrentSelected &&
       FileDialog->CurrentArea == FILE_DIALOG_MENU_AREA) {
-    ST->ConOut->SetAttribute (
-                  ST->ConOut,
+    tST->ConOut->SetAttribute (
+                  tST->ConOut,
                   EFI_TEXT_ATTR(FileDialog->BackColor, FileDialog->ForeColor)
                   );
   } else if (TempDialogItem == FileDialog->CurrentSelected) {
-    ST->ConOut->SetAttribute (
-                  ST->ConOut,
+    tST->ConOut->SetAttribute (
+                  tST->ConOut,
                   EFI_TEXT_ATTR(FileDialog->BackColor, EFI_LIGHTGRAY)
                   );
   } else {
-    ST->ConOut->SetAttribute (
-                  ST->ConOut,
+    tST->ConOut->SetAttribute (
+                  tST->ConOut,
                   EFI_TEXT_ATTR(FileDialog->ForeColor, FileDialog->BackColor)
                   );
   }
@@ -437,7 +437,7 @@ Returns:
   //display ItemName.
   //
   if (StrLen (TempDialogItem->ItemName) > (X1 - X0 - 1)) {
-    BS->CopyMem (
+    tBS->CopyMem (
       Buffer,
       TempDialogItem->ItemName,
       (X1 - X0 - 1) * sizeof(CHAR16)
@@ -461,8 +461,8 @@ Returns:
   }
 
   if (TempDialogItem == FileDialog->CurrentSelected) {
-    ST->ConOut->SetAttribute (
-                  ST->ConOut,
+    tST->ConOut->SetAttribute (
+                  tST->ConOut,
                   EFI_TEXT_ATTR(FileDialog->ForeColor, FileDialog->BackColor)
                   );
   }
@@ -501,7 +501,7 @@ Returns:
   Ypos = FileDialog -> BodyRect.BottomRight.Row + 1;
   Length = StrLen (FileDialog->FileName);
   if (Length > EFI_MAX_ITEM_VALUE_LENGTH) {
-    BS->CopyMem (
+    tBS->CopyMem (
       Buffer,
       FileDialog->FileName,
       EFI_MAX_ITEM_VALUE_LENGTH * sizeof(CHAR16)
@@ -517,7 +517,7 @@ Returns:
     Buffer[EFI_MAX_ITEM_VALUE_LENGTH] = L'\0';
     TestPrintAt (Xpos, Ypos, Buffer);
 
-    BS->CopyMem (Buffer, FileDialog->FileName, (Length + 1) * sizeof(CHAR16));
+    tBS->CopyMem (Buffer, FileDialog->FileName, (Length + 1) * sizeof(CHAR16));
   }
   //
   //print the input string
@@ -579,8 +579,8 @@ Returns:
 
   Status = EFI_SUCCESS;
 
-  ST->ConOut->SetAttribute (
-                ST->ConOut,
+  tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_TEXT_ATTR(FileDialog->ForeColor,
                 FileDialog->BackColor)
                 );
@@ -606,7 +606,7 @@ Returns:
     //
     if (FileDialog->Title != NULL) {
       if (StrLen (FileDialog->Title) > X1 - X0) {
-        BS->CopyMem (
+        tBS->CopyMem (
               Buffer,
               FileDialog->Title,
               (X1 - X0)* sizeof(CHAR16)
@@ -702,7 +702,7 @@ Returns:
         //display File Name.
         //
         if (StrLen (FileDialog->FileName) > EFI_MAX_ITEM_VALUE_LENGTH) {
-          BS->CopyMem (
+          tBS->CopyMem (
             Buffer,
             FileDialog->FileName,
             EFI_MAX_ITEM_VALUE_LENGTH * sizeof(CHAR16)
@@ -766,19 +766,19 @@ Returns:
   while (DialogItem != NULL && DialogItem != FileDialog->LastInDisplay->Next) {
     if (DialogItem == FileDialog->CurrentSelected &&
         FileDialog->CurrentArea == FILE_DIALOG_MENU_AREA) {
-      ST->ConOut->SetAttribute (
-                    ST->ConOut,
+      tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_TEXT_ATTR(FileDialog->BackColor, FileDialog->ForeColor)
                     );
     } else if (DialogItem == FileDialog->CurrentSelected) {
-      ST->ConOut->SetAttribute (
-                    ST->ConOut,
+      tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_TEXT_ATTR(FileDialog->BackColor, EFI_LIGHTGRAY)
                     );
     }
 
     if (StrLen (DialogItem->ItemName) > (X1 - X0 - 1)) {
-      BS->CopyMem (
+      tBS->CopyMem (
         Buffer,
         DialogItem->ItemName,
         (X1 - X0 - 1) * sizeof(CHAR16)
@@ -804,8 +804,8 @@ Returns:
       }
     }
     if (DialogItem == FileDialog->CurrentSelected) {
-      ST->ConOut->SetAttribute (
-                    ST->ConOut,
+      tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_TEXT_ATTR(FileDialog->ForeColor, FileDialog->BackColor)
                     );
     }
@@ -1397,7 +1397,7 @@ Returns:
   Status     = EFI_SUCCESS;
   WAITING    = TRUE;
   TempStr[0] = L'\0';
-  BS->SetMem (&Key, sizeof(EFI_INPUT_KEY), 0);
+  tBS->SetMem (&Key, sizeof(EFI_INPUT_KEY), 0);
 
   Ypos  = FileDialog->BodyRect.BottomRight.Row + 1;
   XLeft = FileDialog->BodyRect.TopLeft.Col + 20;
@@ -1422,13 +1422,13 @@ Returns:
   //
   //enable cursor.
   //
-  ST->ConOut->SetCursorPosition (ST->ConOut, XLeft + XOffSetInScreen, Ypos);
-  ST->ConOut->EnableCursor (ST->ConOut,TRUE);
+  tST->ConOut->SetCursorPosition (tST->ConOut, XLeft + XOffSetInScreen, Ypos);
+  tST->ConOut->EnableCursor (tST->ConOut,TRUE);
 
   while (WAITING) {
-    Status = BS->WaitForEvent (1, &(ST->ConIn->WaitForKey), (UINTN *)&Num);
+    Status = tBS->WaitForEvent (1, &(tST->ConIn->WaitForKey), (UINTN *)&Num);
     if (!EFI_ERROR(Status)) {
-      Status = ST->ConIn->ReadKeyStroke (ST->ConIn, &Key);
+      Status = tST->ConIn->ReadKeyStroke (tST->ConIn, &Key);
     }
     if ( EFI_ERROR(Status)) {
       continue;
@@ -1443,9 +1443,9 @@ Returns:
           //
           //disable cursor.
           //
-          ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+          tST->ConOut->EnableCursor (tST->ConOut, FALSE);
 
-          BS->CopyMem (TempStr, Buffer, EFI_MAX_ITEM_VALUE_LENGTH * sizeof(CHAR16));
+          tBS->CopyMem (TempStr, Buffer, EFI_MAX_ITEM_VALUE_LENGTH * sizeof(CHAR16));
           TempStr[EFI_MAX_ITEM_VALUE_LENGTH] = L'\0';
 
           WAITING             = FALSE;
@@ -1466,8 +1466,8 @@ Returns:
           //
           //set cursor position
           //
-          ST->ConOut->SetCursorPosition (
-                        ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                        tST->ConOut,
                         XLeft + XOffSetInScreen,
                         Ypos
                         );
@@ -1488,7 +1488,7 @@ Returns:
           //
           //refresh display in screen
           //
-          BS->CopyMem (
+          tBS->CopyMem (
             TempStr,
             Buffer + FirstInDisplay,
             EFI_MAX_ITEM_VALUE_LENGTH * sizeof(CHAR16)
@@ -1500,8 +1500,8 @@ Returns:
           if (EFI_ERROR (Status) ) {
             return Status;
           }
-          ST->ConOut->SetCursorPosition (
-                        ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                        tST->ConOut,
                         XLeft + XOffSetInScreen,
                         Ypos
                         );
@@ -1519,8 +1519,8 @@ Returns:
             //
             XOffSetInBuffer++;
             XOffSetInScreen++;
-            ST->ConOut->SetCursorPosition (
-                          ST->ConOut,
+            tST->ConOut->SetCursorPosition (
+                          tST->ConOut,
                           XLeft + XOffSetInScreen,
                           Ypos
                           );
@@ -1534,7 +1534,7 @@ Returns:
               //
               //refresh edit area.
               //
-              BS->CopyMem (
+              tBS->CopyMem (
                 TempStr,
                 Buffer + FirstInDisplay,
                 EFI_MAX_ITEM_VALUE_LENGTH * sizeof(CHAR16)
@@ -1547,8 +1547,8 @@ Returns:
               //
               //reset cursor position
               //
-              ST->ConOut->SetCursorPosition (
-                            ST->ConOut,
+              tST->ConOut->SetCursorPosition (
+                            tST->ConOut,
                             XLeft + XOffSetInScreen,
                             Ypos
                             );
@@ -1565,8 +1565,8 @@ Returns:
               if (EFI_ERROR (Status) ) {
                 return Status;
               }
-              ST->ConOut->SetCursorPosition (
-                            ST->ConOut,
+              tST->ConOut->SetCursorPosition (
+                            tST->ConOut,
                             XLeft + XOffSetInScreen,
                             Ypos
                             );
@@ -1601,8 +1601,8 @@ Returns:
           //
           //refresh cursor position.
           //
-          ST->ConOut->SetCursorPosition (
-                        ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                        tST->ConOut,
                         XLeft + XOffSetInScreen,
                         Ypos
                         );
@@ -1648,8 +1648,8 @@ Returns:
           //
           //reset cusor.
           //
-          ST->ConOut->SetCursorPosition (
-                        ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                        tST->ConOut,
                         XLeft + XOffSetInScreen,
                         Ypos
                         );
@@ -1692,8 +1692,8 @@ Returns:
           //
           //set cursor
           //
-          ST->ConOut->SetCursorPosition (
-                        ST->ConOut,
+          tST->ConOut->SetCursorPosition (
+                        tST->ConOut,
                         XLeft + XOffSetInScreen,
                         Ypos
                         );
@@ -1706,9 +1706,9 @@ Returns:
             //
             StrCpy (FileDialog->FileName, Buffer);
 
-            ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+            tST->ConOut->EnableCursor (tST->ConOut, FALSE);
 
-            BS->CopyMem (
+            tBS->CopyMem (
               TempStr,
               Buffer,
               EFI_MAX_ITEM_VALUE_LENGTH * sizeof(CHAR16)
@@ -1771,8 +1771,8 @@ Returns:
                 if (EFI_ERROR (Status) ) {
                   return Status;
                 }
-                ST->ConOut->SetCursorPosition (
-                              ST->ConOut,
+                tST->ConOut->SetCursorPosition (
+                              tST->ConOut,
                               XLeft + XOffSetInScreen,
                               Ypos
                               );
@@ -1790,9 +1790,9 @@ Returns:
             //
             StrCpy (FileDialog->FileName, Buffer);
 
-            ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+            tST->ConOut->EnableCursor (tST->ConOut, FALSE);
 
-            BS->CopyMem (
+            tBS->CopyMem (
               TempStr,
               Buffer,
               EFI_MAX_ITEM_VALUE_LENGTH * sizeof(CHAR16)
@@ -1852,7 +1852,7 @@ Returns:
                 if (EFI_ERROR (Status)) {
                   return Status;
                 }
-                ST->ConOut->SetCursorPosition (ST->ConOut, XLeft + XOffSetInScreen, Ypos);
+                tST->ConOut->SetCursorPosition (tST->ConOut, XLeft + XOffSetInScreen, Ypos);
               } else {
                 LastInDisplay  = LastInDisplay + 1;
                 FirstInDisplay = FirstInDisplay + 1;
@@ -1883,8 +1883,8 @@ Returns:
                 if (EFI_ERROR (Status) ) {
                   return Status;
                 }
-                ST->ConOut->SetCursorPosition (
-                              ST->ConOut,
+                tST->ConOut->SetCursorPosition (
+                              tST->ConOut,
                               XLeft + XOffSetInScreen,
                               Ypos
                               );
@@ -1958,7 +1958,7 @@ Returns:
     //
     //wait for key press event
     //
-    Status = BS->WaitForEvent (1, &(ST->ConIn->WaitForKey), &Index);
+    Status = tBS->WaitForEvent (1, &(tST->ConIn->WaitForKey), &Index);
 
     if (EFI_ERROR(Status)) {
       break;
@@ -1967,7 +1967,7 @@ Returns:
     //
     //read pressed key
     //
-    Status = ST->ConIn->ReadKeyStroke (ST->ConIn, Key);
+    Status = tST->ConIn->ReadKeyStroke (tST->ConIn, Key);
 
     if (EFI_ERROR(Status)) {
       continue;
@@ -2277,7 +2277,7 @@ Returns:
   //
   //allocate one new Dialog Item
   //
-  Status = BS->AllocatePool(
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_FILE_DIALOG_ITEM),
                  (VOID **)&DialogItem
@@ -2285,14 +2285,14 @@ Returns:
   if (EFI_ERROR(Status)) {
     return NULL;
   }
-  BS->SetMem (DialogItem, sizeof(EFI_FILE_DIALOG_ITEM), 0);
+  tBS->SetMem (DialogItem, sizeof(EFI_FILE_DIALOG_ITEM), 0);
 
   DialogItem->Prev      = NULL;
   DialogItem->Next      = NULL;
   DialogItem->ItemName  = StrDuplicate (String);
 
   if (DialogItem->ItemName == NULL) {
-    BS->FreePool (DialogItem);
+    tBS->FreePool (DialogItem);
     return NULL;
   }
   DialogItem->Context = Context;
@@ -2392,7 +2392,7 @@ Returns:
 
   Size1 = StrSize(Str1);
   Size2 = StrSize(Str2);
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
           EfiBootServicesData,
           Size1 + Size2 + sizeof(CHAR16),
           (VOID **)&Str
@@ -2400,7 +2400,7 @@ Returns:
   if (EFI_ERROR(Status)) {
     return NULL;
   }
-  BS->SetMem (Str, Size1 + Size2 + sizeof(CHAR16), 0);
+  tBS->SetMem (Str, Size1 + Size2 + sizeof(CHAR16), 0);
 
   StrCat (Str, Str1);
   if ( !((*Str == '\\') && (*(Str + 1) == 0)) ) {
@@ -2503,7 +2503,7 @@ Returns:
   }
 
   DirBufferSize = sizeof(EFI_FILE_INFO) + 1024;
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  DirBufferSize,
                  (VOID **)&DirInfo
@@ -2554,7 +2554,7 @@ Returns:
               DirInfo->FileName
              );
 
-      Status = BS->AllocatePool (
+      Status = tBS->AllocatePool (
                      EfiBootServicesData,
                      sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT),
                      (VOID **)&Context
@@ -2563,10 +2563,10 @@ Returns:
       if (EFI_ERROR(Status)) {
         FreeDirDialog (DirDialog);
         NewDir->Close (NewDir);
-        BS->FreePool (DirInfo);
+        tBS->FreePool (DirInfo);
         return FALSE;
       }
-      BS->SetMem (Context,sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT),0);
+      tBS->SetMem (Context,sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT),0);
 
       Context->Handle   = ItemContext->Handle;
       Context->FileName = AppendFileName (
@@ -2584,7 +2584,7 @@ Returns:
       if (DialogItem == NULL) {
         FreeDirDialog (DirDialog);
         NewDir->Close (NewDir);
-        BS->FreePool (DirInfo);
+        tBS->FreePool (DirInfo);
         return FALSE;
       }
     }
@@ -2610,7 +2610,7 @@ Returns:
   }
   DirDialog->LastInDisplay = TempDialogItem;
 
-  BS->FreePool (DirInfo);
+  tBS->FreePool (DirInfo);
 
   return TRUE;
 }
@@ -2663,7 +2663,7 @@ Returns:
   if  (EFI_ERROR(Status)) {
     return FALSE;
   }
-  BS->SetMem ((VOID *)&ContextCopy, sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT), 0);
+  tBS->SetMem ((VOID *)&ContextCopy, sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT), 0);
 
   for (;;) {
 
@@ -2681,10 +2681,10 @@ Returns:
     //set the new file
     //
     if (DialogContext->FileName != NULL) {
-      BS->FreePool (DialogContext->FileName);
+      tBS->FreePool (DialogContext->FileName);
     }
     if (DialogContext->DevicePath != NULL) {
-      BS->FreePool (DialogContext->DevicePath);
+      tBS->FreePool (DialogContext->DevicePath);
     }
 
     //
@@ -2788,8 +2788,8 @@ Returns:
   }
 
   Status                = EFI_SUCCESS;
-  ConAttrib             = ST->ConOut->Mode->Attribute;
-  Status = BS->AllocatePool (
+  ConAttrib             = tST->ConOut->Mode->Attribute;
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_FILE_DIALOG),
                  (VOID **)&FileSystemDialog
@@ -2797,11 +2797,11 @@ Returns:
   if (EFI_ERROR(Status)) {
     return EFI_OUT_OF_RESOURCES;
   }
-  BS->SetMem (FileSystemDialog, sizeof(EFI_FILE_DIALOG), 0);
+  tBS->SetMem (FileSystemDialog, sizeof(EFI_FILE_DIALOG), 0);
 
   FileSystemDialog->Type = DialogContext->DialogType;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH + 1) * sizeof(CHAR16),
                  (VOID **)&FileSystemDialog->FileName
@@ -2828,7 +2828,7 @@ Returns:
   }
 
   DevicePath = gFT->DevicePath;
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                  &gEfiSimpleFileSystemProtocolGuid,
                  &DevicePath,
                  &FsHandles
@@ -2837,7 +2837,7 @@ Returns:
     return EFI_DEVICE_ERROR;
   }
 
-  Status = BS->AllocatePool(
+  Status = tBS->AllocatePool (
           EfiBootServicesData,
           sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT),
           (VOID **)&Context
@@ -2847,7 +2847,7 @@ Returns:
     FreeFileSystemDialog (FileSystemDialog);
     return EFI_OUT_OF_RESOURCES;
   }
-  BS->SetMem (Context, sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT), 0);
+  tBS->SetMem (Context, sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT), 0);
 
   //
   //Find current file system device path
@@ -2884,7 +2884,7 @@ Returns:
   Status = SctMapNameFromDevice (Context->DevicePath, &Str);
   if (!EFI_ERROR(Status)) {
     SPrint (Buffer, MAX_CHAR, L"%s:", Str);
-    BS->FreePool (Str);
+    tBS->FreePool (Str);
   } else {
     FreeFileSystemDialogItemContext (Context);
     return EFI_DEVICE_ERROR;
@@ -2957,7 +2957,7 @@ Returns:
   }
   FileSystemDialog->LastInDisplay = TempDialogItem;
 
-  Status = BS->AllocatePool(
+  Status = tBS->AllocatePool (
           EfiBootServicesData,
           sizeof(EFI_FILE_DIALOG),
           (VOID **)&DirDialog
@@ -2970,7 +2970,7 @@ Returns:
   //
   //share the FileSystemDialog's info so copy mem from FileSystemDialog.
   //
-  BS->CopyMem (DirDialog, FileSystemDialog, sizeof(EFI_FILE_DIALOG));
+  tBS->CopyMem (DirDialog, FileSystemDialog, sizeof(EFI_FILE_DIALOG));
 
   //
   //initialize the default pointer and item values
@@ -2994,13 +2994,13 @@ Returns:
   //free MenuItems and relative Context.
   //
   FreeDirDialog (DirDialog);
-  BS->FreePool (DirDialog);
+  tBS->FreePool (DirDialog);
   FreeFileSystemDialog(FileSystemDialog);
 
   //
   //restore original console attribute
   //
-  ST->ConOut->SetAttribute ( ST->ConOut,ConAttrib);
+  tST->ConOut->SetAttribute ( tST->ConOut,ConAttrib);
 
   return EFI_SUCCESS;
 }

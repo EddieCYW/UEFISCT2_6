@@ -108,11 +108,11 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"ShellExecute: %s - %r", CmdLine, Status));
-    BS->FreePool (CmdLine);
+    tBS->FreePool (CmdLine);
     return Status;
   }
 
-  BS->FreePool (CmdLine);
+  tBS->FreePool (CmdLine);
 
   //
   // For each shell command
@@ -141,11 +141,11 @@ Routine Description:
                );
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"ShellExecute: %s - %r", CmdLine, Status));
-      BS->FreePool (CmdLine);
+      tBS->FreePool (CmdLine);
       return Status;
     }
 
-    BS->FreePool (CmdLine);
+    tBS->FreePool (CmdLine);
 
     //
     // Get the system configuration to a file via shell command
@@ -174,7 +174,7 @@ Routine Description:
       EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"ShellExecute: %s - %r", CmdLine, Status));
     }
 
-    BS->FreePool (CmdLine);
+    tBS->FreePool (CmdLine);
   }
 
   //
@@ -199,11 +199,11 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"ReadFileToBuffer: %s - %r", FileName, Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Done

@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "MiscRuntimeServicesBBTestMain.h"
 
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)

@@ -60,6 +60,7 @@ References:
   UEFI/Tiano DXE Test Case Writer's Guide
 
 --*/
+#include "SctLib.h"
 #include "GraphicsOutputBBTest.h"
 
 //
@@ -386,7 +387,7 @@ Returns:
                                );
 
     if (BltBuffer != NULL)
-        gBS->FreePool (BltBuffer);
+        tBS->FreePool (BltBuffer);
     
     if (EFI_ERROR (Status)) {
       StandardLib->RecordAssertion (
@@ -473,7 +474,7 @@ Returns:
                      (UINTN) Status
                      );
       if (BltBuffer != NULL)
-        gBS->FreePool (BltBuffer);
+        tBS->FreePool (BltBuffer);
       return Status;
     }   
 
@@ -496,7 +497,7 @@ Returns:
                    );
     
     if (BltBuffer != NULL) {
-      gBS->FreePool (BltBuffer);
+      tBS->FreePool (BltBuffer);
     }
     
   }
@@ -584,7 +585,7 @@ Returns:
                      (UINTN) Status
                      );
       if (BltBuffer != NULL)
-        gBS->FreePool (BltBuffer);
+        tBS->FreePool (BltBuffer);
       return Status;
     }
     
@@ -607,7 +608,7 @@ Returns:
                      (UINTN) Status
                      );    
       if (BltBuffer != NULL)
-        gBS->FreePool (BltBuffer);
+        tBS->FreePool (BltBuffer);
       return Status;
     }
 
@@ -636,7 +637,7 @@ Returns:
                      (UINTN) Status
                      );
       if (BltBuffer != NULL)
-        gBS->FreePool (BltBuffer);
+        tBS->FreePool (BltBuffer);
       return Status;
     }   
 
@@ -659,7 +660,7 @@ Returns:
                    );
     
     if (BltBuffer != NULL) {
-      gBS->FreePool (BltBuffer);
+      tBS->FreePool (BltBuffer);
     }
 
   };
@@ -970,11 +971,11 @@ Returns:
                    );
                    
     if (BltBuffer != NULL) {
-      gBS->FreePool (BltBuffer);
+      tBS->FreePool (BltBuffer);
     }
 
     if (BltBuffer2 != NULL) {
-      gBS->FreePool (BltBuffer2);
+      tBS->FreePool (BltBuffer2);
     }
     //
     // Wait for some time

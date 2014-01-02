@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 
+#include "SctLib.h"
 #include "ScsiIoBBTestMain.h"
 
 extern UINT8 EnterEvent;

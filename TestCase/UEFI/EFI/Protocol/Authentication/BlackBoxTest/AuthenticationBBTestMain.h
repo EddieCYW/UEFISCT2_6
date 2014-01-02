@@ -59,10 +59,9 @@ Abstract:
 #define __EFI_LOAD_FILE_TEST_H__
 
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "AuthenticationGuid.h"
 #include "EfiTestUtilityLib.h"
-#include "EfiDriverLib.h"
 #include "EfiTestLib.h"
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestLoggingLibrary)

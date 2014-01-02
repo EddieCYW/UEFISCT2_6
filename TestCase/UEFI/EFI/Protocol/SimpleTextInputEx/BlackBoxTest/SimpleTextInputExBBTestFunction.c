@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver Simple Text Input Ex Protocol's function Test
 
 --*/
+#include "SctLib.h"
 #include "SimpleTextInputExBBTestMain.h"
 
 #define REPEAT_RESET    5

@@ -104,7 +104,7 @@ GetVariableRecord (
   //
   // get the record variable.
   //
-  Status = RT->GetVariable (
+  Status = tRT->GetVariable (
                   gTestRecordName,     
                   &VariableTestGuid,   
                   NULL,                
@@ -679,7 +679,7 @@ SCRTLogProcess(
   Status = LibFlushFile(FileHandle);
   Status = LibCloseFile (FileHandle);
 
-  Status = RT->SetVariable (
+  Status = tRT->SetVariable (
                  gTestRecordName,             // VariableName
                  &VariableTestGuid,           // VendorGuid
                  EFI_VARIABLE_RUNTIME_ACCESS|EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS,                        // Attributes

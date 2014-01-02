@@ -53,10 +53,11 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "MemoryAllocationENTSTestCase.h"
 
 //
-// gBS.AllocatePages
+// tBS.AllocatePages
 //
 static EFI_ALLOCATE_TYPE    BSAllocatePagesType;
 static EFI_MEMORY_TYPE      BSAllocatePagesMemoryType;
@@ -64,7 +65,7 @@ static UINTN                BSAllocatePagesPages;
 static EFI_PHYSICAL_ADDRESS *BSAllocatePagesMemory;
 static EFI_STATUS           *BSAllocatePagesStatus;
 
-ENTS_ARG_FIELD              gBSAllocatePagesArgField[] = {
+ENTS_ARG_FIELD              BSAllocatePagesArgField[] = {
   {
     OCTETN,
     &BSAllocatePagesType
@@ -122,13 +123,13 @@ Returns:
 }
 
 //
-// gBS.FreePages
+// tBS.FreePages
 //
 static EFI_PHYSICAL_ADDRESS BSFreePagesMemory;
 static UINTN                BSFreePagesPages;
 static EFI_STATUS           *BSFreePagesStatus;
 
-ENTS_ARG_FIELD              gBSFreePagesArgField[] = {
+ENTS_ARG_FIELD              BSFreePagesArgField[] = {
   {
     OCTETN,
     &BSFreePagesMemory
@@ -176,14 +177,14 @@ Returns:
 }
 
 //
-// gBS.AllocatePool
+// tBS.AllocatePool
 //
 static EFI_MEMORY_TYPE  BSAllocatePoolPoolType;
 static UINTN            BSAllocatePoolSize;
 static VOID             **BSAllocatePoolBuffer;
 static EFI_STATUS       *BSAllocatePoolStatus;
 
-ENTS_ARG_FIELD          gBSAllocatePoolArgField[] = {
+ENTS_ARG_FIELD              BSAllocatePoolArgField[] = {
   {
     OCTETN,
     &BSAllocatePoolPoolType
@@ -236,12 +237,12 @@ Returns:
 }
 
 //
-// gBS.FreePool
+// tBS.FreePool
 //
 static VOID       *BSFreePoolBuffer;
 static EFI_STATUS *BSFreePoolStatus;
 
-ENTS_ARG_FIELD    gBSFreePoolArgField[] = {
+ENTS_ARG_FIELD    BSFreePoolArgField[] = {
   {
     POINTER,
     &BSFreePoolBuffer

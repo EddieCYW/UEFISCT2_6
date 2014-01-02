@@ -55,9 +55,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EntsLib.h"
-#include "EfiDriverLib.h"
 #include "SerialMonitor.h"
 
 #define SIGNAL_TAG_LENGTH 2
@@ -131,10 +130,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -142,7 +141,7 @@ Returns:
 
   LoadedImage->Unload = SerialMonitorUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_MONITOR_PROTOCOL),
                   (VOID **)&gSerialMonitorInterface
@@ -158,7 +157,7 @@ Returns:
   gSerialMonitorInterface->MonitorListener  = SerialListener;
   gSerialMonitorInterface->MonitorSender    = SerialSender;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsMonitorProtocolGuid,
                   gSerialMonitorInterface,
@@ -172,7 +171,7 @@ Returns:
 
 Error:
   if (gSerialMonitorInterface != NULL) {
-    gBS->FreePool (gSerialMonitorInterface);
+    tBS->FreePool (gSerialMonitorInterface);
   }
 
   return Status;
@@ -201,7 +200,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsMonitorProtocolGuid,
                   gSerialMonitorInterface,
@@ -209,7 +208,7 @@ Returns:
                   );
 
   if (gSerialMonitorInterface != NULL) {
-    gBS->FreePool (gSerialMonitorInterface);
+    tBS->FreePool (gSerialMonitorInterface);
   }
 
   return Status;
@@ -252,13 +251,13 @@ Returns:
             );
 
   if (NoHandle >= HANDLE_IN_USE) {
-    gBS->HandleProtocol (
+    tBS->HandleProtocol (
           HandleBuffer[HANDLE_IN_USE - 1],
           &gEfiSerialIoProtocolGuid,
           &SerialIo
           );
   } else {
-    Status = gBS->LocateProtocol (
+    Status = tBS->LocateProtocol (
                     &gEfiSerialIoProtocolGuid,
                     NULL,
                     &SerialIo
@@ -477,13 +476,13 @@ Returns:
   if (EFI_ERROR (Status)) {
     EFI_ENTS_STATUS ((L"SerialWrite device Error\n"));
     EntsPrint (L"In Sender: can't write start sig Status - %r", Status);
-    gBS->FreePool (BufferTmp);
+    tBS->FreePool (BufferTmp);
     return Status;
   }
 
   BufferSize  = EntsStrLen (Buffer) + 1;
   Status      = SerialIo->Write (SerialIo, &BufferSize, BufferTmp);
-  gBS->FreePool (BufferTmp);
+  tBS->FreePool (BufferTmp);
   if (EFI_ERROR (Status)) {
     EFI_ENTS_STATUS ((L"SerialWrite device Error\n"));
     EntsPrint (L"In Sender: can't write data - %r", Status);

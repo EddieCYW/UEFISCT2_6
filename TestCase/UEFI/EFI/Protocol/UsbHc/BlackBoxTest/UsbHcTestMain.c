@@ -57,6 +57,7 @@ Abstract:
 // Includes
 //
 
+#include "SctLib.h"
 #include "UsbHcTest.h"
 
 //
@@ -227,7 +228,7 @@ InitializeBBTestUsbHc (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   gtBS->CreateEvent(EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
 

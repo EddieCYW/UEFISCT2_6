@@ -55,8 +55,7 @@ Abstract:
 #ifndef _IP4_ENTS_TESTCASE_H_
 #define _IP4_ENTS_TESTCASE_H_
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 #include "Ip4.h"
 

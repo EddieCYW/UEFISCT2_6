@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "HIIFontBBTestMain.h"
 
 
@@ -185,7 +186,7 @@ InitializeHIIFontBBTest (
   // initialize test utility lib
   //
 
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

@@ -156,9 +156,9 @@ Returns:
 {
   EFI_STATUS Status;
 
-  Status = ST->ConOut->SetCursorPosition (ST->ConOut, Col, Row);
+  Status = tST->ConOut->SetCursorPosition (tST->ConOut, Col, Row);
   if (!EFI_ERROR(Status)) {
-    Status = ST->ConOut->OutputString (ST->ConOut, String);
+    Status = tST->ConOut->OutputString (tST->ConOut, String);
   }
   return Status;
 }
@@ -203,8 +203,8 @@ Returns:
   Y1      = ScrollBar->ScrollBarRect.BottomRight.Row;
   Status  = EFI_SUCCESS;
 
-  ST->ConOut->SetAttribute (
-        ST->ConOut,
+  tST->ConOut->SetAttribute (
+        tST->ConOut,
         EFI_MENUPAGE_BODY_BGCOLOR | EFI_MENUPAGE_SCROLLBAR_FORECOLOR
         );
 
@@ -371,7 +371,7 @@ Returns:
   //
   //first clear the header area.
   //
-  ST->ConOut->SetAttribute (ST->ConOut,EFI_MENUPAGE_HEADER_BGCOLOR);
+  tST->ConOut->SetAttribute (tST->ConOut,EFI_MENUPAGE_HEADER_BGCOLOR);
   for (Index = 0; Index < X1 - X0 + 1; Index++) {
     Buffer[Index] = L' ';
   }
@@ -409,8 +409,8 @@ Returns:
         break;
     }
 
-    Status = ST->ConOut->SetAttribute (
-                   ST->ConOut,
+    Status = tST->ConOut->SetAttribute (
+                   tST->ConOut,
                    EFI_MENUPAGE_HEADER_FORECOLOR | EFI_MENUPAGE_HEADER_BGCOLOR
                    );
 
@@ -475,14 +475,14 @@ Returns:
   //
   //disable cursor before print
   //
-  ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+  tST->ConOut->EnableCursor (tST->ConOut, FALSE);
   if (MenuPage->HasBody) {
 
     //
     //first clear the body  area
     //
-    ST->ConOut->SetAttribute (
-          ST->ConOut,
+    tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_ITEM_EDIT_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
           );
     for (Index = 0; Index < (X1 - X0 + 1); Index++) {
@@ -499,8 +499,8 @@ Returns:
     //
     //then draw the four  corner.
     //
-    ST->ConOut->SetAttribute (
-          ST->ConOut,
+    tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_MENUPAGE_ITEM_COMMON_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
           );
 
@@ -596,8 +596,8 @@ Returns:
     //print  the  item header.
     //
     if (MenuPage->Body.MenuItemHeader.Text != NULL) {
-      ST->ConOut->SetAttribute (
-            ST->ConOut,
+      tST->ConOut->SetAttribute (
+            tST->ConOut,
             EFI_MENUPAGE_ITEM_COMMON_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
             );
       if(StrLen (MenuPage->Body.MenuItemHeader.Text) > X2 -X0 - 1) {
@@ -636,8 +636,8 @@ Returns:
     //print the Description header.
     //
     if (MenuPage->Body.DescriptionHeader.Text != NULL) {
-      ST->ConOut->SetAttribute (
-            ST->ConOut,
+      tST->ConOut->SetAttribute (
+            tST->ConOut,
             EFI_ITEM_DESC_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
             );
       if (StrLen (MenuPage->Body.DescriptionHeader.Text) > X1 - X2 - 1) {
@@ -723,22 +723,22 @@ Returns:
       //
       //White color is better
       //
-      ST->ConOut->SetAttribute (
-              ST->ConOut,
+      tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR >> 4
               );
       if (MENU_ITEM_TYPE (MenuPage->Body.CurrentSelected->ItemType) == EFI_ITEM_CASE) {
-        ST->ConOut->EnableCursor (ST->ConOut, TRUE);
-        ST->ConOut->SetCursorPosition(
-                    ST->ConOut,
+        tST->ConOut->EnableCursor (tST->ConOut, TRUE);
+        tST->ConOut->SetCursorPosition(
+                    tST->ConOut,
                     MenuPage->Body.BodyRect.TopLeft.Col + EFI_ITEM_TYPE_TAG_LENGTH + 2 + EFI_MAX_CASE_ITEM_NAME_LENGTH,
                     MenuPage->Body.SplitPoint.Row + Index
                     );
       }
       if (MENU_ITEM_TYPE (MenuPage->Body.CurrentSelected->ItemType) == EFI_ITEM_HAVE_EDIT) {
-        ST->ConOut->EnableCursor (ST->ConOut, TRUE);
-        ST->ConOut->SetCursorPosition(
-                    ST->ConOut,
+        tST->ConOut->EnableCursor (tST->ConOut, TRUE);
+        tST->ConOut->SetCursorPosition(
+                    tST->ConOut,
                     MenuPage->Body.SplitPoint.Col - 22,
                     MenuPage->Body.SplitPoint.Row + Index
                     );
@@ -753,8 +753,8 @@ Returns:
       Buffer[Index] = L' ';
     }
     Buffer[Index] = L'\0';
-    ST->ConOut->SetAttribute (
-          ST->ConOut,
+    tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_TEXT_ATTR (MenuPage->Body.ForeColor, MenuPage->BackColor)
           );
 
@@ -833,7 +833,7 @@ Returns:
   }
   Buffer[Index] = L'\0';
 
-  ST->ConOut->SetAttribute (ST->ConOut, EFI_MENUPAGE_FOOTER_BGCOLOR);
+  tST->ConOut->SetAttribute (tST->ConOut, EFI_MENUPAGE_FOOTER_BGCOLOR);
 
   for  (Index = 0; Index < Lines; Index++) {
     Status = TestPrintAt (X0, Y0 + Index, Buffer);
@@ -867,8 +867,8 @@ Returns:
         //
         //first draw HotKeyName
         //
-        ST->ConOut->SetAttribute (
-              ST->ConOut,
+        tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_FOOTER_HOTKEY_FORECOLOR | EFI_MENUPAGE_FOOTER_BGCOLOR
               );
         if (StrLen (HotKey->HotKeyName.Text) > EFI_HOTKEY_NAME_SPAN) {
@@ -881,8 +881,8 @@ Returns:
         //
         //then draw HotKeyDesc
         //
-        ST->ConOut->SetAttribute (
-              ST->ConOut,
+        tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_FOOTER_DESC_FORECOLOR | EFI_MENUPAGE_FOOTER_BGCOLOR
               );
         if (StrLen (HotKey->HotKeyDesc.Text) > EFI_HOTKEY_DESC_SPAN) {
@@ -907,7 +907,7 @@ Returns:
   //
   //set default MenuPage Console attribute
   //
-  ST->ConOut->SetAttribute (ST->ConOut, EFI_BACKGROUND_BLACK | EFI_WHITE);
+  tST->ConOut->SetAttribute (tST->ConOut, EFI_BACKGROUND_BLACK | EFI_WHITE);
   return Status;
 }
 
@@ -966,10 +966,10 @@ Returns:
   //
   //disable cursor before print
   //
-  ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+  tST->ConOut->EnableCursor (tST->ConOut, FALSE);
   if (MenuPage->HasBody) {
-    ST->ConOut->SetAttribute (
-          ST->ConOut,
+    tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_ITEM_EDIT_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
           );
     for(Index = 0; Index < ( X2 - X0 - 1); Index++) {
@@ -1006,8 +1006,8 @@ Returns:
       }
     }
 
-    ST->ConOut->SetAttribute (
-          ST->ConOut,
+    tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_MENUPAGE_ITEM_COMMON_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
           );
     //
@@ -1027,8 +1027,8 @@ Returns:
       }
     }
 
-    ST->ConOut->SetAttribute (
-          ST->ConOut,
+    tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_MENUPAGE_ITEM_COMMON_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
           );
     MenuItem = MenuPage->Body.FirstInDisplay;
@@ -1080,22 +1080,22 @@ Returns:
     //
     //White color is better
     //
-    ST->ConOut->SetAttribute (
-              ST->ConOut,
+    tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
               );
     if (MENU_ITEM_TYPE (MenuPage->Body.CurrentSelected->ItemType) == EFI_ITEM_CASE) {
-      ST->ConOut->EnableCursor (ST->ConOut, TRUE);
-      ST->ConOut->SetCursorPosition(
-                    ST->ConOut,
+      tST->ConOut->EnableCursor (tST->ConOut, TRUE);
+      tST->ConOut->SetCursorPosition(
+                    tST->ConOut,
                     MenuPage->Body.BodyRect.TopLeft.Col + EFI_ITEM_TYPE_TAG_LENGTH + 2 + EFI_MAX_CASE_ITEM_NAME_LENGTH,
                     MenuPage->Body.SplitPoint.Row + Index
                     );
     }
     if (MENU_ITEM_TYPE (MenuPage->Body.CurrentSelected->ItemType) == EFI_ITEM_HAVE_EDIT) {
-      ST->ConOut->EnableCursor (ST->ConOut, TRUE);
-      ST->ConOut->SetCursorPosition(
-                    ST->ConOut,
+      tST->ConOut->EnableCursor (tST->ConOut, TRUE);
+      tST->ConOut->SetCursorPosition(
+                    tST->ConOut,
                     MenuPage->Body.SplitPoint.Col - 22,
                     MenuPage->Body.SplitPoint.Row + Index
                     );
@@ -1179,20 +1179,20 @@ Returns:
 
   MenuItem = Item;
   if (MenuItem == MenuPage->Body.CurrentSelected) {
-    ST->ConOut->SetAttribute (
-          ST->ConOut,
+    tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
           );
   } else {
-    ST->ConOut->SetAttribute (
-          ST->ConOut,
+    tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_MENUPAGE_ITEM_COMMON_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
           );
   }
   //
   //disable cursor before print.
   //
-  ST->ConOut->EnableCursor (ST->ConOut, FALSE);
+  tST->ConOut->EnableCursor (tST->ConOut, FALSE);
   switch (MENU_ITEM_TYPE (MenuItem->ItemType)) {
     case EFI_ITEM_HAVE_SUBITEMS:
       //
@@ -1231,8 +1231,8 @@ Returns:
     case EFI_ITEM_HAVE_EDIT:
 
       if (MenuItem == MenuPage->Body.CurrentSelected) {
-        ST->ConOut->SetAttribute (
-              ST->ConOut,
+        tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_ITEM_EDIT_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
               );
       }
@@ -1274,8 +1274,8 @@ Returns:
         }
       }
       if (MenuItem == MenuPage->Body.CurrentSelected) {
-        ST->ConOut->SetAttribute (
-              ST->ConOut,
+        tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
               );
       }
@@ -1287,14 +1287,14 @@ Returns:
         Buffer[Index] = L' ';
       }
       Buffer[Index] = L'\0';
-      Attrib = ST->ConOut->Mode->Attribute;
-      ST->ConOut->SetAttribute (
-            ST->ConOut,
+      Attrib = tST->ConOut->Mode->Attribute;
+      tST->ConOut->SetAttribute (
+            tST->ConOut,
             EFI_MENUPAGE_BODY_BGCOLOR >>  4 | EFI_MENUPAGE_BODY_BGCOLOR
             );
       TestPrintAt (X0 + 1, Ypos, Buffer);
 
-      ST->ConOut->SetAttribute (ST->ConOut , Attrib);
+      tST->ConOut->SetAttribute (tST->ConOut , Attrib);
       //
       //draw "[" and "]".
       //
@@ -1409,8 +1409,8 @@ Returns:
         //
         //White color is better
         //
-        ST->ConOut->SetAttribute (
-              ST->ConOut,
+        tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
               );
       }
@@ -1460,8 +1460,8 @@ Returns:
         }
       }
       if (MenuItem == MenuPage->Body.CurrentSelected) {
-        ST->ConOut->SetAttribute (
-              ST->ConOut,
+        tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
               );
       }
@@ -1486,7 +1486,7 @@ Returns:
                    );
       } else {
 
-        BS->CopyMem (
+        tBS->CopyMem (
           Buffer,
           MenuItem->ItemString.Text,
           EFI_MAX_EDIT_ITEM_NAME_LENGTH * sizeof(CHAR16)
@@ -1508,7 +1508,7 @@ Returns:
                    );
       } else {
 
-        BS->CopyMem (
+        tBS->CopyMem (
           Buffer,
           MenuItem->ItemString.Text,
           EFI_MAX_CASE_ITEM_NAME_LENGTH * sizeof(CHAR16)
@@ -1530,7 +1530,7 @@ Returns:
                    );
       } else {
 
-        BS->CopyMem (
+        tBS->CopyMem (
           Buffer,
           MenuItem->ItemString.Text,
           (EFI_MAX_ITEM_NAME_LENGTH + 1) * sizeof(CHAR16)
@@ -1568,7 +1568,7 @@ Returns:
   if (MenuPage->Body.CurrentSelected != NULL  &&
       ((MENU_ITEM_TYPE (MenuPage->Body.CurrentSelected->ItemType) == EFI_ITEM_HAVE_EDIT) ||
        (MENU_ITEM_TYPE (MenuPage->Body.CurrentSelected->ItemType) == EFI_ITEM_CASE))) {
-//    ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+//    tST->ConOut->EnableCursor (tST->ConOut, TRUE);
 
     Index = 0;
     MenuItem = MenuPage->Body.FirstInDisplay;
@@ -1581,25 +1581,25 @@ Returns:
     //
     //White color is better
     //
-    ST->ConOut->SetAttribute (
-              ST->ConOut,
+    tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
               );
     if (MENU_ITEM_TYPE (MenuPage->Body.CurrentSelected->ItemType) == EFI_ITEM_CASE) {
-      ST->ConOut->SetCursorPosition(
-                    ST->ConOut,
+      tST->ConOut->SetCursorPosition(
+                    tST->ConOut,
                     MenuPage->Body.BodyRect.TopLeft.Col + EFI_ITEM_TYPE_TAG_LENGTH + 2 + EFI_MAX_CASE_ITEM_NAME_LENGTH,
                     MenuPage->Body.SplitPoint.Row + Index
                     );
-      ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+      tST->ConOut->EnableCursor (tST->ConOut, TRUE);
     }
     if (MENU_ITEM_TYPE (MenuPage->Body.CurrentSelected->ItemType) == EFI_ITEM_HAVE_EDIT) {
-      ST->ConOut->SetCursorPosition(
-                    ST->ConOut,
+      tST->ConOut->SetCursorPosition(
+                    tST->ConOut,
                     MenuPage->Body.SplitPoint.Col - 22,
                     MenuPage->Body.SplitPoint.Row + Index
                     );
-      ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+      tST->ConOut->EnableCursor (tST->ConOut, TRUE);
     }
   }
   return Status;
@@ -1678,13 +1678,13 @@ Returns:
 
   MenuItem = Item;
   if (MenuItem == MenuPage->Body.CurrentSelected) {
-    ST->ConOut->SetAttribute (
-          ST->ConOut,
+    tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
           );
   } else {
-    ST->ConOut->SetAttribute (
-          ST->ConOut,
+    tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_MENUPAGE_ITEM_COMMON_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
           );
   }
@@ -1783,8 +1783,8 @@ Returns:
             return Status;
           }
         }
-        ST->ConOut->SetAttribute (
-              ST->ConOut,
+        tST->ConOut->SetAttribute (
+              tST->ConOut,
               EFI_MENUPAGE_ITEM_SELECTED_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
               );
       }
@@ -1826,8 +1826,8 @@ Returns:
   //
   //set default Console Attribute and clear the screen
   //
-  ST->ConOut->SetAttribute (ST->ConOut, EFI_BACKGROUND_BLACK | EFI_WHITE);
-  ST->ConOut->ClearScreen (ST->ConOut);
+  tST->ConOut->SetAttribute (tST->ConOut, EFI_BACKGROUND_BLACK | EFI_WHITE);
+  tST->ConOut->ClearScreen (tST->ConOut);
 
   //
   //refesh header
@@ -1875,14 +1875,14 @@ Returns:
     //
     gMode      = *Mode;
 
-    gConAttrib = ST->ConOut->Mode->Attribute;
+    gConAttrib = tST->ConOut->Mode->Attribute;
     gMenuPage  = NULL;
     gMenuExit  = FALSE;
     //
     //disable cursor
     //
-    ST->ConOut->EnableCursor (ST->ConOut,FALSE);
-    ST->ConOut->ClearScreen (ST->ConOut);
+    tST->ConOut->EnableCursor (tST->ConOut,FALSE);
+    tST->ConOut->ClearScreen (tST->ConOut);
     return EFI_SUCCESS;
 }
 
@@ -1906,22 +1906,22 @@ Returns:
   //
   //restore console Attribute
   //
-  if (ST->ConOut->Mode->Attribute != gConAttrib) {
-    ST->ConOut->SetAttribute (ST->ConOut, gConAttrib);
+  if (tST->ConOut->Mode->Attribute != gConAttrib) {
+    tST->ConOut->SetAttribute (tST->ConOut, gConAttrib);
   }
 
   //
   //restore console cursor
   //
-  ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+  tST->ConOut->EnableCursor (tST->ConOut, TRUE);
 
   //
   //restore console display mode
   //
-  if (gMode != ST->ConOut->Mode->Mode) {
-    ST->ConOut->SetMode (ST->ConOut, (UINTN)gMode);
+  if (gMode != tST->ConOut->Mode->Mode) {
+    tST->ConOut->SetMode (tST->ConOut, (UINTN)gMode);
   }
-  ST->ConOut->ClearScreen (ST->ConOut);
+  tST->ConOut->ClearScreen (tST->ConOut);
   return EFI_SUCCESS;
 }
 
@@ -1941,8 +1941,8 @@ Returns:
 
 --*/
 {
-   ST->ConOut->SetAttribute (ST->ConOut, gConAttrib);
-   ST->ConOut->ClearScreen (ST->ConOut);
-   ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+   tST->ConOut->SetAttribute (tST->ConOut, gConAttrib);
+   tST->ConOut->ClearScreen (tST->ConOut);
+   tST->ConOut->EnableCursor (tST->ConOut, TRUE);
    return EFI_SUCCESS;
 }

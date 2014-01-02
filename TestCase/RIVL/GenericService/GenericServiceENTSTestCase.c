@@ -52,6 +52,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "GenericServiceENTSTestCase.h"
 
 //

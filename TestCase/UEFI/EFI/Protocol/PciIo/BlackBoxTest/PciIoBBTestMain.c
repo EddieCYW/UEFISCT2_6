@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "PciIoBBTestMain.h"
 #include "PciIoBBTestSupport.h"
 
@@ -429,7 +430,7 @@ InitializeBBTestPciIo (
   //initialize all the library to be used in this driver.
   //
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   GetSystemDevicePathAndFilePath (ImageHandle);
 

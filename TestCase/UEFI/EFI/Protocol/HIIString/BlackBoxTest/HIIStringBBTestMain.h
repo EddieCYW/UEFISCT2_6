@@ -211,12 +211,6 @@ GetHIIDatabaseInterface (
   OUT EFI_HII_DATABASE_PROTOCOL    **HIIDatabase
   );
   
-VOID
-InitializeLib (
-  IN EFI_HANDLE                     ImageHandle,
-  IN EFI_SYSTEM_TABLE               *SystemTable
-  );
-  
 VOID *
 AllocatePool (
   IN UINTN                          Size

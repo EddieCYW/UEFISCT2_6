@@ -126,13 +126,6 @@ BBTestProcessExtFunctionTest (
   );
   
 
-VOID
-InitializeLib (
-  IN EFI_HANDLE                     ImageHandle,
-  IN EFI_SYSTEM_TABLE               *SystemTable
-  );
-
-
 EFI_STATUS 
 IP4ProcessPacket(
   IN  EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib,

@@ -59,12 +59,11 @@ Abstract:
 #ifndef _SIMPLE_NETWORK_H_
 #define _SIMPLE_NETWORK_H_
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "Guid.h"
 #include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "SimpleNetworkProtocol.h"
-#include "EfiDriverLib.h"
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestLoggingLibrary)
 

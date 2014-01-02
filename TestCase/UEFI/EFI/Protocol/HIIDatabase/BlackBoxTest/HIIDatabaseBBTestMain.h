@@ -349,12 +349,6 @@ BBTestGetPackageListHandleFunctionTest (
   IN EFI_HANDLE                 SupportHandle
   );
   
-VOID
-InitializeLib (
-  IN EFI_HANDLE                     ImageHandle,
-  IN EFI_SYSTEM_TABLE               *SystemTable
-  );
-  
 VOID *
 AllocatePool (
   IN UINTN                          Size

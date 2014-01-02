@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 
+#include "SctLib.h"
 #include "UnicodeCollation2BBTestMain.h"
 
 CHAR8                                                EngUpperMap[0x100];
@@ -179,7 +180,7 @@ InitializeBBTestUnicodeCollation2 (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   InitCharMapping();
 

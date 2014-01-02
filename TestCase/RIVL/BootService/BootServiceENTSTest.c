@@ -52,8 +52,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
+#include "SctLib.h"
 #include "EventTimerAndTaskPriorityService/EventTimerAndTaskPriorityENTSTestCase.h"
 #include "MemoryAllocationService/MemoryAllocationENTSTestCase.h"
 #include "MiscellaneousBootService/MiscellaneousBootENTSTestCase.h"
@@ -67,72 +67,72 @@ ENTS_INTERFACE    gBootServiceEntsInterfaceList[] = {
   {
     L"CreateEvent",
     BS_CreateEvent_EntsTest,
-    gBSCreateEventArgField
+    BSCreateEventArgField
   },
   {
     L"CloseEvent",
     BS_CloseEvent_EntsTest,
-    gBSCloseEventArgField
+    BSCloseEventArgField
   },
   {
     L"SignalEvent",
     BS_SignalEvent_EntsTest,
-    gBSSignalEventArgField
+    BSSignalEventArgField
   },
   {
     L"WaitForEvent",
     BS_WaitForEvent_EntsTest,
-    gBSWaitForEventArgField
+    BSWaitForEventArgField
   },
   {
     L"CheckEvent",
     BS_CheckEvent_EntsTest,
-    gBSCheckEventArgField
+    BSCheckEventArgField
   },
   {
     L"SetTimer",
     BS_SetTimer_EntsTest,
-    gBSSetTimerArgField
+    BSSetTimerArgField
   },
   {
     L"AllocatePages",
     BS_AllocatePages_EntsTest,
-    gBSAllocatePagesArgField
+    BSAllocatePagesArgField
   },
   {
     L"FreePages",
     BS_FreePages_EntsTest,
-    gBSFreePagesArgField
+    BSFreePagesArgField
   },
   {
     L"AllocatePool",
     BS_AllocatePool_EntsTest,
-    gBSAllocatePoolArgField
+    BSAllocatePoolArgField
   },
   {
     L"FreePool",
     BS_FreePool_EntsTest,
-    gBSFreePoolArgField
+    BSFreePoolArgField
   },
   {
     L"SetWatchdogTimer",
     BS_SetWatchdogTimer_EntsTest,
-    gBSSetWatchdogTimerArgField
+    BSSetWatchdogTimerArgField
   },
   {
     L"Stall",
     BS_Stall_EntsTest,
-    gBSStallArgField
+    BSStallArgField
   },
   {
     L"CopyMem",
     BS_CopyMem_EntsTest,
-    gBSCopyMemArgField
+    BSCopyMemArgField
   },
   {
     L"SetMem",
     BS_SetMem_EntsTest,
-    gBSSetMemArgField
+    BSSetMemArgField
   },
   0
 };
@@ -172,10 +172,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -183,7 +183,7 @@ Returns:
 
   LoadedImage->Unload = BootServiceENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   &gBootServiceEntsProtocolInterface
@@ -201,7 +201,7 @@ Returns:
   gBootServiceEntsProtocolInterface->RuntimeInfo        = gBootServiceRuntimeInfo;
   gBootServiceEntsProtocolInterface->RuntimeInfoSize    = gBootServiceRuntimeInfoSize;
 
-  return gBS->InstallMultipleProtocolInterfaces (
+  return tBS->InstallMultipleProtocolInterfaces (
                 &ImageHandle,
                 &gEfiEntsProtocolGuid,
                 gBootServiceEntsProtocolInterface,
@@ -232,7 +232,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gBootServiceEntsProtocolInterface,
@@ -240,7 +240,7 @@ Returns:
                   );
 
   if (gBootServiceEntsProtocolInterface != NULL) {
-    gBS->FreePool (gBootServiceEntsProtocolInterface);
+    tBS->FreePool (gBootServiceEntsProtocolInterface);
   }
 
   return Status;

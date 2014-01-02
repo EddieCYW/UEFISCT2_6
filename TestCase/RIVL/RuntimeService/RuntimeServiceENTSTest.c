@@ -53,8 +53,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
+#include "SctLib.h"
 #include "VariableService/VariableENTSTestCase.h"
 #include "TimeService/TimeENTSTestCase.h"
 #include "MiscellaneousRuntimeService/MiscellaneousRuntimeENTSTestCase.h"
@@ -68,42 +68,42 @@ ENTS_INTERFACE    gRuntimeServiceEntsInterfaceList[] = {
   {
     L"GetVariable",
     RT_GetVariable_EntsTest,
-    gRTGetVariableArgField
+    tRTGetVariableArgField
   },
   {
     L"GetNextVariableName",
     RT_GetNextVariableName_EntsTest,
-    gRTGetNextVariableNameArgField
+    tRTGetNextVariableNameArgField
   },
   {
     L"SetVariable",
     RT_SetVariable_EntsTest,
-    gRTSetVariableArgField
+    tRTSetVariableArgField
   },
   {
     L"GetTime",
     RT_GetTime_EntsTest,
-    gRTGetTimeArgField
+    tRTGetTimeArgField
   },
   {
     L"SetTime",
     RT_SetTime_EntsTest,
-    gRTSetTimeArgField
+    tRTSetTimeArgField
   },
   {
     L"GetWakeupTime",
     RT_GetWakeupTime_EntsTest,
-    gRTGetWakeupTimeArgField
+    tRTGetWakeupTimeArgField
   },
   {
     L"SetWakeupTime",
     RT_SetWakeupTime_EntsTest,
-    gRTSetWakeupTimeArgField
+    tRTSetWakeupTimeArgField
   },
   {
     L"ResetSystem",
     RT_ResetSystem_EntsTest,
-    gRTResetSystemArgField
+    tRTResetSystemArgField
   },
   0
 };
@@ -143,10 +143,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -154,7 +154,7 @@ Returns:
 
   LoadedImage->Unload = RuntimeServiceENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gRuntimeServiceEntsProtocolInterface
@@ -172,7 +172,7 @@ Returns:
   gRuntimeServiceEntsProtocolInterface->RuntimeInfo       = gRuntimeServiceRuntimeInfo;
   gRuntimeServiceEntsProtocolInterface->RuntimeInfoSize   = gRuntimeServiceRuntimeInfoSize;
 
-  return gBS->InstallMultipleProtocolInterfaces (
+  return tBS->InstallMultipleProtocolInterfaces (
                 &ImageHandle,
                 &gEfiEntsProtocolGuid,
                 gRuntimeServiceEntsProtocolInterface,
@@ -203,7 +203,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gRuntimeServiceEntsProtocolInterface,
@@ -211,7 +211,7 @@ Returns:
                   );
 
   if (gRuntimeServiceEntsProtocolInterface != NULL) {
-    gBS->FreePool (gRuntimeServiceEntsProtocolInterface);
+    tBS->FreePool (gRuntimeServiceEntsProtocolInterface);
   }
 
   return Status;

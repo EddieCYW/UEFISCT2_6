@@ -175,7 +175,7 @@ InitializePlatformOverrideDriver1 (
   //
   // initialize test utility lib
   //
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   //
   // allocate memory for PrivateData

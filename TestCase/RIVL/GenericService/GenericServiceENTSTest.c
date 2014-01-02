@@ -52,6 +52,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "GenericServiceENTSTestCase.h"
 
 static CHAR16     gGenericServiceName[] = L"GS";
@@ -103,10 +104,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -114,7 +115,7 @@ Returns:
 
   LoadedImage->Unload = GenericServiceENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gGenericServiceEntsProtocolInterface
@@ -132,7 +133,7 @@ Returns:
   gGenericServiceEntsProtocolInterface->RuntimeInfo       = gGenericServiceRuntimeInfo;
   gGenericServiceEntsProtocolInterface->RuntimeInfoSize   = gGenericServiceRuntimeInfoSize;
 
-  return gBS->InstallMultipleProtocolInterfaces (
+  return tBS->InstallMultipleProtocolInterfaces (
                 &ImageHandle,
                 &gEfiEntsProtocolGuid,
                 gGenericServiceEntsProtocolInterface,
@@ -163,7 +164,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gGenericServiceEntsProtocolInterface,
@@ -171,7 +172,7 @@ Returns:
                   );
 
   if (gGenericServiceEntsProtocolInterface != NULL) {
-    gBS->FreePool (gGenericServiceEntsProtocolInterface);
+    tBS->FreePool (gGenericServiceEntsProtocolInterface);
   }
 
   return Status;

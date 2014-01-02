@@ -53,8 +53,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
+#include "SctLib.h"
 #include "Tcp6ServiceBindingENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
@@ -113,10 +113,10 @@ Returns:
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
   EFI_HANDLE                ClientHandle;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -124,7 +124,7 @@ Returns:
 
   LoadedImage->Unload = Tcp6ServiceBindingENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   &gTcp6ServiceBindingEntsProtocolInterface
@@ -150,7 +150,7 @@ Returns:
   gTcp6ServiceBindingEntsProtocolInterface->RuntimeInfo       = gTcp6ServiceBindingRuntimeInfo;
   gTcp6ServiceBindingEntsProtocolInterface->RuntimeInfoSize   = gTcp6ServiceBindingRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gTcp6ServiceBindingEntsProtocolInterface,
@@ -164,7 +164,7 @@ Returns:
 
 Error:
   if (gTcp6ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gTcp6ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gTcp6ServiceBindingEntsProtocolInterface);
   }
 
   return Status;
@@ -193,7 +193,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gTcp6ServiceBindingEntsProtocolInterface,
@@ -201,7 +201,7 @@ Returns:
                   );
 
   if (gTcp6ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gTcp6ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gTcp6ServiceBindingEntsProtocolInterface);
   }
 
   return Status;

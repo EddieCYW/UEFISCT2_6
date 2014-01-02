@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver Acpi Table Protocol's function Test
 
 --*/
+#include "SctLib.h"
 #include "AcpiTableProtocolBBTestMain.h"
 
 #define EFI_ACPI_TABLE_GUID \

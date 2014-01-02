@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "IPsec2BBTestMain.h"
 
 
@@ -119,7 +120,7 @@ InitializeIPsec2BBTest (
   // initialize test utility lib
   //
 
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

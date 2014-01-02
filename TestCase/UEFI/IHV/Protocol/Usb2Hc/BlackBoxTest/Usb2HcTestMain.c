@@ -56,6 +56,7 @@ Abstract:
 //
 // Includes
 //
+#include "SctLib.h"
 #include "Usb2HcTest.h"
 
 //
@@ -329,7 +330,7 @@ Returns:
   EFI_STATUS  status;
   DEBUG ((EFI_D_INFO | EFI_D_LOAD, "wwwwwwwwwwwwwwwwwwwww"));
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
   status = EfiInitAndInstallIHVBBTestInterface (

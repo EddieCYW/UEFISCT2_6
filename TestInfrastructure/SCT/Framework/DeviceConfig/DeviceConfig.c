@@ -57,6 +57,8 @@ Abstract:
 
 #include "Sct.h"
 
+#include EFI_PROTOCOL_DEFINITION (PciIo)
+
 #define EFI_SCT_SECTION_DEVICE_CONFIG       L"Device Configuration"
 
 #define SCAN_DEVICES_ALL                    0
@@ -185,7 +187,7 @@ SctDeviceConfig (
   //
   // Enable cursor
   //
-  ST->ConOut->EnableCursor (ST->ConOut, TRUE);
+  tST->ConOut->EnableCursor (tST->ConOut, TRUE);
 
   //
   // Create the name of device configuration file
@@ -211,7 +213,7 @@ SctDeviceConfig (
                                );
   if (EFI_ERROR (Status) && (Status != EFI_NOT_FOUND)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Open device config file - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
@@ -227,12 +229,12 @@ SctDeviceConfig (
                                  );
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Create device config file - %r", Status));
-      BS->FreePool (FileName);
+      tBS->FreePool (FileName);
       return Status;
     }
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Print out the help information
@@ -355,9 +357,9 @@ PageBreakPrint (
   //
   // Get the maximum columns and rows
   //
-  ST->ConOut->QueryMode (
-                ST->ConOut,
-                ST->ConOut->Mode->Mode,
+  tST->ConOut->QueryMode (
+                tST->ConOut,
+                tST->ConOut->Mode->Mode,
                 &MaxColumns,
                 &MaxRows
                 );
@@ -371,10 +373,10 @@ PageBreakPrint (
     Print (L"  Press 'q' to exit, any other key to continue");
 
     for (; ;) {
-      BS->Stall (10000);
+      tBS->Stall (10000);
 
-      Status = ST->ConIn->ReadKeyStroke (
-                            ST->ConIn,
+      Status = tST->ConIn->ReadKeyStroke (
+                            tST->ConIn,
                             &Key
                             );
       if (!EFI_ERROR (Status)) {
@@ -442,7 +444,7 @@ DeviceConfigInsert (
   //
   // Locate all handles
   //
-  Status = BS->LocateHandleBuffer (
+  Status = tBS->LocateHandleBuffer (
                  AllHandles,
                  NULL,
                  NULL,
@@ -456,17 +458,17 @@ DeviceConfigInsert (
 
   if ((HandleIndex == 0) || (HandleIndex > NoHandles)) {
     Print (L"  Invalid handle number!\n");
-    BS->FreePool (HandleBuffer);
+    tBS->FreePool (HandleBuffer);
     return EFI_INVALID_PARAMETER;
   }
 
   Handle = HandleBuffer[HandleIndex - 1];
-  BS->FreePool (HandleBuffer);
+  tBS->FreePool (HandleBuffer);
 
   //
   // Check the Device Path Protocol on this handle
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  Handle,
                  &gEfiDevicePathProtocolGuid,
                  (VOID **)&DevicePath
@@ -505,11 +507,11 @@ DeviceConfigInsert (
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Device config set string - %r", Status));
-    BS->FreePool (DevicePathStr);
+    tBS->FreePool (DevicePathStr);
     return Status;
   }
 
-  BS->FreePool (DevicePathStr);
+  tBS->FreePool (DevicePathStr);
 
   //
   // Device Type, let user choose the device type
@@ -938,7 +940,7 @@ DeviceConfigScan (
   //
   // Locate all handles
   //
-  Status = BS->LocateHandleBuffer (
+  Status = tBS->LocateHandleBuffer (
                  AllHandles,
                  NULL,
                  NULL,
@@ -959,7 +961,7 @@ DeviceConfigScan (
     //
     // Skip the handle without the Device Path Protocol
     //
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                    HandleBuffer[Index],
                    &gEfiDevicePathProtocolGuid,
                    (VOID **)&DevicePath
@@ -972,7 +974,7 @@ DeviceConfigScan (
     // Skip the handle without the PCI IO Protocol
     //
     if (ScanType == SCAN_DEVICES_WITH_OPTION_ROM) {
-      Status = BS->HandleProtocol (
+      Status = tBS->HandleProtocol (
                      HandleBuffer[Index],
                      &gEfiPciIoProtocolGuid,
                      (VOID **)&PciIo
@@ -996,12 +998,12 @@ DeviceConfigScan (
     //
     DevicePathStr = LibDevicePathToStr (DevicePath);
     TempStr = PoolPrint (L"%x: %s\n", Index + 1, DevicePathStr);
-    BS->FreePool (DevicePathStr);
+    tBS->FreePool (DevicePathStr);
 
     Status = PageBreakPrint (FALSE, TempStr);
-    BS->FreePool (TempStr);
+    tBS->FreePool (TempStr);
     if (EFI_ERROR (Status)) {
-      BS->FreePool (HandleBuffer);
+      tBS->FreePool (HandleBuffer);
       return EFI_SUCCESS;
     }
 
@@ -1010,12 +1012,12 @@ DeviceConfigScan (
     //
     Status = DeviceConfigScanDrivers (HandleBuffer[Index]);
     if (EFI_ERROR (Status)) {
-      BS->FreePool (HandleBuffer);
+      tBS->FreePool (HandleBuffer);
       return EFI_SUCCESS;
     }
   }
 
-  BS->FreePool (HandleBuffer);
+  tBS->FreePool (HandleBuffer);
 
   //
   // No device with Option ROM
@@ -1208,7 +1210,7 @@ DeviceConfigScanDrivers (
   // useful in this function. But the Buffer is used to store the Handles
   // related to the input controller handle
   //
-  Status = BS->LocateHandleBuffer (
+  Status = tBS->LocateHandleBuffer (
                  AllHandles,
                  NULL,
                  NULL,
@@ -1222,13 +1224,13 @@ DeviceConfigScanDrivers (
   //
   // Locate protocols on this handle
   //
-  Status = BS->ProtocolsPerHandle (
+  Status = tBS->ProtocolsPerHandle (
                  Handle,
                  &ProtocolBuffer,
                  &ProtocolBufferCount
                  );
   if (EFI_ERROR (Status)) {
-    BS->FreePool (HandleBuffer);
+    tBS->FreePool (HandleBuffer);
     return Status;
   }
 
@@ -1241,7 +1243,7 @@ DeviceConfigScanDrivers (
     //
     // Locate open protocol information
     //
-    Status = BS->OpenProtocolInformation (
+    Status = tBS->OpenProtocolInformation (
                    Handle,
                    ProtocolBuffer[Index1],
                    &EntryBuffer,
@@ -1267,7 +1269,7 @@ DeviceConfigScanDrivers (
           //
           // It is a new driver handle
           //
-          Status = BS->HandleProtocol (
+          Status = tBS->HandleProtocol (
                          EntryBuffer[Index2].AgentHandle,
                          &gEfiComponentNameProtocolGuid,
                          (VOID **)&ComponentName
@@ -1285,9 +1287,9 @@ DeviceConfigScanDrivers (
             }
 
             Status = PageBreakPrint (FALSE, TempStr);
-            BS->FreePool (TempStr);
+            tBS->FreePool (TempStr);
             if (EFI_ERROR (Status)) {
-              BS->FreePool (HandleBuffer);
+              tBS->FreePool (HandleBuffer);
               return Status;
             }
 
@@ -1298,7 +1300,7 @@ DeviceConfigScanDrivers (
           // Can not locate the Component Name Protocol. Try the file path in
           // the Loaded Image Protocol
           //
-          Status = BS->HandleProtocol (
+          Status = tBS->HandleProtocol (
                          EntryBuffer[Index2].AgentHandle,
                          &gEfiLoadedImageProtocolGuid,
                          (VOID **)&LoadedImage
@@ -1306,12 +1308,12 @@ DeviceConfigScanDrivers (
           if (!EFI_ERROR (Status)) {
             FilePathStr = LibDevicePathToStr (LoadedImage->FilePath);
             TempStr = PoolPrint (L"  Managed by driver : %s\n", FilePathStr);
-            BS->FreePool (FilePathStr);
+            tBS->FreePool (FilePathStr);
 
             Status = PageBreakPrint (FALSE, TempStr);
-            BS->FreePool (TempStr);
+            tBS->FreePool (TempStr);
             if (EFI_ERROR (Status)) {
-              BS->FreePool (HandleBuffer);
+              tBS->FreePool (HandleBuffer);
               return Status;
             }
           }
@@ -1323,7 +1325,7 @@ DeviceConfigScanDrivers (
   //
   // Free resources
   //
-  BS->FreePool (HandleBuffer);
+  tBS->FreePool (HandleBuffer);
 
   //
   // Done

@@ -54,6 +54,7 @@ COMPONENT_TYPE  = LIBRARY
 
 [sources.common]
   Debug.c
+  Init.c
   Mem.c
 
 [sources.Arm]
@@ -95,7 +96,10 @@ COMPONENT_TYPE  = LIBRARY
   $(EFI_SOURCE)/SctPkg/Include
 
 [libraries.common]
+  EdkGuidLib
   EfiGuidLib
+  EdkProtocolLib
+  EfiProtocolLib
 
 [nmake.common]
   C_STD_INCLUDE=

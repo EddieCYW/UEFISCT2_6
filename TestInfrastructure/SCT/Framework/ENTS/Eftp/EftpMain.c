@@ -109,7 +109,7 @@ Returns:
   //
   // Construct the rx callback and timer callback for eftp read process
   //
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EVT_NOTIFY_SIGNAL,
                   NET_TPL_EVENT,
                   EftpRrqRxCallback,
@@ -121,7 +121,7 @@ Returns:
     return Status;
   }
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EVT_TIMER | EVT_NOTIFY_SIGNAL,
                   NET_TPL_EVENT,
                   EftpRrqTimer,
@@ -200,7 +200,7 @@ Returns:
   //
   // Construct the rx callback and timer callback for eftp  write process
   //
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EVT_NOTIFY_SIGNAL,
                   NET_TPL_EVENT,
                   EftpWrqRxCallback,
@@ -213,7 +213,7 @@ Returns:
     return Status;
   }
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EVT_TIMER | EVT_NOTIFY_SIGNAL,
                   NET_TPL_EVENT,
                   EftpWrqTimer,
@@ -329,7 +329,7 @@ Returns:
   //
   // Initialize the communication parameter used in the eftp configdata
   //
-  gBS->CopyMem (
+  tBS->CopyMem (
         &Private->InitialServer.DstMac,
         &Private->ConfigData.DstMac,
         NET_ETHER_ADDR_LEN
@@ -405,7 +405,7 @@ Returns:
   // but similar to disable interrupt because the same TPL task can preempt each other.
   // define a macro later.
   //
-//  OldTpl = gBS->RaiseTPL (NET_TPL_LOCK);
+//  OldTpl = tBS->RaiseTPL (NET_TPL_LOCK);
 
   //
   // Begin the eftp process.
@@ -442,7 +442,7 @@ Returns:
   }
   EftpSetTimer (Private, Private->Timeout, 0);
 
-//  gBS->RestoreTPL (OldTpl);
+//  tBS->RestoreTPL (OldTpl);
 
   if (Private->Token->Event) {
     return Status;
@@ -466,7 +466,7 @@ Returns:
   }
   
   if (Private->UniToken.MnpToken.Event) {
-    gBS->CloseEvent (Private->UniToken.MnpToken.Event);
+    tBS->CloseEvent (Private->UniToken.MnpToken.Event);
     Private->UniToken.MnpToken.Event = NULL;
   }
 
@@ -478,7 +478,7 @@ CleanUp:
   OldTpl = NET_RAISE_TPL(NET_TPL_LOCK);
 
   if (Private->UniToken.MnpToken.Event) {
-    gBS->CloseEvent (Private->UniToken.MnpToken.Event);
+    tBS->CloseEvent (Private->UniToken.MnpToken.Event);
     Private->UniToken.MnpToken.Event = NULL;
   }
 
@@ -488,7 +488,7 @@ CleanUp:
   }
 
   if (Private->TimeoutEvent) {
-    gBS->CloseEvent (Private->TimeoutEvent);
+    tBS->CloseEvent (Private->TimeoutEvent);
     Private->TimeoutEvent = NULL;
   }
 
@@ -662,7 +662,7 @@ Returns:
     //
     // ConfigureData is NULL means that stopping any pending operation
     //
-    OldTpl              = gBS->RaiseTPL (NET_TPL_EVENT + 1);
+    OldTpl              = tBS->RaiseTPL (NET_TPL_EVENT + 1);
     Private->Configured = FALSE;
 
     if (Private->State != EFTP_INIT) {
@@ -676,7 +676,7 @@ Returns:
       }
     }
 
-    gBS->RestoreTPL (OldTpl);
+    tBS->RestoreTPL (OldTpl);
   } else {
     if (Private->State != EFTP_INIT) {
       return EFI_ACCESS_DENIED;
@@ -866,9 +866,9 @@ Returns:
 
 --*/
 {
-  gBS->SetTimer (Private->TimeoutEvent, TimerCancel, 0);
+  tBS->SetTimer (Private->TimeoutEvent, TimerCancel, 0);
 
-  gBS->SetTimer (
+  tBS->SetTimer (
         Private->TimeoutEvent,
         TimerRelative,
         Sec * TICKS_PER_SECOND + MSec * TICKS_PER_MILLISECOND

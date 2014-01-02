@@ -60,6 +60,7 @@ References:
   UEFI/Tiano DXE Test Case Writer's Guide
 
 --*/
+#include "SctLib.h"
 #include "GraphicsOutputBBTest.h"
 
 #define IHV_GRAPHICS_OUTPUT_BB_TEST_CATEGORY_GUID	\
@@ -525,8 +526,8 @@ Returns:
 --*/
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
 
   return EfiInitAndInstallIHVBBTestInterface (
            &ImageHandle,

@@ -52,6 +52,7 @@ Abstract:
   Source file for Usb2 Hc Basic testing.
 
 --*/
+#include "SctLib.h"
 #include "Usb2HcTest.h"
 
 //

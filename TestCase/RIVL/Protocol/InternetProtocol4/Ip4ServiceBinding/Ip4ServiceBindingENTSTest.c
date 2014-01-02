@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Ip4ServiceBindingENTSTestCase.h"
 
 static CHAR16     gIp4ServiceBindingProtocolName[] = L"Ip4ServiceBinding";
@@ -110,10 +111,10 @@ Returns:
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
   EFI_HANDLE                ClientHandle;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -121,7 +122,7 @@ Returns:
 
   LoadedImage->Unload = Ip4ServiceBindingENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gIp4ServiceBindingEntsProtocolInterface
@@ -147,7 +148,7 @@ Returns:
   gIp4ServiceBindingEntsProtocolInterface->RuntimeInfo        = gIp4ServiceBindingRuntimeInfo;
   gIp4ServiceBindingEntsProtocolInterface->RuntimeInfoSize    = gIp4ServiceBindingRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gIp4ServiceBindingEntsProtocolInterface,
@@ -161,7 +162,7 @@ Returns:
 
 Error:
   if (gIp4ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gIp4ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gIp4ServiceBindingEntsProtocolInterface);
   }
 
   return Status;
@@ -190,7 +191,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gIp4ServiceBindingEntsProtocolInterface,
@@ -198,7 +199,7 @@ Returns:
                   );
 
   if (gIp4ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gIp4ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gIp4ServiceBindingEntsProtocolInterface);
   }
 
   return Status;

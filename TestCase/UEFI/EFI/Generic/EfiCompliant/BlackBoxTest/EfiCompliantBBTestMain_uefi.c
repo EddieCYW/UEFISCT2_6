@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "EfiCompliantBbTestMain_uefi.h"
 
 //
@@ -134,7 +135,7 @@ InitializeEfiCompliantBbTest (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,

@@ -176,7 +176,7 @@ Returns:
   //
   RemainderPath = DevicePath;
 
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                  &gEfiSimpleFileSystemProtocolGuid,
                  &RemainderPath,
                  &DeviceHandle
@@ -189,7 +189,7 @@ Returns:
   //
   // Locate the volume of the file system
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  DeviceHandle,
                  &gEfiSimpleFileSystemProtocolGuid,
                  (VOID **)&Vol
@@ -231,7 +231,7 @@ Returns:
   //
   FileInfoSize = sizeof(EFI_FILE_INFO) + 1024;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  FileInfoSize,
                  (VOID **)&FileInfo
@@ -281,11 +281,11 @@ Returns:
                    );
         if (EFI_ERROR (Status)) {
           EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load a support file - %r", Status));
-          BS->FreePool (FileName);
+          tBS->FreePool (FileName);
           continue;
         }
 
-        BS->FreePool (FileName);
+        tBS->FreePool (FileName);
 
         //
         // Add the support file to the support file list
@@ -322,11 +322,11 @@ Returns:
                    );
         if (EFI_ERROR (Status)) {
           EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load support files - %r", Status));
-          BS->FreePool (SubDir);
+          tBS->FreePool (SubDir);
           continue;
         }
 
-        BS->FreePool (SubDir);
+        tBS->FreePool (SubDir);
       }
     }
   }
@@ -334,7 +334,7 @@ Returns:
   //
   // Free resources
   //
-  BS->FreePool (FileInfo);
+  tBS->FreePool (FileInfo);
   SupportDir->Close (SupportDir);
 
   //
@@ -509,11 +509,11 @@ Returns:
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Set recovery config - %r", Status));
     CloseStandardSupportFiles ();
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Done
@@ -742,16 +742,16 @@ Routine Description:
   FilePath = AppendDevicePath (DevicePath, FileNode);
   if (FilePath == NULL) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"AppendDevicePath: Out of resources"));
-    BS->FreePool (FileNode);
+    tBS->FreePool (FileNode);
     return EFI_OUT_OF_RESOURCES;
   }
 
-  BS->FreePool (FileNode);
+  tBS->FreePool (FileNode);
 
   //
   // Load the support file
   //
-  Status = BS->LoadImage (
+  Status = tBS->LoadImage (
                  FALSE,
                  gFT->ImageHandle,
                  FilePath,
@@ -761,16 +761,16 @@ Routine Description:
                  );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load image - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Verify the image is a driver or not
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  ImageHandle,
                  &gEfiLoadedImageProtocolGuid,
                  (VOID **)&LoadedImage
@@ -785,7 +785,7 @@ Routine Description:
     //
     // It is a driver, and then verify it is a TSL (test support library)
     //
-    Status = BS->StartImage (
+    Status = tBS->StartImage (
                    ImageHandle,
                    &ExitDataSize,
                    &ExitData
@@ -798,7 +798,7 @@ Routine Description:
     //
     // Is it a test support library?
     //
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                    ImageHandle,
                    &gEfiTslInitInterfaceGuid,
                    (VOID **)&TslInit
@@ -813,14 +813,14 @@ Routine Description:
                  );
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Create a support file - %r", Status));
-        BS->UnloadImage (ImageHandle);
+        tBS->UnloadImage (ImageHandle);
         return Status;
       }
 
       return EFI_SUCCESS;
     }
 
-    BS->UnloadImage (ImageHandle);
+    tBS->UnloadImage (ImageHandle);
   }
 
   //
@@ -859,7 +859,7 @@ Routine Description:
   //
   // Allocate memory for the support file
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_SCT_TEST_FILE),
                  (VOID **)SupportFile
@@ -906,12 +906,12 @@ Routine Description:
   // Free the items of support file
   //
   if (SupportFile->DevicePath != NULL) {
-    BS->FreePool (SupportFile->DevicePath);
+    tBS->FreePool (SupportFile->DevicePath);
     SupportFile->DevicePath = NULL;
   }
 
   if (SupportFile->FileName != NULL) {
-    BS->FreePool (SupportFile->FileName);
+    tBS->FreePool (SupportFile->FileName);
     SupportFile->FileName = NULL;
   }
 
@@ -920,7 +920,7 @@ Routine Description:
     //
     // Test support file
     //
-    BS->UnloadImage (SupportFile->ImageHandle);
+    tBS->UnloadImage (SupportFile->ImageHandle);
     break;
 
   default:
@@ -934,7 +934,7 @@ Routine Description:
   //
   // Free the support file itself
   //
-  BS->FreePool (SupportFile);
+  tBS->FreePool (SupportFile);
 
   //
   // Done
@@ -992,7 +992,7 @@ Routine Description:
       //
       // Get the public interface
       //
-      Status = BS->HandleProtocol (
+      Status = tBS->HandleProtocol (
                      gFT->SupportHandle,
                      Guid,
                      (VOID **)&TempProtocol
@@ -1134,7 +1134,7 @@ Returns:
   //
   RemainderPath = DevicePath;
 
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                  &gEfiSimpleFileSystemProtocolGuid,
                  &RemainderPath,
                  &DeviceHandle
@@ -1147,7 +1147,7 @@ Returns:
   //
   // Locate the volume of the file system
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  DeviceHandle,
                  &gEfiSimpleFileSystemProtocolGuid,
                  (VOID **)&Vol
@@ -1189,7 +1189,7 @@ Returns:
   //
   FileInfoSize = sizeof(EFI_FILE_INFO) + 1024;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  FileInfoSize,
                  (VOID **)&FileInfo
@@ -1239,11 +1239,11 @@ Returns:
                    );
         if (EFI_ERROR (Status)) {
           EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load a proxy file - %r", Status));
-          BS->FreePool (FileName);
+          tBS->FreePool (FileName);
           continue;
         }
 
-        BS->FreePool (FileName);
+        tBS->FreePool (FileName);
 
         //
         // Add the support file to the support file list
@@ -1280,11 +1280,11 @@ Returns:
                    );
         if (EFI_ERROR (Status)) {
           EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load proxy files - %r", Status));
-          BS->FreePool (SubDir);
+          tBS->FreePool (SubDir);
           continue;
         }
 
-        BS->FreePool (SubDir);
+        tBS->FreePool (SubDir);
       }
     }
   }
@@ -1292,7 +1292,7 @@ Returns:
   //
   // Free resources
   //
-  BS->FreePool (FileInfo);
+  tBS->FreePool (FileInfo);
   ProxyDir->Close (ProxyDir);
 
   //
@@ -1399,16 +1399,16 @@ Routine Description:
   FilePath = AppendDevicePath (DevicePath, FileNode);
   if (FilePath == NULL) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"AppendDevicePath: Out of resources"));
-    BS->FreePool (FileNode);
+    tBS->FreePool (FileNode);
     return EFI_OUT_OF_RESOURCES;
   }
 
-  BS->FreePool (FileNode);
+  tBS->FreePool (FileNode);
 
   //
   // Load the support file
   //
-  Status = BS->LoadImage (
+  Status = tBS->LoadImage (
                  FALSE,
                  gFT->ImageHandle,
                  FilePath,
@@ -1418,16 +1418,16 @@ Routine Description:
                  );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load image - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Verify the image is a driver or not
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  ImageHandle,
                  &gEfiLoadedImageProtocolGuid,
                  (VOID **)&LoadedImage
@@ -1443,7 +1443,7 @@ Routine Description:
     //
     // It is a driver
     //
-    Status = BS->StartImage (
+    Status = tBS->StartImage (
                    ImageHandle,
                    &ExitDataSize,
                    &ExitData
@@ -1464,7 +1464,7 @@ Routine Description:
                );
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Create a support file - %r", Status));
-      BS->UnloadImage (ImageHandle);
+      tBS->UnloadImage (ImageHandle);
       EFI_SCT_DEBUG ((EFI_SCT_D_TRACE, L"point 2: file <%s>", FileName));
       return Status;
     }
@@ -1509,7 +1509,7 @@ Routine Description:
   //
   // Allocate memory for the support file
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_SCT_TEST_FILE),
                  (VOID **)ProxyFile
@@ -1556,12 +1556,12 @@ Routine Description:
   // Free the items of proxy file
   //
   if (ProxyFile->DevicePath != NULL) {
-    BS->FreePool (ProxyFile->DevicePath);
+    tBS->FreePool (ProxyFile->DevicePath);
     ProxyFile->DevicePath = NULL;
   }
 
   if (ProxyFile->FileName != NULL) {
-    BS->FreePool (ProxyFile->FileName);
+    tBS->FreePool (ProxyFile->FileName);
     ProxyFile->FileName = NULL;
   }
 
@@ -1570,7 +1570,7 @@ Routine Description:
     //
     // Test proxy file
     //
-    BS->UnloadImage (ProxyFile->ImageHandle);
+    tBS->UnloadImage (ProxyFile->ImageHandle);
     break;
 
   default:
@@ -1584,7 +1584,7 @@ Routine Description:
   //
   // Free the proxy file itself
   //
-  BS->FreePool (ProxyFile);
+  tBS->FreePool (ProxyFile);
 
   //
   // Done

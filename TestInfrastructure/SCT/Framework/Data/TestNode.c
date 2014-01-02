@@ -284,8 +284,8 @@ Returns:
                );
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Add root test node - %r", Status));
-      BS->FreePool (CategoryName);
-      BS->FreePool (CategoryDescription);
+      tBS->FreePool (CategoryName);
+      tBS->FreePool (CategoryDescription);
       continue;
     }
 
@@ -299,8 +299,8 @@ Returns:
                );
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Insert entry list to test node - %r", Status));
-      BS->FreePool (CategoryName);
-      BS->FreePool (CategoryDescription);
+      tBS->FreePool (CategoryName);
+      tBS->FreePool (CategoryDescription);
       continue;
     }
   }
@@ -519,7 +519,7 @@ Routine Description:
   //
   // Allocate memory for the test node
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_SCT_TEST_NODE),
                  (VOID **) &TempTestNode
@@ -570,19 +570,19 @@ Routine Description:
   // Free the items of test node
   //
   if (TestNode->Name != NULL) {
-    BS->FreePool (TestNode->Name);
+    tBS->FreePool (TestNode->Name);
     TestNode->Name = NULL;
   }
 
   if (TestNode->Description != NULL) {
-    BS->FreePool (TestNode->Description);
+    tBS->FreePool (TestNode->Description);
     TestNode->Description = NULL;
   }
 
   //
   // Free the test node itself
   //
-  BS->FreePool (TestNode);
+  tBS->FreePool (TestNode);
 
   //
   // Done
@@ -704,7 +704,7 @@ Routine Description:
   //
   // Free resources
   //
-  BS->FreePool (TempName);
+  tBS->FreePool (TempName);
 
   //
   // Done
@@ -972,11 +972,11 @@ GenerateCaseTreeFile(
              );
   if (EFI_ERROR (Status)) {
     EFI_ENTS_DEBUG(( EFI_ENTS_D_ERROR, L"Save cases tree - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
     
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
   return EFI_SUCCESS;
 }
 

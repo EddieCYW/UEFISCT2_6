@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "TapeBBTestMain.h"
 #include "TapeTest.h"
 
@@ -164,7 +165,7 @@ EFI_STATUS prepareTapeTest(int initTestFileMarkCnt, int initTestBlockMarkCnt)
 
 prepareTapeTestEnd:     
   if(buffer!=NULL)
-  	gBS->FreePool(buffer);	  
+  	tBS->FreePool(buffer);	  
 
   logMsg(gTapeBBTestMainAssertionGuid02E,
   			"EFI_TAPE_IO_PROTOCOL Test", 
@@ -318,7 +319,7 @@ EFI_STATUS BBTestTapeFunctionRead(
   		  
 BBTestTapeFunctionReadEnd:		
   if(buffer!=NULL)
-  	gBS->FreePool(buffer);					
+  	tBS->FreePool(buffer);					
   //
   // Exit a function. It is put at the exit point of a function
   LogExitFunction( LoggingLib, 
@@ -456,7 +457,7 @@ BBTestTapeFunctionWrite (
   		  
 BBTestTapeFunctionWriteEnd:	
   if(buffer!=NULL)
-  	gBS->FreePool(buffer);		
+  	tBS->FreePool(buffer);		
   	    							
   //
   // Exit a function. It is put at the exit point of a function

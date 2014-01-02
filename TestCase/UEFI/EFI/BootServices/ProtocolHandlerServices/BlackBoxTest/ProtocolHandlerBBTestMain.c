@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "ProtocolHandlerBBTest.h"
 
 EFI_DRIVER_ENTRY_POINT(InitializeBBTestProtocolHandlerBootServices)
@@ -468,7 +469,7 @@ InitializeBBTestProtocolHandlerBootServices (
   //
   // initialize test utility lib
   //
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

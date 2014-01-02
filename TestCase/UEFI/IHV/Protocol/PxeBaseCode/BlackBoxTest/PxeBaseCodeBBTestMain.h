@@ -64,7 +64,6 @@ Abstract:
 #include "EfiTestLib.h"
 #include <PxeBaseCode.h>
 #include <PxeBaseCodeCallBack.h>
-#include "EfiDriverLib.h"
 
 #include EFI_PROTOCOL_DEFINITION(SimpleNetwork)
 

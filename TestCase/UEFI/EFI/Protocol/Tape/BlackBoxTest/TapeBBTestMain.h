@@ -59,10 +59,9 @@ Abstract:
 #define __EFI_TAPE_TEST_H__
 
 
-#include "Efi.h"
+#include "SctLib.h"
 
 #include "EfiTestUtilityLib.h"
-#include "EfiDriverLib.h"
 #include "EfiTestLib.h"
 #include EFI_TEST_PROTOCOL_DEFINITION(TestLoggingLibrary)
 
@@ -97,12 +96,5 @@ extern EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib;
 extern EFI_TEST_LOGGING_LIBRARY_PROTOCOL	*LoggingLib;
 
 extern EFI_TAPE_IO_PROTOCOL *gTapeIoProtocol;
-  
-
-extern VOID
-InitializeLib (
-  IN EFI_HANDLE           ImageHandle,
-  IN EFI_SYSTEM_TABLE     *SystemTable
-  );
   
 #endif

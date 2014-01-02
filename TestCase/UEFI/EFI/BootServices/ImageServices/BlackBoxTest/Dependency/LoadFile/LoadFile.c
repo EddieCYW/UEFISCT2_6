@@ -57,7 +57,7 @@ Abstract:
 
 #include "ProtocolDefinition.h"
 #include "EfiTest.h"
-#include "EfiTestUtilityLib.h"
+#include "SctLib.h"
 #include "EfiTestLib.h"
 
 #include EFI_PROTOCOL_DEFINITION (DevicePath)
@@ -150,7 +150,7 @@ InitializeLoadFileDriver (
 
   EfiInitializeTestLib (ImageHandle, SystemTable);
 
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mDriverImageHandle = ImageHandle;
   mLoadFileDriverDevicePath = NULL;

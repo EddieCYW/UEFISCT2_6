@@ -61,6 +61,7 @@ References:
 
 --*/
 
+#include "SctLib.h"
 #include "GraphicsOutputBBTest.h"
 
 //

@@ -181,7 +181,7 @@ Returns:
   //
   // Allow EFTP driver to start if this handle has MNP.
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   Controller,
                   &gEfiManagedNetworkServiceBindingProtocolGuid,
                   NULL,
@@ -228,7 +228,7 @@ Returns:
   //
   // Directly return if driver is already running.
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   Controller,
                   &gEfiEftpServiceBindingProtocolGuid,
                   NULL,
@@ -266,7 +266,7 @@ Returns:
   //
   // Get the MNP service binding protocol and create a child
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   Controller,
                   &gEfiManagedNetworkServiceBindingProtocolGuid,
                   (VOID **) &ManagedNetworkSb,
@@ -290,7 +290,7 @@ Returns:
   //
   // Open this mnp protocol and use it as the conjunction of eftp and mnp
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   SbInstance->MnpChildHandle,
                   &gEfiManagedNetworkProtocolGuid,
                   (VOID **) &SbInstance->ManagedNetwork,
@@ -305,7 +305,7 @@ Returns:
   //
   // Close the ManagedNetworkServiceBinding Protocol
   //
-  Status = gBS->CloseProtocol (
+  Status = tBS->CloseProtocol (
                   Controller,
                   &gEfiManagedNetworkServiceBindingProtocolGuid,
                   This->DriverBindingHandle,
@@ -315,7 +315,7 @@ Returns:
   //
   // Install the EftpServiceBinding Protocol onto Controller
   //
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &Controller,
                   &gEfiEftpServiceBindingProtocolGuid,
                   &SbInstance->ServiceBinding,
@@ -324,7 +324,7 @@ Returns:
 
   if (EFI_ERROR (Status)) {
     EFTP_DEBUG_ERROR ((L"DriverBindingStart: Install EftpServiceBinding failed %r.\n", Status));
-    gBS->CloseProtocol (
+    tBS->CloseProtocol (
           SbInstance->MnpChildHandle,
           &gEfiManagedNetworkProtocolGuid,
           This->DriverBindingHandle,
@@ -403,7 +403,7 @@ EftpDriverBindingStop (
   //
   // Get the service binding private context first
   //
-  Status = gBS->OpenProtocolInformation (
+  Status = tBS->OpenProtocolInformation (
                   Controller,
                   &gEfiManagedNetworkProtocolGuid,
                   &OpenBuffer,
@@ -422,7 +422,7 @@ EftpDriverBindingStop (
     }
   }
 
-  gBS->FreePool (OpenBuffer);
+  tBS->FreePool (OpenBuffer);
 
   if (ParentController == NULL) {
     EFTP_DEBUG_VERBOSE ((L"DriverBindingStop: No Parrent controller found.\n"));
@@ -434,7 +434,7 @@ EftpDriverBindingStop (
   //
   // Retrieve the private context data
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ParentController,
                   &gEfiEftpServiceBindingProtocolGuid,
                   (VOID **) &EftpSB,
@@ -443,7 +443,7 @@ EftpDriverBindingStop (
                   EFI_OPEN_PROTOCOL_GET_PROTOCOL
                   );
   if (EFI_ERROR (Status)) {
-    Status = gBS->OpenProtocol (
+    Status = tBS->OpenProtocol (
                     ParentController,
                     &gEfiEftpProtocolGuid,
                     (VOID **) &Eftp,
@@ -477,7 +477,7 @@ EftpDriverBindingStop (
     //
     // To test if there is a Eftp protocol in this controller
     //
-    Status = gBS->OpenProtocol (
+    Status = tBS->OpenProtocol (
                     Controller,
                     &gEfiEftpProtocolGuid,
                     (VOID **) &Eftp,
@@ -496,7 +496,7 @@ EftpDriverBindingStop (
     //
     // Get the ManagedNetwork Service Binding Protocol
     //
-    Status = gBS->OpenProtocol (
+    Status = tBS->OpenProtocol (
                     ParentController,
                     &gEfiManagedNetworkServiceBindingProtocolGuid,
                     (VOID **) &ManagedNetworkSb,
@@ -524,7 +524,7 @@ EftpDriverBindingStop (
   //
   // Uninstall the EFTP service binding protocol
   //
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ParentController,
                   &gEfiEftpServiceBindingProtocolGuid,
                   EftpSB,
@@ -629,7 +629,7 @@ Returns:
     //
     // Open the mnp io instance in this handle
     //
-    Status = gBS->OpenProtocol (
+    Status = tBS->OpenProtocol (
                     ServiceBindingPrivate->MnpChildHandle,
                     &gEfiManagedNetworkProtocolGuid,
                     (VOID **) &IoPrivate->ManagedNetwork,
@@ -651,7 +651,7 @@ Returns:
     //
     // Retrieve the mnp servicebinding prtocol.
     //
-    Status = gBS->OpenProtocol (
+    Status = tBS->OpenProtocol (
                     ServiceBindingPrivate->ControllerHandle,
                     &gEfiManagedNetworkServiceBindingProtocolGuid,
                     (VOID **) &ServiceBinding,
@@ -680,7 +680,7 @@ Returns:
     //
     // Open the MNP IO protocol in this childhandle
     //
-    Status = gBS->OpenProtocol (
+    Status = tBS->OpenProtocol (
                     *ChildHandle,
                     &gEfiManagedNetworkProtocolGuid,
                     (VOID **) &IoPrivate->ManagedNetwork,
@@ -701,7 +701,7 @@ Returns:
   //
   IoPrivate->Handle = *ChildHandle;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   ChildHandle,
                   &gEfiEftpProtocolGuid,
                   &IoPrivate->Eftp,
@@ -725,7 +725,7 @@ CleanUp:
   // Clean up all the resource assoiated with the Eftp instance
   //
   if (*ChildHandle != NULL && *ChildHandle != ServiceBindingPrivate->MnpChildHandle) {
-    gBS->CloseProtocol (
+    tBS->CloseProtocol (
           *ChildHandle,
           &gEfiManagedNetworkProtocolGuid,
           gEftpDriverBinding.DriverBindingHandle,
@@ -777,7 +777,7 @@ Returns:
   //
   // Retrieve the Eftp protocol interface
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ChildHandle,
                   &gEfiEftpProtocolGuid,
                   (VOID **) &Eftp,
@@ -830,7 +830,7 @@ Returns:
   //
   // Uninstall the Eftp protocol from the childhandle
   //
-  gBS->UninstallMultipleProtocolInterfaces (
+  tBS->UninstallMultipleProtocolInterfaces (
         ChildHandle,
         &gEfiEftpProtocolGuid,
         Eftp,
@@ -841,7 +841,7 @@ Returns:
   // Destroy the MNP child handle if it is not the last one
   //
   EFTP_DEBUG_VERBOSE ((L"DestroyChild: Try to destroy the MNP child handle.\n"));
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ServiceBindingPrivate->ControllerHandle,
                   &gEfiManagedNetworkServiceBindingProtocolGuid,
                   (VOID **) &ServiceBinding,
@@ -866,7 +866,7 @@ Returns:
     //
     // Close MNP protocol
     //
-    gBS->CloseProtocol (
+    tBS->CloseProtocol (
           ChildHandle,
           &gEfiManagedNetworkProtocolGuid,
           gEftpDriverBinding.DriverBindingHandle,

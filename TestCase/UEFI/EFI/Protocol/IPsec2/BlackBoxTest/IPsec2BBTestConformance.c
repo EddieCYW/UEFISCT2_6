@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver IPsec2 Protocol's conformance Test
 
 --*/
+#include "SctLib.h"
 #include "IPsec2BBTestMain.h"
 
 EFI_STATUS

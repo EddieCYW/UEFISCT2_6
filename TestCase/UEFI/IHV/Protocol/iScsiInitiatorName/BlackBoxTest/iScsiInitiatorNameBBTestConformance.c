@@ -57,6 +57,7 @@ Revision History
 
 --*/
 
+#include "SctLib.h"
 #include "iScsiInitiatorNameBBTestMain.h"
 
 EFI_STATUS

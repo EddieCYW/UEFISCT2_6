@@ -55,8 +55,7 @@ Abstract:
 #ifndef _GENERIC_SERVICE_ENTS_TESTCASE_H_
 #define _GENERIC_SERVICE_ENTS_TESTCASE_H_
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 
 EFI_STATUS

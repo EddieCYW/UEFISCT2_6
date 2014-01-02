@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "DriverBindingBBTest.h"
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
@@ -109,7 +110,7 @@ InitializeBBTestDriverBinding (
   // Initialize libraries
   //
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   return EfiInitAndInstallIHVBBTestInterface (
            &ImageHandle,

@@ -54,6 +54,7 @@ Abstract:
   BB test file for UEFI processor execution mode
 
 --*/
+#include "SctLib.h"
 #include "ExeModeBBTest.h"
 
 

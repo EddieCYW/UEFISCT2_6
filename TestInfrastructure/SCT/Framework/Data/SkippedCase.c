@@ -189,7 +189,7 @@ Routine Description:
   //
   // Allocate memory for the skipped case
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_SCT_SKIPPED_CASE),
                  (VOID **)&TempSkippedCase
@@ -283,19 +283,19 @@ Routine Description:
 
   // Free Item of Skipped Case 
   if (SkippedCase->CaseName != NULL) {
-    BS->FreePool (SkippedCase->CaseName);
+    tBS->FreePool (SkippedCase->CaseName);
     SkippedCase->CaseName = NULL;
   }
 
   if (SkippedCase->ProtocolName != NULL) {
-    BS->FreePool (SkippedCase->ProtocolName);
+    tBS->FreePool (SkippedCase->ProtocolName);
     SkippedCase->ProtocolName = NULL;
   }
   
   //
   // Free the Skipped Case itself
   //
-  BS->FreePool (SkippedCase);
+  tBS->FreePool (SkippedCase);
 
   //
   // Done

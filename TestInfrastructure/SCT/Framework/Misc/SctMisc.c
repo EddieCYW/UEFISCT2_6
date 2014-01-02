@@ -275,7 +275,7 @@ Routine Description:
   Current = (Min + Max) / 2;
 
   while (Min != Current) {
-    Status = BS->SetWatchdogTimer (
+    Status = tBS->SetWatchdogTimer (
                    Current,
                    0,
                    0,
@@ -290,7 +290,7 @@ Routine Description:
     Current = (Min + Max) / 2;
   }
 
-  BS->SetWatchdogTimer (0, 0, 0, NULL);
+  tBS->SetWatchdogTimer (0, 0, 0, NULL);
 
   *MaxWatchdogTimer = Current;
   return EFI_SUCCESS;
@@ -378,7 +378,7 @@ Routine Description:
   //
   Length = StrLen (FileName) - StrLen (RootFilePath) - 1;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(CHAR16) * (Length + 1),
                  (VOID **)&ShortFileName
@@ -507,7 +507,7 @@ Routine Description:
 
     TempDevicePath = (EFI_DEVICE_PATH_PROTOCOL *) ShellGetMap (TempFilePath);
     if (TempDevicePath == NULL) {
-      BS->FreePool (TempFilePath);
+      tBS->FreePool (TempFilePath);
       continue;
     }
 
@@ -516,7 +516,7 @@ Routine Description:
       return EFI_SUCCESS;
     }
 
-    BS->FreePool (TempFilePath);
+    tBS->FreePool (TempFilePath);
   }
 
   //
@@ -530,7 +530,7 @@ Routine Description:
 
     TempDevicePath = (EFI_DEVICE_PATH_PROTOCOL *) ShellGetMap (TempFilePath);
     if (TempDevicePath == NULL) {
-      BS->FreePool (TempFilePath);
+      tBS->FreePool (TempFilePath);
       continue;
     }
 
@@ -539,7 +539,7 @@ Routine Description:
       return EFI_SUCCESS;
     }
 
-    BS->FreePool (TempFilePath);
+    tBS->FreePool (TempFilePath);
   }
 
   //
@@ -577,7 +577,7 @@ Routine Description:
     // Wait for a key
     //
     EventList[0] = gFT->SystemTable->ConIn->WaitForKey;
-    Status = BS->WaitForEvent (1, EventList, &Index);
+    Status = tBS->WaitForEvent (1, EventList, &Index);
     if (EFI_ERROR(Status)) {
       return Status;
     }
@@ -643,11 +643,11 @@ Routine Description:
              FALSE
              );
   if (EFI_ERROR (Status)) {
-    BS->FreePool (CmdLine);
+    tBS->FreePool (CmdLine);
     return Status;
   }
 
-  BS->FreePool (CmdLine);
+  tBS->FreePool (CmdLine);
 
   //
   // Done
@@ -847,7 +847,7 @@ Routine Description:
   // Locate the device handle
   //
   RemainingDevicePath = DevicePath;
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                  &gEfiSimpleFileSystemProtocolGuid,
                  &RemainingDevicePath,
                  &DeviceHandle
@@ -859,7 +859,7 @@ Routine Description:
   //
   // Locate the simple file system
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  DeviceHandle,
                  &gEfiSimpleFileSystemProtocolGuid,
                  (VOID **)&Vol
@@ -915,7 +915,7 @@ Routine Description:
   // Locate the device handle
   //
   RemainingDevicePath = DevicePath;
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                  &gEfiSimpleFileSystemProtocolGuid,
                  &RemainingDevicePath,
                  &DeviceHandle
@@ -927,7 +927,7 @@ Routine Description:
   //
   // Locate the simple file system
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  DeviceHandle,
                  &gEfiSimpleFileSystemProtocolGuid,
                  (VOID **)&Vol
@@ -1440,21 +1440,21 @@ Routine Description:
 
   Status = SctStrTokens (TempBuffer, &NumberOfTokens, &Tokens);
   if (EFI_ERROR (Status)) {
-    BS->FreePool (TempBuffer);
+    tBS->FreePool (TempBuffer);
     return Status;
   }
 
   //
   // Convert the tokens to the GUIDs
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (NumberOfTokens + 1) * sizeof(EFI_GUID),
                  (VOID **)GuidArray
                  );
   if (EFI_ERROR (Status)) {
-    BS->FreePool (TempBuffer);
-    BS->FreePool (Tokens);
+    tBS->FreePool (TempBuffer);
+    tBS->FreePool (Tokens);
     return Status;
   }
 
@@ -1467,16 +1467,16 @@ Routine Description:
 
     Status = SctStrToGuid (Tokens[Index], *GuidArray);
     if (EFI_ERROR (Status)) {
-      BS->FreePool (TempBuffer);
-      BS->FreePool (Tokens);
+      tBS->FreePool (TempBuffer);
+      tBS->FreePool (Tokens);
       return Status;
     }
 
     (*GuidArray) ++;
   }
 
-  BS->FreePool (TempBuffer);
-  BS->FreePool (Tokens);
+  tBS->FreePool (TempBuffer);
+  tBS->FreePool (Tokens);
   return EFI_SUCCESS;
 }
 
@@ -1544,7 +1544,7 @@ Routine Description:
 
   Status = SctStrTokens (TempBuffer, &NumberOfTokens, &Tokens);
   if (EFI_ERROR (Status)) {
-    BS->FreePool (TempBuffer);
+    tBS->FreePool (TempBuffer);
     return Status;
   }
 
@@ -1565,14 +1565,14 @@ Routine Description:
     } else if (StriCmp (Tokens[Index], L"Exhaustive") == 0) {
       *TestLevel |= EFI_TEST_LEVEL_EXHAUSTIVE;
     } else {
-      BS->FreePool (TempBuffer);
-      BS->FreePool (Tokens);
+      tBS->FreePool (TempBuffer);
+      tBS->FreePool (Tokens);
       return EFI_UNSUPPORTED;
     }
   }
 
-  BS->FreePool (TempBuffer);
-  BS->FreePool (Tokens);
+  tBS->FreePool (TempBuffer);
+  tBS->FreePool (Tokens);
   return EFI_SUCCESS;
 }
 
@@ -1722,7 +1722,7 @@ Routine Description:
 
   Status = SctStrTokens (TempBuffer, &NumberOfTokens, &Tokens);
   if (EFI_ERROR (Status)) {
-    BS->FreePool (TempBuffer);
+    tBS->FreePool (TempBuffer);
     return Status;
   }
 
@@ -1743,14 +1743,14 @@ Routine Description:
     } else if (StriCmp (Tokens[Index], L"ResetRequired") == 0) {
       *CaseAttribute |= EFI_TEST_CASE_RESET_REQUIRED;
     } else {
-      BS->FreePool (TempBuffer);
-      BS->FreePool (Tokens);
+      tBS->FreePool (TempBuffer);
+      tBS->FreePool (Tokens);
       return EFI_UNSUPPORTED;
     }
   }
 
-  BS->FreePool (TempBuffer);
-  BS->FreePool (Tokens);
+  tBS->FreePool (TempBuffer);
+  tBS->FreePool (Tokens);
   return EFI_SUCCESS;
 }
 
@@ -1992,7 +1992,7 @@ Routine Description:
   //
   // Allocate memory for the pointers to tokens
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  Number * sizeof(CHAR16 *),
                  (VOID **)&TempTokens

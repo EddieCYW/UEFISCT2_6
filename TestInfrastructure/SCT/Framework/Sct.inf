@@ -143,12 +143,12 @@ COMPONENT_TYPE       = APPLICATION
   $(SHELL_SOURCE)/Library
 
 [libraries.common]
+  SctLib
   TestProtocolLib
   EfiTestLib
   EasLib
   EntsProtocolLib
   Entslib
-  EfiShellLib
   EftpProtocolLib
   ArchProtocolLib
   EdkFrameworkGuidLib

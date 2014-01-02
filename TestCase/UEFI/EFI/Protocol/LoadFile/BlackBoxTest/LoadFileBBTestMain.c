@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "LoadFileBBTestMain.h"
 
 EFI_EVENT              TimerEvent;
@@ -110,8 +111,8 @@ InitializeLoadFileTest (
   EFI_STATUS Status;
 
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
 
   Status = gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR(Status)) {

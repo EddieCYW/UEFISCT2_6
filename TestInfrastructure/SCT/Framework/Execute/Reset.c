@@ -115,11 +115,11 @@ Returns:
   Status = RemoveFile (gFT->DevicePath, FileName);
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Remove file - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Done
@@ -177,7 +177,7 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Save test cases - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
   
@@ -187,12 +187,12 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Remove TestCase.ini - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
   
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Remove the skipped case
@@ -209,12 +209,12 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Remove SkippedCase.ini - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
   
 
-  BS->FreePool (FileName);  
+  tBS->FreePool (FileName);  
 
   //
   // Remove the recovery file
@@ -241,7 +241,7 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Remove mata files - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
@@ -251,11 +251,11 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Remove Overall Directory - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
   
   //
   // Remove the Sct.log and Sct.cfg
@@ -272,11 +272,11 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Remove Sct.log - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   FilePath = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_CFG);
   if (FilePath == NULL) {
@@ -290,11 +290,11 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Remove Sct.cfg - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);  
+  tBS->FreePool (FilePath);  
 
   //
   // Remove the log files
@@ -312,7 +312,7 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Remove meta files - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
@@ -325,11 +325,11 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Remove Log Directory - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }  
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Remove the .verbose.mode File
@@ -344,11 +344,11 @@ Returns:
              FilePath);
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Remove .verbose.mode files - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Done
@@ -404,11 +404,11 @@ Returns:
              );
   if (EFI_ERROR(Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Save test cases - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Remove the recovery file
@@ -438,12 +438,12 @@ Returns:
   TempName = PoolPrint (MetaName, L"*", L"*", L"*");
   if (TempName == NULL) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"PoolPrint: Out of resource"));
-    BS->FreePool (FilePath);
-    BS->FreePool (MetaName);
+    tBS->FreePool (FilePath);
+    tBS->FreePool (MetaName);
     return EFI_OUT_OF_RESOURCES;
   }
 
-  BS->FreePool (MetaName);
+  tBS->FreePool (MetaName);
 
   //
   // Remove the log and key files
@@ -455,13 +455,13 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Remove meta files - %r", Status));
-    BS->FreePool (FilePath);
-    BS->FreePool (TempName);
+    tBS->FreePool (FilePath);
+    tBS->FreePool (TempName);
     return Status;
   }
 
-  BS->FreePool (FilePath);
-  BS->FreePool (TempName);
+  tBS->FreePool (FilePath);
+  tBS->FreePool (TempName);
 
   //
   // Done
@@ -511,7 +511,7 @@ Routine Description:
   //
   RemainderDevicePath = DevicePath;
 
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                  &gEfiSimpleFileSystemProtocolGuid,
                  &RemainderDevicePath,
                  &DeviceHandle
@@ -523,7 +523,7 @@ Routine Description:
   //
   // Locate system volume from the device handle
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  DeviceHandle,
                  &gEfiSimpleFileSystemProtocolGuid,
                  (VOID **)&Vol
@@ -565,7 +565,7 @@ Routine Description:
   //
   FileInfoSize = sizeof(EFI_FILE_INFO) + 1024;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  FileInfoSize,
                  (VOID **)&FileInfo
@@ -613,11 +613,11 @@ Routine Description:
                  MetaName
                  );
       if (EFI_ERROR(Status)) {
-        BS->FreePool (SubDir);
+        tBS->FreePool (SubDir);
         continue;
       }
 
-      BS->FreePool (SubDir);
+      tBS->FreePool (SubDir);
     }
 
     //
@@ -648,7 +648,7 @@ Routine Description:
   //
   // Free resources
   //
-  BS->FreePool (FileInfo);
+  tBS->FreePool (FileInfo);
   Handle->Close (Handle);
 
   //
@@ -690,7 +690,7 @@ Routine Description:
   //
   RemainderDevicePath = DevicePath;
 
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                  &gEfiSimpleFileSystemProtocolGuid,
                  &RemainderDevicePath,
                  &DeviceHandle
@@ -702,7 +702,7 @@ Routine Description:
   //
   // Locate system volume from the device handle
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  DeviceHandle,
                  &gEfiSimpleFileSystemProtocolGuid,
                  (VOID **)&Vol

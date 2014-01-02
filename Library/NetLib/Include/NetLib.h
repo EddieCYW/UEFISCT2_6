@@ -62,8 +62,11 @@ Abstract:
 // Included files
 //
 #include "SctLib.h"
-#include "EfiDriverLib.h"
 
+#include EFI_PROTOCOL_DEFINITION (ComponentName2)
+#include EFI_PROTOCOL_DEFINITION (DriverBinding)
+#include EFI_PROTOCOL_DEFINITION (DriverConfiguration2)
+#include EFI_PROTOCOL_DEFINITION (DriverDiagnostics2)
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
 //
@@ -117,7 +120,7 @@ extern EFI_NET_DEBUG_CONFIG_PROTOCOL  *NetDebugConfigProtocol;
 #else
 #define NetAllocateZeroPool   EfiLibAllocateZeroPool
 #define NetAllocatePool       EfiLibAllocatePool
-#define NetFreePool           gBS->FreePool
+#define NetFreePool           tBS->FreePool
 #endif
 
 #ifdef NET_SSE2_SPEEDUP
@@ -234,8 +237,8 @@ NetCommonLibSetMem (
 #define NET_UNLOCK(x)    EfiReleaseLock(x)
 
 //flag : UINTN
-#define NET_DISABLE_INTERRUPT(flag) (flag = gBS->RaiseTPL(EFI_TPL_HIGH_LEVEL))
-#define NET_ENABLE_INTERRUPT(flag)  gBS->RestoreTPL(flag)
+#define NET_DISABLE_INTERRUPT(flag) (flag = tBS->RaiseTPL(EFI_TPL_HIGH_LEVEL))
+#define NET_ENABLE_INTERRUPT(flag)  tBS->RestoreTPL(flag)
 
 
 //

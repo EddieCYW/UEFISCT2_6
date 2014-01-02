@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "DevicePathUtilitiesBBTestMain.h"
 
 //
@@ -233,7 +234,7 @@ InitializeBBTestDevicePathUtilitiesProtocol (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   return EfiInitAndInstallBBTestInterface (
           &ImageHandle,

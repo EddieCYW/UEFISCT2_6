@@ -62,6 +62,7 @@ Abstract:
 #define DEBUG_CHECK_IMAGE                        0
 #define DEBUG_SET_PACKAGE_INFO                   0
 
+#include "SctLib.h"
 #include "FirmwareManagementBBTestMain.h"
 
 // ****************************************************************************

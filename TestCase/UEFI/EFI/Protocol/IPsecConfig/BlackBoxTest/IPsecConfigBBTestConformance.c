@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver IPsec Config Protocol's conformance Test
 
 --*/
+#include "SctLib.h"
 #include "IPsecConfigBBTestMain.h"
 
 
@@ -1921,7 +1922,7 @@ BBTestRegisterDataNotifyConformanceTestCheckpoint2 (
     StandardLib->RecordMessage (
                    StandardLib,
                    EFI_VERBOSE_LEVEL_DEFAULT,
-                   L"BS->CreateEvent() error().\r\n"
+                   L"tBS->CreateEvent() error().\r\n"
                    L"%a:%d.\r\n",
                    __FILE__,
                    (UINTN)__LINE__
@@ -2028,7 +2029,7 @@ BBTestUnregisterDataNotifyConformanceTestCheckpoint2 (
     StandardLib->RecordMessage (
                    StandardLib,
                    EFI_VERBOSE_LEVEL_DEFAULT,
-                   L"BS->CreateEvent() error().\r\n"
+                   L"tBS->CreateEvent() error().\r\n"
                    L"%a:%d.\r\n",
                    __FILE__,
                    (UINTN)__LINE__

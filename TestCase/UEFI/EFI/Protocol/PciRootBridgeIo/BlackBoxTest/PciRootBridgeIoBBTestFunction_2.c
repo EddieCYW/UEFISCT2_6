@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "PciRootBridgeIoBBTestMain.h"
 #include "PciRootBridgeIoBBTestSupport.h"
 

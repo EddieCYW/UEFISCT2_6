@@ -82,10 +82,6 @@ EFI Test Utility library functions
 // Public read-only data in the EFI library
 //
 
-extern EFI_SYSTEM_TABLE         *tST;
-extern EFI_BOOT_SERVICES        *tBS;
-extern EFI_RUNTIME_SERVICES     *tRT;
-
 extern EFI_GUID gtEfiDevicePathProtocolGuid;
 extern EFI_GUID gtEfiLoadedImageProtocolGuid;
 extern EFI_GUID gtEfiSimpleTextInProtocolGuid;
@@ -162,12 +158,6 @@ extern EFI_MEMORY_TYPE              PoolAllocationType;
 //
 // Prototypes
 //
-
-VOID
-InitializeLib (
-  IN EFI_HANDLE                     ImageHandle,
-  IN EFI_SYSTEM_TABLE               *SystemTable
-  );
 
 VOID
 InitializeUnicodeSupport (

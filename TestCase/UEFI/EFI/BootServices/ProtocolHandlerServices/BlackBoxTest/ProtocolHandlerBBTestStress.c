@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Misc.h"
 
 EFI_GUID    StressTestNonInterfaceProtocolGuid[40];

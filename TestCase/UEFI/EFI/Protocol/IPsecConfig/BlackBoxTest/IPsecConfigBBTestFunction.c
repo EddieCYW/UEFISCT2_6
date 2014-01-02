@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver IPsec Config Protocol's function Test
 
 --*/
+#include "SctLib.h"
 #include "IPsecConfigBBTestMain.h"
 
 EFI_STATUS
@@ -2569,7 +2570,7 @@ BBTestRegisterDataNotifyFunctionTestCheckpoint1 (
       StandardLib->RecordMessage (
                      StandardLib,
                      EFI_VERBOSE_LEVEL_DEFAULT,
-                     L"BS->CreateEvent() error().\r\n"
+                     L"tBS->CreateEvent() error().\r\n"
                      L"%a:%d.\r\n",
                      __FILE__,
                      (UINTN)__LINE__
@@ -2732,7 +2733,7 @@ BBTestUnregisterDataNotifyFunctionTestCheckpoint1 (
       StandardLib->RecordMessage (
                      StandardLib,
                      EFI_VERBOSE_LEVEL_DEFAULT,
-                     L"BS->CreateEvent() error().\r\n"
+                     L"tBS->CreateEvent() error().\r\n"
                      L"%a:%d.\r\n",
                      __FILE__,
                      (UINTN)__LINE__

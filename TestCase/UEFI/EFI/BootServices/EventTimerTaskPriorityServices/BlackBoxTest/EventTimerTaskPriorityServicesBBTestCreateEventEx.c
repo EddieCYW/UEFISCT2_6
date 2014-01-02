@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "EventTimerTaskPriorityServicesBBTestMain.h"
 
 #ifndef EFI_EVENT_NOTIFY_SIGNAL_ALL

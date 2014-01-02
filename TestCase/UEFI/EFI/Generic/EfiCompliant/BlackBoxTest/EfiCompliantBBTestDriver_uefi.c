@@ -59,6 +59,7 @@ Abstract:
 // Includes
 //
 
+#include "SctLib.h"
 #include "EfiCompliantBbTestMain_uefi.h"
 
 //

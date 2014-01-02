@@ -68,7 +68,6 @@ COMPONENT_TYPE  = LIBRARY
   event.c
   guid.c
   hand.c
-  init.c
   lock.c
   misc.c
   print.c

@@ -53,7 +53,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "Dhcp6.h"
 
 EFI_GUID gEfiDhcp6ServiceBindingProtocolGuid = EFI_DHCP6_SERVICE_BINDING_PROTOCOL_GUID;

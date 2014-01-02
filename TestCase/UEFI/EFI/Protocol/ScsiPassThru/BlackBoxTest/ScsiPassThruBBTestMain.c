@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "ScsiPassThruBBTestMain.h"
 
 UINT8 EnterEvent;
@@ -207,7 +208,7 @@ InitializeBBTestScsiPassThru (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
 
   return EfiInitAndInstallBBTestInterface (

@@ -96,7 +96,7 @@ StallForKey (
   //
   // Create timer event
   //
-  Status = BS->CreateEvent (
+  Status = tBS->CreateEvent (
                  EFI_EVENT_TIMER,
                  0,
                  NULL,
@@ -111,21 +111,21 @@ StallForKey (
   //
   // Set up the timer
   //
-  Status = BS->SetTimer (
+  Status = tBS->SetTimer (
                  TimerEvent,
                  TimerPeriodic,
                  10000000                   // 1 second
                  );
   if (EFI_ERROR (Status)) {
     DEBUG ((EFI_D_ERROR, "Set timer. %a:%d:%r\n", __FILE__, __LINE__, Status));
-    BS->CloseEvent (TimerEvent);
+    tBS->CloseEvent (TimerEvent);
     return Status;
   }
 
   //
   // Set up waiting list
   //
-  WaitList[0] = ST->ConIn->WaitForKey;
+  WaitList[0] = tST->ConIn->WaitForKey;
   WaitList[1] = TimerEvent;
 
   //
@@ -141,7 +141,7 @@ StallForKey (
     //
     // Wait for timeout or key input
     //
-    Status = BS->WaitForEvent (
+    Status = tBS->WaitForEvent (
                    2,
                    WaitList,
                    &WaitIndex
@@ -159,7 +159,7 @@ StallForKey (
       // Key input event is triggered
       //
       Key.ScanCode = SCAN_NULL;
-      Status = ST->ConIn->ReadKeyStroke (ST->ConIn, &Key);
+      Status = tST->ConIn->ReadKeyStroke (tST->ConIn, &Key);
       if (!EFI_ERROR (Status)) {
         break;
       }
@@ -176,7 +176,7 @@ StallForKey (
   //
   // Close the timer event
   //
-  BS->CloseEvent (TimerEvent);
+  tBS->CloseEvent (TimerEvent);
 
   //
   // Done

@@ -92,7 +92,7 @@ COMPONENT_TYPE       = BS_DRIVER
   $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EASDispatcher/Include
      
 [libraries.common]
-  EfiDriverLib
+  SctLib
   EntsLib
   EntsProtocolLib
   NetworkProtocolLib

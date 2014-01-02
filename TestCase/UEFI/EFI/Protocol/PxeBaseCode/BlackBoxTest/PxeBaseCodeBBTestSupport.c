@@ -54,6 +54,7 @@ Abstract:
   Common function used in PXE Base Code test.
 
 --*/
+#include "SctLib.h"
 #include "PxeBaseCodeBBTestMain.h"
 #include "PxeBaseCodeBBTestSupport.h"
 

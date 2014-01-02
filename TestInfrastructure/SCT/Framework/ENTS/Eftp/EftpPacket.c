@@ -294,7 +294,7 @@ Returns:
   if (Buf->RefCnt == 1) {
 
     if (Buf->EftpToken.MnpToken.Event) {
-      gBS->CloseEvent (Buf->EftpToken.MnpToken.Event);
+      tBS->CloseEvent (Buf->EftpToken.MnpToken.Event);
       Buf->EftpToken.MnpToken.Event = NULL;
 
     }
@@ -626,7 +626,7 @@ Returns:
   Packet  = Buf->Packet;
   P       = NetAsciiStrCpy (Packet->Error.ErrorMessage, Err->Desc);
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EVT_NOTIFY_SIGNAL,
                   NET_TPL_EVENT,
                   Func,
@@ -767,7 +767,7 @@ Returns:
     }
   }
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EVT_NOTIFY_SIGNAL,
                   NET_TPL_EVENT,
                   Func,
@@ -935,7 +935,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EVT_NOTIFY_SIGNAL,
                   NET_TPL_EVENT,
                   Func,

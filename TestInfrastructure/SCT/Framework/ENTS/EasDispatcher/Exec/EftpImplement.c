@@ -123,7 +123,7 @@ OpenEftpProtocol (
     return Status;
   }
 
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  ControllerHandle,
                  &gEfiEftpServiceBindingProtocolGuid,
                  (VOID **)&TmpEftpSb
@@ -140,7 +140,7 @@ OpenEftpProtocol (
     return Status;
   }
 
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  TmpEftpInstanceHandle,
                  &gEfiEftpProtocolGuid,
                  (VOID **) &EftpIo
@@ -212,7 +212,7 @@ Returns:
   EFI_FILE                        *Root;
   EFI_STATUS                      Status;
 
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                 mImageHandle,
                 &gEfiLoadedImageProtocolGuid,
                 (VOID **)&Image
@@ -222,7 +222,7 @@ Returns:
     return Status;
   }
 
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                 Image->DeviceHandle,
                 &gEfiDevicePathProtocolGuid,
                 (VOID **)&DevicePath
@@ -232,7 +232,7 @@ Returns:
     return Status;
   }
 
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                 &gEfiSimpleFileSystemProtocolGuid,
                 &DevicePath,
                 &DeviceHandle
@@ -242,7 +242,7 @@ Returns:
     return Status;
   }
 
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                 DeviceHandle,
                 &gEfiSimpleFileSystemProtocolGuid,
                 (VOID *) &SimpleFileSystem

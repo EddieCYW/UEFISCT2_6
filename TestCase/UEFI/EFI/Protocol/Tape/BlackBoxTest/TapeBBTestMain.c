@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "TapeBBTestMain.h"
 
 EFI_BB_TEST_PROTOCOL *gTapeTestProtocol = NULL;
@@ -158,8 +159,8 @@ InitializeTapeTest (
   
   
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   
   //
   // Make sure the Protocol is not already installed in the system

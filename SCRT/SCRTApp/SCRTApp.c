@@ -230,9 +230,9 @@ Returns:
     FreePool (FileBuffer);
   
 
-    for (Index = 0; Index < ST->NumberOfTableEntries; Index++) {
-      if (EfiCompareGuid (&gRuntimeFuncAddressGuid, &(ST->ConfigurationTable[Index].VendorGuid))) {
-        StubTable = ST->ConfigurationTable[Index].VendorTable;
+    for (Index = 0; Index < tST->NumberOfTableEntries; Index++) {
+      if (EfiCompareGuid (&gRuntimeFuncAddressGuid, &(tST->ConfigurationTable[Index].VendorGuid))) {
+        StubTable = tST->ConfigurationTable[Index].VendorTable;
         if (StubTable->Signature != SCRT_STUB_TABLE_SIGNATURE) {
           Print(L"Find Corrupted SCRT Table!\n");
           EFI_DEADLOOP();
@@ -268,7 +268,7 @@ Returns:
     //
     // First call GetMemoryMap() to query the current System MemoryMap Size.
     //
-    BS->GetMemoryMap (
+    tBS->GetMemoryMap (
           &MemoryMapSize,
           MemoryMap,
           &MapKey,
@@ -282,7 +282,7 @@ Returns:
     //
     MemoryMapSize += 1024;
   
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                   EfiRuntimeServicesData,
                   MemoryMapSize,
                   (VOID **)&MemoryMap
@@ -291,7 +291,7 @@ Returns:
       return Status;
     }
   
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                   EfiRuntimeServicesData,
                   MemoryMapSize,
                   (VOID **)&VirtualMemoryMap
@@ -300,7 +300,7 @@ Returns:
       return Status;
     }
 
-    Status = BS->GetMemoryMap (
+    Status = tBS->GetMemoryMap (
                   &MemoryMapSize,
                   MemoryMap,
                   &MapKey,
@@ -323,7 +323,7 @@ Returns:
     MemoryMapSize = 0;
     MemoryMap = NULL;
     do{
-        Status = BS->GetMemoryMap (
+        Status = tBS->GetMemoryMap (
                       &MemoryMapSize,
                       MemoryMap,
                       &MapKey,
@@ -332,14 +332,14 @@ Returns:
                       );
         if (Status == EFI_BUFFER_TOO_SMALL) {
         	MemoryMapSize += 1024;
-            Status = BS->AllocatePool (
+            Status = tBS->AllocatePool (
                         EfiRuntimeServicesData,
                         MemoryMapSize,
                         (VOID **)&MemoryMap
                         );
           if (!EFI_ERROR (Status)) {
 
-          Status = BS->GetMemoryMap (
+          Status = tBS->GetMemoryMap (
                         &MemoryMapSize,
                         MemoryMap,
                         &MapKey,
@@ -356,7 +356,7 @@ Returns:
             //
             // Call ExitBootServices to terminate all boot services.
             //
-            Status = BS->ExitBootServices (ImageHandle, MapKey);
+            Status = tBS->ExitBootServices (ImageHandle, MapKey);
             if (EFI_ERROR (Status)){
                 MemoryMapSize = 0;
                 MemoryMap = NULL;
@@ -368,7 +368,7 @@ Returns:
     // Call VirtualAddressMap to change the address of the runtime components of the firmware 
     // to the new virtual address.
     //
-    Status = RT->SetVirtualAddressMap (
+    Status = tRT->SetVirtualAddressMap (
                   VirtualMapSize,
                   DescriptorSize,
                   DescriptorVersion,

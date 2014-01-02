@@ -56,8 +56,7 @@ Abstract:
 #ifndef _MEMORY_ALLOCATION_ENTS_TESTCASE_H_
 #define _MEMORY_ALLOCATION_ENTS_TESTCASE_H_
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 
 EFI_STATUS
@@ -147,9 +146,9 @@ Returns:
 extern CHAR16         *gRuntimeServiceRuntimeInfo;
 extern UINTN          gRuntimeServiceRuntimeInfoSize;
 
-extern ENTS_ARG_FIELD gBSAllocatePagesArgField[];
-extern ENTS_ARG_FIELD gBSFreePagesArgField[];
-extern ENTS_ARG_FIELD gBSAllocatePoolArgField[];
-extern ENTS_ARG_FIELD gBSFreePoolArgField[];
+extern ENTS_ARG_FIELD BSAllocatePagesArgField[];
+extern ENTS_ARG_FIELD BSFreePagesArgField[];
+extern ENTS_ARG_FIELD BSAllocatePoolArgField[];
+extern ENTS_ARG_FIELD BSFreePoolArgField[];
 
 #endif

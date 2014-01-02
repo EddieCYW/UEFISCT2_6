@@ -64,7 +64,6 @@ Abstract:
 #include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "BisProtocol.h"
-#include "EfiDriverLib.h"
 
 #define BIS_TEST_REVISION 0x00010000
 

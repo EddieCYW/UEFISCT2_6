@@ -59,7 +59,7 @@ Abstract:
 #define _TIME_STAMP_BB_TEST_MAIN
 
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "EfiCommonLib.h"

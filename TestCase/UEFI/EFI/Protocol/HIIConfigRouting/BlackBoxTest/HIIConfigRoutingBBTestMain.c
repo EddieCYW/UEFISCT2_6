@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "HIIConfigRoutingBBTestMain.h"
 
 EFI_BB_TEST_PROTOCOL *gBBTestProtocolInterface;
@@ -224,7 +225,7 @@ InitializeBBTestHIIConfigRouting (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
 
   return EfiInitAndInstallBBTestInterface (

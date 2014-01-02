@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Udp4ServiceBindingENTSTestCase.h"
 
 static CHAR16     gUdp4ServiceBindingProtocolName[] = L"Udp4ServiceBinding";
@@ -110,10 +111,10 @@ Returns:
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
   EFI_HANDLE                ClientHandle;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -121,7 +122,7 @@ Returns:
 
   LoadedImage->Unload = Udp4ServiceBindingENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   &gUdp4ServiceBindingEntsProtocolInterface
@@ -147,7 +148,7 @@ Returns:
   gUdp4ServiceBindingEntsProtocolInterface->RuntimeInfo       = gUdp4ServiceBindingRuntimeInfo;
   gUdp4ServiceBindingEntsProtocolInterface->RuntimeInfoSize   = gUdp4ServiceBindingRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gUdp4ServiceBindingEntsProtocolInterface,
@@ -161,7 +162,7 @@ Returns:
 
 Error:
   if (gUdp4ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gUdp4ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gUdp4ServiceBindingEntsProtocolInterface);
   }
 
   return Status;
@@ -190,7 +191,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gUdp4ServiceBindingEntsProtocolInterface,
@@ -198,7 +199,7 @@ Returns:
                   );
 
   if (gUdp4ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gUdp4ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gUdp4ServiceBindingEntsProtocolInterface);
   }
 
   return Status;

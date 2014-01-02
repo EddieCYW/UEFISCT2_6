@@ -58,17 +58,9 @@ Abstract:
 #include "lib.h"
 
 //
-// RT - pointer to the runtime table
-//
-
-EFI_RUNTIME_SERVICES    *tRT;
-
-//
 // LibStandalone - TRUE if lib is linked in as part of the firmware.
 // N.B. The EFI fw sets this value directly
 //
-
-BOOLEAN  LibFwInstance;
 
 //
 // LibRuntimeRaiseTPL, LibRuntimeRestoreTPL - pointers to Runtime functions from the

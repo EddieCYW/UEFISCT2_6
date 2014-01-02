@@ -160,7 +160,6 @@ EdkCompatibilityPkg/Foundation/Protocol/EdkProtocolLib.inf
 EdkCompatibilityPkg/Foundation/Framework/Protocol/EdkFrameworkProtocolLib.inf
 EdkCompatibilityPkg/Foundation/Efi/Protocol/EfiProtocolLib.inf
 EdkCompatibilityPkg/Foundation/Core/Dxe/ArchProtocol/ArchProtocolLib.inf
-EdkCompatibilityPkg/Foundation/Library/Dxe/EfiDriverLib/EfiDriverLib.inf
 EdkCompatibilityPkg/Foundation/Library/RuntimeDxe/EfiRuntimeLib/EfiRuntimeLib.inf
 EdkCompatibilityPkg/Foundation/Library/Dxe/Print/PrintLib.inf
 

@@ -1517,7 +1517,7 @@ Routine Description:
   //
   // Allocate memory for the test case
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_SCT_TEST_CASE),
                  (VOID **)&TempTestCase
@@ -1571,14 +1571,14 @@ Routine Description:
   // Free the items of test case
   //
   if (TestCase->Name != NULL) {
-    BS->FreePool (TestCase->Name);
+    tBS->FreePool (TestCase->Name);
     TestCase->Name = NULL;
   }
 
   //
   // Free the test case itself
   //
-  BS->FreePool (TestCase);
+  tBS->FreePool (TestCase);
 
   //
   // Done

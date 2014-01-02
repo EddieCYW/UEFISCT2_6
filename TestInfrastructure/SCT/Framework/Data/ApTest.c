@@ -445,7 +445,7 @@ Routine Description:
   //
   // Allocate memory for the application test interface
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_AP_TEST_INTERFACE),
                  &TempApTest
@@ -488,19 +488,19 @@ Routine Description:
   // Free the items of application test interface
   //
   if (ApTest->Name != NULL) {
-    BS->FreePool (ApTest->Name);
+    tBS->FreePool (ApTest->Name);
     ApTest->Name = NULL;
   }
 
   if (ApTest->Description != NULL) {
-    BS->FreePool (ApTest->Description);
+    tBS->FreePool (ApTest->Description);
     ApTest->Description = NULL;
   }
 
   //
   // Free the application test interface itself
   //
-  BS->FreePool (ApTest);
+  tBS->FreePool (ApTest);
 
   //
   // Done
@@ -821,7 +821,7 @@ Routine Description:
   //
   // Allocate memory for the test entry
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_AP_TEST_ENTRY),
                  (VOID **)&TempApEntry
@@ -857,29 +857,29 @@ Routine Description:
   // Free the items of application test entry
   //
   if (ApEntry->Name != NULL) {
-    BS->FreePool (ApEntry->Name);
+    tBS->FreePool (ApEntry->Name);
     ApEntry->Name = NULL;
   }
 
   if (ApEntry->Description != NULL) {
-    BS->FreePool (ApEntry->Description);
+    tBS->FreePool (ApEntry->Description);
     ApEntry->Description = NULL;
   }
 
   if (ApEntry->SupportProtocols != NULL) {
-    BS->FreePool (ApEntry->SupportProtocols);
+    tBS->FreePool (ApEntry->SupportProtocols);
     ApEntry->SupportProtocols = NULL;
   }
 
   if (ApEntry->Parameters != NULL) {
-    BS->FreePool (ApEntry->Parameters);
+    tBS->FreePool (ApEntry->Parameters);
     ApEntry->Parameters = NULL;
   }
 
   //
   // Free the application test entry itself
   //
-  BS->FreePool (ApEntry);
+  tBS->FreePool (ApEntry);
 
   //
   // Done

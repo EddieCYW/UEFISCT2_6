@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "DeviceIoBBTestMain.h"
 #include EFI_PROTOCOL_DEFINITION (PciIo)
 #include "DeviceIoBBTestSupport.h"

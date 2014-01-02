@@ -63,11 +63,10 @@ References:
 #ifndef __GRAPHICS_OUTPUT_BBTEST_H__
 #define __GRAPHICS_OUTPUT_BBTEST_H__
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "GraphicsOutputProtocol.h"
-#include "EfiDriverLib.h"
 
 #define EFI_GRAPHICS_OUTPUT_BB_TEST_REVISION  0x00010000
 

@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Mtftp6ENTSTestCase.h"
 
 //
@@ -1524,7 +1525,7 @@ Returns:
 	  return EFI_ABORTED;
 
   S = "needed1234";
-  gBS->CopyMem ((* Buffer), (void *)S, 10);
+  tBS->CopyMem ((* Buffer), (void *)S, 10);
   
   EntsPrint (L"Callback WriteFilePacketNeeded1() is called.\n");
 

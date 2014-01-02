@@ -57,8 +57,6 @@ Abstract:
 
 #include "SctLib.h"
 #include "EfiTest.h"
-#include "EfiDriverLib.h"
-#include "EfiPrintLib.h"
 #include "TestLogging.h"
 
 //
@@ -235,12 +233,12 @@ Returns:
   //
   // Initialize driver lib
   //
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
 
   //
   // Fill in the Unload() function
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ImageHandle,
                   &gEfiLoadedImageProtocolGuid,
                   (VOID **)&LoadedImage,
@@ -258,7 +256,7 @@ Returns:
   //
   // Open the TslInit protocol to perform the supported test.
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ImageHandle,
                   &gEfiTslInitInterfaceGuid,
                   NULL,
@@ -273,7 +271,7 @@ Returns:
   //
   // Initialize the TslInit private data
   //
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (TSL_INIT_PRIVATE_DATA),
                   (VOID **)&Private
@@ -293,7 +291,7 @@ Returns:
   //
   // Install TslInit protocol
   //
-  Status = gBS->InstallProtocolInterface (
+  Status = tBS->InstallProtocolInterface (
                   &ImageHandle,
                   &gEfiTslInitInterfaceGuid,
                   EFI_NATIVE_INTERFACE,
@@ -330,7 +328,7 @@ Returns:
   //
   // Open the TslInit protocol
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ImageHandle,
                   &gEfiTslInitInterfaceGuid,
                   (VOID **)&TslInit,
@@ -342,13 +340,13 @@ Returns:
     //
     // Uninstall TslInit protocol
     //
-    Status = gBS->UninstallProtocolInterface (
+    Status = tBS->UninstallProtocolInterface (
                     ImageHandle,
                     &gEfiTslInitInterfaceGuid,
                     TslInit
                     );
     Private = TSL_INIT_PRIVATE_DATA_FROM_THIS (TslInit);
-    gBS->FreePool (Private);
+    tBS->FreePool (Private);
   }
 
   return Status;
@@ -400,7 +398,7 @@ Returns:
   // Open the TestLoggingLibrary protocol to perform the supported test.
   //
   if (*LibHandle != NULL) {
-    Status = gBS->OpenProtocol (
+    Status = tBS->OpenProtocol (
                     *LibHandle,
                     &gEfiTestLoggingLibraryGuid,
                     NULL,
@@ -416,7 +414,7 @@ Returns:
   //
   // Initialize the TestLoggingLibrary private data
   //
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (TEST_LOGGING_PRIVATE_DATA),
                   (VOID **)&Private
@@ -446,7 +444,7 @@ Returns:
   //
   // Install TestLoggingLibrary protocol
   //
-  Status = gBS->InstallProtocolInterface (
+  Status = tBS->InstallProtocolInterface (
                   LibHandle,
                   &gEfiTestLoggingLibraryGuid,
                   EFI_NATIVE_INTERFACE,
@@ -489,7 +487,7 @@ Returns:
   //
   // Open the TestLoggingLibrary protocol to perform the supported test.
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   LibHandle,
                   &gEfiTestLoggingLibraryGuid,
                   (VOID **)&TestLogging,
@@ -504,14 +502,14 @@ Returns:
   //
   // Uninstall TestLoggingLibrary protocol
   //
-  Status = gBS->UninstallProtocolInterface (
+  Status = tBS->UninstallProtocolInterface (
                   LibHandle,
                   &gEfiTestLoggingLibraryGuid,
                   TestLogging
                   );
   Private = TEST_LOGGING_PRIVATE_DATA_FROM_TLL (TestLogging);
   TllFreePointer (Private);
-  gBS->FreePool (Private);
+  tBS->FreePool (Private);
 
   return Status;
 }
@@ -1160,7 +1158,7 @@ TllWriteLogFile (
   EFI_SIMPLE_TEXT_OUT_PROTOCOL        *ConOut;
 
   Output = Private->OutputProtocol;
-  ConOut = gST->ConOut;
+  ConOut = tST->ConOut;
 
   Status = EFI_SUCCESS;
 
@@ -1212,12 +1210,12 @@ TllFreePointer (
   //
   FileConf = &Private->SystemLogFile;
   if (FileConf->DevicePath != NULL) {
-    gBS->FreePool (FileConf->DevicePath);
+    tBS->FreePool (FileConf->DevicePath);
     FileConf->DevicePath = NULL;
   }
 
   if (FileConf->FileName != NULL) {
-    gBS->FreePool (FileConf->FileName);
+    tBS->FreePool (FileConf->FileName);
     FileConf->FileName = NULL;
   }
 
@@ -1226,12 +1224,12 @@ TllFreePointer (
   //
   FileConf = &Private->CaseLogFile;
   if (FileConf->DevicePath != NULL) {
-    gBS->FreePool (FileConf->DevicePath);
+    tBS->FreePool (FileConf->DevicePath);
     FileConf->DevicePath = NULL;
   }
 
   if (FileConf->FileName != NULL) {
-    gBS->FreePool (FileConf->FileName);
+    tBS->FreePool (FileConf->FileName);
     FileConf->FileName = NULL;
   }
 
@@ -1239,7 +1237,7 @@ TllFreePointer (
   // Free BiosId
   //
   if (Private->BiosId != NULL) {
-    gBS->FreePool (Private->BiosId);
+    tBS->FreePool (Private->BiosId);
     Private->BiosId = NULL;
   }
 
@@ -1247,7 +1245,7 @@ TllFreePointer (
   // Free ScenarioString
   //
   if (Private->ScenarioString != NULL) {
-    gBS->FreePool (Private->ScenarioString);
+    tBS->FreePool (Private->ScenarioString);
     Private->ScenarioString = NULL;
   }
 
@@ -1255,7 +1253,7 @@ TllFreePointer (
   // Free TestName
   //
   if (Private->TestName != NULL) {
-    gBS->FreePool (Private->TestName);
+    tBS->FreePool (Private->TestName);
     Private->TestName = NULL;
   }
 
@@ -1263,7 +1261,7 @@ TllFreePointer (
   // Free EntryName
   //
   if (Private->EntryName != NULL) {
-    gBS->FreePool (Private->EntryName);
+    tBS->FreePool (Private->EntryName);
     Private->EntryName = NULL;
   }
 
@@ -1271,7 +1269,7 @@ TllFreePointer (
   // Free EntryDescription
   //
   if (Private->EntryDescription != NULL) {
-    gBS->FreePool (Private->EntryDescription);
+    tBS->FreePool (Private->EntryDescription);
     Private->EntryDescription = NULL;
   }
 
@@ -1279,7 +1277,7 @@ TllFreePointer (
   // Free SupportProtocols
   //
   if (Private->SupportProtocols != NULL) {
-    gBS->FreePool (Private->SupportProtocols);
+    tBS->FreePool (Private->SupportProtocols);
     Private->SupportProtocols = NULL;
   }
 
@@ -1298,7 +1296,7 @@ TllStrDuplicate (
     return NULL;
   }
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   (EfiStrLen (String) + 1) * sizeof(CHAR16),
                   (VOID **)&Buffer
@@ -1334,7 +1332,7 @@ TllGuidsDuplicate (
     Guid ++;
   }
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   (NoGuids + 1) * sizeof(EFI_GUID),
                   (VOID **)&Buffer

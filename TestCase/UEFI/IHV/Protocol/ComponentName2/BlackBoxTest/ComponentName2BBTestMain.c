@@ -52,6 +52,7 @@ Abstract:
     for EFI Component Name2 Protocol Test
 
 --*/
+#include "SctLib.h"
 #include "ComponentName2BBTestMain.h"
 
 EFI_HANDLE      mImageHandle;
@@ -132,7 +133,7 @@ InitializeBBTestComponentName2 (
   //
   // initialize test utility lib
   //
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

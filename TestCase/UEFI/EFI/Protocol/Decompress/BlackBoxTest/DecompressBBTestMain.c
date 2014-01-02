@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "DecompressBBTestMain.h"
 #include "DecompressBBTestSupport.h"
 
@@ -165,7 +166,7 @@ Returns:
 --*/
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   GetSystemDevicePathAndFilePath (ImageHandle);
 

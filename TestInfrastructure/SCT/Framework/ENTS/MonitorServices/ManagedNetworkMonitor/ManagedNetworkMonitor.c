@@ -54,9 +54,8 @@ Abstract:
   Managed Network Monitor services implementations.
 
 --*/
-#include "Efi.h"
+#include "SctLib.h"
 #include "EntsLib.h"
-#include "EfiDriverLib.h"
 #include "ManagedNetworkMonitor.h"
 
 #define EAS_QUERY_MSG           "EAS_QURY"
@@ -256,11 +255,11 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
   mImageHandle = ImageHandle;
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -268,7 +267,7 @@ Returns:
 
   LoadedImage->Unload = ManagedNetworkMonitorUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_MONITOR_PROTOCOL),
                   (VOID **)&gManagedNetworkMonitorInterface
@@ -287,7 +286,7 @@ Returns:
   gManagedNetworkMonitorInterface->MonitorSaveContext     = ManagedNetworkSaveContext;
   gManagedNetworkMonitorInterface->MonitorRestoreContext  = ManagedNetworkRestoreContext;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsMonitorProtocolGuid,
                   gManagedNetworkMonitorInterface,
@@ -301,7 +300,7 @@ Returns:
 
 Error:
   if (gManagedNetworkMonitorInterface != NULL) {
-    gBS->FreePool (gManagedNetworkMonitorInterface);
+    tBS->FreePool (gManagedNetworkMonitorInterface);
   }
 
   return Status;
@@ -330,7 +329,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsMonitorProtocolGuid,
                   gManagedNetworkMonitorInterface,
@@ -338,7 +337,7 @@ Returns:
                   );
 
   if (gManagedNetworkMonitorInterface != NULL) {
-    gBS->FreePool (gManagedNetworkMonitorInterface);
+    tBS->FreePool (gManagedNetworkMonitorInterface);
   }
 
   return Status;
@@ -384,7 +383,7 @@ Returns:
     return Status;
   }
 
-  Status = gBS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                   ControllerHandle,
                   &gEfiManagedNetworkServiceBindingProtocolGuid,
                   &MnpSb
@@ -409,7 +408,7 @@ Returns:
   //
   // Open the ManagedNetwork Protocol from ChildHandle
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   mMnpInstanceHandle,
                   &gEfiManagedNetworkProtocolGuid,
                   &Mnp,
@@ -486,7 +485,7 @@ Returns:
   //
   // Close the ManagedNetwork Protocol from ChildHandle
   //
-  Status = gBS->CloseProtocol (
+  Status = tBS->CloseProtocol (
                   mMnpInstanceHandle,
                   &gEfiManagedNetworkProtocolGuid,
                   mImageHandle,
@@ -500,11 +499,11 @@ Returns:
   //
   // Close all the events
   //
-  gBS->CloseEvent (TxToken.Event);
-  gBS->CloseEvent (RxToken.Event);
-  gBS->CloseEvent (TxLLToken.Event);
+  tBS->CloseEvent (TxToken.Event);
+  tBS->CloseEvent (RxToken.Event);
+  tBS->CloseEvent (TxLLToken.Event);
   CancelResendTimer ();
-  gBS->CloseEvent (ResendTimeEvent);
+  tBS->CloseEvent (ResendTimeEvent);
 
   //
   // Destroy MNP instance
@@ -544,7 +543,7 @@ Returns:
 
 --*/
 {
-  gBS->SignalEvent (RxToken.Packet.RxData->RecycleEvent);
+  tBS->SignalEvent (RxToken.Packet.RxData->RecycleEvent);
   return ;
 }
 
@@ -798,7 +797,7 @@ Returns:
     return EFI_ACCESS_DENIED;
   }
 
-  gBS->Stall (1000);
+  tBS->Stall (1000);
 
   MnpBufferOutSize = EntsStrLen(Buffer);
   MnpBufferOut = EntsAllocatePool (MnpBufferOutSize + 1);
@@ -1018,7 +1017,7 @@ Returns:
   RxToken.Packet.RxData = NULL;
   RxToken.Event         = NULL;
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EFI_EVENT_NOTIFY_SIGNAL,
                   EFI_TPL_CALLBACK,
                   NotifyFunctionListen,
@@ -1036,7 +1035,7 @@ Returns:
     goto Error1;
   }
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EFI_EVENT_NOTIFY_SIGNAL,
                   EFI_TPL_CALLBACK,
                   NotifyFunctionSend,
@@ -1048,7 +1047,7 @@ Returns:
     goto Error1;
   }
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EFI_EVENT_NOTIFY_SIGNAL,
                   EFI_TPL_CALLBACK,
                   NotifyFunctionSend,
@@ -1060,7 +1059,7 @@ Returns:
     goto Error2;
   }
 
-  Status = gBS->CreateEvent (
+  Status = tBS->CreateEvent (
                   EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
                   EFI_TPL_CALLBACK,
                   ReSendTimer,
@@ -1075,11 +1074,11 @@ Returns:
   return EFI_SUCCESS;
 
 Error3:
-  gBS->CloseEvent (TxLLToken.Event);
+  tBS->CloseEvent (TxLLToken.Event);
 Error2:
-  gBS->CloseEvent (TxToken.Event);
+  tBS->CloseEvent (TxToken.Event);
 Error1:
-  gBS->CloseEvent (RxToken.Event);
+  tBS->CloseEvent (RxToken.Event);
   return Status;
 }
 
@@ -1474,7 +1473,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->SetTimer (
+  Status = tBS->SetTimer (
                   ResendTimeEvent,
                   TimerPeriodic,
                   uSec * 10
@@ -1504,7 +1503,7 @@ Returns:
 --*/
 {
   EFI_STATUS  Status;
-  Status = gBS->SetTimer (
+  Status = tBS->SetTimer (
                   ResendTimeEvent,
                   TimerCancel,
                   0

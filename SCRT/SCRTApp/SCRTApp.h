@@ -54,7 +54,7 @@ Module Name:
 #ifndef _SCRTAPP_H_
 #define _SCRTAPP_H_
 
-#include "Tiano.h"
+#include "SctLib.h"
 #include "EfiShellLib.h"
 #include "EfiDebug.h"
 #include "Mem.h"

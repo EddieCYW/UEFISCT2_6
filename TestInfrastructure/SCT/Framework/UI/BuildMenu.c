@@ -186,25 +186,25 @@ Returns:
   //
   // Get the cols and rows of the displayed screen
   //
-  ST->ConOut->QueryMode (
-                ST->ConOut,
-                (UINTN)ST->ConOut->Mode->Mode,
+  tST->ConOut->QueryMode (
+                tST->ConOut,
+                (UINTN)tST->ConOut->Mode->Mode,
                 &mCols,
                 &mRows
                 );
 
-  Mode = ST->ConOut->Mode->Mode;
+  Mode = tST->ConOut->Mode->Mode;
   
-  if (ST->ConOut->Mode->Mode != 0) {
-    Status = ST->ConOut->SetMode (ST->ConOut, 0);
+  if (tST->ConOut->Mode->Mode != 0) {
+    Status = tST->ConOut->SetMode (tST->ConOut, 0);
     if (EFI_ERROR (Status)) {
       Print (L"Bug and SCT can't execute: Simple Text Output Protocol should support Mode 0 ! \n");
       return Status;
     }
 
-    ST->ConOut->QueryMode (
-                  ST->ConOut,
-                  (UINTN)ST->ConOut->Mode->Mode,
+    tST->ConOut->QueryMode (
+                  tST->ConOut,
+                  (UINTN)tST->ConOut->Mode->Mode,
                   &mCols,
                   &mRows
                   );
@@ -252,7 +252,7 @@ Returns:
   //
   // Allocate memory for the menu page
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof (EFI_MENU_PAGE),
                  (VOID **)&MyPage
@@ -359,13 +359,13 @@ Returns:
   //
   // Header
   //
-  BS->FreePool (Page->Header.HeaderString.Text);
+  tBS->FreePool (Page->Header.HeaderString.Text);
 
   //
   // Body
   //
-  BS->FreePool (Page->Body.MenuItemHeader.Text);
-  BS->FreePool (Page->Body.DescriptionHeader.Text);
+  tBS->FreePool (Page->Body.MenuItemHeader.Text);
+  tBS->FreePool (Page->Body.DescriptionHeader.Text);
 
   MenuItem = Page->Body.ItemList;
 
@@ -388,9 +388,9 @@ Returns:
     if ((MENU_ITEM_TYPE (MenuItem->ItemType) == EFI_ITEM_HAVE_EDIT ||
          MENU_ITEM_TYPE (MenuItem->ItemType) == EFI_ITEM_HAVE_POPUP) &&
         (MenuItem->ItemValue != NULL)) {
-      BS->FreePool (MenuItem->ItemValue);
+      tBS->FreePool (MenuItem->ItemValue);
     }
-    BS->FreePool (MenuItem);
+    tBS->FreePool (MenuItem);
     MenuItem = NextMenuItem;
   }
 
@@ -398,7 +398,7 @@ Returns:
   //free scroll bar.
   //
   if (Page->Body.HasScrollBar) {
-    BS->FreePool (Page->Body.ScrollBar);
+    tBS->FreePool (Page->Body.ScrollBar);
   }
 
   //
@@ -409,9 +409,9 @@ Returns:
   while (HotKey != NULL) {
     NextHotKey = HotKey->Next;
 
-    BS->FreePool (HotKey->HotKeyName.Text);
-    BS->FreePool (HotKey->HotKeyDesc.Text);
-    BS->FreePool (HotKey);
+    tBS->FreePool (HotKey->HotKeyName.Text);
+    tBS->FreePool (HotKey->HotKeyDesc.Text);
+    tBS->FreePool (HotKey);
 
     HotKey = NextHotKey;
   }
@@ -419,7 +419,7 @@ Returns:
   //
   // Page
   //
-  BS->FreePool (Page);
+  tBS->FreePool (Page);
 
   return EFI_SUCCESS;
 }
@@ -464,7 +464,7 @@ Returns:
   //
   // Allocate memory for hot key
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof (EFI_HOT_KEY),
                  (VOID**)&HotKey
@@ -547,7 +547,7 @@ Returns:
   //
   // Allocate memory for menu item
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof (EFI_MENU_ITEM),
                  (VOID**)&MenuItem
@@ -556,7 +556,7 @@ Returns:
     return Status;
   }
 
-  BS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
+  tBS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
 
   //
   // Menu item
@@ -651,7 +651,7 @@ Returns:
   //
   // Allocate memory for menu item
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof (EFI_MENU_ITEM),
                  (VOID**)&MenuItem
@@ -660,7 +660,7 @@ Returns:
     return Status;
   }
 
-  BS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
+  tBS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
 
   //
   // Menu item
@@ -756,7 +756,7 @@ Returns:
   //
   // Allocate memory for menu item
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof (EFI_MENU_ITEM),
                  (VOID**)&MenuItem
@@ -765,7 +765,7 @@ Returns:
     return Status;
   }
 
-  BS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
+  tBS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
 
   //
   // Menu item
@@ -913,7 +913,7 @@ Returns:
   //
   // Allocate memory for menu item
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof (EFI_MENU_ITEM),
                  (VOID**)&MenuItem
@@ -922,7 +922,7 @@ Returns:
     return Status;
   }
 
-  BS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
+  tBS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
 
   //
   // Menu item
@@ -1009,7 +1009,7 @@ Returns:
   //
   // Allocate memory for menu item
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof (EFI_MENU_ITEM),
                  (VOID**)&MenuItem
@@ -1018,7 +1018,7 @@ Returns:
     return Status;
   }
 
-  BS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
+  tBS->SetMem (MenuItem, sizeof (EFI_MENU_ITEM), 0);
 
   //
   // Menu item
@@ -1141,7 +1141,7 @@ Returns:
   //
   //allocate memory for Value Queue
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
           EfiBootServicesData,
           sizeof (EFI_ITEM_VALUE_QUEUE),
           (VOID **)&TempValueQueue
@@ -1149,7 +1149,7 @@ Returns:
   if (EFI_ERROR (Status)) {
     return EFI_OUT_OF_RESOURCES;
   }
-  BS->SetMem (TempValueQueue, sizeof (EFI_ITEM_VALUE_QUEUE), 0);
+  tBS->SetMem (TempValueQueue, sizeof (EFI_ITEM_VALUE_QUEUE), 0);
 
   TempValueQueue->StringValue = StrDuplicate (StringValue);
   TempValueQueue->IntValue    = IntValue;
@@ -1208,10 +1208,10 @@ Returns:
     TempValueQueue = NextValueQueue->Next;
 
     if (NextValueQueue->StringValue != NULL) {
-      BS->FreePool(NextValueQueue->StringValue);
+      tBS->FreePool (NextValueQueue->StringValue);
     }
 
-    BS->FreePool (NextValueQueue);
+    tBS->FreePool (NextValueQueue);
 
     NextValueQueue = TempValueQueue;
   }
@@ -1272,7 +1272,7 @@ Returns:
     return EFI_SUCCESS;
   }
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof (EFI_SCROLL_BAR),
                  (VOID **)&ScrollBar

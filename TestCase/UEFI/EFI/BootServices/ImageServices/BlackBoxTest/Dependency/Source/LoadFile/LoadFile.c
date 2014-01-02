@@ -151,7 +151,7 @@ InitializeLoadFileDriver (
   
   EfiInitializeTestLib (ImageHandle, SystemTable);
   
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
   
   mDriverImageHandle = ImageHandle;
   mLoadFileDriverDevicePath = NULL;

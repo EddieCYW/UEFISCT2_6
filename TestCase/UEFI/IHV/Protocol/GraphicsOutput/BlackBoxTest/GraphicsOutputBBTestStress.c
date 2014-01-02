@@ -61,6 +61,7 @@ References:
 Revision History
 
 --*/
+#include "SctLib.h"
 #include "GraphicsOutputBBTest.h"
 
 //

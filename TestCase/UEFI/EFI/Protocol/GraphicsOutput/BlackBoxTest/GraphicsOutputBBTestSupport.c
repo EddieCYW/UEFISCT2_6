@@ -62,6 +62,7 @@ Revision History
 
 --*/
 
+#include "SctLib.h"
 #include "GraphicsOutputBBTest.h"
 #ifndef EFIARM
 EFI_GUID  gEfiGraphicsOutputProtocolGuid = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;

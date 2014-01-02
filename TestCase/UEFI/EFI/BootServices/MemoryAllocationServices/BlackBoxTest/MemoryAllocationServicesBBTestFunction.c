@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "MemoryAllocationServicesBBTestMain.h"
 
 #define ALLOCATEPAGES_MEMORYTYPE_NUM 16

@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "DevicePathToTextBBTestMain.h"
 
 extern EFI_GUID gEfiDevicePathFromTextProtocolGuid;

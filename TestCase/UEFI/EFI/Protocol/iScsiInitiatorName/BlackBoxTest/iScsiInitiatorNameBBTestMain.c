@@ -57,6 +57,7 @@ Revision History
 
 --*/
 
+#include "SctLib.h"
 #include "iScsiInitiatorNameBBTestMain.h"
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
@@ -131,8 +132,8 @@ InitializeBBTestiScsiInitiatorName (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,

@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Dhcp4ENTSTestCase.h"
 
 //

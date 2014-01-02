@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Tcp4ServiceBindingENTSTestCase.h"
 
 static CHAR16     gTcp4ServiceBindingProtocolName[] = L"Tcp4ServiceBinding";
@@ -110,10 +111,10 @@ Returns:
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
   EFI_HANDLE                ClientHandle;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -121,7 +122,7 @@ Returns:
 
   LoadedImage->Unload = Tcp4ServiceBindingENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gTcp4ServiceBindingEntsProtocolInterface
@@ -147,7 +148,7 @@ Returns:
   gTcp4ServiceBindingEntsProtocolInterface->RuntimeInfo       = gTcp4ServiceBindingRuntimeInfo;
   gTcp4ServiceBindingEntsProtocolInterface->RuntimeInfoSize   = gTcp4ServiceBindingRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gTcp4ServiceBindingEntsProtocolInterface,
@@ -161,7 +162,7 @@ Returns:
 
 Error:
   if (gTcp4ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gTcp4ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gTcp4ServiceBindingEntsProtocolInterface);
   }
 
   return Status;
@@ -190,7 +191,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gTcp4ServiceBindingEntsProtocolInterface,
@@ -198,7 +199,7 @@ Returns:
                   );
 
   if (gTcp4ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gTcp4ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gTcp4ServiceBindingEntsProtocolInterface);
   }
 
   return Status;

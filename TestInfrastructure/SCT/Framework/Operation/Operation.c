@@ -662,7 +662,7 @@ Returns:
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Create report file - %r", Status));
       Print (L"  ERROR: Cannot create the report file. Status - %r\n", Status);
-      BS->FreePool (LogFilePath);
+      tBS->FreePool (LogFilePath);
       return Status;
     }
 
@@ -680,12 +680,12 @@ Returns:
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Generate report file - %r", Status));
       Print (L"  ERROR: Cannot generate the report file. Status - %r\n", Status);
-      BS->FreePool (LogFilePath);
+      tBS->FreePool (LogFilePath);
       return Status;
     }
 
     Print (L"  Succeed!\n");
-    BS->FreePool (LogFilePath);
+    tBS->FreePool (LogFilePath);
   }
 
   //
@@ -740,11 +740,11 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load support files - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Open the standard test support files
@@ -780,7 +780,7 @@ Routine Description:
   //
   // Allocate memory for the configuration data
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_SCT_CONFIG_DATA),
                  (VOID **)&gFT->ConfigData
@@ -813,7 +813,7 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load config data - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
@@ -831,7 +831,7 @@ Routine Description:
     }
   }
   
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Done
@@ -878,11 +878,11 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load category data - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Done
@@ -931,11 +931,11 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load proxy files - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Done
@@ -981,11 +981,11 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load test cases - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Done
@@ -1031,11 +1031,11 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load skipped cases - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Done
@@ -1095,11 +1095,11 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load test files - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Done

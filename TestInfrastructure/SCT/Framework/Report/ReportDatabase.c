@@ -161,7 +161,7 @@ Routine Description:
   //
   if (Buffer[0] != 0xFEFF) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Unsupported GUID database file"));
-    BS->FreePool (Buffer);
+    tBS->FreePool (Buffer);
     return EFI_SUCCESS;
   }
 
@@ -213,7 +213,7 @@ Routine Description:
     LineBuffer = StrTokenLine (NULL, L"\n\r");
   }
 
-  BS->FreePool (Buffer);
+  tBS->FreePool (Buffer);
   return EFI_SUCCESS;
 }
 
@@ -234,7 +234,7 @@ Routine Description:
   mGuidDatabaseUsedSize = 0;
 
   if (mGuidDatabase != NULL) {
-    BS->FreePool (mGuidDatabase);
+    tBS->FreePool (mGuidDatabase);
     mGuidDatabase = NULL;
   }
 
@@ -430,7 +430,7 @@ Routine Description:
   mGuidAssertionUsedSize = 0;
 
   if (mGuidAssertion != NULL) {
-    BS->FreePool (mGuidAssertion);
+    tBS->FreePool (mGuidAssertion);
     mGuidAssertion = NULL;
   }
 
@@ -714,15 +714,15 @@ Routine Description:
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Set report item - %r", Status));
       if (StrCmp (GuidStr, SystemHangGuidStr) == 0) {
-        BS->FreePool (TitleStr);
-        BS->FreePool (RuntimeInforStr);
+        tBS->FreePool (TitleStr);
+        tBS->FreePool (RuntimeInforStr);
       }
       return Status;
     }
 
     if (StrCmp (GuidStr, SystemHangGuidStr) == 0) {
-      BS->FreePool (TitleStr);
-      BS->FreePool (RuntimeInforStr);
+      tBS->FreePool (TitleStr);
+      tBS->FreePool (RuntimeInforStr);
     }
 
     //
@@ -767,7 +767,7 @@ Routine Description:
 
     while (AssertionInfor != NULL) {
       NextAssertionInfor = AssertionInfor->Next;
-      BS->FreePool (AssertionInfor);
+      tBS->FreePool (AssertionInfor);
       AssertionInfor = NextAssertionInfor;
     }
 
@@ -779,12 +779,12 @@ Routine Description:
 
     while (AssertionInfor != NULL) {
       NextAssertionInfor = AssertionInfor->Next;
-      BS->FreePool (AssertionInfor);
+      tBS->FreePool (AssertionInfor);
       AssertionInfor = NextAssertionInfor;
     }
 
     NextReportItem = ReportItem->Next;
-    BS->FreePool (ReportItem);
+    tBS->FreePool (ReportItem);
     ReportItem = NextReportItem;
   }
 
@@ -854,7 +854,7 @@ Routine Description:
     }
 
     AutoStrCat (Buffer, TempBuffer);
-    BS->FreePool (TempBuffer);
+    tBS->FreePool (TempBuffer);
 
     ReportItem = ReportItem->Prev;
   }
@@ -922,7 +922,7 @@ Routine Description:
       }
 
       AutoStrCat (Buffer, TempBuffer);
-      BS->FreePool (TempBuffer);
+      tBS->FreePool (TempBuffer);
 
       AssertionInfor = AssertionInfor->Prev;
     }
@@ -976,7 +976,7 @@ Routine Description:
       }
 
       AutoStrCat (Buffer, TempBuffer);
-      BS->FreePool (TempBuffer);
+      tBS->FreePool (TempBuffer);
 
       AssertionInfor = AssertionInfor->Prev;
     }
@@ -1023,7 +1023,7 @@ Routine Description:
     mGuidDatabaseMaxSize  = EFI_SCT_GUID_DATABASE_SIZE;
     mGuidDatabaseUsedSize = 0;
 
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    mGuidDatabaseMaxSize * sizeof(EFI_SCT_GUID_DATABASE),
                    (VOID **)&mGuidDatabase
@@ -1043,7 +1043,7 @@ Routine Description:
   if (mGuidDatabaseUsedSize + 1 >= mGuidDatabaseMaxSize) {
     mGuidDatabaseMaxSize = mGuidDatabaseMaxSize * 2;
 
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    mGuidDatabaseMaxSize * sizeof(EFI_SCT_GUID_DATABASE),
                    (VOID **)&TempGuidDatabase
@@ -1064,7 +1064,7 @@ Routine Description:
     //
     // Free the original buffer
     //
-    BS->FreePool (mGuidDatabase);
+    tBS->FreePool (mGuidDatabase);
     mGuidDatabase = TempGuidDatabase;
   }
 
@@ -1157,7 +1157,7 @@ Routine Description:
     mGuidAssertionMaxSize  = EFI_SCT_GUID_ASSERTION_SIZE;
     mGuidAssertionUsedSize = 0;
 
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    mGuidAssertionMaxSize * sizeof(EFI_SCT_GUID_ASSERTION),
                    (VOID **)&mGuidAssertion
@@ -1177,7 +1177,7 @@ Routine Description:
   if (mGuidAssertionUsedSize + 1 >= mGuidAssertionMaxSize) {
     mGuidAssertionMaxSize = mGuidAssertionMaxSize * 2;
 
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    mGuidAssertionMaxSize * sizeof(EFI_SCT_GUID_ASSERTION),
                    (VOID **)&TempGuidAssertion
@@ -1198,7 +1198,7 @@ Routine Description:
     //
     // Free the original buffer
     //
-    BS->FreePool (mGuidAssertion);
+    tBS->FreePool (mGuidAssertion);
     mGuidAssertion = TempGuidAssertion;
   }
 
@@ -1316,7 +1316,7 @@ Routine Description:
             AssertionInfor->Next->Prev = LastAssertionInfor;
           }
 
-          BS->FreePool (AssertionInfor);
+          tBS->FreePool (AssertionInfor);
           break;
         }
 
@@ -1331,7 +1331,7 @@ Routine Description:
     //
     // Not found, create a new report item
     //
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    sizeof(EFI_SCT_REPORT_ITEM),
                    (VOID **)&NewReportItem
@@ -1374,7 +1374,7 @@ Routine Description:
   //
   // Allocate a buffer for the new assertion info
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_SCT_ASSERTION_INFOR),
                  (VOID **)&NewAssertionInfor

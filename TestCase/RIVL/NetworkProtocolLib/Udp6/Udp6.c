@@ -53,7 +53,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "Udp6.h"
 
 EFI_GUID gEfiUdp6ServiceBindingProtocolGuid = EFI_UDP6_SERVICE_BINDING_PROTOCOL_GUID;

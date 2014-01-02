@@ -146,11 +146,11 @@ Returns:
           *Iteration = IterationIndex - 1;
         }
 
-        BS->FreePool (FileName);
+        tBS->FreePool (FileName);
         break;
       }
 
-      BS->FreePool (FileName);
+      tBS->FreePool (FileName);
     }
 
     if (IterationIndex == 0) {
@@ -188,11 +188,11 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Read file to buffer - %r", Status));
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Load the buffer to the GUID assertion table with duplicate
@@ -200,11 +200,11 @@ Returns:
   Status = LoadGuidAssertion (Buffer, TRUE, FileState);
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load GUID assertion - %r", Status));
-    BS->FreePool (Buffer);
+    tBS->FreePool (Buffer);
     return Status;
   }
 
-  BS->FreePool (Buffer);
+  tBS->FreePool (Buffer);
 
   //
   // Get the assertion number (free the GUID assertion table)
@@ -289,7 +289,7 @@ Returns:
         //
         // File does not exist
         //
-        BS->FreePool (FileName);
+        tBS->FreePool (FileName);
         break;
       }
 
@@ -304,11 +304,11 @@ Returns:
                  );
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Read file to buffer - %r", Status));
-        BS->FreePool (FileName);
+        tBS->FreePool (FileName);
         return Status;
       }
 
-      BS->FreePool (FileName);
+      tBS->FreePool (FileName);
 
       //
       // Load the buffer to the GUID assertion table without duplicate
@@ -316,11 +316,11 @@ Returns:
       Status = LoadGuidAssertion (Buffer, FALSE, &FileState);
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load GUID assertion - %r", Status));
-        BS->FreePool (Buffer);
+        tBS->FreePool (Buffer);
         return Status;
       }
 
-      BS->FreePool (Buffer);
+      tBS->FreePool (Buffer);
 
       //
       // Get the assertion number (free the GUID assertion table)
@@ -401,7 +401,7 @@ Returns:
   // Locate the device handle
   //
   RemainingDevicePath = DevicePath;
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                  &gEfiSimpleFileSystemProtocolGuid,
                  &RemainingDevicePath,
                  &DeviceHandle
@@ -414,7 +414,7 @@ Returns:
   //
   // Locate the simple file system
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  DeviceHandle,
                  &gEfiSimpleFileSystemProtocolGuid,
                  (VOID **)&Vol
@@ -456,7 +456,7 @@ Returns:
   //
   FileInfoSize = sizeof(EFI_FILE_INFO) + 1024;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  FileInfoSize,
                  (VOID **)&FileInfo
@@ -514,11 +514,11 @@ Returns:
                  );
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Read file to buffer - %r", Status));
-        BS->FreePool (FileName);
+        tBS->FreePool (FileName);
         continue;
       }
 
-      BS->FreePool (FileName);
+      tBS->FreePool (FileName);
 
       //
       // Get the index and iteration from the file name
@@ -537,7 +537,7 @@ Returns:
                  );
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Get index from file name - %r", Status));
-        BS->FreePool (TempName);
+        tBS->FreePool (TempName);
         continue;
       }
 
@@ -554,15 +554,15 @@ Returns:
                  );
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Load report infor - %r", Status));
-        BS->FreePool (TempName);
-        BS->FreePool (LogName);
-        BS->FreePool (Buffer);
+        tBS->FreePool (TempName);
+        tBS->FreePool (LogName);
+        tBS->FreePool (Buffer);
         continue;
       }
 
-      BS->FreePool (TempName);
-      BS->FreePool (LogName);
-      BS->FreePool (Buffer);
+      tBS->FreePool (TempName);
+      tBS->FreePool (LogName);
+      tBS->FreePool (Buffer);
 
       //
       // Get the assertion number (free the GUID assertion table)
@@ -604,18 +604,18 @@ Returns:
                  );
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Get protocol assertion - %r", Status));
-        BS->FreePool (FileName);
+        tBS->FreePool (FileName);
         continue;
       }
 
-      BS->FreePool (FileName);
+      tBS->FreePool (FileName);
     }
   }
 
   //
   // Free resources
   //
-  BS->FreePool (FileInfo);
+  tBS->FreePool (FileInfo);
   LogDir->Close (LogDir);
 
   //
@@ -696,19 +696,19 @@ Arguments:
   FileName = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_GUID_DATABASE);
   if (FileName == NULL) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
-    BS->FreePool (ConfigBuffer);
+    tBS->FreePool (ConfigBuffer);
     return EFI_OUT_OF_RESOURCES;
   }
 
   Status = LoadGuidDatabase (gFT->DevicePath, FileName);
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load GUID database - %r", Status));
-    BS->FreePool (ConfigBuffer);
-    BS->FreePool (FileName);
+    tBS->FreePool (ConfigBuffer);
+    tBS->FreePool (FileName);
     return Status;
   }
 
-  BS->FreePool (FileName);
+  tBS->FreePool (FileName);
 
   //
   // Load the assertion information from the log directory
@@ -722,7 +722,7 @@ Arguments:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Get protocol assertion - %r", Status));
-    BS->FreePool (ConfigBuffer);
+    tBS->FreePool (ConfigBuffer);
     UnloadGuidDatabase ();
     UnloadReportInfor ();
     return Status;
@@ -734,7 +734,7 @@ Arguments:
   Status = GetReportInfor (&Buffer);
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Get report infor - %r", Status));
-    BS->FreePool (ConfigBuffer);
+    tBS->FreePool (ConfigBuffer);
     UnloadGuidDatabase ();
     UnloadReportInfor ();
     return Status;
@@ -748,28 +748,28 @@ Arguments:
   //
   AsciiBufferSize = StrLen(Buffer) + 1;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  AsciiBufferSize,
                  (VOID **)&AsciiBuffer
                  );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Allocate pool - %r", Status));
-    BS->FreePool (ConfigBuffer);
-    BS->FreePool (Buffer);
+    tBS->FreePool (ConfigBuffer);
+    tBS->FreePool (Buffer);
     return Status;
   }
 
   Status = UnicodeToAscii (Buffer, AsciiBuffer);
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Convert Unicode to ASCII - %r", Status));
-    BS->FreePool (ConfigBuffer);
-    BS->FreePool (Buffer);
-    BS->FreePool (AsciiBuffer);
+    tBS->FreePool (ConfigBuffer);
+    tBS->FreePool (Buffer);
+    tBS->FreePool (AsciiBuffer);
     return Status;
   }
 
-  BS->FreePool (Buffer);
+  tBS->FreePool (Buffer);
 
   //
   // Create the report file
@@ -781,8 +781,8 @@ Arguments:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Create report file - %r", Status));
-    BS->FreePool (ConfigBuffer);
-    BS->FreePool (AsciiBuffer);
+    tBS->FreePool (ConfigBuffer);
+    tBS->FreePool (AsciiBuffer);
     return Status;
   }
 
@@ -798,8 +798,8 @@ Arguments:
                      );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Write report file - %r", Status));
-    BS->FreePool (ConfigBuffer);
-    BS->FreePool (AsciiBuffer);
+    tBS->FreePool (ConfigBuffer);
+    tBS->FreePool (AsciiBuffer);
     Handle->Close (Handle);
     return Status;
   }
@@ -814,14 +814,14 @@ Arguments:
                      );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Write report file - %r", Status));
-    BS->FreePool (ConfigBuffer);
-    BS->FreePool (AsciiBuffer);
+    tBS->FreePool (ConfigBuffer);
+    tBS->FreePool (AsciiBuffer);
     Handle->Close (Handle);
     return Status;
   }
 
-  BS->FreePool (ConfigBuffer);
-  BS->FreePool (AsciiBuffer);
+  tBS->FreePool (ConfigBuffer);
+  tBS->FreePool (AsciiBuffer);
 
   //
   // Close the report file

@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Mtftp4ServiceBindingENTSTestCase.h"
 
 static CHAR16     gMtftp4ServiceBindingProtocolName[] = L"Mtftp4ServiceBinding";
@@ -110,10 +111,10 @@ Returns:
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
   EFI_HANDLE                ClientHandle;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -121,7 +122,7 @@ Returns:
 
   LoadedImage->Unload = Mtftp4ServiceBindingENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gMtftp4ServiceBindingEntsProtocolInterface
@@ -147,7 +148,7 @@ Returns:
   gMtftp4ServiceBindingEntsProtocolInterface->RuntimeInfo       = gMtftp4ServiceBindingRuntimeInfo;
   gMtftp4ServiceBindingEntsProtocolInterface->RuntimeInfoSize   = gMtftp4ServiceBindingRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gMtftp4ServiceBindingEntsProtocolInterface,
@@ -161,7 +162,7 @@ Returns:
 
 Error:
   if (gMtftp4ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gMtftp4ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gMtftp4ServiceBindingEntsProtocolInterface);
   }
 
   return Status;
@@ -190,7 +191,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gMtftp4ServiceBindingEntsProtocolInterface,
@@ -198,7 +199,7 @@ Returns:
                   );
 
   if (gMtftp4ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gMtftp4ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gMtftp4ServiceBindingEntsProtocolInterface);
   }
 
   return Status;

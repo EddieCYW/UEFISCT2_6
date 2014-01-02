@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "DevicePathUtilitiesBBTestMain.h"
 
 #define PCINodeType         1

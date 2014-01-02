@@ -127,12 +127,12 @@ ProbePCDPTable (
   //
   // found PCDP table from system table
   //
-  for (Index = 0; Index < ST->NumberOfTableEntries; Index++) {
-    if (EfiCompareGuid (&(ST->ConfigurationTable[Index].VendorGuid), &gPCDPableGuid)) {
+  for (Index = 0; Index < tST->NumberOfTableEntries; Index++) {
+    if (EfiCompareGuid (&(tST->ConfigurationTable[Index].VendorGuid), &gPCDPableGuid)) {
       //
       // A match was found.
       //
-      PCDPTable = ST->ConfigurationTable[Index].VendorTable;
+      PCDPTable = tST->ConfigurationTable[Index].VendorTable;
       if (PCDPTable->Header.Signature == HCDP_TABLE_SIGNATURE) {
         break;
       }
@@ -187,14 +187,14 @@ ProbeSPCRTable (
   //
   // found ACPI table RSD_PTR from system table
   //
-  for (Index = 0; Index < ST->NumberOfTableEntries; Index++) {
-    if (EfiCompareGuid (&(ST->ConfigurationTable[Index].VendorGuid), &gEfiAcpi20TableGuid) ||
-        EfiCompareGuid (&(ST->ConfigurationTable[Index].VendorGuid), &gEfiAcpiTableGuid)
+  for (Index = 0; Index < tST->NumberOfTableEntries; Index++) {
+    if (EfiCompareGuid (&(tST->ConfigurationTable[Index].VendorGuid), &gEfiAcpi20TableGuid) ||
+        EfiCompareGuid (&(tST->ConfigurationTable[Index].VendorGuid), &gEfiAcpiTableGuid)
           ) {
       //
       // A match was found.
       //
-      Rsdp = ST->ConfigurationTable[Index].VendorTable;
+      Rsdp = tST->ConfigurationTable[Index].VendorTable;
       break;
     }
   }
@@ -236,7 +236,7 @@ RuntimeHandOff (
   EFI_STATUS                                Status;
   EFI_ACPI_3_0_GENERIC_ADDRESS_STRUCTURE    Gas;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiRuntimeServicesData,
                  sizeof(RUNTIME_HANDOFF),
                  (VOID **)&HandOffPtr

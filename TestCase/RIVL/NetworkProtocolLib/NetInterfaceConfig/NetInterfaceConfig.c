@@ -53,7 +53,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "NetInterfaceConfig.h"
 
 EFI_GUID gEfiNetInterfaceConfigProtocolGuid                = EFI_NET_INTERFACE_CONFIG_PROTOCOL_GUID;

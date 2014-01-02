@@ -159,7 +159,7 @@ Returns:
   //
 
   EditBuffer = NULL;
-  Status = BS->AllocatePool(
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH+1)*sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -189,7 +189,7 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     DestroyMenuPage (Page);
-    BS->FreePool (EditBuffer);
+    tBS->FreePool (EditBuffer);
     return Status;
   }
 
@@ -265,7 +265,7 @@ Returns:
   //add BiosId Menu Item
   //
   EditBuffer = NULL;
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
             EfiBootServicesData,
             (EFI_MAX_EDIT_LENGTH + 1) * sizeof(CHAR16),
             (VOID **)&EditBuffer
@@ -290,7 +290,7 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     DestroyMenuPage (Page);
-    BS->FreePool (EditBuffer);
+    tBS->FreePool (EditBuffer);
     return Status;
   }
 
@@ -298,7 +298,7 @@ Returns:
   //add Platform Number Menu Item
   //
   EditBuffer  = NULL;
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH + 1) * sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -319,7 +319,7 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     DestroyMenuPage (Page);
-    BS->FreePool (EditBuffer);
+    tBS->FreePool (EditBuffer);
     return Status;
   }
 
@@ -338,7 +338,7 @@ Returns:
   //add Configuration Number Menu Item
   //
   EditBuffer = NULL;
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH + 1) * sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -364,7 +364,7 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     DestroyMenuPage (Page);
-    BS->FreePool (EditBuffer);
+    tBS->FreePool (EditBuffer);
     return Status;
   }
 
@@ -383,7 +383,7 @@ Returns:
   //add Scenario String Menu Item
   //
   EditBuffer  = NULL;
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH + 1) * sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -408,7 +408,7 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     DestroyMenuPage (Page);
-    BS->FreePool (EditBuffer);
+    tBS->FreePool (EditBuffer);
     return Status;
   }
 
@@ -416,7 +416,7 @@ Returns:
   //add edit command String Menu Item
   //
   EditBuffer  = NULL;
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH + 1) * sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -442,7 +442,7 @@ Returns:
              );
   if (EFI_ERROR (Status)) {
     DestroyMenuPage (Page);
-    BS->FreePool (EditBuffer);
+    tBS->FreePool (EditBuffer);
     return Status;
   }
 
@@ -591,7 +591,7 @@ Returns:
         //
         // convert default value to string
         //
-        Status = BS->AllocatePool(
+        Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH+1)*sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -620,7 +620,7 @@ Returns:
         //
         // convert default value to string
         //
-        Status = BS->AllocatePool(
+        Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH+1)*sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -665,7 +665,7 @@ Returns:
         //
         // convert default value to string
         //
-        Status = BS->AllocatePool(
+        Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH+1)*sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -694,7 +694,7 @@ Returns:
         //
         // convert default value to string
         //
-        Status = BS->AllocatePool(
+        Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH+1)*sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -719,7 +719,7 @@ Returns:
         //
         // convert default value to string
         //
-        Status = BS->AllocatePool(
+        Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH+1)*sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -744,7 +744,7 @@ Returns:
         //
         // convert default value to string
         //
-        Status = BS->AllocatePool(
+        Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH+1)*sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -769,7 +769,7 @@ Returns:
         //
         // convert default value to string
         //
-        Status = BS->AllocatePool(
+        Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_EDIT_LENGTH+1)*sizeof(CHAR16),
                  (VOID **)&EditBuffer
@@ -861,7 +861,7 @@ Returns:
       case CONFIG_MENU_BIOSID:
         if (StriCmp (gFT->ConfigData->BiosId, MenuItem->ItemValue) != 0) {
           if (gFT->ConfigData->BiosId != NULL) {
-            BS->FreePool (gFT->ConfigData->BiosId);
+            tBS->FreePool (gFT->ConfigData->BiosId);
           }
           gFT->ConfigData->BiosId = StrDuplicate (MenuItem->ItemValue);
           ItemValueChanged = TRUE;
@@ -893,7 +893,7 @@ Returns:
       case CONFIG_MENU_SCENARIO_STRING:
         if (StriCmp (gFT->ConfigData->ScenarioString, MenuItem->ItemValue) != 0) {
           if (gFT->ConfigData->ScenarioString != NULL) {
-            BS->FreePool (gFT->ConfigData->ScenarioString);
+            tBS->FreePool (gFT->ConfigData->ScenarioString);
           }
           gFT->ConfigData->ScenarioString = StrDuplicate (MenuItem->ItemValue);
           ItemValueChanged = TRUE;
@@ -903,7 +903,7 @@ Returns:
       case CONFIG_MENU_EDIT_COMMAND:
         if (StriCmp (gFT->ConfigData->EditCommandString, MenuItem->ItemValue) != 0) {
           if (gFT->ConfigData->EditCommandString != NULL) {
-            BS->FreePool (gFT->ConfigData->EditCommandString);
+            tBS->FreePool (gFT->ConfigData->EditCommandString);
           }
           gFT->ConfigData->EditCommandString = StrDuplicate (MenuItem->ItemValue);
           ItemValueChanged = TRUE;
@@ -926,7 +926,7 @@ Returns:
                FileName,
                gFT->ConfigData
                );
-    BS->FreePool (FileName);
+    tBS->FreePool (FileName);
   }
   //
   // Display the parent menu page
@@ -990,7 +990,7 @@ Returns:
 
   BufLen  = 0;
   Page    = (EFI_MENU_PAGE *)Context;
-  Attrib  = ST->ConOut->Mode->Attribute;
+  Attrib  = tST->ConOut->Mode->Attribute;
   X0      = Column;
   Y0      = Row;
   X1      = Page->Body.BodyRect.BottomRight.Col - 1;
@@ -1002,8 +1002,8 @@ Returns:
 
 
   if (MenuItem == Page->Body.CurrentSelected) {
-    Status = ST->ConOut->SetAttribute (
-                           ST->ConOut,
+    Status = tST->ConOut->SetAttribute (
+                           tST->ConOut,
                            EFI_ITEM_DESC_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                            );
     if (EFI_ERROR (Status)) {
@@ -1027,7 +1027,7 @@ Returns:
     //
     //then we display specific information for this menu item
     //
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    MAX_STRING_LEN * sizeof (CHAR16),
                    (VOID **)&Buffer
@@ -1049,7 +1049,7 @@ Returns:
     for (Index = Y1 - 3; Index <= Y1; Index++) {
       Status = TestPrintAt (X0, Index, Buffer);
       if (EFI_ERROR (Status)) {
-        BS->FreePool (Buffer);
+        tBS->FreePool (Buffer);
         return Status;
       }
     }
@@ -1089,8 +1089,8 @@ Returns:
 
       Status = TestPrintAt (X0, Y1 - 1, Buffer);
     }
-    BS->FreePool (Buffer);
-    ST->ConOut->SetAttribute (ST->ConOut, Attrib);
+    tBS->FreePool (Buffer);
+    tST->ConOut->SetAttribute (tST->ConOut, Attrib);
 
     //
     //successfully displayed the message
@@ -1102,15 +1102,15 @@ Returns:
     //
     //clear the display area.
     //
-    Status = ST->ConOut->SetAttribute (
-                           ST->ConOut,
+    Status = tST->ConOut->SetAttribute (
+                           tST->ConOut,
                            EFI_MENUPAGE_BODY_BGCOLOR >> 4 | EFI_MENUPAGE_BODY_BGCOLOR
                            );
     if (EFI_ERROR (Status)) {
       return Status;
     }
     BufLen = (X1 - X0 + 2) * sizeof(CHAR16);
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    BufLen,
                    (VOID **)&Buffer
@@ -1126,13 +1126,13 @@ Returns:
     for (Index = Y0; Index <= Y1; Index ++) {
       Status = TestPrintAt (X0, Index, Buffer);
       if (EFI_ERROR (Status)) {
-        BS->FreePool (Buffer);
+        tBS->FreePool (Buffer);
         return Status;
       }
     }
 
-    BS->FreePool (Buffer);
-    ST->ConOut->SetAttribute (ST->ConOut, Attrib);
+    tBS->FreePool (Buffer);
+    tST->ConOut->SetAttribute (tST->ConOut, Attrib);
     return EFI_SUCCESS;
   }
 }

@@ -451,11 +451,11 @@ Returns:
       //
       //Change to running background
       //
-      ST->ConOut->SetAttribute (
-                    ST->ConOut,
+      tST->ConOut->SetAttribute (
+                    tST->ConOut,
                     EFI_LIGHTGRAY | EFI_BACKGROUND_BLACK
                     );
-      ST->ConOut->ClearScreen (ST->ConOut);
+      tST->ConOut->ClearScreen (tST->ConOut);
       Status = SctContinueExecute ();
       gContinueExec = FALSE;
       if (EFI_ERROR (Status)) {
@@ -593,11 +593,11 @@ DisplayDeviceConfig (
   //
   // Clears the screen
   //
-  ST->ConOut->SetAttribute (
-                ST->ConOut,
+  tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_LIGHTGRAY | EFI_BACKGROUND_BLACK
                 );
-  ST->ConOut->ClearScreen (ST->ConOut);
+  tST->ConOut->ClearScreen (tST->ConOut);
 
   //
   // Gather the device configuration data
@@ -635,7 +635,7 @@ DisplayReportGenerator(
   //
   //allocate a new efi file dialog context.
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_FILE_DIALOG_CONTEXT),
                  (VOID **)&DialogContext
@@ -644,7 +644,7 @@ DisplayReportGenerator(
     return;
   }
 
-  BS->SetMem (DialogContext, sizeof(EFI_FILE_DIALOG_CONTEXT), 0);
+  tBS->SetMem (DialogContext, sizeof(EFI_FILE_DIALOG_CONTEXT), 0);
   DialogContext->DialogType = EFI_FILE_DIALOG_TYPE_SAVE_FILE;
   DialogContext->FileType = EFI_FILTER_FILE_TYPE_CSV;
 
@@ -673,9 +673,9 @@ DisplayReportGenerator(
       FileName = PoolPrint (L"%s.csv", DialogContext->FileName);
     }
     if (FileName == NULL) {
-      BS->FreePool (DialogContext->DevicePath);
-      BS->FreePool (DialogContext->FileName);
-      BS->FreePool (DialogContext);
+      tBS->FreePool (DialogContext->DevicePath);
+      tBS->FreePool (DialogContext->FileName);
+      tBS->FreePool (DialogContext);
       return;
     }
 
@@ -713,19 +713,19 @@ DisplayReportGenerator(
 
     DoDialog (MsgDialogTitle, &MsgDialogContext);
 
-    BS->FreePool (FileName);
-    BS->FreePool (DialogContext->DevicePath);
-    BS->FreePool (DialogContext->FileName);
+    tBS->FreePool (FileName);
+    tBS->FreePool (DialogContext->DevicePath);
+    tBS->FreePool (DialogContext->FileName);
   } else {
     if (DialogContext->FileName != NULL) {
-      BS->FreePool (DialogContext->FileName);
+      tBS->FreePool (DialogContext->FileName);
     }
     if (DialogContext->DevicePath != NULL) {
-      BS->FreePool (DialogContext->DevicePath);
+      tBS->FreePool (DialogContext->DevicePath);
     }
   }
 
-  BS->FreePool (DialogContext);
+  tBS->FreePool (DialogContext);
   MenuPageRefresh (Page);
   return;
 }
@@ -748,7 +748,7 @@ DisplayLog (
   //
   //allocate a new efi file dialog context.
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_FILE_DIALOG_CONTEXT),
                  (VOID **)&DialogContext
@@ -757,7 +757,7 @@ DisplayLog (
     return;
   }
 
-  BS->SetMem (DialogContext, sizeof(EFI_FILE_DIALOG_CONTEXT), 0);
+  tBS->SetMem (DialogContext, sizeof(EFI_FILE_DIALOG_CONTEXT), 0);
   DialogContext->DialogType = EFI_FILE_DIALOG_TYPE_OPEN_FILE;
   DialogContext->FileType = EFI_FILTER_FILE_TYPE_LOG;
 
@@ -786,9 +786,9 @@ DisplayLog (
       FileName = PoolPrint (L"%s.log", DialogContext->FileName);
     }
     if (FileName == NULL) {
-      BS->FreePool (DialogContext->DevicePath);
-      BS->FreePool (DialogContext->FileName);
-      BS->FreePool (DialogContext);
+      tBS->FreePool (DialogContext->DevicePath);
+      tBS->FreePool (DialogContext->FileName);
+      tBS->FreePool (DialogContext);
       return;
     }
 
@@ -798,8 +798,8 @@ DisplayLog (
     //
     //set default Console Attribute and clear the screen
     //
-    ST->ConOut->SetAttribute (ST->ConOut, EFI_BACKGROUND_BLACK | EFI_WHITE);
-    ST->ConOut->ClearScreen (ST->ConOut);
+    tST->ConOut->SetAttribute (tST->ConOut, EFI_BACKGROUND_BLACK | EFI_WHITE);
+    tST->ConOut->ClearScreen (tST->ConOut);
 
     CmdLine = PoolPrint (L"%s \"%s\"", gFT->ConfigData->EditCommandString, FileName);
     if (CmdLine != NULL) {
@@ -815,22 +815,22 @@ DisplayLog (
         DoDialog (MsgDialogTitle, &MsgDialogContext);
       }
 
-      BS->FreePool (CmdLine);
+      tBS->FreePool (CmdLine);
     }
 
-    BS->FreePool (FileName);
-    BS->FreePool (DialogContext->DevicePath);
-    BS->FreePool (DialogContext->FileName);
+    tBS->FreePool (FileName);
+    tBS->FreePool (DialogContext->DevicePath);
+    tBS->FreePool (DialogContext->FileName);
   } else {
     if (DialogContext->FileName != NULL) {
-      BS->FreePool (DialogContext->FileName);
+      tBS->FreePool (DialogContext->FileName);
     }
     if (DialogContext->DevicePath != NULL) {
-      BS->FreePool (DialogContext->DevicePath);
+      tBS->FreePool (DialogContext->DevicePath);
     }
   }
 
-  BS->FreePool (DialogContext);
+  tBS->FreePool (DialogContext);
   MenuPageRefresh (Page);
   return;
 }
@@ -850,7 +850,7 @@ MainMenuLoadSeqFunc (
   //
   //allocate a new efi file dialog context.
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_FILE_DIALOG_CONTEXT),
                  (VOID **)&DialogContext
@@ -859,7 +859,7 @@ MainMenuLoadSeqFunc (
     return EFI_DEVICE_ERROR;
   }
 
-  BS->SetMem (DialogContext, sizeof(EFI_FILE_DIALOG_CONTEXT), 0);
+  tBS->SetMem (DialogContext, sizeof(EFI_FILE_DIALOG_CONTEXT), 0);
   DialogContext->DialogType = EFI_FILE_DIALOG_TYPE_OPEN_FILE;
   DialogContext->FileType = EFI_FILTER_FILE_TYPE_SEQ;
 
@@ -880,9 +880,9 @@ MainMenuLoadSeqFunc (
     //
     FileName = StrDuplicate (DialogContext->FileName);
     if (FileName == NULL) {
-      BS->FreePool (DialogContext->DevicePath);
-      BS->FreePool (DialogContext->FileName);
-      BS->FreePool (DialogContext);
+      tBS->FreePool (DialogContext->DevicePath);
+      tBS->FreePool (DialogContext->FileName);
+      tBS->FreePool (DialogContext);
       return EFI_DEVICE_ERROR;
     }
 
@@ -903,19 +903,19 @@ MainMenuLoadSeqFunc (
     MenuPageRefresh (Page);
     DoDialog (MsgDialogTitle, &MsgDialogContext);
 
-    BS->FreePool (FileName);
-    BS->FreePool (DialogContext->DevicePath);
-    BS->FreePool (DialogContext->FileName);
+    tBS->FreePool (FileName);
+    tBS->FreePool (DialogContext->DevicePath);
+    tBS->FreePool (DialogContext->FileName);
   } else {
     if (DialogContext->FileName != NULL) {
-      BS->FreePool (DialogContext->FileName);
+      tBS->FreePool (DialogContext->FileName);
     }
     if (DialogContext->DevicePath != NULL) {
-      BS->FreePool (DialogContext->DevicePath);
+      tBS->FreePool (DialogContext->DevicePath);
     }
   }
 
-  BS->FreePool (DialogContext);
+  tBS->FreePool (DialogContext);
   MenuPageRefresh (Page);
   return EFI_SUCCESS;
 }
@@ -936,7 +936,7 @@ MainMenuSaveSeqFunc (
   //
   //allocate a new efi file dialog context.
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_FILE_DIALOG_CONTEXT),
                  (VOID **)&DialogContext
@@ -945,7 +945,7 @@ MainMenuSaveSeqFunc (
     return EFI_DEVICE_ERROR;
   }
 
-  BS->SetMem (DialogContext, sizeof(EFI_FILE_DIALOG_CONTEXT), 0);
+  tBS->SetMem (DialogContext, sizeof(EFI_FILE_DIALOG_CONTEXT), 0);
   DialogContext->DialogType = EFI_FILE_DIALOG_TYPE_SAVE_FILE;
   DialogContext->FileType = EFI_FILTER_FILE_TYPE_SEQ;
 
@@ -974,9 +974,9 @@ MainMenuSaveSeqFunc (
       FileName = PoolPrint (L"%s.seq", DialogContext->FileName);
     }
     if (FileName == NULL) {
-      BS->FreePool (DialogContext->DevicePath);
-      BS->FreePool (DialogContext->FileName);
-      BS->FreePool (DialogContext);
+      tBS->FreePool (DialogContext->DevicePath);
+      tBS->FreePool (DialogContext->FileName);
+      tBS->FreePool (DialogContext);
       return EFI_DEVICE_ERROR;
     }
 
@@ -995,19 +995,19 @@ MainMenuSaveSeqFunc (
     MenuPageRefresh (Page);
     DoDialog (MsgDialogTitle, &MsgDialogContext);
 
-    BS->FreePool (FileName);
-    BS->FreePool (DialogContext->DevicePath);
-    BS->FreePool (DialogContext->FileName);
+    tBS->FreePool (FileName);
+    tBS->FreePool (DialogContext->DevicePath);
+    tBS->FreePool (DialogContext->FileName);
   } else {
     if (DialogContext->FileName != NULL) {
-      BS->FreePool (DialogContext->FileName);
+      tBS->FreePool (DialogContext->FileName);
     }
     if (DialogContext->DevicePath != NULL) {
-      BS->FreePool (DialogContext->DevicePath);
+      tBS->FreePool (DialogContext->DevicePath);
     }
   }
 
-  BS->FreePool (DialogContext);
+  tBS->FreePool (DialogContext);
   MenuPageRefresh (Page);
   return EFI_SUCCESS;
 }
@@ -1049,11 +1049,11 @@ Returns:
   MsgDialogContext.Type = EFI_DIALOG_TYPE_REMINDER;
   DoDialog (MsgDialogTitle, &MsgDialogContext);
 
-  ST->ConOut->SetAttribute (
-                ST->ConOut,
+  tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_LIGHTGRAY | EFI_BACKGROUND_BLACK
                 );
-  ST->ConOut->ClearScreen (ST->ConOut);
+  tST->ConOut->ClearScreen (tST->ConOut);
 
   Status = SctExecute ();
   if (Status != EFI_SUCCESS) {
@@ -1065,7 +1065,7 @@ Returns:
   //
   Status = EFI_SUCCESS;
   while(!EFI_ERROR(Status)) {
-    Status = ST->ConIn->ReadKeyStroke (ST->ConIn, &Key);
+    Status = tST->ConIn->ReadKeyStroke (tST->ConIn, &Key);
   }
 
   MenuPageRefresh (Page);

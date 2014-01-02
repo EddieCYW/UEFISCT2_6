@@ -59,8 +59,8 @@ Abstract:
 #define _AUTH_STUB_H_
 
 #define malloc 	EfiLibAllocatePool
-#define memcpy 	gBS->CopyMem
-#define free 	gBS->FreePool
+#define memcpy 	tBS->CopyMem
+#define free 	tBS->FreePool
 
 
 #define 	EFI_AUTHENTICATION_INFO_PROTOCOL_GUID {0x7671d9d0, 0x52db, 0x4173, 0xaa,0x69,0x23,0x27,0xf2,0x1f,0x0b,0xc7}

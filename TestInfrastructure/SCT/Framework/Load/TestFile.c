@@ -151,7 +151,7 @@ Returns:
   //
   RemainderPath = DevicePath;
 
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                  &gEfiSimpleFileSystemProtocolGuid,
                  &RemainderPath,
                  &DeviceHandle
@@ -164,7 +164,7 @@ Returns:
   //
   // Locate the volume of the file system
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  DeviceHandle,
                  &gEfiSimpleFileSystemProtocolGuid,
                  (VOID **)&Vol
@@ -206,7 +206,7 @@ Returns:
   //
   FileInfoSize = sizeof(EFI_FILE_INFO) + 1024;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  FileInfoSize,
                  (VOID **)&FileInfo
@@ -256,11 +256,11 @@ Returns:
                    );
         if (EFI_ERROR (Status)) {
           EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load a test image file - %r", Status));
-          BS->FreePool (FileName);
+          tBS->FreePool (FileName);
           continue;
         }
 
-        BS->FreePool (FileName);
+        tBS->FreePool (FileName);
 
         //
         // Add the test file to the test file list
@@ -284,11 +284,11 @@ Returns:
                    );
         if (EFI_ERROR (Status)) {
           EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load a test script file - %r", Status));
-          BS->FreePool (FileName);
+          tBS->FreePool (FileName);
           continue;
         }
 
-        BS->FreePool (FileName);
+        tBS->FreePool (FileName);
 
         //
         // Add the test file to the test file list
@@ -323,11 +323,11 @@ Returns:
                    );
         if (EFI_ERROR (Status)) {
           EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load test files - %r", Status));
-          BS->FreePool (SubDir);
+          tBS->FreePool (SubDir);
           continue;
         }
 
-        BS->FreePool (SubDir);
+        tBS->FreePool (SubDir);
       }
     }
   }
@@ -335,7 +335,7 @@ Returns:
   //
   // Free resources
   //
-  BS->FreePool (FileInfo);
+  tBS->FreePool (FileInfo);
   TestDir->Close (TestDir);
 
   //
@@ -591,16 +591,16 @@ Routine Description:
   FilePath = AppendDevicePath (DevicePath, FileNode);
   if (FilePath == NULL) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"AppendDevicePath: Out of resources"));
-    BS->FreePool (FileNode);
+    tBS->FreePool (FileNode);
     return EFI_OUT_OF_RESOURCES;
   }
 
-  BS->FreePool (FileNode);
+  tBS->FreePool (FileNode);
 
   //
   // Load the test image file
   //
-  Status = BS->LoadImage (
+  Status = tBS->LoadImage (
                  FALSE,
                  gFT->ImageHandle,
                  FilePath,
@@ -610,16 +610,16 @@ Routine Description:
                  );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Load image - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Check the image is a driver or an application
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  ImageHandle,
                  &gEfiLoadedImageProtocolGuid,
                  (VOID **)&LoadedImage
@@ -634,7 +634,7 @@ Routine Description:
     //
     // It is a driver
     //
-    Status = BS->StartImage (
+    Status = tBS->StartImage (
                    ImageHandle,
                    &ExitDataSize,
                    &ExitData
@@ -647,7 +647,7 @@ Routine Description:
     //
     // Is it a black-box test?
     //
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                    ImageHandle,
                    &gEfiBbTestGuid,
                    (VOID **)&BbTest
@@ -663,7 +663,7 @@ Routine Description:
                  );
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Create a test file - %r", Status));
-        BS->UnloadImage (ImageHandle);
+        tBS->UnloadImage (ImageHandle);
         return Status;
       }
 
@@ -673,7 +673,7 @@ Routine Description:
     //
     // Is it a white-box test?
     //
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                    ImageHandle,
                    &gEfiWbTestGuid,
                    (VOID **)&WbTest
@@ -689,7 +689,7 @@ Routine Description:
                  );
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Create a test file - %r", Status));
-        BS->UnloadImage (ImageHandle);
+        tBS->UnloadImage (ImageHandle);
         return Status;
       }
 
@@ -699,7 +699,7 @@ Routine Description:
     //
     // Is it a IHV black-box test?
     //
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                    ImageHandle,
                    &gEfiIHVBbTestGuid,
                    (VOID **)&BbTest
@@ -715,14 +715,14 @@ Routine Description:
                  );
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Create a test file - %r", Status));
-        BS->UnloadImage (ImageHandle);
+        tBS->UnloadImage (ImageHandle);
         return Status;
       }
 
       return EFI_SUCCESS;
     }
 
-    BS->UnloadImage (ImageHandle);
+    tBS->UnloadImage (ImageHandle);
   } else {
     //
     // It is an application
@@ -743,11 +743,11 @@ Routine Description:
                );
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Unsupported file"));
-      BS->FreePool (ApFileName);
+      tBS->FreePool (ApFileName);
       return EFI_UNSUPPORTED;
     }
 
-    BS->FreePool (ApFileName);
+    tBS->FreePool (ApFileName);
 
     Status = CreateSingleTestFile (
                DevicePath,
@@ -823,7 +823,7 @@ Routine Description:
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Unsupported test file"));
-    BS->FreePool (ApFileName);
+    tBS->FreePool (ApFileName);
     return EFI_UNSUPPORTED;
   }
 
@@ -878,7 +878,7 @@ Routine Description:
   //
   // ALlocate memory for the test file
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_SCT_TEST_FILE),
                  (VOID **)TestFile
@@ -925,12 +925,12 @@ Routine Description:
   // Free the items of test file
   //
   if (TestFile->DevicePath != NULL) {
-    BS->FreePool (TestFile->DevicePath);
+    tBS->FreePool (TestFile->DevicePath);
     TestFile->DevicePath = NULL;
   }
 
   if (TestFile->FileName != NULL) {
-    BS->FreePool (TestFile->FileName);
+    tBS->FreePool (TestFile->FileName);
     TestFile->FileName = NULL;
   }
 
@@ -941,7 +941,7 @@ Routine Description:
     //
     // Black-box or White-box test file
     //
-    BS->UnloadImage (TestFile->ImageHandle);
+    tBS->UnloadImage (TestFile->ImageHandle);
     break;
 
   case EFI_SCT_TEST_FILE_TYPE_APPLICATION:
@@ -963,7 +963,7 @@ Routine Description:
   //
   // Free the test file itself
   //
-  BS->FreePool (TestFile);
+  tBS->FreePool (TestFile);
 
   //
   // Done

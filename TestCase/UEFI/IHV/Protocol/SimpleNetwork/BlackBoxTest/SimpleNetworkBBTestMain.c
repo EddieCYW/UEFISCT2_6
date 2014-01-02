@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "SimpleNetworkBBTestMain.h"
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
@@ -336,8 +337,8 @@ InitializeBBTestSimpleNetworkProtocol (
   // Initialize library
   //
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
 
   return EfiInitAndInstallIHVBBTestInterface (
            &ImageHandle,

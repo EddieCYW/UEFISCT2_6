@@ -57,7 +57,6 @@ Abstract:
 
 #include "SctLib.h"
 #include "EfiTest.h"
-#include "EfiDriverLib.h"
 #include "TestRecovery.h"
 
 //
@@ -171,12 +170,12 @@ Returns:
   TSL_INIT_PRIVATE_DATA          *Private;
 
   // Initialize driver lib
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
 
   //
   // Fill in the Unload() function
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ImageHandle,
                   &gEfiLoadedImageProtocolGuid,
                   (VOID **)&LoadedImage,
@@ -193,7 +192,7 @@ Returns:
   //
   // Open the TslInit protocol to perform the supported test.
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ImageHandle,
                   &gEfiTslInitInterfaceGuid,
                   NULL,
@@ -208,7 +207,7 @@ Returns:
   //
   // Initialize the TslInit private data
   //
-  Status = gBS->AllocatePool(
+  Status = tBS->AllocatePool(
                   EfiBootServicesData,
                   sizeof (TSL_INIT_PRIVATE_DATA),
                   (VOID **)&Private
@@ -228,7 +227,7 @@ Returns:
   //
   // Install TslInit protocol
   //
-  Status = gBS->InstallProtocolInterface (
+  Status = tBS->InstallProtocolInterface (
                   &ImageHandle,
                   &gEfiTslInitInterfaceGuid,
                   EFI_NATIVE_INTERFACE,
@@ -265,7 +264,7 @@ Returns:
   //
   // Open the TslInit protocol
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ImageHandle,
                   &gEfiTslInitInterfaceGuid,
                   (VOID **)&TslInit,
@@ -277,13 +276,13 @@ Returns:
     //
     // Uninstall TslInit protocol
     //
-    Status = gBS->UninstallProtocolInterface (
+    Status = tBS->UninstallProtocolInterface (
                     ImageHandle,
                     &gEfiTslInitInterfaceGuid,
                     TslInit
                     );
     Private = TSL_INIT_PRIVATE_DATA_FROM_THIS (TslInit);
-    gBS->FreePool (Private);
+    tBS->FreePool (Private);
   }
 
   return Status;
@@ -334,7 +333,7 @@ Returns:
   // Open the TestRecoveryLibrary protocol to perform the supported test.
   //
   if (*LibHandle != NULL) {
-    Status = gBS->OpenProtocol (
+    Status = tBS->OpenProtocol (
                     *LibHandle,
                     &gEfiTestRecoveryLibraryGuid,
                     NULL,
@@ -350,7 +349,7 @@ Returns:
   //
   // Initialize the TestRecoveryLibrary private data
   //
-  Status = gBS->AllocatePool(
+  Status = tBS->AllocatePool(
                   EfiBootServicesData,
                   sizeof (TEST_RECOVERY_PRIVATE_DATA),
                   (VOID **)&Private
@@ -375,7 +374,7 @@ Returns:
   //
   // Install TestRecoveryLibrary protocol
   //
-  Status = gBS->InstallProtocolInterface (
+  Status = tBS->InstallProtocolInterface (
                   LibHandle,
                   &gEfiTestRecoveryLibraryGuid,
                   EFI_NATIVE_INTERFACE,
@@ -418,7 +417,7 @@ Returns:
   //
   // Open the TestRecoveryLibrary protocol to perform the supported test.
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   LibHandle,
                   &gEfiTestRecoveryLibraryGuid,
                   (VOID **)&TestRecovery,
@@ -433,14 +432,14 @@ Returns:
   //
   // Uninstall TestRecoveryLibrary protocol
   //
-  Status = gBS->UninstallProtocolInterface (
+  Status = tBS->UninstallProtocolInterface (
                   LibHandle,
                   &gEfiTestRecoveryLibraryGuid,
                   TestRecovery
                   );
   Private = TEST_RECOVERY_PRIVATE_DATA_FROM_TRL (TestRecovery);
   TrlFreePointer (Private);
-  gBS->FreePool (Private);
+  tBS->FreePool (Private);
 
   return Status;
 }
@@ -485,7 +484,7 @@ Returns:
   //  Determine device handle for fs protocol on specified device path
   //
   PreDevicePath = Private->DevicePath;
-  Status = gBS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                   &gEfiSimpleFileSystemProtocolGuid,
                   &PreDevicePath,
                   &DeviceHandle
@@ -497,7 +496,7 @@ Returns:
   //
   //  Determine volume for file system on device handle
   //
-  Status = gBS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                   DeviceHandle,
                   &gEfiSimpleFileSystemProtocolGuid,
                   (VOID*)&Vol
@@ -576,7 +575,7 @@ Returns:
   //  Determine device handle for fs protocol on specified device path
   //
   PreDevicePath = Private->DevicePath;
-  Status = gBS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                   &gEfiSimpleFileSystemProtocolGuid,
                   &PreDevicePath,
                   &DeviceHandle
@@ -588,7 +587,7 @@ Returns:
   //
   //  Determine volume for file system on device handle
   //
-  Status = gBS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                   DeviceHandle,
                   &gEfiSimpleFileSystemProtocolGuid,
                   (VOID*)&Vol
@@ -717,7 +716,7 @@ Returns:
     TrlFreePointer (Private);
     return EFI_OUT_OF_RESOURCES;
   }
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   (EfiStrLen (FileName) + 1) * 2,
                   (VOID **)&(Private->FileName)
@@ -746,14 +745,14 @@ TrlFreePointer (
   // Free DevicePath and FileName
   //
   if (Private->DevicePath != NULL) {
-    Status = gBS->FreePool (Private->DevicePath);
+    Status = tBS->FreePool (Private->DevicePath);
     Private->DevicePath = NULL;
     if (EFI_ERROR (Status)) {
       return Status;
     }
   }
   if (Private->FileName != NULL) {
-    Status = gBS->FreePool (Private->FileName);
+    Status = tBS->FreePool (Private->FileName);
     Private->FileName = NULL;
     if (EFI_ERROR (Status)) {
       return Status;

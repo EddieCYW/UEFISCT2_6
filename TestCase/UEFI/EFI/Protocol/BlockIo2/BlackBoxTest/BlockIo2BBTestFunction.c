@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 
+#include "SctLib.h"
 #include "BlockIo2BBTestMain.h"
 
 #define BIO2ENTITY_SIGNATURE         EFI_SIGNATURE_32('b','i','o','2')

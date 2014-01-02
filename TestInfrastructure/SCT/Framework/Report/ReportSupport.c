@@ -122,7 +122,7 @@ Routine Description:
   // Locate the device handle
   //
   RemainingDevicePath = DevicePath;
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                  &gEfiSimpleFileSystemProtocolGuid,
                  &RemainingDevicePath,
                  &DeviceHandle
@@ -134,7 +134,7 @@ Routine Description:
   //
   // Locate the simple file system
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  DeviceHandle,
                  &gEfiSimpleFileSystemProtocolGuid,
                  (VOID **)&Vol
@@ -209,7 +209,7 @@ Routine Description:
   // Locate the device handle
   //
   RemainingDevicePath = DevicePath;
-  Status = BS->LocateDevicePath (
+  Status = tBS->LocateDevicePath (
                  &gEfiSimpleFileSystemProtocolGuid,
                  &RemainingDevicePath,
                  &DeviceHandle
@@ -222,7 +222,7 @@ Routine Description:
   //
   // Locate the simple file system
   //
-  Status = BS->HandleProtocol (
+  Status = tBS->HandleProtocol (
                  DeviceHandle,
                  &gEfiSimpleFileSystemProtocolGuid,
                  (VOID **)&Vol
@@ -264,7 +264,7 @@ Routine Description:
   //
   FileInfoSize = sizeof(EFI_FILE_INFO) + 1024;
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  FileInfoSize,
                  (VOID **)&FileInfo
@@ -286,7 +286,7 @@ Routine Description:
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Get file info - %r", Status));
     Handle->Close (Handle);
-    BS->FreePool (FileInfo);
+    tBS->FreePool (FileInfo);
     return Status;
   }
 
@@ -295,7 +295,7 @@ Routine Description:
   //
   TempBufferSize = (UINTN) FileInfo->FileSize + sizeof(CHAR16);
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  TempBufferSize,
                  (VOID **)&TempBuffer
@@ -303,13 +303,13 @@ Routine Description:
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Allocate pool - %r", Status));
     Handle->Close (Handle);
-    BS->FreePool (FileInfo);
+    tBS->FreePool (FileInfo);
     return Status;
   }
 
   SctZeroMem (TempBuffer, TempBufferSize);
 
-  BS->FreePool (FileInfo);
+  tBS->FreePool (FileInfo);
 
   //
   // Read the file data to the buffer
@@ -322,7 +322,7 @@ Routine Description:
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Read file - %r", Status));
     Handle->Close (Handle);
-    BS->FreePool (TempBuffer);
+    tBS->FreePool (TempBuffer);
     return Status;
   }
 
@@ -491,7 +491,7 @@ Routine Description:
     mReportBufferMaxSize  = EFI_SCT_LOG_BUFFER_SIZE;
     mReportBufferUsedSize = 0;
 
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    mReportBufferMaxSize * sizeof(CHAR16),
                    (VOID **)&mReportBuffer
@@ -514,7 +514,7 @@ Routine Description:
     //
     mReportBufferMaxSize = mReportBufferMaxSize * 2;
 
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    mReportBufferMaxSize * sizeof(CHAR16),
                    (VOID **)&TempBuffer
@@ -535,7 +535,7 @@ Routine Description:
     //
     // Free the original buffer
     //
-    BS->FreePool (mReportBuffer);
+    tBS->FreePool (mReportBuffer);
     mReportBuffer = TempBuffer;
   }
 

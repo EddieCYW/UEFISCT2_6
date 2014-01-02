@@ -116,7 +116,7 @@ FindTestCard (
     return EFI_NOT_FOUND;
   }
   for (Index = 0; Index < HandleNum; Index++) {
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                    HandleBuffer[Index],
                    &gEfiPciRootBridgeIoProtocolGuid,
                    &RootBridgeIo

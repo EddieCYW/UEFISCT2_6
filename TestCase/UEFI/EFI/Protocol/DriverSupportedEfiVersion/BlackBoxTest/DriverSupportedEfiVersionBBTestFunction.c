@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 
+#include "SctLib.h"
 #include "DriverSupportedEfiVersionBBTestMain.h"
 
 

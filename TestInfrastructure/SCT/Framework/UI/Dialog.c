@@ -108,7 +108,7 @@ Returns:
   //
   //at last free the Dialog
   //
-  BS->FreePool (Dialog);
+  tBS->FreePool (Dialog);
   return EFI_SUCCESS;
 }
 
@@ -164,12 +164,12 @@ Returns:
   }
 
   Status = EFI_SUCCESS;
-  ST->ConOut->EnableCursor (
-                ST->ConOut,
+  tST->ConOut->EnableCursor (
+                tST->ConOut,
                 FALSE
                 );
-  ST->ConOut->SetAttribute (
-                ST->ConOut,
+  tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_TEXT_ATTR(Dialog->ForeColor,
                 Dialog->BackColor)
                 );
@@ -268,8 +268,8 @@ Returns:
         if (EFI_ERROR (Status)) {
           return Status;
         }
-        ST->ConOut->SetAttribute (
-            ST->ConOut,
+        tST->ConOut->SetAttribute (
+            tST->ConOut,
             EFI_TEXT_ATTR(EFI_YELLOW,
             Dialog->BackColor)
             );
@@ -278,8 +278,8 @@ Returns:
         if (EFI_ERROR (Status)) {
           return Status;
         }
-        ST->ConOut->SetAttribute (
-            ST->ConOut,
+        tST->ConOut->SetAttribute (
+            tST->ConOut,
             EFI_TEXT_ATTR(Dialog->ForeColor,
             Dialog->BackColor)
             );
@@ -289,8 +289,8 @@ Returns:
         if (EFI_ERROR (Status)) {
           return Status;
         }
-        ST->ConOut->SetAttribute (
-            ST->ConOut,
+        tST->ConOut->SetAttribute (
+            tST->ConOut,
             EFI_TEXT_ATTR(EFI_YELLOW,
             Dialog->BackColor)
             );
@@ -300,8 +300,8 @@ Returns:
         if (EFI_ERROR (Status)) {
           return Status;
         }
-        ST->ConOut->SetAttribute (
-            ST->ConOut,
+        tST->ConOut->SetAttribute (
+            tST->ConOut,
             EFI_TEXT_ATTR(Dialog->ForeColor,
             Dialog->BackColor)
             );
@@ -309,8 +309,8 @@ Returns:
     }
 
   } else {
-    ST->ConOut->SetAttribute (
-          ST->ConOut,
+    tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_TEXT_ATTR(Dialog->ForeColor,
           Dialog->BackColor)
           );
@@ -320,8 +320,8 @@ Returns:
       if (EFI_ERROR (Status)) {
         return Status;
       }
-      ST->ConOut->SetAttribute (
-          ST->ConOut,
+      tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_TEXT_ATTR(EFI_YELLOW,
           Dialog->BackColor)
           );
@@ -330,8 +330,8 @@ Returns:
       if (EFI_ERROR (Status)) {
         return Status;
       }
-      ST->ConOut->SetAttribute (
-          ST->ConOut,
+      tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_TEXT_ATTR(Dialog->ForeColor,
           Dialog->BackColor)
           );
@@ -342,8 +342,8 @@ Returns:
       if (EFI_ERROR (Status)) {
         return Status;
       }
-      ST->ConOut->SetAttribute (
-          ST->ConOut,
+      tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_TEXT_ATTR(EFI_YELLOW,
           Dialog->BackColor)
           );
@@ -352,8 +352,8 @@ Returns:
       if (EFI_ERROR (Status)) {
         return Status;
       }
-      ST->ConOut->SetAttribute (
-          ST->ConOut,
+      tST->ConOut->SetAttribute (
+          tST->ConOut,
           EFI_TEXT_ATTR(Dialog->ForeColor,
           Dialog->BackColor)
           );
@@ -410,7 +410,7 @@ Returns:
         //
         //wait for key press event
         //
-        Status = BS->WaitForEvent (1, &(ST->ConIn->WaitForKey), &Index);
+        Status = tBS->WaitForEvent (1, &(tST->ConIn->WaitForKey), &Index);
         if (EFI_ERROR(Status)) {
           break;
         }
@@ -418,7 +418,7 @@ Returns:
         //
         //read pressed key
         //
-        Status = ST->ConIn->ReadKeyStroke (ST->ConIn, &Key);
+        Status = tST->ConIn->ReadKeyStroke (tST->ConIn, &Key);
         if (EFI_ERROR(Status)) {
           break;
         }
@@ -487,8 +487,8 @@ Returns:
       //
       // Need user to press any key
       //
-      Status = BS->WaitForEvent (1, &(ST->ConIn->WaitForKey), &Index);
-      Status = ST->ConIn->ReadKeyStroke (ST->ConIn, &Key);
+      Status = tBS->WaitForEvent (1, &(tST->ConIn->WaitForKey), &Index);
+      Status = tST->ConIn->ReadKeyStroke (tST->ConIn, &Key);
       if (EFI_ERROR(Status)) {
         break;
       }
@@ -540,8 +540,8 @@ Returns:
 
   Status                = EFI_SUCCESS;
 
-  ConAttrib             = ST->ConOut->Mode->Attribute;
-  Status = BS->AllocatePool (
+  ConAttrib             = tST->ConOut->Mode->Attribute;
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_DIALOG),
                  (VOID **)&Dialog
@@ -549,7 +549,7 @@ Returns:
   if (EFI_ERROR(Status)) {
     return EFI_OUT_OF_RESOURCES;
   }
-  BS->SetMem (Dialog, sizeof(EFI_DIALOG), 0);
+  tBS->SetMem (Dialog, sizeof(EFI_DIALOG), 0);
 
   Dialog->Type = DialogContext->Type;
 
@@ -559,7 +559,7 @@ Returns:
   Dialog->Title = DialogTitle;
 
   if ( Dialog->Title == NULL ) {
-    BS->FreePool (Dialog);
+    tBS->FreePool (Dialog);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -586,7 +586,7 @@ Returns:
   //
   //restore original console attribute
   //
-  ST->ConOut->SetAttribute ( ST->ConOut,ConAttrib);
+  tST->ConOut->SetAttribute ( tST->ConOut,ConAttrib);
 
   return EFI_SUCCESS;
 }

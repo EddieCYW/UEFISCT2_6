@@ -53,8 +53,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
+#include "SctLib.h"
 #include "Mtftp6ENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
@@ -142,10 +142,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -153,7 +153,7 @@ Returns:
 
   LoadedImage->Unload = Mtftp6ENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gMtftp6EntsProtocolInterface
@@ -171,7 +171,7 @@ Returns:
   gMtftp6EntsProtocolInterface->RuntimeInfo       = gMtftp6EntsRuntimeInfo;
   gMtftp6EntsProtocolInterface->RuntimeInfoSize   = gMtftp6EntsRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gMtftp6EntsProtocolInterface,
@@ -185,7 +185,7 @@ Returns:
 
 Error:
   if (gMtftp6EntsProtocolInterface != NULL) {
-    gBS->FreePool (gMtftp6EntsProtocolInterface);
+    tBS->FreePool (gMtftp6EntsProtocolInterface);
   }
 
   return Status;
@@ -214,7 +214,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gMtftp6EntsProtocolInterface,
@@ -222,7 +222,7 @@ Returns:
                   );
 
   if (gMtftp6EntsProtocolInterface != NULL) {
-    gBS->FreePool (gMtftp6EntsProtocolInterface);
+    tBS->FreePool (gMtftp6EntsProtocolInterface);
   }
 
   return Status;

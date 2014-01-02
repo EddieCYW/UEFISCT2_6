@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver Diagnostics Protocol Test
 
 --*/
+#include "SctLib.h"
 #include "DriverDiagnosticsBBTest.h"
 
 EFI_HANDLE      mImageHandle;
@@ -109,7 +110,7 @@ InitializeBBTestDriverDiagnostics (
   //
   // initialize test utility lib
   //
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

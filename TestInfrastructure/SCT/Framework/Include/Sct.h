@@ -62,7 +62,7 @@ Abstract:
 // Includes
 //
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EfiShellLib.h"
 #include "EfiTestLib.h"
 #include "LibPrivate.h"

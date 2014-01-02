@@ -53,8 +53,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
+#include "SctLib.h"
 #include "Mtftp6ServiceBindingENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
@@ -113,10 +113,10 @@ Returns:
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
   EFI_HANDLE                ClientHandle;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -124,7 +124,7 @@ Returns:
 
   LoadedImage->Unload = Mtftp6ServiceBindingENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gMtftp6ServiceBindingEntsProtocolInterface
@@ -150,7 +150,7 @@ Returns:
   gMtftp6ServiceBindingEntsProtocolInterface->RuntimeInfo       = gMtftp6ServiceBindingRuntimeInfo;
   gMtftp6ServiceBindingEntsProtocolInterface->RuntimeInfoSize   = gMtftp6ServiceBindingRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gMtftp6ServiceBindingEntsProtocolInterface,
@@ -164,7 +164,7 @@ Returns:
 
 Error:
   if (gMtftp6ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gMtftp6ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gMtftp6ServiceBindingEntsProtocolInterface);
   }
 
   return Status;
@@ -193,7 +193,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gMtftp6ServiceBindingEntsProtocolInterface,
@@ -201,7 +201,7 @@ Returns:
                   );
 
   if (gMtftp6ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gMtftp6ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gMtftp6ServiceBindingEntsProtocolInterface);
   }
 
   return Status;

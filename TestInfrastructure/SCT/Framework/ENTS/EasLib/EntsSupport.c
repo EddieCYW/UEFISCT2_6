@@ -976,7 +976,7 @@ NetAssertionUtilityUninstall (
       NetAssertionConfigData.MessageBuf = NULL;
     }
   } else {
-    EFI_ENTS_DEBUG((EFI_ENTS_D_ERROR, L"NetAssertionUtilityUninstall: gBS->CloseEvent fail - %r", Status));
+    EFI_ENTS_DEBUG((EFI_ENTS_D_ERROR, L"NetAssertionUtilityUninstall: tBS->CloseEvent fail - %r", Status));
   }
 
   Status = NetAssertionConfigData.mMnpSb->DestroyChild (

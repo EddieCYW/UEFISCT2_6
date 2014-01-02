@@ -65,7 +65,6 @@ Abstract:
 #include "EfiTestLib.h"
 #include "EbcProtocol.h"
 #include "EfiHobLib.h"
-#include "EfiDriverLib.h"
 
 #include EFI_GUID_DEFINITION (Hob)
 #include EFI_GUID_DEFINITION (PeiPeCoffLoader)

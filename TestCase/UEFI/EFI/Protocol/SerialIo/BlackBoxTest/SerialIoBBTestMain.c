@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "SerialIoBBTestMain.h"
 
 //
@@ -269,7 +270,7 @@ InitializeSerialIoBbTest (
   IN EFI_SYSTEM_TABLE     *SystemTable
   )
 {
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
   EfiInitializeTestLib (ImageHandle, SystemTable);
 
   return EfiInitAndInstallBBTestInterface (

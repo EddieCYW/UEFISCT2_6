@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "PlatformToDriverConfigurationBBTestMain.h"
 
 //
@@ -185,7 +186,7 @@ InitializeBBTestPlatformToDriverConfiguration (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   DriverImageHandle = ImageHandle;
 

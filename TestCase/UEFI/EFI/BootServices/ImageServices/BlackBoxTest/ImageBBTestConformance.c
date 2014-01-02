@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Misc.h"
 
 #define TEST_VENDOR1_GUID                         \
@@ -883,7 +884,7 @@ BBTestExitBootServicesConsistencyTest (
   //
   //
   // the steps to make a invalid MapKey could be:
-  //   1) call BS->GetMemoryMap() to retrieve the correct MapKey
+  //   1) call tBS->GetMemoryMap() to retrieve the correct MapKey
   //   2) add a randomn value to the correct MapKey.
   //
   Status = ImageTestRetrieveCurrentMapKey (&MapKey);

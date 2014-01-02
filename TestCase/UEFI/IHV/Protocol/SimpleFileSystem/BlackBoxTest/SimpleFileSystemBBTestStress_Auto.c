@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "SimpleFileSystemBBTest.h"
 
 #define MAX_DEVICE_PATH_AMOUNT    100

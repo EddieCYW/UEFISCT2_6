@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "VariableENTSTestCase.h"
 
 //
@@ -65,7 +66,7 @@ static UINTN      *RTGetVariableDataSize;
 static VOID       *RTGetVariableData;
 static EFI_STATUS *RTGetVariableStatus;
 
-ENTS_ARG_FIELD    gRTGetVariableArgField[] = {
+ENTS_ARG_FIELD    tRTGetVariableArgField[] = {
   {
     POINTER,
     &RTGetVariableVariableName
@@ -135,7 +136,7 @@ static CHAR16     *RTGetNextVariableNameVariableName;
 static EFI_GUID   *RTGetNextVariableNameVendorGuid;
 static EFI_STATUS *RTGetNextVariableNameStatus;
 
-ENTS_ARG_FIELD    gRTGetNextVariableNameArgField[] = {
+ENTS_ARG_FIELD    tRTGetNextVariableNameArgField[] = {
   {
     POINTER,
     &RTGetNextVariableNameVariableNameSize
@@ -197,7 +198,7 @@ static UINTN      RTSetVariableDataSize;
 static VOID       *RTSetVariableData;
 static EFI_STATUS *RTSetVariableStatus;
 
-ENTS_ARG_FIELD    gRTSetVariableArgField[] = {
+ENTS_ARG_FIELD    tRTSetVariableArgField[] = {
   {
     POINTER,
     &RTSetVariableVariableName

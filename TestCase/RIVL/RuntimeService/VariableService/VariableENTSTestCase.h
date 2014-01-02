@@ -56,8 +56,7 @@ Abstract:
 #ifndef _VARIABLE_ENTS_TESTCASE_H_
 #define _VARIABLE_ENTS_TESTCASE_H_
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 
 EFI_STATUS
@@ -126,8 +125,8 @@ Returns:
 extern CHAR16         *gRuntimeServiceRuntimeInfo;
 extern UINTN          gRuntimeServiceRuntimeInfoSize;
 
-extern ENTS_ARG_FIELD gRTGetVariableArgField[];
-extern ENTS_ARG_FIELD gRTGetNextVariableNameArgField[];
-extern ENTS_ARG_FIELD gRTSetVariableArgField[];
+extern ENTS_ARG_FIELD tRTGetVariableArgField[];
+extern ENTS_ARG_FIELD tRTGetNextVariableNameArgField[];
+extern ENTS_ARG_FIELD tRTSetVariableArgField[];
 
 #endif

@@ -50,6 +50,29 @@
 #include "Efi.h"
 
 //
+// Public read-only data in the EFI library
+//
+
+extern EFI_SYSTEM_TABLE         *tST;
+extern EFI_BOOT_SERVICES        *tBS;
+extern EFI_RUNTIME_SERVICES     *tRT;
+
+//
+// Init API
+//
+EFI_STATUS
+SctInitializeLib (
+  IN EFI_HANDLE           ImageHandle,
+  IN EFI_SYSTEM_TABLE     *SystemTable
+  );
+
+EFI_STATUS
+SctInitializeDriver (
+  IN EFI_HANDLE           ImageHandle,
+  IN EFI_SYSTEM_TABLE     *SystemTable
+  );
+
+//
 // Memory API
 //
 

@@ -58,6 +58,7 @@ Abstract:
 #include "Efi.h"
 #include "EfiTestUtilityLib.h"
 #include "EfiCommonLib.h"
+#include "SctLib.h"
 #include "SctLibPlat.h"
 
 #include EFI_PROTOCOL_DEFINITION (UnicodeCollation)
@@ -119,7 +120,6 @@ LibMatchDevicePaths (
 // Globals
 //
 extern BOOLEAN                          LibInitialized;
-extern BOOLEAN                          LibFwInstance;
 extern EFI_UNICODE_COLLATION_PROTOCOL   *UnicodeInterface;
 extern EFI_UNICODE_COLLATION_PROTOCOL   LibStubUnicodeInterface;
 extern EFI_RAISE_TPL                    LibRuntimeRaiseTPL;

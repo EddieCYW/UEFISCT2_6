@@ -53,8 +53,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
+#include "SctLib.h"
 #include "Udp6ENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
@@ -142,10 +142,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -153,7 +153,7 @@ Returns:
 
   LoadedImage->Unload = Udp6ENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gUdp6EntsProtocolInterface
@@ -171,7 +171,7 @@ Returns:
   gUdp6EntsProtocolInterface->RuntimeInfo       = gUdp6EntsRuntimeInfo;
   gUdp6EntsProtocolInterface->RuntimeInfoSize   = gUdp6EntsRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gUdp6EntsProtocolInterface,
@@ -185,7 +185,7 @@ Returns:
 
 Error:
   if (gUdp6EntsProtocolInterface != NULL) {
-    gBS->FreePool (gUdp6EntsProtocolInterface);
+    tBS->FreePool (gUdp6EntsProtocolInterface);
   }
 
   return Status;
@@ -214,7 +214,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gUdp6EntsProtocolInterface,
@@ -222,7 +222,7 @@ Returns:
                   );
 
   if (gUdp6EntsProtocolInterface != NULL) {
-    gBS->FreePool (gUdp6EntsProtocolInterface);
+    tBS->FreePool (gUdp6EntsProtocolInterface);
   }
 
   return Status;

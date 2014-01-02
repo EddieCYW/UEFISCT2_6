@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver Configuration Protocol Test
 
 --*/
+#include "SctLib.h"
 #include "DriverConfigurationBBTest.h"
 
 EFI_HANDLE      mImageHandle;
@@ -127,7 +128,7 @@ InitializeBBTestDriverConfiguration (
   //
   // initialize test utility lib
   //
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

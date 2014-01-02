@@ -55,11 +55,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
 #include "SctLib.h"
 #include "EfiTest.h"
-#include "EfiPrintLib.h"
-#include "EfiDriverLib.h"
 #include "StandardTest.h"
 #include "EntsLib.h"
 
@@ -269,7 +266,7 @@ Returns:
   //
   // Initialize driver lib
   //
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib   (ImageHandle, SystemTable);
 
   //
@@ -283,7 +280,7 @@ Returns:
   //
   // Fill in the Unload() function
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ImageHandle,
                   &gEfiLoadedImageProtocolGuid,
                   (VOID **)&LoadedImage,
@@ -300,7 +297,7 @@ Returns:
   //
   // Open the TslInit protocol to perform the supported test.
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ImageHandle,
                   &gEfiTslInitInterfaceGuid,
                   NULL,
@@ -315,7 +312,7 @@ Returns:
   //
   // Initialize the TslInit private data
   //
-  Status = gBS->AllocatePool(
+  Status = tBS->AllocatePool(
                   EfiBootServicesData,
                   sizeof (TSL_INIT_PRIVATE_DATA),
                   (VOID **)&Private
@@ -335,7 +332,7 @@ Returns:
   //
   // Install TslInit protocol
   //
-  Status = gBS->InstallProtocolInterface (
+  Status = tBS->InstallProtocolInterface (
                   &ImageHandle,
                   &gEfiTslInitInterfaceGuid,
                   EFI_NATIVE_INTERFACE,
@@ -374,7 +371,7 @@ Returns:
   //
   // Open the TslInit protocol
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ImageHandle,
                   &gEfiTslInitInterfaceGuid,
                   (VOID **)&TslInit,
@@ -386,14 +383,14 @@ Returns:
     //
     // Uninstall TslInit protocol
     //
-    Status = gBS->UninstallProtocolInterface (
+    Status = tBS->UninstallProtocolInterface (
                     ImageHandle,
                     &gEfiTslInitInterfaceGuid,
                     TslInit
                     );
 
     Private = TSL_INIT_PRIVATE_DATA_FROM_THIS (TslInit);
-    gBS->FreePool (Private);
+    tBS->FreePool (Private);
   }
 
   return Status;
@@ -446,7 +443,7 @@ Returns:
   // Open the StandardTestLibrary protocol to perform the supported test.
   //
   if (*LibHandle != NULL) {
-    Status = gBS->OpenProtocol (
+    Status = tBS->OpenProtocol (
                     *LibHandle,
                     &gEfiStandardTestLibraryGuid,
                     NULL,
@@ -462,7 +459,7 @@ Returns:
   //
   // Initialize the StandardTestLibrary private data
   //
-  Status = gBS->AllocatePool(
+  Status = tBS->AllocatePool(
                   EfiBootServicesData,
                   sizeof (STANDARD_TEST_PRIVATE_DATA),
                   (VOID **)&Private
@@ -490,7 +487,7 @@ Returns:
   //
   // Install StandardTestLibrary protocol
   //
-  Status = gBS->InstallProtocolInterface (
+  Status = tBS->InstallProtocolInterface (
                   LibHandle,
                   &gEfiStandardTestLibraryGuid,
                   EFI_NATIVE_INTERFACE,
@@ -533,7 +530,7 @@ Returns:
   //
   // Open the StandardTestLibrary protocol to perform the supported test.
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   LibHandle,
                   &gEfiStandardTestLibraryGuid,
                   (VOID **)&StandardTest,
@@ -548,7 +545,7 @@ Returns:
   //
   // Uninstall StandardTestLibrary protocol
   //
-  Status = gBS->UninstallProtocolInterface (
+  Status = tBS->UninstallProtocolInterface (
                   LibHandle,
                   &gEfiStandardTestLibraryGuid,
                   StandardTest
@@ -556,7 +553,7 @@ Returns:
   Private = STANDARD_TEST_PRIVATE_DATA_FROM_STSL (StandardTest);
   if (Private != NULL) {
     StslFreePointer (Private);
-    gBS->FreePool (Private);
+    tBS->FreePool (Private);
   }
   return Status;
 }
@@ -1135,7 +1132,7 @@ Returns:
     StslWriteLogFile (Private, DashLine);
 
     CurrentTime = &Private->StartTime;
-    gRT->GetTime (CurrentTime, NULL);
+    tRT->GetTime (CurrentTime, NULL);
 
   } else {
     //
@@ -1184,7 +1181,7 @@ Returns:
 
     StslWriteLogFileName (Private);
     CurrentTime = &Private->StartTime;
-    gRT->GetTime (CurrentTime, NULL);
+    tRT->GetTime (CurrentTime, NULL);
     SPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Test Started: %t\n", CurrentTime);
     StslWriteLogFile (Private, Buffer);
 
@@ -1312,7 +1309,7 @@ Returns:
   StslWriteLogFile (Private, DashLine);
 
   StslWriteLogFileName (Private);
-  gRT->GetTime (&CurrentTime, NULL);
+  tRT->GetTime (&CurrentTime, NULL);
   SPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Test Finished: %t\n", &CurrentTime);
   StslWriteLogFile (Private, Buffer);
   SecondsElapsed = SecondsElapsedFromBaseYear (
@@ -1474,7 +1471,7 @@ StslWriteLogFile (
   EFI_SIMPLE_TEXT_OUT_PROTOCOL      *ConOut;
 
   Output = Private->OutputProtocol;
-  ConOut = gST->ConOut;
+  ConOut = tST->ConOut;
 
   Status = EFI_SUCCESS;
 
@@ -1526,7 +1523,7 @@ StslWriteKeyFile (
   EFI_SIMPLE_TEXT_OUT_PROTOCOL      *ConOut;
 
   Output = Private->OutputProtocol;
-  ConOut = gST->ConOut;
+  ConOut = tST->ConOut;
 
   Status = EFI_SUCCESS;
 
@@ -1578,7 +1575,7 @@ StslWriteLogFileName (
   CHAR16                            String[EFI_MAX_PRINT_BUFFER];
 
   Output = Private->OutputProtocol;
-  ConOut = gST->ConOut;
+  ConOut = tST->ConOut;
 
   Status = EFI_SUCCESS;
 
@@ -1634,12 +1631,12 @@ StslFreePointer (
   //
   FileConf = &Private->SystemLogFile;
   if (FileConf->DevicePath != NULL) {
-    gBS->FreePool (FileConf->DevicePath);
+    tBS->FreePool (FileConf->DevicePath);
     FileConf->DevicePath = NULL;
   }
 
   if (FileConf->FileName != NULL) {
-    gBS->FreePool (FileConf->FileName);
+    tBS->FreePool (FileConf->FileName);
     FileConf->FileName = NULL;
   }
 
@@ -1648,12 +1645,12 @@ StslFreePointer (
   //
   FileConf = &Private->SystemKeyFile;
   if (FileConf->DevicePath != NULL) {
-    gBS->FreePool (FileConf->DevicePath);
+    tBS->FreePool (FileConf->DevicePath);
     FileConf->DevicePath = NULL;
   }
 
   if (FileConf->FileName != NULL) {
-    gBS->FreePool (FileConf->FileName);
+    tBS->FreePool (FileConf->FileName);
     FileConf->FileName = NULL;
   }
 
@@ -1662,12 +1659,12 @@ StslFreePointer (
   //
   FileConf = &Private->CaseLogFile;
   if (FileConf->DevicePath != NULL) {
-    gBS->FreePool (FileConf->DevicePath);
+    tBS->FreePool (FileConf->DevicePath);
     FileConf->DevicePath = NULL;
   }
 
   if (FileConf->FileName != NULL) {
-    gBS->FreePool (FileConf->FileName);
+    tBS->FreePool (FileConf->FileName);
     FileConf->FileName = NULL;
   }
 
@@ -1676,12 +1673,12 @@ StslFreePointer (
   //
   FileConf = &Private->CaseKeyFile;
   if (FileConf->DevicePath != NULL) {
-    gBS->FreePool (FileConf->DevicePath);
+    tBS->FreePool (FileConf->DevicePath);
     FileConf->DevicePath = NULL;
   }
 
   if (FileConf->FileName != NULL) {
-    gBS->FreePool (FileConf->FileName);
+    tBS->FreePool (FileConf->FileName);
     FileConf->FileName = NULL;
   }
 
@@ -1689,7 +1686,7 @@ StslFreePointer (
   // Free BiosId
   //
   if (Private->BiosId != NULL) {
-    gBS->FreePool (Private->BiosId);
+    tBS->FreePool (Private->BiosId);
     Private->BiosId = NULL;
   }
 
@@ -1697,7 +1694,7 @@ StslFreePointer (
   // Free ScenarioString
   //
   if (Private->ScenarioString != NULL) {
-    gBS->FreePool (Private->ScenarioString);
+    tBS->FreePool (Private->ScenarioString);
     Private->ScenarioString = NULL;
   }
 
@@ -1705,7 +1702,7 @@ StslFreePointer (
   // Free TestName
   //
   if (Private->TestName != NULL) {
-    gBS->FreePool (Private->TestName);
+    tBS->FreePool (Private->TestName);
     Private->TestName = NULL;
   }
 
@@ -1713,7 +1710,7 @@ StslFreePointer (
   // Free EntryName
   //
   if (Private->EntryName != NULL) {
-    gBS->FreePool (Private->EntryName);
+    tBS->FreePool (Private->EntryName);
     Private->EntryName = NULL;
   }
 
@@ -1721,7 +1718,7 @@ StslFreePointer (
   // Free EntryDescription
   //
   if (Private->EntryDescription != NULL) {
-    gBS->FreePool (Private->EntryDescription);
+    tBS->FreePool (Private->EntryDescription);
     Private->EntryDescription = NULL;
   }
 
@@ -1729,7 +1726,7 @@ StslFreePointer (
   // Free SupportProtocols
   //
   if (Private->SupportProtocols != NULL) {
-    gBS->FreePool (Private->SupportProtocols);
+    tBS->FreePool (Private->SupportProtocols);
     Private->SupportProtocols = NULL;
   }
 
@@ -1737,7 +1734,7 @@ StslFreePointer (
   // Free TestCategory
   //
   if (Private->TestCategory != NULL) {
-    gBS->FreePool (Private->TestCategory);
+    tBS->FreePool (Private->TestCategory);
     Private->TestCategory = NULL;
   }
 
@@ -1745,7 +1742,7 @@ StslFreePointer (
   // Free DevicePath
   //
   if (Private->DevicePath != NULL) {
-    gBS->FreePool (Private->DevicePath);
+    tBS->FreePool (Private->DevicePath);
     Private->DevicePath = NULL;
   }
 
@@ -1808,7 +1805,7 @@ StslStrDuplicate (
     return NULL;
   }
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   (EfiStrLen (String) + 1) * sizeof(CHAR16),
                   (VOID **)&Buffer
@@ -1844,7 +1841,7 @@ StslGuidsDuplicate (
     Guid ++;
   }
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   (NoGuids + 1) * sizeof(EFI_GUID),
                   (VOID **)&Buffer

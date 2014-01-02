@@ -56,8 +56,7 @@ Abstract:
 #ifndef _TIME_ENTS_TESTCASE_H_
 #define _TIME_ENTS_TESTCASE_H_
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 
 EFI_STATUS
@@ -147,9 +146,9 @@ Returns:
 extern CHAR16         *gRuntimeServiceRuntimeInfo;
 extern UINTN          gRuntimeServiceRuntimeInfoSize;
 
-extern ENTS_ARG_FIELD gRTGetTimeArgField[];
-extern ENTS_ARG_FIELD gRTSetTimeArgField[];
-extern ENTS_ARG_FIELD gRTGetWakeupTimeArgField[];
-extern ENTS_ARG_FIELD gRTSetWakeupTimeArgField[];
+extern ENTS_ARG_FIELD tRTGetTimeArgField[];
+extern ENTS_ARG_FIELD tRTSetTimeArgField[];
+extern ENTS_ARG_FIELD tRTGetWakeupTimeArgField[];
+extern ENTS_ARG_FIELD tRTSetWakeupTimeArgField[];
 
 #endif

@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver Acpi Table Protocol's Conformance Test
 
 --*/
+#include "SctLib.h"
 #include "AcpiTableProtocolBBTestMain.h"
 
 

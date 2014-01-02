@@ -96,7 +96,7 @@ InitializeCombinationImage5 (
 
   EfiInitializeTestLib (ImageHandle, SystemTable);
 
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   gtBS->InstallProtocolInterface (
           &Handle,

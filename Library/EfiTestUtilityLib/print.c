@@ -303,8 +303,8 @@ _DbgOut (
     EFI_SIMPLE_TEXT_OUT_PROTOCOL    *DbgOut;
 
     DbgOut = Context;
-//    if (!DbgOut && ST && ST->ConOut) {
-//        DbgOut = ST->ConOut;
+//    if (!DbgOut && ST && tST->ConOut) {
+//        DbgOut = tST->ConOut;
 //    }
 
     if (DbgOut) {

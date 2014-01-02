@@ -65,7 +65,6 @@ Abstract:
 #include EFI_PROTOCOL_DEFINITION (LoadFile)
 
 #include "EfiTestUtilityLib.h"
-#include "EfiDriverLib.h"
 #include "EfiTestLib.h"
 
 #define LOAD_FILE_TEST_REVISION 0x00010000

@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver HII Font Protocol's conformance Test
 
 --*/
+#include "SctLib.h"
 #include "HIIFontBBTestMain.h"
 
 extern UINT8 mPackageList1[];

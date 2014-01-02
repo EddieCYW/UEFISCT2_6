@@ -53,7 +53,7 @@ Abstract:
   
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "Mtftp4.h"
 
 #ifndef EFIARM

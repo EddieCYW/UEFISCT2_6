@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "MiscBootServicesBBTestMain.h"
 
 #define MAX_REPEAT_TIMES 20

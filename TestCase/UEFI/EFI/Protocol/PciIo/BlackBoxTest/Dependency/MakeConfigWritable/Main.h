@@ -58,7 +58,7 @@ Abstract:
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
-#include "Efi.h"
+#include "SctLib.h"
 
 //
 //entry point.

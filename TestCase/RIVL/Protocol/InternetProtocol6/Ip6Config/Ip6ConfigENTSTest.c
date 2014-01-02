@@ -53,8 +53,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
+#include "SctLib.h"
 #include "Ip6ConfigENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 #ifdef EFIARM
@@ -127,10 +127,10 @@ Returns:
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
   EFI_HANDLE                ClientHandle;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -138,7 +138,7 @@ Returns:
 
   LoadedImage->Unload = Ip6ConfigENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gIp6ConfigEntsProtocolInterface
@@ -164,7 +164,7 @@ Returns:
   gIp6ConfigEntsProtocolInterface->RuntimeInfo        = gIp6ConfigRuntimeInfo;
   gIp6ConfigEntsProtocolInterface->RuntimeInfoSize    = gIp6ConfigRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gIp6ConfigEntsProtocolInterface,
@@ -178,7 +178,7 @@ Returns:
 
 Error:
   if (gIp6ConfigEntsProtocolInterface != NULL) {
-    gBS->FreePool (gIp6ConfigEntsProtocolInterface);
+    tBS->FreePool (gIp6ConfigEntsProtocolInterface);
   }
 
   return Status;
@@ -207,7 +207,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gIp6ConfigEntsProtocolInterface,
@@ -215,7 +215,7 @@ Returns:
                   );
 
   if (gIp6ConfigEntsProtocolInterface != NULL) {
-    gBS->FreePool (gIp6ConfigEntsProtocolInterface);
+    tBS->FreePool (gIp6ConfigEntsProtocolInterface);
   }
 
   return Status;

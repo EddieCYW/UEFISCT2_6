@@ -65,7 +65,7 @@ COMPONENT_TYPE       = BS_DRIVER
   ManagedNetworkMonitor.c
 
 [libraries.common]
-  EfiDriverLib
+  SctLib
   EntsLib
   EntsProtocolLib
 

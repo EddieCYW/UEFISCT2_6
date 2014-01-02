@@ -134,13 +134,13 @@ Returns:
   //
   EFI_SHELL_APP_INIT (ImageHandle, SystemTable);
 
-  OldTPL = BS->RaiseTPL(EFI_TPL_HIGH_LEVEL);
+  OldTPL = tBS->RaiseTPL(EFI_TPL_HIGH_LEVEL);
   if(OldTPL != EFI_TPL_APPLICATION) {
-    BS->RestoreTPL(OldTPL);
+    tBS->RestoreTPL(OldTPL);
     Print(L"ERROR: SCT should run at EFI_TPL_APPLICATION level\n");
 	return EFI_SUCCESS;
   }
-  BS->RestoreTPL(OldTPL);
+  tBS->RestoreTPL(OldTPL);
 
   //
   // Initialize the framework table

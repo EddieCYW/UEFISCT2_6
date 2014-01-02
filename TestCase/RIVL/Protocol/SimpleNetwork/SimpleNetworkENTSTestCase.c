@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "SimpleNetworkENTSTestCase.h"
 
 //
@@ -957,9 +958,9 @@ Returns:
   SimpleNetwork   = (EFI_SIMPLE_NETWORK_PROTOCOL *) ClientInterface;
 
   Status          = EFI_SUCCESS;
-  gBS->Stall (5000);
+  tBS->Stall (5000);
 
-  gRT->GetTime (&BeginTime, NULL);
+  tRT->GetTime (&BeginTime, NULL);
   for (Index = 0; Index < 1;) {
     Status = SimpleNetwork->Transmit (
                               SimpleNetwork,
@@ -995,7 +996,7 @@ Returns:
     }
   }
 
-  gRT->GetTime (&BeginTime, NULL);
+  tRT->GetTime (&BeginTime, NULL);
 
   for (Index = 1; Index < TransmitPattern1Number;) {
     Status = SimpleNetwork->Transmit (
@@ -1033,7 +1034,7 @@ Returns:
   }
 
 End:
-  gRT->GetTime (&EndTime, NULL);
+  tRT->GetTime (&EndTime, NULL);
 
   *TransmitPattern1Status = Status;
 
@@ -1154,9 +1155,9 @@ Returns:
   SimpleNetwork   = (EFI_SIMPLE_NETWORK_PROTOCOL *) ClientInterface;
 
   Status          = EFI_SUCCESS;
-  gBS->Stall (5000);
+  tBS->Stall (5000);
 
-  gRT->GetTime (&BeginTime, NULL);
+  tRT->GetTime (&BeginTime, NULL);
   for (Index = 0; Index < 1;) {
     Status = SimpleNetwork->Transmit (
                               SimpleNetwork,
@@ -1192,7 +1193,7 @@ Returns:
     }
   }
 
-  gRT->GetTime (&BeginTime, NULL);
+  tRT->GetTime (&BeginTime, NULL);
 
   for (Index = 1; Index < TransmitPattern2Number;) {
     Status = SimpleNetwork->Transmit (
@@ -1230,7 +1231,7 @@ Returns:
   }
 
 End:
-  gRT->GetTime (&EndTime, NULL);
+  tRT->GetTime (&EndTime, NULL);
 
   *TransmitPattern1Status = Status;
 
@@ -1357,7 +1358,7 @@ Returns:
     }
   }
 
-  gRT->GetTime (&BeginTime, NULL);
+  tRT->GetTime (&BeginTime, NULL);
 
   for (Index = 1; Index < ReceivePattern1Number;) {
     *ReceivePattern1BufferSize = BufferSizeOrg;
@@ -1377,7 +1378,7 @@ Returns:
     }
   }
 
-  gRT->GetTime (&EndTime, NULL);
+  tRT->GetTime (&EndTime, NULL);
 
   *ReceivePattern1Status = Status;
 

@@ -202,12 +202,6 @@ FreePool (
   );
 
 VOID
-InitializeLib (
-  IN EFI_HANDLE                     ImageHandle,
-  IN EFI_SYSTEM_TABLE               *SystemTable
-  );
-
-VOID
 InitializeUnicodeSupport (
   CHAR8                             *LangCode
   );

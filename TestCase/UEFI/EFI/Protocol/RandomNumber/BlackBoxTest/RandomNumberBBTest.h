@@ -57,7 +57,7 @@ Abstract:
 #define _RANDOM_NUMBER_TEST_H
 
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "RandomNumberProtocol.h"

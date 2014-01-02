@@ -83,7 +83,7 @@ COMPONENT_TYPE       = APPLICATION
 
 
 [libraries.common]
-  EfiShellLib
+  SctLib
 
 [libraries.ARM, libraries.Aarch64]
   CompilerIntrinsicsLib

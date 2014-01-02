@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Tcp4ENTSTestCase.h"
 
 static CHAR16     gTcp4ProtocolName[]       = L"Tcp4";
@@ -149,10 +150,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
@@ -160,7 +161,7 @@ Returns:
 
   LoadedImage->Unload = Tcp4ENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gTcp4EntsProtocolInterface
@@ -178,7 +179,7 @@ Returns:
   gTcp4EntsProtocolInterface->RuntimeInfo       = gTcp4EntsRuntimeInfo;
   gTcp4EntsProtocolInterface->RuntimeInfoSize   = gTcp4EntsRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gTcp4EntsProtocolInterface,
@@ -192,7 +193,7 @@ Returns:
 
 Error:
   if (gTcp4EntsProtocolInterface != NULL) {
-    gBS->FreePool (gTcp4EntsProtocolInterface);
+    tBS->FreePool (gTcp4EntsProtocolInterface);
   }
 
   return Status;
@@ -221,7 +222,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gTcp4EntsProtocolInterface,
@@ -229,7 +230,7 @@ Returns:
                   );
 
   if (gTcp4EntsProtocolInterface != NULL) {
-    gBS->FreePool (gTcp4EntsProtocolInterface);
+    tBS->FreePool (gTcp4EntsProtocolInterface);
   }
 
   return Status;

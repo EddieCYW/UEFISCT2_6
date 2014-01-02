@@ -215,7 +215,7 @@ Returns:
     //  - All test cases tested in the test file list
     //
     EditBuffer = NULL;
-    Status = BS->AllocatePool(
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    (EFI_MAX_EDIT_LENGTH + 1) * sizeof(CHAR16),
                    (VOID **)&EditBuffer
@@ -231,7 +231,7 @@ Returns:
     Status = GetIterString (TestNode, EditBuffer);
     if (EFI_ERROR (Status)) {
       DestroyMenuPage (Page);
-      BS->FreePool (EditBuffer);
+      tBS->FreePool (EditBuffer);
       return Status;
     }
 
@@ -245,7 +245,7 @@ Returns:
                );
     if (EFI_ERROR (Status)) {
       DestroyMenuPage (Page);
-      BS->FreePool (EditBuffer);
+      tBS->FreePool (EditBuffer);
       return Status;
     }
 
@@ -556,7 +556,7 @@ Returns:
     //Update Parent Iteration
     //
     TempString = NULL;
-    Status = BS->AllocatePool(
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
                    (VOID **)&TempString
@@ -743,11 +743,11 @@ Returns:
   MsgDialogContext.Type = EFI_DIALOG_TYPE_REMINDER;
   DoDialog (MsgDialogTitle, &MsgDialogContext);
 
-  ST->ConOut->SetAttribute (
-                ST->ConOut,
+  tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_LIGHTGRAY | EFI_BACKGROUND_BLACK
                 );
-  ST->ConOut->ClearScreen (ST->ConOut);
+  tST->ConOut->ClearScreen (tST->ConOut);
 
   Status = SctExecute ();
   if (Status != EFI_SUCCESS) {
@@ -759,7 +759,7 @@ Returns:
   //
   Status = EFI_SUCCESS;
   while(!EFI_ERROR(Status)) {
-    Status = ST->ConIn->ReadKeyStroke (ST->ConIn, &Key);
+    Status = tST->ConIn->ReadKeyStroke (tST->ConIn, &Key);
   }
 
   MenuPageRefresh (Page);
@@ -797,11 +797,11 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  ST->ConOut->SetAttribute (
-                ST->ConOut,
+  tST->ConOut->SetAttribute (
+                tST->ConOut,
                 EFI_LIGHTGRAY | EFI_BACKGROUND_BLACK
                 );
-  ST->ConOut->ClearScreen (ST->ConOut);
+  tST->ConOut->ClearScreen (tST->ConOut);
   Status = SctContinueExecute ();
 
   gContinueExec = FALSE;
@@ -809,7 +809,7 @@ Returns:
 
   Status = EFI_SUCCESS;
   while(!EFI_ERROR(Status)) {
-    Status = ST->ConIn->ReadKeyStroke (ST->ConIn, &Key);
+    Status = tST->ConIn->ReadKeyStroke (tST->ConIn, &Key);
   }
 
   return Status;
@@ -1025,7 +1025,7 @@ Returns:
 
   BufLen  = 0;
   Page    = (EFI_MENU_PAGE *)Context;
-  Attrib  = ST->ConOut->Mode->Attribute;
+  Attrib  = tST->ConOut->Mode->Attribute;
   X0      = Column;
   Y0      = Row;
   X1      = Page->Body.BodyRect.BottomRight.Col - 1;
@@ -1036,8 +1036,8 @@ Returns:
   }
 
   if (MenuItem == Page->Body.CurrentSelected) {
-    Status = ST->ConOut->SetAttribute (
-                           ST->ConOut,
+    Status = tST->ConOut->SetAttribute (
+                           tST->ConOut,
                            EFI_ITEM_DESC_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
                            );
     if (EFI_ERROR (Status)) {
@@ -1062,7 +1062,7 @@ Returns:
     //
     //then we display specific information for this menu item
     //
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    MAX_STRING_LEN * sizeof (CHAR16),
                    (VOID **)&Buffer
@@ -1084,7 +1084,7 @@ Returns:
     for (Index = Y1 - 3; Index <= Y1; Index++) {
       Status = TestPrintAt (X0, Index, Buffer);
       if (EFI_ERROR (Status)) {
-        BS->FreePool (Buffer);
+        tBS->FreePool (Buffer);
         return Status;
       }
     }
@@ -1132,9 +1132,9 @@ Returns:
       Status = TestPrintAt (X0, Y1 - 1, Buffer);
     }
 
-    BS->FreePool (Buffer);
+    tBS->FreePool (Buffer);
 
-    ST->ConOut->SetAttribute (ST->ConOut, Attrib);
+    tST->ConOut->SetAttribute (tST->ConOut, Attrib);
 
     //
     //successfully displayed the message
@@ -1146,8 +1146,8 @@ Returns:
     //
     //clear the display area.
     //
-    Status = ST->ConOut->SetAttribute (
-                           ST->ConOut,
+    Status = tST->ConOut->SetAttribute (
+                           tST->ConOut,
                            EFI_MENUPAGE_BODY_BGCOLOR >> 4 | EFI_MENUPAGE_BODY_BGCOLOR
                            );
     if (EFI_ERROR (Status)) {
@@ -1155,7 +1155,7 @@ Returns:
     }
 
     BufLen = (X1 - X0 + 2) * sizeof(CHAR16);
-    Status = BS->AllocatePool (
+    Status = tBS->AllocatePool (
                    EfiBootServicesData,
                    BufLen,
                    (VOID **)&Buffer
@@ -1172,13 +1172,13 @@ Returns:
     for (Index = Y0; Index <= Y1; Index ++) {
       Status = TestPrintAt (X0, Index, Buffer);
       if (EFI_ERROR (Status)) {
-        BS->FreePool (Buffer);
+        tBS->FreePool (Buffer);
         return Status;
       }
     }
 
-    BS->FreePool (Buffer);
-    ST->ConOut->SetAttribute (ST->ConOut, Attrib);
+    tBS->FreePool (Buffer);
+    tST->ConOut->SetAttribute (tST->ConOut, Attrib);
     return EFI_SUCCESS;
   }
 }
@@ -1465,7 +1465,7 @@ GetIterString(
   IterNumber = 0;
   TempValue = 0;
   TempString = NULL;
-  Status = BS->AllocatePool(
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
                  (VOID **)&TempString

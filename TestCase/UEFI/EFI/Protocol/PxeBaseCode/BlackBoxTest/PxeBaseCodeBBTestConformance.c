@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "PxeBaseCodeBBTestMain.h"
 #include "PxeBaseCodeBBTestSupport.h"
 

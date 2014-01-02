@@ -53,7 +53,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "EfiShellLib.h"
 #include "Eas.h"
 #include "EntsMonitorProtocol.h"
@@ -299,7 +299,7 @@ Returns:
   //
   // Allocate memory for Framework Table
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                 EfiBootServicesData,
                 sizeof (EFI_NETWORK_TEST_FRAMEWORK_TABLE),
                 (VOID **)&gEasFT
@@ -313,13 +313,13 @@ Returns:
   //
   SctZeroMem (gEasFT, sizeof (EFI_NETWORK_TEST_FRAMEWORK_TABLE));
 
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                 EfiBootServicesData,
                 sizeof (EFI_MONITOR_COMMAND),
                 (VOID **)&gEasFT->Cmd
                 );
   if (EFI_ERROR (Status)) {
-    BS->FreePool (gEasFT->Cmd);
+    tBS->FreePool (gEasFT->Cmd);
     return Status;
   }
 
@@ -354,8 +354,8 @@ Returns:
   return EFI_SUCCESS;
 
 AttachFail:
-  BS->FreePool (gEasFT->Cmd);
-  BS->FreePool (gEasFT);
+  tBS->FreePool (gEasFT->Cmd);
+  tBS->FreePool (gEasFT);
   gEasFT = NULL;
   return Status;
 }
@@ -388,26 +388,26 @@ Returns:
   // Free the items of Framework Table
   //
   if (gEasFT->DevicePath != NULL) {
-    BS->FreePool (gEasFT->DevicePath);
+    tBS->FreePool (gEasFT->DevicePath);
     gEasFT->DevicePath = NULL;
   }
 
   if (gEasFT->FilePath != NULL) {
-    BS->FreePool (gEasFT->FilePath);
+    tBS->FreePool (gEasFT->FilePath);
     gEasFT->FilePath = NULL;
   }
   //
   // Free Command
   //
   if (gEasFT->Cmd != NULL) {
-    BS->FreePool (gEasFT->Cmd);
+    tBS->FreePool (gEasFT->Cmd);
     gEasFT->Cmd = NULL;
   }
 
   //
   // Free Framework Table
   //
-  BS->FreePool (gEasFT);
+  tBS->FreePool (gEasFT);
   gEasFT = NULL;
 
   //
@@ -461,11 +461,11 @@ Returns:
             );
   if (EFI_ERROR (Status)) {
     EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"Load support files - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Done
@@ -533,11 +533,11 @@ Returns:
             );
   if (EFI_ERROR (Status)) {
     EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"Load test files - %r", Status));
-    BS->FreePool (FilePath);
+    tBS->FreePool (FilePath);
     return Status;
   }
 
-  BS->FreePool (FilePath);
+  tBS->FreePool (FilePath);
 
   //
   // Done
@@ -594,7 +594,7 @@ Returns:
   //
   // Locate all the handle of EFI_ENTS_MONITOR_PROTOCOL
   //
-  Status = BS->LocateHandleBuffer (
+  Status = tBS->LocateHandleBuffer (
                 ByProtocol,
                 &gEfiEntsMonitorProtocolGuid,
                 NULL,
@@ -611,7 +611,7 @@ Returns:
   // Search the proper EFI_ENTS_MONITOR_PROTOCOL
   //
   for (Index = 0; Index < NoHandles; Index++) {
-    Status = BS->HandleProtocol (
+    Status = tBS->HandleProtocol (
                   HandleBuffer[Index],
                   &gEfiEntsMonitorProtocolGuid,
                  (void **)&EntsMonitorInterface
@@ -627,7 +627,7 @@ Returns:
     }
   }
 
-  BS->FreePool(HandleBuffer);
+  tBS->FreePool(HandleBuffer);
 
   gEasFT->Monitor = EntsMonitorInterface;
   Status          = EntsMonitorInterface->InitMonitor (EntsMonitorInterface);

@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "DevicePathBBTestMain.h"
 
 EFI_GUID  gEfiDevicePathMessagingUartFlowControlGuid  = DEVICE_PATH_MESSAGING_UART_FLOW_CONTROL;

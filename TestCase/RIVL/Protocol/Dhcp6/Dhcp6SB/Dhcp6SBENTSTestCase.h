@@ -56,8 +56,7 @@ Abstract:
 #ifndef _MANAGEDNETWORK_SB_ENTS_TESTCASE_H_
 #define _MANAGEDNETWORK_SB_ENTS_TESTCASE_H_
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
 #include "EntsProtocol.h"
 #include "Eas.h"
 #include "EntsLib.h"

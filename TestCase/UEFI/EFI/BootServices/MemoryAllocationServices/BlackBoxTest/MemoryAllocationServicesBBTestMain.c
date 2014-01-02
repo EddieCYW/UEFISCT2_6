@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "MemoryAllocationServicesBBTestMain.h"
 
 UINT8                                *MemoryMap = NULL;

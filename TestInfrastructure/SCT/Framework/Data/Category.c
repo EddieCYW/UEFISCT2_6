@@ -549,7 +549,7 @@ Routine Description:
   //
   // Allocate memory for the category data
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_SCT_CATEGORY_DATA),
                  (VOID **)&TempCategory
@@ -598,19 +598,19 @@ Routine Description:
   // Free the items of category data
   //
   if (Category->Name != NULL) {
-    BS->FreePool (Category->Name);
+    tBS->FreePool (Category->Name);
     Category->Name = NULL;
   }
 
   if (Category->Description != NULL) {
-    BS->FreePool (Category->Description);
+    tBS->FreePool (Category->Description);
     Category->Description = NULL;
   }
 
   //
   // Free the category data itself
   //
-  BS->FreePool (Category);
+  tBS->FreePool (Category);
 
   //
   // Done

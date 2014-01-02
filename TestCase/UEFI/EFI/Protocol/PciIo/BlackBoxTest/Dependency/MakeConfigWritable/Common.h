@@ -58,7 +58,7 @@ Abstract:
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "pci22.h"
 
 #include EFI_PROTOCOL_CONSUMER(PciRootBridgeIo)

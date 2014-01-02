@@ -53,10 +53,11 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "MiscellaneousBootENTSTestCase.h"
 
 //
-// gBS.SetWatchdogTimer
+// tBS.SetWatchdogTimer
 //
 static UINTN      BSSetWatchdogTimerTimeout;
 static UINT64     BSSetWatchdogTimerWatchdogCode;
@@ -64,7 +65,7 @@ static UINTN      BSSetWatchdogTimerDataSize;
 static CHAR16     *BSSetWatchdogTimerWatchdogData;
 static EFI_STATUS *BSSetWatchdogTimerStatus;
 
-ENTS_ARG_FIELD    gBSSetWatchdogTimerArgField[] = {
+ENTS_ARG_FIELD    BSSetWatchdogTimerArgField[] = {
   {
     OCTETN,
     &BSSetWatchdogTimerTimeout
@@ -122,12 +123,12 @@ Returns:
 }
 
 //
-// gBS.Stall
+// tBS.Stall
 //
 static UINTN      BSStallMicroseconds;
 static EFI_STATUS *BSStallStatus;
 
-ENTS_ARG_FIELD    gBSStallArgField[] = {
+ENTS_ARG_FIELD    BSStallArgField[] = {
   {
     OCTETN,
     &BSStallMicroseconds
@@ -168,13 +169,13 @@ Returns:
 }
 
 //
-// gBS.CopyMem
+// tBS.CopyMem
 //
 static VOID     *BSCopyMemDestination;
 static VOID     *BSCopyMemSource;
 static UINTN    BSCopyMemLength;
 
-ENTS_ARG_FIELD  gBSCopyMemArgField[] = {
+ENTS_ARG_FIELD  BSCopyMemArgField[] = {
   {
     POINTER,
     &BSCopyMemDestination
@@ -223,13 +224,13 @@ Returns:
 }
 
 //
-// gBS.SetMem
+// tBS.SetMem
 //
 static VOID     *BSSetMemBuffer;
 static UINTN    BSSetMemSize;
 static UINT8    BSSetMemValue;
 
-ENTS_ARG_FIELD  gBSSetMemArgField[] = {
+ENTS_ARG_FIELD  BSSetMemArgField[] = {
   {
     POINTER,
     &BSSetMemBuffer

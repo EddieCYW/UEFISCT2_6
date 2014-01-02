@@ -561,7 +561,7 @@ Returns:
   //
   // Allocate runtime memory 
   //
-  Status =  BS->AllocatePages (
+  Status =  tBS->AllocatePages (
                   AllocateAnyPages,
                   EfiRuntimeServicesData,
                   PagesRequested,
@@ -581,7 +581,7 @@ Returns:
   NumFreePages  = EFI_SIZE_TO_PAGES (MemBase - FreeMemBase);
 
   if (NumFreePages != 0) {
-    Status =  BS->FreePages (
+    Status =  tBS->FreePages (
                     FreeMemBase,
                     NumFreePages
                     );
@@ -595,7 +595,7 @@ Returns:
   NumFreePages  = PagesRequested - EFI_SIZE_TO_PAGES (FreeMemBase -MemBase) - NumFreePages;
 
   if (NumFreePages != 0) {
-    Status =  BS->FreePages (
+    Status =  tBS->FreePages (
                     FreeMemBase,
                     NumFreePages
                     );

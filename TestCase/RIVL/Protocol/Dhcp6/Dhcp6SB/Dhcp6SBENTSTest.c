@@ -53,8 +53,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
+#include "SctLib.h"
 #include "Dhcp6SBENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
@@ -116,10 +116,10 @@ Returns:
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
   EFI_HANDLE                ClientHandle;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -127,7 +127,7 @@ Returns:
 
   LoadedImage->Unload = Dhcp6SBENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gDhcp6ServiceBindingEntsProtocolInterface
@@ -153,7 +153,7 @@ Returns:
   gDhcp6ServiceBindingEntsProtocolInterface->RuntimeInfo        = gDhcp6ServiceBindingRuntimeInfo;
   gDhcp6ServiceBindingEntsProtocolInterface->RuntimeInfoSize    = gDhcp6ServiceBindingRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gDhcp6ServiceBindingEntsProtocolInterface,
@@ -167,7 +167,7 @@ Returns:
 
 Error:
   if (gDhcp6ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gDhcp6ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gDhcp6ServiceBindingEntsProtocolInterface);
   }
 
   return Status;
@@ -194,14 +194,14 @@ Returns:
 
 --*/
 {
-  gBS->UninstallMultipleProtocolInterfaces (
+  tBS->UninstallMultipleProtocolInterfaces (
         ImageHandle,
         &gEfiEntsProtocolGuid,
         gDhcp6ServiceBindingEntsProtocolInterface,
         NULL
         );
   if (gDhcp6ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gDhcp6ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gDhcp6ServiceBindingEntsProtocolInterface);
   }
 
   return EFI_SUCCESS;

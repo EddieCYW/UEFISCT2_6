@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "AuthenticationBBTestMain.h"
 #include "AuthTest.h"
 
@@ -121,8 +122,8 @@ InitializeAuthenticationTest (
   EFI_STATUS Status;
 
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   
   //
   // Make sure the Protocol is not already installed in the system

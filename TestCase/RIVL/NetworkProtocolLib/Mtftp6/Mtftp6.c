@@ -54,7 +54,7 @@ Abstract:
   
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "Mtftp6.h"
 
 EFI_GUID gEfiMtftp6ServiceBindingProtocolGuid  = EFI_MTFTP6_SERVICE_BINDING_PROTOCOL_GUID;

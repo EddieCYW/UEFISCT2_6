@@ -56,8 +56,7 @@ Abstract:
 #ifndef _ARP_ENTS_TESTCASE_H_
 #define _ARP_ENTS_TESTCASE_H_
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 #include "Arp.h"
 

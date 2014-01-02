@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver Vlan Config Protocol's conformance Test
 
 --*/
+#include "SctLib.h"
 #include "VlanConfigBBTestMain.h"
 
 

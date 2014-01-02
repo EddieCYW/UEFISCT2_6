@@ -61,6 +61,7 @@ References:
 Revision History
 
 --*/
+#include "SctLib.h"
 #include "GraphicsOutputBBTest.h"
 
 //
@@ -411,11 +412,11 @@ Returns:
                      );
 
       if (BltBuffer != NULL) {
-        gBS->FreePool (BltBuffer);
+        tBS->FreePool (BltBuffer);
       }
 
       if (BltBuffer2 != NULL) {
-        gBS->FreePool (BltBuffer2);
+        tBS->FreePool (BltBuffer2);
       }
       //
       // Wait for some time

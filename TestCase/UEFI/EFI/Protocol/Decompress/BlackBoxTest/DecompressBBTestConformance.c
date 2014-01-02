@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "DecompressBBTestMain.h"
 #include "DecompressBBTestSupport.h"
 

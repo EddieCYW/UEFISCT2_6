@@ -64,7 +64,6 @@ Abstract:
 #include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "SimpleNetworkProtocol.h"
-#include "EfiDriverLib.h"
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestLoggingLibrary)
 

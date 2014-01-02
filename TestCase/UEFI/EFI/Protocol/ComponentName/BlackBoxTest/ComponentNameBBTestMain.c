@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "ComponentNameBBTest.h"
 
 EFI_HANDLE      mImageHandle;
@@ -133,7 +134,7 @@ InitializeBBTestComponentName (
   //
   // initialize test utility lib
   //
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

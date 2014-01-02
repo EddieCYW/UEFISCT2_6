@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "PlatformToDriverConfigurationBBTestMain.h"
 #ifdef EFIARM
 EFI_HANDLE DriverImageHandle;
@@ -189,7 +190,7 @@ InitializeBBTestPlatformToDriverConfiguration (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   DriverImageHandle = ImageHandle;
 

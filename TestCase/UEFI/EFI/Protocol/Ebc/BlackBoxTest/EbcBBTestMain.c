@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "EbcBBTestMain.h"
 
 EFI_GUID gEfiEbcDriverProtocolGuid = EBC_DRIVER_TEST_PROTOCOL;
@@ -200,8 +201,8 @@ InitializeBBTestEbcProtocol (
   // Initialize library
   //
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
 
   //
   // Get Pei Protocols

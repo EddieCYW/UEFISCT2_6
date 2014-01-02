@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "ProtocolDefinition.h"
 #include "../Inc/TestDriver.h"
 

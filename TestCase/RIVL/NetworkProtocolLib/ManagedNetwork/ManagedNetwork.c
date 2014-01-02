@@ -53,7 +53,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
+#include "SctLib.h"
 #include "ManagedNetwork.h"
 #ifndef EFIARM
 EFI_GUID gEfiManagedNetworkServiceBindingProtocolGuid = EFI_MANAGED_NETWORK_SERVICE_BINDING_PROTOCOL_GUID;

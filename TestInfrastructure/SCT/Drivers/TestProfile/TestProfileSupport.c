@@ -54,10 +54,10 @@ Abstract:
   Provides the support services for the test profile library driver.
 
 --*/
-#include "Efi.h"
+#include "SctLib.h"
 #include "TestProfileSupport.h"
 
-extern EFI_BOOT_SERVICES *gBS;
+extern EFI_BOOT_SERVICES *tBS;
 
 VOID *
 Calloc(
@@ -84,7 +84,7 @@ Malloc (
 {
   VOID  *pMem;
 
-  if (gBS->AllocatePool (EfiBootServicesData, size, &pMem) != EFI_SUCCESS) {
+  if (tBS->AllocatePool (EfiBootServicesData, size, &pMem) != EFI_SUCCESS) {
     return NULL;
   }
   return pMem;
@@ -95,7 +95,7 @@ Free (
   VOID        *addr
   )
 {
-  gBS->FreePool (addr);
+  tBS->FreePool (addr);
 }
 
 CHAR8 *

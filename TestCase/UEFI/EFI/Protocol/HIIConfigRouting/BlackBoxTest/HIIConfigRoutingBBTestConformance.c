@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "HIIConfigRoutingBBTestMain.h"
 
 

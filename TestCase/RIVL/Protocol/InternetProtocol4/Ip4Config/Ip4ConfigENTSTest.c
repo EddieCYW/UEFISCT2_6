@@ -53,8 +53,8 @@ Abstract:
 
 --*/
 
-//#include "Efi.h"
-//#include "EfiDriverLib.h"
+#include "SctLib.h"
+//#include "SctLib.h"
 #include "Ip4ConfigENTSTestCase.h"
 //#include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
@@ -117,10 +117,10 @@ Returns:
   EFI_STATUS                Status;
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -128,7 +128,7 @@ Returns:
 
   LoadedImage->Unload = Ip4ConfigENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gIp4ConfigEntsProtocolInterface
@@ -146,7 +146,7 @@ Returns:
   gIp4ConfigEntsProtocolInterface->RuntimeInfo        = gIp4ConfigRuntimeInfo;
   gIp4ConfigEntsProtocolInterface->RuntimeInfoSize    = gIp4ConfigRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gIp4ConfigEntsProtocolInterface,
@@ -160,7 +160,7 @@ Returns:
 
 Error:
   if (gIp4ConfigEntsProtocolInterface != NULL) {
-    gBS->FreePool (gIp4ConfigEntsProtocolInterface);
+    tBS->FreePool (gIp4ConfigEntsProtocolInterface);
   }
 
   return Status;
@@ -189,7 +189,7 @@ Returns:
 {
   EFI_STATUS  Status;
 
-  Status = gBS->UninstallMultipleProtocolInterfaces (
+  Status = tBS->UninstallMultipleProtocolInterfaces (
                   ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gIp4ConfigEntsProtocolInterface,
@@ -197,7 +197,7 @@ Returns:
                   );
 
   if (gIp4ConfigEntsProtocolInterface != NULL) {
-    gBS->FreePool (gIp4ConfigEntsProtocolInterface);
+    tBS->FreePool (gIp4ConfigEntsProtocolInterface);
   }
 
   return Status;

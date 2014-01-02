@@ -118,7 +118,7 @@ EfiLibDefaultUnload (
   // Get the list of all the handles in the handle database.
   // If there is an error getting the list, then the unload operation fails.
   //
-  Status = gBS->LocateHandleBuffer (AllHandles, NULL, NULL, &DeviceHandleCount, &DeviceHandleBuffer);
+  Status = tBS->LocateHandleBuffer (AllHandles, NULL, NULL, &DeviceHandleCount, &DeviceHandleBuffer);
   if (EFI_ERROR (Status)) {
     return Status;
   }
@@ -127,13 +127,13 @@ EfiLibDefaultUnload (
   // handle database.
   //
   for (Index = 0; Index < DeviceHandleCount; Index++) {
-    Status = gBS->DisconnectController (DeviceHandleBuffer[Index], ImageHandle, NULL);
+    Status = tBS->DisconnectController (DeviceHandleBuffer[Index], ImageHandle, NULL);
   }
   //
   // Uninstall all the protocols that were installed in the driver entry point
   //
   for (Index = 0; Index < DeviceHandleCount; Index++) {
-    Status = gBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiDriverBindingProtocolGuid, (VOID **) &DriverBinding);
+    Status = tBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiDriverBindingProtocolGuid, (VOID **) &DriverBinding);
     if (EFI_ERROR (Status)) {
       continue;
     }
@@ -141,42 +141,42 @@ EfiLibDefaultUnload (
     if (DriverBinding->ImageHandle != ImageHandle) {
       continue;
     }
-    gBS->UninstallProtocolInterface (ImageHandle, &gEfiDriverBindingProtocolGuid, DriverBinding);
+    tBS->UninstallProtocolInterface (ImageHandle, &gEfiDriverBindingProtocolGuid, DriverBinding);
 
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)
-    Status = gBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiComponentName2ProtocolGuid, (VOID **) &ComponentName2);
+    Status = tBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiComponentName2ProtocolGuid, (VOID **) &ComponentName2);
 #else
-    Status = gBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiComponentNameProtocolGuid, &ComponentName);
+    Status = tBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiComponentNameProtocolGuid, &ComponentName);
 #endif
     if (!EFI_ERROR (Status)) {
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)
-      gBS->UninstallProtocolInterface (ImageHandle, &gEfiComponentName2ProtocolGuid, ComponentName2);
+      tBS->UninstallProtocolInterface (ImageHandle, &gEfiComponentName2ProtocolGuid, ComponentName2);
 #else
-      gBS->UninstallProtocolInterface (ImageHandle, &gEfiComponentNameProtocolGuid, ComponentName);
+      tBS->UninstallProtocolInterface (ImageHandle, &gEfiComponentNameProtocolGuid, ComponentName);
 #endif
     }
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)
-    Status = gBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiDriverConfiguration2ProtocolGuid, (VOID **) &DriverConfiguration2);
+    Status = tBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiDriverConfiguration2ProtocolGuid, (VOID **) &DriverConfiguration2);
 #else                                                           
-    Status = gBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiDriverConfigurationProtocolGuid, &DriverConfiguration);
+    Status = tBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiDriverConfigurationProtocolGuid, &DriverConfiguration);
 #endif	
     if (!EFI_ERROR (Status)) {
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)
-      gBS->UninstallProtocolInterface (ImageHandle, &gEfiDriverConfiguration2ProtocolGuid, DriverConfiguration2);
+      tBS->UninstallProtocolInterface (ImageHandle, &gEfiDriverConfiguration2ProtocolGuid, DriverConfiguration2);
 #else
-      gBS->UninstallProtocolInterface (ImageHandle, &gEfiDriverConfigurationProtocolGuid, DriverConfiguration);
+      tBS->UninstallProtocolInterface (ImageHandle, &gEfiDriverConfigurationProtocolGuid, DriverConfiguration);
 #endif
     }
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)
-    Status = gBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiDriverDiagnostics2ProtocolGuid, (VOID **) &DriverDiagnostics2);
+    Status = tBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiDriverDiagnostics2ProtocolGuid, (VOID **) &DriverDiagnostics2);
 #else                                                         
-    Status = gBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiDriverDiagnosticsProtocolGuid, &DriverDiagnostics);
+    Status = tBS->HandleProtocol (DeviceHandleBuffer[Index], &gEfiDriverDiagnosticsProtocolGuid, &DriverDiagnostics);
 #endif
     if (!EFI_ERROR (Status)) {
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)
-      gBS->UninstallProtocolInterface (ImageHandle, &gEfiDriverDiagnostics2ProtocolGuid, DriverDiagnostics2);
+      tBS->UninstallProtocolInterface (ImageHandle, &gEfiDriverDiagnostics2ProtocolGuid, DriverDiagnostics2);
 #else
-      gBS->UninstallProtocolInterface (ImageHandle, &gEfiDriverDiagnosticsProtocolGuid, DriverDiagnostics);
+      tBS->UninstallProtocolInterface (ImageHandle, &gEfiDriverDiagnosticsProtocolGuid, DriverDiagnostics);
 #endif
     }
   }
@@ -184,7 +184,7 @@ EfiLibDefaultUnload (
   // Free the buffer containing the list of handles from the handle database
   //
   if (DeviceHandleBuffer != NULL) {
-    gBS->FreePool (DeviceHandleBuffer);
+    tBS->FreePool (DeviceHandleBuffer);
   }
 
   return EFI_SUCCESS;
@@ -214,7 +214,7 @@ Routine Description:
   driver's DriverBindingHandle.  This is typically the same as the driver's
   ImageHandle, but it can be different if the driver produces multiple
   DriverBinding Protocols.  This function also initializes the EFI Driver
-  Library that initializes the global variables gST, gBS, gRT.
+  Library that initializes the global variables gST, tBS, gRT.
 
 Arguments:
 
@@ -237,7 +237,7 @@ Returns:
 
   EFI_SUCCESS if all the protocols were installed onto DriverBindingHandle
 
-  Otherwise, then return status from gBS->InstallProtocolInterface()
+  Otherwise, then return status from tBS->InstallProtocolInterface()
 
 --*/
 {
@@ -306,7 +306,7 @@ EfiLibInstallAllDriverProtocolsWithCustomizedUnload (
   //
   // Retrieve the Loaded Image Protocol from Image Handle
   //
-  Status = gBS->OpenProtocol (
+  Status = tBS->OpenProtocol (
                   ImageHandle,
                   &gEfiLoadedImageProtocolGuid,
                   (VOID **) &LoadedImage,

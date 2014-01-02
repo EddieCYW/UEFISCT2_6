@@ -55,8 +55,7 @@ Abstract:
 #ifndef _EVENT_TIMER_AND_TASK_PRIORITY_ENTS_TESTCASE_H_
 #define _EVENT_TIMER_AND_TASK_PRIORITY_ENTS_TESTCASE_H_
 
-#include "Efi.h"
-#include "EfiDriverLib.h"
+#include "SctLib.h"
 #include "Eas.h"
 
 EFI_STATUS
@@ -188,11 +187,11 @@ Returns:
 extern CHAR16         *gBootServiceRuntimeInfo;
 extern UINTN          gBootServiceRuntimeInfoSize;
 
-extern ENTS_ARG_FIELD gBSCreateEventArgField[];
-extern ENTS_ARG_FIELD gBSCloseEventArgField[];
-extern ENTS_ARG_FIELD gBSSignalEventArgField[];
-extern ENTS_ARG_FIELD gBSWaitForEventArgField[];
-extern ENTS_ARG_FIELD gBSCheckEventArgField[];
-extern ENTS_ARG_FIELD gBSSetTimerArgField[];
+extern ENTS_ARG_FIELD BSCreateEventArgField[];
+extern ENTS_ARG_FIELD BSCloseEventArgField[];
+extern ENTS_ARG_FIELD BSSignalEventArgField[];
+extern ENTS_ARG_FIELD BSWaitForEventArgField[];
+extern ENTS_ARG_FIELD BSCheckEventArgField[];
+extern ENTS_ARG_FIELD BSSetTimerArgField[];
 
 #endif

@@ -61,6 +61,7 @@ Abstract:
 #define DEBUG_GET_PACKAGE_INFO                   1
 
 
+#include "SctLib.h"
 #include "FirmwareManagementBBTestMain.h"
 
 // ****************************************************************************

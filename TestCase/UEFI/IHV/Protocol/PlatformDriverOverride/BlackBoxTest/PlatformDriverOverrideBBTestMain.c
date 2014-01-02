@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "PlatformDriverOverrideBBTestMain.h"
 
 //
@@ -160,7 +161,7 @@ InitializeBBTestPlatformDriverOverride (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   DriverImageHandle = ImageHandle;
 

@@ -52,6 +52,7 @@ Abstract:
     for EFI Driver Component Name2 Protocol's Function Test
 
 --*/
+#include "SctLib.h"
 #include "ComponentName2BBTestMain.h"
 
 

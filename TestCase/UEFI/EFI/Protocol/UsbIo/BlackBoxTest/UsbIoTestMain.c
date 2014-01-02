@@ -57,6 +57,7 @@ Abstract:
 // Includes
 //
 
+#include "SctLib.h"
 #include "UsbIoTest.h"
 
 //
@@ -217,7 +218,7 @@ InitializeBBTestUsbIo (
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
 
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,

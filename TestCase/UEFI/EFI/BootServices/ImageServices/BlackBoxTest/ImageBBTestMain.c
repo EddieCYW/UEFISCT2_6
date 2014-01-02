@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Misc.h"
 
 //
@@ -200,7 +201,7 @@ InitializeBBTestImageBootServices (
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
 
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

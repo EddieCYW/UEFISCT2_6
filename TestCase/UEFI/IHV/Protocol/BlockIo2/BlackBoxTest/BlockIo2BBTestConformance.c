@@ -56,6 +56,7 @@ Abstract:
 --*/
 
 
+#include "SctLib.h"
 #include "BlockIo2BBTestMain.h"
 
 STATIC BOOLEAN                         BlkIO2Finished;

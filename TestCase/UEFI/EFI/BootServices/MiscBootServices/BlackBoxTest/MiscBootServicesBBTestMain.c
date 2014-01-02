@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "MiscBootServicesBBTestMain.h"
 
 #define MAX_MAP_SIZE 0x2000
@@ -265,7 +266,7 @@ InitializeBBTestMiscBootServices (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,

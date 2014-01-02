@@ -89,7 +89,7 @@ Returns:
   //
   // Allocate memory for the framework table
   //
-  Status = BS->AllocatePool (
+  Status = tBS->AllocatePool (
                  EfiBootServicesData,
                  sizeof(EFI_SCT_FRAMEWORK_TABLE),
                  (VOID **)&gFT
@@ -197,7 +197,7 @@ Routine Description:
   //
   if (gFT->ConfigData != NULL) {
     FreeConfigData (gFT->ConfigData);
-    BS->FreePool (gFT->ConfigData);
+    tBS->FreePool (gFT->ConfigData);
     gFT->ConfigData = NULL;
   }
 
@@ -213,32 +213,32 @@ Routine Description:
   UnloadProxyFiles (&gFT->ProxyFileList);
 
   if (gFT->DevicePath != NULL) {
-    BS->FreePool (gFT->DevicePath);
+    tBS->FreePool (gFT->DevicePath);
     gFT->DevicePath = NULL;
   }
 
   if (gFT->FilePath != NULL) {
-    BS->FreePool (gFT->FilePath);
+    tBS->FreePool (gFT->FilePath);
     gFT->FilePath = NULL;
   }
 
   if (gFT->SeqDevicePath != NULL) {
-    BS->FreePool (gFT->SeqDevicePath);
+    tBS->FreePool (gFT->SeqDevicePath);
     gFT->SeqDevicePath = NULL;
   }
 
   if (gFT->SeqFileName != NULL) {
-    BS->FreePool (gFT->SeqFileName);
+    tBS->FreePool (gFT->SeqFileName);
     gFT->SeqFileName = NULL;
   }
 
   if (gFT->RepDevicePath != NULL) {
-    BS->FreePool (gFT->RepDevicePath);
+    tBS->FreePool (gFT->RepDevicePath);
     gFT->RepDevicePath = NULL;
   }
 
   if (gFT->RepFileName != NULL) {
-    BS->FreePool (gFT->RepFileName);
+    tBS->FreePool (gFT->RepFileName);
     gFT->RepFileName = NULL;
   }
 
@@ -250,7 +250,7 @@ Routine Description:
   //
   // Free the framework table itself
   //
-  BS->FreePool (gFT);
+  tBS->FreePool (gFT);
 
   //
   // Done

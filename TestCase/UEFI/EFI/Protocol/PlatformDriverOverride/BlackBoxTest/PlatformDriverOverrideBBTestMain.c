@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "PlatformDriverOverrideBBTestMain.h"
 #ifdef EFIARM
 EFI_HANDLE DriverImageHandle;
@@ -163,7 +164,7 @@ InitializeBBTestPlatformDriverOverride (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   DriverImageHandle = ImageHandle;
 

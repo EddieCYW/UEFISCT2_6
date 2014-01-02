@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "MnpSBENTSTestCase.h"
 
 static CHAR16     gMnpServiceBindingProtocolName[] = L"MnpServiceBinding";
@@ -110,10 +111,10 @@ Returns:
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
   EFI_HANDLE                ClientHandle;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -121,7 +122,7 @@ Returns:
 
   LoadedImage->Unload = MnpSBENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gMnpServiceBindingEntsProtocolInterface
@@ -147,7 +148,7 @@ Returns:
   gMnpServiceBindingEntsProtocolInterface->RuntimeInfo        = gMnpServiceBindingRuntimeInfo;
   gMnpServiceBindingEntsProtocolInterface->RuntimeInfoSize    = gMnpServiceBindingRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gMnpServiceBindingEntsProtocolInterface,
@@ -161,7 +162,7 @@ Returns:
 
 Error:
   if (gMnpServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gMnpServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gMnpServiceBindingEntsProtocolInterface);
   }
 
   return Status;
@@ -188,14 +189,14 @@ Returns:
 
 --*/
 {
-  gBS->UninstallMultipleProtocolInterfaces (
+  tBS->UninstallMultipleProtocolInterfaces (
         ImageHandle,
         &gEfiEntsProtocolGuid,
         gMnpServiceBindingEntsProtocolInterface,
         NULL
         );
   if (gMnpServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gMnpServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gMnpServiceBindingEntsProtocolInterface);
   }
 
   return EFI_SUCCESS;

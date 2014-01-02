@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Udp4ENTSTestCase.h"
 
 //
@@ -573,7 +574,7 @@ Returns:
 
   *SignalRecycleEvent_Status = EFI_SUCCESS;
   if (Completion_Token->Status == EFI_SUCCESS) {
-    *SignalRecycleEvent_Status = gBS->SignalEvent (Completion_Token->Packet.RxData->RecycleSignal);
+    *SignalRecycleEvent_Status = tBS->SignalEvent (Completion_Token->Packet.RxData->RecycleSignal);
   }
 
   RecordMessage (

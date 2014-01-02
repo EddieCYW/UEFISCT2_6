@@ -52,6 +52,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "EventTimerAndTaskPriorityENTSTestCase.h"
 
 VOID
@@ -72,7 +73,7 @@ static EFI_EVENT_NOTIFY BSNotifyFunctionList[] = {
 };
 
 //
-// gBS.CreateEvent
+// tBS.CreateEvent
 //
 static UINT32           BSCreateEventType;
 static EFI_TPL          BSCreateEventNotifyTpl;
@@ -81,7 +82,7 @@ static VOID             *BSCreateEventNotifyContext;
 static EFI_EVENT        *BSCreateEventEvent;
 static EFI_STATUS       *BSCreateEventStatus;
 
-ENTS_ARG_FIELD          gBSCreateEventArgField[] = {
+ENTS_ARG_FIELD          BSCreateEventArgField[] = {
   {
     OCTET4,
     &BSCreateEventType
@@ -144,12 +145,12 @@ Returns:
 }
 
 //
-// gBS.CloseEvent
+// BS.CloseEvent
 //
 static EFI_EVENT  BSCloseEventEvent;
 static EFI_STATUS *BSCloseEventStatus;
 
-ENTS_ARG_FIELD    gBSCloseEventArgField[] = {
+ENTS_ARG_FIELD    BSCloseEventArgField[] = {
   {
     OCTETN,
     &BSCloseEventEvent
@@ -190,12 +191,12 @@ Returns:
 }
 
 //
-// gBS.SignalEvent
+// tBS.SignalEvent
 //
 static EFI_EVENT  BSSignalEventEvent;
 static EFI_STATUS *BSSignalEventStatus;
 
-ENTS_ARG_FIELD    gBSSignalEventArgField[] = {
+ENTS_ARG_FIELD    BSSignalEventArgField[] = {
   {
     OCTETN,
     &BSSignalEventEvent
@@ -236,14 +237,14 @@ Returns:
 }
 
 //
-// gBS.WaitForEvent
+// tBS.WaitForEvent
 //
 static UINTN      BSWaitForEventNumberOfEvents;
 static EFI_EVENT  *BSWaitForEventEvent;
 static UINTN      *BSWaitForEventIndex;
 static EFI_STATUS *BSWaitForEventStatus;
 
-ENTS_ARG_FIELD    gBSWaitForEventArgField[] = {
+ENTS_ARG_FIELD    BSWaitForEventArgField[] = {
   {
     OCTETN,
     &BSWaitForEventNumberOfEvents
@@ -296,12 +297,12 @@ Returns:
 }
 
 //
-// gBS.CheckEvent
+// tBS.CheckEvent
 //
 static EFI_EVENT  BSCheckEventEvent;
 static EFI_STATUS *BSCheckEventStatus;
 
-ENTS_ARG_FIELD    gBSCheckEventArgField[] = {
+ENTS_ARG_FIELD    BSCheckEventArgField[] = {
   {
     OCTETN,
     &BSCheckEventEvent
@@ -342,14 +343,14 @@ Returns:
 }
 
 //
-// gBS.SetTimer
+// tBS.SetTimer
 //
 static EFI_EVENT        BSSetTimerEvent;
 static EFI_TIMER_DELAY  BSSetTimerType;
 static UINT64           BSSetTimerTriggerTime;
 static EFI_STATUS       *BSSetTimerStatus;
 
-ENTS_ARG_FIELD          gBSSetTimerArgField[] = {
+ENTS_ARG_FIELD          BSSetTimerArgField[] = {
   {
     OCTETN,
     &BSSetTimerEvent

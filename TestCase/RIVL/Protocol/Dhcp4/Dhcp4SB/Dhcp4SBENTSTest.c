@@ -53,6 +53,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "Dhcp4SBENTSTestCase.h"
 
 static CHAR16     gDhcp4ServiceBindingProtocolName[] = L"Dhcp4ServiceBinding";
@@ -110,10 +111,10 @@ Returns:
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
   EFI_HANDLE                ClientHandle;
 
-  EfiInitializeDriverLib (ImageHandle, SystemTable);
+  SctInitializeDriver (ImageHandle, SystemTable);
   EfiInitializeEntsLib (ImageHandle, SystemTable);
 
-  gBS->HandleProtocol (
+  tBS->HandleProtocol (
         ImageHandle,
         &gEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
@@ -121,7 +122,7 @@ Returns:
 
   LoadedImage->Unload = Dhcp4SBENTSTestUnload;
 
-  Status = gBS->AllocatePool (
+  Status = tBS->AllocatePool (
                   EfiBootServicesData,
                   sizeof (EFI_ENTS_PROTOCOL),
                   (VOID **)&gDhcp4ServiceBindingEntsProtocolInterface
@@ -147,7 +148,7 @@ Returns:
   gDhcp4ServiceBindingEntsProtocolInterface->RuntimeInfo        = gDhcp4ServiceBindingRuntimeInfo;
   gDhcp4ServiceBindingEntsProtocolInterface->RuntimeInfoSize    = gDhcp4ServiceBindingRuntimeInfoSize;
 
-  Status = gBS->InstallMultipleProtocolInterfaces (
+  Status = tBS->InstallMultipleProtocolInterfaces (
                   &ImageHandle,
                   &gEfiEntsProtocolGuid,
                   gDhcp4ServiceBindingEntsProtocolInterface,
@@ -161,7 +162,7 @@ Returns:
 
 Error:
   if (gDhcp4ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gDhcp4ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gDhcp4ServiceBindingEntsProtocolInterface);
   }
 
   return Status;
@@ -188,14 +189,14 @@ Returns:
 
 --*/
 {
-  gBS->UninstallMultipleProtocolInterfaces (
+  tBS->UninstallMultipleProtocolInterfaces (
         ImageHandle,
         &gEfiEntsProtocolGuid,
         gDhcp4ServiceBindingEntsProtocolInterface,
         NULL
         );
   if (gDhcp4ServiceBindingEntsProtocolInterface != NULL) {
-    gBS->FreePool (gDhcp4ServiceBindingEntsProtocolInterface);
+    tBS->FreePool (gDhcp4ServiceBindingEntsProtocolInterface);
   }
 
   return EFI_SUCCESS;

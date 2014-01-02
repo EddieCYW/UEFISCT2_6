@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "AcpiTableProtocolBBTestMain.h"
 
 //
@@ -141,7 +142,7 @@ InitializeBBTestAcpiTableProtocol (
   // initialize test utility lib
   //
 
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
   mImageHandle = ImageHandle;
 

@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "ScsiIoBBTestMain.h"
 
 UINT8 EnterEvent;
@@ -183,7 +184,7 @@ InitializeBBTestScsiIo (
   )
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
-  InitializeLib (ImageHandle, SystemTable);
+  SctInitializeLib (ImageHandle, SystemTable);
 
 
   return EfiInitAndInstallIHVBBTestInterface (

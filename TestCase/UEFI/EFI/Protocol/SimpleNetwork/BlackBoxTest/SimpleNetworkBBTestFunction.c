@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "SctLib.h"
 #include "SimpleNetworkBBTestMain.h"
 
 /**
@@ -2006,7 +2007,7 @@ BBTestTransmitFunctionTest (
         break;
       }
 
-      if (!EFI_ERROR(gBS->CheckEvent (TimeoutEvent))) {
+      if (!EFI_ERROR(tBS->CheckEvent (TimeoutEvent))) {
         StatCode = EFI_TIMEOUT;
         StandardLib->RecordAssertion (
                        StandardLib,
@@ -2024,7 +2025,7 @@ BBTestTransmitFunctionTest (
       }
     }
 
-    gBS->CloseEvent (TimeoutEvent);
+    tBS->CloseEvent (TimeoutEvent);
   }
 
   AssertionType = EFI_TEST_ASSERTION_PASSED;
