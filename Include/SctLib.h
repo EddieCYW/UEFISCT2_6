@@ -136,6 +136,53 @@ SctCompareMem (
   );
 
 //
+// Misc API
+//
+
+INTN
+SctCompareGuid (
+  IN EFI_GUID                       *Guid1,
+  IN EFI_GUID                       *Guid2
+  );
+
+EFI_STATUS
+SctCalculateCrc32 (
+  IN     UINT8                          *Data,
+  IN     UINTN                          DataSize,
+  IN OUT UINT32                         *CrcOut
+  );
+
+BOOLEAN
+SctGrowBuffer (
+  IN OUT EFI_STATUS   *Status,
+  IN OUT VOID         **Buffer,
+  IN UINTN            BufferSize
+  );
+
+UINT16
+SctSwapBytes16 (
+  IN      UINT16                    Value
+  );
+
+UINT32
+SctSwapBytes32 (
+  IN      UINT32                    Value
+  );
+
+UINT16
+SctWriteUnaligned16 (
+  OUT UINT16                    *Buffer,
+  IN  UINT16                    Value
+  );
+
+UINT32
+SctWriteUnaligned32 (
+  OUT UINT32                    *Buffer,
+  IN  UINT32                    Value
+  );
+
+
+//
 // Protocol & Handle API
 //
 

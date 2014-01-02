@@ -1364,7 +1364,7 @@ Routine Description:
   // Convert the GUIDs to a string
   //
   Buffer[0] = L'\0';
-  while (CompareGuid (GuidArray, &gEfiNullGuid) != 0) {
+  while (SctCompareGuid (GuidArray, &gEfiNullGuid) != 0) {
     Status = SctGuidToStr (GuidArray, Buffer);
     if (EFI_ERROR (Status)) {
       return Status;

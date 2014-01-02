@@ -61,7 +61,6 @@ COMPONENT_TYPE  = LIBRARY
 
 [sources.common]
   console.c
-  crc.c
   data.c
   dpath.c
   error.c

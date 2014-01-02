@@ -231,7 +231,7 @@ Returns:
   
 
     for (Index = 0; Index < tST->NumberOfTableEntries; Index++) {
-      if (EfiCompareGuid (&gRuntimeFuncAddressGuid, &(tST->ConfigurationTable[Index].VendorGuid))) {
+      if (SctCompareGuid (&gRuntimeFuncAddressGuid, &(tST->ConfigurationTable[Index].VendorGuid)) == 0) {
         StubTable = tST->ConfigurationTable[Index].VendorTable;
         if (StubTable->Signature != SCRT_STUB_TABLE_SIGNATURE) {
           Print(L"Find Corrupted SCRT Table!\n");

@@ -613,14 +613,14 @@ Returns:
   //
   // Walk through all support GUIDs
   //
-  for (Guid = Guids; CompareGuid (Guid, &gEfiNullGuid) != 0; Guid ++) {
+  for (Guid = Guids; SctCompareGuid (Guid, &gEfiNullGuid) != 0; Guid ++) {
     //
     // Skip the standard test support files
     //
-    if ((CompareGuid (Guid, &gEfiStandardTestLibraryGuid) == 0) ||
-        (CompareGuid (Guid, &gEfiTestProfileLibraryGuid)  == 0) ||
-        (CompareGuid (Guid, &gEfiTestRecoveryLibraryGuid) == 0) ||
-        (CompareGuid (Guid, &gEfiTestLoggingLibraryGuid)  == 0)) {
+    if ((SctCompareGuid (Guid, &gEfiStandardTestLibraryGuid) == 0) ||
+        (SctCompareGuid (Guid, &gEfiTestProfileLibraryGuid)  == 0) ||
+        (SctCompareGuid (Guid, &gEfiTestRecoveryLibraryGuid) == 0) ||
+        (SctCompareGuid (Guid, &gEfiTestLoggingLibraryGuid)  == 0)) {
       continue;
     }
 
@@ -667,14 +667,14 @@ Returns:
   //
   // Walk through all support GUIDs
   //
-  for (Guid = Guids; CompareGuid (Guid, &gEfiNullGuid) != 0; Guid ++) {
+  for (Guid = Guids; SctCompareGuid (Guid, &gEfiNullGuid) != 0; Guid ++) {
     //
     // Skip the standard test support files
     //
-    if ((CompareGuid (Guid, &gEfiStandardTestLibraryGuid) == 0) ||
-        (CompareGuid (Guid, &gEfiTestProfileLibraryGuid)  == 0) ||
-        (CompareGuid (Guid, &gEfiTestRecoveryLibraryGuid) == 0) ||
-        (CompareGuid (Guid, &gEfiTestLoggingLibraryGuid)  == 0)) {
+    if ((SctCompareGuid (Guid, &gEfiStandardTestLibraryGuid) == 0) ||
+        (SctCompareGuid (Guid, &gEfiTestProfileLibraryGuid)  == 0) ||
+        (SctCompareGuid (Guid, &gEfiTestRecoveryLibraryGuid) == 0) ||
+        (SctCompareGuid (Guid, &gEfiTestLoggingLibraryGuid)  == 0)) {
       continue;
     }
 
@@ -975,7 +975,7 @@ Routine Description:
     //
     TslInit = (EFI_TSL_INIT_INTERFACE *) SupportFile->Context;
 
-    if (CompareGuid (&TslInit->LibraryGuid, Guid) == 0) {
+    if (SctCompareGuid (&TslInit->LibraryGuid, Guid) == 0) {
       //
       // Open the support file
       //
@@ -1052,7 +1052,7 @@ Routine Description:
     //
     TslInit = (EFI_TSL_INIT_INTERFACE *) SupportFile->Context;
 
-    if (CompareGuid (&TslInit->LibraryGuid, Guid) == 0) {
+    if (SctCompareGuid (&TslInit->LibraryGuid, Guid) == 0) {
       //
       // Close the support file
       //

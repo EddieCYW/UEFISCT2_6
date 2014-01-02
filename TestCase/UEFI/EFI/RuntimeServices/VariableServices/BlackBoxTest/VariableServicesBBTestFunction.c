@@ -743,7 +743,7 @@ GetNextVariableNameFuncTestSub1 (
         }
 
         if ((SctStrCmp (VariableName, L"TestVariable")       == 0) &&
-            (CompareGuid (&VendorGuid, &gTestVendor1Guid) == 0)) {
+            (SctCompareGuid (&VendorGuid, &gTestVendor1Guid) == 0)) {
           Result = EFI_TEST_ASSERTION_PASSED;
           break;
         }
@@ -3035,7 +3035,7 @@ HardwareErrorRecordFuncTest (
     }
 
     if ( (SctStrnCmp (GetVariableName, L"HwErrRec", 8) == 0) &&
-         (CompareGuid (&VendorGuid, &gHwErrRecGuid) == 0) ) {
+         (SctCompareGuid (&VendorGuid, &gHwErrRecGuid) == 0) ) {
       SctStrnCpy (ErrorNum, &GetVariableName[8], 4);
       Num = SctXtoi (ErrorNum);
       if (MaxNum < Num)

@@ -323,7 +323,7 @@ Returns:
   for (Link = CategoryList->Flink; Link != CategoryList; Link = Link->Flink) {
     TempCategory = CR (Link, EFI_SCT_CATEGORY_DATA, Link, EFI_SCT_CATEGORY_DATA_SIGNATURE);
 
-    if (CompareGuid (Guid, &TempCategory->CategoryGuid) == 0) {
+    if (SctCompareGuid (Guid, &TempCategory->CategoryGuid) == 0) {
       *Category = TempCategory;
       return EFI_SUCCESS;
     }
@@ -363,7 +363,7 @@ Routine Description:
   for (Link = CategoryList->Flink; Link != CategoryList; Link = Link->Flink) {
     OldCategory = CR (Link, EFI_SCT_CATEGORY_DATA, Link, EFI_SCT_CATEGORY_DATA_SIGNATURE);
 
-    if (CompareGuid (&OldCategory->CategoryGuid, &Category->CategoryGuid) == 0) {
+    if (SctCompareGuid (&OldCategory->CategoryGuid, &Category->CategoryGuid) == 0) {
       EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Found duplicate category data (GUID = %g)", &Category->CategoryGuid));
 
       RemoveEntryList (&OldCategory->Link);

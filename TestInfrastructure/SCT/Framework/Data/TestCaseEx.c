@@ -125,7 +125,7 @@ Returns:
   for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
-    if (CompareGuid (&TestCase->Guid, Guid) == 0) {
+    if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
       Target = TestCase;
     }
 
@@ -216,7 +216,7 @@ Returns:
   for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
-    if (CompareGuid (&TestCase->Guid, Guid) == 0) {
+    if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
       if (TestCase->Order == EFI_SCT_TEST_CASE_INVALID) {
         //
         // Has been unselected before
@@ -301,7 +301,7 @@ Returns:
   //
   Status = GetRunningTestCase (&TestCase);
   if (!EFI_ERROR (Status)) {
-    if (CompareGuid (&TestCase->Guid, Guid) == 0) {
+    if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
       *TestState = EFI_SCT_TEST_STATE_RUNNING;
       return EFI_SUCCESS;
     }
@@ -313,7 +313,7 @@ Returns:
   for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
-    if (CompareGuid (&TestCase->Guid, Guid) == 0) {
+    if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
       if (TestCase->Order == EFI_SCT_TEST_CASE_INVALID) {
         *TestState = EFI_SCT_TEST_STATE_NOT_IN_LIST;
         return EFI_SUCCESS;
@@ -375,7 +375,7 @@ Returns:
   for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
-    if (CompareGuid (&TestCase->Guid, Guid) == 0) {
+    if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
       if (TestCase->Order != EFI_SCT_TEST_CASE_INVALID) {
         return (UINT32) (TestCase->Order + 1);
       } else {
@@ -427,7 +427,7 @@ Returns:
   for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
-    if (CompareGuid (&TestCase->Guid, Guid) == 0) {
+    if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
       if (TestCase->Iterations != EFI_SCT_TEST_CASE_INVALID) {
         return TestCase->Iterations;
       } else {
@@ -479,7 +479,7 @@ Returns:
   for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
-    if (CompareGuid (&TestCase->Guid, Guid) == 0) {
+    if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
       if ((TestCase->Passes != EFI_SCT_TEST_CASE_INVALID) &&
           (TestCase->Passes != EFI_SCT_TEST_CASE_RUNNING)) {
         return TestCase->Passes;
@@ -532,7 +532,7 @@ Returns:
   for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
     TestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
-    if (CompareGuid (&TestCase->Guid, Guid) == 0) {
+    if (SctCompareGuid (&TestCase->Guid, Guid) == 0) {
       if ((TestCase->Failures != EFI_SCT_TEST_CASE_INVALID) &&
           (TestCase->Failures != EFI_SCT_TEST_CASE_RUNNING)) {
         return TestCase->Failures;

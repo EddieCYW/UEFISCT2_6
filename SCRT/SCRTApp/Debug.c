@@ -58,25 +58,6 @@ EFI_GUID              gPCDPableGuid = HCDP_TABLE_GUID;
 RUNTIME_HANDOFF       *HandOffPtr = NULL;
 
 
-BOOLEAN
-EfiCompareGuid (
-  IN EFI_GUID *Guid1,
-  IN EFI_GUID *Guid2
-  )
-{
-  UINTN Index;
-  //
-  // compare byte by byte
-  //
-  for (Index = 0; Index < 16; ++Index) {
-    if (*(((UINT8*) Guid1) + Index) != *(((UINT8*) Guid2) + Index)) {
-      return FALSE;
-    }
-  }
-  return TRUE;
-}
-
-
 EFI_STATUS
 RecordHandOff (
   EFI_ACPI_3_0_GENERIC_ADDRESS_STRUCTURE          Gas
@@ -128,7 +109,7 @@ ProbePCDPTable (
   // found PCDP table from system table
   //
   for (Index = 0; Index < tST->NumberOfTableEntries; Index++) {
-    if (EfiCompareGuid (&(tST->ConfigurationTable[Index].VendorGuid), &gPCDPableGuid)) {
+    if (SctCompareGuid (&(tST->ConfigurationTable[Index].VendorGuid), &gPCDPableGuid) == 0) {
       //
       // A match was found.
       //
@@ -188,8 +169,8 @@ ProbeSPCRTable (
   // found ACPI table RSD_PTR from system table
   //
   for (Index = 0; Index < tST->NumberOfTableEntries; Index++) {
-    if (EfiCompareGuid (&(tST->ConfigurationTable[Index].VendorGuid), &gEfiAcpi20TableGuid) ||
-        EfiCompareGuid (&(tST->ConfigurationTable[Index].VendorGuid), &gEfiAcpiTableGuid)
+    if ((SctCompareGuid (&(tST->ConfigurationTable[Index].VendorGuid), &gEfiAcpi20TableGuid) == 0) ||
+        (SctCompareGuid (&(tST->ConfigurationTable[Index].VendorGuid), &gEfiAcpiTableGuid) == 0)
           ) {
       //
       // A match was found.

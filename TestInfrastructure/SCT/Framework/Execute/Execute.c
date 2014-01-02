@@ -903,7 +903,7 @@ ExecuteMdeLibraryInstance (
   // Search this GUID from configuration table
   //
   for (Index = 0; Index < tST->NumberOfTableEntries; Index++) {
-    if (CompareGuid (Guid, &tST->ConfigurationTable[Index].VendorGuid) == 0) {
+    if (SctCompareGuid (Guid, &tST->ConfigurationTable[Index].VendorGuid) == 0) {
       //
 	  // Get library instance No.
       //
@@ -1028,7 +1028,7 @@ Routine Description:
   //
   // Get the tested interface from the GUID
   //
-  if (CompareGuid (Guid, &gEfiGenericCategoryGuid) == 0) {
+  if (SctCompareGuid (Guid, &gEfiGenericCategoryGuid) == 0) {
     while (ExecuteInfo->Iteration < ExecuteInfo->TestCase->Iterations) {
       //
       // Generic services test
@@ -1059,7 +1059,7 @@ Routine Description:
       ExecuteInfo->Iteration ++;
     }
 
-  } else if (CompareGuid (Guid, &gEfiBootServicesCategoryGuid) == 0) {
+  } else if (SctCompareGuid (Guid, &gEfiBootServicesCategoryGuid) == 0) {
     while (ExecuteInfo->Iteration < ExecuteInfo->TestCase->Iterations) {
       //
       // Boot services test
@@ -1090,7 +1090,7 @@ Routine Description:
       ExecuteInfo->Iteration ++;
     }
 
-  } else if (CompareGuid (Guid, &gEfiRuntimeServicesCategoryGuid) == 0) {
+  } else if (SctCompareGuid (Guid, &gEfiRuntimeServicesCategoryGuid) == 0) {
     while (ExecuteInfo->Iteration < ExecuteInfo->TestCase->Iterations) {
       //
       // Runtime services test
@@ -1173,7 +1173,7 @@ Routine Description:
         //
         // Add one new logic to filter the SerialIo Protocol
         //
-        if (CompareGuid (Guid, &gEfiSerialIoProtocolGuid) == 0) {
+        if (SctCompareGuid (Guid, &gEfiSerialIoProtocolGuid) == 0) {
           Status = tBS->OpenProtocol (
                          HandleBuffer[HandleIndex],
                          Guid,
@@ -1234,7 +1234,7 @@ Routine Description:
           ExecuteInfo->Iteration++;
         }
 
-		if (CompareGuid (Guid, &gEfiSerialIoProtocolGuid) == 0) {
+		if (SctCompareGuid (Guid, &gEfiSerialIoProtocolGuid) == 0) {
           Status = tBS->CloseProtocol (
                          HandleBuffer[HandleIndex],
                          Guid,
@@ -1255,7 +1255,7 @@ Routine Description:
     // Search this GUID from configuration table
     //
     for (Index = 0; Index < tST->NumberOfTableEntries; Index++) {
-      if (CompareGuid (Guid, &tST->ConfigurationTable[Index].VendorGuid) == 0) {
+      if (SctCompareGuid (Guid, &tST->ConfigurationTable[Index].VendorGuid) == 0) {
         //
 	    // Get library instance No.
         //

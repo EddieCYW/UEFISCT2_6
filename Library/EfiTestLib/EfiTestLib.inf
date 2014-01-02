@@ -74,6 +74,7 @@ COMPONENT_TYPE  = LIBRARY
   $(EFI_SOURCE)/SctPkg/Include
 
 [libraries.common]
+  SctLib
   EdkFrameworkGuidLib
 
 [nmake.common]

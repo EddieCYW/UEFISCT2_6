@@ -322,13 +322,6 @@ CheckMemoryType (
   IN UINT32                      Type
   );
 
-EFI_STATUS
-StdCalculateCrc32 (
-  IN  UINT8                             *Data,
-  IN  UINTN                             DataSize,
-  IN OUT UINT32                         *CrcOut
-  );
-
 //
 // Entry GUIDs
 //

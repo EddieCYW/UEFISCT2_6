@@ -235,7 +235,7 @@ SctGetSystemConfigurationTable(
   UINTN Index;
 
   for (Index=0;Index<tST->NumberOfTableEntries;Index++) {
-    if (CompareGuid (TableGuid,&(tST->ConfigurationTable[Index].VendorGuid))==0) {
+    if (SctCompareGuid (TableGuid,&(tST->ConfigurationTable[Index].VendorGuid))==0) {
       *Table = tST->ConfigurationTable[Index].VendorTable;
       return EFI_SUCCESS;
     }

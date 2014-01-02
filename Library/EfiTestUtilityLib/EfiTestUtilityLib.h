@@ -164,12 +164,6 @@ InitializeUnicodeSupport (
   CHAR8                             *LangCode
   );
 
-UINT32
-CalculateCrc (
-  UINT8 *pt,
-  UINTN Size
-  );
-
 BOOLEAN
 MetaMatch (
   IN CHAR16                         *String,
@@ -262,12 +256,6 @@ VOID
 GuidToString (
   OUT CHAR16                        *Buffer,
   IN EFI_GUID                       *Guid
-  );
-
-INTN
-CompareGuid(
-  IN EFI_GUID                       *Guid1,
-  IN EFI_GUID                       *Guid2
   );
 
 VOID

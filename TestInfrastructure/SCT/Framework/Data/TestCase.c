@@ -895,7 +895,7 @@ Returns:
     for (DstLink = DstTestCaseList->Flink; DstLink != DstTestCaseList; DstLink = DstLink->Flink) {
       DstTestCase = CR (DstLink, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
-      if (CompareGuid (&DstTestCase->Guid, &SrcTestCase->Guid) == 0) {
+      if (SctCompareGuid (&DstTestCase->Guid, &SrcTestCase->Guid) == 0) {
         if (SrcTestCase->Order != EFI_SCT_TEST_CASE_INVALID) {
           DstTestCase->Order = SrcTestCase->Order;
         }
@@ -964,7 +964,7 @@ Returns:
   for (Link = gFT->TestCaseList.Flink; Link != &gFT->TestCaseList; Link = Link->Flink) {
     TempTestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
-    if (CompareGuid (&TempTestCase->Guid, Guid) == 0) {
+    if (SctCompareGuid (&TempTestCase->Guid, Guid) == 0) {
       //
       // Got it!
       //
@@ -1007,7 +1007,7 @@ Routine Description:
   for (Link = TestCaseList->Flink; Link != TestCaseList; Link = Link->Flink) {
     OldTestCase = CR (Link, EFI_SCT_TEST_CASE, Link, EFI_SCT_TEST_CASE_SIGNATURE);
 
-    if (CompareGuid (&OldTestCase->Guid, &TestCase->Guid) == 0) {
+    if (SctCompareGuid (&OldTestCase->Guid, &TestCase->Guid) == 0) {
       EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Found duplicate test cases (GUID = %g)", &TestCase->Guid));
       break;
     }

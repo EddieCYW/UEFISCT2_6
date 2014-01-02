@@ -460,7 +460,7 @@ Returns:
       BbTest = (EFI_BB_TEST_PROTOCOL *) TempTestFile->Context;
 
       for (BbEntry = BbTest->EntryList; BbEntry != NULL; BbEntry = BbEntry->Next) {
-        if (CompareGuid (Guid, &BbEntry->EntryId) == 0) {
+        if (SctCompareGuid (Guid, &BbEntry->EntryId) == 0) {
           break;
         }
       }
@@ -482,7 +482,7 @@ Returns:
       WbTest = (EFI_WB_TEST_PROTOCOL *) TempTestFile->Context;
 
       for (WbEntry = WbTest->EntryList; WbEntry != NULL; WbEntry = WbEntry->Next) {
-        if (CompareGuid (Guid, &WbEntry->EntryId) == 0) {
+        if (SctCompareGuid (Guid, &WbEntry->EntryId) == 0) {
           break;
         }
       }
@@ -505,7 +505,7 @@ Returns:
       ApTest = (EFI_AP_TEST_INTERFACE *) TempTestFile->Context;
 
       for (ApEntry = ApTest->EntryList; ApEntry != NULL; ApEntry = ApEntry->Next) {
-        if (CompareGuid (Guid, &ApEntry->EntryId) == 0) {
+        if (SctCompareGuid (Guid, &ApEntry->EntryId) == 0) {
           break;
         }
       }

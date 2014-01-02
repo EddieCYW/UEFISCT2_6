@@ -192,6 +192,8 @@ CheckSystemTable (
 {
   EFI_TEST_ASSERTION  AssertionType;
   UINT32              CRC32;
+  UINT32              LocalCRC32;
+  EFI_STATUS          Status;
 
   //
   // Check the EFI System Table
@@ -199,18 +201,24 @@ CheckSystemTable (
   CRC32 = gtST->Hdr.CRC32;
   gtST->Hdr.CRC32 = 0;
 
-  if ((gtST->Hdr.Signature       == EFI_SYSTEM_TABLE_SIGNATURE      ) &&
-      (gtST->Hdr.Revision        >= 0x0001000A                      ) &&
-      (gtST->Hdr.Reserved        == 0x00000000                      ) &&
-      (gtST->RuntimeServices     != NULL                            ) &&
-      (gtST->BootServices        != NULL                            ) &&
-      (CalculateCrc32 ((UINT8 *)gtST, gtST->Hdr.HeaderSize) == CRC32)) {
-    AssertionType = EFI_TEST_ASSERTION_PASSED;
-  } else {
+  LocalCRC32 = 0;
+  Status = SctCalculateCrc32 ((UINT8 *)gtST, gtST->Hdr.HeaderSize, &LocalCRC32);
+  if (EFI_ERROR (Status)) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
-  }
+  } else {
+    if ((gtST->Hdr.Signature       == EFI_SYSTEM_TABLE_SIGNATURE      ) &&
+        (gtST->Hdr.Revision        >= 0x0001000A                      ) &&
+        (gtST->Hdr.Reserved        == 0x00000000                      ) &&
+        (gtST->RuntimeServices     != NULL                            ) &&
+        (gtST->BootServices        != NULL                            ) &&
+        (LocalCRC32                == CRC32)) {
+      AssertionType = EFI_TEST_ASSERTION_PASSED;
+    } else {
+      AssertionType = EFI_TEST_ASSERTION_FAILED;
+    }
 
-  gtST->Hdr.CRC32 = CRC32;
+    gtST->Hdr.CRC32 = CRC32;
+  }
 
   StandardLib->RecordAssertion (
                  StandardLib,
@@ -284,6 +292,8 @@ CheckBootServices (
 {
   EFI_TEST_ASSERTION  AssertionType;
   UINT32              CRC32;
+  UINT32              LocalCRC32;
+  EFI_STATUS          Status;
 
   //
   // Check the EFI Boot Services Table
@@ -291,55 +301,61 @@ CheckBootServices (
   CRC32 = gtBS->Hdr.CRC32;
   gtBS->Hdr.CRC32 = 0;
 
-  if ((gtBS->Hdr.Signature                       == EFI_BOOT_SERVICES_SIGNATURE) &&
-      (gtBS->Hdr.Revision                        >= 0x0001000A                 ) &&
-      (gtBS->Hdr.Reserved                        == 0x00000000                 ) &&
-      (gtBS->RaiseTPL                            != NULL                       ) &&
-      (gtBS->RestoreTPL                          != NULL                       ) &&
-      (gtBS->AllocatePages                       != NULL                       ) &&
-      (gtBS->FreePages                           != NULL                       ) &&
-      (gtBS->GetMemoryMap                        != NULL                       ) &&
-      (gtBS->AllocatePool                        != NULL                       ) &&
-      (gtBS->FreePool                            != NULL                       ) &&
-      (gtBS->CreateEvent                         != NULL                       ) &&
-      (gtBS->SetTimer                            != NULL                       ) &&
-      (gtBS->WaitForEvent                        != NULL                       ) &&
-      (gtBS->SignalEvent                         != NULL                       ) &&
-      (gtBS->CloseEvent                          != NULL                       ) &&
-      (gtBS->CheckEvent                          != NULL                       ) &&
-      (gtBS->InstallProtocolInterface            != NULL                       ) &&
-      (gtBS->ReinstallProtocolInterface          != NULL                       ) &&
-      (gtBS->UninstallProtocolInterface          != NULL                       ) &&
-      (gtBS->HandleProtocol                      != NULL                       ) &&
-      (gtBS->RegisterProtocolNotify              != NULL                       ) &&
-      (gtBS->LocateHandle                        != NULL                       ) &&
-      (gtBS->LocateDevicePath                    != NULL                       ) &&
-      (gtBS->InstallConfigurationTable           != NULL                       ) &&
-      (gtBS->LoadImage                           != NULL                       ) &&
-      (gtBS->StartImage                          != NULL                       ) &&
-      (gtBS->Exit                                != NULL                       ) &&
-      (gtBS->UnloadImage                         != NULL                       ) &&
-      (gtBS->ExitBootServices                    != NULL                       ) &&
-      (gtBS->GetNextMonotonicCount               != NULL                       ) &&
-      (gtBS->Stall                               != NULL                       ) &&
-      (gtBS->SetWatchdogTimer                    != NULL                       ) &&
-      (gtBS->ConnectController                   != NULL                       ) &&
-      (gtBS->DisconnectController                != NULL                       ) &&
-      (gtBS->OpenProtocol                        != NULL                       ) &&
-      (gtBS->CloseProtocol                       != NULL                       ) &&
-      (gtBS->OpenProtocolInformation             != NULL                       ) &&
-      (gtBS->ProtocolsPerHandle                  != NULL                       ) &&
-      (gtBS->LocateHandleBuffer                  != NULL                       ) &&
-      (gtBS->LocateProtocol                      != NULL                       ) &&
-      (gtBS->InstallMultipleProtocolInterfaces   != NULL                       ) &&
-      (gtBS->UninstallMultipleProtocolInterfaces != NULL                       ) &&
-      (gtBS->CalculateCrc32                      != NULL                       ) &&
-      (gtBS->CopyMem                             != NULL                       ) &&
-      (gtBS->SetMem                              != NULL                       ) &&
-      (CalculateCrc32 ((UINT8 *)gtBS, gtBS->Hdr.HeaderSize) == CRC32           )) {
-    AssertionType = EFI_TEST_ASSERTION_PASSED;
-  } else {
+  LocalCRC32 = 0;
+  Status = SctCalculateCrc32 ((UINT8 *)gtBS, gtBS->Hdr.HeaderSize, &LocalCRC32);
+  if (EFI_ERROR (Status)) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
+  } else {
+    if ((gtBS->Hdr.Signature                       == EFI_BOOT_SERVICES_SIGNATURE) &&
+        (gtBS->Hdr.Revision                        >= 0x0001000A                 ) &&
+        (gtBS->Hdr.Reserved                        == 0x00000000                 ) &&
+        (gtBS->RaiseTPL                            != NULL                       ) &&
+        (gtBS->RestoreTPL                          != NULL                       ) &&
+        (gtBS->AllocatePages                       != NULL                       ) &&
+        (gtBS->FreePages                           != NULL                       ) &&
+        (gtBS->GetMemoryMap                        != NULL                       ) &&
+        (gtBS->AllocatePool                        != NULL                       ) &&
+        (gtBS->FreePool                            != NULL                       ) &&
+        (gtBS->CreateEvent                         != NULL                       ) &&
+        (gtBS->SetTimer                            != NULL                       ) &&
+        (gtBS->WaitForEvent                        != NULL                       ) &&
+        (gtBS->SignalEvent                         != NULL                       ) &&
+        (gtBS->CloseEvent                          != NULL                       ) &&
+        (gtBS->CheckEvent                          != NULL                       ) &&
+        (gtBS->InstallProtocolInterface            != NULL                       ) &&
+        (gtBS->ReinstallProtocolInterface          != NULL                       ) &&
+        (gtBS->UninstallProtocolInterface          != NULL                       ) &&
+        (gtBS->HandleProtocol                      != NULL                       ) &&
+        (gtBS->RegisterProtocolNotify              != NULL                       ) &&
+        (gtBS->LocateHandle                        != NULL                       ) &&
+        (gtBS->LocateDevicePath                    != NULL                       ) &&
+        (gtBS->InstallConfigurationTable           != NULL                       ) &&
+        (gtBS->LoadImage                           != NULL                       ) &&
+        (gtBS->StartImage                          != NULL                       ) &&
+        (gtBS->Exit                                != NULL                       ) &&
+        (gtBS->UnloadImage                         != NULL                       ) &&
+        (gtBS->ExitBootServices                    != NULL                       ) &&
+        (gtBS->GetNextMonotonicCount               != NULL                       ) &&
+        (gtBS->Stall                               != NULL                       ) &&
+        (gtBS->SetWatchdogTimer                    != NULL                       ) &&
+        (gtBS->ConnectController                   != NULL                       ) &&
+        (gtBS->DisconnectController                != NULL                       ) &&
+        (gtBS->OpenProtocol                        != NULL                       ) &&
+        (gtBS->CloseProtocol                       != NULL                       ) &&
+        (gtBS->OpenProtocolInformation             != NULL                       ) &&
+        (gtBS->ProtocolsPerHandle                  != NULL                       ) &&
+        (gtBS->LocateHandleBuffer                  != NULL                       ) &&
+        (gtBS->LocateProtocol                      != NULL                       ) &&
+        (gtBS->InstallMultipleProtocolInterfaces   != NULL                       ) &&
+        (gtBS->UninstallMultipleProtocolInterfaces != NULL                       ) &&
+        (gtBS->CalculateCrc32                      != NULL                       ) &&
+        (gtBS->CopyMem                             != NULL                       ) &&
+        (gtBS->SetMem                              != NULL                       ) &&
+        (LocalCRC32                                == CRC32           )) {
+      AssertionType = EFI_TEST_ASSERTION_PASSED;
+    } else {
+      AssertionType = EFI_TEST_ASSERTION_FAILED;
+    }
   }
 
   gtBS->Hdr.CRC32 = CRC32;
@@ -513,6 +529,8 @@ CheckRuntimeServices (
 {
   EFI_TEST_ASSERTION  AssertionType;
   UINT32              CRC32;
+  UINT32              LocalCRC32;
+  EFI_STATUS          Status;
 
   //
   // Check the EFI Runtime Services Table
@@ -520,24 +538,30 @@ CheckRuntimeServices (
   CRC32 = gtRT->Hdr.CRC32;
   gtRT->Hdr.CRC32 = 0;
 
-  if ((gtRT->Hdr.Signature             == EFI_RUNTIME_SERVICES_SIGNATURE) &&
-      (gtRT->Hdr.Revision              >= 0x0001000A                    ) &&
-      (gtRT->Hdr.Reserved              == 0x00000000                    ) &&
-      (gtRT->GetTime                   != NULL                          ) &&
-      (gtRT->SetTime                   != NULL                          ) &&
-      (gtRT->GetWakeupTime             != NULL                          ) &&
-      (gtRT->SetWakeupTime             != NULL                          ) &&
-      (gtRT->SetVirtualAddressMap      != NULL                          ) &&
-      (gtRT->ConvertPointer            != NULL                          ) &&
-      (gtRT->GetVariable               != NULL                          ) &&
-      (gtRT->GetNextVariableName       != NULL                          ) &&
-      (gtRT->SetVariable               != NULL                          ) &&
-      (gtRT->GetNextHighMonotonicCount != NULL                          ) &&
-      (gtRT->ResetSystem               != NULL                          ) &&
-      (CalculateCrc32 ((UINT8 *)gtRT, gtRT->Hdr.HeaderSize) == CRC32    )) {
-    AssertionType = EFI_TEST_ASSERTION_PASSED;
-  } else {
+  LocalCRC32 = 0;
+  Status = SctCalculateCrc32 ((UINT8 *)gtRT, gtRT->Hdr.HeaderSize, &LocalCRC32);
+  if (EFI_ERROR (Status)) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
+  } else {
+    if ((gtRT->Hdr.Signature             == EFI_RUNTIME_SERVICES_SIGNATURE) &&
+        (gtRT->Hdr.Revision              >= 0x0001000A                    ) &&
+        (gtRT->Hdr.Reserved              == 0x00000000                    ) &&
+        (gtRT->GetTime                   != NULL                          ) &&
+        (gtRT->SetTime                   != NULL                          ) &&
+        (gtRT->GetWakeupTime             != NULL                          ) &&
+        (gtRT->SetWakeupTime             != NULL                          ) &&
+        (gtRT->SetVirtualAddressMap      != NULL                          ) &&
+        (gtRT->ConvertPointer            != NULL                          ) &&
+        (gtRT->GetVariable               != NULL                          ) &&
+        (gtRT->GetNextVariableName       != NULL                          ) &&
+        (gtRT->SetVariable               != NULL                          ) &&
+        (gtRT->GetNextHighMonotonicCount != NULL                          ) &&
+        (gtRT->ResetSystem               != NULL                          ) &&
+        (LocalCRC32                      == CRC32                         )) {
+      AssertionType = EFI_TEST_ASSERTION_PASSED;
+    } else {
+      AssertionType = EFI_TEST_ASSERTION_FAILED;
+    }
   }
 
   gtRT->Hdr.CRC32 = CRC32;

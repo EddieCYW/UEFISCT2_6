@@ -292,7 +292,7 @@ BBTestGetInfoFunctionTestCheckpoint1 (
   	
     AssertionType = EFI_TEST_ASSERTION_FAILED;
 	for (IndexJ = 0; IndexJ < 6; IndexJ++) {
-      if (CompareGuid (RNGAlgorithmList3, &Algos[IndexJ]) == 0) {
+      if (SctCompareGuid (RNGAlgorithmList3, &Algos[IndexJ]) == 0) {
         AssertionType = EFI_TEST_ASSERTION_PASSED;
         break;
       } 

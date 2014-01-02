@@ -497,7 +497,7 @@ ImageTestLoadFile (
 
   VendorDevicePathNode = (VENDOR_DEVICE_PATH*)FilePath;
 
-  if (CompareGuid (&VendorDevicePathNode->Guid, &mImageTestLoadFileApplicationPathGuid) == 0) {
+  if (SctCompareGuid (&VendorDevicePathNode->Guid, &mImageTestLoadFileApplicationPathGuid) == 0) {
 
     CopySimpleFileToMemory (
       mDriverImageHandle,
@@ -505,7 +505,7 @@ ImageTestLoadFile (
       &SourceBuffer,
       &SourceBufferSize
       );
-  } else if (CompareGuid (&VendorDevicePathNode->Guid, &mImageTestLoadFileBootPathGuid) == 0) {
+  } else if (SctCompareGuid (&VendorDevicePathNode->Guid, &mImageTestLoadFileBootPathGuid) == 0) {
 
     CopySimpleFileToMemory (
       mDriverImageHandle,
@@ -513,7 +513,7 @@ ImageTestLoadFile (
       &SourceBuffer,
       &SourceBufferSize
       );
-  } else if (CompareGuid (&VendorDevicePathNode->Guid, &mImageTestLoadFileRuntimePathGuid) == 0) {
+  } else if (SctCompareGuid (&VendorDevicePathNode->Guid, &mImageTestLoadFileRuntimePathGuid) == 0) {
 
     CopySimpleFileToMemory (
       mDriverImageHandle,

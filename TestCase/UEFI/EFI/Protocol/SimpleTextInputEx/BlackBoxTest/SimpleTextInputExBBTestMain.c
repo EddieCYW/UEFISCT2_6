@@ -721,19 +721,19 @@ Returns:
   //
   gtBS->CopyMem (&TempGuid, &Vendor->Guid, sizeof (EFI_GUID));
 
-  if (EfiCompareGuid (&TempGuid, &Guid[0])) {
+  if (SctCompareGuid (&TempGuid, &Guid[0]) == 0) {
     *Termi      = PC_ANSI;
     IsTerminal  = TRUE;
   } else {
-    if (EfiCompareGuid (&TempGuid, &Guid[1])) {
+    if (SctCompareGuid (&TempGuid, &Guid[1]) == 0) {
       *Termi      = VT_100;
       IsTerminal  = TRUE;
     } else {
-      if (EfiCompareGuid (&TempGuid, &Guid[2])) {
+      if (SctCompareGuid (&TempGuid, &Guid[2]) == 0) {
         *Termi      = VT_100_PLUS;
         IsTerminal  = TRUE;
       } else {
-        if (EfiCompareGuid (&TempGuid, &Guid[3])) {
+        if (SctCompareGuid (&TempGuid, &Guid[3]) == 0) {
           *Termi      = VT_UTF8;
           IsTerminal  = TRUE;
         } else {

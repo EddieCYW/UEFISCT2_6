@@ -130,12 +130,6 @@ CloseIniFile (
   IN  EFI_INI_FILE_HANDLE                 IniFile
   );
 
-UINT32
-CalculateCrc32 (
-  IN  UINT8                       *Data,
-  IN  UINTN                       DataSize
-  );
-
 //
 // GUIDs for the test entry points
 //

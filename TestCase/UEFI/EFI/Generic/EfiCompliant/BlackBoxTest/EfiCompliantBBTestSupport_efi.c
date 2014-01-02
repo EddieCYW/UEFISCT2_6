@@ -419,21 +419,3 @@ CloseIniFile (
   //
   return Status;
 }
-
-
-UINT32
-CalculateCrc32 (
-  IN  UINT8                       *Data,
-  IN  UINTN                       DataSize
-  )
-{
-  UINT32  Crc;
-  UINTN   Index;
-
-  Crc = 0xFFFFFFFF;
-  for (Index = 0; Index < DataSize; Index++) {
-    Crc = (Crc >> 8) ^ mCrcTable[(UINT8) Crc ^ Data[Index]];
-  }
-
-  return Crc ^ 0xFFFFFFFF;
-}

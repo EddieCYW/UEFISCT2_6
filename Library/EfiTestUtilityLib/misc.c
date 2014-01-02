@@ -89,7 +89,7 @@ Returns:
   UINTN                   BufferSize;
 
   //
-  // Initialize for GrowBuffer loop
+  // Initialize for SctGrowBuffer loop
   //
 
   Buffer = NULL;
@@ -99,7 +99,7 @@ Returns:
   // Call the real function
   //
 
-  while (GrowBuffer (&Status, (VOID **) &Buffer, BufferSize)) {
+  while (SctGrowBuffer (&Status, (VOID **) &Buffer, BufferSize)) {
     Status = tBS->GetMemoryMap (
                    &BufferSize,
                    Buffer,
@@ -151,7 +151,7 @@ Returns:
   UINTN                   BufferSize;
 
   //
-  // Initialize for GrowBuffer loop
+  // Initialize for SctGrowBuffer loop
   //
 
   Buffer = NULL;
@@ -161,7 +161,7 @@ Returns:
   // Call the real function
   //
 
-  while (GrowBuffer (&Status, &Buffer, BufferSize)) {
+  while (SctGrowBuffer (&Status, &Buffer, BufferSize)) {
     Status = tRT->GetVariable (
                    Name,
                    VendorGuid,

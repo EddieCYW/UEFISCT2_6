@@ -1834,7 +1834,7 @@ BBTestInstallConfigurationTableInterfaceTest (
 
     AssertionType = EFI_TEST_ASSERTION_FAILED;
     for (Index2 = 0; Index2 < gtST->NumberOfTableEntries; Index2++) {
-      if (CompareGuid (&gMiscBootServicesTestTableGuid,
+      if (SctCompareGuid (&gMiscBootServicesTestTableGuid,
                        &(gtST->ConfigurationTable[Index2].VendorGuid)) == 0) {
         if (gtST->ConfigurationTable[Index2].VendorTable == (VOID*)&TestTable) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1940,7 +1940,7 @@ BBTestInstallConfigurationTableInterfaceTest (
 
     AssertionType = EFI_TEST_ASSERTION_FAILED;
     for (Index2 = 0; Index2 < gtST->NumberOfTableEntries; Index2++) {
-      if (CompareGuid (&gMiscBootServicesTestTableGuid,
+      if (SctCompareGuid (&gMiscBootServicesTestTableGuid,
                        &(gtST->ConfigurationTable[Index2].VendorGuid)) == 0) {
         if (gtST->ConfigurationTable[Index2].VendorTable == (VOID*)&TestTable2) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2046,7 +2046,7 @@ BBTestInstallConfigurationTableInterfaceTest (
 
     AssertionType = EFI_TEST_ASSERTION_PASSED;
     for (Index2 = 0; Index2 < gtST->NumberOfTableEntries; Index2++) {
-      if (CompareGuid (&gMiscBootServicesTestTableGuid,
+      if (SctCompareGuid (&gMiscBootServicesTestTableGuid,
                        &(gtST->ConfigurationTable[Index2].VendorGuid)) == 0) {
         if (gtST->ConfigurationTable[Index2].VendorTable == (VOID*)&TestTable2) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2179,7 +2179,7 @@ BBTestCalculateCrc32InterfaceTest (
                      &Crc32
                      );
     gtBS->RestoreTPL (OldTpl);
-    StdCalculateCrc32 (
+    SctCalculateCrc32 (
                      (UINT8 *)gtST,
                      gtST->Hdr.HeaderSize,
                      &StdCrc32

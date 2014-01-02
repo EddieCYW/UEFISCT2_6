@@ -130,13 +130,6 @@ AddWBTestEntry (
   IN EFI_WB_ENTRY_POINT     EntryPoint
   );
 
-STATIC
-INTN
-CompareGuid (
-  IN EFI_GUID               *Guid1,
-  IN EFI_GUID               *Guid2
-  );
-
 BOOLEAN
 CheckBBTestCanRunAndRecordAssertion (
   IN EFI_STANDARD_TEST_LIBRARY_PROTOCOL  *StandardLib,
@@ -169,7 +162,7 @@ EfiInitializeTestLib (
     // Search DXE services table.
     //
     for (Index = 0; Index < gtST->NumberOfTableEntries; Index++) {
-      if (CompareGuid (&gEfiDxeServicesTableGuid, &gtST->ConfigurationTable[Index].VendorGuid) == 0) {
+      if (SctCompareGuid (&gEfiDxeServicesTableGuid, &gtST->ConfigurationTable[Index].VendorGuid) == 0) {
         gtDS = gtST->ConfigurationTable[Index].VendorTable;
         break;
       }
@@ -235,7 +228,7 @@ EfiInitAndInstallBBTestInterface (
   //
   EntryField = BBTestEntryField;
 
-  while (CompareGuid (&EntryField->EntryId, &gEfiNullGuid) != 0) {
+  while (SctCompareGuid (&EntryField->EntryId, &gEfiNullGuid) != 0) {
     Status = AddBBTestEntry (
                *BBTestProtocolInterface,
                EntryField->EntryId,
@@ -330,7 +323,7 @@ EfiInitAndInstallIHVBBTestInterface (
   //
   EntryField = BBTestEntryField;
 
-  while (CompareGuid (&EntryField->EntryId, &gEfiNullGuid) != 0) {
+  while (SctCompareGuid (&EntryField->EntryId, &gEfiNullGuid) != 0) {
     Status = AddBBTestEntry (
                *BBTestProtocolInterface,
                EntryField->EntryId,
@@ -529,7 +522,7 @@ EfiInitAndInstallWBTestInterface (
   //
   EntryField = WBTestEntryField;
 
-  while (CompareGuid (&EntryField->EntryId, &gEfiNullGuid) != 0) {
+  while (SctCompareGuid (&EntryField->EntryId, &gEfiNullGuid) != 0) {
     Status = AddWBTestEntry (
                *WBTestProtocolInterface,
                EntryField->EntryId,
@@ -701,7 +694,7 @@ AddBBTestEntry (
   GuidCount = 0;
   Guid      = SupportProtocols;
 
-  while (CompareGuid (Guid, &gEfiNullGuid) != 0) {
+  while (SctCompareGuid (Guid, &gEfiNullGuid) != 0) {
     GuidCount ++;
     Guid ++;
   }
@@ -837,7 +830,7 @@ AddWBTestEntry (
   GuidCount = 0;
   Guid      = SupportProtocols;
 
-  while (CompareGuid (Guid, &gEfiNullGuid) != 0) {
+  while (SctCompareGuid (Guid, &gEfiNullGuid) != 0) {
     GuidCount ++;
     Guid ++;
   }
@@ -892,30 +885,6 @@ AddWBTestEntry (
   // Done
   //
   return EFI_SUCCESS;
-}
-
-STATIC
-INTN
-CompareGuid (
-  IN EFI_GUID               *Guid1,
-  IN EFI_GUID               *Guid2
-  )
-{
-  INT32       *g1, *g2, r;
-
-  //
-  // Compare 32 bits at a time
-  //
-
-  g1 = (INT32 *) Guid1;
-  g2 = (INT32 *) Guid2;
-
-  r  = g1[0] - g2[0];
-  r |= g1[1] - g2[1];
-  r |= g1[2] - g2[2];
-  r |= g1[3] - g2[3];
-
-  return r;
 }
 
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)

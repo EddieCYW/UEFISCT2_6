@@ -236,7 +236,7 @@ BBTestInstallAcpiTableFunctionTestCheckpoint1 (
     NumberOfTableEntries = gtST->NumberOfTableEntries;
 
     for (Index = 0; Index < NumberOfTableEntries; Index++) {
-      if (CompareGuid (&(ConfigurationTable->VendorGuid), &gAcpiTableGuid) == 0) {
+      if (SctCompareGuid (&(ConfigurationTable->VendorGuid), &gAcpiTableGuid) == 0) {
         break;
       }
       ConfigurationTable++;
@@ -244,7 +244,7 @@ BBTestInstallAcpiTableFunctionTestCheckpoint1 (
 
     if (Index == NumberOfTableEntries) {
       for (Index = 0; Index < NumberOfTableEntries; Index++) {
-        if (CompareGuid (&(ConfigurationTable->VendorGuid), &gAcpi10TableGuid) == 0) {
+        if (SctCompareGuid (&(ConfigurationTable->VendorGuid), &gAcpi10TableGuid) == 0) {
           break;
         }
         ConfigurationTable++;

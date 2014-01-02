@@ -2421,8 +2421,8 @@ Returns:
 
     ReadCmd.OpCode  = USB_BOOT_READ10_OPCODE;
     ReadCmd.Lun     = 0;
-    WriteUnaligned32 ((UINT32 *) ReadCmd.Lba, SwapBytes32 (200));
-    WriteUnaligned16 ((UINT16 *) ReadCmd.TransferLen, SwapBytes16 (1));
+    SctWriteUnaligned32 ((UINT32 *) ReadCmd.Lba, SctSwapBytes32 (200));
+    SctWriteUnaligned16 ((UINT16 *) ReadCmd.TransferLen, SctSwapBytes16 (1));
 
     //
     // Fill in the Command Block Wrapper.
