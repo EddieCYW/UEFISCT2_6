@@ -77,12 +77,6 @@ BOOLEAN  LibFwInstance;
 UINTN    EFIDebug    = EFI_DBUG_MASK;
 
 //
-// LibRuntimeDebugOut - Runtime Debug Output device
-//
-
-EFI_SIMPLE_TEXT_OUT_PROTOCOL    *LibRuntimeDebugOut;
-
-//
 // LibRuntimeRaiseTPL, LibRuntimeRestoreTPL - pointers to Runtime functions from the
 //                                            Boot Services Table
 //

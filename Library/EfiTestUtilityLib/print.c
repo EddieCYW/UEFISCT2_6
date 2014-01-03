@@ -247,11 +247,7 @@ Returns:
     ps.args = args;
     ps.Attr = EFI_TEXT_ATTR(EFI_LIGHTGRAY, EFI_RED);
 
-    DbgOut = LibRuntimeDebugOut;
-
-    if (!DbgOut) {
-        DbgOut = tST->StdErr;
-    }
+    DbgOut = tST->StdErr;
 
     if (DbgOut) {
         ps.Attr = DbgOut->Mode->Attribute;
