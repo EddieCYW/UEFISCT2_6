@@ -2493,8 +2493,8 @@ Returns:
     return FALSE;
   }
 
-  DirInfo = LibGetFileInfo (NewDir);
-  if (!DirInfo) {
+  Status = SctGetFileInfo (NewDir, &DirInfo);
+  if (EFI_ERROR (Status)) {
     return FALSE;
   }
 
@@ -2853,7 +2853,7 @@ Returns:
   //Find current file system device path
   //
   Context->Handle         = FsHandles;
-  Context->FHandle        = LibOpenRoot (Context->Handle);
+  Context->FHandle        = SctOpenRoot (Context->Handle);
   Context->DevicePath     = DevicePathFromHandle (Context->Handle);
   Context->DevicePathStr  = LibDevicePathToStr (Context->DevicePath);
 

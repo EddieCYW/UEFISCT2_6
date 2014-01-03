@@ -64,7 +64,6 @@ COMPONENT_TYPE  = LIBRARY
   data.c
   dpath.c
   event.c
-  hand.c
   misc.c
   str.c
 

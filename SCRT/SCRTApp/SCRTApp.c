@@ -176,7 +176,7 @@ Returns:
     //
     // Open the Configuration file
     //  
-    Status = LibOpenFileByName (
+    Status = SctOpenFileByName (
                InfFileName,
                &FileHandle,
                EFI_FILE_MODE_READ,
@@ -190,12 +190,12 @@ Returns:
     //
     // If the file is directory, abort
     //
-    FileInfo = LibGetFileInfo (FileHandle);
-    if (FileInfo == NULL) {
-      SctPrint(L"Fail to open the configuration file\n");     
-      return EFI_ABORTED;  
+    Status = SctGetFileInfo (FileHandle, &FileInfo);
+    if (EFI_ERROR (Status)) {
+      SctPrint(L"Fail to open the configuration file: %r\n", Status);
+      return EFI_ABORTED;
     } else if (FileInfo->Attribute & EFI_FILE_DIRECTORY) {
-      SctPrint(L"Fail to open the configuration file\n");     
+      SctPrint(L"%s is a directory\n", InfFileName);
       return EFI_ABORTED;
     }
 
@@ -208,7 +208,7 @@ Returns:
     }
   
     FileSize   = CONF_FILE_SIZE;
-    Status     = LibReadFile (FileHandle, &FileSize, FileBuffer);
+    Status     = SctReadFile (FileHandle, &FileSize, FileBuffer);
     if (!EFI_ERROR (Status) && (FileSize == 0)) {
       return EFI_NOT_FOUND; 
     }

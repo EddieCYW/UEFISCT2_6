@@ -56,6 +56,7 @@ COMPONENT_TYPE  = LIBRARY
   Alloc.c
   Debug.c
   Error.c
+  File.c
   Guid.c
   Handle.c
   Init.c

@@ -82,6 +82,66 @@ SctFreePool (
   );
 
 //
+// File API
+//
+
+EFI_STATUS
+SctOpenFileByName (
+  IN  CHAR16                            *FileName,
+  OUT EFI_FILE_HANDLE                   *FileHandle,
+  IN UINT64                             OpenMode,
+  IN UINT64                             Attributes
+  );
+
+EFI_STATUS
+SctCloseFile (
+  IN EFI_FILE_HANDLE     FileHandle
+  );
+
+EFI_STATUS
+SctReadFile (
+  IN EFI_FILE_HANDLE      FileHandle,
+  IN OUT UINTN            *ReadSize,
+  OUT VOID                *Buffer
+  );
+
+EFI_STATUS
+SctWriteFile (
+  IN EFI_FILE_HANDLE    FileHandle,
+  IN OUT UINTN          *BufferSize,
+  OUT VOID              *Buffer
+  );
+
+EFI_STATUS
+SctFlushFile (
+  IN EFI_FILE_HANDLE FileHandle
+  );
+
+EFI_STATUS
+SctGetFileInfo (
+  IN  EFI_FILE_HANDLE      FileHandle,
+  OUT EFI_FILE_INFO      **FileInfo
+  );
+
+EFI_FILE_HANDLE
+SctOpenRoot (
+  IN EFI_HANDLE                   DeviceHandle
+  );
+
+EFI_STATUS
+SctCreateDirectory (
+  IN EFI_FILE_HANDLE              RootDir,
+  IN CHAR16                       *FileName
+  );
+
+EFI_STATUS
+SctCreateFile (
+  IN EFI_FILE_HANDLE              RootDir,
+  IN CHAR16                       *FileName,
+  OUT EFI_FILE_HANDLE             *Handle
+  );
+
+//
 // Public read-only data in the EFI library
 //
 

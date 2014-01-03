@@ -513,7 +513,7 @@ OpenFileAndGetSize (
   //
   //Open the root directory.
   //
-  RootDir = LibOpenRoot (gDeviceHandle);
+  RootDir = SctOpenRoot (gDeviceHandle);
   if (RootDir == NULL) {
     return EFI_NOT_FOUND;
   }
@@ -545,11 +545,10 @@ OpenFileAndGetSize (
   //
   if (FileSize != NULL) {
     FileInfo = NULL;
-    FileInfo = LibFileInfo (FHandle);
+    Status = SctGetFileInfo (FHandle, &FileHandle);
 
-    if (FileInfo == NULL) {
-      FHandle->Close (FHandle);
-      return EFI_DEVICE_ERROR;
+    if (EFI_ERROR (Status)) {
+      return Status;
     }
     *FileSize = (UINT32)FileInfo->FileSize;
     gtBS->FreePool (FileInfo);

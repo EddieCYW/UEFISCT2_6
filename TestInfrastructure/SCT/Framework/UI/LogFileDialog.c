@@ -2533,8 +2533,8 @@ Returns:
     return FALSE;
   }
 
-  DirInfo = LibGetFileInfo (NewDir);
-  if (!DirInfo) {
+  Status = SctGetFileInfo (NewDir, &DirInfo);
+  if (EFI_ERROR (Status)) {
     return FALSE;
   }
 
@@ -2861,8 +2861,8 @@ Returns:
       //
       //success opened the file
       //
-      FileInfo = LibGetFileInfo (FHandle);
-      if (FileInfo == NULL) {
+      Status = SctGetFileInfo (FHandle, &FileInfo);
+      if (EFI_ERROR (Status)) {
         break;
       }
 
@@ -3163,7 +3163,7 @@ Returns:
     tBS->SetMem (Context, sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT), 0);
 
     Context->Handle         = FsHandles[Index];
-    Context->FHandle        = LibOpenRoot (Context->Handle);
+    Context->FHandle        = SctOpenRoot (Context->Handle);
     Context->DevicePath     = DevicePathFromHandle (Context->Handle);
     Context->DevicePathStr  = LibDevicePathToStr (Context->DevicePath);
     Context->FileName       = SctStrDuplicate (L"\\");
@@ -3231,7 +3231,7 @@ Returns:
     tBS->SetMem (Context, sizeof(EFI_FILE_DIALOG_ITEM_CONTEXT), 0);
 
     Context->Handle        = LoadFileHandles[Index];
-    Context->FHandle       = LibOpenRoot (Context->Handle);
+    Context->FHandle       = SctOpenRoot (Context->Handle);
     Context->DevicePath    = DevicePathFromHandle (Context->Handle);
     Context->DevicePathStr = LibDevicePathToStr (Context->DevicePath);
     Context->FileName      = SctStrDuplicate (L"\\");
@@ -3474,7 +3474,7 @@ Returns:
   //Find current file system device path
   //
   Context->Handle         = FsHandles;
-  Context->FHandle        = LibOpenRoot (Context->Handle);
+  Context->FHandle        = SctOpenRoot (Context->Handle);
   Context->DevicePath     = DevicePathFromHandle (Context->Handle);
   Context->DevicePathStr  = LibDevicePathToStr (Context->DevicePath);
 
