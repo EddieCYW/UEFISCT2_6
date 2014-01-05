@@ -181,7 +181,6 @@ EFI_GUID gtEfiFileSystemVolumeLabelInfoGuid = EFI_FILE_SYSTEM_VOLUME_LABEL_INFO_
 //
 
 EFI_GUID gtEfiVariableStoreProtocolGuid = EFI_VARIABLE_STORE_PROTOCOL_GUID;
-EFI_GUID tAdapterDebugProtocol = ADAPTER_DEBUG_PROTOCOL;
 
 //
 // Device path media protocol IDs

@@ -69,7 +69,6 @@ EFI Test Utility library functions
 #include "EfiLibPlat.h"
 #include "LinkedList.h"
 #include "EfiUi.h"
-#include "AdapterDebug.h"
 #include "EfiPerf.h"
 #include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
 #include EFI_PROTOCOL_DEFINITION (FileInfo)
