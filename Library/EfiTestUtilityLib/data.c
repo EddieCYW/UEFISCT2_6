@@ -167,7 +167,7 @@ EFI_GUID gtEfiSimpleNetworkProtocolGuid    = EFI_SIMPLE_NETWORK_PROTOCOL_GUID;
 EFI_GUID gtEfiPxeBaseCodeProtocolGuid      = EFI_PXE_BASE_CODE_PROTOCOL_GUID;
 EFI_GUID gtEfiPxeCallbackProtocolGuid      = EFI_PXE_BASE_CODE_CALLBACK_PROTOCOL_GUID;
 EFI_GUID gtEfiNetworkInterfaceIdentifierProtocolGuid = EFI_NETWORK_INTERFACE_IDENTIFIER_PROTOCOL_GUID;
-EFI_GUID tUiProtocol               = EFI_UI_PROTOCOL;
+
 //
 // File system information IDs
 //
