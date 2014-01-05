@@ -69,7 +69,6 @@ EFI Test Utility library functions
 #include "EfiLibPlat.h"
 #include "LinkedList.h"
 #include "EfiUi.h"
-#include "Intload.h"
 #include "AdapterDebug.h"
 #include "EfiPerf.h"
 #include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
@@ -113,7 +112,6 @@ extern EFI_GUID gtEfiPxeBaseCodeProtocolGuid;
 extern EFI_GUID gtEfiPxeCallbackProtocolGuid;
 extern EFI_GUID gtEfiNetworkInterfaceIdentifierProtocolGuid;
 extern EFI_GUID tUiProtocol;
-extern EFI_GUID gtEfiInternalShellProtocolGuid;
 
 extern EFI_GUID tEfiGlobalVariable;
 extern EFI_GUID tGenericFileInfo;
