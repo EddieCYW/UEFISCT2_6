@@ -65,7 +65,6 @@ EFI Test Utility library functions
 #pragma warning ( disable : 4214 )
 #endif
 
-#include "efipart.h"
 #include "EfiLibPlat.h"
 #include "LinkedList.h"
 #include "EfiPerf.h"
