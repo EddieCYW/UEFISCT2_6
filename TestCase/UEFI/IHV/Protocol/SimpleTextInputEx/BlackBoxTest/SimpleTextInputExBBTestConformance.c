@@ -94,7 +94,7 @@ BBTestReadKeyStrokeExConformanceTest (
   //
   Status = LocateDevicePathFromSimpleTextInputEx (SimpleTextInputEx, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -169,7 +169,7 @@ BBTestSetStateConformanceTest (
   //
   Status = LocateDevicePathFromSimpleTextInputEx (SimpleTextInputEx, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -246,7 +246,7 @@ BBTestRegisterKeyNotifyConformanceTest (
   //
   Status = LocateDevicePathFromSimpleTextInputEx (SimpleTextInputEx, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -321,7 +321,7 @@ BBTestUnregisterKeyNotifyConformanceTest (
   //
   Status = LocateDevicePathFromSimpleTextInputEx (SimpleTextInputEx, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,

@@ -943,7 +943,7 @@ MemRead_Conf (
   //
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
      SctFreePool (DataBuffer);
@@ -1317,7 +1317,7 @@ MemWrite_Conf (
   //
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     SctFreePool (DataBuffer);
@@ -1689,7 +1689,7 @@ IoRead_Conf (
   //
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     SctFreePool (DataBuffer);
@@ -2061,7 +2061,7 @@ IoWrite_Conf (
   //
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     SctFreePool (DataBuffer);
@@ -2420,7 +2420,7 @@ PciRead_Conf (
   //
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     SctFreePool (DataBuffer);
@@ -2783,7 +2783,7 @@ PciWrite_Conf (
   //
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     SctFreePool (DataBuffer);
@@ -3246,7 +3246,7 @@ CopyMem_Conf (
   //
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;

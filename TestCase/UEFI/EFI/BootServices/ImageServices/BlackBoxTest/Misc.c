@@ -156,12 +156,12 @@ ImageTestImageLoadableDevicePath (
   Firmware Volume is not belong to EFI1.10 spec, so remove it.
 --*/
 {
-  while (!EfiIsDevicePathEnd (DevicePath)) {
+  while (!SctIsDevicePathEnd (DevicePath)) {
     if (DevicePath->Type == MEDIA_DEVICE_PATH &&
         DevicePath->SubType == MEDIA_FILEPATH_DP) {
       return TRUE;
     }
-    DevicePath = EfiNextDevicePathNode (DevicePath);
+    DevicePath = SctNextDevicePathNode (DevicePath);
   }
 
   return FALSE;
@@ -260,7 +260,7 @@ ImageTestCreateCombinedNonExistentDevicePath (
           (VOID **) &DevicePath
           );
 
-  *CombinedNonExistentDevicePath = AppendDevicePath (
+  *CombinedNonExistentDevicePath = SctAppendDevicePath (
                                      DevicePath,
                                      VendorDevicePath
                                      );
@@ -311,7 +311,7 @@ ImageTestCreateVendorDevicePath (
   //
   // End Node
   //
-  SetDevicePathEndNode (DevPointer);
+  SctSetDevicePathEndNode (DevPointer);
 
   //
   // release resource
@@ -487,7 +487,7 @@ ImageTestComposeSimpleFilePath (
 
   EntireFileName = SctPoolPrint (L"%s\\%s\\%s", FileNamePath, DEPENDENCY_DIR_NAME, FileName);
 
-  *FilePath = FileDevicePath (LoadImage->DeviceHandle, EntireFileName);
+  *FilePath = SctFileDevicePath (LoadImage->DeviceHandle, EntireFileName);
 
   gtBS->FreePool (EntireFileName);
   gtBS->FreePool (FileNamePath);
@@ -939,7 +939,7 @@ GetImageDevicePath (
     return Status;
   }
 
-  *DevicePath = DuplicateDevicePath (TempDevicePath);
+  *DevicePath = SctDuplicateDevicePath (TempDevicePath);
   if (*DevicePath == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -947,17 +947,17 @@ GetImageDevicePath (
   //
   // Get the file name from the image instance
   //
-  TempDevicePath = UnpackDevicePath (Image->FilePath);
+  TempDevicePath = SctUnpackDevicePath (Image->FilePath);
 
   TempFilePath = NULL;
   TempDeviceNode = TempDevicePath;
-  while (!IsDevicePathEnd (TempDeviceNode)) {
-    if ((DevicePathType (TempDeviceNode) == MEDIA_DEVICE_PATH) &&
-        (DevicePathSubType (TempDeviceNode) == MEDIA_FILEPATH_DP)) {
+  while (!SctIsDevicePathEnd (TempDeviceNode)) {
+    if ((SctDevicePathType (TempDeviceNode) == MEDIA_DEVICE_PATH) &&
+        (SctDevicePathSubType (TempDeviceNode) == MEDIA_FILEPATH_DP)) {
       TempFilePath = SctStrDuplicate (((FILEPATH_DEVICE_PATH *)TempDeviceNode)->PathName);
       break;
     }
-    TempDeviceNode = NextDevicePathNode (TempDeviceNode);
+    TempDeviceNode = SctNextDevicePathNode (TempDeviceNode);
   }
 
   gtBS->FreePool (TempDevicePath);
@@ -1259,7 +1259,7 @@ ImageTestComposeLoadFilePath (
     return EFI_NOT_FOUND;
   }
 
-  *FilePath = AppendDevicePathNode (mLoadFileDevicePath, TailPath);
+  *FilePath = SctAppendDevicePathNode (mLoadFileDevicePath, TailPath);
 
   SctFreePool (TailPath);
 

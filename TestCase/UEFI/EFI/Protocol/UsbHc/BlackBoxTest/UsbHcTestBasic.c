@@ -2421,7 +2421,7 @@ UsbHcGetRootHubPortNumberSubTest1 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
 
   Status = UsbHc->GetRootHubPortNumber (UsbHc, &PortNumber);
   if (!EFI_ERROR(Status)) {
@@ -2499,7 +2499,7 @@ UsbHcGetRootHubPortStatusSubTest1 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
 
   Status = EFI_SUCCESS;
@@ -2654,7 +2654,7 @@ UsbHcGetRootHubPortStatusSubTest2 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
 
   Status = EFI_SUCCESS;
@@ -2809,7 +2809,7 @@ UsbHcGetRootHubPortStatusSubTest3 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -2965,7 +2965,7 @@ UsbHcGetRootHubPortStatusSubTest4 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -3113,7 +3113,7 @@ UsbHcGetRootHubPortStatusSubTest5 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -3261,7 +3261,7 @@ UsbHcGetRootHubPortStatusSubTest7 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -3388,7 +3388,7 @@ UsbHcSetRootHubPortFeatureSubTest1 (
 
  // _asm jmp $
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -3530,7 +3530,7 @@ UsbHcSetRootHubPortFeatureSubTest2 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -3671,7 +3671,7 @@ UsbHcSetRootHubPortFeatureSubTest3 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -3816,7 +3816,7 @@ UsbHcSetRootHubPortFeatureSubTest4 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -3959,7 +3959,7 @@ UsbHcClearRootHubPortFeatureSubTest1 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -4100,7 +4100,7 @@ UsbHcClearRootHubPortFeatureSubTest2 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -4243,7 +4243,7 @@ UsbHcClearRootHubPortFeatureSubTest3 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -4384,7 +4384,7 @@ UsbHcClearRootHubPortFeatureSubTest4 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -4524,7 +4524,7 @@ UsbHcClearRootHubPortFeatureSubTest5 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -4671,7 +4671,7 @@ UsbHcClearRootHubPortFeatureSubTest6 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;
@@ -4817,7 +4817,7 @@ UsbHcClearRootHubPortFeatureSubTest7 (
                   );
   }
 
-  Str = DevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
+  Str = SctDevicePathStrFromProtocol (UsbHc, &gEfiUsbHcProtocolGuid);
   UseGenericGuid = FALSE;
   Status = EFI_SUCCESS;
   Status1 = EFI_SUCCESS;

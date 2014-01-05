@@ -788,7 +788,7 @@ PollMem_Func (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1791,7 +1791,7 @@ PollIo_Func (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2179,7 +2179,7 @@ MemRead_Func (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -2854,7 +2854,7 @@ MemWrite_Func (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -3510,7 +3510,7 @@ IoRead_Func (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -4176,7 +4176,7 @@ IoWrite_Func (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

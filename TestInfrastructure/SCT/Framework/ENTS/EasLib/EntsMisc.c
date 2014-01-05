@@ -54,7 +54,7 @@ Abstract:
   ENTS misc services implementations.
 
 --*/
-#include "Efi.h"
+#include "SctLib.h"
 #include "EntsLib.h"
 
 EFI_STATUS
@@ -125,9 +125,9 @@ Returns:
 
   TempFilePath    = NULL;
   TempDeviceNode  = TempDevicePath;
-  while (!IsDevicePathEnd (TempDeviceNode)) {
-    if ((DevicePathType (TempDeviceNode) == MEDIA_DEVICE_PATH) &&
-        (DevicePathSubType (TempDeviceNode) == MEDIA_FILEPATH_DP)
+  while (!SctIsDevicePathEnd (TempDeviceNode)) {
+    if ((SctDevicePathType (TempDeviceNode) == MEDIA_DEVICE_PATH) &&
+        (SctDevicePathSubType (TempDeviceNode) == MEDIA_FILEPATH_DP)
         ) {
       TempFilePath = EntsStrDuplicate (((FILEPATH_DEVICE_PATH *) TempDeviceNode)->PathName);
       if (TempFilePath == NULL) {
@@ -138,7 +138,7 @@ Returns:
       break;
     }
 
-    TempDeviceNode = NextDevicePathNode (TempDeviceNode);
+    TempDeviceNode = SctNextDevicePathNode (TempDeviceNode);
   }
 
   EntsFreePool (TempDevicePath);

@@ -266,7 +266,7 @@ BBTestReadBlocksStressAutoTest (
 
   LocateDevicePathFromBlockIo (BlockIo, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -803,7 +803,7 @@ BBTestWriteBlocksStressAutoTest (
   //
   LocateDevicePathFromBlockIo (BlockIo, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,

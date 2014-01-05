@@ -139,7 +139,7 @@ BBTestReadDiskFunctionAutoTest (
   //
   LocateDevicePathFromDiskIo (DiskIo, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -488,7 +488,7 @@ BBTestWriteDiskFunctionAutoTest (
   //
   LocateDevicePathFromDiskIo (DiskIo, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,

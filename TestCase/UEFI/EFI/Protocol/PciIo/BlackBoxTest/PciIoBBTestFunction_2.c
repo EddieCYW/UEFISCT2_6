@@ -164,7 +164,7 @@ PciRead_Func (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -797,7 +797,7 @@ PciWrite_Func (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1431,7 +1431,7 @@ CopyMem_Func (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -3764,7 +3764,7 @@ Attributes_Func (
 //  }
 
 
-  DevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  DevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
   if (DevicePathStr == NULL) {
     StandardLib->RecordMessage (
                    StandardLib,

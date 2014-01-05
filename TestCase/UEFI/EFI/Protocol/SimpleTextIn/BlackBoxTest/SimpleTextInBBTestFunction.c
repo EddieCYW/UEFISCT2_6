@@ -123,7 +123,7 @@ BBTestResetFunctionAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextIn (SimpleIn, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -313,7 +313,7 @@ BBTestResetFunctionManualTest (
   //
   Status = LocateDevicePathFromSimpleTextIn (SimpleIn, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -572,7 +572,7 @@ BBTestReadKeyStrokeFunctionManualTest (
   //
   Status = LocateDevicePathFromSimpleTextIn (SimpleIn, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -756,7 +756,7 @@ BBTestWaitForKeyFunctionManualTest (
   //
   Status = LocateDevicePathFromSimpleTextIn (SimpleIn, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,

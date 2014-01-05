@@ -217,7 +217,7 @@ GetDevIoDevicePathStr (
     return EFI_NOT_FOUND;
   }
 
-  TempStr = DevicePathToStr (Dev->DevicePath);
+  TempStr = SctDevicePathToStr (Dev->DevicePath);
 
   if (TempStr == NULL) {
     return EFI_OUT_OF_RESOURCES;

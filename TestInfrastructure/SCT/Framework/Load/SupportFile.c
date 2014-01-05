@@ -733,15 +733,15 @@ Routine Description:
   //
   // Add the file path to the device path
   //
-  FileNode = FileDevicePath (NULL, FileName);
+  FileNode = SctFileDevicePath (NULL, FileName);
   if (FileNode == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"FileDevicePath: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctFileDevicePath: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
-  FilePath = AppendDevicePath (DevicePath, FileNode);
+  FilePath = SctAppendDevicePath (DevicePath, FileNode);
   if (FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"AppendDevicePath: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctAppendDevicePath: Out of resources"));
     tBS->FreePool (FileNode);
     return EFI_OUT_OF_RESOURCES;
   }
@@ -877,7 +877,7 @@ Routine Description:
   (*SupportFile)->Signature   = EFI_SCT_TEST_FILE_SIGNATURE;
   (*SupportFile)->Revision    = EFI_SCT_TEST_FILE_REVISION;
 
-  (*SupportFile)->DevicePath  = DuplicateDevicePath (DevicePath);
+  (*SupportFile)->DevicePath  = SctDuplicateDevicePath (DevicePath);
   (*SupportFile)->FileName    = SctStrDuplicate (FileName);
   (*SupportFile)->ImageHandle = ImageHandle;
   (*SupportFile)->Type        = EFI_SCT_TEST_FILE_TYPE_SUPPORT;
@@ -1390,15 +1390,15 @@ Routine Description:
   //
   // Add the file path to the device path
   //
-  FileNode = FileDevicePath (NULL, FileName);
+  FileNode = SctFileDevicePath (NULL, FileName);
   if (FileNode == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"FileDevicePath: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctFileDevicePath: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
-  FilePath = AppendDevicePath (DevicePath, FileNode);
+  FilePath = SctAppendDevicePath (DevicePath, FileNode);
   if (FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"AppendDevicePath: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctAppendDevicePath: Out of resources"));
     tBS->FreePool (FileNode);
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1527,7 +1527,7 @@ Routine Description:
   (*ProxyFile)->Signature   = EFI_SCT_TEST_FILE_SIGNATURE;
   (*ProxyFile)->Revision    = EFI_SCT_TEST_FILE_REVISION;
 
-  (*ProxyFile)->DevicePath  = DuplicateDevicePath (DevicePath);
+  (*ProxyFile)->DevicePath  = SctDuplicateDevicePath (DevicePath);
   (*ProxyFile)->FileName    = SctStrDuplicate (FileName);
   (*ProxyFile)->ImageHandle = ImageHandle;
   (*ProxyFile)->Type        = EFI_SCT_TEST_FILE_TYPE_SUPPORT;

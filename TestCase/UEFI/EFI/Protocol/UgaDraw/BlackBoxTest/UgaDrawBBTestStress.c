@@ -141,7 +141,7 @@ BBTestVideoFillBufferToVideoManualTest (
   //
   Status = LocateDevicePathFromUgaDraw (UgaDraw, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -979,7 +979,7 @@ BBTestVideoFillVideoToVideoManualTest (
   //
   Status = LocateDevicePathFromUgaDraw (UgaDraw, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -1872,7 +1872,7 @@ BBTestVideoToBltBufferAutoTest (
   //
   Status = LocateDevicePathFromUgaDraw (UgaDraw, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -2614,7 +2614,7 @@ BBTestEfiUgaVideoFillStressAutoTest (
   //
   Status = LocateDevicePathFromUgaDraw (UgaDraw, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -3236,7 +3236,7 @@ BBTestEfiUgaVideoBltBufferStressAutoTest (
   //
   Status = LocateDevicePathFromUgaDraw (UgaDraw, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -4170,7 +4170,7 @@ BBTestEfiUgaVideoToVideoStressAutoTest (
   //
   Status = LocateDevicePathFromUgaDraw (UgaDraw, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,

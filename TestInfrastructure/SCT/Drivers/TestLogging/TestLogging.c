@@ -893,7 +893,7 @@ Returns:
   PrivateFileConf->OverwriteFile      = FileConf->OverwriteFile;
 
   if ((FileConf->DevicePath != NULL) && (FileConf->FileName != NULL)) {
-    PrivateFileConf->DevicePath = EfiDuplicateDevicePath (FileConf->DevicePath);
+    PrivateFileConf->DevicePath = SctDuplicateDevicePath (FileConf->DevicePath);
     if (PrivateFileConf->DevicePath == NULL) {
       TllFreePointer (Private);
       return EFI_OUT_OF_RESOURCES;
@@ -918,7 +918,7 @@ Returns:
   PrivateFileConf->OverwriteFile      = FileConf->OverwriteFile;
 
   if ((FileConf->DevicePath != NULL) && (FileConf->FileName != NULL)) {
-    PrivateFileConf->DevicePath = EfiDuplicateDevicePath (FileConf->DevicePath);
+    PrivateFileConf->DevicePath = SctDuplicateDevicePath (FileConf->DevicePath);
     if (PrivateFileConf->DevicePath == NULL) {
       TllFreePointer (Private);
       return EFI_OUT_OF_RESOURCES;

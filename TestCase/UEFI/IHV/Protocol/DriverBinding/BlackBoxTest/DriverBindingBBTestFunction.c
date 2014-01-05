@@ -324,7 +324,7 @@ BBTestDriverBindingFunctionTest (
                     &DevicePath
                     );
     if (!EFI_ERROR (Status)) {
-      if (LibMatchDevicePaths (ProfileDevicePath, DevicePath)) {
+      if (SctMatchDevicePaths (ProfileDevicePath, DevicePath)) {
         continue;
       }
     }

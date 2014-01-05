@@ -176,15 +176,15 @@ GetFloppyDevicePath (
                  );
     RemainPath = DevicePath;
     LastNode = DevicePath;
-    while (!IsDevicePathEnd (RemainPath)) {
+    while (!SctIsDevicePathEnd (RemainPath)) {
       LastNode = RemainPath;
-      RemainPath = NextDevicePathNode (RemainPath);
+      RemainPath = SctNextDevicePathNode (RemainPath);
     }
     //
     // Is LastNode ACPI device path node ?
     //
-    if ((DevicePathType (LastNode) == 2) &&
-        (DevicePathSubType (LastNode) == 1)) {
+    if ((SctDevicePathType (LastNode) == 2) &&
+        (SctDevicePathSubType (LastNode) == 1)) {
       AcpiNode = (ACPI_HID_DEVICE_PATH*)LastNode;
       //
       // Is floppy device path ?

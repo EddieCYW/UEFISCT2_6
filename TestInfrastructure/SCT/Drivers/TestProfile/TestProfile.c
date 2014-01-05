@@ -687,7 +687,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
 
-  NewIniFile->DevPath = EfiDuplicateDevicePath (RootDevPath);
+  NewIniFile->DevPath = SctDuplicateDevicePath (RootDevPath);
   if ( NewIniFile->DevPath == NULL ) {
     _freeIniFile (NewIniFile);
     return EFI_OUT_OF_RESOURCES;
@@ -907,7 +907,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
 
-  NewIniFile->DevPath = EfiDuplicateDevicePath (RootDevPath);
+  NewIniFile->DevPath = SctDuplicateDevicePath (RootDevPath);
   if ( NewIniFile->DevPath == NULL ) {
     _freeIniFile (NewIniFile);
     return EFI_OUT_OF_RESOURCES;
@@ -1071,7 +1071,7 @@ Returns:
   //
   // Get system device path
   //
-  *DevicePath = EfiDuplicateDevicePath (Private->DevicePath);
+  *DevicePath = SctDuplicateDevicePath (Private->DevicePath);
   if (*DevicePath == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

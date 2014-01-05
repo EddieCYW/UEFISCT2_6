@@ -124,7 +124,7 @@ BBTestResetFunctionManualTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -618,7 +618,7 @@ BBTestResetFunctionAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -1103,7 +1103,7 @@ BBTestOutputStringFunctionAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -1721,7 +1721,7 @@ BBTestOutputStringFunctionManualTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -2548,7 +2548,7 @@ BBTestTestStringFunctionAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -2749,7 +2749,7 @@ BBTestQueryModeFunctionAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -2803,7 +2803,7 @@ BBTestQueryModeFunctionAutoTest (
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
     SctPrint (L"Current testing console device:\r\n");
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       SctPrint (DevicePathStr);
       Status = gtBS->FreePool (DevicePathStr);
@@ -3031,7 +3031,7 @@ BBTestSetModeFunctionManualTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -3372,7 +3372,7 @@ BBTestSetModeFunctionAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -3663,7 +3663,7 @@ BBTestSetAttributeFunctionManualTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -3959,7 +3959,7 @@ BBTestSetAttributeFunctionAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -4246,7 +4246,7 @@ BBTestClearScreenFunctionManualTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -4517,7 +4517,7 @@ BBTestClearScreenFunctionAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -4732,7 +4732,7 @@ BBTestSetCursorPositionFunctionManualTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -5032,7 +5032,7 @@ BBTestSetCursorPositionFunctionAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -5323,7 +5323,7 @@ BBTestEnableCursorFunctionManualTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -5788,7 +5788,7 @@ BBTestEnableCursorFunctionAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,

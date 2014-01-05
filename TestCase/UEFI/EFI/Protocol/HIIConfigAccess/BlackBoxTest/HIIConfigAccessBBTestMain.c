@@ -225,8 +225,8 @@ Returns:
   // Search for the end of the device path structure
   //
   Start = DevicePath;
-  while (!EfiIsDevicePathEnd (DevicePath)) {
-    DevicePath = EfiNextDevicePathNode (DevicePath);
+  while (!SctIsDevicePathEnd (DevicePath)) {
+    DevicePath = SctNextDevicePathNode (DevicePath);
   }
 
   //

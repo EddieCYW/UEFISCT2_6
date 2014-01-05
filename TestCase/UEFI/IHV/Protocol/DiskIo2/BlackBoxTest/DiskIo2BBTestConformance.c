@@ -157,7 +157,7 @@ BBTestReadDiskExConformanceAutoTest (
   //
   LocateDevicePathFromDiskIo2 (DiskIo2, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -589,7 +589,7 @@ BBTestWriteDiskExConformanceAutoTest (
   //
   LocateDevicePathFromDiskIo2 (DiskIo2, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -1072,7 +1072,7 @@ BBTestFlushDiskExConformanceAutoTest (
   //
   LocateDevicePathFromDiskIo2 (DiskIo2, &DevicePath, StandardLib);
      
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,

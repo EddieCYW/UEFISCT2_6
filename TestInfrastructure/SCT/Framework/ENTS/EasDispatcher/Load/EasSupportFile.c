@@ -425,12 +425,12 @@ Returns:
   //
   // Add the file path to the device path
   //
-  FileNode = FileDevicePath (NULL, FileName);
+  FileNode = SctFileDevicePath (NULL, FileName);
   if (FileNode == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
 
-  FilePath = AppendDevicePath (DevicePath, FileNode);
+  FilePath = SctAppendDevicePath (DevicePath, FileNode);
   if (FilePath == NULL) {
     tBS->FreePool (FileNode);
     return EFI_OUT_OF_RESOURCES;
@@ -552,12 +552,12 @@ Returns:
   //
   // Add the file path to the device path
   //
-  FileNode = FileDevicePath (NULL, FileName);
+  FileNode = SctFileDevicePath (NULL, FileName);
   if (FileNode == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
 
-  FilePath = AppendDevicePath (DevicePath, FileNode);
+  FilePath = SctAppendDevicePath (DevicePath, FileNode);
   if (FilePath == NULL) {
     tBS->FreePool (FileNode);
     return EFI_OUT_OF_RESOURCES;
@@ -738,7 +738,7 @@ Returns:
   (*TestFile)->Signature    = EFI_NETWORK_TEST_FILE_SIGNATURE;
   (*TestFile)->Version      = EFI_NETWORK_TEST_FILE_VERSION;
 
-  (*TestFile)->DevicePath   = DuplicateDevicePath (DevicePath);
+  (*TestFile)->DevicePath   = SctDuplicateDevicePath (DevicePath);
   (*TestFile)->FileName     = EntsStrDuplicate (FileName);
   (*TestFile)->CmdName      = EntsStrDuplicate (CmdName);
   (*TestFile)->ImageHandle  = ImageHandle;

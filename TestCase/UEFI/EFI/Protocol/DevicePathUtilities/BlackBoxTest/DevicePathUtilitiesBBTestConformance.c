@@ -168,7 +168,7 @@ DevicePathUtilitiesAppendDeviceNodeConformanceTest (
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  SetDevicePathEndNode (pDevicePath1);
+  SctSetDevicePathEndNode (pDevicePath1);
 
   pDevicePath2  = DevicePathUtilities->CreateDeviceNode (PCIRootNodeType, PCIRootNodeSubType, PCIRootNodeLength);
   pDevicePath4  = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath2);
@@ -289,7 +289,7 @@ DevicePathUtilitiesAppendDevicePathConformanceTest (
   // TDS 3.4.3.2.1
   //
   pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
-  SetDevicePathEndNode (pDevicePath1);
+  SctSetDevicePathEndNode (pDevicePath1);
 
   pDevicePath3  = DevicePathUtilities->CreateDeviceNode (USBNodeType, USBNodeSubType, USBNodeLength);
   pDevicePath4  = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath3);
@@ -312,7 +312,7 @@ DevicePathUtilitiesAppendDevicePathConformanceTest (
                 StandardLib,
                 AssertionType,
                 gDevicePathUtilitiesBBTestFunctionAssertionGuid059,
-                L"EFI_DEVICE_PATH_UTILITIES_PROTOCOL - AppendDevicePath should ignore Src1 when it is set NULL",
+                L"EFI_DEVICE_PATH_UTILITIES_PROTOCOL - SctAppendDevicePath should ignore Src1 when it is set NULL",
                 L"%a:%d:Status - %r",
                 __FILE__,
                 (UINTN)__LINE__
@@ -325,7 +325,7 @@ DevicePathUtilitiesAppendDevicePathConformanceTest (
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  SetDevicePathEndNode (pDevicePath1);
+  SctSetDevicePathEndNode (pDevicePath1);
   DevicePathLen1  = DevicePathUtilities->GetDevicePathSize (pDevicePath1);
 
   pDevicePath2    = DevicePathUtilities->CreateDeviceNode (PCIRootNodeType, PCIRootNodeSubType, PCIRootNodeLength);
@@ -354,14 +354,14 @@ DevicePathUtilitiesAppendDevicePathConformanceTest (
                 StandardLib,
                 AssertionType,
                 gDevicePathUtilitiesBBTestFunctionAssertionGuid060,
-                L"EFI_DEVICE_PATH_UTILITIES_PROTOCOL - AppendDevicePath should ignore Src2 when it is set NULL",
+                L"EFI_DEVICE_PATH_UTILITIES_PROTOCOL - SctAppendDevicePath should ignore Src2 when it is set NULL",
                 L"%a:%d:Status - %r",
                 __FILE__,
                 (UINTN)__LINE__
                 );
 
   pDevicePath1    = DevicePathUtilities->AppendDevicePath (NULL, NULL);
-  if ((pDevicePath1 != NULL) && (IsDevicePathEnd(pDevicePath1))) {
+  if ((pDevicePath1 != NULL) && (SctIsDevicePathEnd(pDevicePath1))) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -371,7 +371,7 @@ DevicePathUtilitiesAppendDevicePathConformanceTest (
                 StandardLib,
                 AssertionType,
                 gDevicePathUtilitiesBBTestFunctionAssertionGuid068,
-                L"EFI_DEVICE_PATH_UTILITIES_PROTOCOL - AppendDevicePath should return end-of-device-path if both Src1 and Src2 are NULL",
+                L"EFI_DEVICE_PATH_UTILITIES_PROTOCOL - SctAppendDevicePath should return end-of-device-path if both Src1 and Src2 are NULL",
                 L"%a:%d",
                 __FILE__,
                 (UINTN)__LINE__
@@ -420,7 +420,7 @@ DevicePathUtilitiesAppendDevicePathInstanceConformanceTest (
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  SetDevicePathEndNode (pDevicePath1);
+  SctSetDevicePathEndNode (pDevicePath1);
 
   pDevicePath2  = DevicePathUtilities->CreateDeviceNode (PCIRootNodeType, PCIRootNodeSubType, PCIRootNodeLength);
   pDevicePath3  = DevicePathUtilities->AppendDeviceNode (pDevicePath1, pDevicePath2);
@@ -599,7 +599,7 @@ DevicePathUtilitiesDuplicateDevicePathConformanceTest (
                 StandardLib,
                 AssertionType,
                 gDevicePathUtilitiesBBTestFunctionAssertionGuid071,
-                L"EFI_DEVICE_PATH_UTILITIES_PROTOCOL - DuplicateDevicePath() should return NULL if DevicePath is NULL",
+                L"EFI_DEVICE_PATH_UTILITIES_PROTOCOL - SctDuplicateDevicePath() should return NULL if DevicePath is NULL",
                 L"%a:%d",
                 __FILE__,
                 (UINTN)__LINE__

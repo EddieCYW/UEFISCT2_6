@@ -199,7 +199,7 @@ BusDriver1BindingSupported (
     Node = (EFI_DEV_PATH *)RemainingDevicePath;
     if (Node->DevPath.Type != HARDWARE_DEVICE_PATH ||
         Node->DevPath.SubType != HW_VENDOR_DP ||
-        DevicePathNodeLength(&Node->DevPath) != sizeof(VENDOR_DEVICE_PATH)) {
+        SctDevicePathNodeLength(&Node->DevPath) != sizeof(VENDOR_DEVICE_PATH)) {
       return EFI_UNSUPPORTED;
     }
   }

@@ -177,7 +177,7 @@ PciRead_Func (
   }
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -862,7 +862,7 @@ PciWrite_Func (
   }
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -1610,7 +1610,7 @@ CopyMem_Func (
                   );
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;

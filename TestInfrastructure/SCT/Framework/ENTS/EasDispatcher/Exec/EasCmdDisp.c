@@ -1027,13 +1027,13 @@ Returns:
     //
     // Add the file path to the device path
     //
-    FileNode = FileDevicePath (NULL, TestFile->FileName);
+    FileNode = SctFileDevicePath (NULL, TestFile->FileName);
     if (FileNode == NULL) {
       EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"in ExecElet:Create file device path - %r", EFI_OUT_OF_RESOURCES));
       return EFI_OUT_OF_RESOURCES;
     }
 
-    FilePath = AppendDevicePath (gEasFT->DevicePath, FileNode);
+    FilePath = SctAppendDevicePath (gEasFT->DevicePath, FileNode);
     if (FilePath == NULL) {
       EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"in ExecElet:Append file device path - %r", EFI_OUT_OF_RESOURCES));
       tBS->FreePool (FileNode);

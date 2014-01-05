@@ -85,7 +85,7 @@ GetFreeSpace (
   //
   // Locate the file system protocol
   //
-  Status = LibDevicePathToInterface (
+  Status = SctDevicePathToInterface (
              &gEfiSimpleFileSystemProtocolGuid,
              DevicePath,
              (VOID **)&Vol

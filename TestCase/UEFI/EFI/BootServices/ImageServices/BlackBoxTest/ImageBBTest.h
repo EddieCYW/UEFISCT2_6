@@ -108,8 +108,6 @@ extern EFI_TPL TplArray [TPL_ARRAY_SIZE_FOR_UNLOAD_EXIT_IMAGE];
 
 #define MAX_STRING_LEN      250
 
-#define DevicePathNodeLength(a)     ( ((a)->Length[0]) | ((a)->Length[1] << 8) )
-
 //////////////////////////////////////////////////////////////////////////////
 //
 // Entry GUIDs for Consistency Test

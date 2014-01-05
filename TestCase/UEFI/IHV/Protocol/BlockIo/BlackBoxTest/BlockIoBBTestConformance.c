@@ -140,7 +140,7 @@ BBTestReadBlocksConformanceAutoTest (
   //
   LocateDevicePathFromBlockIo (BlockIo, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -776,7 +776,7 @@ BBTestReadBlocksConformanceManualTest (
   //
   LocateDevicePathFromBlockIo (BlockIo, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -885,7 +885,7 @@ BBTestReadBlocksConformanceManualTest (
     //
     SctPrint (L"Change media in device ");
 
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       SctPrint (DevicePathStr);
 
@@ -1007,7 +1007,7 @@ AssertionPoints2:
     // Display instruction to tell user remove the media
     //
     SctPrint (L"Remove media in device ");
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       SctPrint (DevicePathStr);
       Status = gtBS->FreePool (DevicePathStr);
@@ -1072,7 +1072,7 @@ AssertionPoints2:
     //
     SctPrint (L"Re-insert media into device ");
 
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       SctPrint (DevicePathStr);
 
@@ -1215,7 +1215,7 @@ BBTestWriteBlocksConformanceAutoTest (
   //
   LocateDevicePathFromBlockIo (BlockIo, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -1942,7 +1942,7 @@ BBTestWriteBlocksConformanceManualTest (
   //
   LocateDevicePathFromBlockIo (BlockIo, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -2051,7 +2051,7 @@ BBTestWriteBlocksConformanceManualTest (
     // Display instruction to tell user change the media
     //
     SctPrint (L"Change media in device ");
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       SctPrint (DevicePathStr);
 
@@ -2174,7 +2174,7 @@ AssertionPoints2:
     // Display instruction to tell user remove the media
     //
     SctPrint (L"Remove media in device ");
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       SctPrint (DevicePathStr);
 
@@ -2240,7 +2240,7 @@ AssertionPoints2:
     // Display instruction to tell user to re-insert the media
     //
     SctPrint (L"Re-insert media into device ");
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       SctPrint (DevicePathStr);
 
@@ -2343,7 +2343,7 @@ AssertionPoint3:
     // Display instruction to tell user to make media write-protected
     //
     SctPrint (L"Turn media in device into write-protected ");
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       SctPrint (DevicePathStr);
 
@@ -2443,7 +2443,7 @@ AssertionPoint3:
     //
 
     SctPrint (L"Turn media write-protected off ");
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       SctPrint (DevicePathStr);
 

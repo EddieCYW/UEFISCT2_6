@@ -145,7 +145,7 @@ DevicePathFromTextConvertTextToDeviceNodeFunctionTest (
 
   pDevicePath       = DevicePathFromText->ConvertTextToDeviceNode (text1);
 
-  if (SctCompareMem (pDevicePath, pDevicePath1, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pDevicePath1)) == 0) {
+  if (SctCompareMem (pDevicePath, pDevicePath1, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pDevicePath1)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -175,7 +175,7 @@ DevicePathFromTextConvertTextToDeviceNodeFunctionTest (
 
   pDevicePath             = DevicePathFromText->ConvertTextToDeviceNode (text2);
 
-  if (SctCompareMem (pDevicePath, pDevicePath2, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pDevicePath2)) == 0) {
+  if (SctCompareMem (pDevicePath, pDevicePath2, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pDevicePath2)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -210,7 +210,7 @@ DevicePathFromTextConvertTextToDeviceNodeFunctionTest (
 
   pDevicePath                     = DevicePathFromText->ConvertTextToDeviceNode (text3);
 
-  if (SctCompareMem (pDevicePath, pDevicePath3, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pDevicePath3)) == 0) {
+  if (SctCompareMem (pDevicePath, pDevicePath3, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pDevicePath3)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -290,7 +290,7 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  SetDevicePathEndNode (pDevicePath1);
+  SctSetDevicePathEndNode (pDevicePath1);
 
   pDevicePath2  = DevicePathUtilities->CreateDeviceNode (PCIRootNodeType, PCIRootNodeSubType, PCIRootNodeLength);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->HID  = EFI_PNP_ID (0x0A03);
@@ -343,7 +343,7 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  SetDevicePathEndNode (pDevicePath1);
+  SctSetDevicePathEndNode (pDevicePath1);
 
   pDevicePath2  = DevicePathUtilities->CreateDeviceNode (PCIRootNodeType, PCIRootNodeSubType, PCIRootNodeLength);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->HID  = EFI_PNP_ID (0x0A03);
@@ -397,7 +397,7 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   if (pDevicePath1 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  SetDevicePathEndNode (pDevicePath1);
+  SctSetDevicePathEndNode (pDevicePath1);
 
   pDevicePath2  = DevicePathUtilities->CreateDeviceNode (PCIRootNodeType, PCIRootNodeSubType, PCIRootNodeLength);
   ((ACPI_HID_DEVICE_PATH *) pDevicePath2)->HID  = EFI_PNP_ID (0x0A03);

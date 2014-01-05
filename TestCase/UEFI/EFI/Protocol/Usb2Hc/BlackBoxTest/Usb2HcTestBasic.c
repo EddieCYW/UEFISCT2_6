@@ -1172,7 +1172,7 @@ Returns:
                   );
   }
 
-  Str     = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str     = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
 
   Status  = Usb2Hc->GetCapability (Usb2Hc, &MaxSpeed, &PortNumber, &Is64BitCapable);
   if (!EFI_ERROR (Status)) {
@@ -2993,7 +2993,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
 
   Status          = EFI_SUCCESS;
@@ -3206,7 +3206,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
 
   Status          = EFI_SUCCESS;
@@ -3418,7 +3418,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -3631,7 +3631,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -3827,7 +3827,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -4077,7 +4077,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -4300,7 +4300,7 @@ Returns:
   //
   // _asm jmp $
   //
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -4486,7 +4486,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -4665,7 +4665,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -4850,7 +4850,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -5026,7 +5026,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -5205,7 +5205,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -5384,7 +5384,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -5560,7 +5560,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -5736,7 +5736,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -5918,7 +5918,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;
@@ -6102,7 +6102,7 @@ Returns:
                   );
   }
 
-  Str             = DevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
+  Str             = SctDevicePathStrFromProtocol (Usb2Hc, &gEfiUsb2HcProtocolGuid);
   UseGenericGuid  = FALSE;
   Status          = EFI_SUCCESS;
   Status1         = EFI_SUCCESS;

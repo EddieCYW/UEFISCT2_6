@@ -102,7 +102,6 @@ LibMatchDevicePaths (
     IN  EFI_DEVICE_PATH_PROTOCOL *Single
     );
 
-
 //
 // Globals
 //

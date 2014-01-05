@@ -118,7 +118,7 @@ BBTestDevicePathNodeConformanceAutoTest (
 
   DevicePath  = (EFI_DEVICE_PATH_PROTOCOL *) ClientInterface;
 
-  DevStr      = DevicePathToStr (DevicePath);
+  DevStr      = SctDevicePathToStr (DevicePath);
   StandardLib->RecordMessage (
                 StandardLib,
                 EFI_VERBOSE_LEVEL_QUIET,
@@ -127,10 +127,10 @@ BBTestDevicePathNodeConformanceAutoTest (
                 );
   gtBS->FreePool (DevStr);
 
-  while (!IsDevicePathEnd (DevicePath)) {
-    Type    = (UINT16) DevicePathType (DevicePath);
-    SubType = (UINT16) DevicePathSubType (DevicePath);
-    Length  = (UINT16) DevicePathNodeLength (DevicePath);
+  while (!SctIsDevicePathEnd (DevicePath)) {
+    Type    = (UINT16) SctDevicePathType (DevicePath);
+    SubType = (UINT16) SctDevicePathSubType (DevicePath);
+    Length  = (UINT16) SctDevicePathNodeLength (DevicePath);
 
     //
     // Assertion Point 3.1.2.2
@@ -1136,15 +1136,15 @@ BBTestDevicePathNodeConformanceAutoTest (
                     );
     }
 
-    DevicePath = NextDevicePathNode (DevicePath);
+    DevicePath = SctNextDevicePathNode (DevicePath);
   }
   //
   // Assertion Point 3.1.2.1
   // Check End of Hardware Device Path: End Entire Device Path
   //
-  Type    = (UINT16) DevicePathType (DevicePath);
-  SubType = (UINT16) DevicePathSubType (DevicePath);
-  Length  = (UINT16) DevicePathNodeLength (DevicePath);
+  Type    = (UINT16) SctDevicePathType (DevicePath);
+  SubType = (UINT16) SctDevicePathSubType (DevicePath);
+  Length  = (UINT16) SctDevicePathNodeLength (DevicePath);
 
   if ((Type == 0x7F) && (SubType == 0xFF)) {
     if (Length == 4) {

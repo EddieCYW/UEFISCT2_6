@@ -200,7 +200,7 @@ BBTestReceiveDataConformanceAutoTest (
         // Search for Ata device Node in devicepath
         //
         DevPathNode = DevicePath;
-        while (!IsDevicePathEnd(DevPathNode)) {
+        while (!SctIsDevicePathEnd(DevPathNode)) {
           DevicePathNodeStr = DevicePathToText->ConvertDeviceNodeToText (
                                                   DevPathNode,
                                                   FALSE,
@@ -215,7 +215,7 @@ BBTestReceiveDataConformanceAutoTest (
           SctFreePool (DevicePathNodeStr);
           DevicePathNodeStr = NULL;
 
-          DevPathNode = NextDevicePathNode(DevPathNode);
+          DevPathNode = SctNextDevicePathNode(DevPathNode);
         }
       }
     }       

@@ -124,7 +124,7 @@ BBTestQueryModeConformanceAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -321,7 +321,7 @@ BBTestSetModeConformanceAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -534,7 +534,7 @@ BBTestSetAttributeConformanceAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -732,7 +732,7 @@ BBTestSetCursorPositionConformanceAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,

@@ -244,7 +244,7 @@ LoadFileDriverBindingStart (
   //
   SctPrint (L"\n");
   
-  mLoadFileDriverDevicePath = DuplicateDevicePath (RemainingDevicePath);
+  mLoadFileDriverDevicePath = SctDuplicateDevicePath (RemainingDevicePath);
   
   Status = gtBS->InstallMultipleProtocolInterfaces (
                   &Controller,
@@ -487,7 +487,7 @@ ImageTestLoadFile (
     return EFI_INVALID_PARAMETER;
   }
   
-  if (EfiDevicePathNodeLength (FilePath) != sizeof (VENDOR_DEVICE_PATH)
+  if (SctDevicePathNodeLength (FilePath) != sizeof (VENDOR_DEVICE_PATH)
       || (FilePath->Type != HARDWARE_DEVICE_PATH)
       || (FilePath->SubType != HW_VENDOR_DP)) {
     //return EFI_NO_SUCH_MEDIA;

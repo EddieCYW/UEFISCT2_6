@@ -55,6 +55,7 @@ COMPONENT_TYPE  = LIBRARY
 [sources.common]
   Alloc.c
   Debug.c
+  DevicePath.c
   Error.c
   File.c
   Guid.c

@@ -2618,8 +2618,8 @@ Returns:
                             );
 
       Context->FHandle       = NewDir;
-      Context->DevicePath    = DuplicateDevicePath (ItemContext->DevicePath);
-      Context->DevicePathStr = LibDevicePathToStr (Context->DevicePath);
+      Context->DevicePath    = SctDuplicateDevicePath (ItemContext->DevicePath);
+      Context->DevicePathStr = SctDevicePathToStr (Context->DevicePath);
       Context->IsDir         = (BOOLEAN)((DirInfo->Attribute & EFI_FILE_DIRECTORY) == EFI_FILE_DIRECTORY);
 
       DialogItem = AllocateLogFileDialogItem (DirDialog, Buffer, Context);
@@ -2770,7 +2770,7 @@ Returns:
                                       DirDialog->FileName
                                       );
 
-          DialogContext->DevicePath = DuplicateDevicePath (ResultContext->DevicePath);
+          DialogContext->DevicePath = SctDuplicateDevicePath (ResultContext->DevicePath);
           RET = TRUE;
           break;
         }
@@ -2805,7 +2805,7 @@ Returns:
           //
           //set the FileName and DevicePath
           //
-          DialogContext->DevicePath = DuplicateDevicePath (ResultContext->DevicePath);
+          DialogContext->DevicePath = SctDuplicateDevicePath (ResultContext->DevicePath);
           if (SctStrBeginWith (DirDialog->FileName, L"\\")) {
             DialogContext->FileName = SctStrDuplicate (DirDialog->FileName);
           } else {
@@ -2881,7 +2881,7 @@ Returns:
         //
         //set devicepath
         //
-        ContextCopy.DevicePath = DuplicateDevicePath (ResultContext->DevicePath);
+        ContextCopy.DevicePath = SctDuplicateDevicePath (ResultContext->DevicePath);
         if ( ContextCopy.DevicePath == NULL ) {
           FHandle->Close(FHandle);
           break;
@@ -2985,7 +2985,7 @@ Returns:
                                       );
         }
 
-        DialogContext->DevicePath = DuplicateDevicePath (ResultContext->DevicePath);
+        DialogContext->DevicePath = SctDuplicateDevicePath (ResultContext->DevicePath);
         RET = TRUE;
         FHandle->Close (FHandle);
         break;
@@ -3165,7 +3165,7 @@ Returns:
     Context->Handle         = FsHandles[Index];
     Context->FHandle        = SctOpenRoot (Context->Handle);
     Context->DevicePath     = DevicePathFromHandle (Context->Handle);
-    Context->DevicePathStr  = LibDevicePathToStr (Context->DevicePath);
+    Context->DevicePathStr  = SctDevicePathToStr (Context->DevicePath);
     Context->FileName       = SctStrDuplicate (L"\\");
     Context->IsDir          = TRUE;
     Context->RootContext    = TRUE;
@@ -3232,8 +3232,8 @@ Returns:
 
     Context->Handle        = LoadFileHandles[Index];
     Context->FHandle       = SctOpenRoot (Context->Handle);
-    Context->DevicePath    = DevicePathFromHandle (Context->Handle);
-    Context->DevicePathStr = LibDevicePathToStr (Context->DevicePath);
+    Context->DevicePath    = SctDevicePathFromHandle (Context->Handle);
+    Context->DevicePathStr = SctDevicePathToStr (Context->DevicePath);
     Context->FileName      = SctStrDuplicate (L"\\");
     Context->IsDir         = TRUE;
     Context->RootContext   = TRUE;
@@ -3334,7 +3334,7 @@ Returns:
       if (DialogContext->FileName != NULL) {
         tBS->FreePool (DialogContext->FileName);
       }
-      DialogContext->DevicePath = DuplicateDevicePath (ResultContext->DevicePath);
+      DialogContext->DevicePath = SctDuplicateDevicePath (ResultContext->DevicePath);
       DialogContext->FileName   = SctStrDuplicate (L"\\");
       break;
     }
@@ -3475,8 +3475,8 @@ Returns:
   //
   Context->Handle         = FsHandles;
   Context->FHandle        = SctOpenRoot (Context->Handle);
-  Context->DevicePath     = DevicePathFromHandle (Context->Handle);
-  Context->DevicePathStr  = LibDevicePathToStr (Context->DevicePath);
+  Context->DevicePath     = SctDevicePathFromHandle (Context->Handle);
+  Context->DevicePathStr  = SctDevicePathToStr (Context->DevicePath);
 
   //
   //Append dir path

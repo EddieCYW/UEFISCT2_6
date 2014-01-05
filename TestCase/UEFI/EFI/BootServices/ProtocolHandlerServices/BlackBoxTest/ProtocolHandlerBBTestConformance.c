@@ -2864,7 +2864,7 @@ BBTestLocateDevicePathConsistencyTest (
   // Checkpoint 3:
   // 3.11.2.3   If DevicePath is a multi-instance device path, the function will operate on the first instance
   //
-  DevicePath3 = AppendDevicePath (DevicePath1, DevicePath2);
+  DevicePath3 = SctAppendDevicePath (DevicePath1, DevicePath2);
   Status = gtBS->LocateDevicePath (
                    &mTestProtocol1Guid,
                    &DevicePath3,

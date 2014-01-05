@@ -89,9 +89,6 @@ extern EFI_TPL TplArray [TPL_ARRAY_SIZE];
 
 #define MAX_STRING_LEN      250
 
-#define DevicePathNodeLength(a)     ( ((a)->Length[0]) | ((a)->Length[1] << 8) )
-
-
 #define DEPENDENCY_DIR_NAME   L"Dependency\\ProtocolHandlerServicesBBTest"
 
 

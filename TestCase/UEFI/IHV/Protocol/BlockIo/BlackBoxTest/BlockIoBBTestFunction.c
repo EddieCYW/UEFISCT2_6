@@ -249,7 +249,7 @@ BBTestReadBlocksFunctionAutoTest (
 
   LocateDevicePathFromBlockIo (BlockIo, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -514,7 +514,7 @@ BBTestWriteBlocksFunctionAutoTest (
   //
   LocateDevicePathFromBlockIo (BlockIo, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -1166,7 +1166,7 @@ BBTestMediaIntegrityManualTest (
   //
   LocateDevicePathFromBlockIo (BlockIo, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -1209,7 +1209,7 @@ BBTestMediaIntegrityManualTest (
         SctPrint (L"Insert media into device ");
       }
 
-      DevicePathStr = DevicePathToStr (DevicePath);
+      DevicePathStr = SctDevicePathToStr (DevicePath);
       if (DevicePathStr != NULL) {
         SctPrint (DevicePathStr);
 
@@ -1308,7 +1308,7 @@ AssertionPoint2:
       SctPrint (L"Insert media into device ");
     }
 
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       SctPrint (DevicePathStr);
 
@@ -1442,7 +1442,7 @@ AssertionPoint2:
       SctPrint (L"Remove media from device ");
     }
 
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       SctPrint (DevicePathStr);
 

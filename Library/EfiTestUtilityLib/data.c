@@ -58,49 +58,6 @@ Abstract:
 #include "lib.h"
 
 //
-// Root device path
-//
-
-//EFI_DEVICE_PATH_PROTOCOL RootDevicePath[] = {
-//    END_DEVICE_PATH_TYPE, END_ENTIRE_DEVICE_PATH_SUBTYPE, END_DEVICE_PATH_LENGTH, 0
-//};
-
-typedef struct {
-  ACPI_HID_DEVICE_PATH              AcpiDevicePath;
-  EFI_DEVICE_PATH_PROTOCOL          EndDevicePath;
-} EFI_PCI_ROOT_BRIDGE_DEVICE_PATH;
-
-EFI_PCI_ROOT_BRIDGE_DEVICE_PATH RootDevicePathTemp = {
-  {
-    ACPI_DEVICE_PATH,
-    ACPI_DP,
-    (UINT8) (sizeof(ACPI_HID_DEVICE_PATH)),
-    (UINT8) ((sizeof(ACPI_HID_DEVICE_PATH)) >> 8),
-    EISA_PNP_ID(0x0A03),
-    0
-  },
-  {
-    END_DEVICE_PATH_TYPE,
-    END_ENTIRE_DEVICE_PATH_SUBTYPE,
-    END_DEVICE_PATH_LENGTH,
-    0
-  }
-};
-
-EFI_DEVICE_PATH_PROTOCOL  *RootDevicePath = (EFI_DEVICE_PATH_PROTOCOL *)&RootDevicePathTemp;
-
-
-
-EFI_DEVICE_PATH_PROTOCOL EndDevicePath[] = {
-    END_DEVICE_PATH_TYPE, END_ENTIRE_DEVICE_PATH_SUBTYPE, END_DEVICE_PATH_LENGTH, 0
-};
-
-EFI_DEVICE_PATH_PROTOCOL EndInstanceDevicePath[] = {
-    END_DEVICE_PATH_TYPE, END_INSTANCE_DEVICE_PATH_SUBTYPE, END_DEVICE_PATH_LENGTH, 0
-};
-
-
-//
 // EFI IDs
 //
 

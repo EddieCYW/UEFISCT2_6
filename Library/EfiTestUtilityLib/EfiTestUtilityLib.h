@@ -144,10 +144,6 @@ extern EFI_GUID gtEfiSalSystemTableGuid;
 
 #define LanguageCodeEnglish         "eng"
 
-extern EFI_DEVICE_PATH_PROTOCOL     *RootDevicePath ;
-extern EFI_DEVICE_PATH_PROTOCOL     EndDevicePath[];
-extern EFI_DEVICE_PATH_PROTOCOL     EndInstanceDevicePath[];
-
 //
 // Other public data in the EFI library
 //
@@ -245,85 +241,6 @@ LibOpenRoot (
 EFI_FILE_INFO *
 LibFileInfo (
   IN EFI_FILE_HANDLE                FHand
-  );
-
-BOOLEAN
-LibMatchDevicePaths (
-  IN  EFI_DEVICE_PATH_PROTOCOL      *Multi,
-  IN  EFI_DEVICE_PATH_PROTOCOL      *Single
-  );
-
-EFI_DEVICE_PATH_PROTOCOL *
-DevicePathFromHandle (
-  IN EFI_HANDLE                     Handle
-  );
-
-UINT16 *
-DevicePathStrFromProtocol (
-  IN VOID        *Protocol,
-  IN EFI_GUID    *Guid
-  );
-
-EFI_DEVICE_PATH_PROTOCOL *
-DevicePathInstance (
-  IN OUT EFI_DEVICE_PATH_PROTOCOL   **DevicePath,
-  OUT UINTN                         *Size
-  );
-
-UINTN
-DevicePathInstanceCount (
-  IN EFI_DEVICE_PATH_PROTOCOL       *DevicePath
-  );
-
-EFI_DEVICE_PATH_PROTOCOL *
-AppendDevicePath (
-  IN EFI_DEVICE_PATH_PROTOCOL       *Src1,
-  IN EFI_DEVICE_PATH_PROTOCOL       *Src2
-  );
-
-EFI_DEVICE_PATH_PROTOCOL *
-AppendDevicePathNode (
-  IN EFI_DEVICE_PATH_PROTOCOL       *Src1,
-  IN EFI_DEVICE_PATH_PROTOCOL       *Src2
-  );
-
-EFI_DEVICE_PATH_PROTOCOL*
-AppendDevicePathInstance (
-  IN EFI_DEVICE_PATH_PROTOCOL       *Src,
-  IN EFI_DEVICE_PATH_PROTOCOL       *Instance
-  );
-
-EFI_DEVICE_PATH_PROTOCOL *
-FileDevicePath (
-  IN EFI_HANDLE                     Device  OPTIONAL,
-  IN CHAR16                         *FileName
-  );
-
-UINTN
-DevicePathSize (
-  IN EFI_DEVICE_PATH_PROTOCOL       *DevPath
-  );
-
-EFI_DEVICE_PATH_PROTOCOL *
-DuplicateDevicePath (
-  IN EFI_DEVICE_PATH_PROTOCOL       *DevPath
-  );
-
-EFI_DEVICE_PATH_PROTOCOL *
-UnpackDevicePath (
-  IN EFI_DEVICE_PATH_PROTOCOL       *DevPath
-  );
-
-EFI_STATUS
-LibDevicePathToInterface (
-  IN EFI_GUID                       *Protocol,
-  IN EFI_DEVICE_PATH_PROTOCOL       *FilePath,
-  OUT VOID                          **Interface
-  );
-
-CHAR16 *
-DevicePathToStr (
-  EFI_DEVICE_PATH_PROTOCOL          *DevPath
   );
 
 //

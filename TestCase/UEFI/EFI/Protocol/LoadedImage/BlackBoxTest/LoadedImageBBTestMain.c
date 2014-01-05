@@ -1069,7 +1069,7 @@ LoadedImageTestComposeSimpleFilePath (
 
   EntireFileName = SctPoolPrint (L"%s\\%s\\%s", FileNamePath, DEPENDENCY_DIR_NAME, FileName);
 
-  *FilePath = FileDevicePath (LoadImage->DeviceHandle, EntireFileName);
+  *FilePath = SctFileDevicePath (LoadImage->DeviceHandle, EntireFileName);
 
   SctFreePool (DevicePath);
   SctFreePool (FileNamePath);

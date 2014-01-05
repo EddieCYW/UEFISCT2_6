@@ -711,7 +711,7 @@ Returns:
   //
   // DevicePath & FileName
   //
-  Private->DevicePath = EfiDuplicateDevicePath (DevicePath);
+  Private->DevicePath = SctDuplicateDevicePath (DevicePath);
   if (Private->DevicePath == NULL) {
     TrlFreePointer (Private);
     return EFI_OUT_OF_RESOURCES;

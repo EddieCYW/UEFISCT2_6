@@ -497,7 +497,7 @@ DeviceConfigInsert (
   //
   // Record the device path
   //
-  DevicePathStr = LibDevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
 
   Status = DeviceConfigSetString (
              IniFile,
@@ -996,7 +996,7 @@ DeviceConfigScan (
     //
     // Print out the device information
     //
-    DevicePathStr = LibDevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     TempStr = SctPoolPrint (L"%x: %s\n", Index + 1, DevicePathStr);
     tBS->FreePool (DevicePathStr);
 
@@ -1306,7 +1306,7 @@ DeviceConfigScanDrivers (
                          (VOID **)&LoadedImage
                          );
           if (!EFI_ERROR (Status)) {
-            FilePathStr = LibDevicePathToStr (LoadedImage->FilePath);
+            FilePathStr = SctDevicePathToStr (LoadedImage->FilePath);
             TempStr = SctPoolPrint (L"  Managed by driver : %s\n", FilePathStr);
             tBS->FreePool (FilePathStr);
 

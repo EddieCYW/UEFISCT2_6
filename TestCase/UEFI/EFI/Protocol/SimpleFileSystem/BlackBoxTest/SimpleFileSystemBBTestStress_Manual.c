@@ -366,7 +366,7 @@ BBTestSimpleFileSytemExtensiveTest1 (
         // found a never tested one. add it into Tested Device Path repository.
         //
 
-        NewDevicePath = DuplicateDevicePath (DevicePath);
+        NewDevicePath = SctDuplicateDevicePath (DevicePath);
         if (NewDevicePath == NULL) {
           continue;
         }
@@ -1020,7 +1020,7 @@ BBTestSimpleFileSytemExtensiveTest2 (
         // found a never tested one. add it into Tested Device Path repository.
         //
 
-        NewDevicePath = DuplicateDevicePath (DevicePath);
+        NewDevicePath = SctDuplicateDevicePath (DevicePath);
         if (NewDevicePath == NULL) {
           continue;
         }
@@ -2119,10 +2119,10 @@ ComposeDevicePathRepository (
     // duplicate the device path content.
     //
     NewDevicePath = NULL;
-    NewDevicePath = DuplicateDevicePath (DevicePath);
+    NewDevicePath = SctDuplicateDevicePath (DevicePath);
     if (NewDevicePath == NULL) {
       SctPrint (
-        L"%a,%d: Generic Error: DuplicateDevicePath fail",
+        L"%a,%d: Generic Error: SctDuplicateDevicePath fail",
         __FILE__,
         (UINTN)__LINE__
         );
@@ -2168,7 +2168,7 @@ AllFileSystemTested (
       //
       if (!SctCompareMem (WholeDevicePathArray[Indexi],
                          TestedDevicePathArray[Indexj],
-                         DevicePathSize (WholeDevicePathArray[Indexi]))) {
+                         SctDevicePathSize (WholeDevicePathArray[Indexi]))) {
         MatchCount++;
       }
     }
@@ -2202,7 +2202,7 @@ IsDevicePathInRepository (
 
     if (!SctCompareMem (DevicePathArray[Index],
                         DevicePath,
-                        DevicePathSize (DevicePathArray[Index]))) {
+                        SctDevicePathSize (DevicePathArray[Index]))) {
       return TRUE;
     }
   }
@@ -2616,7 +2616,7 @@ PrintDevicePathAndAskForInput (
 
   DevicePathString = NULL;
   if (DevicePath != NULL) {
-    DevicePathString = DevicePathToStr (DevicePath);
+    DevicePathString = SctDevicePathToStr (DevicePath);
   }
 
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);

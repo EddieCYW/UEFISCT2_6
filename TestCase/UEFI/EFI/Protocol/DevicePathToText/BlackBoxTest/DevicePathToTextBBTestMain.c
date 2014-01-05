@@ -590,7 +590,7 @@ CreateDeviceNode (
   if (DevicePath != NULL) {
      DevicePath->Type    = NodeType;
      DevicePath->SubType = NodeSubType;
-     SetDevicePathNodeLength (DevicePath, NodeLength);
+     SctSetDevicePathNodeLength (DevicePath, NodeLength);
   }
 
   return DevicePath;
@@ -608,7 +608,7 @@ CreateEndDeviceNode(
   if (DevPath == NULL) {
     return NULL;
   }
-  SetDevicePathEndNode (DevPath);
+  SctSetDevicePathEndNode (DevPath);
 
   return DevPath;
 }
@@ -3559,7 +3559,7 @@ SctConvertTextToDevicePath (
       goto ConvertError;
     }
 
-    NewDevicePath = AppendDevicePathNode (DevicePath, DeviceNode);
+    NewDevicePath = SctAppendDevicePathNode (DevicePath, DeviceNode);
     SctFreePool (DevicePath);
     SctFreePool (DeviceNode);
     DevicePath    = NewDevicePath;

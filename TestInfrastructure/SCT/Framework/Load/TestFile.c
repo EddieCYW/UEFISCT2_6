@@ -582,15 +582,15 @@ Routine Description:
   //
   // Add the file path to the device path
   //
-  FileNode = FileDevicePath (NULL, FileName);
+  FileNode = SctFileDevicePath (NULL, FileName);
   if (FileNode == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"FileDevicePath: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctFileDevicePath: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
-  FilePath = AppendDevicePath (DevicePath, FileNode);
+  FilePath = SctAppendDevicePath (DevicePath, FileNode);
   if (FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"AppendDevicePath: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctAppendDevicePath: Out of resources"));
     tBS->FreePool (FileNode);
     return EFI_OUT_OF_RESOURCES;
   }
@@ -896,7 +896,7 @@ Routine Description:
   (*TestFile)->Signature    = EFI_SCT_TEST_FILE_SIGNATURE;
   (*TestFile)->Revision     = EFI_SCT_TEST_FILE_REVISION;
 
-  (*TestFile)->DevicePath   = DuplicateDevicePath (DevicePath);
+  (*TestFile)->DevicePath   = SctDuplicateDevicePath (DevicePath);
   (*TestFile)->FileName     = SctStrDuplicate (FileName);
   (*TestFile)->ImageHandle  = ImageHandle;
   (*TestFile)->Type         = Type;

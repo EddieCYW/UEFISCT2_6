@@ -138,7 +138,7 @@ BBTestGetModeFunctionAutoTest (
   //
   Status = LocateDevicePathFromUgaDraw (UgaDraw, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -823,7 +823,7 @@ BBTestEfiUgaVideoFillFunctionAutoTest (
   //
   Status = LocateDevicePathFromUgaDraw (UgaDraw, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -1419,7 +1419,7 @@ BBTestEfiUgaVideoBltBufferFunctionAutoTest (
   //
   Status = LocateDevicePathFromUgaDraw (UgaDraw, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -2127,7 +2127,7 @@ BBTestEfiUgaVideoToVideoFunctionAutoTest (
   //
   Status = LocateDevicePathFromUgaDraw (UgaDraw, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,

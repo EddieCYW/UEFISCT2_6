@@ -600,7 +600,7 @@ ComposeFilePath (
   SctFreePool (FilePath);
   SctFreePool (DevicePath);
 
-  *FileDevPath = FileDevicePath (LoadImage->DeviceHandle, EntireFileName);
+  *FileDevPath = SctFileDevicePath (LoadImage->DeviceHandle, EntireFileName);
 
   SctFreePool (EntireFileName);
 

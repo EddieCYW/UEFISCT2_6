@@ -141,12 +141,7 @@ Routine Description:
   //
   // Duplicate the device path and remove the file path from that
   //
-  if (Arg->ParentDevicePath == NULL) {
-    ShellFreeFileList (&FileList);
-    return EFI_INVALID_PARAMETER;
-  }
-
-  *DevicePath = DuplicateDevicePath (Arg->ParentDevicePath);
+  *DevicePath = SctShellGetDevicePathFromFilePath ((CHAR16 *) Arg->FullName);
   if (*DevicePath == NULL) {
     ShellFreeFileList (&FileList);
     return EFI_OUT_OF_RESOURCES;
@@ -307,8 +302,8 @@ Routine Description:
   UINTN   DevPathSize1;
   UINTN   DevPathSize2;
 
-  DevPathSize1 = DevicePathSize (DevicePath1);
-  DevPathSize2 = DevicePathSize (DevicePath2);
+  DevPathSize1 = SctDevicePathSize (DevicePath1);
+  DevPathSize2 = SctDevicePathSize (DevicePath2);
 
   if (DevPathSize1 > DevPathSize2) {
     return 1;
@@ -433,7 +428,7 @@ Routine Description:
   //
   // Copy device path into a new instance
   //
-  *DevicePath = DuplicateDevicePath (TempDevicePath);
+  *DevicePath = SctDuplicateDevicePath (TempDevicePath);
   if (*DevicePath == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

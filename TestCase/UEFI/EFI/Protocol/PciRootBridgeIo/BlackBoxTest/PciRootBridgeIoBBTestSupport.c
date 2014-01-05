@@ -133,7 +133,7 @@ PrintRootBridgeDevPath (
     return EFI_INVALID_PARAMETER;
   }
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

@@ -132,7 +132,7 @@ Attributes_Stress (
 //  }
 
 
-  DevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  DevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
   if (DevicePathStr == NULL) {
     StandardLib->RecordMessage (
                    StandardLib,

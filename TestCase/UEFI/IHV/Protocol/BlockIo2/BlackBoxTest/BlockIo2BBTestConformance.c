@@ -150,7 +150,7 @@ BBTestReadBlocksExConformanceAutoTest (
   //
   LocateDevicePathFromBlockIo2 (BlockIo2, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -1114,7 +1114,7 @@ BBTestWriteBlocksExConformanceAutoTest (
   //
   LocateDevicePathFromBlockIo2 (BlockIo2, &DevicePath, StandardLib);
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                    StandardLib,

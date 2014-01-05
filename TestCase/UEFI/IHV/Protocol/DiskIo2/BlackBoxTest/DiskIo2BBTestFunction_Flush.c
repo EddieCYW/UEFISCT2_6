@@ -460,7 +460,7 @@ BBTestFlushDiskExFunctionAutoTest (
   //
   LocateDevicePathFromDiskIo2 (DiskIo2, &DevicePath, StandardLib);
   
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     StandardLib->RecordMessage (
                   StandardLib,

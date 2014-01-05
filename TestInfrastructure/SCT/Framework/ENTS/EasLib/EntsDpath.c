@@ -54,7 +54,7 @@ Abstract:
   MBR & Device Path functions
 
 --*/
-#include "Efi.h"
+#include "SctLib.h"
 #include "EntsLib.h"
 #include "EntsLibPlat.h"
 
@@ -162,7 +162,7 @@ _DevPathVendor (
   ASSERT (DevPath != NULL);
 
   Vendor = DevPath;
-  switch (DevicePathType (&Vendor->Header)) {
+  switch (SctDevicePathType (&Vendor->Header)) {
   case HARDWARE_DEVICE_PATH:
     Type = L"Hw";
     break;
@@ -251,7 +251,7 @@ _DevPathExtendedAcpi (
   UIDSTRIdx    = 0;
   CIDSTRIdx    = 0;
   ExtendedAcpi = DevPath;
-  Length       = DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) ExtendedAcpi);
+  Length       = SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) ExtendedAcpi);
 
   ASSERT (Length >= 19);
   AsChar8Array = (CHAR8 *) ExtendedAcpi;
@@ -350,7 +350,7 @@ _DevPathAdrAcpi (
   UINT16                  AdditionalAdrCount;
 
   AcpiAdr            = DevPath;
-  Length             = DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) AcpiAdr);
+  Length             = SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) AcpiAdr);
   AdditionalAdrCount = (Length - 8) / 4;
 
   EntsCatPrint (Str, L"AcpiAdr(%x", AcpiAdr->ADR);
@@ -720,7 +720,7 @@ _DevPathFilePath (
   ASSERT (DevPath != NULL);
 
   Fp      = DevPath;
-  Length  = EfiDevicePathNodeLength (((EFI_DEVICE_PATH_PROTOCOL *) DevPath)) - 4;
+  Length  = SctDevicePathNodeLength (((EFI_DEVICE_PATH_PROTOCOL *) DevPath)) - 4;
   NewPath = EntsAllocateZeroPool (Length + sizeof (CHAR16));
   EntsCopyMem (NewPath, Fp->PathName, Length);
   EntsStrTrim (NewPath, L' ');
@@ -898,8 +898,8 @@ Returns:
   // Search for the end of the device path structure
   //
   Start = DevPath;
-  while (!IsDevicePathEnd (DevPath)) {
-    DevPath = NextDevicePathNode (DevPath);
+  while (!SctIsDevicePathEnd (DevPath)) {
+    DevPath = SctNextDevicePathNode (DevPath);
   }
   //
   // Compute the size
@@ -983,14 +983,14 @@ Returns:
   Src   = DevPath;
   Size  = 0;
   for (;;) {
-    Size += DevicePathNodeLength (Src);
+    Size += SctDevicePathNodeLength (Src);
     Size += ALIGN_SIZE (Size);
 
-    if (IsDevicePathEnd (Src)) {
+    if (SctIsDevicePathEnd (Src)) {
       break;
     }
 
-    Src = NextDevicePathNode (Src);
+    Src = SctNextDevicePathNode (Src);
   }
   //
   // Allocate space for the unpacked path
@@ -1006,18 +1006,18 @@ Returns:
     Src   = DevPath;
     Dest  = NewPath;
     for (;;) {
-      Size = DevicePathNodeLength (Src);
+      Size = SctDevicePathNodeLength (Src);
       EntsCopyMem (Dest, Src, Size);
       Size += ALIGN_SIZE (Size);
-      SetDevicePathNodeLength (Dest, Size);
+      SctSetDevicePathNodeLength (Dest, Size);
       Dest->Type |= EFI_DP_TYPE_UNPACKED;
       Dest = (EFI_DEVICE_PATH_PROTOCOL *) (((UINT8 *) Dest) + Size);
 
-      if (IsDevicePathEnd (Src)) {
+      if (SctIsDevicePathEnd (Src)) {
         break;
       }
 
-      Src = NextDevicePathNode (Src);
+      Src = SctNextDevicePathNode (Src);
     }
   }
 
@@ -1051,7 +1051,7 @@ EntsDevicePathToStr (
   // Process each device path node
   //
   DevPathNode = DevPath;
-  while (!IsDevicePathEnd(DevPathNode)) {
+  while (!SctIsDevicePathEnd(DevPathNode)) {
 
     //
     // Find the handler to dump this device path node
@@ -1060,8 +1060,8 @@ EntsDevicePathToStr (
     DumpNode = NULL;
     for (Index = 0; DevPathTable[Index].Function; Index += 1) {
 
-      if (DevicePathType(DevPathNode) == DevPathTable[Index].Type &&
-          DevicePathSubType(DevPathNode) == DevPathTable[Index].SubType) {
+      if (SctDevicePathType (DevPathNode) == DevPathTable[Index].Type &&
+          SctDevicePathSubType (DevPathNode) == DevPathTable[Index].SubType) {
         DumpNode = DevPathTable[Index].Function;
         break;
       }
@@ -1089,7 +1089,7 @@ EntsDevicePathToStr (
     //
     // Next device path node
     //
-    DevPathNode = NextDevicePathNode(DevPathNode);
+    DevPathNode = SctNextDevicePathNode(DevPathNode);
   }
 
   //

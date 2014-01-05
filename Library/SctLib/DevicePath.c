@@ -1,107 +1,124 @@
 /*++
-  The material contained herein is not a license, either        
-  expressly or impliedly, to any intellectual property owned    
-  or controlled by any of the authors or developers of this     
-  material or to any contribution thereto. The material         
-  contained herein is provided on an "AS IS" basis and, to the  
-  maximum extent permitted by applicable law, this information  
-  is provided AS IS AND WITH ALL FAULTS, and the authors and    
-  developers of this material hereby disclaim all other         
-  warranties and conditions, either express, implied or         
-  statutory, including, but not limited to, any (if any)        
-  implied warranties, duties or conditions of merchantability,  
-  of fitness for a particular purpose, of accuracy or           
-  completeness of responses, of results, of workmanlike         
-  effort, of lack of viruses and of lack of negligence, all     
-  with regard to this material and any contribution thereto.    
-  Designers must not rely on the absence or characteristics of  
-  any features or instructions marked "reserved" or             
-  "undefined." The Unified EFI Forum, Inc. reserves any         
-  features or instructions so marked for future definition and  
-  shall have no responsibility whatsoever for conflicts or      
-  incompatibilities arising from future changes to them. ALSO,  
-  THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,  
-  QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR            
-  NON-INFRINGEMENT WITH REGARD TO THE TEST SUITE AND ANY        
-  CONTRIBUTION THERETO.                                         
-                                                                
-  IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THIS MATERIAL OR  
-  ANY CONTRIBUTION THERETO BE LIABLE TO ANY OTHER PARTY FOR     
-  THE COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST      
-  PROFITS, LOSS OF USE, LOSS OF DATA, OR ANY INCIDENTAL,        
-  CONSEQUENTIAL, DIRECT, INDIRECT, OR SPECIAL DAMAGES WHETHER   
-  UNDER CONTRACT, TORT, WARRANTY, OR OTHERWISE, ARISING IN ANY  
-  WAY OUT OF THIS OR ANY OTHER AGREEMENT RELATING TO THIS       
-  DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF     
-  THE POSSIBILITY OF SUCH DAMAGES.                              
-                                                                
-  Copyright 2006 - 2013 Unified EFI, Inc. All  
-  Rights Reserved, subject to all existing rights in all        
-  matters included within this Test Suite, to which United      
-  EFI, Inc. makes no claim of right.                            
-                                                                
-  Copyright (c) 2010 - 2013, Intel Corporation. All rights reserved.<BR>   
-   
---*/
-/*++
+  The material contained herein is not a license, either
+  expressly or impliedly, to any intellectual property owned
+  or controlled by any of the authors or developers of this
+  material or to any contribution thereto. The material
+  contained herein is provided on an "AS IS" basis and, to the
+  maximum extent permitted by applicable law, this information
+  is provided AS IS AND WITH ALL FAULTS, and the authors and
+  developers of this material hereby disclaim all other
+  warranties and conditions, either express, implied or
+  statutory, including, but not limited to, any (if any)
+  implied warranties, duties or conditions of merchantability,
+  of fitness for a particular purpose, of accuracy or
+  completeness of responses, of results, of workmanlike
+  effort, of lack of viruses and of lack of negligence, all
+  with regard to this material and any contribution thereto.
+  Designers must not rely on the absence or characteristics of
+  any features or instructions marked "reserved" or
+  "undefined." The Unified EFI Forum, Inc. reserves any
+  features or instructions so marked for future definition and
+  shall have no responsibility whatsoever for conflicts or
+  incompatibilities arising from future changes to them. ALSO,
+  THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+  QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR
+  NON-INFRINGEMENT WITH REGARD TO THE TEST SUITE AND ANY
+  CONTRIBUTION THERETO.
 
-Module Name:
+  IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THIS MATERIAL OR
+  ANY CONTRIBUTION THERETO BE LIABLE TO ANY OTHER PARTY FOR
+  THE COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST
+  PROFITS, LOSS OF USE, LOSS OF DATA, OR ANY INCIDENTAL,
+  CONSEQUENTIAL, DIRECT, INDIRECT, OR SPECIAL DAMAGES WHETHER
+  UNDER CONTRACT, TORT, WARRANTY, OR OTHERWISE, ARISING IN ANY
+  WAY OUT OF THIS OR ANY OTHER AGREEMENT RELATING TO THIS
+  DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF
+  THE POSSIBILITY OF SUCH DAMAGES.
 
-  dpath.c
+  Copyright 2006 - 2012 Unified EFI, Inc. All
+  Rights Reserved, subject to all existing rights in all
+  matters included within this Test Suite, to which United
+  EFI, Inc. makes no claim of right.
 
-Abstract:
-
-  MBR & Device Path functions
+  Copyright (c) 2013-2014, ARM Ltd. All rights reserved.
 
 --*/
 
-#include "lib.h"
+#include "SctLibInternal.h"
+#include "SctLib.h"
 
-#define ALIGN_SIZE(a)   ((a % MIN_ALIGNMENT_SIZE) ? MIN_ALIGNMENT_SIZE - (a % MIN_ALIGNMENT_SIZE) : 0)
-#define MAX_FILE_PATH   1024
+#define ALIGN_SIZE(a)           ((a % MIN_ALIGNMENT_SIZE) ? MIN_ALIGNMENT_SIZE - (a % MIN_ALIGNMENT_SIZE) : 0)
+#define MAX_DEVICE_PATH_LENGTH  0x00010000 // SIZE_64KB
 
+STATIC CONST EFI_DEVICE_PATH_PROTOCOL mEndInstanceDevicePath[] = {
+    END_DEVICE_PATH_TYPE, END_INSTANCE_DEVICE_PATH_SUBTYPE, END_DEVICE_PATH_LENGTH, 0
+};
 
-EFI_DEVICE_PATH_PROTOCOL *
-DevicePathFromHandle (
-  IN EFI_HANDLE       Handle
+STATIC CONST EFI_DEVICE_PATH_PROTOCOL mEndDevicePath[] = {
+    END_DEVICE_PATH_TYPE, END_ENTIRE_DEVICE_PATH_SUBTYPE, END_DEVICE_PATH_LENGTH, 0
+};
+
+STATIC
+VOID
+DumpHex (
+  IN UINTN        Indent,
+  IN UINTN        Offset,
+  IN UINTN        DataSize,
+  IN VOID         *UserData
   )
-/*++
-
-Routine Description:
-  Function retrieves the device path for the specified handle.
-
-Arguments:
-  Handle           - Handle of the device
-
-Returns:
-
-  If Handle is valid, then a pointer to the device path is returned.
-  If Handle is not valid, then NULL is returned.
-
---*/
 {
-  EFI_STATUS                  Status;
-  EFI_DEVICE_PATH_PROTOCOL    *DevicePath;
+  CHAR8           *Data, Val[50], Str[20], c;
+  UINTN           Size, Index;
 
-  Status = tBS->HandleProtocol (
-                 Handle,
-                 &gEfiDevicePathProtocolGuid,
-                 (VOID*)&DevicePath
-                 );
+  Data = UserData;
+  while (DataSize) {
+    Size = 16;
+    if (Size > DataSize) {
+        Size = DataSize;
+    }
 
-  if (EFI_ERROR(Status)) {
-    DevicePath = NULL;
+    for (Index=0; Index < Size; Index += 1) {
+        c = Data[Index];
+        Val[Index*3+0] = mHex[c>>4];
+        Val[Index*3+1] = mHex[c&0xF];
+        Val[Index*3+2] = (CHAR8)((Index == 7)?'-':' ');
+        Str[Index] = (CHAR8)((c < ' ' || c > 'z') ? '.' : c);
+    }
+
+    Val[Index*3] = 0;
+    Str[Index] = 0;
+    SctPrint (L"%*a%X: %-.48a *%a*\n", Indent, "", Offset, Val, Str);
+
+    Data += Size;
+    Offset += Size;
+    DataSize -= Size;
   }
-
-  return DevicePath;
 }
 
-
-EFI_DEVICE_PATH_PROTOCOL *
-DevicePathInstance (
-  IN OUT EFI_DEVICE_PATH_PROTOCOL   **DevicePath,
-  OUT UINTN                         *Size
+UINT16
+SctSetDevicePathNodeLength (
+  IN OUT VOID  *Node,
+  IN UINTN     Length
   )
+{
+  UINT16 *Node16;
+
+  ASSERT (Node != NULL);
+  ASSERT ((Length >= sizeof (EFI_DEVICE_PATH_PROTOCOL)) && (Length < MAX_DEVICE_PATH_LENGTH));
+
+  Node16 = (UINT16 *)&((EFI_DEVICE_PATH_PROTOCOL *)(Node))->Length[0];
+  return *Node16 = (UINT16)Length;
+}
+
+VOID
+SctSetDevicePathEndNode (
+  OUT VOID  *Node
+  )
+{
+  ASSERT (Node != NULL);
+  SctCopyMem (Node, &mEndDevicePath, sizeof (mEndDevicePath));
+}
+
 /*++
 
 Routine Description:
@@ -120,6 +137,11 @@ Returns:
   If there are no more device path instances in DevicePath, then DevicePath will be set to NULL.
 
 --*/
+EFI_DEVICE_PATH_PROTOCOL *
+SctDevicePathInstance (
+  IN OUT EFI_DEVICE_PATH_PROTOCOL   **DevicePath,
+  OUT UINTN                         *Size
+  )
 {
   EFI_DEVICE_PATH_PROTOCOL    *Start, *Next, *DevPath;
   UINTN                       Count;
@@ -136,9 +158,9 @@ Returns:
   //
 
   for (Count = 0; ; Count++) {
-    Next = NextDevicePathNode(DevPath);
+    Next = SctNextDevicePathNode(DevPath);
 
-    if (IsDevicePathEndType(DevPath)) {
+    if (SctIsDevicePathEndType(DevPath)) {
       break;
     }
 
@@ -146,7 +168,7 @@ Returns:
       //
       // BugBug: Debug code to catch bogus device paths
       //
-      DEBUG((EFI_D_ERROR, "DevicePathInstance: DevicePath %x Size %d", *DevicePath, ((UINT8 *) DevPath) - ((UINT8 *) Start) ));
+      DEBUG((EFI_D_ERROR, "SctDevicePathInstance: DevicePath %x Size %d", *DevicePath, ((UINT8 *) DevPath) - ((UINT8 *) Start) ));
       DumpHex (0, 0, ((UINT8 *) DevPath) - ((UINT8 *) Start), Start);
       break;
     }
@@ -154,14 +176,14 @@ Returns:
     DevPath = Next;
   }
 
-  ASSERT (DevicePathSubType(DevPath) == END_ENTIRE_DEVICE_PATH_SUBTYPE ||
-          DevicePathSubType(DevPath) == END_INSTANCE_DEVICE_PATH_SUBTYPE);
+  ASSERT (SctDevicePathSubType (DevPath) == END_ENTIRE_DEVICE_PATH_SUBTYPE ||
+          SctDevicePathSubType (DevPath) == END_INSTANCE_DEVICE_PATH_SUBTYPE);
 
   //
   // Set next position
   //
 
-  if (DevicePathSubType(DevPath) == END_ENTIRE_DEVICE_PATH_SUBTYPE) {
+  if (SctDevicePathSubType (DevPath) == END_ENTIRE_DEVICE_PATH_SUBTYPE) {
     Next = NULL;
   }
 
@@ -174,11 +196,6 @@ Returns:
   return Start;
 }
 
-
-UINTN
-DevicePathInstanceCount (
-  IN EFI_DEVICE_PATH_PROTOCOL      *DevicePath
-  )
 /*++
 
 Routine Description:
@@ -192,22 +209,103 @@ Returns:
   This function counts and returns the number of device path instances in DevicePath.
 
 --*/
+UINTN
+SctDevicePathInstanceCount (
+  IN EFI_DEVICE_PATH_PROTOCOL      *DevicePath
+  )
 {
   UINTN       Count, Size;
 
   Count = 0;
-  while (DevicePathInstance(&DevicePath, &Size)) {
+  while (SctDevicePathInstance (&DevicePath, &Size)) {
     Count += 1;
   }
   return Count;
 }
 
+/*++
 
+Routine Description:
+  Function retrieves the device path for the specified handle.
+
+Arguments:
+  Handle           - Handle of the device
+
+Returns:
+
+  If Handle is valid, then a pointer to the device path is returned.
+  If Handle is not valid, then NULL is returned.
+
+--*/
 EFI_DEVICE_PATH_PROTOCOL *
-AppendDevicePath (
-  IN EFI_DEVICE_PATH_PROTOCOL  *Src1,
-  IN EFI_DEVICE_PATH_PROTOCOL  *Src2
+SctDevicePathFromHandle (
+  IN EFI_HANDLE       Handle
   )
+{
+  EFI_STATUS                  Status;
+  EFI_DEVICE_PATH_PROTOCOL    *DevicePath;
+
+  Status = tBS->HandleProtocol (
+                 Handle,
+                 &gEfiDevicePathProtocolGuid,
+                 (VOID*)&DevicePath
+                 );
+
+  if (EFI_ERROR(Status)) {
+    DevicePath = NULL;
+  }
+
+  return DevicePath;
+}
+
+UINT16 *
+SctDevicePathStrFromProtocol (
+  IN VOID        *Protocol,
+  IN EFI_GUID    *Guid
+  )
+{
+  EFI_STATUS                          Status;
+  UINTN                                HandleNum;
+  EFI_HANDLE                          *HandleBuffer;
+  EFI_DEVICE_PATH_PROTOCOL            *DevicePath;
+  UINTN                               Index;
+  UINT16                              *Str;
+  VOID                                *Interface;
+  //BOOLEAN                             Found;
+
+  //Found = FALSE;
+  Str = NULL;
+  HandleNum    = 0;
+  Status      = SctLocateHandle(
+                  ByProtocol,
+                  Guid,
+                  NULL,
+                  &HandleNum,
+                  &HandleBuffer
+                  );
+  if (EFI_ERROR(Status) || HandleNum == 0) {
+    return NULL;
+  }
+
+  for ( Index = 0 ; Index < HandleNum ; Index ++ ) {
+    Status = tBS->HandleProtocol (HandleBuffer[Index], Guid, &Interface);
+    if (EFI_ERROR(Status)) {
+      continue;
+    }
+
+    if (Interface == Protocol) {
+      Status = tBS->HandleProtocol (HandleBuffer[Index], &gEfiDevicePathProtocolGuid, (VOID**)&DevicePath);
+      if (!EFI_ERROR(Status)) {
+        //Found = TRUE;
+        Str = SctDevicePathToStr(DevicePath);
+      }
+      break;
+    }
+  }
+
+  return Str;
+}
+
 /*++
 
 Routine Description:
@@ -230,17 +328,22 @@ Returns:
   it in Src2)
 
 --*/
+EFI_DEVICE_PATH_PROTOCOL *
+SctAppendDevicePath (
+  IN EFI_DEVICE_PATH_PROTOCOL  *Src1,
+  IN EFI_DEVICE_PATH_PROTOCOL  *Src2
+  )
 {
   UINTN                       Src1Size, Src1Inst, Src2Size, Size;
   EFI_DEVICE_PATH_PROTOCOL    *Dst, *Inst;
   UINT8                       *DstPos;
 
   //
-  // If both Src1 and Src2 are NULL end-of-device-path is returned. 
+  // If both Src1 and Src2 are NULL end-of-device-path is returned.
   //
   if ((Src1 == NULL) && (Src2 == NULL)) {
     Dst = (EFI_DEVICE_PATH_PROTOCOL *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
-    SetDevicePathEndNode (Dst);
+    SctSetDevicePathEndNode (Dst);
     return Dst;
   }
 
@@ -250,12 +353,12 @@ Returns:
 
   if (!Src1) {
     ASSERT (!IsDevicePathUnpacked (Src2));
-    return DuplicateDevicePath (Src2);
+    return SctDuplicateDevicePath (Src2);
   }
 
   if (!Src2) {
     ASSERT (!IsDevicePathUnpacked (Src1));
-    return DuplicateDevicePath (Src1);
+    return SctDuplicateDevicePath (Src1);
   }
 
   //
@@ -269,9 +372,9 @@ Returns:
   // Append Src2 to every instance in Src1
   //
 
-  Src1Size = DevicePathSize(Src1);
-  Src1Inst = DevicePathInstanceCount(Src1);
-  Src2Size = DevicePathSize(Src2);
+  Src1Size = SctDevicePathSize(Src1);
+  Src1Inst = SctDevicePathInstanceCount(Src1);
+  Src2Size = SctDevicePathSize(Src2);
   Size = Src1Size * Src1Inst + Src2Size;
   Size -= Src1Inst * sizeof(EFI_DEVICE_PATH_PROTOCOL);
 
@@ -282,37 +385,35 @@ Returns:
     //
     // Copy all device path instances
     //
-    Inst = DevicePathInstance (&Src1, &Size);
+    Inst = SctDevicePathInstance (&Src1, &Size);
     while (Inst) {
 
       SctCopyMem (DstPos, Inst, Size);
       DstPos += Size - sizeof(EFI_DEVICE_PATH_PROTOCOL);
 
-      SctCopyMem (DstPos, Src2, Src2Size);
+      SctCopyMem (DstPos, (VOID *) Src2, Src2Size);
       DstPos += Src2Size - sizeof(EFI_DEVICE_PATH_PROTOCOL);
 
-      SctCopyMem (DstPos, EndInstanceDevicePath, sizeof(EFI_DEVICE_PATH_PROTOCOL));
+      SctCopyMem (
+        DstPos,
+        (VOID *) mEndInstanceDevicePath,
+        sizeof(EFI_DEVICE_PATH_PROTOCOL)
+        );
       DstPos += sizeof(EFI_DEVICE_PATH_PROTOCOL);
 
-      Inst = DevicePathInstance (&Src1, &Size);
+      Inst = SctDevicePathInstance (&Src1, &Size);
     }
 
     //
     // Change last end marker
     //
     DstPos -= sizeof(EFI_DEVICE_PATH_PROTOCOL);
-    SctCopyMem (DstPos, EndDevicePath, sizeof(EFI_DEVICE_PATH_PROTOCOL));
+    SctCopyMem (DstPos, mEndDevicePath, sizeof(EFI_DEVICE_PATH_PROTOCOL));
   }
 
   return Dst;
 }
 
-
-EFI_DEVICE_PATH_PROTOCOL *
-AppendDevicePathNode (
-  IN EFI_DEVICE_PATH_PROTOCOL  *Src1,
-  IN EFI_DEVICE_PATH_PROTOCOL  *Src2
-  )
 /*++
 
 Routine Description:
@@ -334,6 +435,11 @@ Returns:
   appended to each instance is Src1.
 
 --*/
+EFI_DEVICE_PATH_PROTOCOL *
+SctAppendDevicePathNode (
+  IN EFI_DEVICE_PATH_PROTOCOL  *Src1,
+  IN EFI_DEVICE_PATH_PROTOCOL  *Src2
+  )
 {
   EFI_DEVICE_PATH_PROTOCOL    *Temp, *Eop;
   UINTN                       Length;
@@ -341,93 +447,25 @@ Returns:
   //
   // Build a Src2 that has a terminator on it
   //
-  Length = DevicePathNodeLength(Src2);
+  Length = SctDevicePathNodeLength(Src2);
   Temp = SctAllocatePool (Length + sizeof(EFI_DEVICE_PATH_PROTOCOL));
   if (!Temp) {
     return NULL;
   }
 
   SctCopyMem (Temp, Src2, Length);
-  Eop = NextDevicePathNode(Temp);
-  SetDevicePathEndNode(Eop);
+  Eop = SctNextDevicePathNode(Temp);
+  SctSetDevicePathEndNode(Eop);
 
   //
   // Append device paths
   //
 
-  Src1 = AppendDevicePath (Src1, Temp);
+  Src1 = SctAppendDevicePath (Src1, Temp);
   SctFreePool (Temp);
   return Src1;
 }
 
-
-EFI_DEVICE_PATH_PROTOCOL *
-FileDevicePath (
-  IN EFI_HANDLE       Device  OPTIONAL,
-  IN CHAR16           *FileName
-  )
-/*++
-
-Routine Description:
-  Function allocates a device path for a file and appends it to an existing device path.
-
-Arguments:
-  Device         - A pointer to a device handle.
-
-  FileName       - A pointer to a Null-terminated Unicode string.
-
-Returns:
-
-  If Device is not a valid device handle, then a device path for the file specified
-  by FileName is allocated and returned.
-
-  Results are allocated from pool.  The caller must FreePool the resulting device path
-  structure
-
---*/
-{
-  UINTN                       Size;
-  FILEPATH_DEVICE_PATH        *FilePath;
-  EFI_DEVICE_PATH_PROTOCOL    *Eop, *DevicePath;
-
-  Size = SctStrSize (FileName);
-  FilePath = SctAllocateZeroPool (Size + SIZE_OF_FILEPATH_DEVICE_PATH + sizeof(EFI_DEVICE_PATH_PROTOCOL));
-  DevicePath = NULL;
-
-  if (FilePath) {
-
-    //
-    // Build a file path
-    //
-    FilePath->Header.Type = MEDIA_DEVICE_PATH;
-    FilePath->Header.SubType = MEDIA_FILEPATH_DP;
-    SetDevicePathNodeLength (&FilePath->Header, Size + SIZE_OF_FILEPATH_DEVICE_PATH);
-    SctCopyMem (FilePath->PathName, FileName, Size);
-    Eop = NextDevicePathNode(&FilePath->Header);
-    SetDevicePathEndNode(Eop);
-
-    //
-    // Append file path to device's device path
-    //
-    DevicePath = (EFI_DEVICE_PATH_PROTOCOL *) FilePath;
-    if (Device) {
-      DevicePath = AppendDevicePath (
-                        DevicePathFromHandle(Device),
-                        DevicePath
-                        );
-      SctFreePool (FilePath);
-    }
-  }
-
-  return DevicePath;
-}
-
-
-
-UINTN
-DevicePathSize (
-    IN EFI_DEVICE_PATH_PROTOCOL  *DevPath
-    )
 /*++
 
 Routine Description:
@@ -441,6 +479,10 @@ Returns:
   Size is returned.
 
 --*/
+UINTN
+SctDevicePathSize (
+    IN EFI_DEVICE_PATH_PROTOCOL  *DevPath
+    )
 {
   EFI_DEVICE_PATH_PROTOCOL     *Start;
 
@@ -449,8 +491,8 @@ Returns:
   //
 
   Start = DevPath;
-  while (!IsDevicePathEnd(DevPath)) {
-    DevPath = NextDevicePathNode(DevPath);
+  while (!SctIsDevicePathEnd(DevPath)) {
+    DevPath = SctNextDevicePathNode(DevPath);
   }
 
   //
@@ -459,11 +501,6 @@ Returns:
   return ((UINTN) DevPath - (UINTN) Start) + sizeof(EFI_DEVICE_PATH_PROTOCOL);
 }
 
-
-EFI_DEVICE_PATH_PROTOCOL *
-DuplicateDevicePath (
-  IN EFI_DEVICE_PATH_PROTOCOL  *DevPath
-  )
 /*++
 
 Routine Description:
@@ -479,6 +516,10 @@ Returns:
   Otherwise, NULL is returned.
 
 --*/
+EFI_DEVICE_PATH_PROTOCOL *
+SctDuplicateDevicePath (
+  IN EFI_DEVICE_PATH_PROTOCOL  *DevPath
+  )
 {
   EFI_DEVICE_PATH_PROTOCOL    *NewDevPath;
   UINTN                       Size;
@@ -487,7 +528,7 @@ Returns:
   //
   // Compute the size
   //
-  Size = DevicePathSize (DevPath);
+  Size = SctDevicePathSize (DevPath);
 
   //
   // Make a copy
@@ -499,10 +540,6 @@ Returns:
   return NewDevPath;
 }
 
-EFI_DEVICE_PATH_PROTOCOL *
-UnpackDevicePath (
-  IN EFI_DEVICE_PATH_PROTOCOL  *DevPath
-  )
 /*++
 
 Routine Description:
@@ -518,6 +555,10 @@ Returns:
   new device path is returned.  Otherwise, NULL is returned.
 
 --*/
+EFI_DEVICE_PATH_PROTOCOL *
+SctUnpackDevicePath (
+  IN EFI_DEVICE_PATH_PROTOCOL  *DevPath
+  )
 {
   EFI_DEVICE_PATH_PROTOCOL    *Src, *Dest, *NewPath;
   UINTN                       Size;
@@ -529,14 +570,14 @@ Returns:
   Src = DevPath;
   Size = 0;
   for (; ;) {
-    Size += DevicePathNodeLength(Src);
-    Size += ALIGN_SIZE(Size);
+    Size += SctDevicePathNodeLength(Src);
+    Size += ALIGN_SIZE (Size);
 
-    if (IsDevicePathEnd(Src)) {
+    if (SctIsDevicePathEnd(Src)) {
       break;
     }
 
-    Src = NextDevicePathNode(Src);
+    Src = SctNextDevicePathNode(Src);
   }
 
 
@@ -555,147 +596,25 @@ Returns:
     Src = DevPath;
     Dest = NewPath;
     for (; ;) {
-      Size = DevicePathNodeLength(Src);
+      Size = SctDevicePathNodeLength(Src);
       SctCopyMem (Dest, Src, Size);
       Size += ALIGN_SIZE(Size);
-      SetDevicePathNodeLength (Dest, Size);
+      SctSetDevicePathNodeLength (Dest, Size);
       Dest->Type |= EFI_DP_TYPE_UNPACKED;
       Dest = (EFI_DEVICE_PATH_PROTOCOL *) (((UINT8 *) Dest) + Size);
 
-      if (IsDevicePathEnd(Src)) {
+      if (SctIsDevicePathEnd(Src)) {
         break;
       }
 
-      Src = NextDevicePathNode(Src);
+      Src = SctNextDevicePathNode(Src);
     }
   }
 
   return NewPath;
 }
 
-
-EFI_DEVICE_PATH_PROTOCOL *
-AppendDevicePathInstance (
-  IN EFI_DEVICE_PATH_PROTOCOL  *Src,
-  IN EFI_DEVICE_PATH_PROTOCOL  *Instance
-  )
-/*++
-
-Routine Description:
-  Function is used to add a device path instance to a device path.
-
-Arguments:
-  Src          - A pointer to a device path data structure
-
-  Instance     - A pointer to a device path instance.
-
-Returns:
-
-  This function returns a pointer to the new device path.
-  If there is not enough temporary pool memory available to complete this function,
-  then NULL is returned. It is up to the caller to free the memory used by Src and
-  Instance if they are no longer needed.
-
---*/
-{
-  UINT8                     *Ptr;
-  EFI_DEVICE_PATH_PROTOCOL  *DevPath;
-  UINTN                     SrcSize;
-  UINTN                     InstanceSize;
-
-  if (Src == NULL) {
-    return DuplicateDevicePath (Instance);
-  }
-  SrcSize = DevicePathSize(Src);
-  InstanceSize = DevicePathSize(Instance);
-  Ptr = SctAllocatePool (SrcSize + InstanceSize);
-  DevPath = (EFI_DEVICE_PATH_PROTOCOL *)Ptr;
-  ASSERT(DevPath);
-
-  SctCopyMem (Ptr, Src, SrcSize);
-//    SctFreePool (Src);
-
-  while (!IsDevicePathEnd(DevPath)) {
-    DevPath = NextDevicePathNode(DevPath);
-  }
-  //
-  // Convert the End to an End Instance, since we are
-  //  appending another instacne after this one its a good
-  //  idea.
-  //
-  DevPath->SubType = END_INSTANCE_DEVICE_PATH_SUBTYPE;
-
-  DevPath = NextDevicePathNode(DevPath);
-  SctCopyMem (DevPath, Instance, InstanceSize);
-  return (EFI_DEVICE_PATH_PROTOCOL *)Ptr;
-}
-
-EFI_STATUS
-LibDevicePathToInterface (
-  IN EFI_GUID                   *Protocol,
-  IN EFI_DEVICE_PATH_PROTOCOL   *FilePath,
-  OUT VOID                      **Interface
-  )
-/*++
-
-Routine Description:
-  Function retrieves a protocol interface for a device.
-
-Arguments:
-  Protocol     - The published unique identifier of the protocol.
-
-  FilePath     - A pointer to a device path data structure.
-
-  Interface    - Supplies and address where a pointer to the requested
-                 Protocol interface is returned.
-
-Returns:
-
-  If a match is found, then the protocol interface of that device is
-  returned in Interface.  Otherwise, Interface is set to NULL.
-
---*/
-{
-  EFI_STATUS              Status;
-  EFI_HANDLE              Device;
-
-  Status = tBS->LocateDevicePath (
-                 Protocol,
-                 &FilePath,
-                 &Device
-                 );
-
-  if (!EFI_ERROR(Status)) {
-
-    //
-    // If we didn't get a direct match return not found
-    //
-    Status = EFI_NOT_FOUND;
-
-    if (IsDevicePathEnd(FilePath)) {
-
-      //
-      // It was a direct match, lookup the protocol interface
-      //
-      Status = tBS->HandleProtocol (
-                     Device,
-                     Protocol,
-                     Interface
-                     );
-      }
-  }
-
-  //
-  // If there was an error, do not return an interface
-  //
-
-  if (EFI_ERROR(Status)) {
-    *Interface = NULL;
-  }
-
-  return Status;
-}
-
+STATIC
 VOID
 _DevPathPci (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -708,6 +627,7 @@ _DevPathPci (
     SctCatPrint(Str, L"Pci(%x|%x)", Pci->Device, Pci->Function);
 }
 
+STATIC
 VOID
 _DevPathPccard (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -720,6 +640,7 @@ _DevPathPccard (
     SctCatPrint(Str, L"Pcmcia(Function%x)", Pccard->FunctionNumber);
 }
 
+STATIC
 VOID
 _DevPathMemMap (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -736,6 +657,7 @@ _DevPathMemMap (
         );
 }
 
+STATIC
 VOID
 _DevPathController (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -750,6 +672,7 @@ _DevPathController (
         );
 }
 
+STATIC
 VOID
 _DevPathVendor (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -761,7 +684,7 @@ _DevPathVendor (
     UNKNOWN_DEVICE_VENDOR_DEVICE_PATH   *UnknownDevPath;
 
     Vendor = DevPath;
-    switch (DevicePathType(&Vendor->Header)) {
+    switch (SctDevicePathType (&Vendor->Header)) {
     case HARDWARE_DEVICE_PATH:  Type = L"Hw";        break;
     case MESSAGING_DEVICE_PATH: Type = L"Msg";       break;
     case MEDIA_DEVICE_PATH:     Type = L"Media";     break;
@@ -769,7 +692,7 @@ _DevPathVendor (
     }
 
     SctCatPrint(Str, L"Ven%s(%g", Type, &Vendor->Guid);
-    if (SctCompareGuid (&Vendor->Guid, &gtEfiUnknownDeviceGuid) == 0) {
+    if (SctCompareGuid (&Vendor->Guid, &mEfiUnknownDeviceGuid) == 0) {
         //
         // GUID used by EFI to enumerate an EDD 1.1 device
         //
@@ -780,7 +703,7 @@ _DevPathVendor (
     }
 }
 
-
+STATIC
 VOID
 _DevPathAcpi (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -797,7 +720,7 @@ _DevPathAcpi (
     }
 }
 
-
+STATIC
 VOID
 _DevPathExtendedAcpi (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -818,7 +741,7 @@ _DevPathExtendedAcpi (
 
     ExtendedAcpi = DevPath;
 
-    Length = DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) ExtendedAcpi);
+    Length = SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) ExtendedAcpi);
     ASSERT (Length >= 19);
 
     AsChar8Array = (CHAR8 *) ExtendedAcpi;
@@ -890,6 +813,7 @@ _DevPathExtendedAcpi (
 }
 
 
+STATIC
 VOID
 _DevPathAtapi (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -905,6 +829,7 @@ _DevPathAtapi (
         );
 }
 
+STATIC
 VOID
 _DevPathScsi (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -917,7 +842,7 @@ _DevPathScsi (
     SctCatPrint(Str, L"Scsi(Pun%x,Lun%x)", Scsi->Pun, Scsi->Lun);
 }
 
-
+STATIC
 VOID
 _DevPathFibre (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -930,6 +855,7 @@ _DevPathFibre (
     SctCatPrint(Str, L"Fibre(Wwn%lx,Lun%x)", Fibre->WWN, Fibre->Lun);
 }
 
+STATIC
 VOID
 _DevPath1394 (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -942,8 +868,7 @@ _DevPath1394 (
     SctCatPrint(Str, L"1394(%g)", &F1394->Guid);
 }
 
-
-
+STATIC
 VOID
 _DevPathUsb (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -956,7 +881,7 @@ _DevPathUsb (
     SctCatPrint(Str, L"Usb(%x, %x)", Usb->ParentPortNumber, Usb->InterfaceNumber);
 }
 
-
+STATIC
 VOID
 _DevPathUsbClass (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -975,8 +900,7 @@ _DevPathUsbClass (
               UsbClass->DeviceProtocol);
 }
 
-
-
+STATIC
 VOID
 _DevPathI2O (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -989,6 +913,7 @@ _DevPathI2O (
     SctCatPrint(Str, L"I2O(%x)", I2O->Tid);
 }
 
+STATIC
 VOID
 _DevPathMacAddr (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -1014,6 +939,7 @@ _DevPathMacAddr (
     SctCatPrint(Str, L")");
 }
 
+STATIC
 VOID
 _DevPathIPv4 (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -1030,30 +956,27 @@ _DevPathIPv4 (
                                        IP->RemotePort);
 }
 
+STATIC
 VOID
 _DevPathIPv6 (
     IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
-    IPv6_DEVICE_PATH     *IP;
-
-    IP = DevPath;
     SctCatPrint(Str, L"IP-v6(not-done)");
 }
 
+STATIC
 VOID
 _DevPathInfiniBand (
     IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
-    INFINIBAND_DEVICE_PATH  *InfiniBand;
-
-    InfiniBand = DevPath;
     SctCatPrint(Str, L"InfiniBand(not-done)");
 }
 
+STATIC
 VOID
 _DevPathUart (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -1095,7 +1018,7 @@ _DevPathUart (
     }
 }
 
-
+STATIC
 VOID
 _DevPathHardDrive (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -1128,6 +1051,7 @@ _DevPathHardDrive (
     }
 }
 
+STATIC
 VOID
 _DevPathCDROM (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -1140,6 +1064,7 @@ _DevPathCDROM (
     SctCatPrint(Str, L"CDROM(Entry%x)", Cd->BootEntry);
 }
 
+STATIC
 VOID
 _DevPathFilePath (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -1152,6 +1077,7 @@ _DevPathFilePath (
     SctCatPrint(Str, L"%s", Fp->PathName);
 }
 
+STATIC
 VOID
 _DevPathMediaProtocol (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -1201,7 +1127,7 @@ _DevPathBssBss (
     SctCatPrint(Str, L"Bss-%s(%a)", Type, Bss->String);
 }
 
-
+STATIC
 VOID
 _DevPathEndInstance (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -1211,6 +1137,7 @@ _DevPathEndInstance (
     SctCatPrint(Str, L",");
 }
 
+STATIC
 VOID
 _DevPathNodeUnknown (
     IN OUT SCT_POOL_PRINT       *Str,
@@ -1220,12 +1147,12 @@ _DevPathNodeUnknown (
     SctCatPrint(Str, L"?");
 }
 
-
+STATIC CONST
 struct {
   UINT8   Type;
   UINT8   SubType;
   VOID    (*Function)(SCT_POOL_PRINT *, VOID *);
-} DevPathTable[] = {
+} mDevPathTable[] = {
   HARDWARE_DEVICE_PATH,   HW_PCI_DP,                        _DevPathPci,
   HARDWARE_DEVICE_PATH,   HW_PCCARD_DP,                     _DevPathPccard,
   HARDWARE_DEVICE_PATH,   HW_MEMMAP_DP,                     _DevPathMemMap,
@@ -1251,7 +1178,7 @@ struct {
   MEDIA_DEVICE_PATH,      MEDIA_VENDOR_DP,                  _DevPathVendor,
   MEDIA_DEVICE_PATH,      MEDIA_FILEPATH_DP,                _DevPathFilePath,
   MEDIA_DEVICE_PATH,      MEDIA_PROTOCOL_DP,                _DevPathMediaProtocol,
-#if (EFI_SPECIFICATION_VERSION < 0x00020000)  
+#if (EFI_SPECIFICATION_VERSION < 0x00020000)
   MEDIA_DEVICE_PATH,      MEDIA_FV_FILEPATH_DP,             _DevPathFvFilePath,
 #endif
   BBS_DEVICE_PATH,        BBS_BBS_DP,                       _DevPathBssBss,
@@ -1259,11 +1186,6 @@ struct {
   0,                      0,                          NULL
 };
 
-
-CHAR16 *
-DevicePathToStr (
-  EFI_DEVICE_PATH_PROTOCOL     *DevPath
-  )
 /*++
 
     Turns the Device Path into a printable string.  Allcoates
@@ -1271,6 +1193,10 @@ DevicePathToStr (
     string.
 
 --*/
+CHAR16 *
+SctDevicePathToStr (
+  EFI_DEVICE_PATH_PROTOCOL     *DevPath
+  )
 {
   SCT_POOL_PRINT                  Str;
   EFI_DEVICE_PATH_PROTOCOL    *DevPathNode;
@@ -1286,7 +1212,7 @@ DevicePathToStr (
   //
   // Unpacked the device path
   //
-  DevPath = UnpackDevicePath(DevPath);
+  DevPath = SctUnpackDevicePath(DevPath);
   ASSERT (DevPath);
 
 
@@ -1294,18 +1220,18 @@ DevicePathToStr (
   // Process each device path node
   //
   DevPathNode = DevPath;
-  while (!IsDevicePathEnd(DevPathNode)) {
+  while (!SctIsDevicePathEnd(DevPathNode)) {
 
     //
     // Find the handler to dump this device path node
     //
 
     DumpNode = NULL;
-    for (Index = 0; DevPathTable[Index].Function; Index += 1) {
+    for (Index = 0; mDevPathTable[Index].Function; Index += 1) {
 
-      if (DevicePathType(DevPathNode) == DevPathTable[Index].Type &&
-          DevicePathSubType(DevPathNode) == DevPathTable[Index].SubType) {
-        DumpNode = DevPathTable[Index].Function;
+      if (SctDevicePathType (DevPathNode) == mDevPathTable[Index].Type &&
+          SctDevicePathSubType (DevPathNode) == mDevPathTable[Index].SubType) {
+        DumpNode = mDevPathTable[Index].Function;
         break;
       }
     }
@@ -1332,7 +1258,7 @@ DevicePathToStr (
     //
     // Next device path node
     //
-    DevPathNode = NextDevicePathNode(DevPathNode);
+    DevPathNode = SctNextDevicePathNode(DevPathNode);
   }
 
   //
@@ -1347,11 +1273,6 @@ Done:
   return Str.str;
 }
 
-BOOLEAN
-LibMatchDevicePaths (
-  IN  EFI_DEVICE_PATH_PROTOCOL *Multi,
-  IN  EFI_DEVICE_PATH_PROTOCOL *Single
-  )
 /*++
 
 Routine Description:
@@ -1369,6 +1290,11 @@ Returns:
   Otherwise, FALSE is returned.
 
 --*/
+BOOLEAN
+SctMatchDevicePaths (
+  IN  EFI_DEVICE_PATH_PROTOCOL *Multi,
+  IN  EFI_DEVICE_PATH_PROTOCOL *Single
+  )
 {
   EFI_DEVICE_PATH_PROTOCOL    *DevicePath, *DevicePathInst;
   UINTN                       Size;
@@ -1378,236 +1304,139 @@ Returns:
   }
 
   DevicePath = Multi;
-  DevicePathInst = DevicePathInstance (&DevicePath, &Size);
+  DevicePathInst = SctDevicePathInstance (&DevicePath, &Size);
   while (DevicePathInst) {
     if (SctCompareMem (Single, DevicePathInst, Size - sizeof(EFI_DEVICE_PATH_PROTOCOL)) == 0) {
       return TRUE;
     }
-    DevicePathInst = DevicePathInstance (&DevicePath, &Size);
+    DevicePathInst = SctDevicePathInstance (&DevicePath, &Size);
   }
   return FALSE;
 }
 
-UINT16 *
-DevicePathStrFromProtocol (
-  IN VOID        *Protocol,
-  IN EFI_GUID    *Guid
+/*++
+
+Routine Description:
+  Function allocates a device path for a file and appends it to an existing device path.
+
+Arguments:
+  Device         - A pointer to a device handle.
+
+  FileName       - A pointer to a Null-terminated Unicode string.
+
+Returns:
+
+  If Device is not a valid device handle, then a device path for the file specified
+  by FileName is allocated and returned.
+
+  Results are allocated from pool.  The caller must FreePool the resulting device path
+  structure
+
+--*/
+EFI_DEVICE_PATH_PROTOCOL *
+SctFileDevicePath (
+  IN EFI_HANDLE       Device  OPTIONAL,
+  IN CHAR16           *FileName
   )
 {
-  EFI_STATUS                          Status;
-  UINTN                                HandleNum;
-  EFI_HANDLE                          *HandleBuffer;
-  EFI_DEVICE_PATH_PROTOCOL            *DevicePath;
-  UINTN                               Index;
-  UINT16                              *Str;
-  VOID                                *Interface;
-  //BOOLEAN                             Found;
+  UINTN                       Size;
+  FILEPATH_DEVICE_PATH        *FilePath;
+  EFI_DEVICE_PATH_PROTOCOL    *Eop, *DevicePath;
 
-  //Found = FALSE;
-  Str = NULL;
-  HandleNum    = 0;
-  Status      = SctLocateHandle(
-                  ByProtocol,
-                  Guid,
-                  NULL,
-                  &HandleNum,
-                  &HandleBuffer
-                  );
-  if (EFI_ERROR(Status) || HandleNum == 0) {
-    return NULL;
-  }
+  Size = SctStrSize (FileName);
+  FilePath = SctAllocateZeroPool (Size + SIZE_OF_FILEPATH_DEVICE_PATH + sizeof(EFI_DEVICE_PATH_PROTOCOL));
+  DevicePath = NULL;
 
-  for ( Index = 0 ; Index < HandleNum ; Index ++ ) {
-    Status = tBS->HandleProtocol (HandleBuffer[Index], Guid, &Interface);
-    if (EFI_ERROR(Status)) {
-      continue;
-    }
+  if (FilePath) {
 
-    if (Interface == Protocol) {
-      Status = tBS->HandleProtocol (HandleBuffer[Index], &gEfiDevicePathProtocolGuid, (VOID**)&DevicePath);
-      if (!EFI_ERROR(Status)) {
-        //Found = TRUE;
-        Str = DevicePathToStr(DevicePath);
-      }
-      break;
+    //
+    // Build a file path
+    //
+    FilePath->Header.Type = MEDIA_DEVICE_PATH;
+    FilePath->Header.SubType = MEDIA_FILEPATH_DP;
+    SctSetDevicePathNodeLength (&FilePath->Header, Size + SIZE_OF_FILEPATH_DEVICE_PATH);
+    SctCopyMem (FilePath->PathName, FileName, Size);
+    Eop = SctNextDevicePathNode(&FilePath->Header);
+    SctSetDevicePathEndNode(Eop);
+
+    //
+    // Append file path to device's device path
+    //
+    DevicePath = (EFI_DEVICE_PATH_PROTOCOL *) FilePath;
+    if (Device) {
+      DevicePath = SctAppendDevicePath (
+                        DevicePathFromHandle(Device),
+                        DevicePath
+                        );
+      SctFreePool (FilePath);
     }
   }
 
-  return Str;
+  return DevicePath;
 }
 
-//
-//added by kevin for test cases
-//
-/**
- *  get the device path and file path based on the loaded image name.
- *  @param Name the iamge file name such as framework.efi
- *  @param DevicePath the Device path of this file is loaded from.
- *  @param FilePath the file path of this file.
- *  @return EFI_SUCCESS the device path and file path was found successfully.
- *  @return EFI_INVALID_PARAMETER the Parameter is invalid
- */
+/*++
+
+Routine Description:
+  Function retrieves a protocol interface for a device.
+
+Arguments:
+  Protocol     - The published unique identifier of the protocol.
+
+  FilePath     - A pointer to a device path data structure.
+
+  Interface    - Supplies and address where a pointer to the requested
+                 Protocol interface is returned.
+
+Returns:
+
+  If a match is found, then the protocol interface of that device is
+  returned in Interface.  Otherwise, Interface is set to NULL.
+
+--*/
 EFI_STATUS
-GetFilePathByName (
-  IN CHAR16                       *Name,
-  OUT EFI_DEVICE_PATH_PROTOCOL    **DevicePath,
-  OUT CHAR16                      **FilePath
+SctDevicePathToInterface (
+  IN EFI_GUID                   *Protocol,
+  IN EFI_DEVICE_PATH_PROTOCOL   *FilePath,
+  OUT VOID                      **Interface
   )
 {
-  EFI_STATUS                  Status;
-  UINTN                       Index;
-  EFI_LOADED_IMAGE_PROTOCOL   *Image;
-  EFI_HANDLE                  *HandleBuffer;
-  UINTN                       HandleNum;
-  EFI_DEVICE_PATH_PROTOCOL    *TempDevicePath;
-  EFI_DEVICE_PATH_PROTOCOL    *TempDeviceNode;
-  CHAR16                      *TempFilePath;
-  CHAR16                      FullFilePath[MAX_FILE_PATH];
-  BOOLEAN                     Found;
+  EFI_STATUS              Status;
+  EFI_HANDLE              Device;
 
-  //
-  //verify parameters.
-  //
-  if (Name == NULL || DevicePath == NULL || FilePath == NULL) {
-    return EFI_INVALID_PARAMETER;
-  }
-  if (SctStrLen (Name) == 0) {
-    return EFI_INVALID_PARAMETER;
-  }
+  Status = tBS->LocateDevicePath (
+                 Protocol,
+                 &FilePath,
+                 &Device
+                 );
 
-  //
-  //get all the load image protocol instance.
-  //
-  Found        = FALSE;
-  HandleNum    = 0;
-  HandleBuffer = NULL;
-
-  Status  = SctLocateHandle(
-                  ByProtocol,
-                  &gEfiLoadedImageProtocolGuid,
-                  NULL,
-                  &HandleNum,
-                  &HandleBuffer
-                  );
-
-  if (EFI_ERROR(Status) || HandleNum == 0) {
-    return EFI_ABORTED;
-  }
-
-  //
-  //for all the LoadedImage protocol found the image file name to match the
-  //given file name.
-  //
-  TempDevicePath = NULL;
-  for (Index = 0; Index < HandleNum; Index ++ ) {
-
-    FullFilePath[0] = '\0';
+  if (!EFI_ERROR(Status)) {
 
     //
-    // Get the image instance from the image handle
+    // If we didn't get a direct match return not found
     //
-    Status = tBS->HandleProtocol (
-                     HandleBuffer[Index],
-                     &gEfiLoadedImageProtocolGuid,
-                     (VOID**)&Image
-                     );
-    if (EFI_ERROR(Status)) {
-      return Status;
-    }
+    Status = EFI_NOT_FOUND;
 
-    if (Image->FilePath == NULL) {
-      continue;
-    }
+    if (SctIsDevicePathEnd(FilePath)) {
 
-    //
-    //get the file path and parse the file name.
-    //
-    TempDevicePath = UnpackDevicePath (Image->FilePath);
-    TempFilePath   = NULL;
-    TempDeviceNode = TempDevicePath;
-
-    while (!IsDevicePathEnd(TempDeviceNode)) {
-      if ((DevicePathType(TempDeviceNode) == MEDIA_DEVICE_PATH) &&
-          (DevicePathSubType(TempDeviceNode) == MEDIA_FILEPATH_DP)) {
-        SctStrCat (FullFilePath, L"\\");
-        TempFilePath = ((FILEPATH_DEVICE_PATH *)TempDeviceNode)->PathName;
-
-        if (SctStrLen (TempFilePath) == 1 && TempFilePath[0] == '\\') {
-          //
-          //if this the "\\" path then we need not append it,or else there will
-          //have 3 '\\' in the device path.
-          //
-          ;
-        } else {
-          SctStrCat (FullFilePath, TempFilePath);
-        }
-      }
-      TempDeviceNode = NextDevicePathNode (TempDeviceNode);
-    }
-
-    tBS->FreePool (TempDevicePath);
-
-    if (SctStrLen (FullFilePath) <= SctStrLen (Name)) {
-      continue;
-    }
-
-    TempFilePath = FullFilePath + (SctStrLen (FullFilePath) - SctStrLen(Name));
-
-    if ((*(TempFilePath - 1)) == L'\\' && SctStriCmp (TempFilePath, Name) == 0) {
-
-      TempFilePath[0] = '\0';
       //
-      // Get the device instance from the device handle
+      // It was a direct match, lookup the protocol interface
       //
       Status = tBS->HandleProtocol (
-                     Image->DeviceHandle,
-                     &gEfiDevicePathProtocolGuid,
-                     (VOID**)&TempDevicePath
+                     Device,
+                     Protocol,
+                     Interface
                      );
-      if (EFI_ERROR(Status)) {
-        return Status;
       }
-
-      Found = TRUE;
-      break;
-    }
-  }
-
-  if (HandleBuffer != NULL) {
-    tBS->FreePool (HandleBuffer);
-  }
-
-  if (!Found) {
-    return EFI_NOT_FOUND;
-  }
-
-
-  //
-  // If the file path is only a root directory "\\", remove it
-  //
-  if (SctStrLen (FullFilePath) > 1) {
-    if (FullFilePath[SctStrLen (FullFilePath) - 1] == L'\\') {
-     FullFilePath[SctStrLen (FullFilePath) - 1] = '\0';
-    }
-  }
-
-  *DevicePath = DuplicateDevicePath (TempDevicePath);
-  if (*DevicePath == NULL) {
-    return EFI_OUT_OF_RESOURCES;
-  }
-  //
-  //skip the first '\\'.
-  //
-  *FilePath = SctStrDuplicate (FullFilePath + 1);
-  if (*FilePath == NULL) {
-    tBS->FreePool (*DevicePath);
-    *DevicePath = NULL;
-    return EFI_OUT_OF_RESOURCES;
   }
 
   //
-  // Done, return status code EFI_SUCCESS
+  // If there was an error, do not return an interface
   //
-  return EFI_SUCCESS;
 
+  if (EFI_ERROR(Status)) {
+    *Interface = NULL;
+  }
+
+  return Status;
 }

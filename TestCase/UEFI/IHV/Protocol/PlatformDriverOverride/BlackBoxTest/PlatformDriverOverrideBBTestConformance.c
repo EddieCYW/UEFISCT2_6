@@ -425,7 +425,7 @@ BBTestDriverLoadedConformanceAutoTest (
   //
   // Get the driver image handle.
   //
-  FilePath = FileDevicePath (NULL, TempFileName);
+  FilePath = SctFileDevicePath (NULL, TempFileName);
   Status = gtBS->LoadImage(
                    FALSE,
                    DriverImageHandle,

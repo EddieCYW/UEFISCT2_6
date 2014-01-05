@@ -3801,7 +3801,7 @@ PciDevicePath_Func (
       continue;
     }
 
-    TempDevPathStr = DevicePathToStr (DevicePath);
+    TempDevPathStr = SctDevicePathToStr (DevicePath);
 
     if (SctCompareMem (TempDevPathStr,
                     DevIoDevicePathStr,
@@ -3860,7 +3860,7 @@ PciDevicePath_Func (
                    Status
                    );
 
-    PciDevPathStr = DevicePathToStr (PciDevicePath);
+    PciDevPathStr = SctDevicePathToStr (PciDevicePath);
 
     if (SctCompareMem (TempDevPathStr,
                     PciDevPathStr,

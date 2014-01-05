@@ -2575,8 +2575,8 @@ Returns:
                             );
 
       Context->FHandle       = NewDir;
-      Context->DevicePath    = DuplicateDevicePath (ItemContext->DevicePath);
-      Context->DevicePathStr = LibDevicePathToStr (Context->DevicePath);
+      Context->DevicePath    = SctDuplicateDevicePath (ItemContext->DevicePath);
+      Context->DevicePathStr = SctDevicePathToStr (Context->DevicePath);
       Context->IsDir         = (BOOLEAN)((DirInfo->Attribute & EFI_FILE_DIRECTORY) == EFI_FILE_DIRECTORY);
 
       DialogItem = AllocateFileDialogItem (DirDialog, Buffer, Context);
@@ -2725,7 +2725,7 @@ Returns:
         return FALSE;
       }
 
-      DialogContext->DevicePath = DuplicateDevicePath (ResultContext->DevicePath);
+      DialogContext->DevicePath = SctDuplicateDevicePath (ResultContext->DevicePath);
       RET = TRUE;
       break;
     }
@@ -2855,7 +2855,7 @@ Returns:
   Context->Handle         = FsHandles;
   Context->FHandle        = SctOpenRoot (Context->Handle);
   Context->DevicePath     = DevicePathFromHandle (Context->Handle);
-  Context->DevicePathStr  = LibDevicePathToStr (Context->DevicePath);
+  Context->DevicePathStr  = SctDevicePathToStr (Context->DevicePath);
 
   //
   //Append dir path

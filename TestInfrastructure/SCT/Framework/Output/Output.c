@@ -325,7 +325,7 @@ Returns:
     }
     SctZeroMem (OutputFile, sizeof(TEST_OUTPUT_FILE));
 
-    OutputFile->DevicePath = DuplicateDevicePath (DevicePath);
+    OutputFile->DevicePath = SctDuplicateDevicePath (DevicePath);
     if (OutputFile->DevicePath == NULL) {
       Handle->Close (Handle);
       tBS->FreePool (OutputFile);

@@ -320,7 +320,7 @@ CreateVendorDevicePath (
   //
   // End Node
   //
-  SetDevicePathEndNode (DevPointer);
+  SctSetDevicePathEndNode (DevPointer);
 
   //
   // release resource
@@ -460,7 +460,7 @@ IsNodeInDevicePath (
   UINTN                       Length;
 
   DevPath = DevicePath;
-  while (!IsDevicePathEndType (DevPath)) {
+  while (!SctIsDevicePathEndType (DevPath)) {
 
     Length = (UINTN)(DevPath->Length[1] << 8 | DevPath->Length[0]);
 
@@ -468,7 +468,7 @@ IsNodeInDevicePath (
       return TRUE;
     }
 
-    DevPath = NextDevicePathNode (DevPath);
+    DevPath = SctNextDevicePathNode (DevPath);
   }
 
   return FALSE;
@@ -510,7 +510,7 @@ LoadStartImage (
   EntireFileName = NULL;
   EntireFileName = SctPoolPrint (L"%s\\%s", mFilePath, FileName);
 
-  FilePath = FileDevicePath (LoadImage->DeviceHandle, EntireFileName);
+  FilePath = SctFileDevicePath (LoadImage->DeviceHandle, EntireFileName);
   if (FilePath == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

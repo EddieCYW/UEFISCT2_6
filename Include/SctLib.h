@@ -82,6 +82,110 @@ SctFreePool (
   );
 
 //
+// Device Path API
+//
+#ifndef END_DEVICE_PATH_LENGTH
+  #define END_DEVICE_PATH_LENGTH               (sizeof (EFI_DEVICE_PATH_PROTOCOL))
+#endif
+
+#ifndef EFI_END_ENTIRE_DEVICE_PATH_SUBTYPE
+  #define EFI_END_ENTIRE_DEVICE_PATH_SUBTYPE  0xff
+#endif
+
+#ifndef EFI_END_INSTANCE_DEVICE_PATH
+  #define EFI_END_INSTANCE_DEVICE_PATH  0x01
+#endif
+
+#define SctDevicePathNodeLength(a)     ( ((a)->Length[0]) | ((a)->Length[1] << 8) )
+
+#define SctNextDevicePathNode(a)  ((EFI_DEVICE_PATH_PROTOCOL *) (((UINT8 *) (a)) + SctDevicePathNodeLength (a)))
+
+#define SctDevicePathType(a)  (((a)->Type) & 0x7f)
+#define SctDevicePathSubType(a)  ((a)->SubType)
+#define SctIsDevicePathEndType(a) (SctDevicePathType (a) == 0x7f)
+#define SctIsDevicePathEndSubType(a)  ((a)->SubType == EFI_END_ENTIRE_DEVICE_PATH_SUBTYPE)
+#define SctIsDevicePathEnd(a) (SctIsDevicePathEndType (a) && SctIsDevicePathEndSubType (a))
+
+UINT16
+SctSetDevicePathNodeLength (
+  IN OUT VOID  *Node,
+  IN UINTN     Length
+  );
+
+VOID
+SctSetDevicePathEndNode (
+  OUT VOID  *Node
+  );
+
+EFI_DEVICE_PATH_PROTOCOL *
+SctDevicePathInstance (
+  IN OUT EFI_DEVICE_PATH_PROTOCOL   **DevicePath,
+  OUT UINTN                         *Size
+  );
+
+EFI_DEVICE_PATH_PROTOCOL *
+SctFileDevicePath (
+  IN EFI_HANDLE                     Device  OPTIONAL,
+  IN CHAR16                         *FileName
+  );
+
+EFI_DEVICE_PATH_PROTOCOL *
+SctDevicePathFromHandle (
+  IN EFI_HANDLE       Handle
+  );
+
+UINT16 *
+SctDevicePathStrFromProtocol (
+  IN VOID        *Protocol,
+  IN EFI_GUID    *Guid
+  );
+
+EFI_DEVICE_PATH_PROTOCOL *
+SctAppendDevicePath (
+  IN EFI_DEVICE_PATH_PROTOCOL       *Src1,
+  IN EFI_DEVICE_PATH_PROTOCOL       *Src2
+  );
+
+EFI_DEVICE_PATH_PROTOCOL *
+SctAppendDevicePathNode (
+  IN EFI_DEVICE_PATH_PROTOCOL       *Src1,
+  IN EFI_DEVICE_PATH_PROTOCOL       *Src2
+  );
+
+UINTN
+SctDevicePathSize (
+  IN EFI_DEVICE_PATH_PROTOCOL       *DevPath
+  );
+
+EFI_DEVICE_PATH_PROTOCOL *
+SctDuplicateDevicePath (
+  IN EFI_DEVICE_PATH_PROTOCOL       *DevPath
+  );
+
+EFI_DEVICE_PATH_PROTOCOL *
+SctUnpackDevicePath (
+  IN EFI_DEVICE_PATH_PROTOCOL       *DevPath
+  );
+
+CHAR16 *
+SctDevicePathToStr (
+  EFI_DEVICE_PATH_PROTOCOL          *DevPath
+  );
+
+BOOLEAN
+SctMatchDevicePaths (
+  IN  EFI_DEVICE_PATH_PROTOCOL *Multi,
+  IN  EFI_DEVICE_PATH_PROTOCOL *Single
+  );
+
+EFI_STATUS
+SctDevicePathToInterface (
+  IN EFI_GUID                   *Protocol,
+  IN EFI_DEVICE_PATH_PROTOCOL   *FilePath,
+  OUT VOID                      **Interface
+  );
+
+//
 // File API
 //
 

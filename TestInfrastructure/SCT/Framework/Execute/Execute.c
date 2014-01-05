@@ -1982,7 +1982,7 @@ Routine Description:
   if (Handle != NULL_HANDLE) {
     DevicePath = DevicePathFromHandle (Handle);
     if (DevicePath != NULL) {
-      ConfigData->DevicePath = LibDevicePathToStr (DevicePath);
+      ConfigData->DevicePath = SctDevicePathToStr (DevicePath);
     } else {
       ConfigData->DevicePath = SctStrDuplicate (L"No device path");
     }

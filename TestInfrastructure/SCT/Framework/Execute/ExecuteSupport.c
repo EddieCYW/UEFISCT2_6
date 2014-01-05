@@ -949,7 +949,7 @@ GatherConfigHandles (
         continue;
       }
 
-      DevicePathStr = LibDevicePathToStr (DevicePath);
+      DevicePathStr = SctDevicePathToStr (DevicePath);
 
       if (SctStrCmp (Buffer, DevicePathStr) == 0) {
         tBS->FreePool (DevicePathStr);

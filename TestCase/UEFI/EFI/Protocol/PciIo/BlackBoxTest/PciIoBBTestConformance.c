@@ -531,7 +531,7 @@ PollMem_Conf (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -1158,7 +1158,7 @@ PollIo_Conf (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -1715,7 +1715,7 @@ MemRead_Conf (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     gtBS->FreePool (Buffer);
@@ -2278,7 +2278,7 @@ MemWrite_Conf (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     gtBS->FreePool (Buffer);
@@ -2839,7 +2839,7 @@ IoRead_Conf (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     gtBS->FreePool (Buffer);
@@ -3400,7 +3400,7 @@ IoWrite_Conf (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     gtBS->FreePool (Buffer);
@@ -3851,7 +3851,7 @@ PciRead_Conf (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     gtBS->FreePool (Buffer);
@@ -4300,7 +4300,7 @@ PciWrite_Conf (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     gtBS->FreePool (Buffer);
@@ -5006,7 +5006,7 @@ CopyMem_Conf (
     return Status;
   }
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (PciIoDevice->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (PciIoDevice->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;

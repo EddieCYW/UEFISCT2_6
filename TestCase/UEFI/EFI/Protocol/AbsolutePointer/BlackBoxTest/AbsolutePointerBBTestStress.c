@@ -127,7 +127,7 @@ BBTestResetClearanceManualTest (
   //
   Status = LocateDevicePathFromAbsolutePointer (AbsolutePointer, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,
@@ -607,7 +607,7 @@ BBTestGetStateExtensiveManualTest (
   //
   Status = LocateDevicePathFromAbsolutePointer (AbsolutePointer, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    DevicePathStr = DevicePathToStr (DevicePath);
+    DevicePathStr = SctDevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
       StandardLib->RecordMessage (
                      StandardLib,

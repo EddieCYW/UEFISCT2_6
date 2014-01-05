@@ -303,7 +303,7 @@ CreateDeviceNode (
   if (DevicePath != NULL) {
      DevicePath->Type    = NodeType;
      DevicePath->SubType = NodeSubType;
-     SetDevicePathNodeLength (DevicePath, NodeLength);
+     SctSetDevicePathNodeLength (DevicePath, NodeLength);
   }
 
   return DevicePath;
@@ -1767,7 +1767,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"PcCard(0x2A)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1793,7 +1793,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctSPrint(text, MaxDevicePathStrLen * 2, L"MemoryMapped(%d,0x123456789ABCDEF,0xFEDCBA9876543210)", EfiMaxMemoryType);
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1819,7 +1819,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"VenHw(5AF6C71E-1261-4637-9838-C4E9913D1DBB,0123456789ABCDEF)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1845,7 +1845,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Ctrl(0x1234ABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1877,7 +1877,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
                       );
 
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1907,7 +1907,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
                       );
 
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1934,7 +1934,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Scsi(1234,0xABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1960,7 +1960,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Fibre(0x123456789ABCDEF0,0xABCDEF1234567890)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1986,7 +1986,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"I1394(ACDE48234567ABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2012,7 +2012,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"USB(12,0xAB)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2038,7 +2038,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"I2O(0x1234ABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2064,7 +2064,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Infiniband(10,A1ED07B9-5BDC-4741-ADCF-CA1E8681DD1A,1234,5678,0xABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2090,7 +2090,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"VenPcAnsi()");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2116,7 +2116,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"UartFlowCtrl(Hardware)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2142,7 +2142,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"SAS(1234567890,0xABCDEF,2000,SAS,External,Direct,0x6A,0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2167,7 +2167,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"DebugPort()");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2193,7 +2193,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"MAC(12345678ABCD12345678ABCD12345678ABCD12345678ABCD12345678ABCD1234,2)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2219,7 +2219,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"IPv4(12.34.56.78,TCP,Static,192.168.67.89,192.168.67.1,255.255.255.0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2245,7 +2245,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"IPv6(1234:5678:ABCD:1234:5678:ABCD:1234:5678,UDP,Static,5678:ABCD:1234:5678:ABCD:1234:5678:ABCD,8,5678:ABCD:1234:5678:ABCD:1234:5678:ABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2271,7 +2271,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Uart(115200,8,D,1.5)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2297,7 +2297,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"UsbClass(1234,5678,14,1,0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2323,7 +2323,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"UsbVideo(1234,5678,1,0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2349,7 +2349,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"UsbTestAndMeasurement(1234,5678,1)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2374,7 +2374,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Unit(0xAB)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2399,7 +2399,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"iSCSI(MyTargetName,0x12AB,5678,CRC32C,None,CHAP_BI,TCP)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2425,7 +2425,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"HD(6,GPT,E8AAED38-1815-4E4F-BCB5-2E3DBD160C9C,12345678,0xABCD1234)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2451,7 +2451,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"HD(6,MBR,0x56789ABC,12345678,0xABCD1234)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2477,7 +2477,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"CDROM(12340000,12345678,0xABCD1234)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2503,7 +2503,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"MyFilePath\\filepath");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2529,7 +2529,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Media(BA3A77E6-39A2-4375-A39A-108BFFCCE1AA)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2555,7 +2555,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"BBS(Floppy,MyId,0x12AB)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2578,7 +2578,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Offset(0xFF, 0xFFFF)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2604,7 +2604,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Vlan(0x12)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2630,7 +2630,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"AcpiAdr(0x80010100)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2656,7 +2656,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"PciRoot(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2682,7 +2682,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"PcieRoot(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2708,7 +2708,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Floppy(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2734,7 +2734,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Keyboard(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2760,7 +2760,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"Serial(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2786,7 +2786,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"ParallelPort(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2812,7 +2812,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"FibreEx(0x123456789ABCDEF0,0xABCDEF1234567890)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2838,7 +2838,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"SasEx(0x1234567890ABCDEF,0x1234567890ABCDEF,2000,SAS,External,Direct,0x6A)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2866,7 +2866,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
 
   SctStrCpy (text, L"NVMe(0xAB124BEF,AB-CD-EF-01-23-45-67-89)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -2957,7 +2957,7 @@ CreateFloppyDevicePath (
   EFI_DEVICE_PATH_PROTOCOL *pDevPath;
 
   pDevPath = (EFI_DEVICE_PATH_PROTOCOL *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
-  SetDevicePathEndNode (pDevPath);
+  SctSetDevicePathEndNode (pDevPath);
 
   pDevPathNode    = ConvertDevNodeFromTextPciRoot(DevicePathUtilities, L"PciRoot(0)");
   pDevPath        = DevicePathUtilities->AppendDeviceNode (pDevPath, pDevPathNode);
@@ -3031,7 +3031,7 @@ DevicePathFromTextConvertTextToDevicePathCoverageTest (
   pDevicePath = CreateFloppyDevicePath(DevicePathUtilities);
 
   pReDevicePath = DevicePathFromText->ConvertTextToDevicePath (text);
-  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, SctDevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;

@@ -792,7 +792,7 @@ PollMem_Func (
   }
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -1797,7 +1797,7 @@ PollIo_Func (
   }
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -2175,7 +2175,7 @@ MemRead_Func (
   }
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -2846,7 +2846,7 @@ MemWrite_Func (
   }
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -3572,7 +3572,7 @@ IoRead_Func (
   }
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -4238,7 +4238,7 @@ IoWrite_Func (
   }
 
   PciDevicePathStr = NULL;
-  PciDevicePathStr = DevicePathToStr (RBDev->DevicePath);
+  PciDevicePathStr = SctDevicePathToStr (RBDev->DevicePath);
 
   if (PciDevicePathStr == NULL) {
     return EFI_OUT_OF_RESOURCES;

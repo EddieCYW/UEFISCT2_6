@@ -217,7 +217,7 @@ BBTestGetDriverFunctionManualTest (
     return EFI_DEVICE_ERROR;
   }
 
-  DevicePathStr = DevicePathToStr (DevicePath);
+  DevicePathStr = SctDevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
     SctPrint (L"\r\nCurrent Device: %s",  DevicePathStr);
     gtBS->FreePool (DevicePathStr);

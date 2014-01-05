@@ -3194,10 +3194,10 @@ BBTestLocateDevicePathInterfaceTestCheckPoint1 (
   // VendorDevicePath1 ~ 5, TestDevicePath2 ~ 5.
   //
   TestDevicePath1 = VendorDevicePath1;
-  TestDevicePath2 = AppendDevicePathNode (TestDevicePath1, VendorDevicePath2);
-  TestDevicePath3 = AppendDevicePathNode (TestDevicePath2, VendorDevicePath3);
-  TestDevicePath4 = AppendDevicePathNode (TestDevicePath3, VendorDevicePath4);
-  TestDevicePath5 = AppendDevicePathNode (TestDevicePath4, VendorDevicePath5);
+  TestDevicePath2 = SctAppendDevicePathNode (TestDevicePath1, VendorDevicePath2);
+  TestDevicePath3 = SctAppendDevicePathNode (TestDevicePath2, VendorDevicePath3);
+  TestDevicePath4 = SctAppendDevicePathNode (TestDevicePath3, VendorDevicePath4);
+  TestDevicePath5 = SctAppendDevicePathNode (TestDevicePath4, VendorDevicePath5);
 
   DevicePathArray[0] = TestDevicePath1;
   DevicePathArray[1] = TestDevicePath2;
@@ -3243,7 +3243,7 @@ BBTestLocateDevicePathInterfaceTestCheckPoint1 (
         //
         // init
         //
-        TempDevicePath = DuplicateDevicePath (DevicePathArray[DeviceIndex]);
+        TempDevicePath = SctDuplicateDevicePath (DevicePathArray[DeviceIndex]);
         //
         // for the use of free resource
         //
@@ -3295,7 +3295,7 @@ BBTestLocateDevicePathInterfaceTestCheckPoint1 (
         if (!SctCompareMem (
                TempDevicePath,
                ExpectedReturnedDevicePath,
-               DevicePathSize (TempDevicePath)
+               SctDevicePathSize (TempDevicePath)
                )) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {
@@ -12048,8 +12048,8 @@ BBTestConnectControllerInterfaceTestCheckPoint1 (
   //
   // create 4 types of End Device Path Nodes
   //
-  SetDevicePathEndNode (&EndDevicePathNodeArray[0]);
-  //SetDevicePathEndNode (&EndDevicePathNodeArray[1]);
+  SctSetDevicePathEndNode (&EndDevicePathNodeArray[0]);
+  //SctSetDevicePathEndNode (&EndDevicePathNodeArray[1]);
   EndDevicePathNodeArray[0].Type = 0x7f;
   //EndDevicePathNodeArray[1].Type = 0xff;
 
