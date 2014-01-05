@@ -68,6 +68,7 @@ COMPONENT_TYPE  = LIBRARY
   Misc.c
   Print.c
   String.c
+  Unicode.c
 
 [sources.Arm]
   Arm/SctLibPlat.h

@@ -867,4 +867,21 @@ SctStrTrim (
   IN     CHAR16   c
   );
 
+//
+// Unicode API
+//
+
+typedef struct {
+  CHAR8   *Language;
+  CHAR16  *UnicodeString;
+} SCT_UNICODE_STRING_TABLE;
+
+EFI_STATUS
+SctLookupUnicodeString (
+  IN  CHAR8                     *Language,
+  IN  CHAR8                     *SupportedLanguages,
+  IN  SCT_UNICODE_STRING_TABLE  *UnicodeStringTable,
+  OUT CHAR16                    **UnicodeString
+  );
+
 #endif

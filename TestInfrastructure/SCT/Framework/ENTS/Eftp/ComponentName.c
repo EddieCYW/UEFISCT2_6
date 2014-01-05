@@ -99,7 +99,7 @@ EFI_COMPONENT_NAME_PROTOCOL     gEftpComponentName = {
 #endif
 };
 
-static EFI_UNICODE_STRING_TABLE mEftpDriverNameTable[] = {
+static SCT_UNICODE_STRING_TABLE mEftpDriverNameTable[] = {
   {
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)
     "en-US",
@@ -151,7 +151,7 @@ EftpComponentNameGetDriverName (
  
 --*/
 {
-  return EfiLibLookupUnicodeString (
+  return SctLookupUnicodeString (
           Language,
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)
           gEftpComponentName2.SupportedLanguages,
