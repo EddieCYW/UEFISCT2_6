@@ -63,6 +63,7 @@ COMPONENT_TYPE  = LIBRARY
   Init.c
   List.c
   Lock.c
+  Match.c
   Math.c
   Mem.c
   Misc.c

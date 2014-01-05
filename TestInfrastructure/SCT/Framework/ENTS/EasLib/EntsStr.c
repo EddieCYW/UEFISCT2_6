@@ -352,136 +352,6 @@ EntsLibStubStrLwrUpr (
 	return;
 }
 
-STATIC
-BOOLEAN
-MetaMatch (
-  IN CHAR16   *String,
-  IN CHAR16   *Pattern
-  )
-{
-  CHAR16  c;
-
-  CHAR16  p;
-
-  CHAR16  l;
-
-  for (;;) {
-    p = *Pattern;
-    Pattern += 1;
-
-    switch (p) {
-    case 0:
-      //
-      // End of pattern.  If end of string, TRUE match
-      //
-      return (BOOLEAN) (*String ? FALSE : TRUE);
-
-    case '*':
-      //
-      // Match zero or more chars
-      //
-      while (*String) {
-        if (MetaMatch (String, Pattern)) {
-          return TRUE;
-        }
-
-        String += 1;
-      }
-
-      return MetaMatch (String, Pattern);
-
-    case '?':
-      //
-      // Match any one char
-      //
-      if (!*String) {
-        return FALSE;
-      }
-
-      String += 1;
-      break;
-
-    case '[':
-      //
-      // Match char set
-      //
-      c = *String;
-      if (!c) {
-        return FALSE;
-        //
-        // syntax problem
-        //
-      }
-
-      l = 0;
-      p = *Pattern++;
-      while (p) {
-        if (p == ']') {
-          return FALSE;
-        }
-
-        if (p == '-') {
-          //
-          // if range of chars,
-          //
-          p = *Pattern;
-          //
-          // get high range
-          //
-          if (p == 0 || p == ']') {
-            return FALSE;
-            //
-            // syntax problem
-            //
-          }
-
-          if (c >= l && c <= p) {
-            //
-            // if in range,
-            //
-            break;
-            //
-            // it's a match
-            //
-          }
-        }
-
-        l = p;
-        if (c == p) {
-          //
-          // if char matches
-          //
-          break;
-          //
-          // move on
-          //
-        }
-
-        p = *Pattern++;
-      }
-      //
-      // skip to end of match char set
-      //
-      while (p && p != ']') {
-        p = *Pattern;
-        Pattern += 1;
-      }
-
-      String += 1;
-      break;
-
-    default:
-      c = *String;
-      if (c != p) {
-        return FALSE;
-      }
-
-      String += 1;
-      break;
-    }
-  }
-}
-
 BOOLEAN
 EntsLibStubMetaiMatch (
   IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
@@ -489,7 +359,7 @@ EntsLibStubMetaiMatch (
   IN CHAR16                           *Pattern
   )
 {
-  return MetaMatch (String, Pattern);
+  return SctMetaMatch (String, Pattern);
 }
 
 EFI_STATUS

@@ -84,26 +84,7 @@ Abstract:
 #include EFI_GUID_DEFINITION (Acpi)
 #include EFI_GUID_DEFINITION (SmBios)
 #include EFI_GUID_DEFINITION (SalSystemTable)
-
-//
-// Prototypes
-//
-
-BOOLEAN
-LibStubMetaiMatch (
-    IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
-    IN CHAR16                           *String,
-    IN CHAR16                           *Pattern
-    );
-
-BOOLEAN
-LibMatchDevicePaths (
-    IN  EFI_DEVICE_PATH_PROTOCOL *Multi,
-    IN  EFI_DEVICE_PATH_PROTOCOL *Single
-    );
-
-//
-// Globals
+// Globals
 //
 extern BOOLEAN                          LibInitialized;
 extern EFI_UNICODE_COLLATION_PROTOCOL   *UnicodeInterface;

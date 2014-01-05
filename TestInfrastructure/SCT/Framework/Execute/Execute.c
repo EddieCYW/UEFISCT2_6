@@ -1980,7 +1980,7 @@ Routine Description:
   }
 
   if (Handle != NULL_HANDLE) {
-    DevicePath = DevicePathFromHandle (Handle);
+    DevicePath = SctDevicePathFromHandle (Handle);
     if (DevicePath != NULL) {
       ConfigData->DevicePath = SctDevicePathToStr (DevicePath);
     } else {

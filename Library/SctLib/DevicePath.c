@@ -1365,7 +1365,7 @@ SctFileDevicePath (
     DevicePath = (EFI_DEVICE_PATH_PROTOCOL *) FilePath;
     if (Device) {
       DevicePath = SctAppendDevicePath (
-                        DevicePathFromHandle(Device),
+                        SctDevicePathFromHandle(Device),
                         DevicePath
                         );
       SctFreePool (FilePath);

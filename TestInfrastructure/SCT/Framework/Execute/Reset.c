@@ -623,7 +623,7 @@ Routine Description:
     //
     // Remove the file or the directory
     //
-    if (MetaiMatch (FileInfo->FileName, MetaName)) {
+    if (SctMetaiMatch (FileInfo->FileName, MetaName)) {
       Status = Handle->Open (
                          Handle,
                          &ChildHandle,

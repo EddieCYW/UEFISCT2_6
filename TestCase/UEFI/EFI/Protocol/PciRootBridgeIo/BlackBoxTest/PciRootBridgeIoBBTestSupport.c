@@ -193,7 +193,7 @@ QueryGoOnTesting (
     return FALSE;
   }
 
-  if (MetaiMatch (InputBuffer, L"y")) {
+  if (SctMetaiMatch (InputBuffer, L"y")) {
     gtBS->FreePool (InputBuffer);
     return TRUE;
   } else {
@@ -2109,5 +2109,3 @@ AToUint64 (
     }
     return U64;
 }
-
- 

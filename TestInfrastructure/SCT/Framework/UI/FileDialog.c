@@ -2854,7 +2854,7 @@ Returns:
   //
   Context->Handle         = FsHandles;
   Context->FHandle        = SctOpenRoot (Context->Handle);
-  Context->DevicePath     = DevicePathFromHandle (Context->Handle);
+  Context->DevicePath     = SctDevicePathFromHandle (Context->Handle);
   Context->DevicePathStr  = SctDevicePathToStr (Context->DevicePath);
 
   //

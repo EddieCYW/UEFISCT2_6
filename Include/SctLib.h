@@ -392,6 +392,22 @@ SctAcquireLockOrFail (
   );
 
 //
+// Match API
+//
+
+BOOLEAN
+SctMetaMatch (
+  IN CHAR16                         *String,
+  IN CHAR16                         *Pattern
+  );
+
+BOOLEAN
+SctMetaiMatch (
+  IN CHAR16                         *String,
+  IN CHAR16                         *Pattern
+  );
+
+//
 // Memory API
 //
 

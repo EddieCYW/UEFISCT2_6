@@ -159,18 +159,6 @@ InitializeUnicodeSupport (
   CHAR8                             *LangCode
   );
 
-BOOLEAN
-MetaMatch (
-  IN CHAR16                         *String,
-  IN CHAR16                         *Pattern
-  );
-
-BOOLEAN
-MetaiMatch (
-  IN CHAR16                         *String,
-  IN CHAR16                         *Pattern
-  );
-
 VOID
 Output (
   IN CHAR16                         *Str

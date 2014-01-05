@@ -111,4 +111,11 @@ GuidToString (
   IN EFI_GUID     *Guid
   );
 
+BOOLEAN
+LibStubMetaiMatch (
+  IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
+  IN CHAR16                           *String,
+  IN CHAR16                           *Pattern
+  );
+
 #endif

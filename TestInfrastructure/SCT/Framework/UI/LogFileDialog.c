@@ -3164,7 +3164,7 @@ Returns:
 
     Context->Handle         = FsHandles[Index];
     Context->FHandle        = SctOpenRoot (Context->Handle);
-    Context->DevicePath     = DevicePathFromHandle (Context->Handle);
+    Context->DevicePath     = SctDevicePathFromHandle (Context->Handle);
     Context->DevicePathStr  = SctDevicePathToStr (Context->DevicePath);
     Context->FileName       = SctStrDuplicate (L"\\");
     Context->IsDir          = TRUE;
