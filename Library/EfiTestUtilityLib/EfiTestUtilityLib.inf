@@ -62,7 +62,6 @@ COMPONENT_TYPE  = LIBRARY
 [sources.common]
   console.c
   data.c
-  event.c
   misc.c
 
 [includes.common]

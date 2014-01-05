@@ -215,12 +215,6 @@ LibGetVariableAndSize (
   OUT UINTN                         *VarSize
   );
 
-EFI_STATUS
-WaitForSingleEvent (
-  IN EFI_EVENT                      Event,
-  IN UINT64                         Timeout OPTIONAL
-  );
-
 EFI_FILE_HANDLE
 LibOpenRoot (
   IN EFI_HANDLE                     DeviceHandle

@@ -236,7 +236,7 @@ Returns:
     //
     // Read a key
     //
-    WaitForSingleEvent(ConIn->WaitForKey, 0);
+    SctWaitForSingleEvent(ConIn->WaitForKey, 0);
     ConIn->ReadKeyStroke(ConIn, &Key);
 
     switch (Key.UnicodeChar) {

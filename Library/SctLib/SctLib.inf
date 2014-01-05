@@ -57,6 +57,7 @@ COMPONENT_TYPE  = LIBRARY
   Debug.c
   DevicePath.c
   Error.c
+  Event.c
   File.c
   Guid.c
   Handle.c

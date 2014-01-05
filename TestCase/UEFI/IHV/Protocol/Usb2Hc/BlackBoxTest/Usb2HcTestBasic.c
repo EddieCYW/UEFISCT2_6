@@ -3858,7 +3858,7 @@ Returns:
                      Str
                      );
       //
-      // WaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
+      // SctWaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
       //
       StallForChangeDevice (StandardLib, 20);
       for (port = 0; port < PortNumber; port++) {
@@ -3886,7 +3886,7 @@ Returns:
                      Str
                      );
       //
-      // WaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
+      // SctWaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
       //
       StallForChangeDevice (StandardLib, 20);
       for (port = 0; port < PortNumber; port++) {
@@ -3913,7 +3913,7 @@ Returns:
                          Str
                          );
           //
-          // WaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
+          // SctWaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
           //
           StallForChangeDevice (StandardLib, 20);
           Status1 = Usb2Hc->GetRootHubPortStatus (Usb2Hc, port, &PortStatus);
@@ -4108,7 +4108,7 @@ Returns:
                      Str
                      );
       //
-      // WaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
+      // SctWaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
       //
       StallForChangeDevice (StandardLib, 20);
       for (port = 0; port < PortNumber; port++) {
@@ -4137,7 +4137,7 @@ Returns:
                            Str
                            );
             //
-            // WaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
+            // SctWaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
             //
             StallForChangeDevice (StandardLib, 20);
             Status1 = Usb2Hc->GetRootHubPortStatus (Usb2Hc, port, &PortStatus);
@@ -4162,7 +4162,7 @@ Returns:
                             Str
                             );
               //
-              // WaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
+              // SctWaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
               //
               StallForChangeDevice (StandardLib, 20);
               Status1 = Usb2Hc->GetRootHubPortStatus (Usb2Hc, port, &PortStatus);
@@ -6154,7 +6154,7 @@ Returns:
       //
       StandardLib->RecordMessage (StandardLib, EFI_VERBOSE_LEVEL_DEFAULT, L"Waiting for 20s\n");
       //
-      // WaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
+      // SctWaitForSingleEvent (gtST->ConIn->WaitForKey, 0);
       //
       StallForChangeDevice (StandardLib, 20);
       for (port = 0; port < PortNumber; port++) {

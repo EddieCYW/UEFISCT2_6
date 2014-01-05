@@ -1260,7 +1260,7 @@ SetPageBreak (
   Str[1] = 0;
   Str[2] = 0;
   for (;;) {
-    WaitForSingleEvent(tST->ConIn->WaitForKey, 0);
+    SctWaitForSingleEvent(tST->ConIn->WaitForKey, 0);
     tST->ConIn->ReadKeyStroke(tST->ConIn, &Key);
 
     //

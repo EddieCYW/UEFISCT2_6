@@ -55,14 +55,8 @@ Abstract:
 
 --*/
 
-#include "lib.h"
+#include "SctLibInternal.h"
 
-
-EFI_STATUS
-WaitForSingleEvent (
-  IN EFI_EVENT        Event,
-  IN UINT64           Timeout OPTIONAL
-  )
 /*++
 
 Routine Description:
@@ -79,6 +73,11 @@ Returns:
   EFI_TIME_OUT     - Timout expired before Event fired..
 
 --*/
+EFI_STATUS
+SctWaitForSingleEvent (
+  IN EFI_EVENT        Event,
+  IN UINT64           Timeout OPTIONAL
+  )
 {
   EFI_STATUS          Status;
   UINTN               Index;

@@ -186,6 +186,16 @@ SctDevicePathToInterface (
   );
 
 //
+// Event API
+//
+
+EFI_STATUS
+SctWaitForSingleEvent (
+  IN EFI_EVENT        Event,
+  IN UINT64           Timeout OPTIONAL
+  );
+
+//
 // File API
 //
 
