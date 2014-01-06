@@ -16,7 +16,6 @@ WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 --*/
 
 #include "Tiano.h"
-#include "EfiDriverLib.h"
 #include "SctLib.h"
 
 

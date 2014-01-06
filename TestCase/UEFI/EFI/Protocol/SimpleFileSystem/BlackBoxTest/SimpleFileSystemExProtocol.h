@@ -60,18 +60,33 @@
 #define _SIMPLE_FILE_SYSTEMEX_FOR_TEST_H
 
 #include "Efi.h"
-#include "EfiCommonLib.h"
-//#include "EfiTestLib.h"
+
+// To prevent to add FileSystem.h and FileInfo.h
+#define _SIMPLE_FILE_SYSTEM_H_
+#define _FILE_INFO_H_
+typedef struct _EFI_FILE_PROTOCOL         *EFI_FILE_HANDLE;
+
+typedef struct {
+  UINT64                  Size;
+  UINT64                  FileSize;
+  UINT64                  PhysicalSize;
+  EFI_TIME                CreateTime;
+  EFI_TIME                LastAccessTime;
+  EFI_TIME                ModificationTime;
+  UINT64                  Attribute;
+  CHAR16                  FileName[1];
+} EFI_FILE_INFO;
+
+#include "SctLib.h"
+#include "EfiTestLib.h"
 #include "Guid.h" 
-#include "LinkedList.h"
-#include "Lock.h"
 
 
 #define EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_REVISION 0x00010000
 #define EFI_FILE_PROTOCOL_REVISION1 0x00010000
 #define EFI_FILE_PROTOCOL_REVISION2 0x00020000
 #define EFI_FILE_PROTOCOL_REVISION EFI_FILE_PROTOCOL_REVISION2
-  
+
 
 
   //#define _SIMPLE_FILE_SYSTEM_H_
@@ -593,17 +608,6 @@ typedef struct _EFI_FILE_PROTOCOL *EFI_FILE_PROTOCOL_HANDLE;
 #define EFI_FILE_INFO_ID   \
   { 0x9576e92, 0x6d3f, 0x11d2, 0x8e, 0x39, 0x0, 0xa0, 0xc9, 0x69, 0x72, 0x3b }
 
-typedef struct {
-  UINT64                  Size;
-  UINT64                  FileSize;
-  UINT64                  PhysicalSize;
-  EFI_TIME                CreateTime;
-  EFI_TIME                LastAccessTime;
-  EFI_TIME                ModificationTime;
-  UINT64                  Attribute;
-  CHAR16                  FileName[1];
-} EFI_FILE_INFO;
-
 //
 // The FileName field of the EFI_FILE_INFO data structure is variable length.
 // Whenever code needs to know the size of the EFI_FILE_INFO data structure, it needs to
@@ -680,18 +684,6 @@ extern EFI_GUID gEfiSimpleFileSystemProtocolGuid;
 extern EFI_GUID gEfiFileInfoGuid;
 extern EFI_GUID gEfiFileInfoIdGuid;
 extern EFI_GUID gEfiFileSystemVolumeLabelInfoIdGuid;
-
-
-
-
-UINTN
-SctPrint (
-  IN CHAR16                         *fmt,
-  ...
-  );
-
-
-
 
 #endif
 

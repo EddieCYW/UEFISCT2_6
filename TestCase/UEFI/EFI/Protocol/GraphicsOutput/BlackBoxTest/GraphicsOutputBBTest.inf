@@ -70,12 +70,9 @@ COMPONENT_TYPE       = BS_DRIVER
   .
   $(EDK_SOURCE)/Foundation
   $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Framework
   $(EDK_SOURCE)/Foundation/Include
   $(EDK_SOURCE)/Foundation/Efi/Include
   $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Include/IndustryStandard
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
   $(EFI_SOURCE)/
   $(EFI_SOURCE)/SctPkg/Include
   $(EFI_SOURCE)/SctPkg/Library/EfiTestLib

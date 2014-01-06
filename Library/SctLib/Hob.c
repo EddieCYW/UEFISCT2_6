@@ -20,7 +20,6 @@ Abstract:
 --*/
 
 #include "Tiano.h"
-#include "EfiDriverLib.h"
 #include "PeiHob.h"
 #include "SctLib.h"
 #include EFI_GUID_DEFINITION (IoBaseHob)

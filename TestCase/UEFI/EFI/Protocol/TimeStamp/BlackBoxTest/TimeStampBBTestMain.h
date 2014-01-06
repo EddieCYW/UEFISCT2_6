@@ -61,7 +61,6 @@ Abstract:
 
 #include "SctLib.h"
 #include "EfiTestLib.h"
-#include "EfiCommonLib.h"
 #include "TimeStamp.h"
 #include "Guid.h"
 

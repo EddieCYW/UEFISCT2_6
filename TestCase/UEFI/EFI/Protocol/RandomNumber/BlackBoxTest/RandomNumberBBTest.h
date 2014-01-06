@@ -60,7 +60,6 @@ Abstract:
 #include "SctLib.h"
 #include "EfiTestLib.h"
 #include "RandomNumberProtocol.h"
-#include "EfiCommonLib.h"
 #include "Guid.h"
 
 #define EFI_RANDOM_NUMBER_TEST_REVISION 0x00010000

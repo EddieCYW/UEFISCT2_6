@@ -74,8 +74,6 @@ COMPONENT_TYPE       = BS_DRIVER
   $(EDK_SOURCE)/Foundation/Include
   $(EDK_SOURCE)/Foundation/Efi/Include
   $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Include/IndustryStandard
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
   $(EDK_SOURCE)/Foundation/Efi/Protocol/DevicePathToText
   $(EDK_SOURCE)/Foundation/Efi/Protocol/DevicePathUtilities
   $(EFI_SOURCE)/
@@ -85,7 +83,6 @@ COMPONENT_TYPE       = BS_DRIVER
 [libraries.common]
   EfiProtocolLib
   TestProtocolLib
-  EfiCommonLib
   EfiTestLib
 
 [nmake.common]

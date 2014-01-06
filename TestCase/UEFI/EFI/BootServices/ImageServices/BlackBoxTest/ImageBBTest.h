@@ -69,7 +69,8 @@ Abstract:
 
 #if (EFI_SPECIFICATION_VERSION >= 0x0002000A)
 
-#include EFI_PROTOCOL_DEFINITION (HiiDatabase)
+#include "HiiDef.h"
+
 extern     UINT8          mPackageList[];
 extern     EFI_GUID     mPackageListGuid ;
 extern     EFI_GUID     mPackageGuid ;

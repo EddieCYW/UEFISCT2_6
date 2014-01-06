@@ -116,7 +116,6 @@ COMPONENT_TYPE       = RT_DRIVER
 
 [libraries.common]
   SctLib
-  EfiCommonLib
   EfiGuidLib
 
 [libraries.ARM, libraries.Aarch64]

@@ -84,7 +84,6 @@ COMPONENT_TYPE       = BS_DRIVER
 [libraries.common]
   EfiProtocolLib
   TestProtocolLib
-  EfiCommonLib
   EfiTestLib
 
 [nmake.common]

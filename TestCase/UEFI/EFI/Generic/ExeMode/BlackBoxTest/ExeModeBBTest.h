@@ -61,7 +61,6 @@ Abstract:
 
 #include "Efi.h"
 #include "EfiTest.h"
-#include "EfiCommonLib.h"
 #include "EfiTestLib.h"
 #include "guid.h"
 

@@ -75,12 +75,9 @@ CUSTOM_MAKEFILE      = GCC | GNUmakefile
   ../../
   $(EDK_SOURCE)/Foundation
   $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Framework
   $(EDK_SOURCE)/Foundation/Include
   $(EDK_SOURCE)/Foundation/Efi/Include
   $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Include/IndustryStandard
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
   $(EFI_SOURCE)/
   $(EFI_SOURCE)/Include
   $(EFI_SOURCE)/SctPkg/Include
@@ -90,7 +87,6 @@ CUSTOM_MAKEFILE      = GCC | GNUmakefile
   EfiGuidLib
   EfiProtocolLib
   TestProtocolLib
-  EfiCommonLib
   EfiTestLib
 
 [nmake.common]

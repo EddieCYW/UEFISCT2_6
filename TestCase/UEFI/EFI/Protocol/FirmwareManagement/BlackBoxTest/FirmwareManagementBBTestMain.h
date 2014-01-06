@@ -63,7 +63,6 @@ Abstract:
 #include "Efi.h"
 #include "Guid.h"
 #include "EfiTestLib.h"
-#include "EfiCommonLib.h"
 
 #include "FirmwareManagement.h"
 

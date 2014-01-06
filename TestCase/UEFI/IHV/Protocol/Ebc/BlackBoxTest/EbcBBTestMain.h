@@ -63,7 +63,6 @@ Abstract:
 #include "guid.h"
 #include "EfiTestLib.h"
 #include "EbcProtocol.h"
-#include "EfiHobLib.h"
 
 #include EFI_GUID_DEFINITION (Hob)
 #include EFI_GUID_DEFINITION (PeiPeCoffLoader)

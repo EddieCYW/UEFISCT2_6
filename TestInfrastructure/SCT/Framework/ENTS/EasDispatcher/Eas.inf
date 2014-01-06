@@ -84,7 +84,6 @@ COMPONENT_TYPE       = LIBRARY
   $(EFI_SOURCE)/
   $(EDK_SOURCE)/Foundation
   $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Include/IndustryStandard
   $(EDK_SOURCE)/Foundation/Efi
   $(EDK_SOURCE)/Foundation/Efi/Include
   $(EDK_SOURCE)/Foundation/FrameWork
@@ -101,19 +100,14 @@ COMPONENT_TYPE       = LIBRARY
   $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
   $(EFI_SOURCE)/SctPkg/Protocol/Eftp
   $(EFI_SOURCE)/SctPkg/Library/NetLib/Include
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
 
 [includes.IA32]
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
 
 [includes.ARM]
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
 
 [includes.AARCH64]
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
 
 [includes.IPF]
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
 
 [libraries.common]
   SctLib

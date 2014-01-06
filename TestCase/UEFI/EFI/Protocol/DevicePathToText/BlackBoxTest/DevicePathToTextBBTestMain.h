@@ -64,7 +64,6 @@ Abstract:
 #include "DevicePathToTextProtocol.h"
 #include "Guid.h"
 #include "EfiTestLib.h"
-#include "EfiCommonLib.h"
 
 #include EFI_PROTOCOL_DEFINITION (DebugPort)
 #include EFI_GUID_DEFINITION (PcAnsi)

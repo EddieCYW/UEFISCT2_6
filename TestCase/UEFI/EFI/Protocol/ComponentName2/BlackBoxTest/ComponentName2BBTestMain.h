@@ -60,7 +60,6 @@ Abstract:
 #include "Efi.h"
 #include "EfiTestLib.h"
 #include "ComponentName2Protocol.h"
-#include "EfiCommonLib.h"
 #include "Guid.h"
 
 #define EFI_COMPONENT_NAME2_TEST_REVISION 0x00010000

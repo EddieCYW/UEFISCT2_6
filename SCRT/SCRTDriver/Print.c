@@ -54,7 +54,6 @@ Module Name:
 #include "SCRTDriver.h"
 #include "EfiError.h"
 #include "TianoCommon.h"
-#include "EfiCommonLib.h"
 #include "SctLib.h"
 
 

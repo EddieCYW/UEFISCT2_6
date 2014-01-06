@@ -62,7 +62,6 @@ Abstract:
 #include "HIIConfigRouting.h"
 #include "Guid.h"
 #include "EfiTestLib.h"
-#include "EfiCommonLib.h"
 
 #define  EFI_HII_CONFIG_ROUTING_PROTOCOL_TEST_REVISION    0x00010000
 

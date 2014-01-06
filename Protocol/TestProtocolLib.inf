@@ -77,7 +77,6 @@ WbTest/WbTest.c
 [includes.common]
 .
 $(EDK_SOURCE)/Foundation/Efi
-$(EDK_SOURCE)/Foundation/Framework
 $(EDK_SOURCE)/Foundation/Include
 $(EDK_SOURCE)/Foundation/Efi/Include
 $(EDK_SOURCE)/Foundation/Framework/Include

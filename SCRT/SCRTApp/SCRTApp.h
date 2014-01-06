@@ -56,7 +56,6 @@ Module Name:
 
 #include "SctLib.h"
 #include "EfiDebug.h"
-#include "EfiCommonLib.h"
 #include EFI_GUID_DEFINITION(GlobalVariable)
 
 

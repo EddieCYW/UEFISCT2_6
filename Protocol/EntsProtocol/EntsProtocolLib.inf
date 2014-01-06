@@ -72,7 +72,6 @@ COMPONENT_TYPE  = LIBRARY
 
 [includes.common]
   .
-  $(EDK_SOURCE)/Foundation/Framework
   $(EDK_SOURCE)/Foundation/Efi
   $(EDK_SOURCE)/Foundation/Include
   $(EDK_SOURCE)/Foundation/Efi/Include

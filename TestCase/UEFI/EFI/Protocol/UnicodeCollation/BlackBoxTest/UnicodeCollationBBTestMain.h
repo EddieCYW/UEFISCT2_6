@@ -64,7 +64,6 @@ Abstract:
 #include "Guid.h"
 #include "UnicodeCollationProtocol.h"
 #include "EfiTestLib.h"
-#include "EfiCommonLib.h"
 
 #define  UNICODE_COLLATION_PROTOCOL_TEST_REVISION    0x00010000
 

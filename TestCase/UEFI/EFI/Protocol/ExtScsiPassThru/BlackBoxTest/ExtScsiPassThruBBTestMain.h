@@ -64,7 +64,6 @@ Abstract:
 #include "ExtScsiPassThruProtocol.h"
 #include "Guid.h"
 #include "EfiTestLib.h"
-#include "EfiCommonLib.h"
 
 #define  EXT_SCSI_PASS_THRU_PROTOCOL_TEST_REVISION    0x00010000
 

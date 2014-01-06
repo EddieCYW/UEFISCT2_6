@@ -62,7 +62,6 @@ Abstract:
 #include "Efi.h"
 #include "Guid.h"
 #include "EfiTestLib.h"
-#include "EfiCommonLib.h"
 
 
 #define MEMORY_ALLOCATION_SERVICES_TEST_REVISION    0x00010000
