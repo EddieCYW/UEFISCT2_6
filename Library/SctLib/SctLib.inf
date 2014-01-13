@@ -56,6 +56,7 @@ COMPONENT_TYPE  = LIBRARY
   Alloc.c
   Debug.c
   DevicePath.c
+  DriverModel.c
   Error.c
   Event.c
   File.c

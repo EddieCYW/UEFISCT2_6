@@ -53,6 +53,7 @@
 #include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
 #include EFI_PROTOCOL_DEFINITION (FileInfo)
 
+
 //
 // Allocation API
 //
@@ -1084,6 +1085,32 @@ EFI_STATUS
 GetIoPortSpaceAddressHobInfo (
   IN  VOID                  *HobStart,
   OUT EFI_PHYSICAL_ADDRESS  *IoPortSpaceAddress
+  );
+
+//
+// EFI Driver Model Helpers
+//
+
+EFI_STATUS
+SctInstallAllDriverProtocols (
+  IN EFI_HANDLE                         ImageHandle,
+  IN EFI_SYSTEM_TABLE                   * SystemTable,
+  IN VOID* DriverBindingProtocol,
+  IN EFI_HANDLE                         DriverBindingHandle,
+  IN VOID* ComponentNameProtocol, OPTIONAL
+  IN VOID* DriverConfigurationProtocol, OPTIONAL
+  IN VOID* DriverDiagnosticsProtocol OPTIONAL
+  );
+
+EFI_STATUS
+SctInstallAllDriverProtocols2 (
+  IN EFI_HANDLE                         ImageHandle,
+  IN EFI_SYSTEM_TABLE                   * SystemTable,
+  IN VOID* DriverBindingProtocol,
+  IN EFI_HANDLE                         DriverBindingHandle,
+  IN VOID* ComponentName2Protocol, OPTIONAL
+  IN VOID* DriverConfiguration2Protocol, OPTIONAL
+  IN VOID* DriverDiagnostics2Protocol OPTIONAL
   );
 
 #endif

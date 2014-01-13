@@ -281,9 +281,9 @@ EfiLibInstallAllDriverProtocolsWithCustomizedUnload (
   EFI_LOADED_IMAGE_PROTOCOL *LoadedImage;
 
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)
-  Status = EfiLibInstallAllDriverProtocols2 (
+  Status = SctInstallAllDriverProtocols2 (
 #else
-  Status = EfiLibInstallAllDriverProtocols (
+  Status = SctInstallAllDriverProtocols (
 #endif
             ImageHandle,
             SystemTable,
