@@ -198,7 +198,7 @@ SctGetPeiProtocol (
     return Status;
   }
 
-  Status = GetNextGuidHob (&HobList, ProtocolGuid, &Buffer, NULL);
+  Status = SctGetNextGuidHob (&HobList, ProtocolGuid, &Buffer, NULL);
   if (EFI_ERROR(Status)) {
     return Status;
   }

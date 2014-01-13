@@ -48,6 +48,7 @@
 #define __SCTLIB_H__
 
 #include "Efi.h"
+#include "PeiHob.h"
 
 #include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
 #include EFI_PROTOCOL_DEFINITION (FileInfo)
@@ -1004,6 +1005,85 @@ SctLookupUnicodeString (
   IN  CHAR8                     *SupportedLanguages,
   IN  SCT_UNICODE_STRING_TABLE  *UnicodeStringTable,
   OUT CHAR16                    **UnicodeString
+  );
+
+//
+// HOB API
+//
+
+VOID  *
+SctGetHob (
+  IN UINT16  Type,
+  IN VOID    *HobStart
+  );
+
+UINTN
+SctGetHobListSize (
+  IN VOID  *HobStart
+  );
+
+UINT32
+SctGetHobVersion (
+  IN VOID  *HobStart
+  );
+
+EFI_STATUS
+SctGetHobBootMode (
+  IN  VOID           *HobStart,
+  OUT EFI_BOOT_MODE  *BootMode
+  );
+
+EFI_STATUS
+SctGetCpuHobInfo (
+  IN  VOID   *HobStart,
+  OUT UINT8  *SizeOfMemorySpace,
+  OUT UINT8  *SizeOfIoSpace
+  );
+
+EFI_STATUS
+SctGetDxeCoreHobInfo (
+  IN  VOID                  *HobStart,
+  OUT EFI_PHYSICAL_ADDRESS  *BaseAddress,
+  OUT UINT64                *Length,
+  OUT VOID                  **EntryPoint,
+  OUT EFI_GUID              **FileName
+  );
+
+EFI_STATUS
+SctGetNextFirmwareVolumeHob (
+  IN OUT VOID                  **HobStart,
+  OUT    EFI_PHYSICAL_ADDRESS  *BaseAddress,
+  OUT    UINT64                *Length
+  );
+
+#if (PI_SPECIFICATION_VERSION >= 0x00010000)
+EFI_STATUS
+GetNextFirmwareVolume2Hob (
+  IN OUT VOID                  **HobStart,
+  OUT    EFI_PHYSICAL_ADDRESS  *BaseAddress,
+  OUT    UINT64                *Length,
+  OUT    EFI_GUID              *FileName
+  );
+#endif
+
+EFI_STATUS
+SctGetNextGuidHob (
+  IN OUT VOID      **HobStart,
+  IN     EFI_GUID  * Guid,
+  OUT    VOID      **Buffer,
+  OUT    UINTN     *BufferSize OPTIONAL
+  );
+
+EFI_STATUS
+GetPalEntryHobInfo (
+  IN  VOID                  *HobStart,
+  OUT EFI_PHYSICAL_ADDRESS  *PalEntry
+  );
+
+EFI_STATUS
+GetIoPortSpaceAddressHobInfo (
+  IN  VOID                  *HobStart,
+  OUT EFI_PHYSICAL_ADDRESS  *IoPortSpaceAddress
   );
 
 #endif

@@ -61,6 +61,7 @@ COMPONENT_TYPE  = LIBRARY
   File.c
   Guid.c
   Handle.c
+  Hob.c
   Init.c
   List.c
   Lock.c
