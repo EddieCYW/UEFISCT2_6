@@ -117,7 +117,6 @@ Returns:
   UINTN                   FileSize;
   UINT32                  ArgIndex;
   CHAR16                  InfFileName[200];
-  BOOLEAN                 ConfigFlag;
   BOOLEAN                 GenLogFlag;
   EFI_STATUS              Status;
   MEMORY_FILE             InfMemoryFile;
@@ -138,7 +137,6 @@ Returns:
   FileHandle            = NULL;
   FileInfo              = NULL;
   FileBuffer            = NULL;
-  ConfigFlag            = FALSE;
   GenLogFlag            = FALSE;
   SctTableFound         = FALSE;
   HandOffAddr            = 0;
@@ -168,10 +166,6 @@ Returns:
     return EFI_INVALID_PARAMETER;
   } else {
     UnicodeStrCpy (InfFileName, SI->Argv[2]);
-    if (UnicodeStrCmp(SI->Argv[1], L"-g") == 0)
-      GenLogFlag = TRUE;
-    else
-      ConfigFlag = TRUE;
   }
 
 
