@@ -486,12 +486,9 @@ Routine Description:
 
 --*/
 {
-  UINTN                     Size;
   UINTN                     Index;
   CHAR16                    *TempFilePath;
   EFI_DEVICE_PATH_PROTOCOL  *TempDevicePath;
-
-  Size = DevicePathSize (DevicePath);
 
   //
   // Why hard code? Currently we cannot get the file system name from the device
