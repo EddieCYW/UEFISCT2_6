@@ -327,7 +327,6 @@ Returns:
 --*/
 {
   EFI_STATUS  status;
-  DEBUG ((EFI_D_INFO | EFI_D_LOAD, "wwwwwwwwwwwwwwwwwwwww"));
   EfiInitializeTestLib (ImageHandle, SystemTable);
   InitializeLib (ImageHandle, SystemTable);
 
