@@ -2392,7 +2392,7 @@ Routine Description:
   CHAR8 ptrValue[MAX_STRING_LEN + 1];
   INI   *ptrItem;
 
-  SctAsciiStrCpy (ptrLine, _alltrim (ptrLine));
+  ptrLine = _alltrim (ptrLine);
 
   if (*ptrLine == '#') {
     // it's a comment line
@@ -2535,6 +2535,7 @@ Routine Description:
   CHAR8   *tmp = ptrStr;
   UINT32  Length;
   UINT32  Index;
+  UINT32  FinalLength;
 
   //
   // skip the ' ' at beginning of string
@@ -2554,7 +2555,12 @@ Routine Description:
   }
 
   tmp[Index] = '\0';
-  SctAsciiStrCpy (ptrStr, tmp);
+  FinalLength = Index;
+  // Move tmp to the beginning of the string
+  // Do this manually - SctStrCopy does not allow the source and dest to overlap
+  for (Index = 0; Index <= FinalLength; Index++) {
+    ptrStr[Index] = tmp[Index];
+  }
 
   return ptrStr;
 }
