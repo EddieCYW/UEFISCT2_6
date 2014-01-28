@@ -78,21 +78,7 @@ EFI_RUNTIME_SERVICES    *tRT;
 //
 EFI_MEMORY_TYPE PoolAllocationType = EfiBootServicesData;
 
-//
-// Unicode collation functions that are in use
-//
-
-EFI_UNICODE_COLLATION_PROTOCOL   LibStubUnicodeInterface = {
-    LibStubStriCmp,
-    LibStubMetaiMatch,
-    LibStubStrLwrUpr,
-    LibStubStrLwrUpr,
-    NULL,   // FatToStr
-    NULL,   // StrToFat
-    NULL    // SupportedLanguages
-};
-
-EFI_UNICODE_COLLATION_PROTOCOL   *UnicodeInterface = &LibStubUnicodeInterface;
+EFI_UNICODE_COLLATION_PROTOCOL   *UnicodeInterface = NULL;
 
 /*++
 
@@ -136,7 +122,7 @@ InitializeUnicodeSupport (
   //
 
   for (Index=0; Index < NoHandles; Index++) {
-    Status = tBS->HandleProtocol (Handles[Index], &gEfiUnicodeCollationProtocolGuid, (VOID*)&Ui);
+    Status = tBS->HandleProtocol (Handles[Index], &gEfiUnicodeCollationProtocolGuid, (VOID**)&Ui);
     if (EFI_ERROR(Status)) {
       continue;
     }
@@ -218,7 +204,7 @@ SctInitializeLib (
     InitializeLibPlatform (ImageHandle,SystemTable);
   }
 
-  if (ImageHandle && UnicodeInterface == &LibStubUnicodeInterface) {
+  if (ImageHandle) {
     LangCode = 0;
     //
     // BUGBUG: Hard code here because variable service is not available in sync3.
@@ -229,6 +215,7 @@ SctInitializeLib (
     if (LangCode) {
       SctFreePool (LangCode);
     }
+    ASSERT (UnicodeInterface != NULL);
   }
   return EFI_SUCCESS;
 }

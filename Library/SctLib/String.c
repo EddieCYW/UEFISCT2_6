@@ -87,24 +87,6 @@ SctStrnCmp (
 }
 
 
-INTN
-LibStubStriCmp (
-  IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
-  IN CHAR16                           *s1,
-  IN CHAR16                           *s2
-  )
-{
-  return SctAsciiStriCmp (s1, s2);
-}
-
-VOID
-LibStubStrLwrUpr (
-  IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
-  IN CHAR16                           *Str
-  )
-{
-}
-
 // compare strings
 INTN
 SctStriCmp (

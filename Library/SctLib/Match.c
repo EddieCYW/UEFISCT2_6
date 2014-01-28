@@ -142,13 +142,3 @@ SctMetaiMatch (
 {
     return UnicodeInterface->MetaiMatch(UnicodeInterface, String, Pattern);
 }
-
-BOOLEAN
-LibStubMetaiMatch (
-    IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
-    IN CHAR16                           *String,
-    IN CHAR16                           *Pattern
-    )
-{
-    return SctMetaMatch (String, Pattern);
-}
