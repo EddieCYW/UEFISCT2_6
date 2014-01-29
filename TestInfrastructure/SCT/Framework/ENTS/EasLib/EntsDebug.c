@@ -795,8 +795,7 @@ Retry:
 
   if(EFI_ERROR(Status))
   {
-    EntsPrint(L"Fuck!\n");
-	EFI_DEADLOOP();
+    EFI_DEADLOOP();
   }
 
   //
