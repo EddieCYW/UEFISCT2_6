@@ -744,6 +744,7 @@ _DevPathMediaProtocol (
   EntsCatPrint (Str, L"%g", &MediaProt->Protocol);
 }
 
+#if (EFI_SPECIFICATION_VERSION < 0x00020000)
 STATIC
 VOID
 _DevPathFvFilePath (
@@ -759,6 +760,7 @@ _DevPathFvFilePath (
   FvFilePath = DevPath;
   EntsCatPrint (Str, L"%g", &FvFilePath->NameGuid);
 }
+#endif
 
 STATIC
 VOID

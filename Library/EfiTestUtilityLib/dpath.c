@@ -1164,6 +1164,7 @@ _DevPathMediaProtocol (
     CatPrint(Str, L"%g", &MediaProt->Protocol);
 }
 
+#if (EFI_SPECIFICATION_VERSION < 0x00020000)
 VOID
 _DevPathFvFilePath (
     IN OUT POOL_PRINT       *Str,
@@ -1175,7 +1176,7 @@ _DevPathFvFilePath (
     FvFilePath = DevPath;
     CatPrint(Str, L"%g", &FvFilePath->NameGuid);
 }
-
+#endif
 
 VOID
 _DevPathBssBss (
