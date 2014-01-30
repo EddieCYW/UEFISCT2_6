@@ -74,66 +74,6 @@ typedef struct _EFI_PASSIVE_TEST_CONTEXT {
   IN UINT64                                        Attributes;
 }EFI_PASSIVE_TEST_CONTEXT;
 
-/*-------------------------------------------------------------------------------*/
-
-#define ENTS_CONTEXT_DEBUG
-
-#ifdef ENTS_CONTEXT_DEBUG
-STATIC
-VOID
-_BuffPrint(
-  IN CHAR8                                *Buffer,
-  IN UINTN                                Size
-  )
-{
-  UINTN                                   Index;
-
-  for(Index = 0; Index < Size; Index++) {
-    if ((Index & 0xFF) == 0) {
-      EntsPrint(L"\n\t");
-    }
-    EntsPrint(L"%c", Buffer[Index]);
-  }
-  EntsPrint(L"\n");
-}
-
-STATIC
-VOID
-_RecordPrint(
-  IN EFI_PASSIVE_TEST_CONTEXT_RECORD      *Record
-  )
-{
-  EntsPrint(L"Key:[%a] ValueSize: [%d] Value:", Record->Key, Record->Size);
-  _BuffPrint((CHAR8 *)Record->Value, Record->Size);
-}
-
-STATIC
-VOID
-_RecordListPrint(
-  IN EFI_PASSIVE_TEST_CONTEXT_RECORD      *RecordList
-  )
-{
-  EFI_PASSIVE_TEST_CONTEXT_RECORD         *Record;
-
-  if(RecordList == NULL) {
-    EntsPrint(L"RecordList is empty\n");
-    return ;
-  }
-
-  for(Record = RecordList; Record != NULL; Record = Record->Next) {
-    _RecordPrint(Record);
-  }
-}
-
-#define BuffPrint(Buffer, Size)           _BuffPrint((Buffer), (Size))
-#define RecordPrint(Record)               _RecordPrint((Record))
-#define RecordListPrint(RecordList)       _RecordListPrint((RecordList))
-#else
-#define BuffPrint(Buffer, Size)
-#define RecordPrint(Record)
-#define RecordListPrint(RecordList)
-#endif
-
 /*--------------------------Internal string library function---------------------------*/
 STATIC
 UINTN
