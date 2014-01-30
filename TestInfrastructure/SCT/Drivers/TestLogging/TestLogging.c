@@ -1116,7 +1116,6 @@ TllCloseAllFiles (
   TEST_LOGGING_PRIVATE_DATA                 *Private
   )
 {
-  EFI_STATUS                          Status;
   EFI_TEST_OUTPUT_LIBRARY_PROTOCOL    *Output;
   EFI_LIB_CONFIG_FILE_HANDLE          *FileConf;
 
@@ -1127,7 +1126,7 @@ TllCloseAllFiles (
   //
   FileConf = &Private->SystemLogFile;
   if (FileConf->FileHandle != NULL) {
-    Status = Output->Close (
+    Output->Close (
                Output,
                FileConf->FileHandle
              );
@@ -1139,7 +1138,7 @@ TllCloseAllFiles (
   //
   FileConf = &Private->CaseLogFile;
   if (FileConf->FileHandle != NULL) {
-    Status = Output->Close (
+    Output->Close (
                Output,
                FileConf->FileHandle
              );
