@@ -160,27 +160,6 @@ InitializeUnicodeSupport (
   );
 
 VOID
-Output (
-  IN CHAR16                         *Str
-  );
-
-VOID
-Input (
-  IN CHAR16                         *Prompt OPTIONAL,
-  OUT CHAR16                        *InStr,
-  IN UINTN                          StrLen
-  );
-
-VOID
-IInput (
-  IN EFI_SIMPLE_TEXT_OUT_PROTOCOL   *ConOut,
-  IN EFI_SIMPLE_TEXT_IN_PROTOCOL    *ConIn,
-  IN CHAR16                         *Prompt OPTIONAL,
-  OUT CHAR16                        *InStr,
-  IN UINTN                          StrLen
-  );
-
-VOID
 ValueToHex (
   IN CHAR16                         *Buffer,
   IN UINT64                         v
@@ -248,17 +227,6 @@ LibGetManagedControllerHandles (
   EFI_HANDLE  DriverBindingHandle,
   UINTN       *ControllerHandleCount,
   EFI_HANDLE  **ControllerHandleBuffer
-  );
-
-EFI_STATUS
-LibGetFreePages (
-  IN UINT64 *NoFreePages
-  );
-
-EFI_STATUS
-StallForKey (
-  IN UINTN             Seconds,
-  OUT EFI_INPUT_KEY    *Key
   );
 
 #endif

@@ -87,6 +87,23 @@ SctFreePool (
   );
 
 //
+// Console API
+//
+
+VOID
+SctInput (
+  IN CHAR16    *Prompt OPTIONAL,
+  OUT CHAR16   *InStr,
+  IN UINTN     StrLen
+  );
+
+EFI_STATUS
+SctStallForKey (
+  IN UINTN             Seconds,
+  OUT EFI_INPUT_KEY    *Key
+  );
+
+//
 // Device Path API
 //
 #ifndef END_DEVICE_PATH_LENGTH

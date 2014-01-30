@@ -337,7 +337,7 @@ WriteMaskBytes (
   //
   //get the address offset.
   //
-  Input (
+  SctInput (
     L"Please input the Address Offset in this Pci configuration space (4 bytes alligned),such as 0x80\r\n",
     Buffer,
     MAX_STRING_LENGTH
@@ -358,7 +358,7 @@ WriteMaskBytes (
   //
   //then get the Address length to be masked.
   //
-  Input (
+  SctInput (
     L"Please input the Address length to be masked (dividable by 4), such as 0x20\r\n",
     Buffer,
     MAX_STRING_LENGTH

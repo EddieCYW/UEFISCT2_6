@@ -560,7 +560,7 @@ ProcessExistingSctFile (
     // User must input a selection
     //
     while (TRUE) {
-      Input (
+      SctInput (
         Prompt,
         InputBuffer,
         2

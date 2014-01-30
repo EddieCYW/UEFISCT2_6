@@ -55,10 +55,9 @@ Abstract:
 
 --*/
 
-#include "lib.h"
+#include "SctLibInternal.h"
 
-
-
+#if 0
 VOID
 Output (
     IN CHAR16   *Str
@@ -67,25 +66,9 @@ Output (
 {
     tST->ConOut->OutputString (tST->ConOut, Str);
 }
+#endif
 
-
-VOID
-Input (
-    IN CHAR16    *Prompt OPTIONAL,
-    OUT CHAR16   *InStr,
-    IN UINTN     StrLen
-    )
-// Input a string at the current cursor location, for StrLen
-{
-    IInput (
-        tST->ConOut,
-        tST->ConIn,
-        Prompt,
-        InStr,
-        StrLen
-        );
-}
-
+STATIC
 VOID
 ConMoveCursorBackward (
   IN     UINTN                   LineLength,
@@ -120,6 +103,7 @@ Returns:
   }
 }
 
+STATIC
 VOID
 ConMoveCursorForward (
   IN     UINTN                   LineLength,
@@ -155,7 +139,7 @@ Returns:
   }
 }
 
-
+STATIC
 VOID
 IInput (
     IN EFI_SIMPLE_TEXT_OUT_PROTOCOL     *ConOut,
@@ -448,8 +432,25 @@ Returns:
   return;
 }
 
+VOID
+SctInput (
+    IN CHAR16    *Prompt OPTIONAL,
+    OUT CHAR16   *InStr,
+    IN UINTN     StrLen
+    )
+// Input a string at the current cursor location, for StrLen
+{
+    IInput (
+        tST->ConOut,
+        tST->ConIn,
+        Prompt,
+        InStr,
+        StrLen
+        );
+}
+
 EFI_STATUS
-StallForKey (
+SctStallForKey (
   IN UINTN             Seconds,
   OUT EFI_INPUT_KEY    *Key
   )

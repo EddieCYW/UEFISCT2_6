@@ -60,7 +60,6 @@ BASE_NAME       = EfiTestUtilityLib
 COMPONENT_TYPE  = LIBRARY
 
 [sources.common]
-  console.c
   data.c
   misc.c
 

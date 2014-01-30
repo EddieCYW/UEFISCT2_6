@@ -245,7 +245,7 @@ SctDeviceConfig (
     //
     // Let user choose the operation
     //
-    Input (L"-", InputBuffer, 10);
+    SctInput (L"-", InputBuffer, 10);
     SctPrint (L"\n");
 
     DeviceConfigParser (InputBuffer, &Option, &Index);
@@ -528,7 +528,7 @@ DeviceConfigInsert (
     L"  O - Other\n"
     );
 
-  Input (L"Enter choice: ", InputBuffer, 2);
+  SctInput (L"Enter choice: ", InputBuffer, 2);
   SctPrint (L"\n");
 
   while (TRUE) {
@@ -567,14 +567,14 @@ DeviceConfigInsert (
       break;
     }
 
-    Input (L"Invalid input! Enter choice again: ", InputBuffer, 2);
+    SctInput (L"Invalid input! Enter choice again: ", InputBuffer, 2);
     SctPrint (L"\n");
   }
 
   //
   // Driver Binding
   //
-  Input (
+  SctInput (
     L"Should test the Driver Binding Protocol? [Y(Default)/N]: ",
     InputBuffer,
     2
@@ -607,14 +607,14 @@ DeviceConfigInsert (
       break;
     }
 
-    Input (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
+    SctInput (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
     SctPrint (L"\n");
   }
 
   //
   // Driver Diagnostics
   //
-  Input (
+  SctInput (
     L"Should test the Driver Diagnostics Protocol? [Y(Default)/N]: ",
     InputBuffer,
     2
@@ -647,14 +647,14 @@ DeviceConfigInsert (
       break;
     }
 
-    Input (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
+    SctInput (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
     SctPrint (L"\n");
   }
 
   //
   // Driver Configuration
   //
-  Input (
+  SctInput (
     L"Should test the Driver Configuration Protocol? [Y(Default)/N]: ",
     InputBuffer,
     2
@@ -687,14 +687,14 @@ DeviceConfigInsert (
       break;
     }
 
-    Input (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
+    SctInput (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
     SctPrint (L"\n");
   }
 
   //
   // Unload Supported function
   //
-  Input (
+  SctInput (
     L"Should test the Unload Supported function? [Y(Default)/N]: ",
     InputBuffer,
     2
@@ -727,14 +727,14 @@ DeviceConfigInsert (
       break;
     }
 
-    Input (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
+    SctInput (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
     SctPrint (L"\n");
   }
 
   //
   // Runtime Supported function
   //
-  Input (
+  SctInput (
     L"Should test the Runtime Supported funtion? [Y(Default)/N]: ",
     InputBuffer,
     2
@@ -767,7 +767,7 @@ DeviceConfigInsert (
       break;
     }
 
-    Input (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
+    SctInput (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
     SctPrint (L"\n");
   }
 
@@ -877,7 +877,7 @@ DeviceConfigRemove (
 
   SctPrint (L"Remove '%s'.\n", Buffer);
 
-  Input (L"Are you sure? [Y/N]: ", InputBuffer, 2);
+  SctInput (L"Are you sure? [Y/N]: ", InputBuffer, 2);
   SctPrint (L"\n");
 
   while (TRUE) {
@@ -896,7 +896,7 @@ DeviceConfigRemove (
       break;
     }
 
-    Input (L"Invalid input! Enter again [Y/N]: ", InputBuffer, 2);
+    SctInput (L"Invalid input! Enter again [Y/N]: ", InputBuffer, 2);
     SctPrint (L"\n");
   }
 

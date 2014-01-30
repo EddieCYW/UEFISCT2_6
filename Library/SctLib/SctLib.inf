@@ -54,6 +54,7 @@ COMPONENT_TYPE  = LIBRARY
 
 [sources.common]
   Alloc.c
+  Console.c
   Debug.c
   DevicePath.c
   DriverModel.c

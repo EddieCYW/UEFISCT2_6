@@ -368,7 +368,7 @@ GetDestination (
     //
     // Input the index of destination file system
     //
-    Input (
+    SctInput (
       L"Input index of destination FS. 'q' to exit:",
       InputBuffer,
       4
@@ -386,7 +386,7 @@ GetDestination (
     //
     // Convert the input to an index
     //
-    Index = Atoi(InputBuffer) - 1;
+    Index = SctAtoi (InputBuffer) - 1;
     if (Index >= mFsCount) {
       SctPrint (L"  Only 1 to %d is valid.\n", mFsCount);
       continue;

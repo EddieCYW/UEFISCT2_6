@@ -1747,7 +1747,7 @@ BBTestGetStatusFunctionTest (
   // Wait for the user disconnect the machine from the LAN.
   //
   SctPrint (L"\nPlease disconnect the machine from the LAN, press any key within 10 seconds\n");
-  StallForKey(10, NULL);
+  SctStallForKey (10, NULL);
 
   //
   // Assertion Point 4.11.2.1
@@ -1805,7 +1805,7 @@ BBTestGetStatusFunctionTest (
   }
 
   SctPrint (L"\nNow the machine can be reconnected to the LAN, press any key within 10 seconds\n");
-  StallForKey(10, NULL);
+  SctStallForKey (10, NULL);
 
   return EFI_SUCCESS;
 }
