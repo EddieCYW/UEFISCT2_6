@@ -155,13 +155,6 @@ _IPrint (
   );
 
 STATIC
-INTN
-_DbgOut (
-  IN VOID     *Context,
-  IN CHAR16   *Buffer
-  );
-
-STATIC
 VOID
 PFLUSH (
   IN OUT PRINT_STATE     *ps
