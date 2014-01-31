@@ -96,25 +96,11 @@ done
 export EFI_SOURCE=`pwd`
 export EDK_SOURCE=`pwd`/EdkCompatibilityPkg
 
-# Setup workspace if it is not set
-#
-if [ -z "${WORKSPACE:-}" ]
-then
-  echo Initializing workspace
-# Uses an external BaseTools project
-# Uses the BaseTools in edk2
-  export EDK_TOOLS_PATH=`pwd`/BaseTools
-  source ./edksetup.sh $EDK_TOOLS_PATH
-else
-  echo Building from: $WORKSPACE
-fi
-
-#check if the last command was succesful
+# check if the last command was successful
 status=$?
-if test $status -ne 0
-then
-echo Could not Run the edksetup.sh script
-        exit -1
+if test $status -ne 0; then
+	echo Could not Run the edksetup.sh script
+	exit -1
 fi
 
 if [ "${1}" != "ARM" -a "${1}" != "AARCH64" ]; then
@@ -196,6 +182,23 @@ if [ "$3" = "RELEASE" -o "$3" = "DEBUG" ]; then
   shift
 fi
 
+#
+# Setup workspace if it is not set
+#
+if [ -z "${WORKSPACE:-}" ]; then
+	echo Initializing workspace
+	# Uses an external BaseTools project
+	# Uses the BaseTools in edk2
+	export EDK_TOOLS_PATH=`pwd`/BaseTools
+	# We do not pass BuildArmSct.sh arguments to edksetup.sh
+	while (( "$#" )); do
+		shift
+	done
+	source ./edksetup.sh
+else
+	echo Building from: $WORKSPACE
+fi
+
 if  [[ ! -e $EDK_TOOLS_PATH/Source/C/bin ]]
 then
   # build the tools if they don't yet exist
@@ -218,16 +221,13 @@ mkdir -p $DEST_DIR
 case `uname -m` in 
 	x86_64)
 		cp SctPkg/Tools/Bin/GenBin_lin_64 $DEST_DIR/GenBin
-	;;
-
+		;;
 	x86_32)
 		cp SctPkg/Tools/Bin/GenBin_lin_32 $DEST_DIR/GenBin
-	;;
-
+		;;
 	*)
 		cp SctPkg/Tools/Bin/GenBin_lin_32 $DEST_DIR/GenBin
-	;;
-
+		;;
 esac
 
 #
@@ -235,7 +235,7 @@ esac
 #
 build -p SctPkg/UEFI/UEFI_SCT.dsc -a $SCT_TARGET_ARCH -t $TARGET_TOOLS -b $SCT_BUILD $3 $4 $5 $6 $7 $8 $9
 
-#Check if there is any error
+# Check if there is any error
 status=$?
 if test $status -ne 0
 then
@@ -244,7 +244,7 @@ echo Could not build SCT package
 fi
 
 #
-#If the argument is clean, then don't have to generate Sct binary.
+# If the argument is clean, then don't have to generate Sct binary.
 #
 for arg in "$@"
 do
@@ -256,12 +256,12 @@ do
 done
 
 #
-#Change directory to Build directory
+# Change directory to Build directory
 #
 cd Build/UefiSct/${SCT_BUILD}_${TARGET_TOOLS}
 
 #
-#Run a script to generate Sct binary for ARM
+# Run a script to generate Sct binary for ARM
 #
 ../../../SctPkg/CommonGenFramework.sh uefi_sct $SCT_TARGET_ARCH InstallSctArm.efi
 
