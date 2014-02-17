@@ -67,10 +67,10 @@ COMPONENT_TYPE       = BS_DRIVER
 
 
 [sources.ia32]
-  ia32\AsmFuncs.asm
+  IA32/AsmFuncs.asm
 
 [sources.x64]
-  x64\AsmFuncs.asm
+  X64/AsmFuncs.asm
 
 [includes.common]
   .
