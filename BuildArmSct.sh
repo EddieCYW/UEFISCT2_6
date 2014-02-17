@@ -77,7 +77,7 @@ PrintUsage() {
 	#Print Help
 	#
 	echo "Usage:"
-	echo "    $0 <architecture (ARM OR AARCH64)> \
+	echo "    $0 <architecture (ARM, AARCH64, X64, etc)> \
 <toolchain name (RVCT or ARMGCC or GCC)> \
 [build type (RELEASE OR DEBUG, DEFAULT: DEBUG)]"
 }
@@ -103,12 +103,6 @@ if test $status -ne 0; then
 	exit -1
 fi
 
-if [ "${1}" != "ARM" -a "${1}" != "AARCH64" ]; then
-    echo "Couldn't build SCT:"
-    echo "Unknown target architecture $1."
-    PrintUsage
-    exit -1
-fi
 SCT_TARGET_ARCH=${1}
 
 #
@@ -126,9 +120,10 @@ case `uname` in
 		;;
 		
 		GCC | gcc)
+			gcc_version=$(gcc -v 2>&1 | tail -1 | awk '{print $3}')
 			if [ "$SCT_TARGET_ARCH" == "ARM" ]; then
 				gcc_version=$(${GCC47_ARM_PREFIX}gcc -v 2>&1 | tail -1 | awk '{print $3}')
-			else
+			elif [ "$SCT_TARGET_ARCH" == "AARCH64" ]; then
 				gcc_version=$(${GCC47_AARCH64_PREFIX}gcc -v 2>&1 | tail -1 | awk '{print $3}')
 			fi
 			case $gcc_version in
