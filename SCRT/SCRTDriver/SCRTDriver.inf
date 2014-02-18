@@ -71,7 +71,9 @@ COMPONENT_TYPE       = RT_DRIVER
   x64/Io.c
   x64/Io.h
   x64/IoAccess.asm
+  x64/IoAccess.S | GCC
   x64/port80.asm
+  x64/port80.S | GCC
   x64/Dump.c
   x64/Debug.c
 
