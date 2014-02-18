@@ -71,6 +71,7 @@ COMPONENT_TYPE       = BS_DRIVER
 
 [sources.x64]
   X64/AsmFuncs.asm
+  X64/AsmFuncs.S | GCC
 
 [includes.common]
   .
