@@ -71,9 +71,10 @@ COMPONENT_TYPE       = APPLICATION
   ia32/VirtualMemory.c
   ia32/GoVirtual.asm
  
-[sources.x64]
+[sources.X64]
   x64/VirtualMemory.c
-  x64/GoVirtual.asm
+  x64/GoVirtual.asm | MSFT
+  x64/GoVirtual.S | GCC
 
 [sources.ipf]
   ipf/VirtualMemory.c
