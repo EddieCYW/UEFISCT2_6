@@ -500,6 +500,7 @@ CleanUp:
 }
 
 EFI_STATUS
+EFIAPI
 EftpReadFile (
   IN EFI_EFTP_PROTOCOL   *This,
   IN EFI_EFTP_TOKEN      *Token
@@ -623,6 +624,7 @@ Returns:
 }
 
 EFI_STATUS
+EFIAPI
 EftpConfigure (
   IN EFI_EFTP_PROTOCOL       *This,
   IN EFI_EFTP_CONFIG_DATA    *EftpConfigData  // OPTIONAL

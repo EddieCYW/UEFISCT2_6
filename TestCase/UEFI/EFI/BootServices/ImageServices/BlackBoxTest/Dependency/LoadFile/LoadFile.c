@@ -183,6 +183,7 @@ InitializeLoadFileDriver (
 }
 
 EFI_STATUS
+EFIAPI
 LoadFileDriverBindingSupported (
   IN EFI_DRIVER_BINDING_PROTOCOL    *This,
   IN EFI_HANDLE                     Controller,
@@ -215,6 +216,7 @@ LoadFileDriverBindingSupported (
 }
 
 EFI_STATUS
+EFIAPI
 LoadFileDriverBindingStart (
   IN EFI_DRIVER_BINDING_PROTOCOL    *This,
   IN EFI_HANDLE                     Controller,
@@ -257,6 +259,7 @@ LoadFileDriverBindingStart (
 }
 
 EFI_STATUS
+EFIAPI
 LoadFileDriverBindingStop (
   IN  EFI_DRIVER_BINDING_PROTOCOL    *This,
   IN  EFI_HANDLE                     Controller,
