@@ -61,7 +61,11 @@ Module Name:
 
 #define X64_MAX_IO_ADDRESS   0xFFFF
 
+#ifdef __GNUC__
+#define X64API __attribute__((cdecl))
+#else
 #define X64API __cdecl
+#endif
 
 typedef union {
   UINT8  VOLATILE  *buf;
