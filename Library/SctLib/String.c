@@ -541,7 +541,6 @@ AsciiToUpper (
 
 **/
 INTN
-EFIAPI
 SctAsciiStriCmp (
   IN      CONST CHAR8               *FirstString,
   IN      CONST CHAR8               *SecondString

@@ -679,7 +679,6 @@ InternalShellConvertFileListType (
   @sa InternalShellConvertFileListType
 **/
 EFI_STATUS
-EFIAPI
 SctShellOpenFileMetaArg (
   IN CHAR16                     *Arg,
   IN UINT64                     OpenMode,

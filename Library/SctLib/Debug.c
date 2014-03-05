@@ -78,7 +78,6 @@ UINTN    EfiDebugMask    = EFI_DBUG_MASK;
 
 **/
   VOID
-EFIAPI
 EfiDebugPrint (
   IN  UINTN   ErrorLevel,
   IN  CHAR8  *Format,
