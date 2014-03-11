@@ -100,14 +100,8 @@ COMPONENT_TYPE       = LIBRARY
   $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
   $(EFI_SOURCE)/SctPkg/Protocol/Eftp
   $(EFI_SOURCE)/SctPkg/Library/NetLib/Include
+  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
 
-[includes.IA32]
-
-[includes.ARM]
-
-[includes.AARCH64]
-
-[includes.IPF]
 
 [libraries.common]
   SctLib

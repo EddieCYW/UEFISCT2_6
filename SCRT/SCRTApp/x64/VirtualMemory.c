@@ -150,7 +150,7 @@ Returns:
     // Virtual address = (Physical address + 32G)
     //
     if ((MemoryMap->Attribute & EFI_MEMORY_RUNTIME) == EFI_MEMORY_RUNTIME) {
-      CopyMem ((VOID *) VirtualMemoryMap, (VOID *) MemoryMap, DescriptorSize);
+      SctCopyMem ((VOID *) VirtualMemoryMap, (VOID *) MemoryMap, DescriptorSize);
       *VirtualMapSize += DescriptorSize;
       VirtualMemoryMap->VirtualStart  = VirtualMemoryMap->PhysicalStart + VIRT_TO_PHYS_OFFSET;
       VirtualMemoryMap  = NextMemoryDescriptor (VirtualMemoryMap, DescriptorSize);

@@ -257,7 +257,7 @@ BBTestReadBlocksExConformanceAutoTest (
   //
   // poisoned data buffer for debug
   //
-  SctSetMem ((VOID *)Buffer, 0xAB, BufferSize);
+  SctSetMem ((VOID *)Buffer, BufferSize, 0xAB);
   
 
   //
@@ -1223,7 +1223,7 @@ BBTestWriteBlocksExConformanceAutoTest (
   //
   // poisoned data buffer for debug
   //
-  SctSetMem ((VOID *)Buffer, 0xAB, BufferSize);
+  SctSetMem ((VOID *)Buffer, BufferSize, 0xAB);
   
   //
   // Assertion Points 4.3.2.1

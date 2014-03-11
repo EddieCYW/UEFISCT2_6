@@ -779,12 +779,12 @@ SctStriCmp (
 
 VOID
 SctStrLwr (
-  IN CONST CHAR16                   *Str
+  IN CHAR16                   *Str
   );
 
 VOID
 SctStrUpr (
-  IN CONST CHAR16                   *Str
+  IN CHAR16                   *Str
   );
 
 VOID

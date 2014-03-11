@@ -100,7 +100,7 @@ SctStriCmp (
 // lower case string
 VOID
 SctStrLwr (
-  IN CONST CHAR16                   *Str
+  IN CHAR16                   *Str
   )
 {
   UnicodeInterface->StrLwr (UnicodeInterface, Str);
@@ -109,7 +109,7 @@ SctStrLwr (
 // upper case string
 VOID
 SctStrUpr (
-  IN CONST CHAR16                   *Str
+  IN CHAR16                   *Str
   )
 {
   UnicodeInterface->StrUpr (UnicodeInterface, Str);
