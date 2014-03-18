@@ -105,15 +105,6 @@ typedef struct {
   UINT64                    EndingOffset;
 } MEDIA_OFFSET_DEVICE_PATH;
 
-#ifndef EFIARM
-typedef struct {
-  EFI_DEVICE_PATH_PROTOCOL        Header;
-  ///
-  /// VLAN identifier (0-4094)
-  ///
-  UINT16                          VlanId;
-} VLAN_DEVICE_PATH;
-#endif
 typedef struct {
   EFI_DEVICE_PATH_PROTOCOL        Header;
   UINT32                          Reserved;

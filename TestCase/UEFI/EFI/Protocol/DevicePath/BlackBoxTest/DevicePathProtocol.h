@@ -118,21 +118,6 @@ Abstract:
 #define EfiIsDevicePathEndInstance(a) (EfiIsDevicePathEndType (a) && EfiIsDevicePathEndInstanceSubType (a))
 #endif
 
-///
-/// VLAN Device Path SubType
-///
-#define MSG_VLAN_DP               0x14
-#ifndef EFIARM
-typedef struct {
-  EFI_DEVICE_PATH_PROTOCOL        Header;
-  ///
-  /// VLAN identifier (0-4094)
-  ///
-  UINT16                          VlanId;
-} VLAN_DEVICE_PATH;
-#endif
-
-
 #define MSG_IPV6_DP               0x0d
 typedef struct {
   EFI_DEVICE_PATH_PROTOCOL        Header;
