@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include "Efi.h"
 #include "EntsLibPlat.h"
 
 VOID
