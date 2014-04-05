@@ -72,7 +72,7 @@ Abstract:
 // Forward reference for pure ANSI compatibility
 //
 
-EFI_FORWARD_DECLARATION (EFI_AP_TEST_ENTRY);
+typedef struct _EFI_AP_TEST_ENTRY EFI_AP_TEST_ENTRY;
 
 //
 // EFI Application Test Entry Point

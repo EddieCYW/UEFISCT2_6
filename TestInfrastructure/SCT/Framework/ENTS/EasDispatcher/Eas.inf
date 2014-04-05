@@ -56,9 +56,10 @@
 #--*/
 
 [defines]
-BASE_NAME            = EasLib
-FILE_GUID            = DFEB14A4-4D47-42fd-90CD-AF842A4E3223
-COMPONENT_TYPE       = LIBRARY
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = EasLib
+  MODULE_TYPE                    = BASE
+  LIBRARY_CLASS                  = EasLib
 
 [sources.common]
   Core/Eas.c
@@ -78,42 +79,26 @@ COMPONENT_TYPE       = LIBRARY
 [sources.ipf]
   ../Rivl/Ipf/RivlCall.s
 
-[includes.common]
-  ./Include
-  ../Rivl
-  $(EFI_SOURCE)/
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/FrameWork
-  $(EDK_SOURCE)/Foundation/FrameWork/Include
-  $(EDK_SOURCE)/Foundation/Core/Dxe
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
 
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Drivers/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/Execute
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
-  $(EFI_SOURCE)/SctPkg/Protocol/Eftp
-  $(EFI_SOURCE)/SctPkg/Library/NetLib/Include
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
-
-
-[libraries.common]
+[LibraryClasses]
   SctLib
 
-[libraries.ipf]
+[LibraryClasses.ipf]
   CpuIa64Lib
 
-[libraries.ia32]
+[LibraryClasses.ia32]
   CpuIa32lib
 
-[libraries.x64]
+[LibraryClasses.X64]
   CpuIa32lib
-  
-[nmake.common]
-  C_STD_INCLUDE=
+
+[Protocols]
+  gEfiDriverBindingProtocolGuid
+  gEfiDriverConfigurationProtocolGuid
+  gEfiDriverDiagnosticsProtocolGuid
+  gEfiEntsProtocolGuid
+  gEfiEntsMonitorProtocolGuid
+  gEfiCpuArchProtocolGuid

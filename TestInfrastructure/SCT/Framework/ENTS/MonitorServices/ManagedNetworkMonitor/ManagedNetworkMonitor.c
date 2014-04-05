@@ -55,8 +55,9 @@ Abstract:
 
 --*/
 #include "SctLib.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 #include "ManagedNetworkMonitor.h"
+#include <Protocol/ServiceBinding.h>
 
 #define EAS_QUERY_MSG           "EAS_QURY"
 #define EAS_START_MSG           "EAS_STAT"
@@ -225,7 +226,6 @@ ManagedNetworkMonitorUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (ManagedNetworkMonitorEntryPoint)
 //
 // External functions implementations
 //
@@ -1018,8 +1018,8 @@ Returns:
   RxToken.Event         = NULL;
 
   Status = tBS->CreateEvent (
-                  EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   NotifyFunctionListen,
                   NULL,
                   &RxToken.Event
@@ -1036,8 +1036,8 @@ Returns:
   }
 
   Status = tBS->CreateEvent (
-                  EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   NotifyFunctionSend,
                   &Context,
                   &TxToken.Event
@@ -1048,8 +1048,8 @@ Returns:
   }
 
   Status = tBS->CreateEvent (
-                  EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   NotifyFunctionSend,
                   &Context,
                   &TxLLToken.Event
@@ -1060,8 +1060,8 @@ Returns:
   }
 
   Status = tBS->CreateEvent (
-                  EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   ReSendTimer,
                   NULL,
                   &ResendTimeEvent

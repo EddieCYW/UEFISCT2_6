@@ -59,9 +59,10 @@ Abstract:
 #include "EfiTest.h"
 #include EFI_TEST_PROTOCOL_DEFINITION (Eftp)
 
-#include EFI_PROTOCOL_DEFINITION (ManagedNetwork)
+#include <Protocol/ComponentName.h>
+#include <Protocol/ManagedNetwork.h>
+#include <Protocol/ServiceBinding.h>
 
-#include EFI_PROTOCOL_DEFINITION (ComponentName)
 #define EFTP_SB_PRIVATE_SIGNATURE EFI_SIGNATURE_32 ('M', 'T', 'S', 'B')
 #define EFTP_SB_PRIVATE_FROM_THIS(a) \
   CR ( \

@@ -104,8 +104,6 @@ EFI_EFTP_PROTOCOL                   gEftpProtocolTemplate = {
   EftpPoll
 };
 
-EFI_DRIVER_ENTRY_POINT (EftpDriverEntryPoint)
-
 #ifdef _EFTP_STAT_
 EFTP_SERVICE_BINDING_PRIVATE  *GlobalData = NULL;
 #endif

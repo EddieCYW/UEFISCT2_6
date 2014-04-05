@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 #include "Efi.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 #include "SctLib.h"
 
 #define MAX_FILENAME_LEN                   128

@@ -56,7 +56,7 @@ Abstract:
 --*/
 
 #include "lib.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 #include "Libsalpal.h"
 
 SAL_PROC                mSalProc;

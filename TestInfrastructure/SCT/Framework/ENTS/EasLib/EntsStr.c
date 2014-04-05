@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 #include "Efi.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 #include "SctLib.h"
 
 #define IsDigit(c)    ((c) >= L'0' && (c) <= L'9')
@@ -182,10 +182,12 @@ EntsStatusString[] = {
     EFI_NOT_AVAILABLE_YET,
     L"EFI_NOT_AVAILABLE_YET"
   },
+#if (EFI_SPECIFICATION_VERSION < 0x00020028)
   {
     EFI_UNLOAD_IMAGE,
     L"EFI_UNLOAD_IMAGE"
   },
+#endif
   {
     EFI_WARN_UNKNOWN_GLYPH,
     L"EFI_WARN_UNKNOWN_GLYPH"
@@ -202,10 +204,12 @@ EntsStatusString[] = {
     EFI_WARN_BUFFER_TOO_SMALL,
     L"EFI_WARN_BUFFER_TOO_SMALL"
   },
+#if (EFI_SPECIFICATION_VERSION < 0x00020028)
   {
     EFI_WARN_RETURN_FROM_LONG_JUMP,
     L"EFI_WARN_RETURN_FROM_LONG_JUMP"
   },
+#endif
   {
     EFI_MAX_BIT,
     NULL

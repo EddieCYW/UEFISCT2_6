@@ -58,7 +58,7 @@ Abstract:
 #ifndef __RIVL_H__
 #define __RIVL_H__
 
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 
 #define RIVL_MAX_VARNAME_LEN      64
 #define RIVL_MAX_TYPENAME_LEN     64

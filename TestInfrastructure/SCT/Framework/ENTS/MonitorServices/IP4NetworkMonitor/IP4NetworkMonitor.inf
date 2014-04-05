@@ -56,29 +56,27 @@
 #--*/
 
 [defines]
-BASE_NAME            = IP4Monitor
-FILE_GUID            = 35B932DF-01C6-4ba9-B167-C573378375FB
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IP4NetworkMonitor
+  FILE_GUID            = 35B932DF-01C6-4ba9-B167-C573378375FB
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = IP4NetworkMonitorEntryPoint
 
 [sources.common]
   IP4NetworkMonitor.h
   IP4NetworkMonitor.c
 
-[libraries.common]
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
   EntsLib
-  EntsProtocolLib
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-
-[nmake.common]
-  IMAGE_ENTRY_POINT=IP4NetworkMonitorEntryPoint
+[Protocols]
+  gEfiEntsMonitorProtocolGuid
+  gEfiIp4ServiceBindingProtocolGuid
+  gEfiIp4ProtocolGuid

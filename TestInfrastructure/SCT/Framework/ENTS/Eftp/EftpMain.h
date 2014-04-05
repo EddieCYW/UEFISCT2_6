@@ -65,7 +65,7 @@ Abstract:
 
 #define _EFTP_STAT_ 1
 
-EFI_FORWARD_DECLARATION (EFTP_IO_PRIVATE);
+typedef struct _EFTP_IO_PRIVATE EFTP_IO_PRIVATE;
 
 #include "EftpCommon.h"
 #include "EftpPacket.h"

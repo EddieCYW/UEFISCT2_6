@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 #include "Efi.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 
 #define LEFT_JUSTIFY  0x01
 #define PREFIX_SIGN   0x02

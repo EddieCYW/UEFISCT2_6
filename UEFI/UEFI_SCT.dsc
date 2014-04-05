@@ -153,9 +153,12 @@
 EdkCompatibilityPkg/Foundation/Guid/EdkGuidLib.inf
 EdkCompatibilityPkg/Foundation/Framework/Guid/EdkFrameworkGuidLib.inf
 EdkCompatibilityPkg/Foundation/Efi/Guid/EfiGuidLib.inf
+EdkCompatibilityPkg/Foundation/Cpu/Pentium/CpuIA32Lib/CpuIA32Lib.inf
 
 EdkCompatibilityPkg/Foundation/Protocol/EdkProtocolLib.inf
+EdkCompatibilityPkg/Foundation/Framework/Protocol/EdkFrameworkProtocolLib.inf
 EdkCompatibilityPkg/Foundation/Efi/Protocol/EfiProtocolLib.inf
+EdkCompatibilityPkg/Foundation/Core/Dxe/ArchProtocol/ArchProtocolLib.inf
 
 SctPkg/Protocol/TestProtocolLib.inf
 SctPkg/Library/EfiTestLib/EfiTestLib.inf

@@ -60,7 +60,7 @@ Abstract:
 #include "EfiTest.h"
 #include EFI_TEST_PROTOCOL_DEFINITION(EntsProtocol)
 #include "Eas.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 #include "Tcp6.h"
 
 EFI_STATUS

@@ -58,6 +58,7 @@ Abstract:
 #include "SctLib.h"
 #include "EfiTest.h"
 #include EFI_TEST_PROTOCOL_DEFINITION (Eftp)
+#include EFI_PROTOCOL_DEFINITION(ServiceBinding)
 #include "Eas.h"
 #include "EftpImplement.h"
 

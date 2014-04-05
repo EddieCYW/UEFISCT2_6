@@ -101,8 +101,6 @@ CheckMonitorName (
 //
 // Entry point
 //
-EFI_DRIVER_ENTRY_POINT(InitializeSct)
-
 EFI_STATUS
 InitializeSct (
   IN EFI_HANDLE                   ImageHandle,
@@ -134,10 +132,10 @@ Returns:
   //
   SctShellApplicationInit (ImageHandle, SystemTable);
 
-  OldTPL = tBS->RaiseTPL(EFI_TPL_HIGH_LEVEL);
-  if(OldTPL != EFI_TPL_APPLICATION) {
+  OldTPL = tBS->RaiseTPL (TPL_HIGH_LEVEL);
+  if(OldTPL != TPL_APPLICATION) {
     tBS->RestoreTPL(OldTPL);
-    SctPrint(L"ERROR: SCT should run at EFI_TPL_APPLICATION level\n");
+    SctPrint(L"ERROR: SCT should run at TPL_APPLICATION level\n");
 	return EFI_SUCCESS;
   }
   tBS->RestoreTPL(OldTPL);

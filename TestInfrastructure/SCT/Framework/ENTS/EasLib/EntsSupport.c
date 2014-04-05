@@ -55,8 +55,9 @@ Abstract:
 
 --*/
 #include "Efi.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 #include EFI_PROTOCOL_DEFINITION (ManagedNetwork)
+#include EFI_PROTOCOL_DEFINITION (ServiceBinding)
 
 typedef struct _EFI_NET_ASSERTION_CONFIG {
   BOOLEAN                              Initialized;
@@ -86,11 +87,6 @@ STATIC EFI_NET_ASSERTION_CONFIG        NetAssertionConfigData  = {0, };
 
 // MAX_DEVICE_PATH_STR_LEN may not be enough for the long device path
 #define MAX_DEVICE_PATH_STR_LEN      256
-#ifndef EFIARM
-STATIC  UINTN                          NICDevicePathLen                            = 0;
-STATIC  CHAR16                         NICDevicePathStr[MAX_DEVICE_PATH_STR_LEN]   = {0, };
-STATIC EFI_GUID gSctVendorGuid = {0x72092b90, 0x17da, 0x47d1, 0x95, 0xce, 0x88, 0xf0, 0x12, 0xe8, 0x50, 0x8d};
-#endif
 
 #define SCT_AGENT_NIC_DEVICE_PATH    L"Sct Agent NIC Device Path"
 
@@ -822,8 +818,13 @@ NetAssertionUtilityStart (
   NetAssertionConfigData.SequenceId   = 0;
   NetAssertionConfigData.MessageBuf   = NULL;
   Status = gntBS->CreateEvent (
+#if (EFI_SPECIFICATION_VERSION < 0x00020028)
                     EFI_EVENT_NOTIFY_SIGNAL,
                     EFI_TPL_CALLBACK,
+#else
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
+#endif
                     (EFI_EVENT_NOTIFY)NotifyFunc,
                     &Finished,
                     &NetAssertionConfigData.TxToken.Event

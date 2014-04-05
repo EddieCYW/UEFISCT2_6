@@ -30,6 +30,10 @@
 [Includes.common]
   Include                        # Root include for the package
   TestInfrastructure/SCT/Drivers/Include
+  TestInfrastructure/SCT/Framework
+  TestInfrastructure/SCT/Framework/Include
+  TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Include/
+  TestInfrastructure/SCT/Framework/ENTS/Rivl
   
   # Legacy
   ../EdkCompatibilityPkg/Foundation/Include

@@ -56,7 +56,7 @@ Abstract:
 --*/
 
 #include "SctLib.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 #include "SerialMonitor.h"
 
 #define SIGNAL_TAG_LENGTH 2
@@ -100,7 +100,6 @@ SerialMonitorUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (SerialMonitorEntryPoint)
 //
 // External functions implementations
 //

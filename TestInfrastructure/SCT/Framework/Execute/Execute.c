@@ -1720,7 +1720,7 @@ Routine Description:
   //
   Status = PreExecuteTestInstance (
              ExecuteInfo,
-             NULL_HANDLE,
+             NULL,
              &IsSkip
              );
   if (EFI_ERROR (Status)) {
@@ -1980,7 +1980,7 @@ Routine Description:
     ConfigData->TestCategory = SctStrDuplicate (L"Unknown");
   }
 
-  if (Handle != NULL_HANDLE) {
+  if (Handle != NULL) {
     DevicePath = SctDevicePathFromHandle (Handle);
     if (DevicePath != NULL) {
       ConfigData->DevicePath = SctDevicePathToStr (DevicePath);

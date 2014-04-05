@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 #include "SctLib.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 
 EFI_STATUS
 GetImageDevicePath (

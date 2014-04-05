@@ -56,29 +56,27 @@
 #--*/
 
 [defines]
-BASE_NAME            = MNPMonitor
-FILE_GUID            = 73310D06-20F4-4e8c-8801-55EA6ADBD4AD
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ManagedNetworkMonitor
+  FILE_GUID            = 73310D06-20F4-4e8c-8801-55EA6ADBD4AD
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = ManagedNetworkMonitorEntryPoint
 
 [sources.common]
   ManagedNetworkMonitor.h
   ManagedNetworkMonitor.c
 
-[libraries.common]
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
   EntsLib
-  EntsProtocolLib
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-
-[nmake.common]
-  IMAGE_ENTRY_POINT=ManagedNetworkMonitorEntryPoint
+[Protocols]
+  gEfiEntsMonitorProtocolGuid
+  gEfiManagedNetworkServiceBindingProtocolGuid
+  gEfiManagedNetworkProtocolGuid

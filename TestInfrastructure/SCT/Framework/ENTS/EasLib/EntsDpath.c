@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 #include "SctLib.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 #include "EntsLibPlat.h"
 
 #define ALIGN_SIZE(a) ((a % MIN_ALIGNMENT_SIZE) ? MIN_ALIGNMENT_SIZE - (a % MIN_ALIGNMENT_SIZE) : 0)
@@ -148,7 +148,11 @@ _DevPathController (
   EntsCatPrint (
     Str,
     L"Ctrl(%d)",
+#if (EFI_SPECIFICATION_VERSION >= 0x00020028)
+    Controller->ControllerNumber
+#else
     Controller->Controller
+#endif
     );
 }
 

@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 #include "Efi.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 
 #include EFI_PROTOCOL_DEFINITION(ManagedNetwork)
 

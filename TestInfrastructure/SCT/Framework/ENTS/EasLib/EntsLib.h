@@ -62,30 +62,35 @@ Abstract:
 // #include "StandardTestLibrary.h"
 //
 #include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
-#include EFI_PROTOCOL_DEFINITION (FileInfo)
-#include EFI_PROTOCOL_DEFINITION (FileSystemInfo)
-#include EFI_PROTOCOL_DEFINITION (FileSystemVolumeLabelInfo)
+#include EDK_PROTOCOL_DEFINITION (FileInfo)
+#include EDK_PROTOCOL_DEFINITION (FileSystemInfo)
+#include EDK_PROTOCOL_DEFINITION (FileSystemVolumeLabelInfo)
 #include EFI_PROTOCOL_DEFINITION (BlockIo)
 #include EFI_PROTOCOL_DEFINITION (DeviceIo)
-#if (EFI_SPECIFICATION_VERSION >= 0x0002000A)
-#include "TianoHii.h"
-#else
+#if (EFI_SPECIFICATION_VERSION < 0x0002000A)
 #include EFI_PROTOCOL_DEFINITION (Hii)
+#elif (EFI_SPECIFICATION_VERSION < 0x00020028)
+#include "TianoHii.h"
 #endif
 #include EFI_PROTOCOL_DEFINITION (UnicodeCollation)
 #include EFI_PROTOCOL_DEFINITION (SimpleTextOut)
 #include EFI_PROTOCOL_DEFINITION (PxeBaseCode)
 #include EFI_PROTOCOL_DEFINITION (PxeBaseCodeCallBack)
-#include EFI_PROTOCOL_DEFINITION (EfiNetworkInterfaceIdentifier)
+#if (EFI_SPECIFICATION_VERSION >= 0x00020028)
+  #include <Protocol/NetworkInterfaceIdentifier.h>
+#else
+  #include EFI_PROTOCOL_DEFINITION (EfiNetworkInterfaceIdentifier)
+#endif
 #include EFI_PROTOCOL_DEFINITION (DevicePath)
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 #include EFI_PROTOCOL_DEFINITION (DiskIo)
 #include EFI_PROTOCOL_DEFINITION (LoadFile)
 #include EFI_PROTOCOL_DEFINITION (SerialIo)
 #include EFI_PROTOCOL_DEFINITION (SimpleNetwork)
-#include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
-#include EFI_PROTOCOL_DEFINITION (VariableStore)
-#include EFI_PROTOCOL_DEFINITION (DebugAssert)
+#if (EFI_SPECIFICATION_VERSION < 0x00020028)
+  #include EFI_PROTOCOL_DEFINITION (VariableStore)
+  #include EFI_PROTOCOL_DEFINITION (DebugAssert)
+#endif
 #include EFI_PROTOCOL_DEFINITION (DriverBinding)
 #include EFI_PROTOCOL_DEFINITION (DriverConfiguration)
 #include EFI_PROTOCOL_DEFINITION (DriverDiagnostics)

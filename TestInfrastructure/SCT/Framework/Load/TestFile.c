@@ -752,7 +752,7 @@ Routine Description:
     Status = CreateSingleTestFile (
                DevicePath,
                FileName,
-               NULL_HANDLE,
+               NULL,
                EFI_SCT_TEST_FILE_TYPE_APPLICATION,
                ApTest,
                TestFile
@@ -830,7 +830,7 @@ Routine Description:
   Status = CreateSingleTestFile (
              DevicePath,
              FileName,
-             NULL_HANDLE,
+             NULL,
              EFI_SCT_TEST_FILE_TYPE_SCRIPT,
              ApTest,
              TestFile

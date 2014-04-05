@@ -69,7 +69,7 @@ Abstract:
 //
 // Forward reference for pure ANSI compatibility
 //
-EFI_FORWARD_DECLARATION (TEST_OUTPUT_FILE);
+typedef struct _TEST_OUTPUT_FILE TEST_OUTPUT_FILE;
 
 struct _TEST_OUTPUT_FILE {
   TEST_OUTPUT_FILE            *Next;

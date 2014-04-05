@@ -56,29 +56,25 @@
 #--*/
 
 [defines]
-BASE_NAME            = SerialMonitor
-FILE_GUID            = 562F6CBE-BF31-4f35-98A3-ACB9793D74FC
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = SerialMonitor
+  FILE_GUID            = 562F6CBE-BF31-4f35-98A3-ACB9793D74FC
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = SerialMonitorEntryPoint
 
 [sources.common]
   SerialMonitor.h
   SerialMonitor.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
 
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
   EntsLib
-  EntsProtocolLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=SerialMonitorEntryPoint
+[Protocols]
+  gEfiEntsMonitorProtocolGuid

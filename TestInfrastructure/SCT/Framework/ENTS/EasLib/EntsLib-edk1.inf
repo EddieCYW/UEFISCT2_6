@@ -44,53 +44,73 @@
 #
 #
 #/*++
-
+#
 # Module Name:
 #
-#    Make.inf
-#    
-# Abstract:
+#    EntsLib.inf
 #
-#    Makefile for Edk/Drivers/Network/Eftp
+#  Abstract:
 #
-# Revision History
+#    Component description file for the EFI utility library.
 #
+#--*/
 
 [defines]
-  INF_VERSION          = 0x00010005
-  BASE_NAME            = Eftp
-  FILE_GUID            = 918F4B06-93BD-4963-8915-4B4A38232A2
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = EftpDriverEntryPoint
+BASE_NAME       = EntsLib
+COMPONENT_TYPE  = LIBRARY
 
 [sources.common]
-ComponentName.c
-EftpDriver.c
-EftpMain.c
-EftpOption.c
-EftpPacket.c
-EftpRRQ.c
-EftpWRQ.c
+  EntsLib.c
+  EntsPrint.c
+  EntsStr.c
+  EntsTime.c
+  EntsMisc.c
+  EntsResult.c
+  EntsSupport.c
+  EntsDebug.c
+  EntsEvent.c
+  EntsHandle.c
+  EntsDpath.c
+  EntsGuid.c
+  EntsContext.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
+[sources.ia32]
+  Ia32/EntsLibPlat.h
+  Ia32/InitPlat.c
 
-[LibraryClasses]
-  UefiDriverEntryPoint
-  SctLib
-  NetLib
+[sources.ipf]
+  Ipf/EntsLibPlat.h
+  Ipf/InitPlat.c
+  Ipf/SalPal.c
+  Ipf/LibSalPal.h
 
-[Protocols]
-  gEfiDriverBindingProtocolGuid
-  gEfiComponentNameProtocolGuid
-  gEfiComponentName2ProtocolGuid
-  gEfiDriverConfigurationProtocolGuid
-  gEfiDriverConfiguration2ProtocolGuid
-  gEfiDriverDiagnosticsProtocolGuid
-  gEfiDriverDiagnostics2ProtocolGuid
-  gEfiManagedNetworkProtocolGuid
-  gEfiManagedNetworkServiceBindingProtocolGuid
-  gEfiEftpProtocolGuid
-  gEfiEftpServiceBindingProtocolGuid
+[sources.ebc]
+  Ebc/EntsLibPlat.h
+  Ebc/EfiLibPlat.c
+
+[sources.x64]
+  X64/EntsLibPlat.h
+  X64/EfiLibPlat.c
+  
+[sources.Arm]
+  Arm/EntsLibPlat.h
+  Arm/InitPlat.c
+
+[sources.Aarch64]
+  Aarch64/EntsLibPlat.h
+  Aarch64/InitPlat.c
+
+[includes.common]
+  .
+  $(EDK_SOURCE)/Foundation
+  $(EDK_SOURCE)/Foundation/Efi
+  $(EDK_SOURCE)/Foundation/Include
+  $(EDK_SOURCE)/Foundation/Efi/Include
+  $(EDK_SOURCE)/Foundation/Framework/Include
+  $(EFI_SOURCE)/SctPkg/Include
+  $(EFI_SOURCE)/SctPkg/Library/EfiTestUtilityLib
+  
+[libraries.common]
+
+[nmake.common]
+  C_STD_INCLUDE=

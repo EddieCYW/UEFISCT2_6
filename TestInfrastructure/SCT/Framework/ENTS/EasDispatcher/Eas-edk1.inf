@@ -44,53 +44,77 @@
 #
 #
 #/*++
-
+#
 # Module Name:
 #
-#    Make.inf
-#    
-# Abstract:
+#    EASDispatcher.inf
 #
-#    Makefile for Edk/Drivers/Network/Eftp
+#  Abstract:
 #
-# Revision History
+#    Component description file for ENTS
 #
+#--*/
 
 [defines]
-  INF_VERSION          = 0x00010005
-  BASE_NAME            = Eftp
-  FILE_GUID            = 918F4B06-93BD-4963-8915-4B4A38232A2
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = EftpDriverEntryPoint
+BASE_NAME            = EasLib
+FILE_GUID            = DFEB14A4-4D47-42fd-90CD-AF842A4E3223
+COMPONENT_TYPE       = LIBRARY
 
 [sources.common]
-ComponentName.c
-EftpDriver.c
-EftpMain.c
-EftpOption.c
-EftpPacket.c
-EftpRRQ.c
-EftpWRQ.c
+  Core/Eas.c
+  Core/EasInit.c
+  Load/EasTestFile.c
+  Load/EasSupportFile.c
+  Exec/EasCmdDisp.c
+  Exec/EftpImplement.c
+  Arg/EasArg.c
+  ../Rivl/RivlType.c
+  ../Rivl/RivlVariable.c
+  ../Rivl/RivlCall.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
+[sources.ia32]
+  ../Rivl/Ia32/RivlCall.asm
 
-[LibraryClasses]
-  UefiDriverEntryPoint
+[sources.ipf]
+  ../Rivl/Ipf/RivlCall.s
+
+[includes.common]
+  ./Include
+  ../Rivl
+  $(EFI_SOURCE)/
+  $(EDK_SOURCE)/Foundation
+  $(EDK_SOURCE)/Foundation/Include
+  $(EDK_SOURCE)/Foundation/Efi
+  $(EDK_SOURCE)/Foundation/Efi/Include
+  $(EDK_SOURCE)/Foundation/FrameWork
+  $(EDK_SOURCE)/Foundation/FrameWork/Include
+  $(EDK_SOURCE)/Foundation/Core/Dxe
+
+  $(EFI_SOURCE)/SctPkg/Include
+  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Drivers/Include
+  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework
+  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/Include
+  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/Execute
+  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
+  $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
+  $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
+  $(EFI_SOURCE)/SctPkg/Protocol/Eftp
+  $(EFI_SOURCE)/SctPkg/Library/NetLib/Include
+  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
+
+
+[libraries.common]
   SctLib
-  NetLib
 
-[Protocols]
-  gEfiDriverBindingProtocolGuid
-  gEfiComponentNameProtocolGuid
-  gEfiComponentName2ProtocolGuid
-  gEfiDriverConfigurationProtocolGuid
-  gEfiDriverConfiguration2ProtocolGuid
-  gEfiDriverDiagnosticsProtocolGuid
-  gEfiDriverDiagnostics2ProtocolGuid
-  gEfiManagedNetworkProtocolGuid
-  gEfiManagedNetworkServiceBindingProtocolGuid
-  gEfiEftpProtocolGuid
-  gEfiEftpServiceBindingProtocolGuid
+[libraries.ipf]
+  CpuIa64Lib
+
+[libraries.ia32]
+  CpuIa32lib
+
+[libraries.x64]
+  CpuIa32lib
+  
+[nmake.common]
+  C_STD_INCLUDE=

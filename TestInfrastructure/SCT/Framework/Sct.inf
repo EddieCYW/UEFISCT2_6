@@ -55,10 +55,13 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = SCT
-FILE_GUID            = BFE5DD88-12D4-4ca7-B8FC-BD5D8A34DD6E
-COMPONENT_TYPE       = APPLICATION
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = SCT
+  FILE_GUID            = BFE5DD88-12D4-4ca7-B8FC-BD5D8A34DD6E
+  MODULE_TYPE          = UEFI_APPLICATION
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeSct
 
 [sources.common]
   Core/Sct.c
@@ -117,39 +120,35 @@ COMPONENT_TYPE       = APPLICATION
   UI/LogFileDialog.c
   UI/LogFileDialog.h
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-    $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Drivers/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/Execute
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EASDispatcher/include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/Report
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
 
-[libraries.common]
+[LibraryClasses]
+  UefiApplicationEntryPoint
   SctLib
-  TestProtocolLib
-  EfiTestLib
+  EntsLib
   EasLib
-  EntsProtocolLib
-  Entslib
-  EftpProtocolLib
-  ArchProtocolLib
-  EdkFrameworkGuidLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeSct
+[Guids]
+  gEfiNullGuid
+  gTestGenericFailureGuid
+  gEfiGenericCategoryGuid
+  gEfiBootServicesCategoryGuid
+  gEfiRuntimeServicesCategoryGuid
 
-[nmake.IA32, nmake.X64, nmake.IPF] 
-  *_*_*_DLINK_FLAGS= DEF(*_*_*_DLINK_FLAGS) /Force:Multiple
+[Protocols]
+  gEfiComponentNameProtocolGuid
+  gEfiPciIoProtocolGuid
+  gEfiManagedNetworkServiceBindingProtocolGuid
+  gEfiManagedNetworkProtocolGuid
+  gEfiStandardTestLibraryGuid
+  gEfiTslInitInterfaceGuid
+  gEfiTestProfileLibraryGuid
+  gEfiTestRecoveryLibraryGuid
+  gEfiTestLoggingLibraryGuid
+  gEfiEftpServiceBindingProtocolGuid
+  gEfiEftpProtocolGuid
+  gEfiBbTestGuid
+  gEfiWbTestGuid
+  gEfiIHVBbTestGuid

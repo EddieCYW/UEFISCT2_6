@@ -56,7 +56,8 @@ Abstract:
 --*/
 
 #include "SctLib.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
+#include <Protocol/ServiceBinding.h>
 #include "IP4NetworkMonitor.h"
 
 #define EAS_QUERY_MSG           "EAS_QURY"
@@ -214,7 +215,6 @@ IP4NetworkMonitorUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (IP4NetworkMonitorEntryPoint)
 //
 // External functions implementations
 //
@@ -856,8 +856,8 @@ Returns:
   RxToken.Event         = NULL;
 
   Status = tBS->CreateEvent (
-                  EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   NotifyFunctionListen,
                   NULL,
                   &RxToken.Event
@@ -868,8 +868,8 @@ Returns:
   }
 
   Status = tBS->CreateEvent (
-                  EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   NotifyFunctionSend,
                   NULL,
                   &TxToken.Event
@@ -881,8 +881,8 @@ Returns:
   }
 
   Status = tBS->CreateEvent (
-                  EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   NotifyFunctionSend,
                   NULL,
                   &TxLLToken.Event
@@ -911,8 +911,8 @@ Returns:
   }
 
   Status = tBS->CreateEvent (
-                  EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   ReSendTimer,
                   NULL,
                   &ResendTimeEvent

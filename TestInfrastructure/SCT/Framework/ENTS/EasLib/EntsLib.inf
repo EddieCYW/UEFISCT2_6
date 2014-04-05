@@ -56,8 +56,10 @@
 #--*/
 
 [defines]
-BASE_NAME       = EntsLib
-COMPONENT_TYPE  = LIBRARY
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = EntsLib
+  MODULE_TYPE                    = BASE
+  LIBRARY_CLASS                  = EntsLib
 
 [sources.common]
   EntsLib.c
@@ -100,17 +102,13 @@ COMPONENT_TYPE  = LIBRARY
   Aarch64/EntsLibPlat.h
   Aarch64/InitPlat.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/
-  
-[libraries.common]
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
 
-[nmake.common]
-  C_STD_INCLUDE=
+[LibraryClasses]
+  DebugLib
+
+[Protocols]
+  gEfiManagedNetworkServiceBindingProtocolGuid
+  gEfiManagedNetworkProtocolGuid
