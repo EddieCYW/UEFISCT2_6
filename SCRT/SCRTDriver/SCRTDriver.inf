@@ -54,10 +54,12 @@
 
 
 [defines]
-BASE_NAME            = SCRTDRIVER
-FILE_GUID            = 3B6CAA77-A47F-4e51-9BFE-F5799AE428BF
-COMPONENT_TYPE       = RT_DRIVER
-
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = SCRTDRIVER
+  FILE_GUID            = 3B6CAA77-A47F-4e51-9BFE-F5799AE428BF
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeSCRTDriver
 
 [sources.ia32]
   ia32/Io.c
@@ -99,30 +101,15 @@ COMPONENT_TYPE       = RT_DRIVER
 [sources.common]
   Guid.h
   Guid.c
-  print.c
+  Print.c
   TestCase.c
   SCRTDriver.c
   SCRTDriver.h
 
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
 
-[includes.common]
-  $(EDK_SOURCE)/Foundation/Framework
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  .
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
-  $(EFI_SOURCE)/SctPkg/Include
-
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  EfiGuidLib
-
-[libraries.ARM, libraries.Aarch64]
-  CompilerIntrinsicsLib
-
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeSCRTDriver
-

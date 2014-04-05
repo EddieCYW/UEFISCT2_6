@@ -55,10 +55,13 @@ Module Name:
 #define _SCRT_DRIVER_H_
 
 #include "SctLib.h"
-#include "EfiRuntimeLib.h"
-#include "EfiCapsule.h"
 #include "Guid.h"
 #include EFI_GUID_DEFINITION(GlobalVariable)
+
+#include <PiPei.h>
+#include <Ppi/CpuIo.h>
+
+#include <Library/BaseLib.h>
 
 extern EFI_RUNTIME_SERVICES            *VRT;
 
@@ -260,7 +263,7 @@ Returns:
 --*/ 
 ;
 
-VOID
+EFI_STATUS
 EFIAPI
 RuntimeTestFunc (
   UINTN   ConfigInfo
@@ -412,5 +415,21 @@ InitVariableRecord (
 
 VOID
 DumpRuntimeTable(VOID);
+
+EFI_STATUS
+EfiIoRead (
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
+  IN     UINT64                     Address,
+  IN     UINTN                      Count,
+  IN OUT VOID                       *Buffer
+  );
+
+EFI_STATUS
+EfiIoWrite (
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
+  IN     UINT64                     Address,
+  IN     UINTN                      Count,
+  IN OUT VOID                       *Buffer
+  );
 
 #endif

@@ -62,7 +62,7 @@ extern EFI_PHYSICAL_ADDRESS  mIoPortSpaceAddress;
 EFI_STATUS
 SalInternalIoOrMemRead (
   IN      BOOLEAN                      MmioFlag,
-  IN      EFI_CPU_IO_PROTOCOL_WIDTH    Width,
+  IN      EFI_PEI_CPU_IO_PPI_WIDTH    Width,
   IN      VOLATILE_POINTER             Address,
   IN      UINTN                        Count,
   IN OUT  VOLATILE_POINTER             Buffer
@@ -105,11 +105,11 @@ Returns:
   AddressStride = (UINTN)1 << (Width & 0x03);
   BufferStride  = AddressStride;
 
-  if (Width >= EfiCpuIoWidthFifoUint8 && Width <= EfiCpuIoWidthFifoUint64) {
+  if (Width >= EfiPeiCpuWidthFifoUint8 && Width <= EfiPeiCpuWidthFifoUint64) {
     AddressStride = 0;
   }
 
-  if (Width >= EfiCpuIoWidthFillUint8 && Width <= EfiCpuIoWidthFillUint64) {
+  if (Width >= EfiPeiCpuWidthFillUint8 && Width <= EfiPeiCpuWidthFillUint64) {
     BufferStride = 0;
   }
 
@@ -118,12 +118,12 @@ Returns:
   BufferAlignedFlag = (BOOLEAN) (Buffer.Value & AlignMask) == 0;
 
   //
-  // Do count transfers of Width size. If EfiCpuIoWidthUint8, EfiCpuIoWidthUint16,
-  // EfiCpuIoWidthUint32, or EfiCpuIoWidthUint64 increment Address and the buffer by Width after every
-  // transaction. If EfiCpuIoWidthFifoUint8, EfiCpuIoWidthFifoUint16, EfiCpuIoWidthFifoUint32,
-  // or EfiCpuIoWidthFifoUint64 repeat the accesses to the same Address but increment the buffer after
-  // every transaction. If EfiCpuIoWidthFillUint8, EfiCpuIoWidthFillUint16, EfiCpuIoWidthFillUint32,
-  // or EfiCpuIoWidthFillUint64 increament the Address, but not the buffer after every transaction.
+  // Do count transfers of Width size. If EfiPeiCpuIoWidthUint8, EfiPeiCpuWidthUint16,
+  // EfiPeiCpuWidthUint32, or EfiPeiCpuWidthUint64 increment Address and the buffer by Width after every
+  // transaction. If EfiPeiCpuWidthFifoUint8, EfiPeiCpuWidthFifoUint16, EfiPeiCpuWidthFifoUint32,
+  // or EfiPeiCpuWidthFifoUint64 repeat the accesses to the same Address but increment the buffer after
+  // every transaction. If EfiPeiCpuWidthFillUint8, EfiPeiCpuWidthFillUint16, EfiPeiCpuWidthFillUint32,
+  // or EfiPeiCpuWidthFillUint64 increament the Address, but not the buffer after every transaction.
   //
   // If Buffer is not aligned on a Width boundry we read data into a local
   // variable and byte copy it into the callers non aligned buffer.
@@ -136,7 +136,7 @@ Returns:
   //
   IoAddress = Address.Value;
   while (Count > 0) {
-    MEMORY_FENCE ();
+    MemoryFence ();
 
     if (!MmioFlag) {
       Address.Value = PORT_AND_IO_BASE_TO_MEM (IoAddress);
@@ -144,11 +144,11 @@ Returns:
 
     switch (Width) {
 
-    case EfiCpuIoWidthUint8:
+    case EfiPeiCpuIoWidthUint8:
       *Buffer.Uint8 = *Address.Uint8;
       break;
 
-    case EfiCpuIoWidthUint16:
+    case EfiPeiCpuWidthUint16:
       if (BufferAlignedFlag) {
         *Buffer.Uint16 = *Address.Uint16;
       } else {
@@ -162,7 +162,7 @@ Returns:
       }
       break;
 
-    case EfiCpuIoWidthUint32:
+    case EfiPeiCpuWidthUint32:
       if (BufferAlignedFlag) {
         *Buffer.Uint32 = *Address.Uint32;
       } else {
@@ -178,7 +178,7 @@ Returns:
       }
       break;
 
-    case EfiCpuIoWidthUint64:
+    case EfiPeiCpuWidthUint64:
       if (BufferAlignedFlag) {
         *Buffer.Uint64++ = *Address.Uint64;
       } else {
@@ -220,7 +220,7 @@ Returns:
 EFI_STATUS
 SalInternalIoOrMemWrite (
   IN      BOOLEAN                      MmioFlag,
-  IN      EFI_CPU_IO_PROTOCOL_WIDTH    Width,
+  IN      EFI_PEI_CPU_IO_PPI_WIDTH    Width,
   IN      VOLATILE_POINTER             Address,
   IN      UINTN                        Count,
   IN OUT  VOLATILE_POINTER             Buffer
@@ -263,11 +263,11 @@ Returns:
   AddressStride = (UINTN)1 << (Width & 0x03);
   BufferStride  = AddressStride;
 
-  if (Width >= EfiCpuIoWidthFifoUint8 && Width <= EfiCpuIoWidthFifoUint64) {
+  if (Width >= EfiPeiCpuWidthFifoUint8 && Width <= EfiPeiCpuWidthFifoUint64) {
     AddressStride = 0;
   }
 
-  if (Width >= EfiCpuIoWidthFillUint8 && Width <= EfiCpuIoWidthFillUint64) {
+  if (Width >= EfiPeiCpuWidthFillUint8 && Width <= EfiPeiCpuWidthFillUint64) {
     BufferStride = 0;
   }
 
@@ -276,12 +276,12 @@ Returns:
   BufferAlignedFlag = (BOOLEAN) (Buffer.Value & AlignMask) == 0;
 
   //
-  // Do count transfers of Width size. If EfiCpuIoWidthUint8, EfiCpuIoWidthUint16,
-  // EfiCpuIoWidthUint32, or EfiCpuIoWidthUint64 increment Address and the buffer by Width after every
-  // transaction. If EfiCpuIoWidthFifoUint8, EfiCpuIoWidthFifoUint16, EfiCpuIoWidthFifoUint32,
-  // or EfiCpuIoWidthFifoUint64 repeat the accesses to the same Address but increment the buffer after
-  // every transaction. If EfiCpuIoWidthFillUint8, EfiCpuIoWidthFillUint16, EfiCpuIoWidthFillUint32,
-  // or EfiCpuIoWidthFillUint64 increament the Address, but not the buffer after every transaction.
+  // Do count transfers of Width size. If EfiPeiCpuIoWidthUint8, EfiPeiCpuWidthUint16,
+  // EfiPeiCpuWidthUint32, or EfiPeiCpuWidthUint64 increment Address and the buffer by Width after every
+  // transaction. If EfiPeiCpuWidthFifoUint8, EfiPeiCpuWidthFifoUint16, EfiPeiCpuWidthFifoUint32,
+  // or EfiPeiCpuWidthFifoUint64 repeat the accesses to the same Address but increment the buffer after
+  // every transaction. If EfiPeiCpuWidthFillUint8, EfiPeiCpuWidthFillUint16, EfiPeiCpuWidthFillUint32,
+  // or EfiPeiCpuWidthFillUint64 increament the Address, but not the buffer after every transaction.
   // If Buffer is not aligned on a Width boundry we read data into a local
   // variable and byte copy it into the callers non aligned buffer.
   //
@@ -300,11 +300,11 @@ Returns:
 
     switch (Width) {
 
-    case EfiCpuIoWidthUint8:
+    case EfiPeiCpuIoWidthUint8:
       *Address.Uint8 = *Buffer.Uint8;
       break;
 
-    case EfiCpuIoWidthUint16:
+    case EfiPeiCpuWidthUint16:
       if (BufferAlignedFlag) {
         *Address.Uint16 = *Buffer.Uint16;
       } else {
@@ -318,7 +318,7 @@ Returns:
       }
       break;
 
-    case EfiCpuIoWidthUint32:
+    case EfiPeiCpuWidthUint32:
       if (BufferAlignedFlag) {
         *Address.Uint32 = *Buffer.Uint32;
       } else {
@@ -334,7 +334,7 @@ Returns:
       }
       break;
 
-    case EfiCpuIoWidthUint64:
+    case EfiPeiCpuWidthUint64:
       if (BufferAlignedFlag) {
         *Address.Uint64 = *Buffer.Uint64;
       } else {
@@ -365,7 +365,7 @@ Returns:
       IoAddress += AddressStride;
     }
 
-    MEMORY_FENCE ();
+    MemoryFence ();
     Count--;
   }
 
@@ -376,7 +376,7 @@ Returns:
 EFI_STATUS
 EFIAPI
 SalIoRead (
-  IN     EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN     UINT64                     Address,
   IN     UINTN                      Count,
   IN OUT VOID                       *Buffer
@@ -434,7 +434,7 @@ Returns:
 EFI_STATUS
 EFIAPI
 SalIoWrite (
-  IN     EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN     UINT64                     Address,
   IN     UINTN                      Count,
   IN OUT VOID                       *Buffer
@@ -490,7 +490,7 @@ Returns:
 
 EFI_STATUS
 EfiIoWrite (
-  IN     EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN     UINT64                     Address,
   IN     UINTN                      Count,
   IN OUT VOID                       *Buffer
@@ -517,7 +517,7 @@ Returns:
 
 EFI_STATUS
 EfiIoRead (
-  IN     EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN     UINT64                     Address,
   IN     UINTN                      Count,
   IN OUT VOID                       *Buffer

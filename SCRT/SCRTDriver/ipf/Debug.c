@@ -65,11 +65,11 @@ UartReadWrite (
   )
 {
   if (ReadFlag) {
-    MEMORY_FENCE (); 
+    MemoryFence (); 
     *Data = *(volatile UINT8 *)(UINTN)Address;
   } else {
     *(volatile UINT8 *)(UINTN)Address = *Data;
-    MEMORY_FENCE (); 
+    MemoryFence (); 
   }
 }
 
@@ -122,19 +122,19 @@ Send2IO (
   // Send text message to IO UART
   //
   while (*Ptr) {
-    EfiIoRead (EfiCpuIoWidthUint8, Address + 0x5, 1, &Data);
+    EfiIoRead (EfiPeiCpuIoWidthUint8, Address + 0x5, 1, &Data);
     //
     // Wait until Line Status Register (LSR) Bit5 Transmitter Holding 
     // Register Empty(THRE) is high, then write.
     //
     while ((Data & 0x20) == 0) {
-      EfiIoRead (EfiCpuIoWidthUint8, Address + 0x5, 1, &Data);
+      EfiIoRead (EfiPeiCpuIoWidthUint8, Address + 0x5, 1, &Data);
     }
     Data = *Ptr++;
     //
     // Write data into Transmit Buffer Register
     //
-    EfiIoWrite (EfiCpuIoWidthUint8, Address, 1, &Data);
+    EfiIoWrite (EfiPeiCpuIoWidthUint8, Address, 1, &Data);
   }
 }
 

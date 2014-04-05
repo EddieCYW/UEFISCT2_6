@@ -53,9 +53,12 @@
 
 
 [defines]
-BASE_NAME            = SCRTAPP
-FILE_GUID            = 3886A4E6-5092-424e-BD71-2389F5C7C1DE
-COMPONENT_TYPE       = APPLICATION
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = SCRTAPP
+  FILE_GUID            = 3886A4E6-5092-424e-BD71-2389F5C7C1DE
+  MODULE_TYPE          = UEFI_APPLICATION
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeSCRT
 
 [sources.ARM]
   Arm/VirtualMemory.c
@@ -92,24 +95,14 @@ COMPONENT_TYPE       = APPLICATION
   Debug.h
   ParseResult.c
 
-[includes.common]
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Framework
-  .
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Include/IndustryStandard
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
-  $(EFI_SOURCE)/SctPkg/Include
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
 
-[libraries.common]
+[LibraryClasses]
+  UefiApplicationEntryPoint
   SctLib
-  
-[libraries.ARM, libraries.Aarch64]
-  CompilerIntrinsicsLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeSCRT
-
+[Guids]
+  gEfiAcpiTableGuid
+  gEfiAcpi20TableGuid

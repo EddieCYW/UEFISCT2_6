@@ -53,12 +53,13 @@ Module Name:
 #ifndef _DEBUG_ACCESS_H
 #define _DEBUG_ACCESS_H
 
-#include "EfiCommon.h"
-#include "EfiApi.h"
+#include "Efi.h"
 #include EFI_GUID_DEFINITION (Acpi)
-#include "Acpi2_0.h"
-#include "Acpi3_0.h"
-#include EFI_PROTOCOL_DEFINITION (CpuIo)
+#include <IndustryStandard/Acpi20.h>
+#include <IndustryStandard/Acpi30.h>
+
+#include <PiPei.h>
+#include <Ppi/CpuIo.h>
 
 
 //
@@ -163,20 +164,18 @@ typedef struct {
 
 EFI_STATUS
 EfiIoRead (
-  IN     EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN     UINT64                     Address,
   IN     UINTN                      Count,
   IN OUT VOID                       *Buffer
-  )
- ;
+  );
 
 EFI_STATUS
 EfiIoWrite (
-  IN     EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN     UINT64                     Address,
   IN     UINTN                      Count,
   IN OUT VOID                       *Buffer
-  )
-  ;
+  );
 
 #endif

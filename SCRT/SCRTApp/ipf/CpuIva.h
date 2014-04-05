@@ -54,7 +54,6 @@ Module Name:
 #ifndef   _CPU_IVA_H_
 #define   _CPU_IVA_H_
 
-#include "Tiano.h"
 #include "EfiRuntimeLib.h"
 #include "EfiDebug.h"
 #include "LibSalPal.h"

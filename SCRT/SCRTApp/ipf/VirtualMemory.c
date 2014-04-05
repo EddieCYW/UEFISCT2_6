@@ -273,7 +273,7 @@ Returns:
         //
         // Pal Code Size is too big to support !!!
         //
-        EFI_DEADLOOP(); 
+    	  CpuDeadLoop ();
       }
     }
     

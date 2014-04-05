@@ -56,7 +56,7 @@ Module Name:
 STATIC
 EFI_STATUS
 CpuIoCheckParameter (
-  IN EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN UINT64                     Address,
   IN UINTN                      Count,
   IN VOID                       *Buffer,
@@ -100,7 +100,7 @@ Returns:
   // For FiFo type, the target address won't increase during the access,
   // so treat count as 1
   //
-  if (Width >= EfiCpuIoWidthFifoUint8 && Width <= EfiCpuIoWidthFifoUint64) {
+  if (Width >= EfiPeiCpuWidthFifoUint8 && Width <= EfiPeiCpuWidthFifoUint64) {
     Count = 1;
   }
 
@@ -121,7 +121,7 @@ STATIC
 EFI_STATUS
 EFIAPI
 CpuIoServiceRead (
-  IN  EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN  EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN  UINT64                     UserAddress,
   IN  UINTN                      Count,
   OUT VOID                       *UserBuffer
@@ -158,7 +158,7 @@ Returns:
 
   Buffer.buf = (UINT8 *) UserBuffer;
 
-  if (Width >= EfiCpuIoWidthMaximum) {
+  if (Width >= EfiPeiCpuWidthMaximum) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -170,11 +170,11 @@ Returns:
   Address   = (UINTN) UserAddress;
   InStride  = (UINTN)1 << (Width & 0x03);
   OutStride = InStride;
-  if (Width >= EfiCpuIoWidthFifoUint8 && Width <= EfiCpuIoWidthFifoUint64) {
+  if (Width >= EfiPeiCpuWidthFifoUint8 && Width <= EfiPeiCpuWidthFifoUint64) {
     InStride = 0;
   }
 
-  if (Width >= EfiCpuIoWidthFillUint8 && Width <= EfiCpuIoWidthFillUint64) {
+  if (Width >= EfiPeiCpuWidthFillUint8 && Width <= EfiPeiCpuWidthFillUint64) {
     OutStride = 0;
   }
 
@@ -184,19 +184,19 @@ Returns:
   // Loop for each iteration and move the data
   //
   switch (Width) {
-  case EfiCpuIoWidthUint8:
+  case EfiPeiCpuIoWidthUint8:
     for (; Count > 0; Count--, Buffer.buf += OutStride, Address += InStride) {
       *Buffer.ui8 = CpuIoRead8 ((UINT16) Address);
     }
     break;
 
-  case EfiCpuIoWidthUint16:
+  case EfiPeiCpuWidthUint16:
     for (; Count > 0; Count--, Buffer.buf += OutStride, Address += InStride) {
       *Buffer.ui16 = CpuIoRead16 ((UINT16) Address);
     }
     break;
 
-  case EfiCpuIoWidthUint32:
+  case EfiPeiCpuWidthUint32:
     for (; Count > 0; Count--, Buffer.buf += OutStride, Address += InStride) {
       *Buffer.ui32 = CpuIoRead32 ((UINT16) Address);
     }
@@ -213,7 +213,7 @@ STATIC
 EFI_STATUS
 EFIAPI
 CpuIoServiceWrite (
-  IN EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN UINT64                     UserAddress,
   IN UINTN                      Count,
   IN VOID                       *UserBuffer
@@ -250,7 +250,7 @@ Returns:
 
   Buffer.buf = (UINT8 *) UserBuffer;
 
-  if (Width >= EfiCpuIoWidthMaximum) {
+  if (Width >= EfiPeiCpuWidthMaximum) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -262,11 +262,11 @@ Returns:
   Address   = (UINTN) UserAddress;
   InStride  = (UINTN)1 << (Width & 0x03);
   OutStride = InStride;
-  if (Width >= EfiCpuIoWidthFifoUint8 && Width <= EfiCpuIoWidthFifoUint64) {
+  if (Width >= EfiPeiCpuWidthFifoUint8 && Width <= EfiPeiCpuWidthFifoUint64) {
     InStride = 0;
   }
 
-  if (Width >= EfiCpuIoWidthFillUint8 && Width <= EfiCpuIoWidthFillUint64) {
+  if (Width >= EfiPeiCpuWidthFillUint8 && Width <= EfiPeiCpuWidthFillUint64) {
     OutStride = 0;
   }
 
@@ -276,19 +276,19 @@ Returns:
   // Loop for each iteration and move the data
   //
   switch (Width) {
-  case EfiCpuIoWidthUint8:
+  case EfiPeiCpuIoWidthUint8:
     for (; Count > 0; Count--, Buffer.buf += OutStride, Address += InStride) {
       CpuIoWrite8 ((UINT16) Address, *Buffer.ui8);
     }
     break;
 
-  case EfiCpuIoWidthUint16:
+  case EfiPeiCpuWidthUint16:
     for (; Count > 0; Count--, Buffer.buf += OutStride, Address += InStride) {
       CpuIoWrite16 ((UINT16) Address, *Buffer.ui16);
     }
     break;
 
-  case EfiCpuIoWidthUint32:
+  case EfiPeiCpuWidthUint32:
     for (; Count > 0; Count--, Buffer.buf += OutStride, Address += InStride) {
       CpuIoWrite32 ((UINT16) Address, *Buffer.ui32);
     }
@@ -304,7 +304,7 @@ Returns:
 
 EFI_STATUS
 EfiIoWrite (
-  IN     EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN     UINT64                     Address,
   IN     UINTN                      Count,
   IN OUT VOID                       *Buffer
@@ -331,7 +331,7 @@ Returns:
 
 EFI_STATUS
 EfiIoRead (
-  IN     EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN     UINT64                     Address,
   IN     UINTN                      Count,
   IN OUT VOID                       *Buffer

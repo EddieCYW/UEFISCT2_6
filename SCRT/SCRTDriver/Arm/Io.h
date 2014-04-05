@@ -54,9 +54,7 @@ Module Name:
 #ifndef _IA32_IO_ACCESS_H
 #define _IA32_IO_ACCESS_H
 
-#include "EfiCommon.h"
-#include "EfiApi.h"
-#include EFI_PROTOCOL_DEFINITION (CpuIo)
+#include "SCRTDriver.h"
 
 #define IA32_MAX_IO_ADDRESS   0xFFFF
 

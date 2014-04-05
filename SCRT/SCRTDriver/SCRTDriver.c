@@ -93,8 +93,8 @@ SCRTRuntimeDriverInit(
   VRT  = mRT;
   
   Status = mBS->CreateEvent (
-                  EFI_EVENT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
-                  EFI_TPL_NOTIFY,
+                  EVT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
+                  TPL_NOTIFY,
                   SCRTDriverVirtualNotifyEvent,
                   (VOID *)(UINTN)GoVirtualChildEvent,
                   &mEfiVirtualNotifyEvent
@@ -102,7 +102,6 @@ SCRTRuntimeDriverInit(
   return Status;
 }
 
-EFI_RUNTIMESERVICE
 VOID
 SCRTDriverClassAddressChangeEvent (
   IN EFI_EVENT        Event,
@@ -131,8 +130,6 @@ Returns:
   mRT->ConvertPointer (0, (VOID **)&VRT);
 }
 
-
-EFI_DRIVER_ENTRY_POINT (InitializeSCRTDriver)
 
 EFI_STATUS
 InitializeSCRTDriver (
@@ -184,7 +181,7 @@ Returns:
 }
 
 
-VOID
+EFI_STATUS
 EFIAPI
 RuntimeTestFunc (
   UINTN    HandOffAddr
@@ -213,8 +210,8 @@ Returns:
   ConsumeHandOff(HandOffAddr, &ConfigData);
   SctAPrint ("BitMap = 0x%x\n", ConfigData.InfoData);
   if (ConfigData.BitMap.Signature != CONFIGURE_INFO_SIGNATURE) {
-    SctAPrint ("Find Configuration Data Corrupte, Hang!!\n");
-    EFI_DEADLOOP();
+    SctAPrint ("Find Configuration Data Corrupted, Hang!!\n");
+    return EFI_COMPROMISED_DATA;
   } 
   //
   // Dump Runtime Table
@@ -241,4 +238,5 @@ Returns:
   SctAPrint ("===================Reset Services Test Start=================\n\n");
   EfiResetTestVirtual(&ConfigData);
 
+  return EFI_SUCCESS;
 }

@@ -74,5 +74,5 @@ Returns:
   
 --*/  
 {
-   EfiIoWrite (EfiCpuIoWidthUint8, 0x80, 1, &num);
+   EfiIoWrite (EfiPeiCpuIoWidthUint8, 0x80, 1, &num);
 }

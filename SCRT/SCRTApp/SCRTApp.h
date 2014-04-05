@@ -55,7 +55,7 @@ Module Name:
 #define _SCRTAPP_H_
 
 #include "SctLib.h"
-#include "EfiDebug.h"
+//#include "EfiDebug.h"
 #include EFI_GUID_DEFINITION(GlobalVariable)
 
 
@@ -70,7 +70,6 @@ Module Name:
 
 
 typedef
-EFI_RUNTIMESERVICE
 EFI_STATUS
 (EFIAPI *EFI_SCRT_TEST_FUNCTION) ();
 

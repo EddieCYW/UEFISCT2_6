@@ -58,7 +58,7 @@ STATIC
 EFI_STATUS
 EFIAPI
 CpuIoServiceWrite (
-  IN EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN UINT64                     UserAddress,
   IN UINTN                      Count,
   IN VOID                       *UserBuffer
@@ -93,7 +93,7 @@ Returns:
 
 EFI_STATUS
 EfiIoWrite (
-  IN     EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN     UINT64                     Address,
   IN     UINTN                      Count,
   IN OUT VOID                       *Buffer
@@ -120,7 +120,7 @@ Returns:
 
 EFI_STATUS
 EfiIoRead (
-  IN     EFI_CPU_IO_PROTOCOL_WIDTH  Width,
+  IN     EFI_PEI_CPU_IO_PPI_WIDTH  Width,
   IN     UINT64                     Address,
   IN     UINTN                      Count,
   IN OUT VOID                       *Buffer

@@ -236,7 +236,7 @@ Returns:
         StubTable = tST->ConfigurationTable[Index].VendorTable;
         if (StubTable->Signature != SCRT_STUB_TABLE_SIGNATURE) {
           SctPrint(L"Find Corrupted SCRT Table!\n");
-          EFI_DEADLOOP();
+          return EFI_COMPROMISED_DATA;
         } else {
           SctTableFound =TRUE;
           VirtualFunc = (UINTN)StubTable->FuncAddr;
@@ -247,7 +247,7 @@ Returns:
 
     if (!SctTableFound) {
       SctPrint(L"Fail to find SCRT Table!\n");
-      EFI_DEADLOOP();
+      return EFI_UNSUPPORTED;
     }
   
     //
