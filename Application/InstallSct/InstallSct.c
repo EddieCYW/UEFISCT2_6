@@ -61,7 +61,6 @@ Abstract:
 // Global variables
 //
 
-EFI_HANDLE    gImageHandle  = NULL_HANDLE;
 BACKUP_POLICY mBackupPolicy = BACKUP_POLICY_UNDEFINED;
 
 //
@@ -107,8 +106,6 @@ InstallStartup (
 //
 // Entry point
 //
-EFI_DRIVER_ENTRY_POINT(InstallSct)
-
 EFI_STATUS
 InstallSct (
   IN EFI_HANDLE         ImageHandle,

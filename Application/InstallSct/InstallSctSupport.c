@@ -58,7 +58,7 @@ Abstract:
 
 #include "InstallSct.h"
 
-#include EFI_PROTOCOL_DEFINITION (FileSystemInfo)
+#include <Guid/FileSystemInfo.h>
 
 //
 // External function implementation

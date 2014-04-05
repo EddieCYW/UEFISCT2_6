@@ -35,30 +35,35 @@
   DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF
   THE POSSIBILITY OF SUCH DAMAGES.
 
-  Copyright 2006 - 2012 Unified EFI, Inc. All
+  Copyright 2006, 2007, 2008, 2009, 2010 Unified EFI, Inc. All
   Rights Reserved, subject to all existing rights in all
   matters included within this Test Suite, to which United
   EFI, Inc. makes no claim of right.
 
-  Copyright (c) 2011, 2012, ARM Ltd. All rights reserved.
-
---*/
-/*++
-
-Module Name:
-
-  InstallSctDef.h
-
-Abstract:
-
-  Definitions for the EFI SCT installation.
+  Copyright (c) 2014, ARM Ltd. All rights reserved.<BR>
 
 --*/
 
 #ifndef _EFI_INSTALL_SCT_DEF_H_
 #define _EFI_INSTALL_SCT_DEF_H_
 
-#define INSTALL_SCT_PLATFORM_NAME           L"AARCH64"
-#define INSTALL_SCT_PLATFORM_SHORT_NAME     L"AARCH64"
+#if defined(EFI32)
+  #define INSTALL_SCT_PLATFORM_SHORT_NAME   L"32"
+  #define INSTALL_SCT_PLATFORM_NAME         L"IA32"
+#elif defined(EFIX64)
+  #define INSTALL_SCT_PLATFORM_SHORT_NAME   L"x64"
+  #define INSTALL_SCT_PLATFORM_NAME         L"X64"
+#elif defined(EFI64)
+  #define INSTALL_SCT_PLATFORM_SHORT_NAME   L"64"
+  #define INSTALL_SCT_PLATFORM_NAME         L"IPF"
+#elif defined(EFIARM)
+  #define INSTALL_SCT_PLATFORM_SHORT_NAME   L"arm"
+  #define INSTALL_SCT_PLATFORM_NAME         L"ARM"
+#elif defined(EFIAARCH64)
+  #define INSTALL_SCT_PLATFORM_SHORT_NAME   L"aarch64"
+  #define INSTALL_SCT_PLATFORM_NAME         L"AARCH64"
+#else
+  #error "Architecture not supported"
+#endif
 
 #endif

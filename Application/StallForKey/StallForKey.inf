@@ -41,6 +41,7 @@
 # EFI, Inc. makes no claim of right.                          
 #                                                             
 # Copyright (c) 2010 - 2012, Intel Corporation. All rights reserved.<BR> 
+# Copyright (c) 2014, ARM Ltd. All rights reserved.<BR>
 #
 #
 #/*++
@@ -56,27 +57,21 @@
 #--*/
 
 [defines]
-BASE_NAME            = StallForKey
-FILE_GUID            = 985154b9-59f0-4ed6-9abc-8ba752e3c8ef
-COMPONENT_TYPE       = APPLICATION
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = StallForKey
+  FILE_GUID            = 985154b9-59f0-4ed6-9abc-8ba752e3c8ef
+  MODULE_TYPE          = UEFI_APPLICATION
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = StallForKey
 
 [sources.common]
   StallForKey.c
   StallForKey.h
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include  
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
 
-[libraries.common]
+[LibraryClasses]
+  UefiApplicationEntryPoint
   SctLib
-
-[libraries.ARM, libraries.AARCH64]
-  CompilerIntrinsicsLib
-
-[nmake.common]
-  IMAGE_ENTRY_POINT=StallForKey

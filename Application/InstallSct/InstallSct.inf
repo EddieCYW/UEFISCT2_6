@@ -40,7 +40,8 @@
 # matters included within this Test Suite, to which United    
 # EFI, Inc. makes no claim of right.                          
 #                                                             
-# Copyright (c) 2010 - 2012, Intel Corporation. All rights reserved.<BR> 
+# Copyright (c) 2010 - 2012, Intel Corporation. All rights reserved.<BR>
+# Copyright (c) 2014, ARM Ltd. All rights reserved.<BR>
 #
 #
 # /*++
@@ -56,9 +57,12 @@
 # --*/
 
 [defines]
-BASE_NAME            = InstallSct
-FILE_GUID            = 4EB9D07B-EA00-41d7-95D3-CF6A3C7ACDBC
-COMPONENT_TYPE       = APPLICATION
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = InstallSct
+  FILE_GUID            = 4EB9D07B-EA00-41d7-95D3-CF6A3C7ACDBC
+  MODULE_TYPE          = UEFI_APPLICATION
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InstallSct
 
 [sources.common]
   InstallSct.c
@@ -66,19 +70,10 @@ COMPONENT_TYPE       = APPLICATION
   InstallSctSupport.c
   InstallSctSupport.h
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  
-[libraries.common]
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
   SctLib
-
-[libraries.ARM, libraries.Aarch64]
-  CompilerIntrinsicsLib
-
-[nmake.common]
-  IMAGE_ENTRY_POINT=InstallSct

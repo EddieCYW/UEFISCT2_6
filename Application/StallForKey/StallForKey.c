@@ -57,11 +57,6 @@ Abstract:
 
 #include "StallForKey.h"
 
-//
-// Entry point
-//
-EFI_APPLICATION_ENTRY_POINT (StallForKey)
-
 EFI_STATUS
 StallForKey (
   IN EFI_HANDLE         ImageHandle,
@@ -95,7 +90,7 @@ StallForKey (
   // Create timer event
   //
   Status = tBS->CreateEvent (
-                 EFI_EVENT_TIMER,
+		         EVT_TIMER,
                  0,
                  NULL,
                  NULL,

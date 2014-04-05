@@ -66,6 +66,7 @@ Abstract:
 #include "SctLib.h"
 #include "InstallSctDef.h"
 #include "InstallSctSupport.h"
+#include <Library/UefiBootServicesTableLib.h>
 
 //
 // Global definitions
@@ -94,7 +95,6 @@ typedef enum {
 // Global variables
 //
 
-extern EFI_HANDLE    gImageHandle;
 extern BACKUP_POLICY mBackupPolicy;
 
 //
