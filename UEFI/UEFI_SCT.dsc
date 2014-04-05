@@ -197,6 +197,7 @@ SctPkg/Library/SctLib/SctLib-edk1.inf
   NetLib|SctPkg/Library/NetLib/NetLib.inf
   EntsLib|SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib.inf
   EasLib|SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas.inf
+  EfiTestLib|SctPkg/Library/EfiTestLib/EfiTestLib.inf
 
 [LibraryClasses.ARM]
   NULL|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf

@@ -63,7 +63,7 @@ Abstract:
 #include "Efi.h"
 #include "ScsiPassThruProtocol.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 #define  SCSI_PASS_THRU_PROTOCOL_TEST_REVISION    0x00010000
 

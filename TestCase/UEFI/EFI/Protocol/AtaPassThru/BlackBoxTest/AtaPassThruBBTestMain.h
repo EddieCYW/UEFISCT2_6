@@ -63,7 +63,7 @@ Abstract:
 #include "Efi.h"
 #include "AtaPassThruProtocol.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 #define  ATA_PASS_THRU_PROTOCOL_TEST_REVISION    0x00010000
 

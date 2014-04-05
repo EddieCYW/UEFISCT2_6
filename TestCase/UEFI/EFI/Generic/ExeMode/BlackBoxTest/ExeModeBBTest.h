@@ -61,7 +61,7 @@ Abstract:
 
 #include "Efi.h"
 #include "EfiTest.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "guid.h"
 
 #define EXE_MODE_TEST_REVISION 0x00010000

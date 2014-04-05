@@ -65,7 +65,7 @@ Abstract:
 #include EFI_PROTOCOL_DEFINITION (SimpleTextOut)
 #include EFI_PROTOCOL_DEFINITION (GraphicsOutput)
 
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 
 extern   EFI_EVENT               TimerEvent;

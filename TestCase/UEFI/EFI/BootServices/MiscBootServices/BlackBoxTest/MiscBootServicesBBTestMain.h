@@ -61,7 +61,7 @@ Abstract:
 
 #include "Efi.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 typedef struct _RESET_DATA {
   UINTN           Step;

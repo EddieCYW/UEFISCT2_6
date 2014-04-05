@@ -63,7 +63,7 @@ Abstract:
 //
 
 #include "SctLib.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "LibPrivate.h"
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestProfileLibrary)

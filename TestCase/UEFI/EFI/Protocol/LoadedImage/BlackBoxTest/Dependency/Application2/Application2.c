@@ -56,7 +56,7 @@ Abstract:
 --*/
 
 #include "LoadedImageBBTestProtocolDefinition.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 //
 // data definition here

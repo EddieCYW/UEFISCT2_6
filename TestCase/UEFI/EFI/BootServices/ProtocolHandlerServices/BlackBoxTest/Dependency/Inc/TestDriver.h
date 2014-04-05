@@ -59,7 +59,7 @@ Abstract:
 #define TEST_DRIVER_H
 
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "ProtocolDefinition.h"
 
 #define MAX_STRING_LEN      250

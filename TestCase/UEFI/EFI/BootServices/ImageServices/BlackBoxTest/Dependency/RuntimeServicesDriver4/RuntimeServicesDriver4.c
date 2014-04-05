@@ -56,7 +56,7 @@ Abstract:
 --*/
 
 #include "ProtocolDefinition.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 #include EFI_PROTOCOL_DEFINITION (DriverBinding)
 #include EFI_PROTOCOL_DEFINITION (DevicePath)

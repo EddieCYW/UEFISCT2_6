@@ -54,7 +54,7 @@ Abstract:
 --*/
 
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 EFI_STATUS
 InitializeRuntimeServicesDriver1 (

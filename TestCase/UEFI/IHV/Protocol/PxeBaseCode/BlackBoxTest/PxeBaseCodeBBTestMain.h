@@ -60,7 +60,7 @@ Abstract:
 
 #include "Efi.h"
 #include "guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include <PxeBaseCode.h>
 #include <PxeBaseCodeCallBack.h>
 

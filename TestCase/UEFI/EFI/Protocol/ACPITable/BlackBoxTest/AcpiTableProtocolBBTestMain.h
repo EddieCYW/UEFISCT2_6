@@ -60,7 +60,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "AcpiTableProtocol.h"
 #include "Guid.h"
 

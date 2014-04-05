@@ -63,7 +63,7 @@ Abstract:
 #include "Efi.h"
 #include "Guid.h"
 #include "DriverSupportedEfiVersionProtocol.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 #define  DRIVER_SUPPORTED_EFI_VERSION_PROTOCOL_TEST_REVISION    0x00010000
 

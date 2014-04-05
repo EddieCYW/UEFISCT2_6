@@ -63,7 +63,7 @@ Abstract:
 #include "Efi.h"
 #include "AbsolutePointerProtocol.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 #define  ABSOLUTE_POINTER_PROTOCOL_TEST_REVISION    0x00010000
 

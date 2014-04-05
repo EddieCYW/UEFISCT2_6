@@ -62,7 +62,7 @@ Abstract:
 
 #include "Efi.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "BusSpecificDriverOverrideProtocol.h"
 
 #define  BUS_SPECIFIC_DRIVER_OVERRIDE_PROTOCOL_TEST_REVISION    0x00010000

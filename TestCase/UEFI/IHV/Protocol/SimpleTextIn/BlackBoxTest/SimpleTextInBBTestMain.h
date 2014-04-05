@@ -62,7 +62,7 @@ Abstract:
 #include "Efi.h"
 #include "SimpleTextInProtocol.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 
 #define  SIMPLE_TEXT_IN_PROTOCOL_TEST_REVISION    0x00010000

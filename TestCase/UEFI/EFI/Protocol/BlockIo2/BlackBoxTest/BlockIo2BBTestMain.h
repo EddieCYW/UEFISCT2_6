@@ -66,7 +66,7 @@ Abstract:
 #include "SctLib.h"
 #include "Guid.h"
 #include "BlockIo2Protocol.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "EfiCommon.h"
 
 //

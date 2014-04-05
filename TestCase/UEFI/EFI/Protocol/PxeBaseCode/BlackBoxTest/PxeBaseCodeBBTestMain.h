@@ -60,7 +60,7 @@ Abstract:
 
 #include "SctLib.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "PxeBaseCode.h"
 #include "PxeBaseCodeCallBack.h"
 

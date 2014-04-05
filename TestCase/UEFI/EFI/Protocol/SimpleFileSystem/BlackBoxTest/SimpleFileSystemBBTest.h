@@ -59,7 +59,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "Guid.h"
 
 #include EFI_PROTOCOL_DEFINITION (BlockIo)

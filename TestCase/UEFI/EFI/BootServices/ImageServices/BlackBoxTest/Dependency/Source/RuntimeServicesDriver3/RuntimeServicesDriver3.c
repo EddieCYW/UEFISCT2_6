@@ -57,7 +57,7 @@ Abstract:
 --*/
 
 #include "ProtocolDefinition.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 //
 // data definition here

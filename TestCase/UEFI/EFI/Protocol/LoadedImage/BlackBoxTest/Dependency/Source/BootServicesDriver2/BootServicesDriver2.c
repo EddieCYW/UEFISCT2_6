@@ -64,7 +64,7 @@ Revision History
 --*/
 
 #include "LoadedImageBBTestProtocolDefinition.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 EFI_STATUS
 InitializeBootServicesDriver2 (

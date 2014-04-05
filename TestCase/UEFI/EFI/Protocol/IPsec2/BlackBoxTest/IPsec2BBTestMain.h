@@ -59,7 +59,7 @@ Abstract:
 #define _IPSEC2_BB_TEST_MAIN
 
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "IPsecConfigProtocol.h"
 #include "IPsec2Protocol.h"
 #include "Guid.h"

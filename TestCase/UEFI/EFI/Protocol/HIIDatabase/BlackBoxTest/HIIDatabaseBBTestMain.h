@@ -59,7 +59,7 @@ Abstract:
 #define _HII_DATABASE_BB_TEST_MAIN
 
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "HiiProtocol.h"
 #include "HIIDatabase.h"
 #include "Guid.h"

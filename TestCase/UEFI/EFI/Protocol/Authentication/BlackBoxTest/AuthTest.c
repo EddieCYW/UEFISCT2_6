@@ -57,7 +57,7 @@ Abstract:
 #include "SctLib.h"
 #include "SctLib.h"
 #include "AuthTest.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "AuthenticationGuid.h"
 
 #include EFI_TEST_PROTOCOL_DEFINITION(StandardTestLibrary)

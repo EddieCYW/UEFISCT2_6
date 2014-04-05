@@ -62,7 +62,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "PciRootBridgeIoProtocol.h"
 
 #include "Guid.h"

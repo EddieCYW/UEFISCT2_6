@@ -56,27 +56,26 @@
 #--*/
 
 [defines]
-  INF_VERSION                    = 0x00010005
-  BASE_NAME                      = EfiTestLib
-  MODULE_TYPE                    = BASE
-  LIBRARY_CLASS                  = EfiTestLib
+BASE_NAME       = EfiTestLib
+COMPONENT_TYPE  = LIBRARY
 
 [sources.common]
   EfiTestLib.c
+  ../../Include/Library/EfiTestLib.h
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
+[includes.common]
+  .
+  $(EDK_SOURCE)/Foundation/Efi
+  $(EDK_SOURCE)/Foundation/Framework
+  $(EDK_SOURCE)/Foundation/Include
+  $(EDK_SOURCE)/Foundation/Efi/Include
+  $(EDK_SOURCE)/Foundation/Framework/Include
+  $(EFI_SOURCE)/
+  $(EFI_SOURCE)/SctPkg/Include
 
-[LibraryClasses]
+[libraries.common]
   SctLib
+  EdkFrameworkGuidLib
 
-[Guids]
-  gEfiNullGuid
-  gEfiDxeServicesTableGuid
-
-[Protocols]
-  gEfiBbTestGuid
-  gEfiStandardTestLibraryGuid
-  gEfiIHVBbTestGuid
-  gEfiWbTestGuid
+[nmake.common]
+  C_STD_INCLUDE=

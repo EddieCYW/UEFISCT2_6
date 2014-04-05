@@ -60,7 +60,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "HIIFont.h"
 #include "HiiProtocol.h"
 #include "Guid.h"

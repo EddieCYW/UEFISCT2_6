@@ -59,7 +59,7 @@ Abstract:
 #define _EVENT_TIMER_TASK_PRIORITY_SERVICES_BB_TEST_MAIN_H
 
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 #include "Guid.h"
 

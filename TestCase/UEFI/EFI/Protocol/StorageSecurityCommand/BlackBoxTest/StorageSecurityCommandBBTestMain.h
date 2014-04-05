@@ -66,7 +66,7 @@ Abstract:
 #include "Efi.h"
 #include "StorageSecurityCommandProtocol.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "DevicePathUtilities.h"
 #include "DevicePathToText.h"
 #include EFI_PROTOCOL_DEFINITION (BlockIo)

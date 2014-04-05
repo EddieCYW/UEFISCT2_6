@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "SctLib.h"
 #include EFI_GUID_DEFINITION (DxeServices)
 

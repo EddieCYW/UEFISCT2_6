@@ -59,7 +59,7 @@ Abstract:
 
 #include "Efi.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "UsbHcProtocol.h"
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestRecoveryLibrary)

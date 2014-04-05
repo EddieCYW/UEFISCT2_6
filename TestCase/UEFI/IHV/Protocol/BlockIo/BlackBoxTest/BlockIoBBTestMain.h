@@ -66,7 +66,7 @@ Abstract:
 #include "Efi.h"
 #include "BlockIoProtocol.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 //
 // Definitions
 //

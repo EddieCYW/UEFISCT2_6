@@ -64,7 +64,7 @@ Abstract:
 #include EFI_PROTOCOL_DEFINITION (BlockIo)
 #include "DiskIoProtocol.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 #define  DISK_IO_PROTOCOL_TEST_REVISION    0x00010000
 

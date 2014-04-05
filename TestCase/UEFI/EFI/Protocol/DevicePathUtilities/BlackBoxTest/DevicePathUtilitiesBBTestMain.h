@@ -71,7 +71,7 @@ typedef EFI_DEVICE_PATH_PROTOCOL  EFI_DEVICE_PATH;
 #endif
 
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 #define DEVICE_PATH_PROTOCOL_TEST_REVISION  0x00010001
 

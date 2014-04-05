@@ -63,7 +63,7 @@ Abstract:
 #include "Efi.h"
 #include "Guid.h"
 #include "UnicodeCollation2Protocol.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 #define  UNICODE_COLLATION2_PROTOCOL_TEST_REVISION    0x00010000
 

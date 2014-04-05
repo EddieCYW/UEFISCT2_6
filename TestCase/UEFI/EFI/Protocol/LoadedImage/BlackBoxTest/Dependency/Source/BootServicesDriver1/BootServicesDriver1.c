@@ -64,7 +64,7 @@ Revision History
 --*/
 
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 //
 // data definition here

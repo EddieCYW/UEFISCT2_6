@@ -58,7 +58,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "ComponentName2Protocol.h"
 #include "Guid.h"
 

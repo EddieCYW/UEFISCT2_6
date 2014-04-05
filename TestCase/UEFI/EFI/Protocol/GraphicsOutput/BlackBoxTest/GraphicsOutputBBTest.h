@@ -64,7 +64,7 @@ References:
 #define __GRAPHICS_OUTPUT_BBTEST_H__
 
 #include "SctLib.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 #include "GraphicsOutputProtocol.h"
 
 #define EFI_GRAPHICS_OUTPUT_BB_TEST_REVISION  0x00010000

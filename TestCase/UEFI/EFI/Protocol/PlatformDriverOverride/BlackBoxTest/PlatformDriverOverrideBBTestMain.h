@@ -63,7 +63,7 @@ Abstract:
 #include "Efi.h"
 #include "PlatformDriverOverrideProtocol.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 #define  PLATFORM_DRIVER_OVERRIDE_PROTOCOL_TEST_REVISION    0x00010000
 #ifdef EFIARM

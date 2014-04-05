@@ -63,7 +63,7 @@ Abstract:
 #include "Efi.h"
 #include "ScsiIoProtocol.h"
 #include "Guid.h"
-#include "EfiTestLib.h"
+#include <Library/EfiTestLib.h>
 
 #define  SCSI_IO_PROTOCOL_TEST_REVISION    0x00010000
 
