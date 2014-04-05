@@ -35,30 +35,91 @@
   DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF     
   THE POSSIBILITY OF SUCH DAMAGES.                              
                                                                 
-  Copyright 2006, 2007, 2008, 2009, 2010 Unified EFI, Inc. All  
+  Copyright 2006 - 2012 Unified EFI, Inc. All  
   Rights Reserved, subject to all existing rights in all        
   matters included within this Test Suite, to which United      
   EFI, Inc. makes no claim of right.                            
                                                                 
-  Copyright (c) 2010, Intel Corporation. All rights reserved.<BR>   
+  Copyright (c) 2010 - 2012, Intel Corporation. All rights reserved.<BR>   
    
 --*/
 /*++
 
 Module Name:
 
-  Eftp.c
+  EntsMonitorProtocol.h
 
 Abstract:
 
-  Ents File Transfer Protocol GUID Declaration.
-  
 --*/
 
-#include "Eftp.h"
+#ifndef _ENTS_MONITOR_PROTOCOL_H_
+#define _ENTS_MONITOR_PROTOCOL_H_
 
-EFI_GUID  gEfiEftpServiceBindingProtocolGuid  = EFI_EFTP_SERVICE_BINDING_PROTOCOL_GUID;
-EFI_GUID  gEfiEftpProtocolGuid                = EFI_EFTP_PROTOCOL_GUID;
+#define EFI_ENTS_MONITOR_PROTOCOL_GUID \
+  { \
+    0xf3f93305, 0x57e1, 0x43bf, 0x96, 0x20, 0xf1, 0x4a, 0xb3, 0x31, 0xe2, 0x7d \
+  }
 
-EFI_GUID_STRING(&gEfiEftpServiceBindingProtocolGuid, "EFTP Service Binding Protocol", "EFTP Service Binding Protocol");
-EFI_GUID_STRING(&gEfiEftpProtocolGuid, "EFTP Protocol", "EFTP Protocol");
+extern EFI_GUID gEfiEntsMonitorProtocolGuid;
+
+typedef struct _EFI_ENTS_MONITOR_PROTOCOL EFI_ENTS_MONITOR_PROTOCOL;
+
+typedef
+EFI_STATUS
+(EFIAPI *EFI_INIT_MONITOR) (
+  IN EFI_ENTS_MONITOR_PROTOCOL           * This
+  );
+
+typedef
+EFI_STATUS
+(EFIAPI *EFI_RESET_MONITOR) (
+  IN EFI_ENTS_MONITOR_PROTOCOL           * This
+  );
+
+typedef
+EFI_STATUS
+(EFIAPI *EFI_MONITOR_LISTENER) (
+  IN     EFI_ENTS_MONITOR_PROTOCOL       * This,
+  IN OUT UINTN                           *Size,
+  OUT CHAR16                             **Buffer
+  );
+
+typedef
+EFI_STATUS
+(EFIAPI *EFI_MONITOR_SENDER) (
+  IN EFI_ENTS_MONITOR_PROTOCOL           * This,
+  IN CHAR16                              *Buffer
+  );
+
+typedef
+EFI_STATUS
+(EFIAPI *EFI_MONITOR_VALIDATER) (
+  IN EFI_ENTS_MONITOR_PROTOCOL           * This
+  );
+
+typedef
+EFI_STATUS
+(EFIAPI *EFI_MONITOR_SAVECONTEXT) (
+  IN EFI_ENTS_MONITOR_PROTOCOL                 *This
+  );
+
+typedef
+EFI_STATUS
+(EFIAPI *EFI_MONITOR_RESTORECONTEXT) (
+  IN EFI_ENTS_MONITOR_PROTOCOL                 *This
+  );
+
+struct _EFI_ENTS_MONITOR_PROTOCOL {
+  VOID                        *MonitorName;
+  VOID                        *MonitorIo;
+  EFI_INIT_MONITOR            InitMonitor;
+  EFI_RESET_MONITOR           ResetMonitor;
+  BOOLEAN                     CleanUpEnvironmentFlag;
+  EFI_MONITOR_LISTENER        MonitorListener;
+  EFI_MONITOR_SENDER          MonitorSender;
+  EFI_MONITOR_SAVECONTEXT     MonitorSaveContext;
+  EFI_MONITOR_RESTORECONTEXT  MonitorRestoreContext;
+};
+
+#endif // _ENTS_MONITOR_PROTOCOL_H_

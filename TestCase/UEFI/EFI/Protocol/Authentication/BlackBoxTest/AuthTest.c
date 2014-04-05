@@ -60,7 +60,7 @@ Abstract:
 #include "EfiTestLib.h"
 #include "AuthenticationGuid.h"
 
-#include "SctPkg/Protocol/StandardTestLibrary/StandardTestLibrary.h"
+#include EFI_TEST_PROTOCOL_DEFINITION(StandardTestLibrary)
 
 #ifdef EFIARM	
 extern EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib;

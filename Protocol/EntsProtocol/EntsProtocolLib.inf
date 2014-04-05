@@ -60,9 +60,7 @@ BASE_NAME       = EntsProtocolLib
 COMPONENT_TYPE  = LIBRARY
 
 [sources.common]
-  EntsProtocol.h
   EntsProtocol.c
-  ../EntsMonitorProtocol/EntsMonitorProtocol.h
   ../EntsMonitorProtocol/EntsMonitorProtocol.c
  
 [sources.ia32]

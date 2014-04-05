@@ -153,21 +153,17 @@
 EdkCompatibilityPkg/Foundation/Guid/EdkGuidLib.inf
 EdkCompatibilityPkg/Foundation/Framework/Guid/EdkFrameworkGuidLib.inf
 EdkCompatibilityPkg/Foundation/Efi/Guid/EfiGuidLib.inf
-EdkCompatibilityPkg/Foundation/Cpu/Pentium/CpuIA32Lib/CpuIA32Lib.inf
 
 EdkCompatibilityPkg/Foundation/Protocol/EdkProtocolLib.inf
-EdkCompatibilityPkg/Foundation/Framework/Protocol/EdkFrameworkProtocolLib.inf
 EdkCompatibilityPkg/Foundation/Efi/Protocol/EfiProtocolLib.inf
-EdkCompatibilityPkg/Foundation/Core/Dxe/ArchProtocol/ArchProtocolLib.inf
 
 SctPkg/Protocol/TestProtocolLib.inf
 SctPkg/Library/EfiTestLib/EfiTestLib.inf
 
-SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib.inf
+SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib-edk1.inf
 SctPkg/TestCase/RIVL/NetworkProtocolLib/NetworkProtocolLib.inf
 SctPkg/Protocol/EntsProtocol/EntsProtocolLib.inf
-SctPkg/Protocol/Eftp/EftpProtocolLib.inf
-SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas.inf
+SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas-edk1.inf
 SctPkg/Library/NetLib/NetLib.inf
 SctPkg/Library/SctLib/SctLib-edk1.inf
 
@@ -199,6 +195,8 @@ SctPkg/Library/SctLib/SctLib-edk1.inf
 
   SctLib|SctPkg/Library/SctLib/SctLib.inf
   NetLib|SctPkg/Library/NetLib/NetLib.inf
+  EntsLib|SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib.inf
+  EasLib|SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas.inf
 
 [LibraryClasses.ARM]
   NULL|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf

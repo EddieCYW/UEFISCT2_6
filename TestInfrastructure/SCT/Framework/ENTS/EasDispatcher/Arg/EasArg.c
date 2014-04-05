@@ -55,7 +55,8 @@ Abstract:
 
 #include "SctLib.h"
 #include "Eas.h"
-#include "EntsMonitorProtocol.h"
+#include "EfiTest.h"
+#include EFI_TEST_PROTOCOL_DEFINITION (EntsMonitorProtocol)
 
 EFI_STATUS
 AssignFromVar (

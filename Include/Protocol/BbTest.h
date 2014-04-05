@@ -47,81 +47,85 @@
 
 Module Name:
 
-  WbTest.h
+  BbTest.h
 
 Abstract:
 
-  This file defines the EFI White-Box Test Protocol.
+  This file defines the EFI Black-Box Test Protocol.
 
 --*/
 
-#ifndef _EFI_WB_TEST_H_
-#define _EFI_WB_TEST_H_
+#ifndef _EFI_BB_TEST_H_
+#define _EFI_BB_TEST_H_
 
 //
 // Includes
 //
 
 //
-// EFI White-Box Test Protocol Definitions
+// EFI Black-Box Test Protocol Definitions
 //
 
-#define EFI_WB_TEST_GUID                \
-  { 0x0B486CED, 0x25EB, 0x448a, 0xB2, 0xB2, 0x22, 0x4E, 0x7A, 0x20, 0xCF, 0x57 }
+#define EFI_BB_TEST_GUID                \
+  { 0x8C41CE3E, 0xB255, 0x4966, 0xB5, 0x3C, 0x39, 0x76, 0x5A, 0xE1, 0x11, 0xD0 }
 
-#define EFI_WB_TEST_REVISION            0x00010000
+#define EFI_BB_TEST_REVISION            0x00010000
+
+#define EFI_IHV_BB_TEST_GUID           \
+  { 0x27e36cde, 0xa7e7, 0x4a4a, 0x9b, 0x5f, 0xa3, 0x9a, 0x56, 0x75, 0xcb, 0x80 }
 
 //
 // Forward reference for pure ANSI compatibility
 //
 
-EFI_FORWARD_DECLARATION (EFI_WB_TEST_ENTRY);
-EFI_FORWARD_DECLARATION (EFI_WB_TEST_PROTOCOL);
+typedef struct _EFI_BB_TEST_ENTRY EFI_BB_TEST_ENTRY;
+typedef struct _EFI_BB_TEST_PROTOCOL EFI_BB_TEST_PROTOCOL;
 
 //
-// EFI White-Box Test Entry Point
+// EFI Black-Box Test Entry Point
 //
 
 typedef
 EFI_STATUS
-(EFIAPI *EFI_WB_ENTRY_POINT) (
-  IN  EFI_WB_TEST_PROTOCOL              *This,
+(EFIAPI *EFI_BB_ENTRY_POINT) (
+  IN  EFI_BB_TEST_PROTOCOL              *This,
+  IN  VOID                              *ClientInterface,
   IN  EFI_TEST_LEVEL                    TestLevel,
   IN  EFI_HANDLE                        SupportHandle
   );
 
 //
-// EFI White-Box Test Entry
+// EFI Black-Box Test Entry
 //
 
-struct _EFI_WB_TEST_ENTRY {
-  EFI_WB_TEST_ENTRY                     *Next;
+struct _EFI_BB_TEST_ENTRY {
+  EFI_BB_TEST_ENTRY                     *Next;
   EFI_GUID                              EntryId;
   CHAR16                                *Name;
   CHAR16                                *Description;
   EFI_TEST_LEVEL                        TestLevelSupportMap;
   EFI_GUID                              *SupportProtocols;
   EFI_TEST_ATTRIBUTE                    CaseAttribute;
-  EFI_WB_ENTRY_POINT                    EntryPoint;
-} ;
-
-//
-// EFI White-Box Test Protocol
-//
-
-struct _EFI_WB_TEST_PROTOCOL {
-  UINT64                                TestRevision;
-  EFI_GUID                              CategoryGuid;
-  EFI_HANDLE                            ClientHandle;
-  CHAR16                                *Name;
-  CHAR16                                *Description;
-  EFI_WB_TEST_ENTRY                     *EntryList;
+  EFI_BB_ENTRY_POINT                    EntryPoint;
 };
 
 //
-// Global ID for EFI White-Box Test Protocol
+// EFI Black-Box Test Protocol
 //
 
-extern EFI_GUID gEfiWbTestGuid;
+struct _EFI_BB_TEST_PROTOCOL {
+  UINT64                                TestRevision;
+  EFI_GUID                              CategoryGuid;
+  CHAR16                                *Name;
+  CHAR16                                *Description;
+  EFI_BB_TEST_ENTRY                     *EntryList;
+};
+
+//
+// Global ID for EFI Black-Box Test Protocol
+//
+
+extern EFI_GUID gEfiBbTestGuid;
+extern EFI_GUID gEfiIHVBbTestGuid;
 
 #endif

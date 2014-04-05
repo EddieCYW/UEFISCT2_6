@@ -62,7 +62,8 @@ Abstract:
 // Includes
 //
 
-#include "EntsProtocol.h"
+#include "EfiTest.h"
+#include EFI_TEST_PROTOCOL_DEFINITION (EntsProtocol)
 #include "Rivl.h"
 #include "EasType.h"
 #include "EasLoad.h"

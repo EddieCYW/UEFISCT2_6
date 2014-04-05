@@ -55,7 +55,7 @@ Abstract:
 
 #include "SctLib.h"
 #include "Eas.h"
-#include "EntsMonitorProtocol.h"
+#include EFI_TEST_PROTOCOL_DEFINITION (EntsMonitorProtocol)
 
 EFI_NETWORK_TEST_FRAMEWORK_TABLE  *gEasFT = NULL;
 

@@ -47,75 +47,64 @@
 
 Module Name:
 
-  TestOutputLibrary.h
+  TestRecoveryLibrary.h
 
 Abstract:
 
-  This file defines the EFI Test Output Library Protocol.
-
-  This protocol will be invoked by the standard test library protocol, the test
-  logging library protocol, or the other user-defined library protocols.
-  Generally a test case should only invoke the standard test library protocol
-  or the test logging library protocol to record the output message. It can not
-  touch this test output library protocol directly.
+  This file defines the EFI Test Recovery Library Protocol.
 
 --*/
 
-#ifndef _EFI_TEST_OUTPUT_LIBRARY_H_
-#define _EFI_TEST_OUTPUT_LIBRARY_H_
+#ifndef _EFI_TEST_RECOVERY_LIBRARY_H_
+#define _EFI_TEST_RECOVERY_LIBRARY_H_
 
 //
 // Includes
 //
 
-#include EFI_PROTOCOL_DEFINITION (DevicePath)
-#include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
-
 //
-// EFI Test Output Library Protocol Definitions
+// EFI Test Recovery Library Protocol Definitions
 //
 
-#define EFI_TEST_OUTPUT_LIBRARY_GUID        \
-  { 0x8bfeab85, 0x83cf, 0x4c7b, 0x9e, 0xcd, 0xcf, 0x14, 0x28, 0x87, 0xe7, 0x12 }
+#define EFI_TEST_RECOVERY_LIBRARY_GUID      \
+  { 0x7fd8c38d, 0x7c5c, 0x42fc, 0xb0, 0x44, 0x3a, 0x83, 0x4a, 0x61, 0x74, 0x76 }
 
-#define EFI_TEST_OUTPUT_LIBRARY_REVISION    0x00010000
+#define EFI_TEST_RECOVERY_LIBRARY_REVISION  0x00010000
 
 //
 // Forward reference for pure ANSI compatibility
 //
 
-EFI_FORWARD_DECLARATION (EFI_TEST_OUTPUT_LIBRARY_PROTOCOL);
+typedef struct _EFI_TEST_RECOVERY_LIBRARY_PROTOCOL EFI_TEST_RECOVERY_LIBRARY_PROTOCOL;
 
 //
-// EFI Test Output Library Protocol API - Open
+// EFI Test Recovery Library Protocol API - ReadResetRecord
 //
 typedef
 EFI_STATUS
-(EFIAPI *EFI_TOL_OPEN) (
-  IN  EFI_TEST_OUTPUT_LIBRARY_PROTOCOL          *This,
-  IN  EFI_DEVICE_PATH_PROTOCOL                  *DevicePath,
-  IN  CHAR16                                    *FileName,
-  IN  BOOLEAN                                   Overwrite,
-  OUT EFI_FILE                                  **FileHandle
+(EFIAPI *EFI_TRL_READ_RESET_RECORD) (
+  IN  EFI_TEST_RECOVERY_LIBRARY_PROTOCOL          *This,
+  OUT UINTN                                       *Size,
+  OUT VOID                                        *Buffer
   )
 /*++
 
 Routine Description:
 
-  Open an output file.
+  Reads the information which is recorded before of system reset. It can
+  only be used to transfer the data between system reset in one test case. The
+  test management system will clean up all recorded information after a test
+  case is completed.
 
 Arguments:
 
-  This          - Test output library protocol instance.
+  This          - Test recovery library protocol instance.
 
-  DevicePath    - Device path of the output file.
+  Size          - The number of byte returned in the Buffer.
 
-  FileName      - File name of the output file.
-
-  Overwrite     - Control write operations. TRUE stands for overwrite the old
-                  file, FALSE for append it.
-
-  FileHandle    - Handle for the opened file.
+  Buffer        - The buffer is used to restore the output information. The
+                  buffer is allocated by the caller and should be larger than
+                  1024 bytes.
 
 Returns:
 
@@ -125,25 +114,33 @@ Returns:
 ;
 
 //
-// EFI Test Output Library Protocol API - Close
+// EFI Test Recovery Library Protocol API - WriteResetRecord
 //
 typedef
 EFI_STATUS
-(EFIAPI *EFI_TOL_CLOSE) (
-  IN  EFI_TEST_OUTPUT_LIBRARY_PROTOCOL          *This,
-  IN  EFI_FILE                                  *FileHandle
+(EFIAPI *EFI_TRL_WRITE_RESET_RECORD) (
+  IN  EFI_TEST_RECOVERY_LIBRARY_PROTOCOL          *This,
+  IN  UINTN                                       Size,
+  IN  VOID                                        *Buffer
   )
 /*++
 
 Routine Description:
 
-  Close an output file.
+  Writes the information which will be used after system reset. It is also used
+  to indicate this system reset is scheduled by the test case in plan. The test
+  management system will restart this test case if it finds any recorded
+  information. So the test case should clean up the recorded information after
+  it is restarted.
 
 Arguments:
 
-  This          - Test output library protocol instance.
+  This          - Test recovery library protocol instance.
 
-  FileHandle    - File handle to be closed.
+  Size          - The number of byte to be written.
+
+  Buffer        - The buffer is used to restore the output information. This
+                  buffer should not larger than 1024 bytes.
 
 Returns:
 
@@ -153,53 +150,21 @@ Returns:
 ;
 
 //
-// EFI Test Output Library Protocol API - Write
-//
-typedef
-EFI_STATUS
-(EFIAPI *EFI_TOL_WRITE) (
-  IN  EFI_TEST_OUTPUT_LIBRARY_PROTOCOL          *This,
-  IN  EFI_FILE                                  *FileHandle,
-  IN  CHAR16                                    *String
-  )
-/*++
-
-Routine Description:
-
-  Write a string to the output file.
-
-Arguments:
-
-  This          - Test output library protocol instance.
-
-  FileHandle    - Handle for the opened file.
-
-  String        - Null terminated Unicode string to be written.
-
-Returns:
-
-  EFI_SUCCESS if everything is correct.
-
---*/
-;
-
-//
-// EFI Test Output Library Protocol
+// EFI Test Recovery Library Protocol
 //
 
-struct _EFI_TEST_OUTPUT_LIBRARY_PROTOCOL {
+struct _EFI_TEST_RECOVERY_LIBRARY_PROTOCOL {
   UINT64                                LibraryRevision;
   CHAR16                                *Name;
   CHAR16                                *Description;
-  EFI_TOL_OPEN                          Open;
-  EFI_TOL_CLOSE                         Close;
-  EFI_TOL_WRITE                         Write;
+  EFI_TRL_READ_RESET_RECORD             ReadResetRecord;
+  EFI_TRL_WRITE_RESET_RECORD            WriteResetRecord;
 };
 
 //
-// Global ID for EFI Test Output Library Protocol
+// Global ID for EFI Test Recovery Library Protocol
 //
 
-extern EFI_GUID gEfiTestOutputLibraryGuid;
+extern EFI_GUID gEfiTestRecoveryLibraryGuid;
 
 #endif

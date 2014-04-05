@@ -57,7 +57,8 @@ Abstract:
 #define _MANAGEDNETWORK_SB_ENTS_TESTCASE_H_
 
 #include "SctLib.h"
-#include "EntsProtocol.h"
+#include "EfiTest.h"
+#include EFI_TEST_PROTOCOL_DEFINITION(EntsProtocol)
 #include "Eas.h"
 #include "EntsLib.h"
 #include "Dhcp6.h"

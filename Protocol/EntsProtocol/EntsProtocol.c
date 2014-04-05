@@ -54,7 +54,8 @@ Abstract:
 --*/
 
 #include "Efi.h"
-#include "EntsProtocol.h"
+#include "EfiTest.h"
+#include EFI_TEST_PROTOCOL_DEFINITION(EntsProtocol)
 
 EFI_GUID  gEfiEntsProtocolGuid = EFI_ENTS_PROTOCOL_GUID;
 

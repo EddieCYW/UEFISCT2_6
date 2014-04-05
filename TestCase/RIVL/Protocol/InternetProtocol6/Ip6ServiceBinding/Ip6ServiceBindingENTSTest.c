@@ -54,8 +54,8 @@ Abstract:
 --*/
 
 #include "SctLib.h"
-#include "SctLib.h"
 #include "Ip6ServiceBindingENTSTestCase.h"
+#include "EfiTest.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
 static CHAR16     gIp6ServiceBindingProtocolName[] = L"Ip6ServiceBinding";

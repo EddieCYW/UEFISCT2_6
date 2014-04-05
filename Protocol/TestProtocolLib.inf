@@ -58,22 +58,15 @@
 BASE_NAME       = TestProtocolLib
 COMPONENT_TYPE  = LIBRARY
 [sources.common]
-BbTest/BbTest.h
 BbTest/BbTest.c
-StandardTestLibrary/StandardTestLibrary.h
 StandardTestLibrary/StandardTestLibrary.c
-TestLoggingLibrary/TestLoggingLibrary.h
 TestLoggingLibrary/TestLoggingLibrary.c
-TestOutputLibrary/TestOutputLibrary.h
 TestOutputLibrary/TestOutputLibrary.c
-TestProfileLibrary/TestProfileLibrary.h
 TestProfileLibrary/TestProfileLibrary.c
-TestRecoveryLibrary/TestRecoveryLibrary.h
 TestRecoveryLibrary/TestRecoveryLibrary.c
-TslInit/TslInit.h
 TslInit/TslInit.c
-WbTest/WbTest.h
 WbTest/WbTest.c
+
 [includes.common]
 .
 $(EDK_SOURCE)/Foundation/Efi

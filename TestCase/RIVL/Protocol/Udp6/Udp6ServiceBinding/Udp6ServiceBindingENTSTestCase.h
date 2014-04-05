@@ -57,7 +57,8 @@ Abstract:
 #define _UDP6_SERVICE_BINDING_ENTS_TESTCASE_H_
 
 #include "SctLib.h"
-#include "EntsProtocol.h"
+#include "EfiTest.h"
+#include EFI_TEST_PROTOCOL_DEFINITION(EntsProtocol)
 #include "Eas.h"
 #include "EntsLib.h"
 #include "Udp6.h"

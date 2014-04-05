@@ -55,7 +55,7 @@ Abstract:
 
 
 #include "Sct.h"
-#include "EntsMonitorProtocol.h"
+#include EFI_TEST_PROTOCOL_DEFINITION (EntsMonitorProtocol)
 
 STATIC
 EFI_STATUS

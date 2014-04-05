@@ -56,7 +56,8 @@ Abstract:
 --*/
 
 #include "SctLib.h"
-#include "Eftp.h"
+#include "EfiTest.h"
+#include EFI_TEST_PROTOCOL_DEFINITION (Eftp)
 #include "Eas.h"
 #include "EftpImplement.h"
 

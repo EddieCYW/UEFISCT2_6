@@ -75,7 +75,7 @@ Abstract:
 // Forward reference for pure ANSI compatibility
 //
 
-EFI_FORWARD_DECLARATION (EFI_STANDARD_TEST_LIBRARY_PROTOCOL);
+typedef struct _EFI_STANDARD_TEST_LIBRARY_PROTOCOL EFI_STANDARD_TEST_LIBRARY_PROTOCOL;
 
 //
 // Related Definitions

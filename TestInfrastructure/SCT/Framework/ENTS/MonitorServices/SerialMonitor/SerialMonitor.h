@@ -58,7 +58,8 @@ Abstract:
 #ifndef _SERIAL_MONITOR_H_
 #define _SERIAL_MONITOR_H_
 
-#include "EntsMonitorProtocol.h"
+#include "EfiTest.h"
+#include EFI_TEST_PROTOCOL_DEFINITION (EntsMonitorProtocol)
 
 #define ENTS_SERIAL_MONITOR_NAME  L"Serial"
 

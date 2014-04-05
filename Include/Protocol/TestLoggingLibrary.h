@@ -75,7 +75,7 @@ Abstract:
 // Forward reference for pure ANSI compatibility
 //
 
-EFI_FORWARD_DECLARATION (EFI_TEST_LOGGING_LIBRARY_PROTOCOL);
+typedef struct _EFI_TEST_LOGGING_LIBRARY_PROTOCOL EFI_TEST_LOGGING_LIBRARY_PROTOCOL;
 
 //
 // EFI Test Logging Library Protocol API - Line

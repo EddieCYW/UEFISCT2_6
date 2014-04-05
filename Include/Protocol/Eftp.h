@@ -70,8 +70,8 @@ Abstract:
     0x53228ef0, 0x04eb, 0x46bd, 0x99, 0xe2, 0x7d, 0x09, 0x4e, 0x8f, 0x8e, 0x5d \
   }
 
-EFI_FORWARD_DECLARATION (EFI_EFTP_PROTOCOL);
-EFI_FORWARD_DECLARATION (EFI_EFTP_TOKEN);
+typedef struct _EFI_EFTP_PROTOCOL EFI_EFTP_PROTOCOL;
+typedef struct _EFI_EFTP_TOKEN EFI_EFTP_TOKEN;
 
 extern EFI_GUID gEfiEftpServiceBindingProtocolGuid;
 extern EFI_GUID gEfiEftpProtocolGuid;

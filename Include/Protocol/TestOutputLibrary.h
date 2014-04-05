@@ -47,65 +47,75 @@
 
 Module Name:
 
-  TslInit.h
+  TestOutputLibrary.h
 
 Abstract:
 
-  This file defines the EFI Test Support Library Initiation Interface.
+  This file defines the EFI Test Output Library Protocol.
 
-  This interface provides a union format to install, uninstall, and initialize
-  the test support library protocols. Using this interface the test management
-  system can detect any test support libraries automatically.
+  This protocol will be invoked by the standard test library protocol, the test
+  logging library protocol, or the other user-defined library protocols.
+  Generally a test case should only invoke the standard test library protocol
+  or the test logging library protocol to record the output message. It can not
+  touch this test output library protocol directly.
 
 --*/
 
-#ifndef _EFI_TSL_INIT_H_
-#define _EFI_TSL_INIT_H_
+#ifndef _EFI_TEST_OUTPUT_LIBRARY_H_
+#define _EFI_TEST_OUTPUT_LIBRARY_H_
 
 //
 // Includes
 //
 
+#include EFI_PROTOCOL_DEFINITION (DevicePath)
+#include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
+
 //
-// EFI TSL Initiation Interface Definitions
+// EFI Test Output Library Protocol Definitions
 //
 
-#define EFI_TSL_INIT_INTERFACE_GUID       \
-  { 0x625c0828, 0xa47d, 0x493d, 0xb7, 0x97, 0x97, 0x85, 0x55, 0x72, 0xdb, 0xc8 }
+#define EFI_TEST_OUTPUT_LIBRARY_GUID        \
+  { 0x8bfeab85, 0x83cf, 0x4c7b, 0x9e, 0xcd, 0xcf, 0x14, 0x28, 0x87, 0xe7, 0x12 }
 
-#define EFI_TSL_INIT_INTERFACE_REVISION   0x00010000
+#define EFI_TEST_OUTPUT_LIBRARY_REVISION    0x00010000
 
 //
 // Forward reference for pure ANSI compatibility
 //
 
-EFI_FORWARD_DECLARATION (EFI_TSL_INIT_INTERFACE);
+typedef struct _EFI_TEST_OUTPUT_LIBRARY_PROTOCOL EFI_TEST_OUTPUT_LIBRARY_PROTOCOL;
 
 //
-// EFI TSL Initiation Interface API - Open
+// EFI Test Output Library Protocol API - Open
 //
 typedef
 EFI_STATUS
-(EFIAPI *EFI_TSL_OPEN) (
-  IN     EFI_TSL_INIT_INTERFACE         *This,
-  IN OUT EFI_HANDLE                     *LibHandle,
-     OUT VOID                           **PrivateInterface
+(EFIAPI *EFI_TOL_OPEN) (
+  IN  EFI_TEST_OUTPUT_LIBRARY_PROTOCOL          *This,
+  IN  EFI_DEVICE_PATH_PROTOCOL                  *DevicePath,
+  IN  CHAR16                                    *FileName,
+  IN  BOOLEAN                                   Overwrite,
+  OUT EFI_FILE                                  **FileHandle
   )
 /*++
 
 Routine Description:
 
-  Opens the test support library to get the handle with the public interface
-  and the private interface.
+  Open an output file.
 
 Arguments:
 
-  This              - TSL Initiation Interface instance.
+  This          - Test output library protocol instance.
 
-  LibHandle         - The pointer to the handle on which the public interface
-                      is installed.
+  DevicePath    - Device path of the output file.
 
-  PrivateInterface  - The private interface of the test support library.
+  FileName      - File name of the output file.
+
+  Overwrite     - Control write operations. TRUE stands for overwrite the old
+                  file, FALSE for append it.
+
+  FileHandle    - Handle for the opened file.
 
 Returns:
 
@@ -115,25 +125,25 @@ Returns:
 ;
 
 //
-// EFI TSL Initiation Interface API - Close
+// EFI Test Output Library Protocol API - Close
 //
 typedef
 EFI_STATUS
-(EFIAPI *EFI_TSL_CLOSE) (
-  IN EFI_TSL_INIT_INTERFACE             *This,
-  IN EFI_HANDLE                         LibHandle
+(EFIAPI *EFI_TOL_CLOSE) (
+  IN  EFI_TEST_OUTPUT_LIBRARY_PROTOCOL          *This,
+  IN  EFI_FILE                                  *FileHandle
   )
 /*++
 
 Routine Description:
 
-  Closes the test support library to free the public interface.
+  Close an output file.
 
 Arguments:
 
-  This              - TSL Initiation Interface instance.
+  This          - Test output library protocol instance.
 
-  LibHandle         - The handle on which the public interface was installed.
+  FileHandle    - File handle to be closed.
 
 Returns:
 
@@ -143,20 +153,53 @@ Returns:
 ;
 
 //
-// EFI TSL Initiation Interface
+// EFI Test Output Library Protocol API - Write
+//
+typedef
+EFI_STATUS
+(EFIAPI *EFI_TOL_WRITE) (
+  IN  EFI_TEST_OUTPUT_LIBRARY_PROTOCOL          *This,
+  IN  EFI_FILE                                  *FileHandle,
+  IN  CHAR16                                    *String
+  )
+/*++
+
+Routine Description:
+
+  Write a string to the output file.
+
+Arguments:
+
+  This          - Test output library protocol instance.
+
+  FileHandle    - Handle for the opened file.
+
+  String        - Null terminated Unicode string to be written.
+
+Returns:
+
+  EFI_SUCCESS if everything is correct.
+
+--*/
+;
+
+//
+// EFI Test Output Library Protocol
 //
 
-struct _EFI_TSL_INIT_INTERFACE {
-  UINT64                                Revision;
-  EFI_GUID                              LibraryGuid;
-  EFI_TSL_OPEN                          Open;
-  EFI_TSL_CLOSE                         Close;
+struct _EFI_TEST_OUTPUT_LIBRARY_PROTOCOL {
+  UINT64                                LibraryRevision;
+  CHAR16                                *Name;
+  CHAR16                                *Description;
+  EFI_TOL_OPEN                          Open;
+  EFI_TOL_CLOSE                         Close;
+  EFI_TOL_WRITE                         Write;
 };
 
 //
-// Global ID for EFI TSL Initiation Interface
+// Global ID for EFI Test Output Library Protocol
 //
 
-extern EFI_GUID gEfiTslInitInterfaceGuid;
+extern EFI_GUID gEfiTestOutputLibraryGuid;
 
 #endif

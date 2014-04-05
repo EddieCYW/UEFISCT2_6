@@ -63,7 +63,7 @@ Abstract:
 #include "CpuFuncs.h"
 #endif
 
-#include "EntsMonitorProtocol.h"
+#include EFI_TEST_PROTOCOL_DEFINITION (EntsMonitorProtocol)
 #include "EftpImplement.h"
 #include "Sct.h"
 

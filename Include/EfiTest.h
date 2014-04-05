@@ -65,7 +65,7 @@ Abstract:
 
 #define EFI_TEST_STRINGIZE(a)               #a
 #define EFI_TEST_PROTOCOL_DEFINITION(a)     \
-  EFI_TEST_STRINGIZE(SctPkg/Protocol/a/a.h)
+  EFI_TEST_STRINGIZE(Protocol/a.h)
 
 //
 // These should be used to include protocols.  If they are followed,

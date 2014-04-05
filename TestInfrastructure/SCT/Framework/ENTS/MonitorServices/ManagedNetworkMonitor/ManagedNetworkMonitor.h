@@ -58,7 +58,8 @@ Abstract:
 #ifndef _MANAGED_NETWORK_MONITOR_H_
 #define _MANAGED_NETWORK_MONITOR_H_
 
-#include "EntsMonitorProtocol.h"
+#include "EfiTest.h"
+#include EFI_TEST_PROTOCOL_DEFINITION (EntsMonitorProtocol)
 #include EFI_PROTOCOL_DEFINITION (ManagedNetwork)
 
 #define ENTS_VENDOR_GUID \

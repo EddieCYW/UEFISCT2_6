@@ -47,85 +47,116 @@
 
 Module Name:
 
-  BbTest.h
+  TslInit.h
 
 Abstract:
 
-  This file defines the EFI Black-Box Test Protocol.
+  This file defines the EFI Test Support Library Initiation Interface.
+
+  This interface provides a union format to install, uninstall, and initialize
+  the test support library protocols. Using this interface the test management
+  system can detect any test support libraries automatically.
 
 --*/
 
-#ifndef _EFI_BB_TEST_H_
-#define _EFI_BB_TEST_H_
+#ifndef _EFI_TSL_INIT_H_
+#define _EFI_TSL_INIT_H_
 
 //
 // Includes
 //
 
 //
-// EFI Black-Box Test Protocol Definitions
+// EFI TSL Initiation Interface Definitions
 //
 
-#define EFI_BB_TEST_GUID                \
-  { 0x8C41CE3E, 0xB255, 0x4966, 0xB5, 0x3C, 0x39, 0x76, 0x5A, 0xE1, 0x11, 0xD0 }
+#define EFI_TSL_INIT_INTERFACE_GUID       \
+  { 0x625c0828, 0xa47d, 0x493d, 0xb7, 0x97, 0x97, 0x85, 0x55, 0x72, 0xdb, 0xc8 }
 
-#define EFI_BB_TEST_REVISION            0x00010000
-
-#define EFI_IHV_BB_TEST_GUID           \
-  { 0x27e36cde, 0xa7e7, 0x4a4a, 0x9b, 0x5f, 0xa3, 0x9a, 0x56, 0x75, 0xcb, 0x80 }
+#define EFI_TSL_INIT_INTERFACE_REVISION   0x00010000
 
 //
 // Forward reference for pure ANSI compatibility
 //
 
-EFI_FORWARD_DECLARATION (EFI_BB_TEST_ENTRY);
-EFI_FORWARD_DECLARATION (EFI_BB_TEST_PROTOCOL);
+typedef struct _EFI_TSL_INIT_INTERFACE EFI_TSL_INIT_INTERFACE;
 
 //
-// EFI Black-Box Test Entry Point
+// EFI TSL Initiation Interface API - Open
 //
-
 typedef
 EFI_STATUS
-(EFIAPI *EFI_BB_ENTRY_POINT) (
-  IN  EFI_BB_TEST_PROTOCOL              *This,
-  IN  VOID                              *ClientInterface,
-  IN  EFI_TEST_LEVEL                    TestLevel,
-  IN  EFI_HANDLE                        SupportHandle
-  );
+(EFIAPI *EFI_TSL_OPEN) (
+  IN     EFI_TSL_INIT_INTERFACE         *This,
+  IN OUT EFI_HANDLE                     *LibHandle,
+     OUT VOID                           **PrivateInterface
+  )
+/*++
+
+Routine Description:
+
+  Opens the test support library to get the handle with the public interface
+  and the private interface.
+
+Arguments:
+
+  This              - TSL Initiation Interface instance.
+
+  LibHandle         - The pointer to the handle on which the public interface
+                      is installed.
+
+  PrivateInterface  - The private interface of the test support library.
+
+Returns:
+
+  EFI_SUCCESS if everything is correct.
+
+--*/
+;
 
 //
-// EFI Black-Box Test Entry
+// EFI TSL Initiation Interface API - Close
+//
+typedef
+EFI_STATUS
+(EFIAPI *EFI_TSL_CLOSE) (
+  IN EFI_TSL_INIT_INTERFACE             *This,
+  IN EFI_HANDLE                         LibHandle
+  )
+/*++
+
+Routine Description:
+
+  Closes the test support library to free the public interface.
+
+Arguments:
+
+  This              - TSL Initiation Interface instance.
+
+  LibHandle         - The handle on which the public interface was installed.
+
+Returns:
+
+  EFI_SUCCESS if everything is correct.
+
+--*/
+;
+
+//
+// EFI TSL Initiation Interface
 //
 
-struct _EFI_BB_TEST_ENTRY {
-  EFI_BB_TEST_ENTRY                     *Next;
-  EFI_GUID                              EntryId;
-  CHAR16                                *Name;
-  CHAR16                                *Description;
-  EFI_TEST_LEVEL                        TestLevelSupportMap;
-  EFI_GUID                              *SupportProtocols;
-  EFI_TEST_ATTRIBUTE                    CaseAttribute;
-  EFI_BB_ENTRY_POINT                    EntryPoint;
+struct _EFI_TSL_INIT_INTERFACE {
+  UINT64                                Revision;
+  EFI_GUID                              LibraryGuid;
+  EFI_TSL_OPEN                          Open;
+  EFI_TSL_CLOSE                         Close;
 };
 
 //
-// EFI Black-Box Test Protocol
+// Global ID for EFI TSL Initiation Interface
 //
 
-struct _EFI_BB_TEST_PROTOCOL {
-  UINT64                                TestRevision;
-  EFI_GUID                              CategoryGuid;
-  CHAR16                                *Name;
-  CHAR16                                *Description;
-  EFI_BB_TEST_ENTRY                     *EntryList;
-};
-
-//
-// Global ID for EFI Black-Box Test Protocol
-//
-
-extern EFI_GUID gEfiBbTestGuid;
-extern EFI_GUID gEfiIHVBbTestGuid;
+extern EFI_GUID gEfiTslInitInterfaceGuid;
 
 #endif

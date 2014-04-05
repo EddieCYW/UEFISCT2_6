@@ -58,7 +58,8 @@ Abstract:
 #ifndef _EFI_EFTP_MAIN_H_
 #define _EFI_EFTP_MAIN_H_
 
-#include "Eftp.h"
+#include "EfiTest.h"
+#include EFI_TEST_PROTOCOL_DEFINITION (Eftp)
 
 #include EFI_PROTOCOL_DEFINITION (ManagedNetwork)
 

@@ -47,79 +47,81 @@
 
 Module Name:
 
-  EntsMonitorProtocol.h
+  WbTest.h
 
 Abstract:
 
+  This file defines the EFI White-Box Test Protocol.
+
 --*/
 
-#ifndef _ENTS_MONITOR_PROTOCOL_H_
-#define _ENTS_MONITOR_PROTOCOL_H_
+#ifndef _EFI_WB_TEST_H_
+#define _EFI_WB_TEST_H_
 
-#define EFI_ENTS_MONITOR_PROTOCOL_GUID \
-  { \
-    0xf3f93305, 0x57e1, 0x43bf, 0x96, 0x20, 0xf1, 0x4a, 0xb3, 0x31, 0xe2, 0x7d \
-  }
+//
+// Includes
+//
 
-extern EFI_GUID gEfiEntsMonitorProtocolGuid;
+//
+// EFI White-Box Test Protocol Definitions
+//
 
-EFI_FORWARD_DECLARATION (EFI_ENTS_MONITOR_PROTOCOL);
+#define EFI_WB_TEST_GUID                \
+  { 0x0B486CED, 0x25EB, 0x448a, 0xB2, 0xB2, 0x22, 0x4E, 0x7A, 0x20, 0xCF, 0x57 }
 
-typedef
-EFI_STATUS
-(EFIAPI *EFI_INIT_MONITOR) (
-  IN EFI_ENTS_MONITOR_PROTOCOL           * This
-  );
+#define EFI_WB_TEST_REVISION            0x00010000
 
-typedef
-EFI_STATUS
-(EFIAPI *EFI_RESET_MONITOR) (
-  IN EFI_ENTS_MONITOR_PROTOCOL           * This
-  );
+//
+// Forward reference for pure ANSI compatibility
+//
 
-typedef
-EFI_STATUS
-(EFIAPI *EFI_MONITOR_LISTENER) (
-  IN     EFI_ENTS_MONITOR_PROTOCOL       * This,
-  IN OUT UINTN                           *Size,
-  OUT CHAR16                             **Buffer
-  );
+typedef struct _EFI_WB_TEST_ENTRY EFI_WB_TEST_ENTRY;
+typedef struct _EFI_WB_TEST_PROTOCOL EFI_WB_TEST_PROTOCOL;
+
+//
+// EFI White-Box Test Entry Point
+//
 
 typedef
 EFI_STATUS
-(EFIAPI *EFI_MONITOR_SENDER) (
-  IN EFI_ENTS_MONITOR_PROTOCOL           * This,
-  IN CHAR16                              *Buffer
+(EFIAPI *EFI_WB_ENTRY_POINT) (
+  IN  EFI_WB_TEST_PROTOCOL              *This,
+  IN  EFI_TEST_LEVEL                    TestLevel,
+  IN  EFI_HANDLE                        SupportHandle
   );
 
-typedef
-EFI_STATUS
-(EFIAPI *EFI_MONITOR_VALIDATER) (
-  IN EFI_ENTS_MONITOR_PROTOCOL           * This
-  );
+//
+// EFI White-Box Test Entry
+//
 
-typedef
-EFI_STATUS
-(EFIAPI *EFI_MONITOR_SAVECONTEXT) (
-  IN EFI_ENTS_MONITOR_PROTOCOL                 *This
-  );
+struct _EFI_WB_TEST_ENTRY {
+  EFI_WB_TEST_ENTRY                     *Next;
+  EFI_GUID                              EntryId;
+  CHAR16                                *Name;
+  CHAR16                                *Description;
+  EFI_TEST_LEVEL                        TestLevelSupportMap;
+  EFI_GUID                              *SupportProtocols;
+  EFI_TEST_ATTRIBUTE                    CaseAttribute;
+  EFI_WB_ENTRY_POINT                    EntryPoint;
+} ;
 
-typedef
-EFI_STATUS
-(EFIAPI *EFI_MONITOR_RESTORECONTEXT) (
-  IN EFI_ENTS_MONITOR_PROTOCOL                 *This
-  );
+//
+// EFI White-Box Test Protocol
+//
 
-struct _EFI_ENTS_MONITOR_PROTOCOL {
-  VOID                        *MonitorName;
-  VOID                        *MonitorIo;
-  EFI_INIT_MONITOR            InitMonitor;
-  EFI_RESET_MONITOR           ResetMonitor;
-  BOOLEAN                     CleanUpEnvironmentFlag;
-  EFI_MONITOR_LISTENER        MonitorListener;
-  EFI_MONITOR_SENDER          MonitorSender;
-  EFI_MONITOR_SAVECONTEXT     MonitorSaveContext;
-  EFI_MONITOR_RESTORECONTEXT  MonitorRestoreContext;
+struct _EFI_WB_TEST_PROTOCOL {
+  UINT64                                TestRevision;
+  EFI_GUID                              CategoryGuid;
+  EFI_HANDLE                            ClientHandle;
+  CHAR16                                *Name;
+  CHAR16                                *Description;
+  EFI_WB_TEST_ENTRY                     *EntryList;
 };
 
-#endif // _ENTS_MONITOR_PROTOCOL_H_
+//
+// Global ID for EFI White-Box Test Protocol
+//
+
+extern EFI_GUID gEfiWbTestGuid;
+
+#endif

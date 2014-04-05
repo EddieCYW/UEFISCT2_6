@@ -56,6 +56,7 @@ Abstract:
 #include "SctLib.h"
 #include "SctLib.h"
 #include "Dhcp6ENTSTestCase.h"
+#include "EfiTest.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
 EFI_GUID gEfiDhcp6ProtocolGuid=EFI_DHCP6_PROTOCOL_GUID;
