@@ -58,7 +58,7 @@ Abstract:
 #ifndef __PROTOCOL_EFTP_H__
 #define __PROTOCOL_EFTP_H__
 
-#include "NetLib.h"
+#include <Library/NetLib.h>
 
 #define EFI_EFTP_SERVICE_BINDING_PROTOCOL_GUID \
   { \

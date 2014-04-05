@@ -57,7 +57,7 @@ Abstract:
 #ifndef _EFI_EFTP_COMMON_H_
 #define _EFI_EFTP_COMMON_H_
 
-#include "NetDebug.h"
+#include <Library/NetDebug.h>
 
 #define EFTP_DEFAULT_TIMEOUT  3
 #define EFTP_DEFAULT_RETRY    5

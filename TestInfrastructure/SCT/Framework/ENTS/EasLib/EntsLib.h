@@ -1152,19 +1152,6 @@ typedef struct _NET_DEBUG_CACHE_BUFFER {
 } NET_DEBUG_CACHE_BUFFER;
 
 //
-// Network helper functions. Implemented in Lib\NetLib.c
-//
-#define NET_TPL_SYSTEM_POLL       EFI_TPL_NOTIFY
-#define NET_TPL_GLOBAL_LOCK       NET_TPL_SYSTEM_POLL
-#define NET_TPL_LOCK              (EFI_TPL_CALLBACK+1)
-#define NET_TPL_EVENT             EFI_TPL_CALLBACK
-#define NET_TPL_RECYCLE           EFI_TPL_CALLBACK
-#define NET_TPL_FAST_RECYCLE      NET_TPL_SYSTEM_POLL
-#define NET_TPL_SLOW_TIMER        (EFI_TPL_CALLBACK-1)
-#define NET_TPL_FAST_TIMER        (EFI_TPL_CALLBACK+1)
-#define NET_TPL_TIMER             EFI_TPL_CALLBACK
-
-//
 //  UINT32 NTOHL(UINT32 x);
 //
 #define NTOHL(x)               \

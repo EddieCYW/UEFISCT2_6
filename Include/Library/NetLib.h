@@ -78,7 +78,7 @@ Abstract:
 #define EFI_SYS_LOG
 #endif
 
-#include "NetDebug.h"
+#include <Library/NetDebug.h>
 
 #define  __W(x)  L##x
 #define  __W2(x) __W(x)
@@ -156,6 +156,7 @@ NetCommonLibSetMem (
 
 #define NetMultU64x32         SctMultU64x32
 
+#if (EFI_SPECIFICATION_VERSION < 0x00020028)
 #define EVT_TIMER             EFI_EVENT_TIMER
 #define EVT_NOTIFY_WAIT       EFI_EVENT_NOTIFY_WAIT
 #define EVT_NOTIFY_SIGNAL     EFI_EVENT_NOTIFY_SIGNAL
@@ -169,7 +170,17 @@ NetCommonLibSetMem (
 #define NET_TPL_SLOW_TIMER        (EFI_TPL_CALLBACK-1)
 #define NET_TPL_FAST_TIMER        (EFI_TPL_CALLBACK+1)
 #define NET_TPL_TIMER             EFI_TPL_CALLBACK
-
+#else
+#define NET_TPL_SYSTEM_POLL       TPL_NOTIFY
+#define NET_TPL_GLOBAL_LOCK       NET_TPL_SYSTEM_POLL
+#define NET_TPL_LOCK              (TPL_CALLBACK+1)
+#define NET_TPL_EVENT             TPL_CALLBACK
+#define NET_TPL_RECYCLE           TPL_CALLBACK
+#define NET_TPL_FAST_RECYCLE      NET_TPL_SYSTEM_POLL
+#define NET_TPL_SLOW_TIMER        (TPL_CALLBACK-1)
+#define NET_TPL_FAST_TIMER        (TPL_CALLBACK+1)
+#define NET_TPL_TIMER             TPL_CALLBACK
+#endif
 //
 //sychronization primitives
 //
@@ -253,7 +264,11 @@ NetCommonLibSetMem (
 
 #define NET_LIST_ENTRY                      SCT_LIST_ENTRY
 #define LIST_INIT                           SctInitializeListHead
+#if (EFI_SPECIFICATION_VERSION < 0x00020028)
 #define LIST_ENTRY(Entry,Type,Field)        _CR(Entry,Type,Field)
+#else
+#define LIST_ENTRY(Entry,Type,Field)        BASE_CR(Entry,Type,Field)
+#endif
 #define LIST_ENTRY_S(Entry,Type,Field,Sig)  CR(Entry,Type,Field,Sig)
 #define LIST_INSERT_HEAD                    SctInsertHeadList
 #define LIST_INSERT_TAIL                    SctInsertTailList
@@ -295,7 +310,7 @@ NetCommonLibSetMem (
   (PostEntry)->BackLink              = (NewEntry);\
   }
 
-EFI_FORWARD_DECLARATION(OBJECT_LIST_CLASS);
+typedef struct _OBJECT_LIST_CLASS OBJECT_LIST_CLASS;
 
 //
 //  Object list structure and operations

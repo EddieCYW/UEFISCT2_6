@@ -168,7 +168,7 @@ SctPkg/TestCase/RIVL/NetworkProtocolLib/NetworkProtocolLib.inf
 SctPkg/Protocol/EntsProtocol/EntsProtocolLib.inf
 SctPkg/Protocol/Eftp/EftpProtocolLib.inf
 SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas.inf
-SctPkg/Library/NetLib/Network/NetLib.inf
+SctPkg/Library/NetLib/NetLib.inf
 SctPkg/Library/SctLib/SctLib-edk1.inf
 
 [Libraries.IPF]
@@ -198,6 +198,7 @@ SctPkg/Library/SctLib/SctLib-edk1.inf
   PrintLib|MdePkg/Library/BasePrintLib/BasePrintLib.inf
 
   SctLib|SctPkg/Library/SctLib/SctLib.inf
+  NetLib|SctPkg/Library/NetLib/NetLib.inf
 
 [LibraryClasses.ARM]
   NULL|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf

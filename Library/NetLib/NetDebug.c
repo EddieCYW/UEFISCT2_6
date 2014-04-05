@@ -54,7 +54,7 @@ Abstract:
 
 --*/
 
-#include "NetLib.h"
+#include <Library/NetLib.h>
 
 #ifdef EFI_SYS_LOG
 

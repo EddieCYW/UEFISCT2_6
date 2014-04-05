@@ -57,7 +57,7 @@ Abstract:
 #ifndef __EFI_IPV4_PACKET_HEADER_H
 #define __EFI_IPV4_PACKET_HEADER_H
 
-#include "NetLib.h"
+#include <Library/NetLib.h>
 
 //
 // transport layer protocol type

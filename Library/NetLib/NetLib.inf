@@ -56,8 +56,10 @@
 #--*/
 
 [defines]
-BASE_NAME           = NetLib
-COMPONENT_TYPE      = LIBRARY
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = NetLib
+  MODULE_TYPE                    = UEFI_APPLICATION
+  LIBRARY_CLASS                  = NetLib
 
 [sources.common]
   NetLib.c
@@ -68,18 +70,10 @@ COMPONENT_TYPE      = LIBRARY
   Ia32/NetCopyMemSSE2.asm
   Ia32/NetSetMemSSE2.asm
   Ia32/NetZeroMemSSE2.asm
-  
-[includes.common]
-  ../Include
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include
 
-[libraries.common]
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+
+[LibraryClasses]
   SctLib
-
-[nmake.common]
-  C_STD_INCLUDE=

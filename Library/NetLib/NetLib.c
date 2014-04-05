@@ -53,7 +53,11 @@ Abstract:
 
 --*/
 
-#include "NetLib.h"
+#include <Library/NetLib.h>
+
+#if (EFI_SPECIFICATION_VERSION >= 0x00020028)
+#include <Protocol/DriverConfiguration.h>
+#endif
 
 EFI_MAC_ADDRESS BroadcastMacAddr = {
   {
