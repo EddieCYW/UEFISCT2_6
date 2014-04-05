@@ -79,7 +79,7 @@
   DEFINE GCC_VER_MACRO           = -D EFI_SPECIFICATION_VERSION=0x00020028 -D TIANO_RELEASE_VERSION=0x00080006  
   DEFINE MSFT_VER_MACRO          = /D EFI_SPECIFICATION_VERSION=0x00020028 /D TIANO_RELEASE_VERSION=0x00080006  
 
- 
+
 ################################################################################
 #
 # SKU Identification section - list of all SKU IDs supported by this
@@ -169,7 +169,7 @@ SctPkg/Protocol/EntsProtocol/EntsProtocolLib.inf
 SctPkg/Protocol/Eftp/EftpProtocolLib.inf
 SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas.inf
 SctPkg/Library/NetLib/Network/NetLib.inf
-SctPkg/Library/SctLib/SctLib.inf
+SctPkg/Library/SctLib/SctLib-edk1.inf
 
 [Libraries.IPF]
   EdkCompatibilityPkg/Foundation/Cpu/Itanium/CpuIa64Lib/CpuIA64Lib.inf
@@ -181,6 +181,29 @@ SctPkg/Library/SctLib/SctLib.inf
 [Libraries.Arm, Libraries.Aarch64]
   EdkCompatibilityPkg/Foundation/Library/CompilerStub/CompilerStubLib.inf
   ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
+
+[LibraryClasses.common]
+  UefiApplicationEntryPoint|MdePkg/Library/UefiApplicationEntryPoint/UefiApplicationEntryPoint.inf
+  UefiDriverEntryPoint|MdePkg/Library/UefiDriverEntryPoint/UefiDriverEntryPoint.inf
+  UefiBootServicesTableLib|MdePkg/Library/UefiBootServicesTableLib/UefiBootServicesTableLib.inf
+  BaseLib|MdePkg/Library/BaseLib/BaseLib.inf
+  BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
+  DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
+  PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
+  
+  # Needed by IsDevicePathEnd() in SctLib
+  DevicePathLib|MdePkg/Library/UefiDevicePathLib/UefiDevicePathLib.inf
+  # Needed by DevicePathLib
+  MemoryAllocationLib|MdePkg/Library/UefiMemoryAllocationLib/UefiMemoryAllocationLib.inf
+  PrintLib|MdePkg/Library/BasePrintLib/BasePrintLib.inf
+
+  SctLib|SctPkg/Library/SctLib/SctLib.inf
+
+[LibraryClasses.ARM]
+  NULL|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
+
+[LibraryClasses.AARCH64]
+  NULL|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
 
 ###############################################################################
 #

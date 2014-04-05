@@ -49,10 +49,8 @@
 #--*/
 
 [defines]
-  INF_VERSION                    = 0x00010005
-  BASE_NAME       = SctLib
-  MODULE_TYPE                    = UEFI_APPLICATION
-  LIBRARY_CLASS                  = SctLib
+BASE_NAME       = SctLib
+COMPONENT_TYPE  = LIBRARY
 
 [sources.common]
   Alloc.c
@@ -87,59 +85,39 @@
   Aarch64/initplat.c
 
 [sources.ia32]
-  Ia32/SctLibPlat.h
-  Ia32/initplat.c
+  ia32/SctLibPlat.h
+  ia32/initplat.c
 
 [sources.ipf]
-  Ipf/SctLibPlat.h
-  Ipf/initplat.c
-  Ipf/salpal.c
-  Ipf/libsalpal.h
+  ipf/SctLibPlat.h
+  ipf/initplat.c
+  ipf/salpal.c
+  ipf/libsalpal.h
 
 [sources.ebc]
   ebc/SctLibPlat.h
   ebc/EfiLibPlat.c
 
 [sources.x64]
-  X64/SctLibPlat.h
-  X64/EfiLibPlat.c
+  x64/SctLibPlat.h
+  x64/EfiLibPlat.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
+[includes.common]
+  .
+  $(EDK_SOURCE)/Foundation
+  $(EDK_SOURCE)/Foundation/Efi
+  $(EDK_SOURCE)/Foundation/Framework
+  $(EDK_SOURCE)/Foundation/Include
+  $(EDK_SOURCE)/Foundation/Efi/Include
+  $(EDK_SOURCE)/Foundation/Framework/Include
+  $(EFI_SOURCE)/SctPkg/Include
 
-[LibraryClasses]
-  DebugLib
+[libraries.common]
+  EdkGuidLib
+  EfiGuidLib
+  EdkProtocolLib
+  EfiProtocolLib
+  EdkFrameworkGuidLib
 
-[Protocols]
-  gEfiComponentName2ProtocolGuid
-  gEfiDriverConfiguration2ProtocolGuid
-  gEfiDriverDiagnostics2ProtocolGuid
-  gEfiBlockIoProtocolGuid
-  gEfiDeviceIoProtocolGuid
-  gEfiDevicePathProtocolGuid
-  gEfiDiskIoProtocolGuid
-  gEfiLoadFileProtocolGuid
-  gEfiLoadedImageProtocolGuid
-  gEfiNetworkInterfaceIdentifierProtocolGuid
-  gEfiPxeBaseCodeCallbackProtocolGuid
-  gEfiPxeBaseCodeProtocolGuid
-  gEfiSerialIoProtocolGuid
-  gEfiSimpleFileSystemProtocolGuid
-  gEfiSimpleNetworkProtocolGuid
-  gEfiSimpleTextInProtocolGuid
-  gEfiSimpleTextOutProtocolGuid
-  gEfiUnicodeCollationProtocolGuid
-  gEfiDriverBindingProtocolGuid
-  gEfiDriverConfigurationProtocolGuid
-  gEfiDriverDiagnosticsProtocolGuid
-  gEfiComponentNameProtocolGuid
-
-[Guids]
-  gEfiFileInfoGuid
-  gEfiFileSystemInfoGuid
-  gEfiGlobalVariableGuid
-  gEfiPartTypeLegacyMbrGuid
-  gEfiPartTypeSystemPartGuid
-  gEfiHobListGuid
-  gEfiHobMemoryAllocModuleGuid
+[nmake.common]
+  C_STD_INCLUDE=

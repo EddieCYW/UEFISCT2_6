@@ -19,11 +19,22 @@ Abstract:
 
 --*/
 
-#include "Tiano.h"
-#include "PeiHob.h"
 #include "SctLib.h"
-#include EFI_GUID_DEFINITION (IoBaseHob)
-#include EFI_GUID_DEFINITION (MemoryAllocationHob)
+
+#if (EFI_SPECIFICATION_VERSION >= 0x00020028)
+  #include <Library/HobLib.h>
+
+  #include <Guid/HobList.h>
+  #include <Guid/MemoryAllocationHob.h>
+
+  #define EFI_IOBASE_HOB_GUID \
+    { 0xd4a28a3e, 0xdcf2, 0x43cf, {0xa2, 0xb7, 0xf3, 0x57, 0x2a, 0x7c, 0xab, 0x9} }
+
+  EFI_GUID gEfiIoBaseHobGuid  = EFI_IOBASE_HOB_GUID;
+#else
+  #include EFI_GUID_DEFINITION (IoBaseHob)
+  #include EFI_GUID_DEFINITION (MemoryAllocationHob)
+#endif
 
 VOID *
 SctGetHob (
@@ -255,7 +266,11 @@ Returns:
   DxeCoreHob.Raw  = SctGetHob (EFI_HOB_TYPE_MEMORY_ALLOCATION, DxeCoreHob.Raw);
   while (DxeCoreHob.Header->HobType == EFI_HOB_TYPE_MEMORY_ALLOCATION &&
          !SctCompareGuid (&DxeCoreHob.MemoryAllocationModule->MemoryAllocationHeader.Name,
+#if (EFI_SPECIFICATION_VERSION >= 0x00020028)
+                          &gEfiHobMemoryAllocModuleGuid)) {
+#else
                           &gEfiHobMemeryAllocModuleGuid)) {
+#endif
 
     DxeCoreHob.Raw  = GET_NEXT_HOB (DxeCoreHob);
     DxeCoreHob.Raw  = SctGetHob (EFI_HOB_TYPE_MEMORY_ALLOCATION, DxeCoreHob.Raw);

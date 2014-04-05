@@ -48,10 +48,9 @@
 #define __SCTLIB_H__
 
 #include "Efi.h"
-#include "PeiHob.h"
 
 #include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
-#include EFI_PROTOCOL_DEFINITION (FileInfo)
+#include EDK_PROTOCOL_DEFINITION (FileInfo)
 
 
 //

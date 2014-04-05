@@ -99,8 +99,8 @@ EFI_GUID                        tNullGuid           = { 0, 0, 0, 0, 0, 0, 0, 0, 
 //
 EFI_GUID                        gtEfiDevicePathProtocolGuid       = EFI_DEVICE_PATH_PROTOCOL_GUID;
 EFI_GUID                        gtEfiLoadedImageProtocolGuid      = EFI_LOADED_IMAGE_PROTOCOL_GUID;
-EFI_GUID                        gtEfiSimpleTextInProtocolGuid     = EFI_SIMPLE_TEXT_IN_PROTOCOL_GUID;
-EFI_GUID                        gtEfiSimpleTextOutProtocolGuid    = EFI_SIMPLE_TEXT_OUT_PROTOCOL_GUID;
+EFI_GUID                        gtEfiSimpleTextInProtocolGuid     = EFI_SIMPLE_TEXT_INPUT_PROTOCOL_GUID;
+EFI_GUID                        gtEfiSimpleTextOutProtocolGuid    = EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL_GUID;
 EFI_GUID                        gtEfiBlockIoProtocolGuid          = EFI_BLOCK_IO_PROTOCOL_GUID;
 EFI_GUID                        gtEfiDiskIoProtocolGuid           = EFI_DISK_IO_PROTOCOL_GUID;
 EFI_GUID                        gtEfiSimpleFileSystemProtocolGuid = EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID;

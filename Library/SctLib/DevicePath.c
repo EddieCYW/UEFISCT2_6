@@ -50,6 +50,11 @@
 #define ALIGN_SIZE(a)           ((a % MIN_ALIGNMENT_SIZE) ? MIN_ALIGNMENT_SIZE - (a % MIN_ALIGNMENT_SIZE) : 0)
 #define MAX_DEVICE_PATH_LENGTH  0x00010000 // SIZE_64KB
 
+typedef struct {
+  VENDOR_DEVICE_PATH              DevicePath;
+  UINT8                           LegacyDriveLetter;
+} UNKNOWN_DEVICE_VENDOR_DEVICE_PATH;
+
 STATIC CONST EFI_DEVICE_PATH_PROTOCOL mEndInstanceDevicePath[] = {
     END_DEVICE_PATH_TYPE, END_INSTANCE_DEVICE_PATH_SUBTYPE, END_DEVICE_PATH_LENGTH, 0
 };
@@ -668,7 +673,11 @@ _DevPathController (
 
     Controller = DevPath;
     SctCatPrint(Str, L"Ctrl(%d)",
+#if (EFI_SPECIFICATION_VERSION >= 0x00020028)
+        Controller->ControllerNumber
+#else
         Controller->Controller
+#endif
         );
 }
 

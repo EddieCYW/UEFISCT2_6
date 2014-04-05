@@ -15,7 +15,6 @@ WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 
 --*/
 
-#include "Tiano.h"
 #include "SctLib.h"
 
 
@@ -107,7 +106,7 @@ Returns:
   DEBUG_CODE (
     Entry->ForwardLink = (SCT_LIST_ENTRY *) EFI_BAD_POINTER;
     Entry->BackLink    = (SCT_LIST_ENTRY *) EFI_BAD_POINTER;
-  )
+  );
 }
 
 

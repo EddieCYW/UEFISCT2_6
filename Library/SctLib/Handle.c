@@ -52,7 +52,11 @@
 #include EFI_PROTOCOL_DEFINITION (DriverDiagnostics)
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
-#include EFI_GUID_DEFINITION (Hob)
+#if (EFI_SPECIFICATION_VERSION >= 0x00020028)
+  #include <Guid/HobList.h>
+#else
+  #include EFI_GUID_DEFINITION (Hob)
+#endif
 
 /*++
 

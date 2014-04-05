@@ -64,20 +64,34 @@ Abstract:
 #include EFI_PROTOCOL_DEFINITION (DeviceIo)
 #include EFI_PROTOCOL_DEFINITION (DevicePath)
 #include EFI_PROTOCOL_DEFINITION (DiskIo)
-#include EFI_PROTOCOL_DEFINITION (EfiNetworkInterfaceIdentifier)
-#include EFI_PROTOCOL_DEFINITION (FileInfo)
-#include EFI_PROTOCOL_DEFINITION (FileSystemInfo)
+#if (EFI_SPECIFICATION_VERSION >= 0x00020028)
+  #include <Protocol/NetworkInterfaceIdentifier.h>
+#else
+  #include EFI_PROTOCOL_DEFINITION (EfiNetworkInterfaceIdentifier)
+#endif
+
+#if (EFI_SPECIFICATION_VERSION >= 0x00020028)
+  #include <Guid/FileInfo.h>
+  #include <Guid/FileSystemInfo.h>
+#else
+  #include EFI_PROTOCOL_DEFINITION (FileInfo)
+  #include EFI_PROTOCOL_DEFINITION (FileSystemInfo)
+#endif
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 #include EFI_PROTOCOL_DEFINITION (LoadFile)
-#include EFI_PROTOCOL_DEFINITION (PxeBaseCodeCallBack)
 #include EFI_PROTOCOL_DEFINITION (PxeBaseCode)
+#include EFI_PROTOCOL_DEFINITION (PxeBaseCodeCallBack)
 #include EFI_PROTOCOL_DEFINITION (SerialIo)
 #include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
 #include EFI_PROTOCOL_DEFINITION (SimpleNetwork)
 #include EFI_PROTOCOL_DEFINITION (SimpleTextIn)
 #include EFI_PROTOCOL_DEFINITION (SimpleTextOut)
 #include EFI_PROTOCOL_DEFINITION (UnicodeCollation)
-#include EFI_PROTOCOL_DEFINITION (VariableStore)
+#if (EFI_SPECIFICATION_VERSION < 0x00020028)
+  #include EFI_PROTOCOL_DEFINITION (VariableStore)
+#else
+  EFI_GUID  gEfiVariableStoreProtocolGuid = EFI_VARIABLE_STORE_PROTOCOL_GUID;
+#endif
 
 EFI_GUID mEfiUnknownDeviceGuid = UNKNOWN_DEVICE_GUID;
 

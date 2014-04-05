@@ -61,6 +61,11 @@ Abstract:
 #define ALIGN_SIZE(a) ((a % MIN_ALIGNMENT_SIZE) ? MIN_ALIGNMENT_SIZE - (a % MIN_ALIGNMENT_SIZE) : 0)
 #define MAX_FILE_PATH 1024
 
+typedef struct {
+  VENDOR_DEVICE_PATH              DevicePath;
+  UINT8                           LegacyDriveLetter;
+} UNKNOWN_DEVICE_VENDOR_DEVICE_PATH;
+
 //
 // VLAN Device Path SubType
 // BUGBUG: this local device path definition is temporal.

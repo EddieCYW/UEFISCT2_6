@@ -29,6 +29,10 @@ Abstract:
 #include EFI_PROTOCOL_DEFINITION (DriverConfiguration2)
 #include EFI_PROTOCOL_DEFINITION (DriverDiagnostics2)
 
+#if (EFI_SPECIFICATION_VERSION >= 0x00020028)
+#include <Protocol/DriverConfiguration.h>
+#endif
+
 EFI_STATUS
 SctInstallDriverBinding (
   IN EFI_HANDLE                   ImageHandle,

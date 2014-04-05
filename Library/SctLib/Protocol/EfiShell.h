@@ -15,7 +15,7 @@
 #ifndef __EFI_SHELL_PROTOCOL__
 #define __EFI_SHELL_PROTOCOL__
 
-#include EFI_PROTOCOL_DEFINITION (FileInfo)
+#include EDK_PROTOCOL_DEFINITION (FileInfo)
 
 #define EFI_SHELL_PROTOCOL_GUID \
   { \
