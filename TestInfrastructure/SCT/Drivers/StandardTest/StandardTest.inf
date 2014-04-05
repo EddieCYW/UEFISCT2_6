@@ -56,30 +56,30 @@
 #--*/
 
 [defines]
-BASE_NAME            = StandardTest
-FILE_GUID            = 5AD0375B-3E31-4d1b-BAB8-12669D173D31
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = StandardTest
+  FILE_GUID            = 5AD0375B-3E31-4d1b-BAB8-12669D173D31
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = StandardTestEntryPoint
 
 [sources.common]
   StandardTest.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Drivers/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
 
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  EfiProtocolLib
-  TestProtocolLib
   EntsLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=StandardTestEntryPoint
+[Guids]
+  gEfiNullGuid
+
+[Protocols]
+  gEfiManagedNetworkServiceBindingProtocolGuid
+  gEfiManagedNetworkProtocolGuid
+  gEfiTslInitInterfaceGuid
+  gEfiStandardTestLibraryGuid

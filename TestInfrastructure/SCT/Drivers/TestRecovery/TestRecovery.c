@@ -140,8 +140,6 @@ TrlFreePointer (
 //
 // Entry point
 //
-EFI_DRIVER_ENTRY_POINT (TestRecoveryEntryPoint)
-
 EFI_STATUS
 TestRecoveryEntryPoint (
   IN EFI_HANDLE         ImageHandle,

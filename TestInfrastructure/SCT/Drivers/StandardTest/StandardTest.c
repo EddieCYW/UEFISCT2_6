@@ -58,7 +58,7 @@ Abstract:
 #include "SctLib.h"
 #include "EfiTest.h"
 #include "StandardTest.h"
-#include "EntsLib.h"
+#include <Library/EntsLib.h>
 
 //
 // Prototypes
@@ -228,8 +228,6 @@ StslGuidsDuplicate (
 //
 // Entry point
 //
-EFI_DRIVER_ENTRY_POINT (StandardTestEntryPoint)
-
 EFI_STATUS
 StandardTestEntryPoint (
   IN EFI_HANDLE         ImageHandle,

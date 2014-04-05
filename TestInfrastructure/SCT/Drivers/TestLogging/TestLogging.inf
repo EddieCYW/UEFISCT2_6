@@ -56,28 +56,27 @@
 #--*/
 
 [defines]
-BASE_NAME            = TestLogging
-FILE_GUID            = 3726DCF8-1869-4e74-AEE6-FA8C1CE6654F
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = TestLogging
+  FILE_GUID            = 3726DCF8-1869-4e74-AEE6-FA8C1CE6654F
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = TestLoggingEntryPoint
 
 [sources.common]
   TestLogging.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Drivers/Include
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
 
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  EfiProtocolLib
-  TestProtocolLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=TestLoggingEntryPoint
+[Guids]
+  gEfiNullGuid
+
+[Protocols]
+  gEfiTslInitInterfaceGuid
+  gEfiTestLoggingLibraryGuid

@@ -94,8 +94,8 @@ typedef struct {
 // Forward reference for pure ANSI compatibility
 //
 
-EFI_FORWARD_DECLARATION (INI);
-EFI_FORWARD_DECLARATION (COMMENTLINE);
+typedef struct _INI INI;
+typedef struct _COMMENTLINE COMMENTLINE;
 
 struct _INI {
   UINT32                          commentNo;

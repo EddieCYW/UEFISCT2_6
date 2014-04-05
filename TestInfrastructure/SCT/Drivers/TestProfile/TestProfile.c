@@ -303,8 +303,6 @@ CHAR16 *gAtslDescription = L"EFI Test Profile Library";
 //
 // Entry point
 //
-EFI_DRIVER_ENTRY_POINT (TestProfileEntryPoint)
-
 EFI_STATUS
 TestProfileEntryPoint (
   IN EFI_HANDLE         ImageHandle,

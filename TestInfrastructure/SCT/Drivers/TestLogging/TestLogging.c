@@ -201,8 +201,6 @@ TllGuidsDuplicate (
 //
 // Entry point
 //
-EFI_DRIVER_ENTRY_POINT (TestLoggingEntryPoint)
-
 EFI_STATUS
 TestLoggingEntryPoint (
   IN EFI_HANDLE         ImageHandle,
