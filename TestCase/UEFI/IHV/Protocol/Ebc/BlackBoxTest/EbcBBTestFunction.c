@@ -176,7 +176,7 @@ BBTestCreateThunkBasicTest (
 
     Status = gtBS->HandleProtocol (
                     gDummyImageHandle,
-                    &gEfiEbcDriverProtocolGuid,
+                    &gBlackBoxEfiEbcDriverProtocolGuid,
                     &EbcDriverInterface
                     );
 

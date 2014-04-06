@@ -58,7 +58,7 @@ Abstract:
 
 #include "SctLib.h"
 #include "Eas.h"
-#include "Ip4.h"
+#include <UEFI/Protocol/Ip4.h>
 
 EFI_STATUS
 Ip4ServiceBindingCreateChild_EntsTest (

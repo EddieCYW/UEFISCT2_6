@@ -112,7 +112,6 @@ BBTestBusSpecificDriverOverrideProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestBusSpecificDriverOverride)
 
 /**
  *  Bus Specific Driver Override Protocol Test Driver Entry point.
@@ -132,7 +131,7 @@ InitializeBBTestBusSpecificDriverOverride (
   SctInitializeLib (ImageHandle, SystemTable);
 
 
-  Status = gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR(Status)) {
 
   }
@@ -197,7 +196,7 @@ LocateDevicePathFromBusOverride (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiBusSpecificDriverOverrideProtocolGuid,
+                   &gBlackBoxEfiBusSpecificDriverOverrideProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -235,7 +234,7 @@ LocateDevicePathFromBusOverride (
   for (Index = 0; Index < NoHandles; Index++) {
       Status = gtBS->HandleProtocol (
                        HandleBuffer[Index],
-                       &gEfiBusSpecificDriverOverrideProtocolGuid,
+                       &gBlackBoxEfiBusSpecificDriverOverrideProtocolGuid,
                        &OtherBusOverride
                        );
     if (EFI_ERROR (Status)) {

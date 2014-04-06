@@ -60,7 +60,7 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "DecompressProtocol.h"
+#include <UEFI/Protocol/Decompress.h>
 #include "Guid.h"
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestProfileLibrary)

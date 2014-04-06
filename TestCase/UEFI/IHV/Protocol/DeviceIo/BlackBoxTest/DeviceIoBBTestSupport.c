@@ -126,7 +126,7 @@ CreateAllDevIoDevices (
 
   Status      = SctLocateHandle (
                   ByProtocol,
-                  &gEfiDeviceIoProtocolGuid,
+                  &gBlackBoxEfiDeviceIoProtocolGuid,
                   NULL,
                   &HandleNum,
                   &HandleBuffer
@@ -149,7 +149,7 @@ CreateAllDevIoDevices (
 
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiDeviceIoProtocolGuid,
+                     &gBlackBoxEfiDeviceIoProtocolGuid,
                      &DeviceIo
                      );
 

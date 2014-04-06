@@ -298,7 +298,7 @@ BBTestGetControllerNameFuncTestCheckpoint1 (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiComponentName2ProtocolGuid,
+                   &gBlackBoxEfiComponentName2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -325,7 +325,7 @@ BBTestGetControllerNameFuncTestCheckpoint1 (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiComponentName2ProtocolGuid,
+                     &gBlackBoxEfiComponentName2ProtocolGuid,
                      &TestedComponentName
                      );
     if (EFI_ERROR (Status)) {
@@ -527,7 +527,7 @@ BBTestGetControllerNameFuncTestCheckpoint2 (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiComponentName2ProtocolGuid,
+                   &gBlackBoxEfiComponentName2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -554,7 +554,7 @@ BBTestGetControllerNameFuncTestCheckpoint2 (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiComponentName2ProtocolGuid,
+                     &gBlackBoxEfiComponentName2ProtocolGuid,
                      &TestedComponentName
                      );
     if (EFI_ERROR (Status)) {

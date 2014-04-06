@@ -55,36 +55,29 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = Tcp4ServiceBinding_ENTSTest
-FILE_GUID            = B4C44C66-516D-47c2-88DE-93309A6245F7
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = Tcp4ServiceBinding_ENTSTest
+  FILE_GUID            = B4C44C66-516D-47c2-88DE-93309A6245F7
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = Tcp4ServiceBindingENTSTestMain
 
-[sources.common]
+[Sources.common]
   Tcp4ServiceBindingENTSTest.c
   Tcp4ServiceBindingENTSTestCase.h
   Tcp4ServiceBindingENTSTestCase.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
-  $(EFI_SOURCE)/SctPkg/TestCase/RIVL/NetworkProtocolLib/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EASDispatcher/Include
-     
-[libraries.common]
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
+  EfiTestLib
   EntsLib
-  EntsProtocolLib
 
-[nmake.common]
-  C_STD_INCLUDE=
-  IMAGE_ENTRY_POINT=Tcp4ServiceBindingENTSTestMain
-
+[Protocols]
+  gEfiEntsProtocolGuid

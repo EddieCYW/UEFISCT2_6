@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = ExtScsiPassThruBBTest
-FILE_GUID            = 0B6DEC66-47C4-4d87-BFD6-7F39E996E58C
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ExtScsiPassThruBBTest
+  FILE_GUID            = 0B6DEC66-47C4-4d87-BFD6-7F39E996E58C
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestExtScsiPassThru
 
 [sources.common]
   ExtScsiPassThruBBTestMain.c
@@ -67,31 +70,14 @@ COMPONENT_TYPE       = BS_DRIVER
   ExtScsiPassThruBBTestConformance.c
   Guid.c
 
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.IA32]
-  ExtScsiPassThruProtocol.c
-
-[sources.X64]
-  ExtScsiPassThruProtocol.c
-
-[sources.IPF]
-  ExtScsiPassThruProtocol.c
-  
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestExtScsiPassThru
+[Protocols]

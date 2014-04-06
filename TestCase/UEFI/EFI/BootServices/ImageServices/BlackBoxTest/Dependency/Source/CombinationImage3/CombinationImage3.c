@@ -70,7 +70,6 @@ InitializeCombinationImage3 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeCombinationImage3)
 
 EFI_STATUS
 InitializeCombinationImage3 (

@@ -60,8 +60,8 @@ Abstract:
 
 
 #include "SctLib.h"
-#include "EfiTestLib.h"
-#include "TimeStamp.h"
+#include <Library/EfiTestLib.h>
+#include <UEFI/Protocol/TimeStamp.h>
 #include "Guid.h"
 
 

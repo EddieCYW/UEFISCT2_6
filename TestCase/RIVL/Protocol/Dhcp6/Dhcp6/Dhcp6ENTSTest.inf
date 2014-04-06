@@ -55,40 +55,28 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = Dhcp6_ENTSTest
-FILE_GUID            = E04ABBDD-135B-48db-9196-FBBE9EC48B75
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = Dhcp6_ENTSTest
+  FILE_GUID            = E04ABBDD-135B-48db-9196-FBBE9EC48B75
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = Dhcp6ENTSTestMain
 
-[sources.common]
+[Sources.common]
   Dhcp6ENTSTest.c
   Dhcp6ENTSTestCase.c
 
-[includes.common]
-  .
-  ./Include
-  $(EFI_SOURCE)/Framework
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EDK_SOURCE)/Foundation/Library/Dxe/EfiIfrSupportLib
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
-  $(EFI_SOURCE)/SctPkg/TestCase/RIVL/NetworkProtocolLib/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EASDispatcher/Include
-     
-[libraries.common]
-  SctLib
-  EntsLib
-  EntsProtocolLib
-  NetworkProtocolLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[nmake.common]
-  C_STD_INCLUDE=
-  IMAGE_ENTRY_POINT=Dhcp6ENTSTestMain
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
+  EfiTestLib
+  EntsLib
+
+[Protocols]
+  gEfiEntsProtocolGuid

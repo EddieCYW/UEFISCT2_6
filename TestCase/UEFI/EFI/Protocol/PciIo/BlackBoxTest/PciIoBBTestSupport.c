@@ -58,7 +58,7 @@ Abstract:
 #include "SctLib.h"
 #include "PciIoBBTestMain.h"
 #include "PciIoBBTestSupport.h"
-#include "Acpi.h"
+#include <IndustryStandard/Acpi.h>
 
 //
 //global varibles.
@@ -1508,7 +1508,7 @@ InitializeCaseEnvironment (
   HandleNum    = 0;
   Status      = SctLocateHandle (
                   ByProtocol,
-                  &gEfiPciRootBridgeIoProtocolGuid,
+                  &gBlackBoxEfiPciRootBridgeIoProtocolGuid,
                   NULL,
                   &HandleNum,
                   &HandleBuffer
@@ -1518,7 +1518,7 @@ InitializeCaseEnvironment (
   }
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiPciRootBridgeIoProtocolGuid,
+                   &gBlackBoxEfiPciRootBridgeIoProtocolGuid,
                    &gRootBridgeIo
                    );
   gtBS->FreePool (HandleBuffer);
@@ -1531,7 +1531,7 @@ InitializeCaseEnvironment (
   HandleNum    = 0;
   Status      = SctLocateHandle (
                   ByProtocol,
-                  &gEfiPciIoProtocolGuid,
+                  &gBlackBoxEfiPciIoProtocolGuid,
                   NULL,
                   &HandleNum,
                   &HandleBuffer
@@ -1553,7 +1553,7 @@ InitializeCaseEnvironment (
   //get all the pci io devices PciIo protocol and DevicePath protocol instance.
   //
   for (Index = 0 ; Index < HandleNum ; Index++) {
-    Status = gtBS->HandleProtocol (HandleBuffer[Index], &gEfiPciIoProtocolGuid, &PciIo);
+    Status = gtBS->HandleProtocol (HandleBuffer[Index], &gBlackBoxEfiPciIoProtocolGuid, &PciIo);
     if (EFI_ERROR(Status)) {
       EfiStatus  = Status;
       continue;
@@ -2042,7 +2042,7 @@ GetUserInputOrTimeOut (
   //create time event
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER ,
+                   EVT_TIMER ,
                    0,
                    NULL,
                    NULL,
@@ -2054,7 +2054,7 @@ GetUserInputOrTimeOut (
   }
 
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER,
+                   EVT_TIMER,
                    0,
                    NULL,
                    NULL,

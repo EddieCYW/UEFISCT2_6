@@ -153,7 +153,6 @@ BBTestDiskIoProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestDiskIo)
 
 /**
  *  Disk I/O Protocol Test Driver Entry point.
@@ -173,7 +172,7 @@ InitializeBBTestDiskIo (
   SctInitializeLib (ImageHandle, SystemTable);
 
 
-  Status = gtBS->CreateEvent(EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = gtBS->CreateEvent(EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   ASSERT_EFI_ERROR(Status);
 
   return EfiInitAndInstallBBTestInterface (
@@ -257,7 +256,7 @@ LocateBlockIoFromDiskIo(
   //
   Status = gtBS->LocateHandleBuffer(
                    ByProtocol,
-                   &gEfiDiskIoProtocolGuid,
+                   &gBlackBoxEfiDiskIoProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -295,7 +294,7 @@ LocateBlockIoFromDiskIo(
   for (Index = 0; Index < NoHandles; Index++) {
       Status = gtBS->HandleProtocol(
                        HandleBuffer[Index],
-                       &gEfiDiskIoProtocolGuid,
+                       &gBlackBoxEfiDiskIoProtocolGuid,
                        &OtherDiskIo
                        );
     if (EFI_ERROR (Status)) {
@@ -334,7 +333,7 @@ LocateBlockIoFromDiskIo(
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[Index],
-                   &gEfiBlockIoProtocolGuid,
+                   &gBlackBoxEfiBlockIoProtocolGuid,
                    BlockIo
                    );
   if (EFI_ERROR(Status)) {
@@ -387,7 +386,7 @@ LocateDevicePathFromDiskIo(
   //
   Status = gtBS->LocateHandleBuffer(
                    ByProtocol,
-                   &gEfiDiskIoProtocolGuid,
+                   &gBlackBoxEfiDiskIoProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -425,7 +424,7 @@ LocateDevicePathFromDiskIo(
   for (Index = 0; Index < NoHandles; Index++) {
       Status = gtBS->HandleProtocol(
                        HandleBuffer[Index],
-                       &gEfiDiskIoProtocolGuid,
+                       &gBlackBoxEfiDiskIoProtocolGuid,
                        &OtherDiskIo
                        );
     if (EFI_ERROR (Status)) {

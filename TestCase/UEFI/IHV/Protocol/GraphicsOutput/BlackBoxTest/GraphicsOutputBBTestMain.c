@@ -254,52 +254,52 @@ EFI_GUID                    gEfiGraphicsOutputBltVideoToBufferBBTestExtensiveAss
 //
 //  Function GUIDs referenced in Functions
 //
-EFI_GUID                    gEfiGraphicsOutputQueryModeBBTestFunctionAutoGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputQueryModeBBTestFunctionAutoGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_QUERYMODE_FUNCTION_AUTO_GUID;
 
-EFI_GUID                    gEfiGraphicsOutputSetModeFunctionAutoGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputSetModeFunctionAutoGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_SETMODE_FUNCTION_AUTO_GUID;
 
-EFI_GUID                    gEfiGraphicsOutputBltVideoFillFunctionAutoGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputBltVideoFillFunctionAutoGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_BLTVIDEOFILL_FUNCTION_AUTO_GUID;
 
-EFI_GUID                    gEfiGraphicsOutputBltVideoBltBufferFunctionAutoGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputBltVideoBltBufferFunctionAutoGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_BLTVIDEOBLTBUFFER_FUNCTION_AUTO_GUID;
 
-EFI_GUID                    gEfiGraphicsOutputBltVideoToVideoFunctionAutoGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputBltVideoToVideoFunctionAutoGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_BLTVIDEOTOVIDEO_FUNCTION_AUTO_GUID;
 
 //
 // Conformance GUIDs referenced in Conformances
 //
-EFI_GUID                    gEfiGraphicsOutputQueryModeConformanceAutoGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputQueryModeConformanceAutoGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_QUERYMODE_CONFORMANCE_AUTO_GUID;
 
-EFI_GUID                    gEfiGraphicsOutputSetModeConformanceAutoGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputSetModeConformanceAutoGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_SETMODE_CONFORMANCE_AUTO_GUID;
 
-EFI_GUID                    gEfiGraphicsOutputBltConformanceAutoGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputBltConformanceAutoGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_BLT_CONFORMANCE_AUTO_GUID;
 
 //
 // Entry GUIDs for extensive test
 //
-EFI_GUID                    gEfiGraphicsOutputBltVideoFillStressAutoGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputBltVideoFillStressAutoGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_EFIBLTVIDEOFILL_STRESS_AUTO_GUID;
 
-EFI_GUID                    gEfiGraphicsOutputBltVideoBltBufferStressAutoGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputBltVideoBltBufferStressAutoGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_EFIBLTVIDEOBLTBUFFER_STRESS_AUTO_GUID;
 
-EFI_GUID                    gEfiGraphicsOutputBltVideoToVideoStressAutoGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputBltVideoToVideoStressAutoGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_EFIBLTVIDEOTOVIDEO_STRESS_AUTO_GUID;
 
-EFI_GUID                    gEfiGraphicsOutputVideoFillBufferToVideoExtensiveManualGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputVideoFillBufferToVideoExtensiveManualGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_VIDEOFILL_BUFFERTOVIDEO_EXTENSIVE_MANUAL_GUID;
 
-EFI_GUID                    gEfiGraphicsOutputVideoFillVideoToVideoExtensiveManualGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputVideoFillVideoToVideoExtensiveManualGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_VIDEOFILL_VIDEOTOVIDEO_EXTENSIVE_MANUAL_GUID;
 
-EFI_GUID                    gEfiGraphicsOutputVideoToBufferExtensiveGuid =
+EFI_GUID                    gBlackBoxEfiGraphicsOutputVideoToBufferExtensiveGuid =
   EFI_GRAPHICS_OUTPUT_PROTOCOL_VIDEOTOBLTBUFFER_EXTENSIVE_AUTO_GUID;
 
 //
@@ -501,7 +501,6 @@ Returns:
            );
 }
 
-EFI_DRIVER_ENTRY_POINT (InitializeGraphicsOutputBBTest)
 
 EFI_STATUS
 InitializeGraphicsOutputBBTest (

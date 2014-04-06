@@ -61,7 +61,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "AbsolutePointerProtocol.h"
+#include <UEFI/Protocol/AbsolutePointer.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

@@ -112,7 +112,6 @@ Ip4ENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Ip4ENTSTestMain)
 
 EFI_STATUS
 Ip4ENTSTestMain (

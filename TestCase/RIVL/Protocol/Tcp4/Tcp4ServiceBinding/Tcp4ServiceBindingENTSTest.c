@@ -82,7 +82,6 @@ Tcp4ServiceBindingENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Tcp4ServiceBindingENTSTestMain)
 
 EFI_STATUS
 Tcp4ServiceBindingENTSTestMain (

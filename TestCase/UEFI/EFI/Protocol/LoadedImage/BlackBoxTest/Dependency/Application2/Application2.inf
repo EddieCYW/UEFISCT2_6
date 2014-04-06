@@ -56,31 +56,26 @@
 #--*/
 
 [defines]
-BASE_NAME            = LoadedImage_LoadedImageApplication2
-FILE_GUID            = 3690401E-B52D-49bf-A28F-3675E3ABA476
-COMPONENT_TYPE       = APPLICATION
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = LoadedImage_LoadedImageApplication2
+  FILE_GUID            = 3690401E-B52D-49bf-A28F-3675E3ABA476
+  MODULE_TYPE          = UEFI_APPLICATION
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeEfiApplication2
 
 [sources.common]
   Application2.c
   ../../LoadedImageBBTestProtocolDefinition.c
 
-[includes.common]
-  .
-  ../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeEfiApplication2
+[Protocols]
+  gBlackBoxEfiLoadedImageProtocolGuid

@@ -68,7 +68,6 @@ InitializeEfiApplication2 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeEfiApplication2)
 
 EFI_STATUS
 InitializeEfiApplication2 (
@@ -88,7 +87,7 @@ InitializeEfiApplication2 (
 
   Status = gtBS->HandleProtocol (
                    ImageHandle,
-                   &gEfiLoadedImageProtocolGuid,
+                   &gBlackBoxEfiLoadedImageProtocolGuid,
                    &LoadedImage
                    );
   if (EFI_ERROR (Status)) {

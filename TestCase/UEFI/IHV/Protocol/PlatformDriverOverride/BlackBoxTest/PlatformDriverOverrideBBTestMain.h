@@ -61,7 +61,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "PlatformDriverOverrideProtocol.h"
+#include <UEFI/Protocol/PlatformDriverOverride.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

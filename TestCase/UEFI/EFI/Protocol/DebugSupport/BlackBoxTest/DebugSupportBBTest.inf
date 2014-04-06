@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = DebugSupportBBTest
-FILE_GUID            = 4D72D5AB-34F3-4d47-A1CD-119B20D7371C
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = DebugSupportBBTest
+  FILE_GUID            = 4D72D5AB-34F3-4d47-A1CD-119B20D7371C
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDebugSupport
 
 [sources.common]
   DebugSupportBBTestMain.c
@@ -71,21 +74,18 @@ COMPONENT_TYPE       = BS_DRIVER
   ia32/PlatformIsa.c
   ia32/DebugSupportBBTestExceptionCallbackFunction.c
   ia32/DebugSupportBBTestCacheFunction.c
-  DebugSupportProtocol.c
 
 [sources.ipf]
   ipf/AsmFuncs.s
   ipf/PlatformIsa.c
   ipf/DebugSupportBBTestExceptionCallbackFunction.c
   ipf/DebugSupportBBTestCacheFunction.c
-  DebugSupportProtocol.c
 
 [sources.x64]
   x64/AsmFuncs.asm
   x64/PlatformIsa.c
   x64/DebugSupportBBTestExceptionCallbackFunction.c
   x64/DebugSupportBBTestCacheFunction.c
-  DebugSupportProtocol.c
 
 [sources.Arm]
   Arm/PlatformIsa.c
@@ -97,22 +97,14 @@ COMPONENT_TYPE       = BS_DRIVER
   Aarch64/DebugSupportBBTestExceptionCallbackFunction.c
   Aarch64/DebugSupportBBTestCacheFunction.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Efi/Protocol/DebugSupport
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestDebugSupport
+[Protocols]

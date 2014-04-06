@@ -423,8 +423,8 @@ Returns:
   for (i = 0; i < *MnpTransmitMultiPacketCnt; i++) {
     tBS->Stall (20);
     Status = tBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     BSCallBackFunc[CallBackIndex],
                     BSCreateEventNotifyContext,
                     &MnpTransmitMultiPacketToken->Event
@@ -639,8 +639,8 @@ Returns:
   //
   for (Index = 0; Index < 100; Index++) {
     tBS->CreateEvent (
-          EFI_EVENT_NOTIFY_SIGNAL,
-          EFI_TPL_CALLBACK,
+          EVT_NOTIFY_SIGNAL,
+          TPL_CALLBACK,
           RegenerateToken,
           (VOID *) Index,
           &RxInfo.Token[Index].Event
@@ -660,7 +660,7 @@ Returns:
     }
   }
 
-  Status = tBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = tBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR (Status)) {
     *MnpReceiveMultiPacketStatus          = Status;
     *MnpReceiveMultiPacketReceivedNumbber = RxInfo.ReceivedNumber;
@@ -778,7 +778,7 @@ Returns:
   int                           run;
 
   Mnp     = (EFI_MANAGED_NETWORK_PROTOCOL *) ClientInterface;
-  Status  = tBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status  = tBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR (Status)) {
     *MnpPollPattern1Status = Status;
     return EFI_SUCCESS;

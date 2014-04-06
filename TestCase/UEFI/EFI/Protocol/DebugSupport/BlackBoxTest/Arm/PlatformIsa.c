@@ -55,8 +55,6 @@ Abstract:
 
 --*/
 #include "Efi.h"
-////#include "DebugSupportProtocol.h"
 #include EFI_PROTOCOL_DEFINITION (DebugSupport)
 
 EFI_INSTRUCTION_SET_ARCHITECTURE PlatformIsa = IsaArm;
-

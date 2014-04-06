@@ -89,7 +89,6 @@ EFI_BB_TEST_PROTOCOL *gBBTestProtocolInterface;
 //
 // Entry point
 //
-EFI_DRIVER_ENTRY_POINT (InitializeBBTestDriverBinding)
 
 /**
  *  Creates/installs the BlackBox Interface and eminating Entry Point

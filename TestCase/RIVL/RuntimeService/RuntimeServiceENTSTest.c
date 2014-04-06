@@ -115,7 +115,6 @@ RuntimeServiceENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (RuntimeServiceENTSTestMain)
 
 EFI_STATUS
 RuntimeServiceENTSTestMain (

@@ -106,7 +106,6 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
 //
 // IPSEC2 test case entry point
 //
-EFI_DRIVER_ENTRY_POINT(InitializeIPsec2BBTest)
 
 EFI_STATUS
 InitializeIPsec2BBTest (

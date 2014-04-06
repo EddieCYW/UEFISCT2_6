@@ -55,33 +55,28 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = BusDriver1
-FILE_GUID            = 6149B364-8540-45ca-ACB6-7617FE8B0AA8
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = BusDriver1
+  FILE_GUID            = 6149B364-8540-45ca-ACB6-7617FE8B0AA8
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBusDriver1
 
-[sources.common]
+[Sources.common]
   BusDriver1.c
-  ../../../protocoldefinition.c
-  ../../../misc.c
+  ../../../ProtocolDefinition.c
+  ../../../Misc.c
 
-[includes.common]
-  .
-  ../../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBusDriver1
+[Protocols]
+  gEfiPlatformDriverOverrideProtocolGuid

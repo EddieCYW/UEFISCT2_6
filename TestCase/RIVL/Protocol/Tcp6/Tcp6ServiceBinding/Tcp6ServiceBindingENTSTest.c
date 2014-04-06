@@ -84,7 +84,6 @@ Tcp6ServiceBindingENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Tcp6ServiceBindingENTSTestMain)
 
 EFI_STATUS
 Tcp6ServiceBindingENTSTestMain (

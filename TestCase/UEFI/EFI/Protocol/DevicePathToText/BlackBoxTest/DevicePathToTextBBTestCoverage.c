@@ -55,11 +55,7 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "DevicePathToTextBBTestMain.h"
-
-extern EFI_GUID gEfiDevicePathFromTextProtocolGuid;
-extern EFI_GUID gEfiDevicePathUtilitiesProtocolGuid;
 
 #define MaxDevicePathStrLen 200
 
@@ -267,7 +263,7 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
   }
 
   Status = gtBS->LocateProtocol (
-                  &gEfiDevicePathUtilitiesProtocolGuid,
+                  &gBlackBoxEfiDevicePathUtilitiesProtocolGuid,
                   NULL,
                   &DevicePathUtilities
                   );
@@ -390,7 +386,7 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
   // Ctrl(0x1234ABCD)
   //
   pDeviceNode1 = DevicePathUtilities->CreateDeviceNode (0x1, 0x5, 0x8);
-  ((CONTROLLER_DEVICE_PATH *)pDeviceNode1)->Controller = 0x1234ABCD;
+  ((CONTROLLER_DEVICE_PATH *)pDeviceNode1)->ControllerNumber = 0x1234ABCD;
 
   Text = DevicePathToText->ConvertDeviceNodeToText (pDeviceNode1, FALSE, FALSE);
   pDeviceNode2 = SctConvertTextToDeviceNode(Text);
@@ -767,7 +763,7 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
   // VenPcAnsi()
   //
   pDeviceNode1 = DevicePathUtilities->CreateDeviceNode (0x3, 0xa, 20);
-  ((VENDOR_DEVICE_PATH *)pDeviceNode1)->Guid = gEfiPcAnsiGuid;
+  ((VENDOR_DEVICE_PATH *)pDeviceNode1)->Guid = gBlackBoxEfiPcAnsiGuid;
 
   Text = DevicePathToText->ConvertDeviceNodeToText (pDeviceNode1, FALSE, TRUE);
   pDeviceNode2 = SctConvertTextToDeviceNode(Text);

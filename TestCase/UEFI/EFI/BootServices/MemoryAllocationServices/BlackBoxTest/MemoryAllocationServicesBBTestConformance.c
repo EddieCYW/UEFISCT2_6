@@ -261,7 +261,7 @@ BBTestGetMemoryMapConsistencyTest (
   //
   // 3.1.2.6  GetMemoryMap should not succeed when MemoryMapSize is too small
   //
-  OldTpl = gtBS->RaiseTPL (EFI_TPL_CALLBACK);
+  OldTpl = gtBS->RaiseTPL (TPL_CALLBACK);
 
   Status        = EFI_SUCCESS;
   Status2       = EFI_SUCCESS;

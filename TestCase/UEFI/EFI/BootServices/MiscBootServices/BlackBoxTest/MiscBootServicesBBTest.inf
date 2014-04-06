@@ -55,12 +55,15 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = MiscBootServicesBBTest
-FILE_GUID            = F25CC4B7-91FF-41f3-813A-62E871CA5293
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = MiscBootServicesBBTest
+  FILE_GUID            = F25CC4B7-91FF-41f3-813A-62E871CA5293
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestMiscBootServices
 
-[sources.common]
+[Sources.common]
   MiscBootServicesBBTestMain.h
   MiscBootServicesBBTestConformance.c
   MiscBootServicesBBTestFunction.c
@@ -68,21 +71,15 @@ COMPONENT_TYPE       = BS_DRIVER
   MiscBootServicesBBTestMain.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestMiscBootServices
+[Protocols]
+  gEfiTestRecoveryLibraryGuid

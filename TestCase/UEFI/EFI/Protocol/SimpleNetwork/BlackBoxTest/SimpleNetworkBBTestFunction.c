@@ -1281,7 +1281,7 @@ BBTestStatisticsFunctionTest (
 }
 
 /**
- *  Entrypoint for EFI_SIMPLE_NETWORK_PROTOCOL.MCastIPtoMAC() Function Test.
+ *  Entrypoint for EFI_SIMPLE_NETWORK_PROTOCOL.MCastIpToMac() Function Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
  *  @param ClientInterface a pointer to the interface to be tested.
  *  @param TestLevel test "thoroughness" control.
@@ -1292,7 +1292,7 @@ BBTestStatisticsFunctionTest (
 // TDS 4.9
 //
 EFI_STATUS
-BBTestMCastIPtoMACFunctionTest (
+BBTestMCastIpToMacFunctionTest (
   IN EFI_BB_TEST_PROTOCOL       *This,
   IN VOID                       *ClientInterface,
   IN EFI_TEST_LEVEL             TestLevel,
@@ -1363,7 +1363,7 @@ BBTestMCastIPtoMACFunctionTest (
   MAC2.Addr[4] = 0x00;
   MAC2.Addr[5] = 0x01;
 
-  Status = SnpInterface->MCastIPtoMAC(SnpInterface, FALSE, &IP, &MAC1);
+  Status = SnpInterface->MCastIpToMac(SnpInterface, FALSE, &IP, &MAC1);
 
   //
   // Do not check the MAC address, because this is based on ethernet.
@@ -1380,7 +1380,7 @@ BBTestMCastIPtoMACFunctionTest (
                  StandardLib,
                  AssertionType,
                  gSimpleNetworkBBTestFunctionAssertionGuid017,
-                 L"EFI_SIMPLE_NETWORK_PROTOCOL.MCastIPtoMAC - Invoke MCastIPtoMAC() and verify interface correctness within test case",
+                 L"EFI_SIMPLE_NETWORK_PROTOCOL.MCastIpToMac - Invoke MCastIpToMac() and verify interface correctness within test case",
                  L"%a:%d:Status - %r, MAC address - %02x%02x%02x%02x%02x%02x",
                  __FILE__,
                  (UINTN)__LINE__,
@@ -1944,8 +1944,8 @@ BBTestTransmitFunctionTest (
   //
   if (!EFI_ERROR(Status)) {
     StatCode =gtBS->CreateEvent (
-        EFI_EVENT_TIMER,
-        EFI_TPL_CALLBACK,
+        EVT_TIMER,
+        TPL_CALLBACK,
         NULL,
         NULL,
         &TimeoutEvent

@@ -56,32 +56,29 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvSimpleTextInputExBBTest
-FILE_GUID            = 2C92BF78-9C4F-4d72-AD7D-89A072D0701A
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvSimpleTextInputExBBTest
+  FILE_GUID            = 2C92BF78-9C4F-4d72-AD7D-89A072D0701A
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeSimpleTextInputExBBTest
 
 [sources.common]
   SimpleTextInputExBBTestConformance.c
   SimpleTextInputExBBTestFunction.c
   SimpleTextInputExBBTestMain.c
   Guid.c
-  SimpleTextInputEx.c
-  
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeSimpleTextInputExBBTest
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gBlackBoxEfiSimpleTextInputExProtocolGuid

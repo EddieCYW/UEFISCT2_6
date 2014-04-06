@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = PlatformToDriverConfigurationBBTest
-FILE_GUID            = 804A7494-C640-4072-8850-DC85B919AA07
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = PlatformToDriverConfigurationBBTest
+  FILE_GUID            = 804A7494-C640-4072-8850-DC85B919AA07
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestPlatformToDriverConfiguration
 
 [sources.common]
   PlatformToDriverConfigurationBBTestMain.c
@@ -67,31 +70,17 @@ COMPONENT_TYPE       = BS_DRIVER
   PlatformToDriverConfigurationBBTestConformance.c
   ConfigureClpParameterBlkBBTestFunction.c
   Guid.c
-  
-[sources.IA32]
-  PlatformToDriverConfigurationProtocol.c
 
-[sources.X64]
-  PlatformToDriverConfigurationProtocol.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.IPF]
-  PlatformToDriverConfigurationProtocol.c
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestPlatformToDriverConfiguration
+[Protocols]
+  gBlackBoxEfiPlatformToDriverConfigurationProtocolGuid
+  gBlackBoxEfiPlatformToDriverConfigurationClpGuid

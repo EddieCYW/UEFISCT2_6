@@ -56,7 +56,7 @@
 #--*/
 
 BASE_NAME=Decompress_CompressedFile1
-SOURCE_DIR=$(EFI_SOURCE)/SctPkg/TestCase/UEFI/EFI/Protocol/Decompress/BlackBoxTest/Dependency/CompressedFile1
+SOURCE_DIR=$(WORKSPACE)/SctPkg/TestCase/UEFI/EFI/Protocol/Decompress/BlackBoxTest/Dependency/CompressedFile1
 GENBIN=GenBin
 DEPENDECY=$(SOURCE_DIR)/CompressedFile1.ini
 UNAME = $(shell uname)

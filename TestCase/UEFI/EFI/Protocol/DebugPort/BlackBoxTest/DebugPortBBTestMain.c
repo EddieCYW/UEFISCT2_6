@@ -130,7 +130,6 @@ BBTestDebugPortProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestDebugPort)
 
 /**
  *  Debug Port Protocol Test Driver Entry point.

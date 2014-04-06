@@ -181,7 +181,6 @@ BOOLEAN     BeenExecuted;
 //
 //
 //
-EFI_DRIVER_ENTRY_POINT(InitializeSimpleTextInputExBBTest)
 
 EFI_STATUS
 InitializeSimpleTextInputExBBTest (
@@ -196,7 +195,7 @@ InitializeSimpleTextInputExBBTest (
   //
 
   SctInitializeLib (ImageHandle, SystemTable);
-  gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
 
   mImageHandle = ImageHandle;
 
@@ -564,7 +563,7 @@ LocateDevicePathFromSimpleTextInputEx (
   //
   Status = gtBS->LocateHandleBuffer (
                         ByProtocol,
-                        &gEfiSimpleTextInputExProtocolGuid,
+                        &gBlackBoxEfiSimpleTextInputExProtocolGuid,
                         NULL,
                         &NoHandles,
                         &HandleBuffer
@@ -602,7 +601,7 @@ LocateDevicePathFromSimpleTextInputEx (
   for (Index=0;Index<NoHandles;Index++) {
       Status = gtBS->HandleProtocol (
                         HandleBuffer[Index],
-                        &gEfiSimpleTextInputExProtocolGuid,
+                        &gBlackBoxEfiSimpleTextInputExProtocolGuid,
                         &OtherSimpleTextInputEx
                         );
     if (EFI_ERROR (Status)) {

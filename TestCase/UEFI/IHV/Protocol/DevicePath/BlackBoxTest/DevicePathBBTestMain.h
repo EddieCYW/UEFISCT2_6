@@ -59,7 +59,7 @@ Abstract:
 #define _DEVICE_PATH_BBTEST_H_
 
 #include "Efi.h"
-#include "DevicePathProtocol.h"
+#include <UEFI/Protocol/DevicePath.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

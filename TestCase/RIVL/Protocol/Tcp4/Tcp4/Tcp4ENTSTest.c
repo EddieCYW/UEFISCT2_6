@@ -121,7 +121,6 @@ Tcp4ENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Tcp4ENTSTestMain)
 
 EFI_STATUS
 Tcp4ENTSTestMain (

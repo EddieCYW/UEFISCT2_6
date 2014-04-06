@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = DriverSupportedEfiVersionBBTest
-FILE_GUID            = 9B72180D-155C-4b7a-BBA8-99837B2F9DF8
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = DriverSupportedEfiVersionBBTest
+  FILE_GUID            = 9B72180D-155C-4b7a-BBA8-99837B2F9DF8
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDriverSupportedEfiVersion
 
 [sources.common]
   DriverSupportedEfiVersionBBTestMain.c
@@ -66,30 +69,14 @@ COMPONENT_TYPE       = BS_DRIVER
   DriverSupportedEfiVersionBBTestFunction.c
   Guid.c
 
-[sources.IA32]
-  DriverSupportedEfiVersionProtocol.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.X64]
-  DriverSupportedEfiVersionProtocol.c
-
-[sources.IPF]
-  DriverSupportedEfiVersionProtocol.c
-  
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
-  EdkFrameworkGuidLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestDriverSupportedEfiVersion
+[Protocols]

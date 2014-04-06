@@ -63,7 +63,7 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "PciRootBridgeIoProtocol.h"
+#include <UEFI/Protocol/PciRootBridgeIo.h>
 
 #include "Guid.h"
 #include EFI_TEST_PROTOCOL_DEFINITION(TestProfileLibrary)

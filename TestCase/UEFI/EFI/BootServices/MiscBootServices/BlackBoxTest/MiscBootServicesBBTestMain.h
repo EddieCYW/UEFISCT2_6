@@ -81,7 +81,7 @@ typedef struct _RESET_DATA {
 
 //
 // Change size from TPL_ARRAY_SIZE to TPL_ARRAY_SIZE + 1
-// for Stall test in EFI_TPL_HIGH_LEVEL
+// for Stall test in TPL_HIGH_LEVEL
 //
 extern EFI_TPL TplArray[TPL_ARRAY_SIZE + 1];
 

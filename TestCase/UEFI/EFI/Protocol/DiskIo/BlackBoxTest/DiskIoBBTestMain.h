@@ -61,8 +61,8 @@ Abstract:
 
 
 #include "Efi.h"
-#include EFI_PROTOCOL_DEFINITION (BlockIo)
-#include "DiskIoProtocol.h"
+#include <UEFI/Protocol/BlockIo.h>
+#include <UEFI/Protocol/DiskIo.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

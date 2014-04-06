@@ -69,7 +69,6 @@ InitializeBootServicesDriver6 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBootServicesDriver6)
 
 EFI_STATUS
 InitializeBootServicesDriver6 (

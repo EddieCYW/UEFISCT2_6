@@ -57,10 +57,6 @@ Abstract:
 
 #include "SctLib.h"
 #include "PlatformToDriverConfigurationBBTestMain.h"
-#ifdef EFIARM
-EFI_HANDLE DriverImageHandle;
-#endif
-
 
 //
 // Build Data structure here
@@ -175,7 +171,6 @@ BBTestPlatformToDriverConfigurationProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestPlatformToDriverConfiguration)
 
 /**
  *  Platform To Driver Configuration Protocol Test Driver Entry point.
@@ -191,8 +186,6 @@ InitializeBBTestPlatformToDriverConfiguration (
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
   SctInitializeLib (ImageHandle, SystemTable);
-
-  DriverImageHandle = ImageHandle;
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,

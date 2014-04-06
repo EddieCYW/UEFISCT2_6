@@ -55,10 +55,7 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "EbcBBTestMain.h"
-
-EFI_GUID gEfiEbcDriverProtocolGuid = EBC_DRIVER_TEST_PROTOCOL;
 
 EFI_PEI_FLUSH_INSTRUCTION_CACHE_PROTOCOL  *gEfiPeiFlushInstructionCache = NULL;
 EFI_PEI_PE_COFF_LOADER_PROTOCOL           *gEfiPeiPeCoffLoader          = NULL;
@@ -174,7 +171,6 @@ BBTestEbcUnload (
 // Prototypes of Internal Functions
 //
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestEbcProtocol)
 
 /**
  *  Ebc Protocol Test Driver Entry point.
@@ -293,7 +289,7 @@ ReadEbcDriver (
   //
   DevicePath = gDevicePath;
   Status = gtBS->LocateDevicePath (
-                   &gEfiSimpleFileSystemProtocolGuid,
+                   &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                    &DevicePath,
                    &DeviceHandle
                    );
@@ -306,7 +302,7 @@ ReadEbcDriver (
   //
   Status = gtBS->HandleProtocol (
                    DeviceHandle,
-                   &gEfiSimpleFileSystemProtocolGuid,
+                   &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                    (VOID*)&Vol
                    );
   if ( EFI_ERROR ( Status ) ) {
@@ -356,7 +352,7 @@ ReadEbcDriver (
   //
   Status = Handle->GetInfo(
                      Handle,
-                     &gEfiFileInfoGuid,
+                     &gBlackBoxEfiFileInfoGuid,
                      &FileInfoSize,
                      FileInfo
                      );
@@ -374,7 +370,7 @@ ReadEbcDriver (
   }
   Status = Handle->GetInfo(
                      Handle,
-                     &gEfiFileInfoGuid,
+                     &gBlackBoxEfiFileInfoGuid,
                      &FileInfoSize,
                      FileInfo
                      );
@@ -496,7 +492,7 @@ LoadEbcDriver (
   SctZeroMem (&DummyImageProtocol, sizeof (DummyImageProtocol));
   Status = gtBS->InstallProtocolInterface (
                    &gDummyImageHandle,
-                   &gEfiLoadedImageProtocolGuid,
+                   &gBlackBoxEfiLoadedImageProtocolGuid,
                    EFI_NATIVE_INTERFACE,
                    &DummyImageProtocol
                    );
@@ -604,13 +600,13 @@ UnloadEbcDriver ()
 
   Status = gtBS->UninstallProtocolInterface (
                   gDummyImageHandle,
-                  &gEfiEbcDriverProtocolGuid,
+                  &gBlackBoxEfiEbcDriverProtocolGuid,
                   NULL
                   );
 
   Status = gtBS->UninstallProtocolInterface (
                    gDummyImageHandle,
-                   &gEfiLoadedImageProtocolGuid,
+                   &gBlackBoxEfiLoadedImageProtocolGuid,
                    NULL
                    );
 

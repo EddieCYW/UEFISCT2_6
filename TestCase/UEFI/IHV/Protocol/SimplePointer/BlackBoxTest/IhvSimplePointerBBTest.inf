@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvSimplePointerBBTest
-FILE_GUID            = D5E49099-238F-4a02-BB79-1EC0B376FD81
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvSimplePointerBBTest
+  FILE_GUID            = D5E49099-238F-4a02-BB79-1EC0B376FD81
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestSimplePointer
 
 [sources.common]
   SimplePointerBBTestMain.c
@@ -66,24 +69,18 @@ COMPONENT_TYPE       = BS_DRIVER
   SimplePointerBBTestFunction.c
   SimplePointerBBTestConformance.c
   SimplePointerBBTestStress.c
-  SimplePointerProtocol.c
-  Guid.c
+  guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestSimplePointer
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gBlackBoxEfiSimplePointerProtocolGuid

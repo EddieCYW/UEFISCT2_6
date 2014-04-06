@@ -122,12 +122,12 @@ BBTestSignalEvent_Func_Sub1 (
   UINTN               SubIndex;
   EFI_TPL             OldTpl;
   UINT32              EventTypes[] = {
-                        EFI_EVENT_NOTIFY_SIGNAL,
+                        EVT_NOTIFY_SIGNAL,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;
@@ -157,17 +157,17 @@ BBTestSignalEvent_Func_Sub1 (
       }
 
       //
-      // Signal event in the EFI_TPL_CALLBACK
+      // Signal event in the TPL_CALLBACK
       //
-      OldTpl  = gtBS->RaiseTPL (EFI_TPL_CALLBACK);
+      OldTpl  = gtBS->RaiseTPL (TPL_CALLBACK);
       Status1 = gtBS->SignalEvent (Event);
       Status2 = gtBS->SignalEvent (Event);
       gtBS->RestoreTPL (OldTpl);
 
       if ((Status1   == EFI_SUCCESS) &&
           (Status2   == EFI_SUCCESS) &&
-          (((NotifyTpls[SubIndex] >  EFI_TPL_CALLBACK) && (Buffer[1] == 2)) ||
-           ((NotifyTpls[SubIndex] <= EFI_TPL_CALLBACK) && (Buffer[1] == 1))
+          (((NotifyTpls[SubIndex] >  TPL_CALLBACK) && (Buffer[1] == 2)) ||
+           ((NotifyTpls[SubIndex] <= TPL_CALLBACK) && (Buffer[1] == 1))
           )) {
         AssertionType = EFI_TEST_ASSERTION_PASSED;
       } else {

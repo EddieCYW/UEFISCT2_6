@@ -56,42 +56,27 @@
 #--*/
 
 [defines]
-BASE_NAME            = RandomNumberBbTest
-FILE_GUID            = C8E119C1-5058-4B0D-AB23-07D5AFE8FD65
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = RandomNumberBbTest
+  FILE_GUID            = C8E119C1-5058-4B0D-AB23-07D5AFE8FD65
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestRandomNumber
 
 [sources.common]
   Guid.c
   RandomNumberBBTestMain.c
   RandomNumberBBTestFunction.c
   RandomNumberBBTestConformance.c
- 
-[sources.IA32]
-  RandomNumberProtocol.c
-  
-[sources.X64]
-  RandomNumberProtocol.c 
 
-[sources.IPF]
-  RandomNumberProtocol.c 
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Include/IndustryStandard
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestRandomNumber
+[Protocols]

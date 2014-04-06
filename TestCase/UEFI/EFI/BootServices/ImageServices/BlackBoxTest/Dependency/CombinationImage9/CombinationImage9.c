@@ -69,7 +69,6 @@ InitializeCombinationImage9 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeCombinationImage9)
 
 EFI_STATUS
 InitializeCombinationImage9 (

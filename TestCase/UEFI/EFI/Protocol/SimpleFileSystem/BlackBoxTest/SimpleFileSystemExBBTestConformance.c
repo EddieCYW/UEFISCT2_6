@@ -53,8 +53,9 @@ Abstract:
 
 --*/
 
+#define EFI_FILE_HANDLE_REVISION 0x00020000
 
-#include "SimpleFileSystemExProtocol.h"
+#include "SimpleFileSystemBBTest.h"
 
 STATIC BOOLEAN                         FileIoFinished;
 
@@ -389,7 +390,7 @@ BBTestOpenExConformanceTestCheckpoint1 (
   EFI_STATUS                Status;
   EFI_STATUS                StatusSync;
   EFI_STATUS                StatusAsync;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   EFI_TEST_ASSERTION        AssertionType;
 
   UINT32                    RandomValue;
@@ -397,7 +398,7 @@ BBTestOpenExConformanceTestCheckpoint1 (
   CHAR16                    RandomChars[10];
   CHAR16                    *BaseFileName;
   CHAR16                    NewFileName[100];
-  EFI_FILE_PROTOCOL         *FileHandle;
+  EFI_FILE                  *FileHandle;
   EFI_FILE_IO_TOKEN         FileIoTokenSync;
   EFI_FILE_IO_TOKEN         FileIoTokenAsync;
   EFI_TPL                   OldTpl;
@@ -454,8 +455,8 @@ BBTestOpenExConformanceTestCheckpoint1 (
   // Async Token Init
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    NotifyFunc,
                    &FileIoFinished,
                    &FileIoTokenAsync.Event
@@ -573,7 +574,7 @@ BBTestOpenExConformanceTestCheckpoint2 (
   EFI_STATUS                Status;
   EFI_STATUS                StatusSync;
   EFI_STATUS                StatusAsync;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   EFI_TEST_ASSERTION        AssertionType;
   UINT32                    RandomValue;
   CHAR16                    RandomChars[100];
@@ -581,7 +582,7 @@ BBTestOpenExConformanceTestCheckpoint2 (
   CHAR16                    NewDirName[100];
   CHAR16                    FileName[100];
   CHAR16                    OpenFileName[MAX_STRING_LENGTH];
-  EFI_FILE_PROTOCOL         *FileHandle;
+  EFI_FILE                  *FileHandle;
   UINTN                     FileNameLength;
   UINTN                     FileIndex;
   EFI_FILE_IO_TOKEN         FileIoTokenSync;
@@ -636,8 +637,8 @@ BBTestOpenExConformanceTestCheckpoint2 (
   // Async Token Init
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    NotifyFunc,
                    &FileIoFinished,
                    &FileIoTokenAsync.Event
@@ -784,11 +785,11 @@ BBTestOpenExConformanceTestCheckpoint3 (
   EFI_STATUS                Status;
   EFI_STATUS                StatusSync;
   EFI_STATUS                StatusAsync;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   EFI_TEST_ASSERTION        AssertionType;
   CHAR16                    FileName[100];
-  EFI_FILE_PROTOCOL         *FileHandle;
-  EFI_FILE_PROTOCOL         *OpenHandle;
+  EFI_FILE                  *FileHandle;
+  EFI_FILE                  *OpenHandle;
   UINTN                     ModeIndex;
   UINTN                     Index;
   EFI_TPL                   OldTpl;
@@ -853,8 +854,8 @@ BBTestOpenExConformanceTestCheckpoint3 (
   // Async Token Init
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    NotifyFunc,
                    &FileIoFinished,
                    &FileIoTokenAsync.Event
@@ -983,9 +984,9 @@ BBTestWriteExConformanceTestCheckpoint1 (
   EFI_STATUS                Status;
   EFI_STATUS                StatusSync;
   EFI_STATUS                StatusAsync;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   EFI_TEST_ASSERTION        AssertionType;
-  EFI_FILE_PROTOCOL         *DirHandle;
+  EFI_FILE                  *DirHandle;
   CHAR16                    DirName[100];
   UINT8                     Temp;
   UINTN                     TempSize;
@@ -1043,8 +1044,8 @@ BBTestWriteExConformanceTestCheckpoint1 (
   // Async Token Init
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    NotifyFunc,
                    &FileIoFinished,
                    &FileIoTokenAsync.Event
@@ -1151,10 +1152,10 @@ BBTestWriteExConformanceTestCheckpoint2 (
   EFI_STATUS                StatusSync;
   EFI_STATUS                StatusAsync;
   
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   EFI_TEST_ASSERTION        AssertionType;
-  EFI_FILE_PROTOCOL         *FileHandle;
-  EFI_FILE_PROTOCOL         *OpenHandle;
+  EFI_FILE                  *FileHandle;
+  EFI_FILE                  *OpenHandle;
   CHAR16                    FileName[100];
   UINT8                     Temp;
   UINTN                     TempSize;
@@ -1210,8 +1211,8 @@ BBTestWriteExConformanceTestCheckpoint2 (
  // Async Token Init
  //
  Status = gtBS->CreateEvent (
-                  EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   NotifyFunc,
                   &FileIoFinished,
                   &FileIoTokenAsync.Event
@@ -1365,10 +1366,10 @@ BBTestWriteExConformanceTestCheckpoint3 (
   EFI_STATUS                StatusSync;
   EFI_STATUS                StatusAsync;
   
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   EFI_TEST_ASSERTION        AssertionType;
-  EFI_FILE_PROTOCOL         *FileHandle1;
-  EFI_FILE_PROTOCOL         *FileHandle2;
+  EFI_FILE                  *FileHandle1;
+  EFI_FILE                  *FileHandle2;
   CHAR16                    FileName[100];
   UINT8                     Temp;
   UINTN                     TempSize;
@@ -1425,8 +1426,8 @@ BBTestWriteExConformanceTestCheckpoint3 (
  // Async Token Init
  //
  Status = gtBS->CreateEvent (
-                  EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   NotifyFunc,
                   &FileIoFinished,
                   &FileIoTokenAsync.Event
@@ -1564,10 +1565,10 @@ BBTestFlushExConformanceTestCheckpoint1 (
   EFI_STATUS                StatusSync;
   EFI_STATUS                StatusAsync;
   
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   EFI_TEST_ASSERTION        AssertionType;
-  EFI_FILE_PROTOCOL         *FileHandle;
-  EFI_FILE_PROTOCOL         *OpenHandle;
+  EFI_FILE                  *FileHandle;
+  EFI_FILE                  *OpenHandle;
   CHAR16                    FileName[100];
   EFI_FILE_IO_TOKEN         FileIoTokenSync;
   EFI_FILE_IO_TOKEN         FileIoTokenAsync;
@@ -1625,8 +1626,8 @@ BBTestFlushExConformanceTestCheckpoint1 (
   // Async Token Init
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    NotifyFunc,
                    &FileIoFinished,
                    &FileIoTokenAsync.Event
@@ -1776,9 +1777,9 @@ BBTestReadExConformanceTestCheckpoint1 (
   EFI_STATUS                StatusSync;
   EFI_STATUS                StatusAsync;
   
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   EFI_TEST_ASSERTION        AssertionType;
-  EFI_FILE_PROTOCOL         *FileHandle;
+  EFI_FILE                  *FileHandle;
   CHAR16                    FileName[100];
   UINT8                     Temp;
   UINTN                     TempSize;
@@ -1839,8 +1840,8 @@ BBTestReadExConformanceTestCheckpoint1 (
  // Async Token Init
  //
  Status = gtBS->CreateEvent (
-                  EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   NotifyFunc,
                   &FileIoFinished,
                   &FileIoTokenAsync.Event
@@ -1996,10 +1997,10 @@ BBTestReadExConformanceTestCheckpoint2 (
   EFI_STATUS                StatusSync;
   EFI_STATUS                StatusAsync;
   
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   EFI_TEST_ASSERTION        AssertionType;
-  EFI_FILE_PROTOCOL         *FileHandle1;
-  EFI_FILE_PROTOCOL         *FileHandle2;  
+  EFI_FILE                  *FileHandle1;
+  EFI_FILE                  *FileHandle2;
   CHAR16                    FileName[100];
   UINT8                     Temp;
   UINTN                     TempSize;
@@ -2056,8 +2057,8 @@ BBTestReadExConformanceTestCheckpoint2 (
  // Async Token Init
  //
  Status = gtBS->CreateEvent (
-                  EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   NotifyFunc,
                   &FileIoFinished,
                   &FileIoTokenAsync.Event

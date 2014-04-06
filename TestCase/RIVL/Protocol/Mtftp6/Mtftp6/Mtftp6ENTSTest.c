@@ -113,7 +113,6 @@ Mtftp6ENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Mtftp6ENTSTestMain)
 
 EFI_STATUS
 Mtftp6ENTSTestMain (

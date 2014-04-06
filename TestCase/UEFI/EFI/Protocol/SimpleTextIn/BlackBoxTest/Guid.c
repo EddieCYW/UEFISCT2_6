@@ -55,8 +55,8 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "Guid.h"
+
+#include "SimpleTextInBBTestMain.h"
 
 EFI_GUID gSimpleTextInConformanceTestAssertionGuid002 = EFI_TEST_SIMPLETEXTINCONFORMANCETEST_ASSERTION_002_GUID;
 

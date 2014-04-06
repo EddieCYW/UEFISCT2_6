@@ -56,12 +56,14 @@
 #--*/
 
 [defines]
-BASE_NAME            = PciIoBBTest
-FILE_GUID            = 52a3ea37-8fd4-44b0-83f0-7ff71ca4c6a7
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = PciIoBBTest
+  FILE_GUID            = 52a3ea37-8fd4-44b0-83f0-7ff71ca4c6a7
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestPciIo
 
 [sources.common]
-  PciIoProtocol.h
   PciIoBBTestMain.c
   PciIoBBTestMain.h
   PciIoBBTestFunction_1.c
@@ -72,32 +74,19 @@ COMPONENT_TYPE       = BS_DRIVER
   PciIoBBTestSupport.h
   Guid.c
   Guid.h
-  
-[sources.IA32]
-  PciIoProtocol.c
 
-[sources.X64]
-  PciIoProtocol.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.IPF]
-  PciIoProtocol.c  
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Include/IndustryStandard
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestPciIo
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gEfiTestProfileLibraryGuid
+  gBlackBoxEfiPciRootBridgeIoProtocolGuid
+  gBlackBoxEfiPciIoProtocolGuid

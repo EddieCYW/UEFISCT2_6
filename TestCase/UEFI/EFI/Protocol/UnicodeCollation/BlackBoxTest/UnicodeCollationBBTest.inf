@@ -56,32 +56,28 @@
 #--*/
 
 [defines]
-BASE_NAME            = UnicodeCollationBBTest
-FILE_GUID            = 65341A7A-1E32-4066-8638-3FFF76DAAAB7
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = UnicodeCollationBBTest
+  FILE_GUID            = 65341A7A-1E32-4066-8638-3FFF76DAAAB7
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestUnicodeCollation
 
 [sources.common]
   UnicodeCollationBBTestMain.c
   UnicodeCollationBBTestMain.h
   UnicodeCollationBBTestFunction.c
   UnicodeCollationBBTestStress.c
-  UnicodeCollationProtocol.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestUnicodeCollation
+[Protocols]

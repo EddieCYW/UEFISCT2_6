@@ -236,7 +236,6 @@ GetAnInvalidVlanId (
 //
 //
 //
-EFI_DRIVER_ENTRY_POINT(InitializeVlanConfigBBTest)
 
 EFI_STATUS
 InitializeVlanConfigBBTest (

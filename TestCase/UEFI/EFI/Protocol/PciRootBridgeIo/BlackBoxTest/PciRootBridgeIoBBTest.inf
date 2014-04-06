@@ -56,12 +56,14 @@
 #--*/
 
 [defines]
-BASE_NAME            = PciRootBridgeIoBBTest
-FILE_GUID            = b377e1de-4cd5-4154-bd17-8d24b453c5a1
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = PciRootBridgeIoBBTest
+  FILE_GUID            = b377e1de-4cd5-4154-bd17-8d24b453c5a1
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestPciRootBridgeIo
 
 [sources.common]
-  PciRootBridgeIoProtocol.h
   PciRootBridgeIoBBTestMain.c
   PciRootBridgeIoBBTestMain.h
   PciRootBridgeIoBBTestFunction_1.c
@@ -72,32 +74,18 @@ COMPONENT_TYPE       = BS_DRIVER
   PciRootBridgeIoBBTestSupport.h
   Guid.c
   Guid.h
-  
-[sources.IA32]
-  PciRootBridgeIoProtocol.c
 
-[sources.X64]
-  PciRootBridgeIoProtocol.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.IPF]
-  PciRootBridgeIoProtocol.c
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Include/IndustryStandard
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestPciRootBridgeIo
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gEfiTestProfileLibraryGuid
+  gBlackBoxEfiPciRootBridgeIoProtocolGuid

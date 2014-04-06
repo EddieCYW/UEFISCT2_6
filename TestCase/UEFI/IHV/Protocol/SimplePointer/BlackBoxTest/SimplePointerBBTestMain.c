@@ -171,7 +171,6 @@ BBTestSimplePointerProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestSimplePointer)
 
 /**
  *  Simple Pointer Protocol Test Driver Entry point.
@@ -188,7 +187,7 @@ InitializeBBTestSimplePointer (
   EfiInitializeTestLib (ImageHandle, SystemTable);
   SctInitializeLib (ImageHandle, SystemTable);
 
-  gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
 
   return EfiInitAndInstallIHVBBTestInterface (
            &ImageHandle,
@@ -246,7 +245,7 @@ LocateDevicePathFromSimplePointer (
   HandleBuffer = NULL;
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiSimplePointerProtocolGuid,
+                   &gBlackBoxEfiSimplePointerProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -284,7 +283,7 @@ LocateDevicePathFromSimplePointer (
   for (Index = 0; Index < NoHandles; Index++) {
       Status = gtBS->HandleProtocol (
                        HandleBuffer[Index],
-                       &gEfiSimplePointerProtocolGuid,
+                       &gBlackBoxEfiSimplePointerProtocolGuid,
                        &OtherSimpleIn
                        );
     if (EFI_ERROR (Status)) {

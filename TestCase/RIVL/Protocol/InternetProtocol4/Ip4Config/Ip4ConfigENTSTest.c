@@ -89,7 +89,6 @@ Ip4ConfigENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Ip4ConfigENTSTestMain)
 
 EFI_STATUS
 Ip4ConfigENTSTestMain (

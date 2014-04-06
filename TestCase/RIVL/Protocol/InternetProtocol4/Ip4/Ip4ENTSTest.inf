@@ -55,36 +55,29 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = Ip4_ENTSTest
-FILE_GUID            = 9F825126-F495-4488-B784-DA04C5EC396B
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = Ip4_ENTSTest
+  FILE_GUID            = 9F825126-F495-4488-B784-DA04C5EC396B
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = Ip4ENTSTestMain
 
-[sources.common]
+[Sources.common]
   Ip4ENTSTest.c
   Ip4ENTSTestCase.h
   Ip4ENTSTestCase.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
-  $(EFI_SOURCE)/SctPkg/TestCase/RIVL/NetworkProtocolLib/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EASDispatcher/Include
-     
-[libraries.common]
-  SctLib
-  EntsLib
-  EntsProtocolLib
-  
-[nmake.common]
-  C_STD_INCLUDE=
-  IMAGE_ENTRY_POINT=Ip4ENTSTestMain
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
+  EfiTestLib
+  EntsLib
+
+[Protocols]
+  gEfiEntsProtocolGuid

@@ -56,35 +56,35 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvEbcBBTest
-FILE_GUID            = C3776D26-7DFE-4698-A52E-422C075ACA76
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvEbcBBTest
+  FILE_GUID            = C3776D26-7DFE-4698-A52E-422C075ACA76
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestEbcProtocol
 
 [sources.common]
   EbcBBTestConformance.c
   EbcBBTestFunction.c
   EbcBBTestMain.c
   EbcBBTestMain.h
-  EbcProtocol.c
-  EbcProtocol.h
   guid.c
   guid.h
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  TestProtocolLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestEbcProtocol
+[Guids]
+  gBlackBoxEfiFileInfoGuid
+
+[Protocols]
+  gEfiSimpleFileSystemProtocolGuid
+  gEfiTestProfileLibraryGuid
+  gBlackBoxEfiEbcDriverProtocolGuid

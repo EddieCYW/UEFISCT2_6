@@ -58,13 +58,13 @@ Abstract:
 #ifndef _HII_IMAGE_BB_TEST_MAIN
 #define _HII_IMAGE_BB_TEST_MAIN
 
-
-#include "Efi.h"
+#define __UEFI_INTERNAL_FORMREPRESENTATION_H__
+#include <Base.h>
+#include "SctLib.h"
 #include <Library/EfiTestLib.h>
-#include "HiiProtocol.h"
-#include "HIIImage.h"
+#include <UEFI/Protocol/Hii.h>
 #include "Guid.h"
-#include "GraphicsOutput.h"
+#include <UEFI/Protocol/GraphicsOutput.h>
 
 
 

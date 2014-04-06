@@ -63,9 +63,9 @@ EFI_GUID mEfiCapsuleHeaderGuid = EFI_CAPSULE_GUID;
 #endif
 
 EFI_TPL TplArray [TPL_ARRAY_SIZE] = {
-  EFI_TPL_APPLICATION,
-  EFI_TPL_CALLBACK,
-  EFI_TPL_NOTIFY
+  TPL_APPLICATION,
+  TPL_CALLBACK,
+  TPL_NOTIFY
 };
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
@@ -169,7 +169,6 @@ BBTestMiscRuntimeServicesUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestMiscRuntimeServices)
 
 /**
  *  Miscellaneous Runtime Services Test Driver Entry point.

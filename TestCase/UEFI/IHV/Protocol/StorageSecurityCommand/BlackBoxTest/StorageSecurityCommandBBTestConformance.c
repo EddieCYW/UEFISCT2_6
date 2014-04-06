@@ -59,7 +59,6 @@ Abstract:
 #include "SctLib.h"
 #include "StorageSecurityCommandBBTestMain.h"
 
-
 /**
  *  Entrypoint for EFI_STORAGE_SECURITY_COMMAND_PROTOCOL.ReceiveData() Consistency Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
@@ -127,7 +126,7 @@ BBTestReceiveDataConformanceAutoTest (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiStorageSecurityCommandProtocolGuid,
+                   &gBlackBoxEfiStorageSecurityCommandProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -135,13 +134,13 @@ BBTestReceiveDataConformanceAutoTest (
   for (Index = 0; Index < NoHandles; Index++) {
      Status = gtBS->HandleProtocol (
                       HandleBuffer[Index],
-                      &gEfiStorageSecurityCommandProtocolGuid,
+                      &gBlackBoxEfiStorageSecurityCommandProtocolGuid,
                       &StorageSecurityTemp
                       );
      if (Status == EFI_SUCCESS && StorageSecurityTemp == StorageSecurityCommand) {
        Status = gtBS->HandleProtocol (
                         HandleBuffer[Index],
-                        &gEfiBlockIoProtocolGuid,
+                        &gBlackBoxEfiBlockIoProtocolGuid,
                         &BlockIo
                         );
        Handle = HandleBuffer[Index];
@@ -191,7 +190,7 @@ BBTestReceiveDataConformanceAutoTest (
 
     if (!EFI_ERROR(Status)) {
       Status = gtBS->LocateProtocol (
-                       &gEfiDevicePathToTextProtocolGuid,
+                       &gBlackBoxEfiDevicePathToTextProtocolGuid,
                        NULL,
                        &DevicePathToText
                        );
@@ -486,7 +485,7 @@ BBTestSendDataConformanceAutoTest (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiStorageSecurityCommandProtocolGuid,
+                   &gBlackBoxEfiStorageSecurityCommandProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -494,13 +493,13 @@ BBTestSendDataConformanceAutoTest (
   for (Index = 0; Index < NoHandles; Index++) {
      Status = gtBS->HandleProtocol (
                       HandleBuffer[Index],
-                      &gEfiStorageSecurityCommandProtocolGuid,
+                      &gBlackBoxEfiStorageSecurityCommandProtocolGuid,
                       &StorageSecurityTemp
                       );
      if (Status == EFI_SUCCESS && StorageSecurityTemp == StorageSecurityCommand) {
        Status = gtBS->HandleProtocol (
                         HandleBuffer[Index],
-                        &gEfiBlockIoProtocolGuid,
+                        &gBlackBoxEfiBlockIoProtocolGuid,
                         &BlockIo
                         );
        if (Status != EFI_SUCCESS) {

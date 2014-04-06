@@ -56,31 +56,27 @@
 #--*/
 
 [defines]
-BASE_NAME            = LoadFileBBTest
-FILE_GUID            = 4BCFDA92-A3E7-43fe-9737-1D6F22002051
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = LoadFileBBTest
+  FILE_GUID            = 4BCFDA92-A3E7-43fe-9737-1D6F22002051
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeLoadFileTest
 
 [sources.common]
- LoadFileBBTestMain.c
- LoadFileBBTestMain.h
- guid.c
- guid.h
+  LoadFileBBTestMain.c
+  LoadFileBBTestMain.h
+  Guid.c
+  Guid.h
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  TestProtocolLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeLoadFileTest
+[Protocols]

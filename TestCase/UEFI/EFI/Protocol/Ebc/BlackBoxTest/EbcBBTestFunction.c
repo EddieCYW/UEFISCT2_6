@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "EbcBBTestMain.h"
 
 /**
@@ -176,7 +175,7 @@ BBTestCreateThunkBasicTest (
 
     Status = gtBS->HandleProtocol (
                     gDummyImageHandle,
-                    &gEfiEbcDriverProtocolGuid,
+                    &gBlackBoxEfiEbcDriverProtocolGuid,
                     &EbcDriverInterface
                     );
 

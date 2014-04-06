@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "DebugSupportBBTestMain.h"
 
 
@@ -139,7 +138,6 @@ BBTestDebugSupportProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestDebugSupport)
 
 /**
  *  Debug Support Protocol Test Driver Entry point.

@@ -59,7 +59,7 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "ComponentNameProtocol.h"
+#include <UEFI/Protocol/ComponentName.h>
 #include "guid.h"
 
 #define IHV_COMPONENT_NAME_TEST_REVISION 0x00010000

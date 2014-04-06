@@ -79,7 +79,6 @@ RuntimeServicesDriver1Unload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeRuntimeServicesDriver1)
 
 EFI_STATUS
 InitializeRuntimeServicesDriver1 (

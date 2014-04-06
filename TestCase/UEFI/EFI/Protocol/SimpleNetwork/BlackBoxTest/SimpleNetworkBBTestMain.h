@@ -62,7 +62,7 @@ Abstract:
 #include "SctLib.h"
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
-#include "SimpleNetworkProtocol.h"
+#include <UEFI/Protocol/SimpleNetwork.h>
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestLoggingLibrary)
 
@@ -164,7 +164,7 @@ BBTestStatisticsFunctionTest (
 // TDS 4.9
 //
 EFI_STATUS
-BBTestMCastIPtoMACFunctionTest (
+BBTestMCastIpToMacFunctionTest (
   IN EFI_BB_TEST_PROTOCOL       *This,
   IN VOID                       *ClientInterface,
   IN EFI_TEST_LEVEL             TestLevel,
@@ -311,7 +311,7 @@ BBTestStatisticsConformanceTest (
 // TDS 5.9
 //
 EFI_STATUS
-BBTestMCastIPtoMACConformanceTest (
+BBTestMCastIpToMacConformanceTest (
   IN EFI_BB_TEST_PROTOCOL       *This,
   IN VOID                       *ClientInterface,
   IN EFI_TEST_LEVEL             TestLevel,

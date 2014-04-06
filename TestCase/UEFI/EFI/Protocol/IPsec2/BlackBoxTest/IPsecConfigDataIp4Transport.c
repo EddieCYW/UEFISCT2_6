@@ -56,7 +56,7 @@ Abstract:
 --*/
 
 #include "Efi.h"
-#include "IPsecConfigProtocol.h"
+#include <UEFI/Protocol/IPsecConfig.h>
 
 EFI_IP_ADDRESS_INFO LocalAddressIp4Transport;
 EFI_IP_ADDRESS_INFO RemoteAddressIp4Transport;

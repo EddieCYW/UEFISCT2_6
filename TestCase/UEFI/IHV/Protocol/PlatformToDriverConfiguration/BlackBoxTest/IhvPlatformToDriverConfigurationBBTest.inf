@@ -56,34 +56,30 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvPlatformToDriverConfigurationBBTest
-FILE_GUID            = 9FC1929D-CE27-494e-9533-7DE215B4772E
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvPlatformToDriverConfigurationBBTest
+  FILE_GUID            = 9FC1929D-CE27-494e-9533-7DE215B4772E
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestPlatformToDriverConfiguration
 
 [sources.common]
   PlatformToDriverConfigurationBBTestMain.c
   PlatformToDriverConfigurationBBTestMain.h
-  PlatformToDriverConfigurationProtocol.c
   PlatformToDriverConfigurationBBTestFunction.c
   PlatformToDriverConfigurationBBTestConformance.c
   ConfigureClpParameterBlkBBTestFunction.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestPlatformToDriverConfiguration
+[Protocols]
+  gBlackBoxEfiPlatformToDriverConfigurationClpGuid

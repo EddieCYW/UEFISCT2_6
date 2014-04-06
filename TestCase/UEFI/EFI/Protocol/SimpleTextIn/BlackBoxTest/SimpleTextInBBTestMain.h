@@ -58,9 +58,10 @@ Abstract:
 #ifndef _SIMPLE_TEXT_IN_BBTEST_H_
 #define _SIMPLE_TEXT_IN_BBTEST_H_
 
-
-#include "Efi.h"
-#include "SimpleTextInProtocol.h"
+#include <Base.h>
+#include "SctLib.h"
+#include <UEFI/Protocol/DevicePath.h>
+#include <UEFI/Protocol/SimpleTextIn.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

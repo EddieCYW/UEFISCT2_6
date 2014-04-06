@@ -148,7 +148,7 @@
 
   DEBUG_*_*_CC_FLAGS  = -DEFI_DEBUG
   RELEASE_*_*_CC_FLAGS  = -DMDEPKG_NDEBUG
-  
+
 [Libraries]
 EdkCompatibilityPkg/Foundation/Guid/EdkGuidLib.inf
 EdkCompatibilityPkg/Foundation/Framework/Guid/EdkFrameworkGuidLib.inf
@@ -166,6 +166,17 @@ SctPkg/Protocol/EntsProtocol/EntsProtocolLib.inf
 SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas-edk1.inf
 SctPkg/Library/NetLib/NetLib.inf
 SctPkg/Library/SctLib/SctLib-edk1.inf
+
+  SctPkg/Library/SctLib/SctLib.inf
+  SctPkg/Library/SctGuidLib/SctGuidLib.inf
+  SctPkg/Library/EfiTestLib/EfiTestLib.inf
+  MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
+
+[Libraries.ARM]
+  ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
+
+[Libraries.AARCH64]
+  ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
 
 [Libraries.IPF]
   EdkCompatibilityPkg/Foundation/Cpu/Itanium/CpuIa64Lib/CpuIA64Lib.inf
@@ -187,12 +198,6 @@ SctPkg/Library/SctLib/SctLib-edk1.inf
   DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
   PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
   
-  # Needed by IsDevicePathEnd() in SctLib
-  DevicePathLib|MdePkg/Library/UefiDevicePathLib/UefiDevicePathLib.inf
-  # Needed by DevicePathLib
-  MemoryAllocationLib|MdePkg/Library/UefiMemoryAllocationLib/UefiMemoryAllocationLib.inf
-  PrintLib|MdePkg/Library/BasePrintLib/BasePrintLib.inf
-
   SctLib|SctPkg/Library/SctLib/SctLib.inf
   NetLib|SctPkg/Library/NetLib/NetLib.inf
   EntsLib|SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib.inf
@@ -226,7 +231,7 @@ DEFINE PACKAGE=Default
 # Following are the SCT suite & related drivers
 #
 
-#SctPkg/TestInfrastructure/SCT/Framework/Sct.inf
+SctPkg/TestInfrastructure/SCT/Framework/Sct.inf
 SctPkg/TestInfrastructure/SCT/Drivers/StandardTest/StandardTest.inf
 SctPkg/TestInfrastructure/SCT/Drivers/TestProfile/TestProfile.inf
 SctPkg/TestInfrastructure/SCT/Drivers/TestRecovery/TestRecovery.inf
@@ -270,7 +275,6 @@ SctPkg/TestCase/UEFI/EFI/Protocol/DevicePathUtilities/BlackBoxTest/DevicePathUti
 SctPkg/TestCase/UEFI/EFI/Protocol/DevicePathToText/BlackBoxTest/DevicePathToTextBBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/DevicePathFromText/BlackBoxTest/DevicePathFromTextBBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/DiskIo/BlackBoxTest/DiskIoBBTest.inf
-SctPkg/TestCase/UEFI/EFI/Protocol/DiskIo2/BlackBoxTest/DiskIo2BBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/Ebc/BlackBoxTest/EbcBBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/LoadedImage/BlackBoxTest/LoadedImageBBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/LoadFile/BlackBoxTest/LoadFileBBTest.inf
@@ -315,7 +319,6 @@ SctPkg/TestCase/UEFI/EFI/Protocol/PlatformToDriverConfiguration/BlackBoxTest/Pla
 SctPkg/TestCase/UEFI/EFI/Protocol/FirmwareManagement/BlackBoxTest/FirmwareManagementBBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/AtaPassThru/BlackBoxTest/AtaPassThruBBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/StorageSecurityCommand/BlackBoxTest/StorageSecurityCommandBBTest.inf
-
 
 SctPkg/TestCase/UEFI/EFI/Protocol/AdapterInfo/BlackBoxTest/AdapterInfoProtocolBBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/TimeStamp/BlackBoxTest/TimeStampProtocolBBTest.inf

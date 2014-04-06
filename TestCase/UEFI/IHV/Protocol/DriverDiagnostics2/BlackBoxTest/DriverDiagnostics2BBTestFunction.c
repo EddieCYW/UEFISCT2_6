@@ -155,7 +155,7 @@ BBTestRunDiagnosticsFuncTestCheckpoint1 (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiDriverDiagnostics2ProtocolGuid,
+                   &gBlackBoxEfiDriverDiagnostics2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -182,7 +182,7 @@ BBTestRunDiagnosticsFuncTestCheckpoint1 (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiDriverDiagnostics2ProtocolGuid,
+                     &gBlackBoxEfiDriverDiagnostics2ProtocolGuid,
                      &TestedDriverDiagnostics2
                      );
     if (EFI_ERROR (Status)) {
@@ -393,7 +393,7 @@ BBTestRunDiagnosticsFuncTestCheckpoint2 (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiDriverDiagnostics2ProtocolGuid,
+                   &gBlackBoxEfiDriverDiagnostics2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -420,7 +420,7 @@ BBTestRunDiagnosticsFuncTestCheckpoint2 (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiDriverDiagnostics2ProtocolGuid,
+                     &gBlackBoxEfiDriverDiagnostics2ProtocolGuid,
                      &TestedDriverDiagnostics2
                      );
     if (EFI_ERROR (Status)) {

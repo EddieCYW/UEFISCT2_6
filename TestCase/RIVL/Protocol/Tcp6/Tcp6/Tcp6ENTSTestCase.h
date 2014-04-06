@@ -61,7 +61,7 @@ Abstract:
 #include EFI_TEST_PROTOCOL_DEFINITION(EntsProtocol)
 #include "Eas.h"
 #include <Library/EntsLib.h>
-#include "SimpleNetwork.h"
+#include <UEFI/Protocol/SimpleNetwork.h>
 #include "ManagedNetwork.h"
 #include "Ip6.h"
 #include "Tcp6.h"

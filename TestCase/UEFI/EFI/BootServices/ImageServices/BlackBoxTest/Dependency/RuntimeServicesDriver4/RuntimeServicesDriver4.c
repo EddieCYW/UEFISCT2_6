@@ -111,7 +111,6 @@ RuntimeServicesDriver4Unload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeRuntimeServicesDriver4)
 
 EFI_STATUS
 InitializeRuntimeServicesDriver4 (

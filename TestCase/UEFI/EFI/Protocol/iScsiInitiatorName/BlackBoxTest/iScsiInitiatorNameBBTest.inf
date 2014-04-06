@@ -56,41 +56,29 @@
 #--*/
 
 [defines]
-BASE_NAME            = iScsiInitiatorNameBBTest
-FILE_GUID            = 8DDEABFF-E86E-4245-B369-B3F221E53A0F
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = iScsiInitiatorNameBBTest
+  FILE_GUID            = 8DDEABFF-E86E-4245-B369-B3F221E53A0F
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestiScsiInitiatorName
 
 [sources.common]
-  guid.c
+  Guid.c
+  Guid.h
   iScsiInitiatorNameBBTestMain.c
   iScsiInitiatorNameBBTestMain.h
   iScsiInitiatorNameBBTestFunction.c
   iScsiInitiatorNameBBTestConformance.c
 
-[sources.IA32]
-  iScsiInitiatorNameProtocol.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.X64]
-  iScsiInitiatorNameProtocol.c
-
-[sources.IPF]
-  iScsiInitiatorNameProtocol.c
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  TestProtocolLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestiScsiInitiatorName
+[Protocols]

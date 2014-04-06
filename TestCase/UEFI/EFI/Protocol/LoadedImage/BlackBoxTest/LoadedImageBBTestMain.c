@@ -54,7 +54,6 @@ Abstract:
   for Loaded Image Protocol Black Box Test
 
 --*/
-#include "SctLib.h"
 #include "LoadedImageBBTest.h"
 
 //
@@ -62,7 +61,6 @@ Abstract:
 //
 EFI_HANDLE      mImageHandle;
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestLoadedImageProtocol)
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
   LOADED_IMAGE_PROTOCOL_TEST_REVISION,
@@ -312,8 +310,8 @@ BBTestLoadedImageTest1 (
   for (Index = 0; Index < 6; Index++) {
 
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      TestNotifyFunction,
                      &ProtocolNotifyContext,
                      &EventArray[Index]
@@ -390,7 +388,7 @@ BBTestLoadedImageTest1 (
     //
     Status = gtBS->HandleProtocol (
                      ImageHandle,
-                     &gEfiLoadedImageProtocolGuid,
+                     &gBlackBoxEfiLoadedImageProtocolGuid,
                      &LoadedImage
                      );
     if (EFI_SUCCESS == Status) {
@@ -676,7 +674,7 @@ BBTestLoadedImageTest1 (
       //
       Status = gtBS->HandleProtocol (
                        ImageHandle,
-                       &gEfiLoadedImageProtocolGuid,
+                       &gBlackBoxEfiLoadedImageProtocolGuid,
                        &LoadedImage
                        );
       if (EFI_ERROR (Status)) {
@@ -761,7 +759,7 @@ BBTestLoadedImageTest1 (
       //
       Status = gtBS->HandleProtocol (
                        ImageHandle,
-                       &gEfiLoadedImageProtocolGuid,
+                       &gBlackBoxEfiLoadedImageProtocolGuid,
                        &LoadedImage
                        );
       if (EFI_ERROR (Status)) {
@@ -1036,7 +1034,7 @@ LoadedImageTestComposeSimpleFilePath (
 
   Status = gtBS->HandleProtocol (
                    CurrentImageHandle,
-                   &gEfiLoadedImageProtocolGuid,
+                   &gBlackBoxEfiLoadedImageProtocolGuid,
                    &LoadImage
                    );
   if (EFI_ERROR (Status)) {

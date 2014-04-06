@@ -54,8 +54,8 @@
    GUIDs auto-generated for EFI test assertion.
 
 --*/
-#include "Efi.h"
-#include "Guid.h"
+
+#include "HIIDatabaseBBTestMain.h"
 
 EFI_GUID gHIIDatabaseBBTestConformanceAssertionGuid001 = EFI_TEST_HIIDATABASEBBTESTCONFORMANCE_ASSERTION_001_GUID;
 

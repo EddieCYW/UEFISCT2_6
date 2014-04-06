@@ -55,44 +55,29 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = Ip6_ENTSTest
-FILE_GUID            = 22A3B176-E8B9-43b7-B130-32FE26F72739                       
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = Ip6_ENTSTest
+  FILE_GUID            = 22A3B176-E8B9-43b7-B130-32FE26F72739
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = Ip6ENTSTestMain
 
-COMPONENT_TYPE       = BS_DRIVER
-
-[sources.common]
+[Sources.common]
   Ip6ENTSTest.c
   Ip6ENTSTestCase.h
   Ip6ENTSTestCase.c
 
-[includes.common]
-  .
-  ./Include
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-  $(EFI_SOURCE)/Framework
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EDK_SOURCE)/Foundation/Library/Dxe/EfiIfrSupportLib
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
-  $(EFI_SOURCE)/SctPkg/TestCase/RIVL/NetworkProtocolLib/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EASDispatcher/Include
-     
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
+  EfiTestLib
   EntsLib
-  EntsProtocolLib
-  NetworkProtocolLib
 
-[nmake.common]
-  C_STD_INCLUDE=
-  IMAGE_ENTRY_POINT=Ip6ENTSTestMain
-
+[Protocols]
+  gEfiEntsProtocolGuid

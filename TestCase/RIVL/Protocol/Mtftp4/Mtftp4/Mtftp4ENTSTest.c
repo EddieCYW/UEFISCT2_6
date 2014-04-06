@@ -111,7 +111,6 @@ Mtftp4ENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Mtftp4ENTSTestMain)
 
 EFI_STATUS
 Mtftp4ENTSTestMain (

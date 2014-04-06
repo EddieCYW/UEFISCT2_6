@@ -52,7 +52,7 @@ Abstract:
     for EFI Driver HII Image Protocol's function Test
 
 --*/
-#include "SctLib.h"
+
 #include "HIIImageBBTestMain.h"
 
 extern UINT8 mPackageList1[];

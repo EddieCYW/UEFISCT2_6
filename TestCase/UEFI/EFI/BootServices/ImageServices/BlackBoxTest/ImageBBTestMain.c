@@ -61,14 +61,13 @@ Abstract:
 //
 // global variable for this test driver's image handle
 //
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestImageBootServices)
 
 //
 // Build Data structure here
 //
 EFI_TPL TplArray [TPL_ARRAY_SIZE_FOR_UNLOAD_EXIT_IMAGE] = {
-  EFI_TPL_APPLICATION,
-  EFI_TPL_CALLBACK
+  TPL_APPLICATION,
+  TPL_CALLBACK
 };
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {

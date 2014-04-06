@@ -93,7 +93,6 @@ EFI_BB_TEST_ENTRY_FIELD gLoadFileTestEntryField[] = {
 EFI_BB_TEST_PROTOCOL *gLoadFileTestProt;
 
 
-EFI_DRIVER_ENTRY_POINT(InitializeLoadFileTest)
 /**
  *  Creates/installs the BlackBox Interface and eminating Entry Point node list.
  *  @param  ImageHandle The test driver image handle
@@ -114,7 +113,7 @@ InitializeLoadFileTest (
   SctInitializeLib (ImageHandle, SystemTable);
   SctInitializeDriver (ImageHandle, SystemTable);
 
-  Status = gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR(Status)) {
     return Status;
   }

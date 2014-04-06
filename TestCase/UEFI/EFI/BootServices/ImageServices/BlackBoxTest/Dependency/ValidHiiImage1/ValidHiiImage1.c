@@ -67,7 +67,6 @@ InitializeValidHiiImage1 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeValidHiiImage1)
 
 EFI_STATUS
 InitializeValidHiiImage1 (

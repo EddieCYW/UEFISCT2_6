@@ -82,7 +82,6 @@ MnpSBENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (MnpSBENTSTestMain)
 
 EFI_STATUS
 MnpSBENTSTestMain (

@@ -60,15 +60,15 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "IPsecConfigProtocol.h"
-#include "IPsec2Protocol.h"
+#include <UEFI/Protocol/IPsecConfig.h>
+#include <UEFI/Protocol/IPsec2.h>
 #include "Guid.h"
-#include "Ip4.h"
-#include "Ip6.h"
+#include <UEFI/Protocol/Ip4.h>
+#include <UEFI/Protocol/Ip6.h>
 #include "Ip4Packet.h"
 #include "Ip6Packet.h"
-#include "Udp4.h"
-#include "Udp6.h"
+#include <UEFI/Protocol/Udp4.h>
+#include <UEFI/Protocol/Udp6.h>
 #include "IPsecConfigDataIp4Transport.h"
 #include "IPsecConfigDataIp4Tunnel.h"
 #include "IPsecConfigDataIp6Transport.h"

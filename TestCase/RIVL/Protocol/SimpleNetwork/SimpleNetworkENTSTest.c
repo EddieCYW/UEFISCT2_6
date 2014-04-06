@@ -156,7 +156,6 @@ SimpleNetworkENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (SimpleNetworkENTSTestMain)
 
 EFI_STATUS
 SimpleNetworkENTSTestMain (

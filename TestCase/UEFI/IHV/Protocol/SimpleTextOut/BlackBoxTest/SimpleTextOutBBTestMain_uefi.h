@@ -62,7 +62,7 @@ Abstract:
 
 #include "Efi.h"
 #include "Guid_uefi.h"
-#include EFI_PROTOCOL_DEFINITION (SimpleTextOut)
+#include <UEFI/Protocol/SimpleTextOut.h>
 #include EFI_PROTOCOL_DEFINITION (GraphicsOutput)
 
 #include <Library/EfiTestLib.h>

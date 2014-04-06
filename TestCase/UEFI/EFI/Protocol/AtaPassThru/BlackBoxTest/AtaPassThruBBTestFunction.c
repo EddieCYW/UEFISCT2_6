@@ -932,8 +932,8 @@ BBTestPassThruFunctionAutoTest (
   // Create Event
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    NotifyFunction,
                    NULL,
                    &Event

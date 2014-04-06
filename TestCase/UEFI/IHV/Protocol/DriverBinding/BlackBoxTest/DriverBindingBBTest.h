@@ -61,7 +61,7 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "DriverBindingProtocol.h"
+#include <UEFI/Protocol/DriverBinding.h>
 #include "guid.h"
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestProfileLibrary)

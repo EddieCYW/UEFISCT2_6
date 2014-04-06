@@ -59,11 +59,12 @@ Abstract:
 #ifndef _BBTEST_SIMPLE_TEXT_OUTPUT_H
 #define _BBTEST_SIMPLE_TEXT_OUTPUT_H
 
-#include "Efi.h"
+#include <Base.h>
+#include "SctLib.h"
 #include "Guid_efi.h"
-#include EFI_PROTOCOL_DEFINITION (SimpleTextOut)
+#include <UEFI/Protocol/SimpleTextOut.h>
+#include <UEFI/Protocol/UgaDraw.h>
 #include EFI_PROTOCOL_DEFINITION (DevicePath)
-#include EFI_PROTOCOL_DEFINITION (UgaDraw)
 
 #include <Library/EfiTestLib.h>
 

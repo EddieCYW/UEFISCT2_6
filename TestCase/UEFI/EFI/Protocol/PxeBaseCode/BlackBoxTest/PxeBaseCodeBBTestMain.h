@@ -61,10 +61,9 @@ Abstract:
 #include "SctLib.h"
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
-#include "PxeBaseCode.h"
-#include "PxeBaseCodeCallBack.h"
-
-#include EFI_PROTOCOL_DEFINITION(SimpleNetwork)
+#include <UEFI/Protocol/SimpleNetwork.h>
+#include <UEFI/Protocol/PxeBaseCode.h>
+#include <UEFI/Protocol/PxeBaseCodeCallBack.h>
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestProfileLibrary)
 #include EFI_TEST_PROTOCOL_DEFINITION(TestLoggingLibrary)

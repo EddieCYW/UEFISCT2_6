@@ -60,7 +60,7 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "IPsecConfigProtocol.h"
+#include <UEFI/Protocol/IPsecConfig.h>
 #include "Guid.h"
 
 

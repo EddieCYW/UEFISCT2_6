@@ -149,7 +149,7 @@ BBTestProcessExtFunctionTest (
   // Open IPSEC_CONFIG_PROTOCOL
   //
   SctLocateProtocol(
-    &gEfiIPsecConfigProtocolGuid,
+    &gBlackBoxEfiIPsecConfigProtocolGuid,
     &IpSecConf
     );
 
@@ -825,7 +825,7 @@ BBTestProcessExtFunctionTestCheckpoint1 (
   // 
   gtBS->LocateHandleBuffer(
           ByProtocol, 
-          &gEfiUdp4ServiceBindingProtocolGuid, 
+          &gBlackBoxEfiUdp4ServiceBindingProtocolGuid, 
           NULL, 
           &NoHandles,
           &NicHandleBuffer
@@ -1162,7 +1162,7 @@ BBTestProcessExtFunctionTestCheckpoint2 (
   // 
   gtBS->LocateHandleBuffer(
           ByProtocol, 
-          &gEfiUdp4ServiceBindingProtocolGuid, 
+          &gBlackBoxEfiUdp4ServiceBindingProtocolGuid, 
           NULL, 
           &NoHandles,
           &NicHandleBuffer
@@ -1502,7 +1502,7 @@ BBTestProcessExtFunctionTestCheckpoint3(
   // 
   gtBS->LocateHandleBuffer(
           ByProtocol, 
-          &gEfiUdp4ServiceBindingProtocolGuid, 
+          &gBlackBoxEfiUdp4ServiceBindingProtocolGuid, 
           NULL, 
           &NoHandles,
           &NicHandleBuffer
@@ -1921,7 +1921,7 @@ BBTestProcessExtFunctionTestCheckpoint4(
   // 
   gtBS->LocateHandleBuffer(
           ByProtocol, 
-          &gEfiUdp4ServiceBindingProtocolGuid, 
+          &gBlackBoxEfiUdp4ServiceBindingProtocolGuid, 
           NULL, 
           &NoHandles,
           &NicHandleBuffer
@@ -2336,7 +2336,7 @@ BBTestProcessExtFunctionTestCheckpoint5 (
   // 
   gtBS->LocateHandleBuffer(
           ByProtocol, 
-          &gEfiUdp6ServiceBindingProtocolGuid, 
+          &gBlackBoxEfiUdp6ServiceBindingProtocolGuid, 
           NULL, 
           &NoHandles,
           &NicHandleBuffer
@@ -2708,7 +2708,7 @@ BBTestProcessExtFunctionTestCheckpoint6 (
   // 
   gtBS->LocateHandleBuffer(
           ByProtocol, 
-          &gEfiUdp6ServiceBindingProtocolGuid, 
+          &gBlackBoxEfiUdp6ServiceBindingProtocolGuid, 
           NULL, 
           &NoHandles,
           &NicHandleBuffer
@@ -3080,7 +3080,7 @@ BBTestProcessExtFunctionTestCheckpoint7(
   // 
   gtBS->LocateHandleBuffer(
           ByProtocol, 
-          &gEfiUdp6ServiceBindingProtocolGuid, 
+          &gBlackBoxEfiUdp6ServiceBindingProtocolGuid, 
           NULL, 
           &NoHandles,
           &NicHandleBuffer
@@ -3541,7 +3541,7 @@ BBTestProcessExtFunctionTestCheckpoint8(
   // 
   gtBS->LocateHandleBuffer(
           ByProtocol, 
-          &gEfiUdp6ServiceBindingProtocolGuid, 
+          &gBlackBoxEfiUdp6ServiceBindingProtocolGuid, 
           NULL, 
           &NoHandles,
           &NicHandleBuffer

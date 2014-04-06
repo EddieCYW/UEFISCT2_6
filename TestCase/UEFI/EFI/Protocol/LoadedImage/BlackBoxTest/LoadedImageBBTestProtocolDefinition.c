@@ -55,9 +55,7 @@ Abstract:
     Loaded Image Protocol Test
 
 --*/
-#include "SctLib.h"
-#include "Efi.h"
-#include "LoadedImageBBTestProtocolDefinition.h"
+#include "LoadedImageBBTest.h"
 
 //
 // module globals

@@ -111,7 +111,6 @@ BootServicesDriver4Unload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBootServicesDriver4)
 
 EFI_STATUS
 InitializeBootServicesDriver4 (

@@ -57,7 +57,7 @@
 #--*/
 
 BASE_NAME=ImageServices_VeryLargeImage1
-SOURCE_DIR=$(EFI_SOURCE)/SctPkg/TestCase/UEFI/EFI/BootServices/ImageServices/BlackBoxTest/Dependency/VeryLargeImage1
+SOURCE_DIR=$(WORKSPACE)/SctPkg/TestCase/UEFI/EFI/BootServices/ImageServices/BlackBoxTest/Dependency/VeryLargeImage1
 GENBIN=GenBin
 DEPENDECY=$(SOURCE_DIR)/VeryLargeImage1.ini
 UNAME = $(shell uname)

@@ -56,40 +56,28 @@
 #--*/
 
 [defines]
-BASE_NAME            = ComponentNameBbTest
-FILE_GUID            = 431F9FD2-62E3-4017-86D6-AC064BF1FAAE
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ComponentNameBbTest
+  FILE_GUID            = 431F9FD2-62E3-4017-86D6-AC064BF1FAAE
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestComponentName
 
 [sources.common]
   Guid.c
   ComponentNameBBTestMain.c
   ComponentNameBBTestFunction.c
   ComponentNameBBTestConformance.c
- 
-[sources.IA32]
-  ComponentNameProtocol.c
-  
-[sources.X64]
-  ComponentNameProtocol.c 
 
-[sources.IPF]
-  ComponentNameProtocol.c 
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestComponentName
+[Protocols]
+  gBlackBoxEfiComponentNameProtocolGuid

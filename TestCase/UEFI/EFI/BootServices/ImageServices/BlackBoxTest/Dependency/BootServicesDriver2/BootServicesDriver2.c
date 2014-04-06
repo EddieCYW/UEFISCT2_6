@@ -69,7 +69,6 @@ InitializeBootServicesDriver2 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBootServicesDriver2)
 
 EFI_STATUS
 InitializeBootServicesDriver2 (

@@ -56,32 +56,27 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvDevicePathBBTest
-FILE_GUID            = 160EB3DB-0B8C-43f4-9FE5-459087E8B0C4
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvDevicePathBBTest
+  FILE_GUID            = 160EB3DB-0B8C-43f4-9FE5-459087E8B0C4
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDevicePath
 
 [sources.common]
   DevicePathBBTestMain.c
   DevicePathBBTestMain.h
   DevicePathBBTestFunction.c
-  DevicePathProtocol.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestDevicePath
+[Protocols]

@@ -55,8 +55,7 @@
 
 --*/
 
-#include "Efi.h"
-#include "Guid.h"
+#include "HIIStringBBTestMain.h"
 
 EFI_GUID gHIIStringBBTestConformanceAssertionGuid001 = EFI_TEST_HIISTRINGBBTESTCONFORMANCE_ASSERTION_001_GUID;
 

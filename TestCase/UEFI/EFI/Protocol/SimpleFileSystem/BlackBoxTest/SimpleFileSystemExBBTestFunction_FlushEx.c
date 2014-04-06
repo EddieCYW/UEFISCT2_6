@@ -54,14 +54,16 @@ Abstract:
 --*/
 
 
-#include "SimpleFileSystemExProtocol.h"
+#define EFI_FILE_HANDLE_REVISION 0x00020000
+
+#include "SimpleFileSystemBBTest.h"
 
 //
 //
 //
 typedef struct {
   UINTN                 Signature;
-  EFI_FILE_PROTOCOL     *FileIo;
+  EFI_FILE              *FileIo;
   EFI_FILE_IO_TOKEN     FileIoToken;
   EFI_TPL               Tpl;
   SCT_LIST_ENTRY        ListEntry;     
@@ -98,7 +100,7 @@ BBTestFlushExBasicTestCheckpoint4 (
 
 EFI_STATUS
 InternalGetInfoFileIo2 (
-  EFI_FILE_PROTOCOL    *FileHandle,
+  EFI_FILE             *FileHandle,
   VOID                 **InfoBuffer,
   UINTN                *BufferSize,
   EFI_GUID             *InfoId
@@ -106,7 +108,7 @@ InternalGetInfoFileIo2 (
 
 EFI_STATUS
 InternalSetFileSizeFileIo2 (
-  EFI_FILE_PROTOCOL    *FileHandle,
+  EFI_FILE             *FileHandle,
   UINT64               FileSize
   );
 
@@ -120,7 +122,7 @@ SCT_LIST_ENTRY  AsyncFlushFileFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABL
 //
 // Async Flush File lock
 //
-SCT_LOCK  gAsyncFlushFileQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncFlushFileQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 
 //
@@ -133,7 +135,7 @@ SCT_LIST_ENTRY  AsyncFlushDirFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE
 //
 // Async Flush Dir lock
 //
-SCT_LOCK  gAsyncFlushDirQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncFlushDirQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 
 
@@ -170,7 +172,7 @@ EFIAPI FileIoFlushFileNotifyFunc (
 STATIC
 EFI_STATUS
 FileIoAsyncFlushFileData (
-  IN EFI_FILE_PROTOCOL    *FileIo,
+  IN EFI_FILE             *FileIo,
   IN EFI_TPL              Tpl
 )
 {
@@ -198,8 +200,8 @@ FileIoAsyncFlushFileData (
   // FileIoToken initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    FileIoFlushFileNotifyFunc,
                    FileIoEntity,
                    &FileIoEntity->FileIoToken.Event
@@ -276,7 +278,7 @@ EFIAPI FileIoFlushDirNotifyFunc (
 STATIC
 EFI_STATUS
 FileIoAsyncFlushDirData (
-  IN EFI_FILE_PROTOCOL                 *FileIo,
+  IN EFI_FILE                          *FileIo,
   IN EFI_TPL                           Tpl
 )
 {
@@ -302,8 +304,8 @@ FileIoAsyncFlushDirData (
   // FileIoToken initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    FileIoFlushDirNotifyFunc,
                    FileIoEntity,
                    &FileIoEntity->FileIoToken.Event
@@ -426,10 +428,10 @@ BBTestFlushExBasicTestCheckpoint1 (
   )
 {
   EFI_STATUS           Status;
-  EFI_FILE_PROTOCOL    *Root;
+  EFI_FILE             *Root;
   UINTN                TplIndex;
   CHAR16               FileName[100];
-  EFI_FILE_PROTOCOL    *FileHandle;
+  EFI_FILE             *FileHandle;
   UINT8                *Buffer;
   UINTN                BufferSize;
   UINTN                IndexI;
@@ -730,10 +732,10 @@ BBTestFlushExBasicTestCheckpoint2 (
   )
 {
   EFI_STATUS                Status;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   UINTN                     TplIndex;
   CHAR16                    FileName[100];
-  EFI_FILE_PROTOCOL         *FileHandle;
+  EFI_FILE                  *FileHandle;
   UINT8                     *Buffer;
   UINTN                     BufferSize;
   EFI_FILE_IO_TOKEN         FileIoTokenSync;
@@ -914,12 +916,12 @@ BBTestFlushExBasicTestCheckpoint3 (
   )
 {
   EFI_STATUS                Status;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   UINTN                     TplIndex;
   CHAR16                    DirName[100];
   CHAR16                    FileName[TPL_ARRAY_SIZE][100];
-  EFI_FILE_PROTOCOL         *DirHandle;
-  EFI_FILE_PROTOCOL         *FileHandle[TPL_ARRAY_SIZE];
+  EFI_FILE                  *DirHandle;
+  EFI_FILE                  *FileHandle[TPL_ARRAY_SIZE];
   UINTN                     IndexI;
   UINTN                     WaitIndex;
   SCT_LIST_ENTRY            *ListEntry;
@@ -1180,12 +1182,12 @@ BBTestFlushExBasicTestCheckpoint4 (
   )
 {
   EFI_STATUS                Status;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   UINTN                     TplIndex;
   CHAR16                    DirName[100];
   CHAR16                    FileName[100];
-  EFI_FILE_PROTOCOL         *DirHandle;
-  EFI_FILE_PROTOCOL         *FileHandle;
+  EFI_FILE                  *DirHandle;
+  EFI_FILE                  *FileHandle;
   EFI_FILE_IO_TOKEN         FileIoTokenSync;
   EFI_TPL                   OldTpl;
   EFI_TEST_ASSERTION        AssertionType;

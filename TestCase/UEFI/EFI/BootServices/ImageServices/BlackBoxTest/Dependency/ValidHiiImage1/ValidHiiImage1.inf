@@ -67,8 +67,8 @@ CUSTOM_MAKEFILE      = GCC | GNUmakefile
 
 [sources.common]
   ValidHiiImage1.c
-  ../../protocoldefinition.c
-  ../../misc.c
+  ../../ProtocolDefinition.c
+  ../../Misc.c
 
 [includes.common]
   .

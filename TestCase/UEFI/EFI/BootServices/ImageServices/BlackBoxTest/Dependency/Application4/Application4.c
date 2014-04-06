@@ -69,7 +69,6 @@ InitializeEfiApplication4 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_APPLICATION_ENTRY_POINT(InitializeEfiApplication4)
 
 EFI_STATUS
 InitializeEfiApplication4 (

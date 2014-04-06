@@ -82,7 +82,6 @@ Udp4ServiceBindingENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Udp4ServiceBindingENTSTestMain)
 
 EFI_STATUS
 Udp4ServiceBindingENTSTestMain (

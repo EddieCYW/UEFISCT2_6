@@ -61,7 +61,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "SimplePointerProtocol.h"
+#include <UEFI/Protocol/SimplePointer.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

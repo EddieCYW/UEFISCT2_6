@@ -56,7 +56,7 @@
 #--*/
 
 BASE_NAME=ImageServices_InvalidImage7
-SOURCE_DIR=$(EFI_SOURCE)/SctPkg/TestCase/UEFI/EFI/BootServices/ImageServices/BlackBoxTest/Dependency/InvalidImage7
+SOURCE_DIR=$(WORKSPACE)/SctPkg/TestCase/UEFI/EFI/BootServices/ImageServices/BlackBoxTest/Dependency/InvalidImage7
 GENBIN=GenBin
 DEPENDECY=$(SOURCE_DIR)/InvalidImage7.ini
 UNAME = $(shell uname)

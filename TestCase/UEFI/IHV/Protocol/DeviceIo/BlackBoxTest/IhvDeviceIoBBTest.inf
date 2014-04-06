@@ -56,13 +56,14 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvDeviceIoBBTest
-FILE_GUID            = CD158402-5966-4313-B46B-F6668444A398
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvDeviceIoBBTest
+  FILE_GUID            = CD158402-5966-4313-B46B-F6668444A398
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDeviceIo
 
 [sources.common]
-  DeviceIoProtocol.c
-  DeviceIoProtocol.h
   DeviceIoBBTestMain.c
   DeviceIoBBTestMain.h
   DeviceIoBBTestFunction.c
@@ -72,22 +73,18 @@ COMPONENT_TYPE       = BS_DRIVER
   guid.c
   guid.h
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestDeviceIo
-
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gEfiTestProfileLibraryGuid
+  gBlackBoxEfiPciIoProtocolGuid
+  gBlackBoxEfiDeviceIoProtocolGuid

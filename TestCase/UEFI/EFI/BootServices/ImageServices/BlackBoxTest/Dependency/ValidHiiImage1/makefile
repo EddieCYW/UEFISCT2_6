@@ -57,7 +57,7 @@
 
 
 BASE_NAME=ImageServices_ValidHiiImage1
-SOURCE_DIR=$(EFI_SOURCE)\SctPkg\TestCase\UEFI\EFI\BootServices\ImageServices\BlackBoxTest\Dependency\ValidHiiImage1
+SOURCE_DIR=$(WORKSPACE)\SctPkg\TestCase\UEFI\EFI\BootServices\ImageServices\BlackBoxTest\Dependency\ValidHiiImage1
 TARGET_EFI=$(SOURCE_DIR)\$(ARCH)\$(BASE_NAME).efi
 
 #

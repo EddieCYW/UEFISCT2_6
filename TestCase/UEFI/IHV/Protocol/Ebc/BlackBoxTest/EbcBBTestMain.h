@@ -62,11 +62,13 @@ Abstract:
 #include "Efi.h"
 #include "guid.h"
 #include <Library/EfiTestLib.h>
-#include "EbcProtocol.h"
+#include <UEFI/Protocol/Ebc.h>
+#include <UEFI/Protocol/SimpleFileSystem.h>
 
-#include EFI_GUID_DEFINITION (Hob)
-#include EFI_GUID_DEFINITION (PeiPeCoffLoader)
-#include EFI_GUID_DEFINITION (PeiFlushInstructionCache)
+#include <Guid/HobList.h>
+
+#include <Protocol/PeiPeCoffLoader.h>
+#include <Protocol/PeiFlushInstructionCache.h>
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestProfileLibrary)
 
@@ -98,7 +100,7 @@ typedef struct {
 #define EBC_DRIVER_TEST_PROTOCOL \
   { 0xf01547c5, 0x6f06, 0x4c6d, 0xb6, 0x10, 0x88, 0x91, 0xe7, 0x74, 0x36, 0x45 }
 
-extern EFI_GUID gEfiEbcDriverProtocolGuid;
+extern EFI_GUID gBlackBoxEfiEbcDriverProtocolGuid;
 
 //
 // Prototypes of Basic Test

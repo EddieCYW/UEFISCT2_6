@@ -61,7 +61,7 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "AcpiTableProtocol.h"
+#include <UEFI/Protocol/AcpiTable.h>
 #include "Guid.h"
 
 

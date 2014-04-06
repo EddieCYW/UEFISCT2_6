@@ -56,13 +56,14 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvUsb2HcTest
-FILE_GUID            = A9C327A7-0B0C-440a-BAF4-48C49220CA85
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvUsb2HcTest
+  FILE_GUID            = A9C327A7-0B0C-440a-BAF4-48C49220CA85
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestUsb2Hc
 
 [sources.common]
-  Usb2HcProtocol.h
-  Usb2HcProtocol.c
   Usb2HcTest.h
   Usb2HcTestMain.c
   Usb2HcTestConformance.c
@@ -79,21 +80,16 @@ COMPONENT_TYPE       = BS_DRIVER
 [sources.ia32]    
   ia32/TimerInterrupt.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestUsb2Hc
+[Protocols]
+  gEfiTestLoggingLibraryGuid
+  gBlackBoxEfiUsb2HcProtocolGuid

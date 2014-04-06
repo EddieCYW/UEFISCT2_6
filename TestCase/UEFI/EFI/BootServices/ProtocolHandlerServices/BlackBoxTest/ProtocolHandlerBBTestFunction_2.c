@@ -6889,29 +6889,29 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint1 (
   }
 
   Status1 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_WAIT,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_WAIT,
+                    TPL_CALLBACK,
                     TestNotifyFunction0,
                     NULL,
                     &EventArray[0]
                     );
   Status2 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction0,
                     NULL,
                     &EventArray[1]
                     );
   Status3 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_WAIT,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_WAIT,
+                    TPL_NOTIFY,
                     TestNotifyFunction0,
                     NULL,
                     &EventArray[2]
                     );
   Status4 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction0,
                     NULL,
                     &EventArray[3]
@@ -7074,15 +7074,15 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint2 (
   }
 
   Status1 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[0],
                     &EventArray[0]
                     );
   Status2 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[1],
                     &EventArray[1]
@@ -7323,15 +7323,15 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint3 (
   }
 
   Status1 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[0],
                     &EventArray[0]
                     );
   Status2 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[1],
                     &EventArray[1]
@@ -7382,9 +7382,9 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint3 (
 
   
   //
-  // Raise TPL to EFI_TPL_CALLBACK
+  // Raise TPL to TPL_CALLBACK
   //
-  OldTpl = gtBS->RaiseTPL (EFI_TPL_CALLBACK);
+  OldTpl = gtBS->RaiseTPL (TPL_CALLBACK);
 
   //
   // Step 2: Install TestNoInterfaceProtocol1
@@ -7634,15 +7634,15 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint4 (
   }
 
   Status1 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[0],
                     &EventArray[0]
                     );
   Status2 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[1],
                     &EventArray[1]
@@ -7702,13 +7702,13 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint4 (
   }
 
   //
-  // Raise TPL to EFI_TPL_NOTIFY
+  // Raise TPL to TPL_NOTIFY
   // the RecordAssertion could only be invoked at TPL lower
-  // than EFI_TPL_NOTIFY, therefore, all records will be performed
+  // than TPL_NOTIFY, therefore, all records will be performed
   // at the label "RecordPlace", where TPL has been lowered down to
-  // EFI_TPL_APPLICATION
+  // TPL_APPLICATION
   //
-  OldTpl = gtBS->RaiseTPL (EFI_TPL_NOTIFY);
+  OldTpl = gtBS->RaiseTPL (TPL_NOTIFY);
 
   //
   // Step 2: Install TestNoInterfaceProtocol1
@@ -7913,15 +7913,15 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint5 (
   gtBS->SetMem (NotifyContextArray, 2 * sizeof (NOTIFY_CONTEXT_2), 0);
 
   Status1 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction2,
                     &NotifyContextArray[0],
                     &EventArray[0]
                     );
   Status2 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction2,
                     &NotifyContextArray[1],
                     &EventArray[1]
@@ -8181,15 +8181,15 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint6 (
   NotifyContextArray[1].Status = 0x5a;
 
   Status1 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction2,
                     &NotifyContextArray[0],
                     &EventArray[0]
                     );
   Status2 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction2,
                     &NotifyContextArray[1],
                     &EventArray[1]
@@ -8252,9 +8252,9 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint6 (
   }
 
   //
-  // Raise TPL to EFI_TPL_CALLBACK
+  // Raise TPL to TPL_CALLBACK
   //
-  OldTpl = gtBS->RaiseTPL (EFI_TPL_CALLBACK);
+  OldTpl = gtBS->RaiseTPL (TPL_CALLBACK);
 
   //
   // Step 2: Install TestNoInterfaceProtocol1
@@ -8505,15 +8505,15 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint7 (
   NotifyContextArray[1].Status = 0x5a;
 
   Status1 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction2,
                     &NotifyContextArray[0],
                     &EventArray[0]
                     );
   Status2 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction2,
                     &NotifyContextArray[1],
                     &EventArray[1]
@@ -8576,13 +8576,13 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint7 (
   }
 
   //
-  // Raise TPL to EFI_TPL_NOTIFY
+  // Raise TPL to TPL_NOTIFY
   // the RecordAssertion could only be invoked at TPL lower
-  // than EFI_TPL_NOTIFY, therefore, all records will be performed
+  // than TPL_NOTIFY, therefore, all records will be performed
   // at the label "RecordPlace", where TPL has been lowered down to
-  // EFI_TPL_APPLICATION
+  // TPL_APPLICATION
   //
-  OldTpl = gtBS->RaiseTPL (EFI_TPL_NOTIFY);
+  OldTpl = gtBS->RaiseTPL (TPL_NOTIFY);
 
   //
   // Step 2: Install TestNoInterfaceProtocol1
@@ -10324,29 +10324,29 @@ BBTestInstallMultipleProtocolInterfacesInterfaceTestCheckPoint6 (
   InitializeInterfaceFunctionTestProtocol2 (&InterfaceFunctionTestProt2Instance);
 
   Status1 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[0],
                     &EventArray[0]
                     );
   Status2 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[1],
                     &EventArray[1]
                     );
   Status3 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[2],
                     &EventArray[2]
                     );
   Status4 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[3],
                     &EventArray[3]
@@ -10440,7 +10440,7 @@ BBTestInstallMultipleProtocolInterfacesInterfaceTestCheckPoint6 (
                  AssertionType,
                  gProtocolHandlerBBTestFunction_2AssertionGuid365,
                  L"BS.InstallMultipleProtocolInterfaces - InterfaceTestCheckpoint6",
-                 L"%a:%d:Status - %r, TPL - EFI_TPL_APPLICATION",
+                 L"%a:%d:Status - %r, TPL - TPL_APPLICATION",
                  __FILE__,
                  (UINTN)__LINE__,
                  Status
@@ -10557,29 +10557,29 @@ BBTestInstallMultipleProtocolInterfacesInterfaceTestCheckPoint7 (
   InitializeInterfaceFunctionTestProtocol2 (&InterfaceFunctionTestProt2Instance);
 
   Status1 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[0],
                     &EventArray[0]
                     );
   Status2 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[1],
                     &EventArray[1]
                     );
   Status3 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[2],
                     &EventArray[2]
                     );
   Status4 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[3],
                     &EventArray[3]
@@ -10654,7 +10654,7 @@ BBTestInstallMultipleProtocolInterfacesInterfaceTestCheckPoint7 (
   //
   // Step 2: Install Protocol1 & Protocol2
   //
-  OldTpl = gtBS->RaiseTPL (EFI_TPL_CALLBACK);
+  OldTpl = gtBS->RaiseTPL (TPL_CALLBACK);
 
   gtBS->SetMem (NotifiedTimesArray, 4 * sizeof (UINTN), 0);
   Status = gtBS->InstallMultipleProtocolInterfaces (
@@ -10713,7 +10713,7 @@ RecordPlace:
                  AssertionTypeGuid368,
                  gProtocolHandlerBBTestFunction_2AssertionGuid368,
                  L"BS.InstallMultipleProtocolInterfaces - InterfaceTestCheckpoint7",
-                 L"%a:%d:Status - %r, TPL - EFI_TPL_CALLBACK",
+                 L"%a:%d:Status - %r, TPL - TPL_CALLBACK",
                  __FILE__,
                  (UINTN)__LINE__,
                  Status
@@ -10816,29 +10816,29 @@ BBTestInstallMultipleProtocolInterfacesInterfaceTestCheckPoint8 (
   InitializeInterfaceFunctionTestProtocol2 (&InterfaceFunctionTestProt2Instance);
 
   Status1 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[0],
                     &EventArray[0]
                     );
   Status2 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_CALLBACK,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_CALLBACK,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[1],
                     &EventArray[1]
                     );
   Status3 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[2],
                     &EventArray[2]
                     );
   Status4 = gtBS->CreateEvent (
-                    EFI_EVENT_NOTIFY_SIGNAL,
-                    EFI_TPL_NOTIFY,
+                    EVT_NOTIFY_SIGNAL,
+                    TPL_NOTIFY,
                     TestNotifyFunction1,
                     &NotifiedTimesArray[3],
                     &EventArray[3]
@@ -10913,7 +10913,7 @@ BBTestInstallMultipleProtocolInterfacesInterfaceTestCheckPoint8 (
   //
   // Step 2: Install Protocol1 & Protocol2
   //
-  OldTpl = gtBS->RaiseTPL (EFI_TPL_NOTIFY);
+  OldTpl = gtBS->RaiseTPL (TPL_NOTIFY);
 
   gtBS->SetMem (NotifiedTimesArray, 4 * sizeof (UINTN), 0);
   Status = gtBS->InstallMultipleProtocolInterfaces (
@@ -10961,7 +10961,7 @@ RecordPlace:
                  AssertionTypeGuid371,
                  gProtocolHandlerBBTestFunction_2AssertionGuid371,
                  L"BS.InstallMultipleProtocolInterfaces - InterfaceTestCheckpoint8",
-                 L"%a:%d:Status - %r, TPL - EFI_TPL_NOTIFY",
+                 L"%a:%d:Status - %r, TPL - TPL_NOTIFY",
                  __FILE__,
                  (UINTN)__LINE__,
                  Status

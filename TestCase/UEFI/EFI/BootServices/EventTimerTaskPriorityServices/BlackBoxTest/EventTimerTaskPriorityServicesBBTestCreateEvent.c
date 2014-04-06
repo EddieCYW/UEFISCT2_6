@@ -140,7 +140,7 @@ BBTestCreateEvent_Conf (
   BBTestCreateEvent_Conf_Sub3 (StandardLib);
 
   //
-  // CreateEvent() returns EFI_INVALID_PARAMETER with NotifyFunction being NULL and Type is EFI_EVENT_NOTIFY_WAIT or EFI_EVENT_NOTIFY_SIGNAL..
+  // CreateEvent() returns EFI_INVALID_PARAMETER with NotifyFunction being NULL and Type is EVT_NOTIFY_WAIT or EVT_NOTIFY_SIGNAL..
   //
   BBTestCreateEvent_Conf_Sub4 (StandardLib);
   
@@ -211,16 +211,16 @@ BBTestCreateEvent_Conf_Sub1 (
   UINTN               Index;
   UINTN               SubIndex;
   UINT32              InvalidEventTypes[] = {
-                        EFI_EVENT_NOTIFY_WAIT | EFI_EVENT_NOTIFY_SIGNAL,
-                        EFI_EVENT_NOTIFY_WAIT | EFI_EVENT_SIGNAL_EXIT_BOOT_SERVICES,
-                        EFI_EVENT_NOTIFY_WAIT | EFI_EVENT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
-                        EFI_EVENT_TIMER | EFI_EVENT_SIGNAL_EXIT_BOOT_SERVICES,
-                        EFI_EVENT_TIMER | EFI_EVENT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
+                        EVT_NOTIFY_WAIT | EVT_NOTIFY_SIGNAL,
+                        EVT_NOTIFY_WAIT | EVT_SIGNAL_EXIT_BOOT_SERVICES,
+                        EVT_NOTIFY_WAIT | EVT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
+                        EVT_TIMER | EVT_SIGNAL_EXIT_BOOT_SERVICES,
+                        EVT_TIMER | EVT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;
@@ -286,14 +286,14 @@ BBTestCreateEvent_Conf_Sub2 (
   UINTN               Index;
   UINTN               SubIndex;
   UINT32              EventTypes[] = {
-                        // NotifyTpl will be ignored with EFI_EVENT_TIMER
-                        EFI_EVENT_NOTIFY_WAIT,
-                        EFI_EVENT_NOTIFY_SIGNAL,
+                        // NotifyTpl will be ignored with EVT_TIMER
+                        EVT_NOTIFY_WAIT,
+                        EVT_NOTIFY_SIGNAL,
                         0
                       };
   EFI_TPL             InvalidNotifyTpls[] = {
-                        (EFI_TPL) (EFI_TPL_HIGH_LEVEL + 1),
-                        (EFI_TPL) (EFI_TPL_APPLICATION - 1),
+                        (EFI_TPL) (TPL_HIGH_LEVEL + 1),
+                        (EFI_TPL) (TPL_APPLICATION - 1),
                         (EFI_TPL) -1,
                         0
                       };
@@ -360,17 +360,17 @@ BBTestCreateEvent_Conf_Sub3 (
   UINTN               Index;
   UINTN               SubIndex;
   UINT32              EventTypes[] = {
-                        EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                        EFI_EVENT_RUNTIME | EFI_EVENT_NOTIFY_SIGNAL,							
-                        EFI_EVENT_NOTIFY_WAIT,
-                        EFI_EVENT_NOTIFY_SIGNAL,
-                        EFI_EVENT_SIGNAL_EXIT_BOOT_SERVICES ,
-                        EFI_EVENT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
+                        EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                        EVT_RUNTIME | EVT_NOTIFY_SIGNAL,							
+                        EVT_NOTIFY_WAIT,
+                        EVT_NOTIFY_SIGNAL,
+                        EVT_SIGNAL_EXIT_BOOT_SERVICES ,
+                        EVT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;
@@ -428,13 +428,13 @@ BBTestCreateEvent_Conf_Sub4 (
   UINTN               Index;
   UINTN               SubIndex;
   UINT32              EventTypes[] = {						
-                        EFI_EVENT_NOTIFY_WAIT,
-                        EFI_EVENT_NOTIFY_SIGNAL,
+                        EVT_NOTIFY_WAIT,
+                        EVT_NOTIFY_SIGNAL,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;
@@ -466,7 +466,7 @@ BBTestCreateEvent_Conf_Sub4 (
                  StandardLib,
                  AssertionType,
                  gEventTimerTaskPriorityServicesBBTestCreateEventAssertionGuid007,
-                 L"BS.CreateEvent - Create event with NotifyFunction being NULL and Type is EFI_EVENT_NOTIFY_WAIT or EFI_EVENT_NOTIFY_SIGNAL.",
+                 L"BS.CreateEvent - Create event with NotifyFunction being NULL and Type is EVT_NOTIFY_WAIT or EVT_NOTIFY_SIGNAL.",
                  L"%a:%d:Status = %r, EventType - 0x%08x, NotifyTpl - %d",
                  __FILE__,
                  (UINTN)__LINE__,
@@ -499,16 +499,16 @@ BBTestCreateEvent_Func_Sub1 (
   UINTN               Index;
   UINTN               SubIndex;
   UINT32              EventTypes[] = {
-                        EFI_EVENT_TIMER,
-                        EFI_EVENT_NOTIFY_WAIT,
-                        EFI_EVENT_NOTIFY_SIGNAL,
-                        EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_WAIT,
-                        EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
+                        EVT_TIMER,
+                        EVT_NOTIFY_WAIT,
+                        EVT_NOTIFY_SIGNAL,
+                        EVT_TIMER | EVT_NOTIFY_WAIT,
+                        EVT_TIMER | EVT_NOTIFY_SIGNAL,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;
@@ -574,11 +574,11 @@ BBTestCreateEvent_Func_Sub2 (
   UINTN               Index;
   UINTN               SubIndex;
   UINT32              EventTypes[] = {
-                        EFI_EVENT_TIMER,
+                        EVT_TIMER,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        (EFI_TPL) (EFI_TPL_HIGH_LEVEL + 1),
+                        (EFI_TPL) (TPL_HIGH_LEVEL + 1),
                         (EFI_TPL) -1,
                         0
                       };
@@ -646,12 +646,12 @@ BBTestCreateEvent_Func_Sub3 (
   UINTN               SubIndex;
   EFI_TPL             OldTpl;
   UINT32              EventTypes[] = {
-                        EFI_EVENT_NOTIFY_SIGNAL,
+                        EVT_NOTIFY_SIGNAL,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;
@@ -687,9 +687,9 @@ BBTestCreateEvent_Func_Sub3 (
     }
 
     //
-    // Signal these events at EFI_TPL_HIGH_LEVEL
+    // Signal these events at TPL_HIGH_LEVEL
     //
-    OldTpl = gtBS->RaiseTPL (EFI_TPL_HIGH_LEVEL);
+    OldTpl = gtBS->RaiseTPL (TPL_HIGH_LEVEL);
     for (SubIndex = 0; NotifyTpls[SubIndex] != 0; SubIndex++) {
       Status = gtBS->SignalEvent (Events[SubIndex]);
       if (EFI_ERROR (Status)) {
@@ -706,8 +706,8 @@ BBTestCreateEvent_Func_Sub3 (
     // Compare the notify order
     //
     if ((Buffer[1] == 2                       ) &&
-        (Buffer[2] == (UINTN) EFI_TPL_NOTIFY  ) &&
-        (Buffer[3] == (UINTN) EFI_TPL_CALLBACK)) {
+        (Buffer[2] == (UINTN) TPL_NOTIFY  ) &&
+        (Buffer[3] == (UINTN) TPL_CALLBACK)) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_FAILED;

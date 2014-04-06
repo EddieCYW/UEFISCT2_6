@@ -58,11 +58,11 @@ Abstract:
 #ifndef _HII_STRING_BB_TEST_MAIN
 #define _HII_STRING_BB_TEST_MAIN
 
-
-#include "Efi.h"
+#define __UEFI_INTERNAL_FORMREPRESENTATION_H__
+#include <Base.h>
+#include "SctLib.h"
 #include <Library/EfiTestLib.h>
-#include "HiiProtocol.h"
-#include "HIIString.h"
+#include <UEFI/Protocol/Hii.h>
 #include "Guid.h"
 
 

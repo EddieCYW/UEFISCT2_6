@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "DevicePathToTextBBTestMain.h"
 
 //
@@ -129,7 +128,6 @@ BBTestDevicePathToTextProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (InitializeBBTestDevicePathToTextProtocol)
 
 /**
  *  Device Path Protocol Test Driver Entry point.
@@ -856,7 +854,7 @@ BuildCtrlDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Controller", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    Controller->Controller = (UINT32) SctStrToUInt (ParamIdentifierVal);
+    Controller->ControllerNumber = (UINT32) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
@@ -1585,7 +1583,7 @@ BuildVenPcAnsiDeviceNode (
     return NULL;
   }
 
-  Vendor->Guid = gEfiPcAnsiGuid;
+  Vendor->Guid = gBlackBoxEfiPcAnsiGuid;
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Vendor;
 }
@@ -1603,7 +1601,7 @@ BuildVenVt100DeviceNode (
     return NULL;
   }
 
-  Vendor->Guid = gEfiVT100Guid;
+  Vendor->Guid = gBlackBoxEfiVT100Guid;
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Vendor;
 }
@@ -1621,7 +1619,7 @@ BuildVenVt100PlusDeviceNode (
     return NULL;
   }
 
-  Vendor->Guid = gEfiVT100PlusGuid;
+  Vendor->Guid = gBlackBoxEfiVT100PlusGuid;
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Vendor;
 }
@@ -1639,7 +1637,7 @@ BuildVenUtf8DeviceNode (
     return NULL;
   }
 
-  Vendor->Guid = gEfiVTUTF8Guid;
+  Vendor->Guid = gBlackBoxEfiVTUTF8Guid;
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Vendor;
 }
@@ -1693,7 +1691,7 @@ BuildDebugPortDeviceNode (
 
   Vend = (VENDOR_DEFINED_MESSAGING_DEVICE_PATH *) CreateDeviceNode (0x3, 0x0a, sizeof (VENDOR_DEFINED_MESSAGING_DEVICE_PATH));
 
-  Vend->Guid = gEfiDebugPortProtocolGuid;
+  Vend->Guid = gBlackBoxEfiDebugPortProtocolGuid;
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Vend;
 }

@@ -79,7 +79,6 @@ RuntimeServicesDriver5Unload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeRuntimeServicesDriver5)
 
 EFI_STATUS
 InitializeRuntimeServicesDriver5 (

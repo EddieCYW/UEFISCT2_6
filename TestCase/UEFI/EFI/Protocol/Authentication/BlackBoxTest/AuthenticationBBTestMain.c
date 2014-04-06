@@ -59,9 +59,9 @@ Abstract:
 #include "AuthenticationBBTestMain.h"
 #include "AuthTest.h"
 
-  EFI_EVENT              TimerEvent;
-  EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib;
-  EFI_TEST_LOGGING_LIBRARY_PROTOCOL		*LoggingLib;
+EFI_EVENT              TimerEvent;
+EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib;
+EFI_TEST_LOGGING_LIBRARY_PROTOCOL		*LoggingLib;
   
 EFI_BB_TEST_PROTOCOL_FIELD gEfiAuthenticationTestProtField = {
   AUTH_TEST_REVISION,
@@ -104,7 +104,6 @@ EFI_BB_TEST_ENTRY_FIELD gAuthenticationTestEntryField[] = {
 EFI_BB_TEST_PROTOCOL *gAuthenticationTestProt;
 
 
-EFI_DRIVER_ENTRY_POINT(InitializeAuthenticationTest)
 /*********************************************************************************
  *  Creates/installs the BlackBox Interface and eminating Entry Point node list.
  *  @param  ImageHandle The test driver image handle
@@ -130,7 +129,7 @@ InitializeAuthenticationTest (
   //
   //ASSERT_PROTOCOL_ALREADY_INSTALLED (NULL, &);  
   
-  Status = gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR(Status)) {
     return Status;
   }

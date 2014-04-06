@@ -198,8 +198,6 @@ InfoTypeAndBlockSizeCmp(
 //
 //
 //
-EFI_DRIVER_ENTRY_POINT(InitializeAdapterInfoBBTest)
-
 EFI_STATUS
 InitializeAdapterInfoBBTest (
   IN EFI_HANDLE          ImageHandle,

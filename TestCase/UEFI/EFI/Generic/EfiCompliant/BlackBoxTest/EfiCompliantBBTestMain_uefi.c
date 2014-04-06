@@ -126,7 +126,6 @@ EfiCompliantBbTestUnload (
 //
 // Entry point
 //
-EFI_DRIVER_ENTRY_POINT (InitializeEfiCompliantBbTest)
 
 EFI_STATUS
 InitializeEfiCompliantBbTest (

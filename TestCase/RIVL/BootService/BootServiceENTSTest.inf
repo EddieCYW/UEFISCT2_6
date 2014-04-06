@@ -55,12 +55,15 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = BootService_ENTSTest
-FILE_GUID            = FC442EBA-E7FB-4e48-BA34-2EC2D84180EE
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = BootService_ENTSTest
+  FILE_GUID            = FC442EBA-E7FB-4e48-BA34-2EC2D84180EE
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = BootServiceENTSTestMain
 
-[sources.common]
+[Sources.common]
   BootServiceENTSTest.c
   EventTimerAndTaskPriorityService/EventTimerAndTaskPriorityENTSTestCase.h
   EventTimerAndTaskPriorityService/EventTimerAndTaskPriorityENTSTestCase.c
@@ -69,24 +72,16 @@ COMPONENT_TYPE       = BS_DRIVER
   MiscellaneousBootService/MiscellaneousBootENTSTestCase.h
   MiscellaneousBootService/MiscellaneousBootENTSTestCase.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EASDispatcher/Include
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  Sctlib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
+  EfiTestLib
   EntsLib
-  EntsProtocolLib
 
-[nmake.common]
-  C_STD_INCLUDE=
-  IMAGE_ENTRY_POINT=BootServiceENTSTestMain
+[Protocols]
+  gEfiEntsProtocolGuid

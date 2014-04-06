@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "HIIStringBBTestMain.h"
 
 
@@ -175,7 +174,6 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
 //
 //
 //
-EFI_DRIVER_ENTRY_POINT(InitializeHIIStringBBTest)
 
 EFI_STATUS
 InitializeHIIStringBBTest (
@@ -229,7 +227,7 @@ GetHIIDatabaseInterface (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiHIIDatabaseProtocolGuid,
+                   &gBlackBoxEfiHIIDatabaseProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -244,7 +242,7 @@ GetHIIDatabaseInterface (
   
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiHIIDatabaseProtocolGuid,
+                   &gBlackBoxEfiHIIDatabaseProtocolGuid,
                    HIIDatabase
                    );
   if ( EFI_ERROR(Status) ) {

@@ -109,7 +109,7 @@ SCT_LIST_ENTRY  SyncReadDataListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncRea
 //
 // Async Write lock
 //
-SCT_LOCK gAsyncWriteQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK gAsyncWriteQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 //
 //  Sync Write Queue
@@ -195,8 +195,8 @@ DiskIo2AsyncWriteData (
   // DiskIo2Token initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    DiskIo2WriteNotifyFunc,
                    DiskIo2Entity,
                    &DiskIo2Entity->DiskIo2Token.Event
@@ -283,8 +283,8 @@ EFIAPI DiskIo2WriteBatchNotifyFunc (
 
     DiskIo2Entity->DiskIo2Token.Event = NULL;
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      DiskIo2WriteBatchNotifyFunc,
                      TaskContext,
                      &DiskIo2Entity->DiskIo2Token.Event
@@ -383,8 +383,8 @@ DiskIo2AsyncBatchWrite (
     DiskIo2Entity = CR(ListHeader->ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
 
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      DiskIo2WriteBatchNotifyFunc,
                      TaskContext,
                      &DiskIo2Entity->DiskIo2Token.Event
@@ -1676,8 +1676,8 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
   AsyncBatchWriteToken.TransactionStatus = EFI_NOT_READY;
   
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    DiskIo2FinishNotifyFunc,
                    &AsyncBatchWriteFinished,
                    &AsyncBatchWriteToken.Event

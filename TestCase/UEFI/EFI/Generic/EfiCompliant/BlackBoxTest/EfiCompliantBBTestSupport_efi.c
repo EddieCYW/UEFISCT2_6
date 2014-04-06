@@ -375,7 +375,7 @@ OpenIniFile (
                          IniFile
                          );
   if (EFI_ERROR (Status)) {
-    *IniFile = NULL_HANDLE;
+    *IniFile = NULL;
   }
 
   //
@@ -402,7 +402,7 @@ CloseIniFile (
   //
   // Check parameters
   //
-  if (IniFile == NULL_HANDLE) {
+  if (IniFile == NULL) {
     return EFI_SUCCESS;
   }
 

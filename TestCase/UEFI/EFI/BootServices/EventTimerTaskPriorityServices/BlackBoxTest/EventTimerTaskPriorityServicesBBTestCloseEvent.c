@@ -119,14 +119,14 @@ BBTestCloseEvent_Func_Sub1 (
   UINTN               Index;
   UINTN               SubIndex;
   UINT32              EventTypes[] = {
-                        EFI_EVENT_TIMER,
-                        EFI_EVENT_NOTIFY_WAIT,
-                        EFI_EVENT_NOTIFY_SIGNAL,
+                        EVT_TIMER,
+                        EVT_NOTIFY_WAIT,
+                        EVT_NOTIFY_SIGNAL,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;

@@ -56,46 +56,31 @@
 #--*/
 
 [defines]
-BASE_NAME            = SerialIoBbTest
-FILE_GUID            = 5AD6EAA7-337F-4c20-9F6A-D3F92CF3F48A
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = SerialIoBbTest
+  FILE_GUID            = 5AD6EAA7-337F-4c20-9F6A-D3F92CF3F48A
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeSerialIoBbTest
 
 [sources.common]
-  SerialIoBbTestMain.h
-  SerialIoBbTestMain.c
-  SerialIoBbTestConformance.c
-  SerialIoBbTestFunction.c
-  SerialIoBbTestStress.c
-  guid.h
-  guid.c
+  SerialIoBBTestMain.h
+  SerialIoBBTestMain.c
+  SerialIoBBTestConformance.c
+  SerialIoBBTestFunction.c
+  SerialIoBBTestStress.c
+  Guid.h
+  Guid.c
 
-[sources.IA32]
-  SerialIo.h
-  SerialIo.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.X64]
-  SerialIo.h
-  SerialIo.c
-
-[sources.IPF]
-  SerialIo.h
-  SerialIo.c
-  
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeSerialIoBbTest
+[Protocols]
+  gEfiTestLoggingLibraryGuid

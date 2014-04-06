@@ -56,7 +56,6 @@ Abstract:
 --*/
 
 
-#include "SctLib.h"
 #include "SimpleTextOutBBTestMain_uefi.h"
 
 EFI_EVENT              TimerEvent;
@@ -271,7 +270,6 @@ BBTestSimpleTextOutputProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestSimpleTextOutput)
 
 /**
  *  Simple Text Output Protocol Test Driver Entry point.
@@ -288,7 +286,7 @@ InitializeBBTestSimpleTextOutput (
   EfiInitializeTestLib (ImageHandle, SystemTable);
   SctInitializeLib (ImageHandle, SystemTable);
 
-  gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,
@@ -346,7 +344,7 @@ CopyUnicodeString (
 UINTN
 _IPrint (
   IN EFI_GRAPHICS_OUTPUT_PROTOCOL            *GraphicsOutput,
-  IN EFI_SIMPLE_TEXT_OUT_PROTOCOL     *Sto,
+  IN EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL  *Sto,
   IN UINTN                            X,
   IN UINTN                            Y,
   IN EFI_GRAPHICS_OUTPUT_BLT_PIXEL                    *Foreground,
@@ -398,7 +396,7 @@ _IPrint (
 
   Status = gtBS->LocateHandle (
                    ByProtocol,
-                   &gEfiHiiProtocolGuid,
+                   &gBlackBoxEfiHiiProtocolGuid,
                    NULL,
                    &Size,
                    &Handle
@@ -410,7 +408,7 @@ _IPrint (
 
   Status = gtBS->HandleProtocol (
                    Handle,
-                   &gEfiHiiProtocolGuid,
+                   &gBlackBoxEfiHiiProtocolGuid,
                    &Hii
                    );
 
@@ -476,7 +474,7 @@ PrintXY (
 {
   EFI_HANDLE                          Handle;
   EFI_GRAPHICS_OUTPUT_PROTOCOL        *GraphicsOutput;
-  EFI_SIMPLE_TEXT_OUT_PROTOCOL        *Sto;
+  EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL     *Sto;
   EFI_STATUS                          Status;
 
 
@@ -485,7 +483,7 @@ PrintXY (
 
   Status = gtBS->HandleProtocol (
                    Handle,
-                   &gEfiGraphicsOutputProtocolGuid,
+                   &gBlackBoxEfiGraphicsOutputProtocolGuid,
                    &GraphicsOutput
                    );
 
@@ -495,7 +493,7 @@ PrintXY (
 
   Status = gtBS->HandleProtocol (
                    Handle,
-                   &gEfiSimpleTextOutProtocolGuid,
+                   &gBlackBoxEfiSimpleTextOutProtocolGuid,
                    &Sto
                    );
 
@@ -722,7 +720,7 @@ AutoJudgeUga (
  */
 EFI_STATUS
 RestoreMode (
-  IN EFI_SIMPLE_TEXT_OUT_PROTOCOL         *SimpleOut,
+  IN EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL      *SimpleOut,
   IN EFI_SIMPLE_TEXT_OUTPUT_MODE          *SavedMode,
   IN EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib
   )
@@ -804,7 +802,7 @@ RestoreMode (
  */
 VOID
 BackupMode (
-  IN EFI_SIMPLE_TEXT_OUT_PROTOCOL         *SimpleOut,
+  IN EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL      *SimpleOut,
   IN EFI_SIMPLE_TEXT_OUTPUT_MODE          *SavedMode
   )
 {
@@ -828,7 +826,7 @@ BackupMode (
 */
 EFI_STATUS
 LocateDevicePathFromSimpleTextOut (
-  IN EFI_SIMPLE_TEXT_OUT_PROTOCOL         *SimpleOut,
+  IN EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL      *SimpleOut,
   IN EFI_DEVICE_PATH_PROTOCOL             **DevicePath,
   IN EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib
   )
@@ -837,14 +835,14 @@ LocateDevicePathFromSimpleTextOut (
 
   UINTN                                   NoHandles, Index;
   EFI_HANDLE                              *HandleBuffer;
-  EFI_SIMPLE_TEXT_OUT_PROTOCOL            *OtherSimpleOut;
+  EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL         *OtherSimpleOut;
 
   //
   // Locate the Handle that the SimpleTextOutput interface is bound to
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiSimpleTextOutProtocolGuid,
+                   &gBlackBoxEfiSimpleTextOutProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -882,7 +880,7 @@ LocateDevicePathFromSimpleTextOut (
   for (Index=0; Index<NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiSimpleTextOutProtocolGuid,
+                     &gBlackBoxEfiSimpleTextOutProtocolGuid,
                      &OtherSimpleOut
                      );
     if (EFI_ERROR (Status)) {
@@ -919,7 +917,7 @@ LocateDevicePathFromSimpleTextOut (
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[Index],
-                   &gEfiDevicePathProtocolGuid,
+                   &gBlackBoxEfiDevicePathProtocolGuid,
                    DevicePath
                    );
 
@@ -938,7 +936,7 @@ LocateDevicePathFromSimpleTextOut (
 */
 EFI_STATUS
 LocateGopFromSimpleTextOut (
-  IN EFI_SIMPLE_TEXT_OUT_PROTOCOL         *SimpleOut,
+  IN EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL      *SimpleOut,
   IN EFI_GRAPHICS_OUTPUT_PROTOCOL           **GraphicsOutput,
   IN EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib
   )
@@ -947,14 +945,14 @@ LocateGopFromSimpleTextOut (
 
   UINTN                                   NoHandles, Index;
   EFI_HANDLE                              *HandleBuffer;
-  EFI_SIMPLE_TEXT_OUT_PROTOCOL            *OtherSimpleOut;
+  EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL         *OtherSimpleOut;
 
   //
   // Locate the Handle that the SimpleTextOutput interface is bound to
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiSimpleTextOutProtocolGuid,
+                   &gBlackBoxEfiSimpleTextOutProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -992,7 +990,7 @@ LocateGopFromSimpleTextOut (
   for (Index=0; Index<NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiSimpleTextOutProtocolGuid,
+                     &gBlackBoxEfiSimpleTextOutProtocolGuid,
                      &OtherSimpleOut
                      );
     if (EFI_ERROR (Status)) {
@@ -1028,7 +1026,7 @@ LocateGopFromSimpleTextOut (
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[Index],
-                   &gEfiGraphicsOutputProtocolGuid,
+                   &gBlackBoxEfiGraphicsOutputProtocolGuid,
                    GraphicsOutput
                    );
 

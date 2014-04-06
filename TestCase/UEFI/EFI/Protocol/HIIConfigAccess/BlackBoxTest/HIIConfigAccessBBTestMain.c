@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "HIIConfigAccessBBTestMain.h"
 
 //
@@ -154,7 +153,6 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
 
 
 
-EFI_DRIVER_ENTRY_POINT(InitializeHIIConfigAccessBBTest)
 
 EFI_STATUS
 InitializeHIIConfigAccessBBTest (
@@ -353,7 +351,7 @@ GetDevicePath (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiHIIConfigAccessProtocolGuid,
+                   &gBlackBoxEfiHIIConfigAccessProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -369,7 +367,7 @@ GetDevicePath (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiHIIConfigAccessProtocolGuid,
+                     &gBlackBoxEfiHIIConfigAccessProtocolGuid,
                      &TestedConfigAccess
                      );
     if (EFI_ERROR(Status)) {
@@ -393,7 +391,7 @@ GetDevicePath (
   //
   Status = gtBS->HandleProtocol (
                    ConfigAccessHandle,
-                   &gEfiDevicePathProtocolGuid,
+                   &gBlackBoxEfiDevicePathProtocolGuid,
                    (void **)&DevicePath
                    );
 
@@ -556,7 +554,7 @@ GetHIIConfigRoutingInterface (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiHIIConfigRoutingProtocolGuid,
+                   &gBlackBoxEfiHIIConfigRoutingProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -571,7 +569,7 @@ GetHIIConfigRoutingInterface (
   
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiHIIConfigRoutingProtocolGuid,
+                   &gBlackBoxEfiHIIConfigRoutingProtocolGuid,
                    HIIConfigRouting
                    );
   if ( EFI_ERROR(Status) ) {

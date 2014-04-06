@@ -122,7 +122,6 @@ Dhcp6ENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Dhcp6ENTSTestMain)
 
 EFI_STATUS
 Dhcp6ENTSTestMain (

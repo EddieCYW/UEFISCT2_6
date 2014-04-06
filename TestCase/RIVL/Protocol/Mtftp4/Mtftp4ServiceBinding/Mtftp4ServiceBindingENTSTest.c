@@ -82,7 +82,6 @@ Mtftp4ServiceBindingENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Mtftp4ServiceBindingENTSTestMain)
 
 EFI_STATUS
 Mtftp4ServiceBindingENTSTestMain (

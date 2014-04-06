@@ -369,7 +369,6 @@ BBTestPxeBcUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestPxeBCProtocol)
 /**
  *  Creates/installs the BlackBox Interface and eminating Entry Point node list.
  *  @param  ImageHandle The test driver image handle
@@ -390,7 +389,7 @@ InitializeBBTestPxeBCProtocol (
   SctInitializeLib (ImageHandle, SystemTable);
   SctInitializeDriver (ImageHandle, SystemTable);
 
-  Status = gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR(Status)) {
     return Status;
   }
@@ -664,7 +663,7 @@ HookReturnAbortCallBack (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiPxeBaseCodeProtocolGuid,
+                   &gBlackBoxEfiPxeBaseCodeProtocolGuid,
                    NULL,
                    &HandleCount,
                    &HandleBuffer
@@ -680,7 +679,7 @@ HookReturnAbortCallBack (
   for (Index = 0; Index < HandleCount; Index += 1) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiPxeBaseCodeProtocolGuid,
+                     &gBlackBoxEfiPxeBaseCodeProtocolGuid,
                      (VOID **)&Interface
                    );
     if (BcInterface == Interface) {
@@ -700,7 +699,7 @@ HookReturnAbortCallBack (
   //
   Status = gtBS->HandleProtocol (
                    gHandle,
-                   &gEfiPxeBaseCodeCallbackProtocolGuid,
+                   &gBlackBoxEfiPxeBaseCodeCallbackProtocolGuid,
                    (VOID **)&BcCallBack
                    );
   if (Status == EFI_SUCCESS) {
@@ -713,7 +712,7 @@ HookReturnAbortCallBack (
     //
     Status = gtBS->InstallProtocolInterface (
                      &gHandle,
-                     &gEfiPxeBaseCodeCallbackProtocolGuid,
+                     &gBlackBoxEfiPxeBaseCodeCallbackProtocolGuid,
                      EFI_NATIVE_INTERFACE,
                      &NewCallBackProtocol
                      );
@@ -735,7 +734,7 @@ HookReturnAbortCallBack (
     if (EFI_ERROR(Status)) {
       gtBS->UninstallProtocolInterface (
               gHandle,
-              &gEfiPxeBaseCodeCallbackProtocolGuid,
+              &gBlackBoxEfiPxeBaseCodeCallbackProtocolGuid,
               &NewCallBackProtocol
               );
       return Status;
@@ -757,7 +756,7 @@ UnHookReturnAbortCallBack (
   if (gOldCallBack != NULL) {
     Status = gtBS->HandleProtocol (
                      gHandle,
-                     &gEfiPxeBaseCodeCallbackProtocolGuid,
+                     &gBlackBoxEfiPxeBaseCodeCallbackProtocolGuid,
                      (VOID **)&BcCallBack
                      );
     if (EFI_ERROR(Status)) {
@@ -784,7 +783,7 @@ UnHookReturnAbortCallBack (
     }
     Status = gtBS->UninstallProtocolInterface (
                      gHandle,
-                     &gEfiPxeBaseCodeCallbackProtocolGuid,
+                     &gBlackBoxEfiPxeBaseCodeCallbackProtocolGuid,
                      &NewCallBackProtocol
                      );
     if (EFI_ERROR(Status)) {

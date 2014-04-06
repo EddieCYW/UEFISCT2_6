@@ -2450,7 +2450,7 @@ BBTestDevicePathAutoTest (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiSimplePointerProtocolGuid,
+                   &gBlackBoxEfiSimplePointerProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -2475,7 +2475,7 @@ BBTestDevicePathAutoTest (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiSimplePointerProtocolGuid,
+                     &gBlackBoxEfiSimplePointerProtocolGuid,
                      &SimplePointer
                      );
     if (EFI_ERROR (Status)) {

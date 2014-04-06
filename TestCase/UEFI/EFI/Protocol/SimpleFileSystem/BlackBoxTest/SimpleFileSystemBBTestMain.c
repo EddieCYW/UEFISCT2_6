@@ -52,7 +52,7 @@ Abstract:
     for EFI Simple File System Protocol and EFI_FILE Protocol Black Box Test
 
 --*/
-#include "SctLib.h"
+
 #include "SimpleFileSystemBBTest.h"
 
 EFI_EVENT TimerEvent = NULL;
@@ -61,13 +61,12 @@ EFI_EVENT TimerEvent = NULL;
 // global variable for this test driver's image handle
 //
 EFI_TPL TplArray [TPL_ARRAY_SIZE] = {
-  EFI_TPL_APPLICATION,
-  EFI_TPL_CALLBACK
+  TPL_APPLICATION,
+  TPL_CALLBACK
 };
 
 EFI_HANDLE      mImageHandle;
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestSimpleFileSystem)
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
   SIMPLE_FILE_SYSTEM_TEST_REVISION,

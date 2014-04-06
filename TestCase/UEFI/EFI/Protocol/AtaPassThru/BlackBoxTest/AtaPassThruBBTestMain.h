@@ -61,7 +61,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "AtaPassThruProtocol.h"
+#include <UEFI/Protocol/AtaPassThru.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

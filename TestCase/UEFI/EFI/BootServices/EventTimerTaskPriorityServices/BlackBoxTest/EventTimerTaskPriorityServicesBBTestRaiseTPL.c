@@ -120,10 +120,10 @@ BBTestRaiseTPL_Func_Sub1 (
   EFI_TPL             Tpl1;
   EFI_TPL             Tpl2;
   EFI_TPL             CheckTpls[] = {
-                        EFI_TPL_APPLICATION,
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
-                        EFI_TPL_HIGH_LEVEL,
+                        TPL_APPLICATION,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
+                        TPL_HIGH_LEVEL,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;
@@ -135,7 +135,7 @@ BBTestRaiseTPL_Func_Sub1 (
     //
     // Check the current TPL
     //
-    OldTpl = gtBS->RaiseTPL (EFI_TPL_HIGH_LEVEL);
+    OldTpl = gtBS->RaiseTPL (TPL_HIGH_LEVEL);
     gtBS->RestoreTPL (OldTpl);
 
     if (OldTpl > CheckTpls[Index]) {
@@ -146,7 +146,7 @@ BBTestRaiseTPL_Func_Sub1 (
     // Raise to check TPL and then to highest TPL
     //
     Tpl1 = gtBS->RaiseTPL (CheckTpls[Index]);
-    Tpl2 = gtBS->RaiseTPL (EFI_TPL_HIGH_LEVEL);
+    Tpl2 = gtBS->RaiseTPL (TPL_HIGH_LEVEL);
     gtBS->RestoreTPL (OldTpl);
 
     if ((Tpl1 == OldTpl) && (Tpl2 == CheckTpls[Index])) {

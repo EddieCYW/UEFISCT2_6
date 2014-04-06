@@ -371,7 +371,7 @@ BBTestSimpleFileSytemExtensiveTest5 (
                OpenFileHandle[FileIndex],
                &FileInfo,
                &InfoBufferSize,
-               &gEfiFileInfoGuid
+               &gBlackBoxEfiFileInfoGuid
                );
     if (Status != EFI_SUCCESS) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -399,7 +399,7 @@ BBTestSimpleFileSytemExtensiveTest5 (
     //
     Status = OpenFileHandle[FileIndex]->SetInfo (
                                           OpenFileHandle[FileIndex],
-                                          &gEfiFileInfoGuid,
+                                          &gBlackBoxEfiFileInfoGuid,
                                           InfoBufferSize,
                                           &Temp
                                           );
@@ -485,7 +485,7 @@ BBTestSimpleFileSytemExtensiveTest5 (
                OpenDirHandle[FileIndex],
                &FileInfo,
                &InfoBufferSize,
-               &gEfiFileInfoGuid
+               &gBlackBoxEfiFileInfoGuid
                );
     if (Status != EFI_SUCCESS) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -513,7 +513,7 @@ BBTestSimpleFileSytemExtensiveTest5 (
     //
     Status = OpenDirHandle[FileIndex]->SetInfo (
                                          OpenDirHandle[FileIndex],
-                                         &gEfiFileInfoGuid,
+                                         &gBlackBoxEfiFileInfoGuid,
                                          InfoBufferSize,
                                          &Temp
                                          );

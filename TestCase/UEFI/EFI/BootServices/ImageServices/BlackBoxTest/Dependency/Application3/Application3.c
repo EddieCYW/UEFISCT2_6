@@ -68,7 +68,6 @@ InitializeEfiApplication3 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_APPLICATION_ENTRY_POINT(InitializeEfiApplication3)
 
 EFI_STATUS
 InitializeEfiApplication3 (

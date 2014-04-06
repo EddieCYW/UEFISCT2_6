@@ -168,7 +168,6 @@ BBTestBlockIo2ProtocolUnload (
 //
 // Entry Point Declaration
 //
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestBlockIo2)
 
 /**
  *  Block I/O 2 Protocol Test Driver Entry point.
@@ -185,7 +184,7 @@ InitializeBBTestBlockIo2 (
   EfiInitializeTestLib (ImageHandle, SystemTable);
   SctInitializeLib (ImageHandle, SystemTable);
 
-  gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
 
   return EfiInitAndInstallIHVBBTestInterface (
            &ImageHandle,
@@ -270,7 +269,7 @@ LocateDevicePathFromBlockIo2 (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiBlockIo2ProtocolGuid,
+                   &gBlackBoxEfiBlockIo2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -296,7 +295,7 @@ LocateDevicePathFromBlockIo2 (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiBlockIo2ProtocolGuid,
+                     &gBlackBoxEfiBlockIo2ProtocolGuid,
                      &OtherBlockIo2
                      );
     if (EFI_ERROR (Status)) {
@@ -453,7 +452,7 @@ LocateBlockIo2FromDevicePath (
   //
   Status = gtBS->HandleProtocol (
                    HandleBuffer[Index],
-                   &gEfiBlockIo2ProtocolGuid,
+                   &gBlackBoxEfiBlockIo2ProtocolGuid,
                    BlockIo2
                    );
   if (EFI_ERROR(Status)) {

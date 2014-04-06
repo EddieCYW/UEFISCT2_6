@@ -76,10 +76,10 @@ typedef struct {
 } BUS_OVERRIDE_PRIVATE_DATA;
 
 #define BUS_OVERRIDE_PRIVATE_DATA_FROM_DRIVER_BINDING(a) \
- _CR(a, BUS_OVERRIDE_PRIVATE_DATA, DriverBinding)
+  BASE_CR(a, BUS_OVERRIDE_PRIVATE_DATA, DriverBinding)
 
- #define BUS_OVERRIDE_PRIVATE_DATA_FROM_THIS(a) \
- _CR(a, BUS_OVERRIDE_PRIVATE_DATA, BusOverride)
+#define BUS_OVERRIDE_PRIVATE_DATA_FROM_THIS(a) \
+  BASE_CR(a, BUS_OVERRIDE_PRIVATE_DATA, BusOverride)
 
 BUS_OVERRIDE_PRIVATE_DATA          *mPrivateData;
 
@@ -138,7 +138,6 @@ BusOverrideDriver1Unload (
 //
 // global variable for this test driver's image handle
 //
-EFI_DRIVER_ENTRY_POINT(InitializeBusOverrideDriver1)
 
 EFI_STATUS
 InitializeBusOverrideDriver1 (

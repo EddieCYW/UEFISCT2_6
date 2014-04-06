@@ -1122,7 +1122,7 @@ BBTestStatisticsConformanceTest (
 }
 
 /**
- *  Entrypoint for EFI_SIMPLE_NETWORK_PROTOCOL.MCastIPtoMAC() Conformance Test.
+ *  Entrypoint for EFI_SIMPLE_NETWORK_PROTOCOL.MCastIpToMac() Conformance Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
  *  @param ClientInterface a pointer to the interface to be tested.
  *  @param TestLevel test "thoroughness" control.
@@ -1133,7 +1133,7 @@ BBTestStatisticsConformanceTest (
 // TDS 5.9
 //
 EFI_STATUS
-BBTestMCastIPtoMACConformanceTest (
+BBTestMCastIpToMacConformanceTest (
   IN EFI_BB_TEST_PROTOCOL       *This,
   IN VOID                       *ClientInterface,
   IN EFI_TEST_LEVEL             TestLevel,
@@ -1188,7 +1188,7 @@ BBTestMCastIPtoMACConformanceTest (
 
   //
   // Assertion Point 5.9.2.1
-  // Call MCastIPtoMAC() function if network interface not start.
+  // Call MCastIpToMac() function if network interface not start.
   //
   IP.v4.Addr[0] = 239;
   IP.v4.Addr[1] = 255;
@@ -1196,7 +1196,7 @@ BBTestMCastIPtoMACConformanceTest (
   IP.v4.Addr[3] = 255;
   SctSetMem (&MAC, sizeof (EFI_MAC_ADDRESS), 0x0);
 
-  Status = SnpInterface->MCastIPtoMAC(SnpInterface, FALSE, &IP, &MAC);
+  Status = SnpInterface->MCastIpToMac(SnpInterface, FALSE, &IP, &MAC);
   if ((Status == EFI_NOT_STARTED) && (SnpInterface->Mode->State == EfiSimpleNetworkStopped)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -1224,7 +1224,7 @@ BBTestMCastIPtoMACConformanceTest (
                  StandardLib,
                  AssertionType,
                  gSimpleNetworkBBTestConformanceAssertionGuid018,
-                 L"EFI_SIMPLE_NETWORK_PROTOCOL.MCastIPtoMAC - Invoke MCastIPtoMAC() when network interface not start.",
+                 L"EFI_SIMPLE_NETWORK_PROTOCOL.MCastIpToMac - Invoke MCastIpToMac() when network interface not start.",
                  L"%a:%d:Status - %r",
                  __FILE__,
                  (UINTN)__LINE__,

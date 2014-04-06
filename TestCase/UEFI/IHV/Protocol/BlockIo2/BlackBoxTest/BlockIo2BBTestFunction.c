@@ -171,7 +171,7 @@ SCT_LIST_ENTRY  ReadFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(ReadFail
 //
 // Async Read lock
 //
-SCT_LOCK gReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK gReadQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 
 //
@@ -190,7 +190,7 @@ SCT_LIST_ENTRY  MixedSyncReadFailListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(Mi
 //
 // Mixed Sync & Async Read lock
 //
-SCT_LOCK gMixedReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK gMixedReadQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 
 //
@@ -207,7 +207,7 @@ SCT_LIST_ENTRY  SyncReadDataListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncRea
 //
 // Async Write lock
 //
-SCT_LOCK gWriteQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK gWriteQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 //
 // Mixed Async Write Queue
@@ -224,7 +224,7 @@ SCT_LIST_ENTRY  MixedSyncWriteFailListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(M
 //
 // Mixed Sync & Async Write lock
 //
-SCT_LOCK gMixedWriteQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK gMixedWriteQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 //
 // Async signal
@@ -293,8 +293,8 @@ BlockIo2AsyncReadData (
   // BlockIo2Token initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    BlockIo2ReadNotifyFunc,
                    BlockIo2Entity,
                    &BlockIo2Entity->BlockIo2Token.Event
@@ -421,8 +421,8 @@ BlockIo2MixedSyncAsyncReadData (
   // BlockIo2Token initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    BlockIo2MixedReadNotifyFunc,
                    BlockIo2Entity,
                    &BlockIo2Entity->BlockIo2Token.Event
@@ -619,8 +619,8 @@ BlockIo2AsyncWriteData (
   // BlockIo2Token initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    BlockIo2WriteNotifyFunc,
                    BlockIo2Entity,
                    &BlockIo2Entity->BlockIo2Token.Event
@@ -747,8 +747,8 @@ BlockIo2MixedSyncAsyncWriteData (
   // BlockIo2Token initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    BlockIo2MixedWriteNotifyFunc,
                    BlockIo2Entity,
                    &BlockIo2Entity->BlockIo2Token.Event
@@ -897,8 +897,8 @@ EFIAPI BlockIo2ReadBatchNotifyFunc (
 
     BlockIo2Entity->BlockIo2Token.Event = NULL;
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      BlockIo2ReadBatchNotifyFunc,
                      TaskContext,
                      &BlockIo2Entity->BlockIo2Token.Event
@@ -1000,8 +1000,8 @@ BlockIo2AsyncBatchRead (
     BlockIo2Entity = CR(ListHeader->ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
  
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      BlockIo2ReadBatchNotifyFunc,
                      TaskContext,
                      &BlockIo2Entity->BlockIo2Token.Event
@@ -1048,8 +1048,8 @@ EFIAPI BlockIo2WriteBatchNotifyFunc (
 
     BlockIo2Entity->BlockIo2Token.Event = NULL;
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      BlockIo2WriteBatchNotifyFunc,
                      TaskContext,
                      &BlockIo2Entity->BlockIo2Token.Event
@@ -1152,8 +1152,8 @@ BlockIo2AsyncBatchWrite (
     BlockIo2Entity = CR(ListHeader->ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
  
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      BlockIo2WriteBatchNotifyFunc,
                      TaskContext,
                      &BlockIo2Entity->BlockIo2Token.Event
@@ -1378,7 +1378,7 @@ BBTestReadBlocksExFunctionAutoTest (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiBlockIo2ProtocolGuid,
+                   &gBlackBoxEfiBlockIo2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -1386,13 +1386,13 @@ BBTestReadBlocksExFunctionAutoTest (
   for (Index = 0; Index < NoHandles; Index++) {
      Status = gtBS->HandleProtocol (
                       HandleBuffer[Index],
-                      &gEfiBlockIo2ProtocolGuid,
+                      &gBlackBoxEfiBlockIo2ProtocolGuid,
                       &BlockIo2Temp
                       );
      if (Status == EFI_SUCCESS && BlockIo2Temp == BlockIo2) {
        Status = gtBS->HandleProtocol (
                         HandleBuffer[Index],
-                        &gEfiBlockIoProtocolGuid,
+                        &gBlackBoxEfiBlockIoProtocolGuid,
                         &BlockIo
                         );
        if (Status != EFI_SUCCESS) {
@@ -2091,8 +2091,8 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint3(
   AsyncReadFinished = 0;
   BatchReadToken.Event = NULL;
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    BlockIo2FinishNotifyFunc,
                    &AsyncReadFinished,
                    &BatchReadToken.Event
@@ -2754,7 +2754,7 @@ BBTestWriteBlocksExFunctionAutoTest (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiBlockIo2ProtocolGuid,
+                   &gBlackBoxEfiBlockIo2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -2762,13 +2762,13 @@ BBTestWriteBlocksExFunctionAutoTest (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiBlockIo2ProtocolGuid,
+                     &gBlackBoxEfiBlockIo2ProtocolGuid,
                      &BlockIo2Temp
                      );
     if (Status == EFI_SUCCESS && BlockIo2Temp == BlockIo2) {
       Status = gtBS->HandleProtocol (
                        HandleBuffer[Index],
-                       &gEfiBlockIoProtocolGuid,
+                       &gBlackBoxEfiBlockIoProtocolGuid,
                        &BlockIo
                        );
       if (Status != EFI_SUCCESS) {
@@ -3668,8 +3668,8 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
   AsyncWriteFinished = 0;
   BatchWriteToken.Event = NULL;
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    BlockIo2FinishNotifyFunc,
                    &AsyncWriteFinished,
                    &BatchWriteToken.Event
@@ -4641,8 +4641,8 @@ BBTestFushBlocksExFunctionAutoTestCheckpoint1(
     BlockIo2TokenBuffer[IndexI].Event = NULL;
     BlockIo2TokenBuffer[IndexI].TransactionStatus = EFI_NOT_READY;
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      BlockIo2FinishNotifyFunc,
                      &AsyncFlushFinished[IndexI],
                      &BlockIo2TokenBuffer[IndexI].Event
@@ -4846,7 +4846,7 @@ BBTestMediaInfoCheckAutoTest (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiBlockIo2ProtocolGuid,
+                   &gBlackBoxEfiBlockIo2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -4854,13 +4854,13 @@ BBTestMediaInfoCheckAutoTest (
   for (Index = 0; Index < NoHandles; Index++) {
      Status = gtBS->HandleProtocol (
                       HandleBuffer[Index],
-                      &gEfiBlockIo2ProtocolGuid,
+                      &gBlackBoxEfiBlockIo2ProtocolGuid,
                       &BlockIo2Temp
                       );
      if (Status == EFI_SUCCESS && BlockIo2Temp == BlockIo2) {
        Status = gtBS->HandleProtocol (
                         HandleBuffer[Index],
-                        &gEfiBlockIoProtocolGuid,
+                        &gBlackBoxEfiBlockIoProtocolGuid,
                         &BlockIo
                         );
        if (Status != EFI_SUCCESS) {

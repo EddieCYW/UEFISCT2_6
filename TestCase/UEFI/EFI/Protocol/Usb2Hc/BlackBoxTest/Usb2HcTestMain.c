@@ -301,7 +301,6 @@ EFI_BB_TEST_PROTOCOL        *gBBTestProtocolInterface;
 //
 // Functions
 //
-EFI_DRIVER_ENTRY_POINT (InitializeBBTestUsb2Hc)
 
 EFI_STATUS
 InitializeBBTestUsb2Hc (
@@ -331,7 +330,7 @@ Returns:
   EfiInitializeTestLib (ImageHandle, SystemTable);
   SctInitializeLib (ImageHandle, SystemTable);
 
-  gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   status = EfiInitAndInstallBBTestInterface (
              &ImageHandle,
              &gBBTestProtocolField,

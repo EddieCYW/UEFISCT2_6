@@ -65,13 +65,13 @@ EFI_GUID gMiscBootServicesTestTableGuid = MISC_BOOT_SERVICES_TEST_TABLE_GUID;
 
 //
 // Change size from TPL_ARRAY_SIZE to TPL_ARRAY_SIZE + 1
-// for Stall test in EFI_TPL_HIGH_LEVEL
+// for Stall test in TPL_HIGH_LEVEL
 //
 EFI_TPL TplArray[TPL_ARRAY_SIZE + 1] = {
-  EFI_TPL_APPLICATION,
-  EFI_TPL_CALLBACK,
-  EFI_TPL_NOTIFY,
-  EFI_TPL_HIGH_LEVEL
+  TPL_APPLICATION,
+  TPL_CALLBACK,
+  TPL_NOTIFY,
+  TPL_HIGH_LEVEL
 };
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
@@ -251,7 +251,6 @@ BBTestMiscBootServicesUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestMiscBootServices)
 
 /**
  *  Miscellaneous Boot Services Test Driver Entry point.

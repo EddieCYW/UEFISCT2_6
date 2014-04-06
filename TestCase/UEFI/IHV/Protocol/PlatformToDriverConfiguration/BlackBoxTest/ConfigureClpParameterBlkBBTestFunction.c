@@ -59,7 +59,7 @@ Abstract:
 #include "SctLib.h"
 #include "PlatformToDriverConfigurationBBTestMain.h"
 
-//EFI_GUID  gEfiPlatformToDriverConfigurationClpGuid = EFI_PLATFORM_TO_DRIVER_CONFIGURATION_CLP_GUID;
+//EFI_GUID  gBlackBoxEfiPlatformToDriverConfigurationClpGuid = EFI_PLATFORM_TO_DRIVER_CONFIGURATION_CLP_GUID;
 
 CHAR16 *StandardClpCmdVerb[] = {\
     L"cd",\
@@ -242,7 +242,7 @@ BBTestCLPCommandAutoTest (
   //
   
   Status = gtBS->LocateProtocol (
-                         &gEfiPlatformToDriverConfigurationProtocolGuid,
+                         &gBlackBoxEfiPlatformToDriverConfigurationProtocolGuid,
                          NULL,
                          &Instance
                          );
@@ -332,17 +332,17 @@ BBTestCLPCommandAutoTest (
   // Verify the ParameterTypeGuid is the EFI_PLATFORM_TO_DRIVER_CONFIGURATION_CLP_BLOCK
   //
 
-  if(ParameterTypeGuid->Data1==gEfiPlatformToDriverConfigurationClpGuid.Data1
-  	&&ParameterTypeGuid->Data2==gEfiPlatformToDriverConfigurationClpGuid.Data2
-  	&&ParameterTypeGuid->Data3==gEfiPlatformToDriverConfigurationClpGuid.Data3
-  	&&ParameterTypeGuid->Data4[0]==gEfiPlatformToDriverConfigurationClpGuid.Data4[0]
-  	&&ParameterTypeGuid->Data4[1]==gEfiPlatformToDriverConfigurationClpGuid.Data4[1]
-  	&&ParameterTypeGuid->Data4[2]==gEfiPlatformToDriverConfigurationClpGuid.Data4[2]
-  	&&ParameterTypeGuid->Data4[3]==gEfiPlatformToDriverConfigurationClpGuid.Data4[3]
-  	&&ParameterTypeGuid->Data4[4]==gEfiPlatformToDriverConfigurationClpGuid.Data4[4]
-  	&&ParameterTypeGuid->Data4[5]==gEfiPlatformToDriverConfigurationClpGuid.Data4[5]
-  	&&ParameterTypeGuid->Data4[6]==gEfiPlatformToDriverConfigurationClpGuid.Data4[6]
-  	&&ParameterTypeGuid->Data4[7]==gEfiPlatformToDriverConfigurationClpGuid.Data4[7]
+  if(ParameterTypeGuid->Data1==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data1
+  	&&ParameterTypeGuid->Data2==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data2
+  	&&ParameterTypeGuid->Data3==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data3
+  	&&ParameterTypeGuid->Data4[0]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[0]
+  	&&ParameterTypeGuid->Data4[1]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[1]
+  	&&ParameterTypeGuid->Data4[2]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[2]
+  	&&ParameterTypeGuid->Data4[3]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[3]
+  	&&ParameterTypeGuid->Data4[4]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[4]
+  	&&ParameterTypeGuid->Data4[5]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[5]
+  	&&ParameterTypeGuid->Data4[6]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[6]
+  	&&ParameterTypeGuid->Data4[7]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[7]
   	) 
   {
     //
@@ -499,7 +499,7 @@ BBTestCLPReturnStringAutoTest (
   //
   
   Status = gtBS->LocateProtocol (
-                         &gEfiPlatformToDriverConfigurationProtocolGuid,
+                         &gBlackBoxEfiPlatformToDriverConfigurationProtocolGuid,
                          NULL,
                          &Instance
                          );
@@ -618,17 +618,17 @@ BBTestCLPReturnStringAutoTest (
   // Verify the ParameterTypeGuid is the EFI_PLATFORM_TO_DRIVER_CONFIGURATION_CLP_BLOCK
   //
 
-  if(ParameterTypeGuid->Data1==gEfiPlatformToDriverConfigurationClpGuid.Data1
-  	&&ParameterTypeGuid->Data2==gEfiPlatformToDriverConfigurationClpGuid.Data2
-  	&&ParameterTypeGuid->Data3==gEfiPlatformToDriverConfigurationClpGuid.Data3
-  	&&ParameterTypeGuid->Data4[0]==gEfiPlatformToDriverConfigurationClpGuid.Data4[0]
-  	&&ParameterTypeGuid->Data4[1]==gEfiPlatformToDriverConfigurationClpGuid.Data4[1]
-  	&&ParameterTypeGuid->Data4[2]==gEfiPlatformToDriverConfigurationClpGuid.Data4[2]
-  	&&ParameterTypeGuid->Data4[3]==gEfiPlatformToDriverConfigurationClpGuid.Data4[3]
-  	&&ParameterTypeGuid->Data4[4]==gEfiPlatformToDriverConfigurationClpGuid.Data4[4]
-  	&&ParameterTypeGuid->Data4[5]==gEfiPlatformToDriverConfigurationClpGuid.Data4[5]
-  	&&ParameterTypeGuid->Data4[6]==gEfiPlatformToDriverConfigurationClpGuid.Data4[6]
-  	&&ParameterTypeGuid->Data4[7]==gEfiPlatformToDriverConfigurationClpGuid.Data4[7]
+  if(ParameterTypeGuid->Data1==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data1
+  	&&ParameterTypeGuid->Data2==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data2
+  	&&ParameterTypeGuid->Data3==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data3
+  	&&ParameterTypeGuid->Data4[0]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[0]
+  	&&ParameterTypeGuid->Data4[1]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[1]
+  	&&ParameterTypeGuid->Data4[2]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[2]
+  	&&ParameterTypeGuid->Data4[3]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[3]
+  	&&ParameterTypeGuid->Data4[4]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[4]
+  	&&ParameterTypeGuid->Data4[5]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[5]
+  	&&ParameterTypeGuid->Data4[6]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[6]
+  	&&ParameterTypeGuid->Data4[7]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[7]
   	) 
   {
     //
@@ -772,7 +772,7 @@ BBTestCLPCmdStatusAutoTest (
   //
   
   Status = gtBS->LocateProtocol (
-                         &gEfiPlatformToDriverConfigurationProtocolGuid,
+                         &gBlackBoxEfiPlatformToDriverConfigurationProtocolGuid,
                          NULL,
                          &Instance
                          );
@@ -863,17 +863,17 @@ BBTestCLPCmdStatusAutoTest (
   // Verify the ParameterTypeGuid is the EFI_PLATFORM_TO_DRIVER_CONFIGURATION_CLP_BLOCK
   //
 
-  if(ParameterTypeGuid->Data1==gEfiPlatformToDriverConfigurationClpGuid.Data1
-  	&&ParameterTypeGuid->Data2==gEfiPlatformToDriverConfigurationClpGuid.Data2
-  	&&ParameterTypeGuid->Data3==gEfiPlatformToDriverConfigurationClpGuid.Data3
-  	&&ParameterTypeGuid->Data4[0]==gEfiPlatformToDriverConfigurationClpGuid.Data4[0]
-  	&&ParameterTypeGuid->Data4[1]==gEfiPlatformToDriverConfigurationClpGuid.Data4[1]
-  	&&ParameterTypeGuid->Data4[2]==gEfiPlatformToDriverConfigurationClpGuid.Data4[2]
-  	&&ParameterTypeGuid->Data4[3]==gEfiPlatformToDriverConfigurationClpGuid.Data4[3]
-  	&&ParameterTypeGuid->Data4[4]==gEfiPlatformToDriverConfigurationClpGuid.Data4[4]
-  	&&ParameterTypeGuid->Data4[5]==gEfiPlatformToDriverConfigurationClpGuid.Data4[5]
-  	&&ParameterTypeGuid->Data4[6]==gEfiPlatformToDriverConfigurationClpGuid.Data4[6]
-  	&&ParameterTypeGuid->Data4[7]==gEfiPlatformToDriverConfigurationClpGuid.Data4[7]
+  if(ParameterTypeGuid->Data1==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data1
+  	&&ParameterTypeGuid->Data2==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data2
+  	&&ParameterTypeGuid->Data3==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data3
+  	&&ParameterTypeGuid->Data4[0]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[0]
+  	&&ParameterTypeGuid->Data4[1]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[1]
+  	&&ParameterTypeGuid->Data4[2]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[2]
+  	&&ParameterTypeGuid->Data4[3]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[3]
+  	&&ParameterTypeGuid->Data4[4]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[4]
+  	&&ParameterTypeGuid->Data4[5]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[5]
+  	&&ParameterTypeGuid->Data4[6]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[6]
+  	&&ParameterTypeGuid->Data4[7]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[7]
   	) 
   {
     //
@@ -992,7 +992,7 @@ BBTestCLPErrorValueAutoTest (
   //
   
   Status = gtBS->LocateProtocol (
-                         &gEfiPlatformToDriverConfigurationProtocolGuid,
+                         &gBlackBoxEfiPlatformToDriverConfigurationProtocolGuid,
                          NULL,
                          &Instance
                          );
@@ -1083,17 +1083,17 @@ BBTestCLPErrorValueAutoTest (
   // Verify the ParameterTypeGuid is the EFI_PLATFORM_TO_DRIVER_CONFIGURATION_CLP_BLOCK
   //
 
-  if(ParameterTypeGuid->Data1==gEfiPlatformToDriverConfigurationClpGuid.Data1
-  	&&ParameterTypeGuid->Data2==gEfiPlatformToDriverConfigurationClpGuid.Data2
-  	&&ParameterTypeGuid->Data3==gEfiPlatformToDriverConfigurationClpGuid.Data3
-  	&&ParameterTypeGuid->Data4[0]==gEfiPlatformToDriverConfigurationClpGuid.Data4[0]
-  	&&ParameterTypeGuid->Data4[1]==gEfiPlatformToDriverConfigurationClpGuid.Data4[1]
-  	&&ParameterTypeGuid->Data4[2]==gEfiPlatformToDriverConfigurationClpGuid.Data4[2]
-  	&&ParameterTypeGuid->Data4[3]==gEfiPlatformToDriverConfigurationClpGuid.Data4[3]
-  	&&ParameterTypeGuid->Data4[4]==gEfiPlatformToDriverConfigurationClpGuid.Data4[4]
-  	&&ParameterTypeGuid->Data4[5]==gEfiPlatformToDriverConfigurationClpGuid.Data4[5]
-  	&&ParameterTypeGuid->Data4[6]==gEfiPlatformToDriverConfigurationClpGuid.Data4[6]
-  	&&ParameterTypeGuid->Data4[7]==gEfiPlatformToDriverConfigurationClpGuid.Data4[7]
+  if(ParameterTypeGuid->Data1==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data1
+  	&&ParameterTypeGuid->Data2==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data2
+  	&&ParameterTypeGuid->Data3==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data3
+  	&&ParameterTypeGuid->Data4[0]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[0]
+  	&&ParameterTypeGuid->Data4[1]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[1]
+  	&&ParameterTypeGuid->Data4[2]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[2]
+  	&&ParameterTypeGuid->Data4[3]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[3]
+  	&&ParameterTypeGuid->Data4[4]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[4]
+  	&&ParameterTypeGuid->Data4[5]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[5]
+  	&&ParameterTypeGuid->Data4[6]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[6]
+  	&&ParameterTypeGuid->Data4[7]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[7]
   	) 
   {
     //
@@ -1253,7 +1253,7 @@ BBTestCLPMessageCodeAutoTest (
   //
   
   Status = gtBS->LocateProtocol (
-                         &gEfiPlatformToDriverConfigurationProtocolGuid,
+                         &gBlackBoxEfiPlatformToDriverConfigurationProtocolGuid,
                          NULL,
                          &Instance
                          );
@@ -1344,17 +1344,17 @@ BBTestCLPMessageCodeAutoTest (
   // Verify the ParameterTypeGuid is the EFI_PLATFORM_TO_DRIVER_CONFIGURATION_CLP_BLOCK
   //
 
-  if(ParameterTypeGuid->Data1==gEfiPlatformToDriverConfigurationClpGuid.Data1
-  	&&ParameterTypeGuid->Data2==gEfiPlatformToDriverConfigurationClpGuid.Data2
-  	&&ParameterTypeGuid->Data3==gEfiPlatformToDriverConfigurationClpGuid.Data3
-  	&&ParameterTypeGuid->Data4[0]==gEfiPlatformToDriverConfigurationClpGuid.Data4[0]
-  	&&ParameterTypeGuid->Data4[1]==gEfiPlatformToDriverConfigurationClpGuid.Data4[1]
-  	&&ParameterTypeGuid->Data4[2]==gEfiPlatformToDriverConfigurationClpGuid.Data4[2]
-  	&&ParameterTypeGuid->Data4[3]==gEfiPlatformToDriverConfigurationClpGuid.Data4[3]
-  	&&ParameterTypeGuid->Data4[4]==gEfiPlatformToDriverConfigurationClpGuid.Data4[4]
-  	&&ParameterTypeGuid->Data4[5]==gEfiPlatformToDriverConfigurationClpGuid.Data4[5]
-  	&&ParameterTypeGuid->Data4[6]==gEfiPlatformToDriverConfigurationClpGuid.Data4[6]
-  	&&ParameterTypeGuid->Data4[7]==gEfiPlatformToDriverConfigurationClpGuid.Data4[7]
+  if(ParameterTypeGuid->Data1==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data1
+  	&&ParameterTypeGuid->Data2==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data2
+  	&&ParameterTypeGuid->Data3==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data3
+  	&&ParameterTypeGuid->Data4[0]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[0]
+  	&&ParameterTypeGuid->Data4[1]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[1]
+  	&&ParameterTypeGuid->Data4[2]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[2]
+  	&&ParameterTypeGuid->Data4[3]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[3]
+  	&&ParameterTypeGuid->Data4[4]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[4]
+  	&&ParameterTypeGuid->Data4[5]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[5]
+  	&&ParameterTypeGuid->Data4[6]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[6]
+  	&&ParameterTypeGuid->Data4[7]==gBlackBoxEfiPlatformToDriverConfigurationClpGuid.Data4[7]
   	) 
   {
     //

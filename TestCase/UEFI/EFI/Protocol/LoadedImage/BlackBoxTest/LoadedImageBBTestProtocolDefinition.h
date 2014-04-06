@@ -64,6 +64,8 @@ Abstract:
 //
 #include "Efi.h"
 
+extern EFI_GUID gBlackBoxEfiLoadedImageProtocolGuid;
+
 //
 // LoadedImageTestNoInterfaceProtocol1
 //

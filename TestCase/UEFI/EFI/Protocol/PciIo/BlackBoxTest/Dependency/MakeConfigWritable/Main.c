@@ -57,7 +57,6 @@ Abstract:
 #include "Common.h"
 #include "Main.h"
 
-EFI_DRIVER_ENTRY_POINT (MakeConfigWritableEntryPoint)
 
 EFI_STATUS
 MakeConfigWritableEntryPoint (

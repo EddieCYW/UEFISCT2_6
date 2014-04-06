@@ -219,7 +219,6 @@ BBTestDevicePathUtilitiesProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (InitializeBBTestDevicePathUtilitiesProtocol)
 
 /**
  *  Device Path Protocol Test Driver Entry point.

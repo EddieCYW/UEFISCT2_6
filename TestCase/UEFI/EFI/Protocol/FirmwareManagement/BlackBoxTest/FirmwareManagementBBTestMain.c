@@ -216,7 +216,6 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
 //   Initialization and Unload functions
 // ****************************************************************************
 
-EFI_DRIVER_ENTRY_POINT(InitializeFirmwareManagementBBTest)
 
 EFI_STATUS
 InitializeFirmwareManagementBBTest (

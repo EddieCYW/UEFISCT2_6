@@ -146,7 +146,6 @@ PXEBaseCodeENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (PXEBaseCodeENTSTestMain)
 
 EFI_STATUS
 PXEBaseCodeENTSTestMain (

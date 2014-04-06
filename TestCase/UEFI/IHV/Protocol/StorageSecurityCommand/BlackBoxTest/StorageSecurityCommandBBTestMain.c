@@ -112,7 +112,6 @@ BBTestBlockIoProtocolUnload (
 //
 // Entry Point Declaration
 //
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestStorageSecurityCommand)
 
 /**
  *  Storage Security Command Protocol Test Driver Entry point.

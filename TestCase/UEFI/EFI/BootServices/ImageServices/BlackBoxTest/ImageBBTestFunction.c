@@ -58,6 +58,8 @@ Abstract:
 #include "SctLib.h"
 #include "Misc.h"
 
+extern EFI_GUID gBlackBoxEfiHIIPackageListProtocolGuid;
+
 //
 // Useful Macros
 //
@@ -1897,7 +1899,7 @@ BBTestLoadImageInterfaceTestCheckPoint8 (
       //
       Status = gtBS->HandleProtocol(
                    ImageHandle, 
-                   &gEfiHIIPackageListProtocolGuid, 
+                   &gBlackBoxEfiHIIPackageListProtocolGuid,
                    (VOID **)&HiiPackageList
                    );
       if(EFI_ERROR(Status)) {
@@ -2086,7 +2088,7 @@ BBTestLoadImageInterfaceTestCheckPoint9 (
        //
         Status = gtBS->HandleProtocol (
                          ImageHandle,
-                         &gEfiHIIPackageListProtocolGuid,
+                         &gBlackBoxEfiHIIPackageListProtocolGuid,
                          (VOID **) &HiiPackageList
                          );
         if (EFI_SUCCESS == Status) {
@@ -2277,8 +2279,8 @@ BBTestStartImageInterfaceTestCheckPoint1 (
     // Create an event
     //
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      ImageTestNotifyFunction,
                      &NotifyTimes,
                      &Event
@@ -2592,8 +2594,8 @@ BBTestStartImageInterfaceTestCheckPoint2 (
     // Create an event
     //
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      ImageTestNotifyFunction,
                      &NotifyTimes,
                      &Event
@@ -3218,8 +3220,8 @@ BBTestStartImageInterfaceTestCheckPoint4 (
     // Create an event
     //
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      ImageTestNotifyFunction,
                      &NotifyTimes,
                      &Event
@@ -7046,8 +7048,8 @@ BBTestExitInterfaceTestCheckPoint5 (
     // Create an event
     //
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      ImageTestNotifyFunction,
                      &NotifyTimes,
                      &Event
@@ -7403,8 +7405,8 @@ BBTestExitInterfaceTestCheckPoint6 (
     // Create an event
     //
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      ImageTestNotifyFunction,
                      &NotifyTimes,
                      &Event
@@ -8092,8 +8094,8 @@ BBTestExitInterfaceTestCheckPoint8 (
     // Create an event
     //
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      ImageTestNotifyFunction,
                      &NotifyTimes,
                      &Event
@@ -8786,8 +8788,8 @@ BBTestExitInterfaceTestCheckPoint10 (
     // Create an event
     //
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      ImageTestNotifyFunction,
                      &NotifyTimes,
                      &Event

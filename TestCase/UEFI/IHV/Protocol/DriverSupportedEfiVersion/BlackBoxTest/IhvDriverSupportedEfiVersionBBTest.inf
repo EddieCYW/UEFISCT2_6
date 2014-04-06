@@ -56,32 +56,27 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvDriverSupportedEfiVersionBBTest
-FILE_GUID            = 44B3B138-9579-4323-AC64-7AD0F7674406
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvDriverSupportedEfiVersionBBTest
+  FILE_GUID            = 44B3B138-9579-4323-AC64-7AD0F7674406
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDriverSupportedEfiVersion
 
 [sources.common]
   DriverSupportedEfiVersionBBTestMain.c
   DriverSupportedEfiVersionBBTestMain.h
   DriverSupportedEfiVersionBBTestFunction.c
-  DriverSupportedEfiVersionProtocol.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
-  EdkFrameworkGuidLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestDriverSupportedEfiVersion
+[Protocols]

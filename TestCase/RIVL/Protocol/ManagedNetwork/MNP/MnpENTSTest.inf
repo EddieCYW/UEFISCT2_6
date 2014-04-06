@@ -55,34 +55,28 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = Mnp_ENTSTest
-FILE_GUID            = 5F442A3D-AA4A-4d10-A30C-7BC57283D730
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = Mnp_ENTSTest
+  FILE_GUID            = 5F442A3D-AA4A-4d10-A30C-7BC57283D730
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = MnpENTSTestMain
 
-[sources.common]
+[Sources.common]
   MnpENTSTest.c
   MnpENTSTestCase.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
-  $(EFI_SOURCE)/SctPkg/TestCase/RIVL/NetworkProtocolLib/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EASDispatcher/Include
-     
-[libraries.common]
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
+  EfiTestLib
   EntsLib
-  EntsProtocolLib
-  
-[nmake.common]
-  C_STD_INCLUDE=
-  IMAGE_ENTRY_POINT=MnpENTSTestMain
+
+[Protocols]
+  gEfiEntsProtocolGuid

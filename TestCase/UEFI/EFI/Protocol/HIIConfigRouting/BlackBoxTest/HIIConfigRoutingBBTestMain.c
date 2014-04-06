@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "HIIConfigRoutingBBTestMain.h"
 
 EFI_BB_TEST_PROTOCOL *gBBTestProtocolInterface;
@@ -210,7 +209,6 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
 };
 
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestHIIConfigRouting)
 
 /**
  *  HII Config Routing Protocol Test Driver Entry point.

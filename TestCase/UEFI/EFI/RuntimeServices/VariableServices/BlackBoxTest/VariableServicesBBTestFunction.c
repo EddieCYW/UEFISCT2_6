@@ -56,8 +56,6 @@ Abstract:
 #include "SctLib.h"
 #include "VariableServicesBBTestMain.h"
 
-#include "EfiVariable.h"
-
 //
 // Prototypes (external)
 //
@@ -434,7 +432,7 @@ GetVariableFuncTestSub1 (
   UINT8                 Data[MAX_BUFFER_SIZE];
   UINT32                Attributes;
   EFI_TPL               OldTpl;
-  EFI_TPL               TplArray[] = {EFI_TPL_APPLICATION, EFI_TPL_CALLBACK};
+  EFI_TPL               TplArray[] = {TPL_APPLICATION, TPL_CALLBACK};
   UINT32                AttributesArray[] = {
     EFI_VARIABLE_BOOTSERVICE_ACCESS,
     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
@@ -664,7 +662,7 @@ GetNextVariableNameFuncTestSub1 (
   CHAR16                VariableName[MAX_BUFFER_SIZE];
   EFI_GUID              VendorGuid;
   EFI_TPL               OldTpl;
-  EFI_TPL               TplArray[] = {EFI_TPL_APPLICATION, EFI_TPL_CALLBACK};
+  EFI_TPL               TplArray[] = {TPL_APPLICATION, TPL_CALLBACK};
   UINT32                AttributesArray[] = {
     EFI_VARIABLE_BOOTSERVICE_ACCESS,
     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
@@ -824,7 +822,7 @@ SetVariableFuncTestSub1 (
   UINT8                 Data2[MAX_BUFFER_SIZE];
   UINT32                Attributes;
   EFI_TPL               OldTpl;
-  EFI_TPL               TplArray[] = {EFI_TPL_APPLICATION, EFI_TPL_CALLBACK};
+  EFI_TPL               TplArray[] = {TPL_APPLICATION, TPL_CALLBACK};
   UINT32                AttributesArray[] = {
     EFI_VARIABLE_BOOTSERVICE_ACCESS,
     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
@@ -1069,7 +1067,7 @@ SetVariableFuncTestSub2 (
   UINT8                 Data[MAX_BUFFER_SIZE];
   UINT32                Attributes;
   EFI_TPL               OldTpl;
-  EFI_TPL               TplArray[] = {EFI_TPL_APPLICATION, EFI_TPL_CALLBACK};
+  EFI_TPL               TplArray[] = {TPL_APPLICATION, TPL_CALLBACK};
   UINT32                AttributesArray[] = {
     EFI_VARIABLE_BOOTSERVICE_ACCESS,
     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
@@ -1449,7 +1447,7 @@ SetVariableFuncTestSub3 (
   UINT8                 Data[MAX_BUFFER_SIZE];
   UINT32                Attributes;
   EFI_TPL               OldTpl;
-  EFI_TPL               TplArray[] = {EFI_TPL_APPLICATION, EFI_TPL_CALLBACK};
+  EFI_TPL               TplArray[] = {TPL_APPLICATION, TPL_CALLBACK};
   UINT32                AttributesArray[] = {
     EFI_VARIABLE_BOOTSERVICE_ACCESS,
     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
@@ -1832,7 +1830,7 @@ SetVariableFuncTestSub4 (
   UINT8                 Data[MAX_BUFFER_SIZE];
   UINT32                Attributes;
   EFI_TPL               OldTpl;
-  EFI_TPL               TplArray[] = {EFI_TPL_APPLICATION, EFI_TPL_CALLBACK};
+  EFI_TPL               TplArray[] = {TPL_APPLICATION, TPL_CALLBACK};
   UINT32                AttributesArray[] = {
     EFI_VARIABLE_BOOTSERVICE_ACCESS,
     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
@@ -1993,7 +1991,7 @@ SetVariableFuncTestSub5 (
   UINT8                 Data[MAX_BUFFER_SIZE];
   UINT32                Attributes;
   EFI_TPL               OldTpl;
-  EFI_TPL               TplArray[] = {EFI_TPL_APPLICATION, EFI_TPL_CALLBACK};
+  EFI_TPL               TplArray[] = {TPL_APPLICATION, TPL_CALLBACK};
   UINT32                AttributesArray[] = {
     EFI_VARIABLE_BOOTSERVICE_ACCESS,
     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
@@ -2160,7 +2158,7 @@ SetVariableFuncTestSub6 (
   UINTN                 RecoveryDataSize;
   UINT8                 *RecoveryData;
   EFI_TPL               OldTpl;
-  EFI_TPL               TplArray[] = {EFI_TPL_APPLICATION, EFI_TPL_CALLBACK};
+  EFI_TPL               TplArray[] = {TPL_APPLICATION, TPL_CALLBACK};
   UINT32                AttributesArray[] = {
     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,
     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS | EFI_VARIABLE_RUNTIME_ACCESS
@@ -2421,7 +2419,7 @@ SetVariableFuncTestSub7 (
   UINTN                 RecoveryDataSize;
   UINT8                 *RecoveryData;
   EFI_TPL               OldTpl;
-  EFI_TPL               TplArray[] = {EFI_TPL_APPLICATION, EFI_TPL_CALLBACK};
+  EFI_TPL               TplArray[] = {TPL_APPLICATION, TPL_CALLBACK};
   UINT32                AttributesArray[] = {
     EFI_VARIABLE_BOOTSERVICE_ACCESS,
     EFI_VARIABLE_BOOTSERVICE_ACCESS | EFI_VARIABLE_RUNTIME_ACCESS

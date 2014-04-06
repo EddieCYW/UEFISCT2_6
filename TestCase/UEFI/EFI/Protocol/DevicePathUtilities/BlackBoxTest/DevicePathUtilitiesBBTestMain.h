@@ -60,7 +60,7 @@ Abstract:
 
 #include "Efi.h"
 #ifndef EFIARM
-#include "DevicePathUtilitiesProtocol.h"
+#include <UEFI/Protocol/DevicePathUtilities.h>
 #else
 #include EFI_PROTOCOL_DEFINITION (DevicePath)
 typedef EFI_DEVICE_PATH_PROTOCOL  EFI_DEVICE_PATH; 

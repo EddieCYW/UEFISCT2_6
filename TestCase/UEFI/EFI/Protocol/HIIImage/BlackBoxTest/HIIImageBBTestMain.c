@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "HIIImageBBTestMain.h"
 
 //
@@ -174,7 +173,6 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
 //
 //
 //
-EFI_DRIVER_ENTRY_POINT(InitializeHIIImageBBTest)
 
 EFI_STATUS
 InitializeHIIImageBBTest (
@@ -224,7 +222,7 @@ GetGraphicsOutputInterface (
   
   Status = gtBS->LocateHandleBuffer (
                         ByProtocol,
-                        &gEfiGraphicsOutputProtocolGuid,
+                        &gBlackBoxEfiGraphicsOutputProtocolGuid,
                         NULL,
                         &NoHandles,
                         &HandleBuffer
@@ -239,7 +237,7 @@ GetGraphicsOutputInterface (
   
   Status = gtBS->HandleProtocol (
              HandleBuffer[0],
-             &gEfiGraphicsOutputProtocolGuid,
+             &gBlackBoxEfiGraphicsOutputProtocolGuid,
              GraphicsOutput
              );
   if ( EFI_ERROR(Status) ) {
@@ -266,7 +264,7 @@ GetHIIDatabaseInterface (
   //
   Status = gtBS->LocateHandleBuffer (
                         ByProtocol,
-                        &gEfiHIIDatabaseProtocolGuid,
+                        &gBlackBoxEfiHIIDatabaseProtocolGuid,
                         NULL,
                         &NoHandles,
                         &HandleBuffer
@@ -281,7 +279,7 @@ GetHIIDatabaseInterface (
   
   Status = gtBS->HandleProtocol (
              HandleBuffer[0],
-             &gEfiHIIDatabaseProtocolGuid,
+             &gBlackBoxEfiHIIDatabaseProtocolGuid,
              HIIDatabase
              );
   if ( EFI_ERROR(Status) ) {

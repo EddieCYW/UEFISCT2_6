@@ -70,7 +70,6 @@ InitializeRuntimeServicesDriver6 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeRuntimeServicesDriver6)
 
 EFI_STATUS
 InitializeRuntimeServicesDriver6 (

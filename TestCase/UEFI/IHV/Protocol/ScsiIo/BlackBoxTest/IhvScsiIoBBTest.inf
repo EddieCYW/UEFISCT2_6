@@ -56,33 +56,28 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvScsiIoBBTest
-FILE_GUID            = 85CDBE89-E83A-4c89-9B92-C32C9ED6E2E9
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvScsiIoBBTest
+  FILE_GUID            = 85CDBE89-E83A-4c89-9B92-C32C9ED6E2E9
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestScsiIo
 
 [sources.common]
   ScsiIoBBTestMain.c
   ScsiIoBBTestMain.h
   ScsiIoBBTestFunction.c
   ScsiIoBBTestConformance.c
-  ScsiIoProtocol.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestScsiIo
+[Protocols]

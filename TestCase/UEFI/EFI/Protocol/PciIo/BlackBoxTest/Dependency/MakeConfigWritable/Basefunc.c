@@ -55,7 +55,7 @@ Abstract:
 --*/
 
 #include "Common.h"
-#include EFI_PROTOCOL_CONSUMER(PciIo)
+#include <UEFI/Protocol/PciIo.h>
 
 /*
  *  Read a byte from configuration space.

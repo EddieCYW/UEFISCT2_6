@@ -64,7 +64,6 @@ Abstract:
 
 EFI_HANDLE mImageHandle;
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestAcpiTableProtocol)
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
   EFI_ACPI_TABLE_PROTOCOL_TEST_REVISION,

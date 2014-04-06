@@ -281,18 +281,6 @@ extern EFI_GUID mImageTestVariableVendorGuid;
 
 extern EFI_GUID   mValidHiiImage1Guid;
 
-#define EFI_HII_PACKAGE_LIST_PROTOCOL_GUID \
-{ 0x6a1ee763, 0xd47a, 0x43b4, { 0xaa, 0xbe, 0xef, 0x1d, 0xe2, 0xab, 0x56, 0xfc } }
-
-extern EFI_GUID gEfiHIIPackageListProtocolGuid;
-
-#define EFI_HII_DATABASE_PROTOCOL_GUID \
-  { \
-    0xef9fc172, 0xa1b2, 0x4693, 0xb3, 0x27, 0x6d, 0x32, 0xfc, 0x41, 0x60, 0x42 \
-  }
-  
-extern EFI_GUID gEfiHIIDatabaseProtocolGuid;
-
 #define VALID_HII_IMAGE_1_NAME                    L"ValidHiiImage1.efi"
 #endif
 

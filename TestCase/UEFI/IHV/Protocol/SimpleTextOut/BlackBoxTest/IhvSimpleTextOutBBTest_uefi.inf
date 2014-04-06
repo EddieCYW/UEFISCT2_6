@@ -56,31 +56,29 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvSimpleTextOutBBTest
-FILE_GUID            = 5A4F05F1-880B-43e2-872F-49AF48E8BCAD
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvSimpleTextOutBBTest
+  FILE_GUID            = 5A4F05F1-880B-43e2-872F-49AF48E8BCAD
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestSimpleTextOutput
 
 [sources.common]
   SimpleTextOutBBTestMain_uefi.c
   SimpleTextOutBBTestFunction_uefi.c
   SimpleTextOutBBTestConformance_uefi.c
-  Guid_uefi.c
+  guid_uefi.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestSimpleTextOutput
+[Protocols]
+  gBlackBoxEfiGraphicsOutputProtocolGuid
+  gEfiDevicePathProtocolGuid

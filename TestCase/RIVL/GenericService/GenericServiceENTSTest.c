@@ -76,7 +76,6 @@ GenericServiceENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (GenericServiceENTSTestMain)
 
 EFI_STATUS
 GenericServiceENTSTestMain (

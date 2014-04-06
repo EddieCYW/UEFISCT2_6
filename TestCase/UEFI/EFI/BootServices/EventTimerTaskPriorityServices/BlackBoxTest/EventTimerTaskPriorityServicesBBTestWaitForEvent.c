@@ -196,9 +196,9 @@ BBTestWaitForEvent_Conf_Sub1 (
   UINTN               Index;
   EFI_TPL             OldTpl;
   EFI_TPL             CheckTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
-                        EFI_TPL_HIGH_LEVEL,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
+                        TPL_HIGH_LEVEL,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;
@@ -209,8 +209,8 @@ BBTestWaitForEvent_Conf_Sub1 (
   // Create an event
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_NOTIFY,
+                   EVT_NOTIFY_WAIT,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    NULL,
                    &Event
@@ -273,8 +273,8 @@ BBTestWaitForEvent_Conf_Sub2 (
   // Create an event
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_NOTIFY,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    NULL,
                    &Event
@@ -332,8 +332,8 @@ BBTestWaitForEvent_Conf_Sub3 (
   // Create an event
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_NOTIFY,
+                   EVT_NOTIFY_WAIT,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    NULL,
                    &Event
@@ -391,8 +391,8 @@ BBTestWaitForEvent_Func_Sub1 (
   // Create an event
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_NOTIFY,
+                   EVT_NOTIFY_WAIT,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    NULL,
                    &Event
@@ -461,8 +461,8 @@ BBTestWaitForEvent_Func_Sub2 (
   // Create an event
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_NOTIFY,
+                   EVT_NOTIFY_WAIT,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    NULL,
                    &Event[0]
@@ -476,8 +476,8 @@ BBTestWaitForEvent_Func_Sub2 (
   // Create a timer event and set it
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER,
-                   EFI_TPL_NOTIFY,
+                   EVT_TIMER,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    NULL,
                    &Event[1]

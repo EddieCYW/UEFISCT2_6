@@ -61,7 +61,7 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "SimpleTextInputEx.h"
+#include <UEFI/Protocol/SimpleTextInEx.h>
 #include "Guid.h"
 
 

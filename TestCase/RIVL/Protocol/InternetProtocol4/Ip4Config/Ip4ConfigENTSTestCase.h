@@ -60,7 +60,7 @@ Abstract:
 //#include EFI_TEST_PROTOCOL_DEFINITION(EntsProtocol)
 #include "Eas.h"
 //#include <Library/EntsLib.h>
-#include "Ip4.h"
+#include <UEFI/Protocol/Ip4.h>
 
 EFI_STATUS
 Ip4ConfigStart_EntsTest (

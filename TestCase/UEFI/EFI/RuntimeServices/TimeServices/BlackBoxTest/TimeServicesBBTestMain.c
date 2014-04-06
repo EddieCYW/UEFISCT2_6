@@ -72,8 +72,8 @@ INTN DayOfMonth[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 
 EFI_TPL TplArray [TPL_ARRAY_SIZE] = {
-  EFI_TPL_APPLICATION,
-  EFI_TPL_CALLBACK
+  TPL_APPLICATION,
+  TPL_CALLBACK
 };
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
@@ -193,7 +193,6 @@ BBTestTimeServicesUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestTimeServices)
 
 /**
  *  Time Services Test Driver Entry point.

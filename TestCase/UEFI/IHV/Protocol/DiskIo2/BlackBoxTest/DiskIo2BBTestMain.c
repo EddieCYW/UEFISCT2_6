@@ -163,8 +163,6 @@ BBTestDiskIo2ProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestDiskIo2)
-
 /**
  *  Disk I/O2 Protocol Test Driver Entry point.
  *  @param ImageHandle the driver image handle.
@@ -183,7 +181,7 @@ InitializeBBTestDiskIo2 (
   SctInitializeLib (ImageHandle, SystemTable);
 
 
-  Status = gtBS->CreateEvent(EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   ASSERT_EFI_ERROR(Status);
 
   return EfiInitAndInstallIHVBBTestInterface (

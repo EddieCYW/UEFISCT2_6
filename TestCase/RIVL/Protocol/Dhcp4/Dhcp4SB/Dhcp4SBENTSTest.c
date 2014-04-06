@@ -82,7 +82,6 @@ Dhcp4SBENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Dhcp4SBENTSTestMain)
 
 EFI_STATUS
 Dhcp4SBENTSTestMain (

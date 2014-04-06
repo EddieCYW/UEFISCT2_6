@@ -111,8 +111,6 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
 //
 //
 //
-EFI_DRIVER_ENTRY_POINT(InitializeTimeStampBBTest)
-
 EFI_STATUS
 InitializeTimeStampBBTest (
   IN EFI_HANDLE                   ImageHandle,

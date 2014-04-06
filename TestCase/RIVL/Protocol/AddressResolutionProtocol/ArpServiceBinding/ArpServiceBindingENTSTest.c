@@ -82,7 +82,6 @@ ArpServiceBindingENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (ArpServiceBindingENTSTestMain)
 
 EFI_STATUS
 ArpServiceBindingENTSTestMain (

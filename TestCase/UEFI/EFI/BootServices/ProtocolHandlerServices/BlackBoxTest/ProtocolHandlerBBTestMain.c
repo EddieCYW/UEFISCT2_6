@@ -58,7 +58,6 @@ Abstract:
 #include "SctLib.h"
 #include "ProtocolHandlerBBTest.h"
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestProtocolHandlerBootServices)
 
 //
 // global variable
@@ -69,9 +68,9 @@ EFI_HANDLE                  mImageHandle;
 // Build Data structure here
 //
 EFI_TPL TplArray[TPL_ARRAY_SIZE] = {
-  EFI_TPL_APPLICATION,
-  EFI_TPL_CALLBACK,
-  EFI_TPL_NOTIFY
+  TPL_APPLICATION,
+  TPL_CALLBACK,
+  TPL_NOTIFY
 };
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {

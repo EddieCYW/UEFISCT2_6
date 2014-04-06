@@ -55,12 +55,15 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = ProtocolHandlerServicesBBTest
-FILE_GUID            = 65D50E3C-2174-4b24-AF95-D18EB249AEED
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ProtocolHandlerServicesBBTest
+  FILE_GUID            = 65D50E3C-2174-4b24-AF95-D18EB249AEED
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestProtocolHandlerBootServices
 
-[sources.common]
+[Sources.common]
   ProtocolHandlerBBTestMain.c
   ProtocolHandlerBBTestConformance.c
   ProtocolHandlerBBTestFunction.c
@@ -71,21 +74,16 @@ COMPONENT_TYPE       = BS_DRIVER
   Misc.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestProtocolHandlerBootServices
+[Protocols]
+  gEfiTestProfileLibraryGuid
+  gEfiPlatformDriverOverrideProtocolGuid

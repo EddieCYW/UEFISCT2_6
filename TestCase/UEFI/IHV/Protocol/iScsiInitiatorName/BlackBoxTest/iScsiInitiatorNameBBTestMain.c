@@ -123,7 +123,6 @@ BBTestiScsiInitiatorNameProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestiScsiInitiatorName)
 
 EFI_STATUS
 InitializeBBTestiScsiInitiatorName (

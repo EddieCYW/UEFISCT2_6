@@ -55,11 +55,7 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "DevicePathFromTextBBTestMain.h"
-
-extern EFI_GUID gEfiDevicePathUtilitiesProtocolGuid;
-extern EFI_GUID gEfiDevicePathToTextProtocolGuid;
 
 #define PCINodeType         1
 #define PCINodeSubType      1

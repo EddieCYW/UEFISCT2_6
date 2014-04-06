@@ -54,22 +54,11 @@ Abstract:
   This driver supports platform authtest service
 
 --*/
-#include "SctLib.h"
-#include "SctLib.h"
+
+#include "AuthenticationBBTestMain.h"
 #include "AuthTest.h"
-#include <Library/EfiTestLib.h>
-#include "AuthenticationGuid.h"
 
 #include EFI_TEST_PROTOCOL_DEFINITION(StandardTestLibrary)
-
-#ifdef EFIARM	
-extern EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib;
-#else
-EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib;
-#endif
-
-EFI_GUID gEfiAuthenticationProtocolGuid = EFI_AUTHENTICATION_INFO_PROTOCOL_GUID;
-
 
 //
 // Worker functions
@@ -92,9 +81,6 @@ void hex_dump(unsigned char buffer[], int length)
 		}
 	}
 }
-#ifndef EFIARM  
-EFI_EVENT              TimerEvent;
-#endif
 
 /***********************************************************************************
 

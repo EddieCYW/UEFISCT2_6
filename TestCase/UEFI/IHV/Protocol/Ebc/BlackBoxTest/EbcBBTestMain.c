@@ -58,8 +58,6 @@ Abstract:
 #include "SctLib.h"
 #include "EbcBBTestMain.h"
 
-EFI_GUID gEfiEbcDriverProtocolGuid = EBC_DRIVER_TEST_PROTOCOL;
-
 EFI_PEI_FLUSH_INSTRUCTION_CACHE_PROTOCOL  *gEfiPeiFlushInstructionCache = NULL;
 EFI_PEI_PE_COFF_LOADER_PROTOCOL           *gEfiPeiPeCoffLoader          = NULL;
 
@@ -170,7 +168,6 @@ BBTestEbcUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestEbcProtocol)
 
 /**
  *  Ebc Protocol Test Driver Entry point.
@@ -198,8 +195,8 @@ InitializeBBTestEbcProtocol (
   //
   // Get Pei Protocols
   //
-  SctGetPeiProtocol (&gEfiPeiFlushInstructionCacheGuid, &gEfiPeiFlushInstructionCache);
-  SctGetPeiProtocol (&gEfiPeiPeCoffLoaderGuid, &gEfiPeiPeCoffLoader);
+  SctGetPeiProtocol (&gBlackBoxEfiPeiFlushInstructionCacheGuid, &gEfiPeiFlushInstructionCache);
+  SctGetPeiProtocol (&gBlackBoxEfiPeiPeCoffLoaderGuid, &gEfiPeiPeCoffLoader);
 
   //
   // Use profile lib at here just for less effect on the current system. It is
@@ -352,7 +349,7 @@ ReadEbcDriver (
   //
   Status = Handle->GetInfo(
                      Handle,
-                     &gEfiFileInfoGuid,
+                     &gBlackBoxEfiFileInfoGuid,
                      &FileInfoSize,
                      FileInfo
                      );
@@ -370,7 +367,7 @@ ReadEbcDriver (
   }
   Status = Handle->GetInfo(
                      Handle,
-                     &gEfiFileInfoGuid,
+                     &gBlackBoxEfiFileInfoGuid,
                      &FileInfoSize,
                      FileInfo
                      );
@@ -600,7 +597,7 @@ UnloadEbcDriver ()
 
   Status = gtBS->UninstallProtocolInterface (
                   gDummyImageHandle,
-                  &gEfiEbcDriverProtocolGuid,
+                  &gBlackBoxEfiEbcDriverProtocolGuid,
                   NULL
                   );
 

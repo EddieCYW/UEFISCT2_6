@@ -1912,8 +1912,8 @@ BBTestRegisterDataNotifyConformanceTestCheckpoint2 (
   DataType = IPsecConfigDataTypeMaximum;
   
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_NOTIFY,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_NOTIFY,
                    EventNotifyFunc,
                    NULL,
                    &Event
@@ -2019,8 +2019,8 @@ BBTestUnregisterDataNotifyConformanceTestCheckpoint2 (
   DataType = IPsecConfigDataTypeMaximum;
   
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_NOTIFY,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_NOTIFY,
                    EventNotifyFunc,
                    NULL,
                    &Event

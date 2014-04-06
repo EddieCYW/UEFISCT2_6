@@ -55,34 +55,28 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = CombinationImage1
-FILE_GUID            = 802533D3-46EF-45fc-AA71-A53F03D015D6
-COMPONENT_TYPE       = APPLICATION
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = CombinationImage1
+  FILE_GUID            = 802533D3-46EF-45fc-AA71-A53F03D015D6
+  MODULE_TYPE          = UEFI_APPLICATION
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeCombinationImage1
 
-[sources.common]
+[Sources.common]
   CombinationImage1.c
-  ../../../protocoldefinition.c
-  ../../../misc.c
+  ../../../ProtocolDefinition.c
+  ../../../Misc.c
 
-[includes.common]
-  .
-  ../../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/TestCase/UEFI/EFI/Protocol/HIIDatabase/BlackBoxTest
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeCombinationImage1
+[Protocols]
+  gEfiTestProfileLibraryGuid

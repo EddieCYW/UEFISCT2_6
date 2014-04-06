@@ -61,16 +61,11 @@ Abstract:
 
 
 #include "Efi.h"
-#include "PlatformToDriverConfigurationProtocol.h"
+#include <UEFI/Protocol/PlatformToDriverConfiguration.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 
 #define  PLATFORM_TO_DRIVER_CONFIGURATION_PROTOCOL_TEST_REVISION    0x00010000
-#ifdef EFIARM
-extern EFI_HANDLE DriverImageHandle;
-#else
-EFI_HANDLE DriverImageHandle;
-#endif
 
 //
 //define the data structure

@@ -52,7 +52,7 @@ Abstract:
     for EFI Driver Simple Text Input Ex Protocol's conformance Test
 
 --*/
-#include "SctLib.h"
+
 #include "SimpleTextInputExBBTestMain.h"
 
 

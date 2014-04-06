@@ -177,7 +177,6 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
 //
 //
 //
-EFI_DRIVER_ENTRY_POINT(InitializeIPsecConfigBBTest)
 
 EFI_STATUS
 InitializeIPsecConfigBBTest (

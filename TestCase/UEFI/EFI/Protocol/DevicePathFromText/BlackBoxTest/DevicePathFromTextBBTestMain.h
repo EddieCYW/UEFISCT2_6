@@ -58,10 +58,11 @@ Abstract:
 #ifndef _DEVICE_PATH_FROM_TEXT_BBTEST_H_
 #define _DEVICE_PATH_FROM_TEXT_BBTEST_H_
 
-#include "Efi.h"
-#include "DevicePathFromTextProtocol.h"
-#include "DevicePathUtilities.h"
-#include "DevicePathToText.h"
+#include <Base.h>
+#include "SctLib.h"
+#include <UEFI/Protocol/DevicePathFromText.h>
+#include <UEFI/Protocol/DevicePathUtilities.h>
+#include <UEFI/Protocol/DevicePathToText.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 
@@ -125,30 +126,6 @@ typedef struct {
   UINT32                          NamespaceId;
   UINT64                          EUId;
 } NVME_DEVICE_PATH;
-
-typedef struct {
-  EFI_DEVICE_PATH_PROTOCOL        Header;
-  EFI_IPv6_ADDRESS                LocalIpAddress;
-  EFI_IPv6_ADDRESS                RemoteIpAddress;
-  UINT16                          LocalPort;
-  UINT16                          RemotePort;
-  UINT16                          Protocol;
-  UINT8                           IPAddressOrigin;
-  UINT8                           PrefixLength;
-  EFI_IPv6_ADDRESS                GatewayIPAddress;
-} IPV6_DEVICE_PATH;
-
-typedef struct {
-  EFI_DEVICE_PATH_PROTOCOL        Header;
-  EFI_IPv4_ADDRESS                LocalIpAddress;
-  EFI_IPv4_ADDRESS                RemoteIpAddress;
-  UINT16                          LocalPort;
-  UINT16                          RemotePort;
-  UINT16                          Protocol;
-  BOOLEAN                         StaticIpAddress;
-  EFI_IPv4_ADDRESS                GatewayIPAddress;
-  EFI_IPv4_ADDRESS                SubnetMask;
-} IPV4_DEVICE_PATH;
 
 #pragma pack()
 

@@ -57,9 +57,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = DriverDiagnostics2BBTest
-FILE_GUID            = 7F3CD762-5A89-4392-9D8D-12552CBE818A
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = DriverDiagnostics2BBTest
+  FILE_GUID            = 7F3CD762-5A89-4392-9D8D-12552CBE818A
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDriverDiagnostics2
 
 [sources.common]
   Guid.c
@@ -67,30 +70,15 @@ COMPONENT_TYPE       = BS_DRIVER
   DriverDiagnostics2BBTestConformance.c
   DriverDiagnostics2BBTestFunction.c
 
-[sources.IA32]
-  DriverDiagnostics2Protocol.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.X64]
-  DriverDiagnostics2Protocol.c
-
-[sources.IPF]
-  DriverDiagnostics2Protocol.c 
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestDriverDiagnostics2
+[Protocols]
+  gBlackBoxEfiDriverDiagnostics2ProtocolGuid

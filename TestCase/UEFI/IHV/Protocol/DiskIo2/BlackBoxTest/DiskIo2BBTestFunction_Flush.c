@@ -102,7 +102,7 @@ SCT_LIST_ENTRY  AsyncFlushFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(As
 //
 // Async Flush lock
 //
-SCT_LOCK gAsyncFlushQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK gAsyncFlushQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 
 //
@@ -170,8 +170,8 @@ DiskIo2AsyncFlushData (
   // DiskIo2Token initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    DiskIo2FlushNotifyFunc,
                    DiskIo2Entity,
                    &DiskIo2Entity->DiskIo2Token.Event
@@ -257,8 +257,8 @@ EFIAPI DiskIo2FlushBatchNotifyFunc (
 
     DiskIo2Entity->DiskIo2Token.Event = NULL;
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      DiskIo2FlushBatchNotifyFunc,
                      TaskContext,
                      &DiskIo2Entity->DiskIo2Token.Event
@@ -362,8 +362,8 @@ DiskIo2AsyncBatchFlush (
     DiskIo2Entity = CR(ListHeader->ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
  
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      DiskIo2FlushBatchNotifyFunc,
                      TaskContext,
                      &DiskIo2Entity->DiskIo2Token.Event
@@ -1127,8 +1127,8 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint3(
   BatchFlushToken.Event = NULL;
   
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    DiskIo2FinishNotifyFunc,
                    &AsyncBatchFlushFinished,
                    &BatchFlushToken.Event

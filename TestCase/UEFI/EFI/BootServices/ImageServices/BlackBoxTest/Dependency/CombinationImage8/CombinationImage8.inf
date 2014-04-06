@@ -55,34 +55,28 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = ImageServices_CombinationImage8
-FILE_GUID            = 1B1D1C18-7818-43a6-820A-B09F0E38E235
-COMPONENT_TYPE       = APPLICATION
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ImageServices_CombinationImage8
+  FILE_GUID            = 1B1D1C18-7818-43a6-820A-B09F0E38E235
+  MODULE_TYPE          = UEFI_APPLICATION
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeCombinationImage8
 
-[sources.common]
+[Sources.common]
   CombinationImage8.c
-  ../../protocoldefinition.c
-  ../../misc.c
+  ../../ProtocolDefinition.c
+  ../../Misc.c
 
-[includes.common]
-  .
-  ../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/TestCase/UEFI/EFI/Protocol/HIIDatabase/BlackBoxTest
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeCombinationImage8
+[Protocols]
+  gEfiTestProfileLibraryGuid

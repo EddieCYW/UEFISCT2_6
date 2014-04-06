@@ -58,10 +58,10 @@ Abstract:
 #ifndef _SIMPLE_TEXT_INPUT_EX_BB_TEST_MAIN
 #define _SIMPLE_TEXT_INPUT_EX_BB_TEST_MAIN
 
-
-#include "Efi.h"
+#include <Base.h>
+#include "SctLib.h"
 #include <Library/EfiTestLib.h>
-#include "SimpleTextInputEx.h"
+#include <UEFI/Protocol/SimpleTextInEx.h>
 #include "Guid.h"
 
 

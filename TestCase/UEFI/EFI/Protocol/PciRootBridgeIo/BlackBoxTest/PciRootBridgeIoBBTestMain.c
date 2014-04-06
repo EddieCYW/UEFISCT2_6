@@ -371,7 +371,6 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
 
 EFI_BB_TEST_PROTOCOL *gBBTestProtocolInterface;
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestPciRootBridgeIo)
 
 EFI_STATUS
 InitializeBBTestPciRootBridgeIo (

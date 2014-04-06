@@ -146,7 +146,6 @@ BBTestPlatformDriverOverrideProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestPlatformDriverOverride)
 
 /**
  *  Platform Driver Override Protocol Test Driver Entry point.

@@ -58,13 +58,14 @@ Abstract:
 #ifndef _HII_CONFIG_ACCESS_BB_TEST_MAIN
 #define _HII_CONFIG_ACCESS_BB_TEST_MAIN
 
-
-#include "Efi.h"
+#define __UEFI_INTERNAL_FORMREPRESENTATION_H__
+#include <Base.h>
+#include "SctLib.h"
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
-#include "HIIConfigAccess.h"
-#include "HIIConfigAccess2.h"
-#include "HIIConfigRouting.h"
+#include <UEFI/Protocol/Hii.h>
+#include <UEFI/Protocol/HIIConfigAccess.h>
+#include <UEFI/Protocol/HIIConfigRouting.h>
 
 
 #define EFI_HII_CONFIG_ACCESS_PROTOCOL_TEST_REVISION    0x00010000

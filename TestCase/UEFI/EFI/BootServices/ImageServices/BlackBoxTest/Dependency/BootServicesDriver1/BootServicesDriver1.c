@@ -79,7 +79,6 @@ BootServicesDriver1Unload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBootServicesDriver1)
 
 EFI_STATUS
 InitializeBootServicesDriver1 (

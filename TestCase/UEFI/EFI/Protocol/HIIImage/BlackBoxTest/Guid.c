@@ -54,8 +54,7 @@
 
 --*/
 
-#include "Efi.h"
-#include "Guid.h"
+#include "HIIImageBBTestMain.h"
 
 EFI_GUID gHIIImageBBTestConformanceAssertionGuid001 = EFI_TEST_HIIIMAGEBBTESTCONFORMANCE_ASSERTION_001_GUID;
 

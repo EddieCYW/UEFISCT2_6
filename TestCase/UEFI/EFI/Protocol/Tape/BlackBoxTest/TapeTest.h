@@ -58,7 +58,8 @@ Abstract:
 #ifndef _TAPE_TEST_H
 #define _TAPE_TEST_H
 
-#include "Tape.h"
+#include <SctLib.h>
+#include <UEFI/Protocol/Tape.h>
 
 //
 // Function prototypes

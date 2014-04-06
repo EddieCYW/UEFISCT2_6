@@ -183,8 +183,8 @@ BBTestReadDiskExConformanceAutoTest (
   //
   DiskIO2Finished = FALSE;
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    NotifyFunc,
                    &DiskIO2Finished,
                    &DiskIo2TokenAsync.Event
@@ -614,8 +614,8 @@ BBTestWriteDiskExConformanceAutoTest (
   //
   DiskIO2Finished = FALSE;
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    NotifyFunc,
                    &DiskIO2Finished,
                    &DiskIo2TokenAsync.Event
@@ -1098,8 +1098,8 @@ BBTestFlushDiskExConformanceAutoTest (
   DiskIO2Finished = FALSE;
   
   Status = gtBS->CreateEvent (
-                  EFI_EVENT_NOTIFY_SIGNAL,
-                  EFI_TPL_CALLBACK,
+                  EVT_NOTIFY_SIGNAL,
+                  TPL_CALLBACK,
                   NotifyFunc,
                   &DiskIO2Finished,
                   &DiskIo2TokenAsync.Event

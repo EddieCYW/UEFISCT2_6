@@ -56,34 +56,28 @@
 #--*/
 
 [defines]
-BASE_NAME            = AtaPassThruBBTest
-FILE_GUID            = DDCEF0AA-56A8-4212-B214-EECC1CF2D848
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = AtaPassThruBBTest
+  FILE_GUID            = DDCEF0AA-56A8-4212-B214-EECC1CF2D848
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestAtaPassThru
 
 [sources.common]
   AtaPassThruBBTestMain.c
   AtaPassThruBBTestMain.h
   AtaPassThruBBTestFunction.c
   AtaPassThruBBTestConformance.c
-  AtaPassThruProtocol.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestAtaPassThru
+[Protocols]

@@ -54,14 +54,16 @@ Abstract:
 --*/
 
 
-#include "SimpleFileSystemExProtocol.h"
+#define EFI_FILE_HANDLE_REVISION 0x00020000
+
+#include "SimpleFileSystemBBTest.h"
 
 //
 //
 //
 typedef struct {
   UINTN                             Signature;
-  EFI_FILE_PROTOCOL                 *FileIo;
+  EFI_FILE                          *FileIo;
   EFI_FILE_IO_TOKEN               	FileIoToken;
   EFI_TPL                           Tpl;
   UINT64                            SetPosition;
@@ -74,7 +76,7 @@ typedef struct {
 
 EFI_STATUS
 InternalGetInfoFileIo2 (
-  EFI_FILE_PROTOCOL      *FileHandle,
+  EFI_FILE               *FileHandle,
   VOID                   **InfoBuffer,
   UINTN                  *BufferSize,
   EFI_GUID               *InfoId
@@ -82,7 +84,7 @@ InternalGetInfoFileIo2 (
 
 EFI_STATUS
 InternalSetFileSizeFileIo2 (
-  EFI_FILE_PROTOCOL      *FileHandle,
+  EFI_FILE               *FileHandle,
   UINT64                 FileSize
   );
 
@@ -125,7 +127,7 @@ SCT_LIST_ENTRY  AsyncWriteFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(As
 //
 // Async Write File lock
 //
-SCT_LOCK  gAsyncWriteQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncWriteQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 //
 // Async Write Multi Files Queue
@@ -137,7 +139,7 @@ SCT_LIST_ENTRY  AsyncWriteMultiFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIAB
 //
 // Async Write Multi Files lock
 //
-SCT_LOCK  gAsyncWriteMultiQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncWriteMultiQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 
 //
@@ -189,7 +191,7 @@ EFIAPI FileIoWriteOneFileNotifyFunc (
 STATIC
 EFI_STATUS
 FileIoAsyncWriteOneFile(
-  IN EFI_FILE_PROTOCOL                 *FileIo,
+  IN EFI_FILE                          *FileIo,
   IN EFI_TPL                           Tpl,
   IN UINT64                            SetPosition,
   IN UINTN                             WriteLength,
@@ -218,8 +220,8 @@ FileIoAsyncWriteOneFile(
   // FileIoToken initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    FileIoWriteOneFileNotifyFunc,
                    FileIoEntity,
                    &FileIoEntity->FileIoToken.Event
@@ -324,7 +326,7 @@ EFIAPI FileIoWriteMultiFilesNotifyFunc (
 STATIC
 EFI_STATUS
 FileIoAsyncWriteMultiFiles (
-  IN EFI_FILE_PROTOCOL                 *FileIo,
+  IN EFI_FILE                          *FileIo,
   IN UINT64                            SetPosition,
   IN UINTN                             WriteLength,
   OUT UINT8                            *Buffer
@@ -351,8 +353,8 @@ FileIoAsyncWriteMultiFiles (
   // FileIoToken initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    FileIoWriteMultiFilesNotifyFunc,
                    FileIoEntity,
                    &FileIoEntity->FileIoToken.Event
@@ -479,10 +481,10 @@ BBTestWriteExBasicTestCheckpoint1 (
   )
 {
   EFI_STATUS                Status;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   UINTN                     TplIndex;
   CHAR16                    FileName[100];
-  EFI_FILE_PROTOCOL         *FileHandle;
+  EFI_FILE                  *FileHandle;
   UINT64                    FileSize;
   UINT8                     *Buffer;
   UINTN                     BufferSize;
@@ -888,10 +890,10 @@ BBTestWriteExBasicTestCheckpoint2 (
 {
   EFI_STATUS                Status;
   EFI_STATUS                WriteExStatus;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   UINTN                     TplIndex;
   CHAR16                    FileName[100];
-  EFI_FILE_PROTOCOL         *FileHandle;
+  EFI_FILE                  *FileHandle;
   UINT64                    FileSize;
   UINT8                     BufferWrite[200];
   UINT8                     BufferRead[200];
@@ -1088,7 +1090,7 @@ BBTestWriteExBasicTestCheckpoint2 (
             // file size grows
             //
             FileInfo = NULL;
-            Status = InternalGetInfoFileIo2 (FileHandle, &FileInfo, &InfoSize, &gEfiFileInfoGuid);
+            Status = InternalGetInfoFileIo2 (FileHandle, &FileInfo, &InfoSize, &gBlackBoxEfiFileInfoGuid);
             if (EFI_ERROR (Status)) {
               StandardLib->RecordAssertion (
                              StandardLib,
@@ -1203,9 +1205,9 @@ BBTestWriteExBasicTestCheckpoint3 (
   )
 {
   EFI_STATUS                Status;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   CHAR16                    FileName[3][100];
-  EFI_FILE_PROTOCOL         *FileHandle[3];
+  EFI_FILE                  *FileHandle[3];
   UINT64                    FileSize;
   UINT8                     *Buffer[3];
   UINTN                     BufferSize;
@@ -1422,7 +1424,7 @@ BBTestWriteExBasicTestCheckpoint3 (
             // file size grows
             //
             FileInfo = NULL;
-            Status = InternalGetInfoFileIo2 (FileIoEntity->FileIo, &FileInfo, &InfoSize, &gEfiFileInfoGuid);
+            Status = InternalGetInfoFileIo2 (FileIoEntity->FileIo, &FileInfo, &InfoSize, &gBlackBoxEfiFileInfoGuid);
             if (EFI_ERROR (Status)) {
               StandardLib->RecordAssertion (
                              StandardLib,
@@ -1640,9 +1642,9 @@ BBTestWriteExBasicTestCheckpoint4 (
 {
   EFI_STATUS                Status;
   EFI_STATUS                WriteStatus;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   CHAR16                    FileName[3][100];
-  EFI_FILE_PROTOCOL         *FileHandle[3];
+  EFI_FILE                  *FileHandle[3];
   UINT64                    FileSize;
   UINTN                     BufferSize;
   UINT64                    SetPosition[3] = {0, 100, 200};
@@ -1845,7 +1847,7 @@ BBTestWriteExBasicTestCheckpoint4 (
           // file size grows
           //
           FileInfo = NULL;
-          Status = InternalGetInfoFileIo2 (FileHandle[Index], &FileInfo, &InfoSize, &gEfiFileInfoGuid);
+          Status = InternalGetInfoFileIo2 (FileHandle[Index], &FileInfo, &InfoSize, &gBlackBoxEfiFileInfoGuid);
           if (EFI_ERROR (Status)) {
             StandardLib->RecordAssertion (
                            StandardLib,
@@ -1954,7 +1956,7 @@ BBTestWriteExBasicTestCheckpoint4 (
 
 EFI_STATUS
 InternalGetInfoFileIo2 (
-  EFI_FILE_PROTOCOL      *FileHandle,
+  EFI_FILE               *FileHandle,
   VOID                   **InfoBuffer,
   UINTN                  *BufferSize,
   EFI_GUID               *InfoId
@@ -2021,7 +2023,7 @@ Done:
 
 EFI_STATUS
 InternalSetFileSizeFileIo2 (
-  EFI_FILE_PROTOCOL      *FileHandle,
+  EFI_FILE               *FileHandle,
   UINT64                 FileSize
   )
 {
@@ -2029,13 +2031,13 @@ InternalSetFileSizeFileIo2 (
   UINTN         BufferSize;
   EFI_STATUS    Status;
 
-  Status = InternalGetInfoFileIo2 (FileHandle, &InfoBuffer, &BufferSize, &gEfiFileInfoGuid);
+  Status = InternalGetInfoFileIo2 (FileHandle, &InfoBuffer, &BufferSize, &gBlackBoxEfiFileInfoGuid);
   if (EFI_ERROR (Status)) {
     return Status;
   }
 
   InfoBuffer->FileSize = FileSize;
-  Status = FileHandle->SetInfo (FileHandle, &gEfiFileInfoGuid, BufferSize, InfoBuffer);
+  Status = FileHandle->SetInfo (FileHandle, &gBlackBoxEfiFileInfoGuid, BufferSize, InfoBuffer);
 
   gtBS->FreePool (InfoBuffer);
 

@@ -56,55 +56,36 @@
 #--*/
 
 [defines]
-BASE_NAME            = IPsec2BBTest
-FILE_GUID            = 3B7B5A7A-17C2-49f6-91CA-EB8B7BAF41A6
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IPsec2BBTest
+  FILE_GUID            = 3B7B5A7A-17C2-49f6-91CA-EB8B7BAF41A6
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeIPsec2BBTest
 
 [sources.common]
-  IPsec2Protocol.c
   IPsec2BBTestConformance.c
   IPsec2BBTestFunction.c
   IPsec2BBTestMain.c
   Guid.c
-  IPsecConfigProtocol.c
-  IPSecConfigDataIp4Transport.c
-  IPSecConfigDataIp4Tunnel.c
+  IPsecConfigDataIp4Transport.c
+  IPsecConfigDataIp4Tunnel.c
   Ip4Packet.c
-  IPSecConfigDataIp6Transport.c
-  IPSecConfigDataIp6Tunnel.c
+  IPsecConfigDataIp6Transport.c
+  IPsecConfigDataIp6Tunnel.c
   Ip6Packet.c
-  Udp6.c
 
-[sources.ia32]
-  Udp4.c
-  Ip6.c
-  Ip4.c
-  
-[sources.ipf]
-  Udp4.c
-  Ip6.c
-  Ip4.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.x64]  
-  Udp4.c
-  Ip6.c
-  Ip4.c
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeIPsec2BBTest
+[Protocols]
+  gBlackBoxEfiIPsecConfigProtocolGuid
+  gBlackBoxEfiUdp4ServiceBindingProtocolGuid
+  gBlackBoxEfiUdp6ServiceBindingProtocolGuid

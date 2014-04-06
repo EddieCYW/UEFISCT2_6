@@ -670,8 +670,8 @@ BBTestCombinationTest3 (
   // event for protocol4 installation & reinstallation
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    TestNotifyFunction1,
                    &NotifyTimes,
                    &Event
@@ -1415,8 +1415,8 @@ BBTestCombinationTest2CheckPoint2 (
 
   for (Index = 0; Index < 100; Index++) {
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_WAIT,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_WAIT,
+                     TPL_CALLBACK,
                      TestNotifyFunction1,
                      &NotifyTimes,
                      &Event[Index]

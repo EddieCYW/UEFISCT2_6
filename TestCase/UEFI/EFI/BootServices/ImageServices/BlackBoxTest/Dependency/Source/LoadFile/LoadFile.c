@@ -137,7 +137,6 @@ EFI_DEVICE_PATH_PROTOCOL    *mLoadFileDriverDevicePath;
 //
 // global variable for this test driver's image handle
 //
-EFI_DRIVER_ENTRY_POINT(InitializeLoadFileDriver)
 
 EFI_STATUS
 InitializeLoadFileDriver (

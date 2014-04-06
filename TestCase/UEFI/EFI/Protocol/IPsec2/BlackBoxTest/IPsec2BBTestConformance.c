@@ -99,7 +99,7 @@ BBTestProcessExtConformanceTest (
   // Open IPSEC_CONFIG_PROTOCOL
   //
   SctLocateProtocol(
-    &gEfiIPsecConfigProtocolGuid,
+    &gBlackBoxEfiIPsecConfigProtocolGuid,
     &IpSecConf
     );
 
@@ -184,7 +184,7 @@ BBTestProcessExtConformanceTestCheckpoint1 (
   // 
   Status = gtBS->LocateHandleBuffer(
                    ByProtocol, 
-                   &gEfiUdp4ServiceBindingProtocolGuid, 
+                   &gBlackBoxEfiUdp4ServiceBindingProtocolGuid, 
                    NULL, 
                    &NoHandles,
                    &NicHandleBuffer

@@ -79,22 +79,17 @@ COMPONENT_TYPE   = BS_DRIVER
 
 [includes.common]
   .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Efi/Protocol/DevicePathUtilities
-  $(EDK_SOURCE)/Foundation/Efi/Protocol/DevicePathFromText
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/MdePkg/Include
 
 [libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+  SctLib
+  SctGuidLib
   EfiTestLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
 [nmake.common]
   IMAGE_ENTRY_POINT = InitializeBBTestDevicePathToTextProtocol

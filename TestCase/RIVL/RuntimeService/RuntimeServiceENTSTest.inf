@@ -55,12 +55,15 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = RuntimeService_ENTSTest
-FILE_GUID            = 3896A379-77BE-4c5f-A7D2-CE171E8ED2E4
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = RuntimeService_ENTSTest
+  FILE_GUID            = 3896A379-77BE-4c5f-A7D2-CE171E8ED2E4
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = RuntimeServiceENTSTestMain
 
-[sources.common]
+[Sources.common]
   RuntimeServiceENTSTest.c
   VariableService/VariableENTSTestCase.h
   VariableService/VariableENTSTestCase.c
@@ -69,25 +72,16 @@ COMPONENT_TYPE       = BS_DRIVER
   MiscellaneousRuntimeService/MiscellaneousRuntimeENTSTestCase.h
   MiscellaneousRuntimeService/MiscellaneousRuntimeENTSTestCase.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EASDispatcher/Include
-     
-[libraries.common]
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
+  EfiTestLib
   EntsLib
-  EntsProtocolLib
 
-[nmake.common]
-  C_STD_INCLUDE=
-  IMAGE_ENTRY_POINT=RuntimeServiceENTSTestMain
-
+[Protocols]
+  gEfiEntsProtocolGuid

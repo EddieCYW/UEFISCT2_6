@@ -56,7 +56,6 @@ Abstract:
 --*/
 
 
-#include "SctLib.h"
 #include "DebugSupportBBTestMain.h"
 
 extern volatile  UINTN InvokedPeriodicCallback;
@@ -365,8 +364,8 @@ BBTestRegisterPeriodicCallbackFunctionAutoTest (
   // Create Event for time service
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    TimerNotifyFunction1,
                    NULL,
                    &TimeEvent

@@ -59,8 +59,8 @@ Abstract:
 #define _ADAPTER_INFORMATION_BB_TEST_MAIN
 
 #include "Efi.h"
-#include "EfiTestLib.h"
-#include "AdapterInfoProtocol.h"
+#include <Library/EfiTestLib.h>
+#include <UEFI/Protocol/AdapterInfo.h>
 #include "guid.h"
 
 

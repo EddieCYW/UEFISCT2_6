@@ -271,17 +271,17 @@ extern EFI_GUID gEventTimerTaskPriorityServicesBBTestCreateEventExAssertionGuid0
 
 extern EFI_GUID gEventTimerTaskPriorityServicesBBTestCreateEventExAssertionGuid006;
 
-#define EFI_EVENT_GROUP_TEST_GROUP1_GUID \
+#define EVT_GROUP_TEST_GROUP1_GUID \
 { 0x573f9b3e, 0xaee4, 0x434b, 0xa6, 0x7c, 0x89, 0x0e, 0x58, 0xb3, 0x16, 0xc0 }
 
 extern EFI_GUID EventGroupTestGroup1Guid;              
 
-#define EFI_EVENT_GROUP_TEST_GROUP2_GUID \
+#define EVT_GROUP_TEST_GROUP2_GUID \
 { 0xb79db4ae, 0x725e, 0x4e5b, 0xb5, 0x81, 0xae, 0x9e, 0x13, 0xa3, 0xa3, 0x48 }
 
 extern EFI_GUID EventGroupTestGroup2Guid;          
 
-#define EFI_EVENT_GROUP_TEST_GROUP3_GUID \
+#define EVT_GROUP_TEST_GROUP3_GUID \
 { 0xf1b97006, 0xaa0e, 0x4926, 0xa0, 0x62, 0x5f, 0xc5, 0xa8, 0xb8, 0xbb, 0x78 }
 
 extern EFI_GUID EventGroupTestGroup3Guid; 

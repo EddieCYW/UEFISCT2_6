@@ -272,7 +272,6 @@ BBTestSimpleTextOutputProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestSimpleTextOutput)
 
 /**
  *  Simple Text Output Protocol Test Driver Entry point.
@@ -289,7 +288,7 @@ InitializeBBTestSimpleTextOutput (
   EfiInitializeTestLib (ImageHandle, SystemTable);
   SctInitializeLib (ImageHandle, SystemTable);
 
-  gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,
@@ -433,7 +432,7 @@ _IPrint (
 
   Status = gtBS->LocateHandle (
                    ByProtocol,
-                   &gEfiHiiProtocolGuid,
+                   &gBlackBoxEfiHiiProtocolGuid,
                    NULL,
                    &Size,
                    &Handle
@@ -445,7 +444,7 @@ _IPrint (
 
   Status = gtBS->HandleProtocol (
                    Handle,
-                   &gEfiHiiProtocolGuid,
+                   &gBlackBoxEfiHiiProtocolGuid,
                    &Hii
                    );
 
@@ -527,7 +526,7 @@ PrintXY (
 
   Status = gtBS->HandleProtocol (
                    Handle,
-                   &gEfiUgaDrawProtocolGuid,
+                   &gBlackBoxEfiUgaDrawProtocolGuid,
                    &UgaDraw
                    );
 
@@ -537,7 +536,7 @@ PrintXY (
 
   Status = gtBS->HandleProtocol (
                    Handle,
-                   &gEfiSimpleTextOutProtocolGuid,
+                   &gBlackBoxEfiSimpleTextOutProtocolGuid,
                    &Sto
                    );
 
@@ -884,7 +883,7 @@ LocateDevicePathFromSimpleTextOut (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiSimpleTextOutProtocolGuid,
+                   &gBlackBoxEfiSimpleTextOutProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -922,7 +921,7 @@ LocateDevicePathFromSimpleTextOut (
   for (Index=0; Index<NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiSimpleTextOutProtocolGuid,
+                     &gBlackBoxEfiSimpleTextOutProtocolGuid,
                      &OtherSimpleOut
                      );
     if (EFI_ERROR (Status)) {
@@ -959,7 +958,7 @@ LocateDevicePathFromSimpleTextOut (
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[Index],
-                   &gEfiDevicePathProtocolGuid,
+                   &gBlackBoxEfiDevicePathProtocolGuid,
                    DevicePath
                    );
 
@@ -994,7 +993,7 @@ LocateUgaDrawFromSimpleTextOut (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiSimpleTextOutProtocolGuid,
+                   &gBlackBoxEfiSimpleTextOutProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -1032,7 +1031,7 @@ LocateUgaDrawFromSimpleTextOut (
   for (Index=0; Index<NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiSimpleTextOutProtocolGuid,
+                     &gBlackBoxEfiSimpleTextOutProtocolGuid,
                      &OtherSimpleOut
                      );
     if (EFI_ERROR (Status)) {
@@ -1068,7 +1067,7 @@ LocateUgaDrawFromSimpleTextOut (
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[Index],
-                   &gEfiUgaDrawProtocolGuid,
+                   &gBlackBoxEfiUgaDrawProtocolGuid,
                    UgaDraw
                    );
 

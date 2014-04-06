@@ -58,10 +58,10 @@ Abstract:
 #include "SctLib.h"
 #include "DevicePathBBTestMain.h"
 
-EFI_GUID  gEfiDevicePathMessagingUartFlowControlGuid  = DEVICE_PATH_MESSAGING_UART_FLOW_CONTROL;
+EFI_GUID  gBlackBoxEfiDevicePathMessagingUartFlowControlGuid  = DEVICE_PATH_MESSAGING_UART_FLOW_CONTROL;
 
 #if (EFI_SPECIFICATION_VERSION >= 0x00020000)
-EFI_GUID  gEfiDevicePathMessagingSASGuid              = DEVICE_PATH_MESSAGING_SAS;
+EFI_GUID  gBlackBoxEfiDevicePathMessagingSASGuid              = DEVICE_PATH_MESSAGING_SAS;
 #endif
 
 /**
@@ -827,7 +827,7 @@ BBTestDevicePathNodeConformanceAutoTest (
       // Assertion Point 3.1.2.26
       // Check Messaging Device Path: UART Flow Control Messaging Path
       //
-      if (SctCompareMem (&Vendor->Guid, &gEfiDevicePathMessagingUartFlowControlGuid, sizeof (EFI_GUID)) == 0) {
+      if (SctCompareMem (&Vendor->Guid, &gBlackBoxEfiDevicePathMessagingUartFlowControlGuid, sizeof (EFI_GUID)) == 0) {
         UartFlow = (UART_FLOW_CONTROL_DEVICE_PATH *) DevicePath;
         if ((Length == 24) && 
             (UartFlow->FlowControlMap == 0x0 ||
@@ -856,7 +856,7 @@ BBTestDevicePathNodeConformanceAutoTest (
       // Assertion Point 3.1.2.27
       // Check Messaging Device Path: Serial Attached SCSI (SAS) Device Path
       //
-      else if (SctCompareMem (&Vendor->Guid, &gEfiDevicePathMessagingSASGuid, sizeof (EFI_GUID)) == 0) {
+      else if (SctCompareMem (&Vendor->Guid, &gBlackBoxEfiDevicePathMessagingSASGuid, sizeof (EFI_GUID)) == 0) {
         if (Length == 44) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {

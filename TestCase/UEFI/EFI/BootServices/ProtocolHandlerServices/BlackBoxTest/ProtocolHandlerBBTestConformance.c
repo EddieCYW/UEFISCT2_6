@@ -861,7 +861,7 @@ BBTestRegisterProtocolNotifyConsistencyTest (
   //
   // Create Event. ## destroy before leave
   //
-  Status = gtBS->CreateEvent (EFI_EVENT_NOTIFY_WAIT, EFI_TPL_CALLBACK, TestNotifyFunction0, NULL, &Event);
+  Status = gtBS->CreateEvent (EVT_NOTIFY_WAIT, TPL_CALLBACK, TestNotifyFunction0, NULL, &Event);
   if (EFI_ERROR(Status)) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -2583,7 +2583,7 @@ BBTestLocateProtocolConsistencyTest (
   //
   // Create Event. ##2 destroy before leave
   //
-  Status = gtBS->CreateEvent (EFI_EVENT_NOTIFY_WAIT, EFI_TPL_CALLBACK, TestNotifyFunction0, NULL, &Event);
+  Status = gtBS->CreateEvent (EVT_NOTIFY_WAIT, TPL_CALLBACK, TestNotifyFunction0, NULL, &Event);
   if (EFI_ERROR(Status)) {
     StandardLib->RecordAssertion (
                    StandardLib,

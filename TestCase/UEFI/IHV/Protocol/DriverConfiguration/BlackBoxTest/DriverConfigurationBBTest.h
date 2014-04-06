@@ -60,7 +60,7 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "DriverConfigurationProtocol.h"
+#include <UEFI/Protocol/DriverConfiguration.h>
 #include "guid.h"
 
 #define IHV_DRIVER_CONFIGURATION_TEST_REVISION 0x00010000

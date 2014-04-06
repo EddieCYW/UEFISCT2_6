@@ -62,7 +62,7 @@ Abstract:
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
 #include "Guid.h"
-#include "EfiCapsule.h"
+#include <Protocol/Capsule.h>
 
 #define CAPSULE_FLAGS_INITIATE_RESET   0x00040000 
 

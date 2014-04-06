@@ -107,7 +107,6 @@ BBTestEfiVersionProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestDriverSupportedEfiVersion)
 
 /**
  *  Efi Driver Supported Efi Version Protocol Test Driver Entry point.

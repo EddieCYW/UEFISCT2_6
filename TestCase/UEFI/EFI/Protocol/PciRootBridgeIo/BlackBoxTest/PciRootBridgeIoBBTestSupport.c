@@ -59,7 +59,7 @@ Abstract:
 #include "SctLib.h"
 #include "PciRootBridgeIoBBTestMain.h"
 #include "PciRootBridgeIoBBTestSupport.h"
-#include "Acpi.h"
+#include <IndustryStandard/Acpi.h>
 
 //
 //global varibles.
@@ -1018,7 +1018,7 @@ InitializeCaseEnvironment (
 
   Status      = SctLocateHandle (
                   ByProtocol,
-                  &gEfiPciRootBridgeIoProtocolGuid,
+                  &gBlackBoxEfiPciRootBridgeIoProtocolGuid,
                   NULL,
                   &HandleNum,
                   &HandleBuffer
@@ -1040,7 +1040,7 @@ InitializeCaseEnvironment (
 
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiPciRootBridgeIoProtocolGuid,
+                     &gBlackBoxEfiPciRootBridgeIoProtocolGuid,
                      &RootBridgeIo
                      );
 
@@ -1866,7 +1866,7 @@ GetUserInputOrTimeOut (
   //
 
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER ,
+                   EVT_TIMER ,
                    0,
                    NULL,
                    NULL,
@@ -1879,7 +1879,7 @@ GetUserInputOrTimeOut (
   }
 
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER,
+                   EVT_TIMER,
                    0,
                    NULL,
                    NULL,

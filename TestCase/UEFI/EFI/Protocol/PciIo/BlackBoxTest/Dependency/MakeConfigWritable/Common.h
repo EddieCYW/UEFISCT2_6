@@ -59,9 +59,9 @@ Abstract:
 #define _COMMON_H_
 
 #include "SctLib.h"
-#include "pci22.h"
+#include <IndustryStandard/Pci22.h>
 
-#include EFI_PROTOCOL_CONSUMER(PciRootBridgeIo)
+#include <UEFI/Protocol/PciRootBridgeIo.h>
 
 //
 //Test card types

@@ -79,7 +79,6 @@ BootServicesDriver3Unload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBootServicesDriver3)
 
 EFI_STATUS
 InitializeBootServicesDriver3 (

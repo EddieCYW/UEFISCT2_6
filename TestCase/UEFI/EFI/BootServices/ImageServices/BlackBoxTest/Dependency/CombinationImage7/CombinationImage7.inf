@@ -55,34 +55,28 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = ImageServices_CombinationImage7
-FILE_GUID            = 4245C7C0-8B1C-4912-AAA5-8DAACA614FEF
-COMPONENT_TYPE       = APPLICATION
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ImageServices_CombinationImage7
+  FILE_GUID            = 4245C7C0-8B1C-4912-AAA5-8DAACA614FEF
+  MODULE_TYPE          = UEFI_APPLICATION
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeCombinationImage7
 
-[sources.common]
+[Sources.common]
   CombinationImage7.c
-  ../../protocoldefinition.c
-  ../../misc.c
+  ../../ProtocolDefinition.c
+  ../../Misc.c
 
-[includes.common]
-  .
-  ../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/TestCase/UEFI/EFI/Protocol/HIIDatabase/BlackBoxTest
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeCombinationImage7
+[Protocols]
+  gEfiTestProfileLibraryGuid

@@ -55,15 +55,9 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "DevicePathFromTextBBTestMain.h"
 
 #define MaxDevicePathStrLen 200
-
-#ifndef EFIARM
-EFI_GUID  gEfiDevicePathUtilitiesProtocolGuid = EFI_DEVICE_PATH_UTILITIES_PROTOCOL_GUID;
-EFI_GUID  gEfiDevicePathToTextProtocolGuid    = EFI_DEVICE_PATH_TO_TEXT_PROTOCOL_GUID;
-#endif
 
 #define PCINodeType         1
 #define PCINodeSubType      1
@@ -120,7 +114,7 @@ DevicePathFromTextConvertTextToDeviceNodeFunctionTest (
   }
 
   Status = gtBS->LocateProtocol (
-                  &gEfiDevicePathUtilitiesProtocolGuid,
+                  &gBlackBoxEfiDevicePathUtilitiesProtocolGuid,
                   NULL,
                   &DevicePathUtilities
                   );
@@ -271,7 +265,7 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   }
 
   Status = gtBS->LocateProtocol (
-                  &gEfiDevicePathUtilitiesProtocolGuid,
+                  &gBlackBoxEfiDevicePathUtilitiesProtocolGuid,
                   NULL,
                   &DevicePathUtilities
                   );

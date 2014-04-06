@@ -61,7 +61,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "PlatformToDriverConfigurationProtocol.h"
+#include <UEFI/Protocol/PlatformToDriverConfiguration.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

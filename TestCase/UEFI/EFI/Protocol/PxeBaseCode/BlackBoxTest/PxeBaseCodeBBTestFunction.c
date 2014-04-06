@@ -2110,7 +2110,7 @@ BBTestMtftpFunctionTest (
   // Call SNP Interface to Reset Current MAC Address
   //
   Status = gtBS->LocateProtocol (
-                   &gEfiSimpleNetworkProtocolGuid,
+                   &gBlackBoxEfiSimpleNetworkProtocolGuid,
                    NULL,
                    (VOID **)&SnpInterface
                    );
@@ -2308,7 +2308,7 @@ BBTestUdpWriteFunctionTest (
   // Call SNP Interface to Reset Current MAC Address
   //
   Status = gtBS->LocateProtocol (
-                   &gEfiSimpleNetworkProtocolGuid,
+                   &gBlackBoxEfiSimpleNetworkProtocolGuid,
                    NULL,
                    (VOID **)&SnpInterface
                    );
@@ -2485,7 +2485,7 @@ BBTestUdpReadFunctionTest (
   // Call SNP Interface to Reset Current MAC Address
   //
   Status = gtBS->LocateProtocol (
-                   &gEfiSimpleNetworkProtocolGuid,
+                   &gBlackBoxEfiSimpleNetworkProtocolGuid,
                    NULL,
                    (VOID **)&SnpInterface
                    );
@@ -2656,7 +2656,7 @@ BBTestSetIpFilterFunctionTest (
 }
 
 /**
- *  Entrypoint for EFI_PXE_BASE_CODE_PROTOCOL.MCastIPtoMAC() Function Test.
+ *  Entrypoint for EFI_PXE_BASE_CODE_PROTOCOL.MCastIpToMac() Function Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
  *  @param ClientInterface a pointer to the interface to be tested.
  *  @param TestLevel test "thoroughness" control.
@@ -2766,7 +2766,7 @@ BBTestArpFunctionTest (
   }
 
   Status = gtBS->LocateProtocol (
-                   &gEfiSimpleNetworkProtocolGuid,
+                   &gBlackBoxEfiSimpleNetworkProtocolGuid,
                    NULL,
                    (VOID **)&SnpInterface
                    );

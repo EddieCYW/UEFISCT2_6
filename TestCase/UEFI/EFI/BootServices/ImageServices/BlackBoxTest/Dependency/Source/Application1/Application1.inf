@@ -55,32 +55,26 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = Application1
-FILE_GUID            = F663A95C-F782-4325-BF55-B1DEACCEACD1
-COMPONENT_TYPE       = APPLICATION
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = Application1
+  FILE_GUID            = F663A95C-F782-4325-BF55-B1DEACCEACD1
+  MODULE_TYPE          = UEFI_APPLICATION
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeEfiApplication1
 
-[sources.common]
+[Sources.common]
   Application1.c
-  ../../../protocoldefinition.c
+  ../../../ProtocolDefinition.c
 
-[includes.common]
-  .
-  ../../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeEfiApplication1
+[Protocols]

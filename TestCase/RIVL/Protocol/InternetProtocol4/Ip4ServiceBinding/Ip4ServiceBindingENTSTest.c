@@ -82,7 +82,6 @@ Ip4ServiceBindingENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Ip4ServiceBindingENTSTestMain)
 
 EFI_STATUS
 Ip4ServiceBindingENTSTestMain (

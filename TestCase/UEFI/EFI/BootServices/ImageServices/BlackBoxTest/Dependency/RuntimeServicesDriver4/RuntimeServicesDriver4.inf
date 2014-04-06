@@ -55,32 +55,29 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = ImageServices_RuntimeServicesDriver4
-FILE_GUID            = 2E61BC85-DD53-4ce9-BD95-AABA0E891452
-COMPONENT_TYPE       = RT_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ImageServices_RuntimeServicesDriver4
+  FILE_GUID            = 2E61BC85-DD53-4ce9-BD95-AABA0E891452
+  MODULE_TYPE          = DXE_RUNTIME_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeRuntimeServicesDriver4
 
-[sources.common]
+[Sources.common]
   RuntimeServicesDriver4.c
-  ../../protocoldefinition.c
+  ../../ProtocolDefinition.c
 
-[includes.common]
-  .
-  ../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeRuntimeServicesDriver4
+[Protocols]
+
+[Depex]
+  TRUE

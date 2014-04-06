@@ -55,10 +55,7 @@
 
 --*/
 
-
-
-#include "Efi.h"
-#include "Guid.h"
+#include "HIIFontBBTestMain.h"
 
 EFI_GUID gHIIFontBBTestConformanceAssertionGuid001 = EFI_TEST_HIIFONTBBTESTCONFORMANCE_ASSERTION_001_GUID;
 

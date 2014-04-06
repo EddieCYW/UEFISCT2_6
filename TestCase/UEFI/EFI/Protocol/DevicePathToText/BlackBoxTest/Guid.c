@@ -55,6 +55,7 @@ Abstract:
 
 --*/
 
+#include <Base.h>
 #include "Efi.h"
 #include "Guid.h"
 

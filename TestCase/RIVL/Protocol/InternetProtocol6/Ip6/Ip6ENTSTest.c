@@ -119,7 +119,6 @@ Ip6ENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Ip6ENTSTestMain)
 
 EFI_STATUS
 Ip6ENTSTestMain (

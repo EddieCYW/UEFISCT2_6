@@ -56,30 +56,25 @@
 #--*/
 
 [defines]
-BASE_NAME            = LoadedImage_LoadedImageBootServicesDriver1
-FILE_GUID            = 7807D44E-D079-4c69-A5E3-95B7ED0D40C6
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = LoadedImage_LoadedImageBootServicesDriver1
+  FILE_GUID            = 7807D44E-D079-4c69-A5E3-95B7ED0D40C6
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBootServicesDriver1
 
 [sources.common]
   BootServicesDriver1.c
 
-[includes.common]
-  .
-  ../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBootServicesDriver1
+[Protocols]
+  gBlackBoxEfiLoadedImageProtocolGuid

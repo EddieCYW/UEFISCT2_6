@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = Usb2HcTest
-FILE_GUID            = 374E9E49-7119-409e-A28C-527B290985ED
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = Usb2HcTest
+  FILE_GUID            = 374E9E49-7119-409e-A28C-527B290985ED
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestUsb2Hc
 
 [sources.common]
   Usb2HcTest.h
@@ -70,41 +73,29 @@ COMPONENT_TYPE       = BS_DRIVER
 
 [sources.x64]
   x64/TimerInterrupt.asm
-  Usb2HcProtocol.h
-  Usb2HcProtocol.c  
 
 [sources.ipf]    
-  ipf/TimerInterrupt.c
-  Usb2HcProtocol.h
-  Usb2HcProtocol.c  
+  IPF/TimerInterrupt.c
 
 [sources.ia32]    
-  ia32/TimerInterrupt.c
-  Usb2HcProtocol.h
-  Usb2HcProtocol.c  
+  Ia32/TimerInterrupt.c
 
 [sources.ARM]
-  ipf/TimerInterrupt.c
+  IPF/TimerInterrupt.c
 
 [sources.Aarch64]
-  ipf/TimerInterrupt.c
+  IPF/TimerInterrupt.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Include/IndustryStandard
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestUsb2Hc
+[Protocols]
+  gEfiTestLoggingLibraryGuid
+  gBlackBoxEfiUsb2HcProtocolGuid

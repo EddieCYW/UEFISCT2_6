@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvDiskIoBBTest
-FILE_GUID            = B9CE4CF9-4FE9-47c7-BF1D-7E35759F310B
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvDiskIoBBTest
+  FILE_GUID            = B9CE4CF9-4FE9-47c7-BF1D-7E35759F310B
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDiskIo
 
 [sources.common]
   DiskIoBBTestMain.c
@@ -66,24 +69,19 @@ COMPONENT_TYPE       = BS_DRIVER
   DiskIoBBTestConformance.c
   DiskIoBBTestFunction.c
   DiskIoBBTestStress.c
-  DiskIoProtocol.c
-  Guid.c
+  guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestDiskIo
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gBlackBoxEfiBlockIoProtocolGuid
+  gBlackBoxEfiDiskIoProtocolGuid

@@ -76,7 +76,7 @@ typedef struct {
 } DEVICE_DRIVER_13_PRIVATE_DATA;
 
 #define DEVICE_DRIVER_13_PRIVATE_DATA_FROM_DRIVER_BINDING(a) \
- _CR(a, DEVICE_DRIVER_13_PRIVATE_DATA, DriverBinding)
+ BASE_CR(a, DEVICE_DRIVER_13_PRIVATE_DATA, DriverBinding)
  
 DEVICE_DRIVER_13_PRIVATE_DATA          *mPrivateData;
 
@@ -132,7 +132,6 @@ DeviceDriver13Unload (
 //
 // global variable for this test driver's image handle
 //
-EFI_DRIVER_ENTRY_POINT(InitializeDeviceDriver13)
 
 EFI_STATUS
 InitializeDeviceDriver13 (

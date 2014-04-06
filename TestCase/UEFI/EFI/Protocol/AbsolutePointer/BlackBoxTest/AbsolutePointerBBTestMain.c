@@ -169,8 +169,6 @@ BBTestAbsolutePointerProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestAbsolutePointer)
-
 /**
  *  Absolute Pointer Protocol Test Driver Entry point.
  *  @param ImageHandle the driver image handle.
@@ -186,7 +184,7 @@ InitializeBBTestAbsolutePointer (
   EfiInitializeTestLib (ImageHandle, SystemTable);
   SctInitializeLib (ImageHandle, SystemTable);
 
-  gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,
@@ -246,7 +244,7 @@ LocateDevicePathFromAbsolutePointer (
   HandleBuffer = NULL;
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiAbsolutePointerProtocolGuid,
+                   &gBlackBoxEfiAbsolutePointerProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -284,7 +282,7 @@ LocateDevicePathFromAbsolutePointer (
   for (Index = 0; Index < NoHandles; Index++) {
       Status = gtBS->HandleProtocol (
                        HandleBuffer[Index],
-                       &gEfiAbsolutePointerProtocolGuid,
+                       &gBlackBoxEfiAbsolutePointerProtocolGuid,
                        &OtherAbsoluteIn
                        );
     if (EFI_ERROR (Status)) {

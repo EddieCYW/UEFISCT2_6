@@ -60,7 +60,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "SimpleTextInProtocol.h"
+#include <UEFI/Protocol/SimpleTextIn.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

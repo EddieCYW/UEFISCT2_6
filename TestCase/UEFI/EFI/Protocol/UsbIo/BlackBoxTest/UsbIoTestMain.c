@@ -200,7 +200,6 @@ EFI_BB_TEST_PROTOCOL *gBBTestProtocolInterface;
 // Functions
 //
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestUsbIo)
 
 /**
  *  Creates/installs the BlackBox Interface and the Entry Point list.

@@ -119,7 +119,7 @@ BBTestQueryConformanceAutoTest (
   // Get all the handles in the system.
   SctLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
   
-  ParameterTypeGuid = &gEfiPlatformToDriverConfigurationClpGuid;
+  ParameterTypeGuid = &gBlackBoxEfiPlatformToDriverConfigurationClpGuid;
   *ParameterClpBlockSize = sizeof( EFI_CONFIGURE_CLP_PARAMETER_BLK );
 
   Status = gtBS->AllocatePool (EfiBootServicesData,*ParameterClpBlockSize,&ParameterClpBlock);
@@ -141,7 +141,7 @@ BBTestQueryConformanceAutoTest (
   //retrieve the protocol Instance
   //
   Status = gtBS->LocateProtocol (
-                         &gEfiPlatformToDriverConfigurationProtocolGuid,
+                         &gBlackBoxEfiPlatformToDriverConfigurationProtocolGuid,
                          NULL,
                          &Instance
                          );
@@ -360,7 +360,7 @@ BBTestResponseConformanceAutoTest (
   // Get all the handles in the system.
   SctLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
   
-  ParameterTypeGuid = &gEfiPlatformToDriverConfigurationClpGuid;
+  ParameterTypeGuid = &gBlackBoxEfiPlatformToDriverConfigurationClpGuid;
   *ParameterClpBlockSize = sizeof( EFI_CONFIGURE_CLP_PARAMETER_BLK );
   
   Status = gtBS->AllocatePool (EfiBootServicesData,*ParameterClpBlockSize,&ParameterClpBlock);
@@ -382,7 +382,7 @@ BBTestResponseConformanceAutoTest (
   //retrieve the protocol Instance
   //
   Status = gtBS->LocateProtocol (
-                         &gEfiPlatformToDriverConfigurationProtocolGuid,
+                         &gBlackBoxEfiPlatformToDriverConfigurationProtocolGuid,
                          NULL,
                          &Instance
                          );

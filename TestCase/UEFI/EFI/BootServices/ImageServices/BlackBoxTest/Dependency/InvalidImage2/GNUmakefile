@@ -57,7 +57,7 @@
 
 
 BASE_NAME=ImageServices_InvalidImage2
-SOURCE_DIR=$(EFI_SOURCE)/SctPkg/TestCase/UEFI/EFI/BootServices/ImageServices/BlackBoxTest/Dependency/InvalidImage2
+SOURCE_DIR=$(WORKSPACE)/SctPkg/TestCase/UEFI/EFI/BootServices/ImageServices/BlackBoxTest/Dependency/InvalidImage2
 GENBIN=GenBin
 DEPENDECY=$(SOURCE_DIR)/InvalidImage2.ini
 UNAME = $(shell uname)

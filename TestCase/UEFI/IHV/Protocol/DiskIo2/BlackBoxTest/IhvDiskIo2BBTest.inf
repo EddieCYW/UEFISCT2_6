@@ -70,9 +70,6 @@ COMPONENT_TYPE       = BS_DRIVER
   DiskIo2BBTestFunction_Write.c
   DiskIo2BBTestFunction_Flush.c
   guid.c
-  DiskIo2Protocol.c 
-  DiskIoProtocol.c 
-  BlockIo2Protocol.c
   
 [includes.common]
   .

@@ -57,39 +57,27 @@
 #--*/
 
 [defines]
-BASE_NAME            = DriverConfigurationBBTest
-FILE_GUID            = 7A410F2F-1602-4c4c-81FF-346B25544686
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = DriverConfigurationBBTest
+  FILE_GUID            = 7A410F2F-1602-4c4c-81FF-346B25544686
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDriverConfiguration
 
 [sources.common]
   Guid.c
   DriverConfigurationBBTestMain.c
   DriverConfigurationBBTestConformance.c
 
-[sources.IA32]
-  DriverConfigurationProtocol.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.X64]
-  DriverConfigurationProtocol.c
-
-[sources.IPF]
-  DriverConfigurationProtocol.c
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestDriverConfiguration
+[Protocols]
+  gBlackBoxEfiDriverConfigurationProtocolGuid

@@ -55,12 +55,15 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = TimeServicesBBTest
-FILE_GUID            = 97C6AD68-5F9E-4583-9D76-5A61D101A467
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = TimeServicesBBTest
+  FILE_GUID            = 97C6AD68-5F9E-4583-9D76-5A61D101A467
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestTimeServices
 
-[sources.common]
+[Sources.common]
   TimeServicesBBTestMain.h
   TimeServicesBBTestConformance.c
   TimeServicesBBTestFunction.c
@@ -68,24 +71,16 @@ COMPONENT_TYPE       = BS_DRIVER
   TimeServicesBBTestMain.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
-  EdkFrameworkGuidLib
 
-[libraries.ARM, libraries.Aarch64]
-
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestTimeServices
+[Protocols]
+  gEfiTestRecoveryLibraryGuid
+  gEfiTestLoggingLibraryGuid

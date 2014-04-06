@@ -70,7 +70,6 @@ InitializeCombinationImage4 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeCombinationImage4)
 
 EFI_STATUS
 InitializeCombinationImage4 (

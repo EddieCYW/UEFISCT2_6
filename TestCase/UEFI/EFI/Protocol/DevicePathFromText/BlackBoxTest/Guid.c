@@ -55,8 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "Guid.h"
+#include "DevicePathFromTextBBTestMain.h"
 
 EFI_GUID  gDevicePathFromTextBBTestFunctionAssertionGuid081 = EFI_TEST_DEVICEPATHFROMTEXTBBTESTFUNCTION_ASSERTION_081_GUID;
 

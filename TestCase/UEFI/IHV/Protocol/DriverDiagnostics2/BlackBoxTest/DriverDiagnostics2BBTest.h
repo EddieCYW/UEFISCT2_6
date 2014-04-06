@@ -59,7 +59,7 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "DriverDiagnostics2Protocol.h"
+#include <UEFI/Protocol/DriverDiagnostics2.h>
 #include "guid.h"
 
 #define IHV_DRIVER_DIAGNOSTICS2_TEST_REVISION 0x00020000

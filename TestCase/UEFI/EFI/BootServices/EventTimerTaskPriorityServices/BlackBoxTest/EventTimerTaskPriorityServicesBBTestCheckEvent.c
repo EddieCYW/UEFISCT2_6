@@ -197,8 +197,8 @@ BBTestCheckEvent_Conf_Sub1 (
   // Create an event with type being EVT_NOTIFY_SIGNAL
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_NOTIFY,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    NULL,
                    &Event
@@ -255,8 +255,8 @@ BBTestCheckEvent_Func_Sub1 (
   // Create an event without notify function
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER,
-                   EFI_TPL_NOTIFY,
+                   EVT_TIMER,
+                   TPL_NOTIFY,
                    NULL,
                    NULL,
                    &Event
@@ -313,8 +313,8 @@ BBTestCheckEvent_Func_Sub2 (
   // Create an event with notify function, which does not signal itself
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_NOTIFY,
+                   EVT_NOTIFY_WAIT,
+                   TPL_NOTIFY,
                    NotifyFunctionNoSignal,
                    NULL,
                    &Event
@@ -371,8 +371,8 @@ BBTestCheckEvent_Func_Sub3 (
   // Create an event with notify function
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_NOTIFY,
+                   EVT_NOTIFY_WAIT,
+                   TPL_NOTIFY,
                    NotifyFunctionSignal,
                    NULL,
                    &Event
@@ -438,8 +438,8 @@ BBTestCheckEvent_Func_Sub4 (
   // Create an event with notify function, which signals itself
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_NOTIFY,
+                   EVT_NOTIFY_WAIT,
+                   TPL_NOTIFY,
                    NotifyFunctionSignal,
                    NULL,
                    &Event

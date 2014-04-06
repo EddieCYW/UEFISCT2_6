@@ -56,7 +56,7 @@ Abstract:
 
 #include "Common.h"
 #include "Main.h"
-#include EFI_PROTOCOL_CONSUMER(PciIo)
+#include <UEFI/Protocol/PciIo.h>
 
 //
 //function protype
@@ -105,7 +105,7 @@ FindTestCard (
 
   Status = SctLocateHandle(
              ByProtocol,
-             &gEfiPciRootBridgeIoProtocolGuid,
+             &gBlackBoxEfiPciRootBridgeIoProtocolGuid,
              NULL,
              &HandleNum,
              &HandleBuffer
@@ -117,7 +117,7 @@ FindTestCard (
   for (Index = 0; Index < HandleNum; Index++) {
     Status = tBS->HandleProtocol (
                    HandleBuffer[Index],
-                   &gEfiPciRootBridgeIoProtocolGuid,
+                   &gBlackBoxEfiPciRootBridgeIoProtocolGuid,
                    &RootBridgeIo
                    );
     if (EFI_ERROR(Status)) {

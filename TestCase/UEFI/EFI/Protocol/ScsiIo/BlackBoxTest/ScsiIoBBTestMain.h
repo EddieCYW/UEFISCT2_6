@@ -61,7 +61,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "ScsiIoProtocol.h"
+#include <UEFI/Protocol/ScsiIo.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

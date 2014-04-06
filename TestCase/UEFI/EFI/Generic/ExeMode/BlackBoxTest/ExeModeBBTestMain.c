@@ -58,7 +58,6 @@ Abstract:
 #include "ExeModeBBTest.h"
 
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestExeMode)
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
   EXE_MODE_TEST_REVISION,

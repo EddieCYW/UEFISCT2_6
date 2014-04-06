@@ -56,7 +56,7 @@
 #--*/
 
 BASE_NAME=ImageServices_InvalidImage5
-SOURCE_DIR=$(EFI_SOURCE)/SctPkg/TestCase/UEFI/EFI/BootServices/ImageServices/BlackBoxTest/Dependency/InvalidImage5
+SOURCE_DIR=$(WORKSPACE)/SctPkg/TestCase/UEFI/EFI/BootServices/ImageServices/BlackBoxTest/Dependency/InvalidImage5
 GENBIN=GenBin
 DEPENDECY=$(SOURCE_DIR)/InvalidImage5.ini
 

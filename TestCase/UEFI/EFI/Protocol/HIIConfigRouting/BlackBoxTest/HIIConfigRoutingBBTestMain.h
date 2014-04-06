@@ -57,9 +57,11 @@ Abstract:
 #ifndef _HII_CONFIG_ROUTING_BBTEST_H_
 #define _HII_CONFIG_ROUTING_BBTEST_H_
 
-
-#include "Efi.h"
-#include "HIIConfigRouting.h"
+#define __UEFI_INTERNAL_FORMREPRESENTATION_H__
+#include <Base.h>
+#include "SctLib.h"
+#include <UEFI/Protocol/Hii.h>
+#include <UEFI/Protocol/HIIConfigRouting.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

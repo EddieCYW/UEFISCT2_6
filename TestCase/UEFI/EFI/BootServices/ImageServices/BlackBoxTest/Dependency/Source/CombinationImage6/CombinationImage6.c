@@ -69,7 +69,6 @@ InitializeCombinationImage6 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeCombinationImage6)
 
 EFI_STATUS
 InitializeCombinationImage6 (

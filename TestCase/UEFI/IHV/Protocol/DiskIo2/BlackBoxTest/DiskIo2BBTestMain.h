@@ -61,11 +61,10 @@ Abstract:
 
 
 #include "Efi.h"
-#include "DiskIo2Protocol.h"
+#include <UEFI/Protocol/DiskIo2.h>
 #include "Guid.h"
-#include "EfiTestLib.h"
-#include "BlockIo2Protocol.h"
-
+#include <Library/EfiTestLib.h>
+#include <UEFI/Protocol/BlockIo2.h>
 
 
 #define  IHV_DISK_IO2_PROTOCOL_TEST_REVISION    0x00020000

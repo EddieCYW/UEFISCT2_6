@@ -55,9 +55,7 @@
 
 --*/
 
-#include "Efi.h"
-#include "Guid.h"
-
+#include "SimpleTextInputExBBTestMain.h"
 
 EFI_GUID gSimpleTextInputExBBTestConformanceAssertionGuid001 = EFI_TEST_SIMPLETEXTINPUTEXBBTESTCONFORMANCE_ASSERTION_001_GUID;
 

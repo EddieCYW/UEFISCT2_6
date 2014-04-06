@@ -441,8 +441,8 @@ BBTestLocateHandleInterfaceTestCheckPoint2 (
   // event for register notify
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_WAIT,
+                   TPL_CALLBACK,
                    TestNotifyFunction0,
                    NULL,
                    &Event
@@ -1049,8 +1049,8 @@ BBTestLocateHandleInterfaceTestCheckPoint4 (
   // event for register notify
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_WAIT,
+                   TPL_CALLBACK,
                    TestNotifyFunction0,
                    NULL,
                    &Event
@@ -1815,8 +1815,8 @@ BBTestLocateHandleBufferInterfaceTestCheckPoint2 (
   HandleBuffer = NULL;
 
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_WAIT,
+                   TPL_CALLBACK,
                    TestNotifyFunction0,
                    NULL,
                    &Event
@@ -2772,8 +2772,8 @@ BBTestLocateProtocolInterfaceTestCheckPoint2 (
   // event for register notify
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_WAIT,
+                   TPL_CALLBACK,
                    TestNotifyFunction0,
                    NULL,
                    &Event

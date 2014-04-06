@@ -57,7 +57,7 @@ Abstract:
 #ifndef _EFI_PCI_IO_BBTEST_SUPPORT_H_
 #define _EFI_PCI_IO_BBTEST_SUPPORT_H_
 
-#include EFI_PROTOCOL_DEFINITION(PciRootBridgeIo)
+#include <UEFI/Protocol/PciRootBridgeIo.h>
 
 //#define PCI_MAX_CONFIG_OFFSET  0x100
 

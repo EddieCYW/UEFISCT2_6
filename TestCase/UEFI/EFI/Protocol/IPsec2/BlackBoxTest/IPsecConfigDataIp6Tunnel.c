@@ -56,7 +56,7 @@ Abstract:
 --*/
 
 #include "Efi.h"
-#include "IPsecConfigProtocol.h"
+#include <UEFI/Protocol/IPsecConfig.h>
 
 
 

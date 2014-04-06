@@ -59,7 +59,7 @@ Abstract:
 #define _DEVICEIO_BBTEST_MAIN_H
 
 #include "Efi.h"
-#include "DeviceIOProtocol.h"
+#include <UEFI/Protocol/DeviceIO.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

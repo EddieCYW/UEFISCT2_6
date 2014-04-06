@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "HIIFontBBTestMain.h"
 
 
@@ -65,21 +64,6 @@ Abstract:
 EFI_HANDLE mImageHandle;
 
 EFI_BB_TEST_PROTOCOL *gBBTestProtocolInterface;
-
-#define EFI_HII_STRING_PROTOCOL_GUID \
-	{0xfd96974, 0x23aa, 0x4cdc, 0xb9, 0xcb, 0x98, 0xd1, 0x77, 0x50, 0x32, 0x2a}
-
-#define EFI_HII_DATABASE_PROTOCOL_GUID \
-	{0xef9fc172, 0xa1b2, 0x4693, 0xb3, 0x27, 0x6d, 0x32, 0xfc, 0x41, 0x60, 0x42}
-
-#define EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID \
-    {0x9042a9de, 0x23dc, 0x4a38, 0x96, 0xfb, 0x7a, 0xde, 0xd0, 0x80, 0x51, 0x6a}
-
-EFI_GUID  gEfiHIIStringProtocolGuid = EFI_HII_STRING_PROTOCOL_GUID;
-EFI_GUID  gEfiHIIDatabaseProtocolGuid = EFI_HII_DATABASE_PROTOCOL_GUID;
-#ifndef EFIARM
-EFI_GUID  gEfiGraphicsOutputProtocolGuid = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
-#endif
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
   EFI_HII_FONT_PROTOCOL_TEST_REVISION,
@@ -172,7 +156,6 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
 //
 //
 //
-EFI_DRIVER_ENTRY_POINT(InitializeHIIFontBBTest)
 
 EFI_STATUS
 InitializeHIIFontBBTest (
@@ -222,7 +205,7 @@ GetGraphicsOutputInterface (
   
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiGraphicsOutputProtocolGuid,
+                   &gBlackBoxEfiGraphicsOutputProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -237,7 +220,7 @@ GetGraphicsOutputInterface (
   
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiGraphicsOutputProtocolGuid,
+                   &gBlackBoxEfiGraphicsOutputProtocolGuid,
                    GraphicsOutput
                    );
   if ( EFI_ERROR(Status) ) {
@@ -262,7 +245,7 @@ GetHIIDatabaseInterface (
   
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiHIIDatabaseProtocolGuid,
+                   &gBlackBoxEfiHIIDatabaseProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -277,7 +260,7 @@ GetHIIDatabaseInterface (
   
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiHIIDatabaseProtocolGuid,
+                   &gBlackBoxEfiHIIDatabaseProtocolGuid,
                    HIIDatabase
                    );
   if ( EFI_ERROR(Status) ) {
@@ -301,7 +284,7 @@ GetHIIStringInterface (
   
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiHIIStringProtocolGuid,
+                   &gBlackBoxEfiHIIStringProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -316,7 +299,7 @@ GetHIIStringInterface (
   
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiHIIStringProtocolGuid,
+                   &gBlackBoxEfiHIIStringProtocolGuid,
                    HIIString
                    );
   if ( EFI_ERROR(Status) ) {
@@ -347,7 +330,7 @@ GetPackageListHeader (
   //
   Status = gtBS->HandleProtocol(
                    *DriverHandle,
-                   &gEfiHIIPackageListProtocolGuid,
+                   &gBlackBoxEfiHIIPackageListProtocolGuid,
                    &PackageListTemp
                    );
   if ( EFI_ERROR(Status) ) {

@@ -254,7 +254,6 @@ UnloadSerialIoBbTest (
 // Functions
 //
 
-EFI_DRIVER_ENTRY_POINT(InitializeSerialIoBbTest)
 
 /**
  *  Creates/installs the BlackBox Interface and the Entry Point list.

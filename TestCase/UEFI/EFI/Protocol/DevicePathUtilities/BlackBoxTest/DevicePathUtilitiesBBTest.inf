@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = DevicePathUtilitiesBBTest
-FILE_GUID              = C1F89661-8441-49aa-9F5F-56E6E456B4B1
-COMPONENT_TYPE   = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = DevicePathUtilitiesBBTest
+  FILE_GUID            = C1F89661-8441-49aa-9F5F-56E6E456B4B1
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDevicePathUtilitiesProtocol
 
 [sources.common]
   DevicePathUtilitiesBBTestMain.c
@@ -66,31 +69,15 @@ COMPONENT_TYPE   = BS_DRIVER
   DevicePathUtilitiesBBTestFunction.c
   DevicePathUtilitiesBBTestConformance.c
   Guid.c
-  
-[sources.IA32]
-  DevicePathUtilitiesProtocol.c
 
-[sources.X64]
-  DevicePathUtilitiesProtocol.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.IPF]
-  DevicePathUtilitiesProtocol.c 
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestDevicePathUtilitiesProtocol
+[Protocols]

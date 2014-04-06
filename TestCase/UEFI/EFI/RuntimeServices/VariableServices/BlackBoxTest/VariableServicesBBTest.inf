@@ -55,39 +55,36 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = VariableServicesBBTest
-FILE_GUID            = 813c1a3d-62a8-464d-8e35-aab8a850aa8d
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = VariableServicesBBTest
+  FILE_GUID            = 813c1a3d-62a8-464d-8e35-aab8a850aa8d
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeVariableServicesBbTest
 
-[sources.common]
-  VariableServicesBbTestMain.h
-  VariableServicesBbTestMain.c
-  VariableServicesBbTestFunction.c
-  VariableServicesBbTestConformance.c
-  VariableServicesBbTestStress.c
-  guid.h
-  guid.c
+[Sources.common]
+  VariableServicesBBTestMain.h
+  VariableServicesBBTestMain.c
+  VariableServicesBBTestFunction.c
+  VariableServicesBBTestConformance.c
+  VariableServicesBBTestStress.c
+  Guid.h
+  Guid.c
   AuthVariableServicesBBTest.h
   AuthVariableServicesBBTestConformance.c
   AuthVariableServicesBBTestFunction.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeVariableServicesBbTest
-
+[Protocols]
+  gEfiTestRecoveryLibraryGuid
+  gEfiTestLoggingLibraryGuid

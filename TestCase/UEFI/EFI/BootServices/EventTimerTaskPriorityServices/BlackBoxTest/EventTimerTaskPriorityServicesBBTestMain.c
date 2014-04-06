@@ -243,8 +243,6 @@ UnloadEventTimerTaskPriorityServicesBBTest (
 //
 // Entry point
 //
-EFI_DRIVER_ENTRY_POINT(InitializeEventTimerTaskPriorityServicesBBTest);
-
 EFI_STATUS
 InitializeEventTimerTaskPriorityServicesBBTest (
   IN EFI_HANDLE                   ImageHandle,

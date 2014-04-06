@@ -65,7 +65,7 @@ References:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "GraphicsOutputProtocol.h"
+#include <UEFI/Protocol/GraphicsOutput.h>
 
 #define EFI_GRAPHICS_OUTPUT_BB_TEST_REVISION  0x00010000
 
@@ -548,33 +548,33 @@ extern EFI_GUID gEfiGraphicsOutputBltVideoVideoBBTestFunctionAssertionGuid002;
 //
 //  Function GUIDs referenced in Functions
 //
-extern EFI_GUID gEfiGraphicsOutputQueryModeBBTestFunctionAutoGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputQueryModeBBTestFunctionAutoGuid;
 
-extern EFI_GUID gEfiGraphicsOutputSetModeFunctionAutoGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputSetModeFunctionAutoGuid;
 
-extern EFI_GUID gEfiGraphicsOutputBltVideoFillFunctionAutoGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputBltVideoFillFunctionAutoGuid;
 
-extern EFI_GUID gEfiGraphicsOutputBltVideoBltBufferFunctionAutoGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputBltVideoBltBufferFunctionAutoGuid;
 
-extern EFI_GUID gEfiGraphicsOutputBltVideoToVideoFunctionAutoGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputBltVideoToVideoFunctionAutoGuid;
 
-extern EFI_GUID gEfiGraphicsOutputQueryModeConformanceAutoGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputQueryModeConformanceAutoGuid;
 
-extern EFI_GUID gEfiGraphicsOutputSetModeConformanceAutoGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputSetModeConformanceAutoGuid;
 
-extern EFI_GUID gEfiGraphicsOutputBltConformanceAutoGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputBltConformanceAutoGuid;
 
-extern EFI_GUID gEfiGraphicsOutputBltVideoFillStressAutoGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputBltVideoFillStressAutoGuid;
 
-extern EFI_GUID gEfiGraphicsOutputBltVideoBltBufferStressAutoGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputBltVideoBltBufferStressAutoGuid;
 
-extern EFI_GUID gEfiGraphicsOutputBltVideoToVideoStressAutoGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputBltVideoToVideoStressAutoGuid;
 
-extern EFI_GUID gEfiGraphicsOutputVideoFillBufferToVideoExtensiveManualGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputVideoFillBufferToVideoExtensiveManualGuid;
 
-extern EFI_GUID gEfiGraphicsOutputVideoFillVideoToVideoExtensiveManualGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputVideoFillVideoToVideoExtensiveManualGuid;
 
-extern EFI_GUID gEfiGraphicsOutputVideoToBufferExtensiveGuid;
+extern EFI_GUID gBlackBoxEfiGraphicsOutputVideoToBufferExtensiveGuid;
 
 //
 // Test Case Define

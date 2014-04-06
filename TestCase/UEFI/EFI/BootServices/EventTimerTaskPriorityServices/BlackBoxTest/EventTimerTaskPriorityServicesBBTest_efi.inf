@@ -56,13 +56,15 @@
 #
 #--*/
 
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = EventTimerTaskPriorityServicesBBTest
+  FILE_GUID            = ff96dcc6-5a9a-49c1-8fa8-6242c213cd3c
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeEventTimerTaskPriorityServicesBBTest
 
-[defines]
-BASE_NAME            = EventTimerTaskPriorityServicesBBTest
-FILE_GUID            = ff96dcc6-5a9a-49c1-8fa8-6242c213cd3c
-COMPONENT_TYPE       = BS_DRIVER
-
-[sources.common]
+[Sources.common]
   EventTimerTaskPriorityServicesBBTestMain.c
   EventTimerTaskPriorityServicesBBTestCreateEvent.c
   EventTimerTaskPriorityServicesBBTestCloseEvent.c
@@ -73,26 +75,17 @@ COMPONENT_TYPE       = BS_DRIVER
   EventTimerTaskPriorityServicesBBTestRaiseTPL.c
   EventTimerTaskPriorityServicesBBTestRestoreTPL.c
   Support.c
-  guid.h
-  guid.c
+  Guid.h
+  Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeEventTimerTaskPriorityServicesBBTest
-
+[Protocols]

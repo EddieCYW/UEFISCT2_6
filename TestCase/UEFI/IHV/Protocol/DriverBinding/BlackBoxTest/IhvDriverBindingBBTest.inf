@@ -57,34 +57,30 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvDriverBindingBBTest
-FILE_GUID            = EC112A4F-49D7-4427-9543-1FCBFC2DE20A
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvDriverBindingBBTest
+  FILE_GUID            = EC112A4F-49D7-4427-9543-1FCBFC2DE20A
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDriverBinding
 
 [sources.common]
   DriverBindingBBTest.h
   DriverBindingBBTestMain.c
   DriverBindingBBTestFunction.c
-  DriverBindingProtocol.c
-  DriverBindingProtocol.h
   guid.c
   guid.h
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestDriverBinding
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gEfiTestProfileLibraryGuid

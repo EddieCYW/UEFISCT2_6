@@ -144,7 +144,6 @@ BootServiceENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (BootServiceENTSTestMain)
 
 EFI_STATUS
 BootServiceENTSTestMain (

@@ -65,9 +65,7 @@ Abstract:
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestLoggingLibrary)
 
-// Notes: This is self-defined EFI_SERIAL_IO_PROTOCOL for testing.
-#include "SerialIo.h"
-
+#include <UEFI/Protocol/SerialIo.h>
 //
 // Definitions
 //

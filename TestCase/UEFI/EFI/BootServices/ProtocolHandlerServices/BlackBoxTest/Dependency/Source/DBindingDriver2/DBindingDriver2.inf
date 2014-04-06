@@ -55,32 +55,26 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = DBindingDriver2
-FILE_GUID            = 98AB4144-C26A-4f28-9752-171948BC6E9A
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = DBindingDriver2
+  FILE_GUID            = 98AB4144-C26A-4f28-9752-171948BC6E9A
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeDBindingDriver2
 
-[sources.common]
+[Sources.common]
   DBindingDriver2.c
-  ../../../protocoldefinition.c
+  ../../../ProtocolDefinition.c
 
-[includes.common]
-  .
-  ../../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeDBindingDriver2
+[Protocols]

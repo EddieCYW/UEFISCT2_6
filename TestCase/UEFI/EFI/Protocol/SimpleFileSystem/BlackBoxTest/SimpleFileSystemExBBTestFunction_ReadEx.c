@@ -54,7 +54,9 @@ Abstract:
 --*/
 
 
-#include "SimpleFileSystemExProtocol.h"
+#define EFI_FILE_HANDLE_REVISION 0x00020000
+
+#include "SimpleFileSystemBBTest.h"
 
 //
 //checkpoint 
@@ -97,7 +99,7 @@ SCT_LIST_ENTRY  AsyncReadFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(Asy
 //
 // Async Read File lock
 //
-SCT_LOCK  gAsyncReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncReadQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 
 //
@@ -110,7 +112,7 @@ SCT_LIST_ENTRY  AsyncReadDirFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(
 //
 // Async Read Directory lock
 //
-SCT_LOCK  gAsyncReadDirQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncReadDirQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 
 //
@@ -151,7 +153,7 @@ EFIAPI FileIoReadNotifyFunc (
 STATIC
 EFI_STATUS
 FileIoAsyncReadData (
-  IN EFI_FILE_PROTOCOL                 *FileIo,
+  IN EFI_FILE                          *FileIo,
   IN EFI_TPL                           Tpl,
   IN UINT64                            SetPosition,
   IN UINTN                             ReadLength,
@@ -181,8 +183,8 @@ FileIoAsyncReadData (
   // FileIoToken initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    FileIoReadNotifyFunc,
                    FileIoEntity,
                    &FileIoEntity->FileIoToken.Event
@@ -268,7 +270,7 @@ EFIAPI FileIoReadDirNotifyFunc (
 STATIC
 EFI_STATUS
 FileIoAsyncReadDir (
-  IN EFI_FILE_PROTOCOL                 *FileIo,
+  IN EFI_FILE                          *FileIo,
   IN EFI_TPL                           Tpl,
   IN UINTN                             ReadLength,
   IN UINTN                             Index
@@ -311,8 +313,8 @@ FileIoAsyncReadDir (
   // FileIoToken initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    FileIoReadDirNotifyFunc,
                    FileIoReadDirEntity,
                    &FileIoReadDirEntity->FileIoToken.Event
@@ -448,10 +450,10 @@ BBTestReadExBasicTestCheckpoint1 (
   )
 {
   EFI_STATUS                Status;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   UINTN                     TplIndex;
   CHAR16                    FileName[100];
-  EFI_FILE_PROTOCOL         *FileHandle;
+  EFI_FILE                  *FileHandle;
   UINTN                     FileSize;
   UINT8                     *Buffer;
   UINTN                     BufferSize;
@@ -825,10 +827,10 @@ BBTestReadExBasicTestCheckpoint2 (
   )
 {
   EFI_STATUS                Status;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   UINTN                     TplIndex;
   CHAR16                    FileName[100];
-  EFI_FILE_PROTOCOL         *FileHandle;
+  EFI_FILE                  *FileHandle;
   UINTN                     FileSize;
   UINT8                     *Buffer;
   UINTN                     BufferSize;
@@ -1097,12 +1099,12 @@ BBTestReadExBasicTestCheckpoint3 (
 
 {
   EFI_STATUS                Status;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   UINTN                     TplIndex;
   CHAR16                    FileName[100];
   CHAR16                    DirName[100];
-  EFI_FILE_PROTOCOL         *FileHandle;
-  EFI_FILE_PROTOCOL         *DirHandle;
+  EFI_FILE                  *FileHandle;
+  EFI_FILE                  *DirHandle;
   UINTN                     ReadLength[10];
   UINTN                     BufferSize;
   UINTN                     Index;
@@ -1487,12 +1489,12 @@ BBTestReadExBasicTestCheckpoint4 (
   
 {
   EFI_STATUS                Status;
-  EFI_FILE_PROTOCOL         *Root;
+  EFI_FILE                  *Root;
   UINTN                     TplIndex;
   CHAR16                    FileName[100];
   CHAR16                    DirName[100];
-  EFI_FILE_PROTOCOL         *FileHandle;
-  EFI_FILE_PROTOCOL         *DirHandle;
+  EFI_FILE                  *FileHandle;
+  EFI_FILE                  *DirHandle;
   UINT8                     *Buffer;
   UINTN                     ReadLength[5];
   UINTN                     BufferSize;

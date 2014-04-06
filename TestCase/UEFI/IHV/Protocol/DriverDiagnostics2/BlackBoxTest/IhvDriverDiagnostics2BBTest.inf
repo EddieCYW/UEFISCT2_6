@@ -57,32 +57,28 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvDriverDiagnostics2BBTest
-FILE_GUID            = B0FCFE7E-DA03-48fd-A67C-374F01646ADA
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvDriverDiagnostics2BBTest
+  FILE_GUID            = B0FCFE7E-DA03-48fd-A67C-374F01646ADA
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDriverDiagnostics2
 
 [sources.common]
   Guid.c
   DriverDiagnostics2BBTestMain.c
   DriverDiagnostics2BBTestConformance.c
   DriverDiagnostics2BBTestFunction.c
-  DriverDiagnostics2Protocol.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestDriverDiagnostics2
+[Protocols]
+  gBlackBoxEfiDriverDiagnostics2ProtocolGuid

@@ -58,16 +58,16 @@ Abstract:
 #include "SctLib.h"
 #include "EventTimerTaskPriorityServicesBBTestMain.h"
 
-#ifndef EFI_EVENT_NOTIFY_SIGNAL_ALL
-#define EFI_EVENT_NOTIFY_SIGNAL_ALL     0x00000400
+#ifndef EVT_NOTIFY_SIGNAL_ALL
+#define EVT_NOTIFY_SIGNAL_ALL     0x00000400
 #endif
 
-#ifndef EFI_EVENT_SIGNAL_READY_TO_BOOT
-#define EFI_EVENT_SIGNAL_READY_TO_BOOT  0x00000203
+#ifndef EVT_SIGNAL_READY_TO_BOOT
+#define EVT_SIGNAL_READY_TO_BOOT  0x00000203
 #endif
 
-#ifndef EFI_EVENT_SIGNAL_LEGACY_BOOT
-#define EFI_EVENT_SIGNAL_LEGACY_BOOT    0x00000204
+#ifndef EVT_SIGNAL_LEGACY_BOOT
+#define EVT_SIGNAL_LEGACY_BOOT    0x00000204
 #endif
 
 //
@@ -236,15 +236,15 @@ BBTestCreateEventEx_Conf_Sub1 (
   UINTN               TplIndex;
   UINTN               EventGroupIndex;
   UINT32              EventTypes[] = {
-                        EFI_EVENT_NOTIFY_WAIT,
-                        EFI_EVENT_NOTIFY_SIGNAL,
-                        EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                        EFI_EVENT_RUNTIME | EFI_EVENT_NOTIFY_SIGNAL,
+                        EVT_NOTIFY_WAIT,
+                        EVT_NOTIFY_SIGNAL,
+                        EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                        EVT_RUNTIME | EVT_NOTIFY_SIGNAL,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_GUID            *EventGroups[] = {
@@ -322,18 +322,18 @@ BBTestCreateEventEx_Conf_Sub2 (
   UINTN               TplIndex;
   UINTN               EventGroupIndex;
   UINT32              InvalidEventTypes[] = {
-                        EFI_EVENT_NOTIFY_WAIT | EFI_EVENT_NOTIFY_SIGNAL,
-                        EFI_EVENT_NOTIFY_WAIT | EFI_EVENT_SIGNAL_EXIT_BOOT_SERVICES,
-                        EFI_EVENT_NOTIFY_WAIT | EFI_EVENT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
-                        EFI_EVENT_TIMER | EFI_EVENT_SIGNAL_EXIT_BOOT_SERVICES,
-                        EFI_EVENT_TIMER | EFI_EVENT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
-                        EFI_EVENT_SIGNAL_EXIT_BOOT_SERVICES,
-                        EFI_EVENT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
+                        EVT_NOTIFY_WAIT | EVT_NOTIFY_SIGNAL,
+                        EVT_NOTIFY_WAIT | EVT_SIGNAL_EXIT_BOOT_SERVICES,
+                        EVT_NOTIFY_WAIT | EVT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
+                        EVT_TIMER | EVT_SIGNAL_EXIT_BOOT_SERVICES,
+                        EVT_TIMER | EVT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
+                        EVT_SIGNAL_EXIT_BOOT_SERVICES,
+                        EVT_SIGNAL_VIRTUAL_ADDRESS_CHANGE,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_GUID            *EventGroups[] = {
@@ -419,15 +419,15 @@ BBTestCreateEventEx_Conf_Sub3 (
   UINTN               TplIndex;
   UINTN               EventGroupIndex;
   UINT32              EventTypes[] = {                        
-                        EFI_EVENT_NOTIFY_WAIT,
-                        EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_WAIT,
-                        EFI_EVENT_NOTIFY_SIGNAL,
-                        EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,                   
+                        EVT_NOTIFY_WAIT,
+                        EVT_TIMER | EVT_NOTIFY_WAIT,
+                        EVT_NOTIFY_SIGNAL,
+                        EVT_TIMER | EVT_NOTIFY_SIGNAL,                   
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_GUID            *EventGroups[] = {
@@ -466,7 +466,7 @@ BBTestCreateEventEx_Conf_Sub3 (
                        StandardLib,
                        AssertionType,
                        gEventTimerTaskPriorityServicesBBTestCreateEventExAssertionGuid004,
-                       L"BS.CreateEventEx - Create event with either EFI_EVENT_NOTIFY_WAIT or EFI_EVENT_NOTIFY_SIGNAL set and NotifyFunction being NULL",
+                       L"BS.CreateEventEx - Create event with either EVT_NOTIFY_WAIT or EVT_NOTIFY_SIGNAL set and NotifyFunction being NULL",
                        L"%a:%d:Status - %r, EventType - 0x%08x, NotifyTPL - %d, EventGroup NULL ",
                        __FILE__,
                        (UINTN)__LINE__,
@@ -502,13 +502,13 @@ BBTestCreateEventEx_Conf_Sub4 (
   UINTN               TplIndex;
   UINTN               EventGroupIndex;
   UINT32              EventTypes[] = {
-                        // NotifyTpl will be ignored with EFI_EVENT_TIMER
-                        EFI_EVENT_NOTIFY_WAIT,
-                        EFI_EVENT_NOTIFY_SIGNAL,
+                        // NotifyTpl will be ignored with EVT_TIMER
+                        EVT_NOTIFY_WAIT,
+                        EVT_NOTIFY_SIGNAL,
                         0
                       };
   EFI_TPL             InvalidNotifyTpls[] = {
-                        (EFI_TPL) (EFI_TPL_HIGH_LEVEL + 1),
+                        (EFI_TPL) (TPL_HIGH_LEVEL + 1),
                         (EFI_TPL) -1,
                         0
                       };
@@ -594,12 +594,12 @@ BBTestCreateEventEx_Func_Sub1 (
   UINTN               Index;
   EFI_TPL             OldTpl;
   UINT32              EventTypes[] = {
-                        EFI_EVENT_NOTIFY_SIGNAL,
+                        EVT_NOTIFY_SIGNAL,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;
@@ -680,9 +680,9 @@ BBTestCreateEventEx_Func_Sub1 (
   }
   
   //
-  // Signal these events at EFI_TPL_HIGH_LEVEL
+  // Signal these events at TPL_HIGH_LEVEL
   //
-  OldTpl = gtBS->RaiseTPL (EFI_TPL_HIGH_LEVEL);
+  OldTpl = gtBS->RaiseTPL (TPL_HIGH_LEVEL);
 
   Status = gtBS->SignalEvent (Event[0]);
   if (EFI_ERROR (Status)) {
@@ -712,9 +712,9 @@ BBTestCreateEventEx_Func_Sub1 (
   //
   // Compare the notify order
   //
-  if ( (Buffer[MAX_TEST_EVENT_NUM] == 2 && Buffer[MAX_TEST_EVENT_NUM + 1] == EFI_TPL_NOTIFY) &&
-       (Buffer[MAX_TEST_EVENT_NUM + 3] == EFI_TPL_CALLBACK) &&
-       (Buffer[MAX_TEST_EVENT_NUM + 5] == EFI_TPL_CALLBACK) ) {
+  if ( (Buffer[MAX_TEST_EVENT_NUM] == 2 && Buffer[MAX_TEST_EVENT_NUM + 1] == TPL_NOTIFY) &&
+       (Buffer[MAX_TEST_EVENT_NUM + 3] == TPL_CALLBACK) &&
+       (Buffer[MAX_TEST_EVENT_NUM + 5] == TPL_CALLBACK) ) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -750,12 +750,12 @@ BBTestCreateEventEx_Func_Sub2 (
   EFI_TPL             OldTpl;
   UINTN               TestTable;
   UINT32              EventTypes[] = {
-                        EFI_EVENT_NOTIFY_SIGNAL,
+                        EVT_NOTIFY_SIGNAL,
                         0
                       };
   EFI_TPL             NotifyTpls[] = {
-                        EFI_TPL_CALLBACK,
-                        EFI_TPL_NOTIFY,
+                        TPL_CALLBACK,
+                        TPL_NOTIFY,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;
@@ -836,9 +836,9 @@ BBTestCreateEventEx_Func_Sub2 (
   }
   
   //
-  // Install a configuration table at EFI_TPL_HIGH_LEVEL
+  // Install a configuration table at TPL_HIGH_LEVEL
   //
-  OldTpl = gtBS->RaiseTPL (EFI_TPL_HIGH_LEVEL);
+  OldTpl = gtBS->RaiseTPL (TPL_HIGH_LEVEL);
   
   Status = gtBS->InstallConfigurationTable (
                      &EventGroupTestGroup3Guid,
@@ -871,9 +871,9 @@ BBTestCreateEventEx_Func_Sub2 (
   //
   // Compare the notify order
   //
-  if ( (Buffer[MAX_TEST_EVENT_NUM] == 2 && Buffer[MAX_TEST_EVENT_NUM + 1] == EFI_TPL_NOTIFY) &&
-       Buffer[MAX_TEST_EVENT_NUM + 3] == EFI_TPL_CALLBACK &&
-       Buffer[MAX_TEST_EVENT_NUM + 5] == EFI_TPL_CALLBACK ) {
+  if ( (Buffer[MAX_TEST_EVENT_NUM] == 2 && Buffer[MAX_TEST_EVENT_NUM + 1] == TPL_NOTIFY) &&
+       Buffer[MAX_TEST_EVENT_NUM + 3] == TPL_CALLBACK &&
+       Buffer[MAX_TEST_EVENT_NUM + 5] == TPL_CALLBACK ) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;

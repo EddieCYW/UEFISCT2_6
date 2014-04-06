@@ -55,8 +55,7 @@
 
 --*/
 
-#include "Efi.h"
-#include "Guid.h"
+#include "HIIConfigAccessBBTestMain.h"
 
 EFI_GUID gHIIConfigAccessBBTestConformanceAssertionGuid001=EFI_TEST_HIICONFIGACCESSBBTESTCONFORMANCE_ASSERTION_001_GUID;
 EFI_GUID gHIIConfigAccessBBTestConformanceAssertionGuid002=EFI_TEST_HIICONFIGACCESSBBTESTCONFORMANCE_ASSERTION_002_GUID;

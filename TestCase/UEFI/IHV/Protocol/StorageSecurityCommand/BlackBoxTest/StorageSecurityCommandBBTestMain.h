@@ -64,11 +64,11 @@ Abstract:
 //
 
 #include "Efi.h"
-#include "StorageSecurityCommandProtocol.h"
+#include <UEFI/Protocol/StorageSecurityCommand.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
-#include "DevicePathUtilities.h"
-#include "DevicePathToText.h"
+#include <UEFI/Protocol/DevicePathUtilities.h>
+#include <UEFI/Protocol/DevicePathToText.h>
 
 
 //

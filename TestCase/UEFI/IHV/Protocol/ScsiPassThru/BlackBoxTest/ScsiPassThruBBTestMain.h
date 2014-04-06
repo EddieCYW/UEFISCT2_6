@@ -61,7 +61,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "ScsiPassThruProtocol.h"
+#include <UEFI/Protocol/ScsiPassThru.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

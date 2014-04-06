@@ -56,36 +56,34 @@
 #--*/
 
 [defines]
-BASE_NAME            = BisBBTest
-FILE_GUID            = 2F43E87E-8455-4f67-8532-E658F9F8092D
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = BisBBTest
+  FILE_GUID            = 2F43E87E-8455-4f67-8532-E658F9F8092D
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestBisProtocol
 
 [sources.common]
   BisBBTestCase.c
   BisBBTestMain.c
   BisBBTestMain.h
-  guid.c
-  guid.h
+  Guid.c
+  Guid.h
 
-[sources.IA32, sources.IPF, sources.x64]
-  BisProtocol.c
-  BisProtocol.h
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  TestProtocolLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestBisProtocol
+[Guids]
+  gEfiFileInfoGuid
+
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gEfiSimpleFileSystemProtocolGuid
+

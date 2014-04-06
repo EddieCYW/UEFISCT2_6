@@ -56,34 +56,27 @@
 #--*/
 
 [defines]
-BASE_NAME            = FirmwareManagementBBTest
-FILE_GUID            = 62AA4F9E-F1F6-4bab-A8AF-06C19D0D82DF
-
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = FirmwareManagementBBTest
+  FILE_GUID            = 62AA4F9E-F1F6-4bab-A8AF-06C19D0D82DF
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeFirmwareManagementBBTest
 
 [sources.common]
   FirmwareManagementBBTestConformance.c
   FirmwareManagementBBTestFunction.c
   FirmwareManagementBBTestMain.c
-  FirmwareManagement.c
   Guid.c
-  
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeFirmwareManagementBBTest
+[Protocols]

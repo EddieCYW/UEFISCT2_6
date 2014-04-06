@@ -63,7 +63,7 @@ Abstract:
 // data definition here
 //
 #define TEST_DRIVER_1_PRIVATE_DATA_FROM_THIS(a) \
- _CR(a, TEST_DRIVER_PRIVATE_DATA, ExProt1)
+ BASE_CR(a, TEST_DRIVER_PRIVATE_DATA, ExProt1)
 
 TEST_DRIVER_PRIVATE_DATA  *mPrivateData;
 
@@ -84,7 +84,6 @@ TestDriver1Unload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeTestDriver1)
 
 EFI_STATUS
 InitializeTestDriver1 (

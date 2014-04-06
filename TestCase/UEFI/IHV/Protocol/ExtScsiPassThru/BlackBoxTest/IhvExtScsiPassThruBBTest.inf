@@ -56,33 +56,28 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvExtScsiPassThruBBTest
-FILE_GUID            = 858FA815-A1DE-4911-B0CF-A22EB26DC1DE
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvExtScsiPassThruBBTest
+  FILE_GUID            = 858FA815-A1DE-4911-B0CF-A22EB26DC1DE
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestExtScsiPassThru
 
 [sources.common]
   ExtScsiPassThruBBTestMain.c
   ExtScsiPassThruBBTestMain.h
   ExtScsiPassThruBBTestFunction.c
   ExtScsiPassThruBBTestConformance.c
-  ExtScsiPassThruProtocol.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestExtScsiPassThru
+[Protocols]

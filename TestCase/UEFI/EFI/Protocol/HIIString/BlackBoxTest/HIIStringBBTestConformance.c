@@ -52,7 +52,7 @@ Abstract:
     for EFI Driver HII String Protocol's conformance Test
 
 --*/
-#include "SctLib.h"
+
 #include "HIIStringBBTestMain.h"
 
 extern UINT8 mPackageList1[];

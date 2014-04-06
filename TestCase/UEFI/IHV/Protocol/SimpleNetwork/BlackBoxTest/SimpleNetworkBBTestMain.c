@@ -145,12 +145,12 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
   },
   {
     SNP_MCASTIPTOMAC_FUNCTION_TEST_GUID,
-    L"MCastIPtoMAC_Func",
-    L"Function Test for MCastIPtoMAC",
+    L"MCastIpToMac_Func",
+    L"Function Test for MCastIpToMac",
     EFI_TEST_LEVEL_DEFAULT,
     gSupportProtocolGuid1,
     EFI_TEST_CASE_AUTO,
-    BBTestMCastIPtoMACFunctionTest
+    BBTestMCastIpToMacFunctionTest
   },
   {
     SNP_NVDATA_FUNCTION_TEST_GUID,
@@ -244,12 +244,12 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
   },
   {
     SNP_MCASTIPTOMAC_CONFORMANCE_TEST_GUID,
-    L"MCastIPtoMAC_Conf",
-    L"Conformance Test for MCastIPtoMAC",
+    L"MCastIpToMac_Conf",
+    L"Conformance Test for MCastIpToMac",
     EFI_TEST_LEVEL_MINIMAL,
     gSupportProtocolGuid1,
     EFI_TEST_CASE_AUTO,
-    BBTestMCastIPtoMACConformanceTest
+    BBTestMCastIpToMacConformanceTest
   },
   {
     SNP_NVDATA_CONFORMANCE_TEST_GUID,
@@ -319,7 +319,6 @@ BBTestSimpleNetworkUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestSimpleNetworkProtocol)
 
 /**
  *  SimpleNetwork Protocol Test Driver Entry point.

@@ -56,7 +56,6 @@ Abstract:
 #include "SctLib.h"
 #include "VariableServicesBBTestMain.h"
 #include "AuthVariableServicesBBTest.h"
-#include "EfiVariable.h"
 
 
 STATIC UINT8 mAuthVarDERCreateKey0[] = {

@@ -55,42 +55,30 @@
 #--*/
 
 [defines]
-BASE_NAME            = PciIo_MakeConfigWritable
-FILE_GUID            = 419A35b1-3BE6-4e70-9D4A-a0d1F66460B7
-COMPONENT_TYPE       = APPLICATION
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = PciIo_MakeConfigWritable
+  FILE_GUID            = 419A35b1-3BE6-4e70-9D4A-a0d1F66460B7
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = MakeConfigWritableEntryPoint
 
 [sources.common]
   Main.h
   Main.c
   MakeConfigWritable.c
   Common.h
-  basefunc.c
+  Basefunc.c
   Search.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Include/IndustryStandard
-  $(EDK_SOURCE)/Foundation/Library/Dxe/EfiIfrSupportLib
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[includes.IA32]
-
-[includes.X64]
-
-[includes.IPF]
-
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  EfiGuidLib
-  EfiProtocolLib
-  EdkProtocolLib
-  EdkFrameworkGuidLib
+  EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=MakeConfigWritableEntryPoint
+[Protocols]
+  gBlackBoxEfiPciRootBridgeIoProtocolGuid

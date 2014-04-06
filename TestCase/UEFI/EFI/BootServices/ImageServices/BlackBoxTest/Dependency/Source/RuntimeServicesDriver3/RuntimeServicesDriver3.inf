@@ -55,32 +55,29 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = RuntimeServicesDriver3
-FILE_GUID            = 5B302A15-4771-472b-9195-A4AE3D0D3665
-COMPONENT_TYPE       = RT_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = RuntimeServicesDriver3
+  FILE_GUID            = 5B302A15-4771-472b-9195-A4AE3D0D3665
+  MODULE_TYPE          = DXE_RUNTIME_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeRuntimeServicesDriver3
 
-[sources.common]
+[Sources.common]
   RuntimeServicesDriver3.c
-  ../../../protocoldefinition.c
+  ../../../ProtocolDefinition.c
 
-[includes.common]
-  .
-  ../../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeRuntimeServicesDriver3
+[Protocols]
+
+[Depex]
+  TRUE

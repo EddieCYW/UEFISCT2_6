@@ -211,7 +211,6 @@ EFI_BB_TEST_PROTOCOL *gBBTestProtocolInterface;
 // Functions
 //
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestUsbHc)
 
 /**
  *  Creates/installs the BlackBox Interface and the Entry Point list.
@@ -230,7 +229,7 @@ InitializeBBTestUsbHc (
   EfiInitializeTestLib (ImageHandle, SystemTable);
   SctInitializeLib (ImageHandle, SystemTable);
 
-  gtBS->CreateEvent(EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  gtBS->CreateEvent(EVT_TIMER, 0, NULL, NULL, &TimerEvent);
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,

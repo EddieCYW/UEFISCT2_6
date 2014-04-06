@@ -184,7 +184,7 @@ BBTestVideoFillBufferToVideoManualTest (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    NULL,
                    &Size,
                    &HandleBuffer
@@ -208,7 +208,7 @@ BBTestVideoFillBufferToVideoManualTest (
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    &Console
                    );
 
@@ -1023,7 +1023,7 @@ BBTestVideoFillVideoToVideoManualTest (
 
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    NULL,
                    &Size,
                    &HandleBuffer
@@ -1047,7 +1047,7 @@ BBTestVideoFillVideoToVideoManualTest (
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    &Console
                    );
 
@@ -1916,7 +1916,7 @@ BBTestVideoToBltBufferAutoTest (
 
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    NULL,
                    &Size,
                    &HandleBuffer
@@ -1940,7 +1940,7 @@ BBTestVideoToBltBufferAutoTest (
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    &Console
                    );
 
@@ -2658,7 +2658,7 @@ BBTestEfiUgaVideoFillStressAutoTest (
 
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    NULL,
                    &Size,
                    &HandleBuffer
@@ -2682,7 +2682,7 @@ BBTestEfiUgaVideoFillStressAutoTest (
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    &Console
                    );
 
@@ -3280,7 +3280,7 @@ BBTestEfiUgaVideoBltBufferStressAutoTest (
 
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    NULL,
                    &Size,
                    &HandleBuffer
@@ -3304,7 +3304,7 @@ BBTestEfiUgaVideoBltBufferStressAutoTest (
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    &Console
                    );
 
@@ -4214,7 +4214,7 @@ BBTestEfiUgaVideoToVideoStressAutoTest (
 
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    NULL,
                    &Size,
                    &HandleBuffer
@@ -4238,7 +4238,7 @@ BBTestEfiUgaVideoToVideoStressAutoTest (
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[0],
-                   &gEfiConsoleControlProtocolGuid,
+                   &gBlackBoxEfiConsoleControlProtocolGuid,
                    &Console
                    );
 

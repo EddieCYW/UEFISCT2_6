@@ -56,31 +56,27 @@
 #--*/
 
 [defines]
-BASE_NAME            = VlanConfigBBTest
-FILE_GUID            = 937C8E50-7E5D-46ea-B60E-A4E492A4E16E
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = VlanConfigBBTest
+  FILE_GUID            = 937C8E50-7E5D-46ea-B60E-A4E492A4E16E
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeVlanConfigBBTest
 
 [sources.common]
-  VlanConfigProtocol.c
   VlanConfigBBTestConformance.c
   VlanConfigBBTestFunction.c
   VlanConfigBBTestMain.c
   Guid.c
-  
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeVlanConfigBBTest
+[Protocols]

@@ -60,7 +60,7 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
-#include "VlanConfigProtocol.h"
+#include <UEFI/Protocol/VlanConfig.h>
 #include "Guid.h"
 
 

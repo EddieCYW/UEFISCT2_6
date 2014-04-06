@@ -56,32 +56,28 @@
 #--*/
 
 [defines]
-BASE_NAME            = ScsiPassThruBBTest
-FILE_GUID            = 12548DBE-8F3C-450c-88F7-924130880DCF
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ScsiPassThruBBTest
+  FILE_GUID            = 12548DBE-8F3C-450c-88F7-924130880DCF
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestScsiPassThru
 
 [sources.common]
   ScsiPassThruBBTestMain.c
   ScsiPassThruBBTestMain.h
   ScsiPassThruBBTestFunction.c
   ScsiPassThruBBTestConformance.c
-  ScsiPassThruProtocol.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestScsiPassThru
+[Protocols]

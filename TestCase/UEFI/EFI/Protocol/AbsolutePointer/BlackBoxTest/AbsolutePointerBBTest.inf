@@ -41,6 +41,7 @@
 # EFI, Inc. makes no claim of right.                          
 #                                                             
 # Copyright (c) 2010 - 2012, Byosoft Corporation. All rights reserved.<BR> 
+# Copyright (c) 2014, ARM Ltd. All rights reserved.<BR> 
 #
 #
 #/*++
@@ -56,9 +57,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = AbsolutePointerBBTest
-FILE_GUID            = 804A7494-C640-4072-8850-DC85B919AA07
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = AbsolutePointerBBTest
+  FILE_GUID            = 804A7494-C640-4072-8850-DC85B919AA07
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestAbsolutePointer
 
 [sources.common]
   AbsolutePointerBBTestMain.c
@@ -67,30 +71,16 @@ COMPONENT_TYPE       = BS_DRIVER
   AbsolutePointerBBTestConformance.c
   Guid.c
 
-[sources.IPF]
-  AbsolutePointerProtocol.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.IA32]
-  AbsolutePointerProtocol.c
-
-[sources.x64]
-
-  AbsolutePointerProtocol.c
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestAbsolutePointer
+[Protocols]
+  gBlackBoxEfiAbsolutePointerProtocolGuid
+  gEfiDevicePathProtocolGuid

@@ -165,7 +165,6 @@ BBTestUnicodeCollationProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestUnicodeCollation)
 
 /**
  *  Unicode Collation Protocol Test Driver Entry point.

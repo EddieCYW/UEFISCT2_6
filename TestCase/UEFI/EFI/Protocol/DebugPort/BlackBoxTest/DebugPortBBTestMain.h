@@ -61,7 +61,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "DebugPortProtocol.h"
+#include <UEFI/Protocol/DebugPort.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

@@ -57,7 +57,7 @@
 #--*/
 
 BASE_NAME=Ebc_EbcDriver
-SOURCE_DIR=$(EFI_SOURCE)/SctPkg/TestCase/UEFI/IHV/Protocol/Ebc/BlackBoxTest/Dependency/EbcDriverBin
+SOURCE_DIR=$(WORKSPACE)/SctPkg/TestCase/UEFI/IHV/Protocol/Ebc/BlackBoxTest/Dependency/EbcDriverBin
 GENBIN=$(EDK_TOOLS_PATH)/Bin/Win32/GenBin
 DEPENDECY=$(SOURCE_DIR)/EbcDriver.ini
 UNAME = $(shell uname)

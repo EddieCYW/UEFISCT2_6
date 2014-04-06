@@ -65,9 +65,8 @@ Abstract:
 
 #include "Efi.h"
 #include "Guid.h"
-#include "BlockIo2Protocol.h"
+#include <UEFI/Protocol/BlockIo2.h>
 #include <Library/EfiTestLib.h>
-#include "EfiCommon.h"
 
 //
 // Definitions

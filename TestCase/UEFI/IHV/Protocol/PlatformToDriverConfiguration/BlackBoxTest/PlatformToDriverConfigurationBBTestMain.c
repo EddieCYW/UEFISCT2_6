@@ -171,7 +171,6 @@ BBTestPlatformToDriverConfigurationProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestPlatformToDriverConfiguration)
 
 /**
  *  Platform To Driver Configuration Protocol Test Driver Entry point.

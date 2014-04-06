@@ -824,7 +824,7 @@ FindMatchedDeviceHandle (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiDriverDiagnostics2ProtocolGuid,
+                   &gBlackBoxEfiDriverDiagnostics2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -840,7 +840,7 @@ FindMatchedDeviceHandle (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiDriverDiagnostics2ProtocolGuid,
+                     &gBlackBoxEfiDriverDiagnostics2ProtocolGuid,
                      &TestedDriverDiagnostics2
                      );
     if (EFI_ERROR(Status)) {
@@ -905,7 +905,7 @@ FindMatchedBusHandle (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiDriverDiagnostics2ProtocolGuid,
+                   &gBlackBoxEfiDriverDiagnostics2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -921,7 +921,7 @@ FindMatchedBusHandle (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiDriverDiagnostics2ProtocolGuid,
+                     &gBlackBoxEfiDriverDiagnostics2ProtocolGuid,
                      &TestedDriverDiagnostics2
                      );
     if (EFI_ERROR(Status)) {

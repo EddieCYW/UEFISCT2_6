@@ -64,14 +64,8 @@ Revision History
 
 #include "SctLib.h"
 #include "GraphicsOutputBBTest.h"
-#ifndef EFIARM
-EFI_GUID  gEfiGraphicsOutputProtocolGuid = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
-#endif
 
 EFI_EVENT TimerEvent;
-#ifndef EFIARM
-EFI_GUID_STRING(&gEfiGraphicsOutputProtocolGuid, "GraphicsOutput Protocol", "UEFI 2.0 Graphics output protocol");
-#endif
 
 EFI_STATUS
 InitTestEnv (
@@ -136,7 +130,7 @@ Returns:
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiGraphicsOutputProtocolGuid,
+                   &gBlackBoxEfiGraphicsOutputProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -173,7 +167,7 @@ Returns:
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiGraphicsOutputProtocolGuid,
+                     &gBlackBoxEfiGraphicsOutputProtocolGuid,
                      (VOID **) &OtherGraphicsOutput
                      );
     if (EFI_ERROR (Status)) {
@@ -569,7 +563,7 @@ Returns:
   AutoJudge = 1;
 
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER,
+                   EVT_TIMER,
                    0,
                    NULL,
                    NULL,

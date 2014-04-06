@@ -59,7 +59,6 @@ Abstract:
 #include "Efi.h"
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
-#include "EfiVariable.h"
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestRecoveryLibrary)
 #include EFI_TEST_PROTOCOL_DEFINITION(TestLoggingLibrary)

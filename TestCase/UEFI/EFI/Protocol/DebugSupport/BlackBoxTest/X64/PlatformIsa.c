@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 #include "Efi.h"
-#include "DebugSupportProtocol.h"
+#include <UEFI/Protocol/DebugSupport.h>
 
 EFI_INSTRUCTION_SET_ARCHITECTURE PlatformIsa = IsaX64;
 

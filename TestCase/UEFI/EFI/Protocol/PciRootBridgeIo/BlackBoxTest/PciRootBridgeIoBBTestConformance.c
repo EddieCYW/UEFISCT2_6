@@ -68,6 +68,22 @@ Abstract:
 #define SECTION_NAME_PCIWRITE_CONFORM_TEST  L"PciWrite_Conf"
 #define SECTION_NAME_COPYMEM_CONFORM_TEST   L"CopyMem_Conf"
 
+STATIC CONST UINT64       mAllAttributes[14] = {
+    EFI_PCI_ATTRIBUTE_ISA_MOTHERBOARD_IO,
+    EFI_PCI_ATTRIBUTE_ISA_IO,
+    EFI_PCI_ATTRIBUTE_VGA_PALETTE_IO,
+    EFI_PCI_ATTRIBUTE_VGA_MEMORY,
+    EFI_PCI_ATTRIBUTE_VGA_IO,
+    EFI_PCI_ATTRIBUTE_IDE_PRIMARY_IO,
+    EFI_PCI_ATTRIBUTE_IDE_SECONDARY_IO,
+    EFI_PCI_ATTRIBUTE_MEMORY_WRITE_COMBINE,
+    EFI_PCI_ATTRIBUTE_MEMORY_CACHED,
+    EFI_PCI_ATTRIBUTE_MEMORY_DISABLE,
+    EFI_PCI_ATTRIBUTE_DUAL_ADDRESS_CYCLE,
+    EFI_PCI_ATTRIBUTE_ISA_IO_16,
+    EFI_PCI_ATTRIBUTE_VGA_IO_16,
+    EFI_PCI_ATTRIBUTE_VGA_PALETTE_IO_16
+  };
 
 /**
  *  Entrypoint for PollMem() conformance automatic test.
@@ -3731,23 +3747,6 @@ AllocateBuffer_Conf (
   UINTN                                 InvalidMemoryTypeNum;
   UINTN                                 AttributesNum;
 
-  UINT64       AllAttributes[14] = {
-    EFI_PCI_ATTRIBUTE_ISA_MOTHERBOARD_IO,
-    EFI_PCI_ATTRIBUTE_ISA_IO,
-    EFI_PCI_ATTRIBUTE_VGA_PALETTE_IO,
-    EFI_PCI_ATTRIBUTE_VGA_MEMORY,
-    EFI_PCI_ATTRIBUTE_VGA_IO,
-    EFI_PCI_ATTRIBUTE_IDE_PRIMARY_IO,
-    EFI_PCI_ATTRIBUTE_IDE_SECONDARY_IO,
-    EFI_PCI_ATTRIBUTE_MEMORY_WRITE_COMBINE,
-    EFI_PCI_ATTRIBUTE_MEMORY_CACHED,
-    EFI_PCI_ATTRIBUTE_MEMORY_DISABLE,
-    EFI_PCI_ATTRIBUTE_DUAL_ADDRESS_CYCLE,
-    EFI_PCI_ATTRIBUTE_ISA_IO_16,
-    EFI_PCI_ATTRIBUTE_VGA_IO_16,
-    EFI_PCI_ATTRIBUTE_VGA_PALETTE_IO_16
-  };
-
   UINT64 ValidAllocateBufferAttributes = EFI_PCI_ATTRIBUTE_MEMORY_WRITE_COMBINE|
                                          EFI_PCI_ATTRIBUTE_MEMORY_CACHED|
                                          EFI_PCI_ATTRIBUTE_DUAL_ADDRESS_CYCLE;
@@ -3920,7 +3919,7 @@ AllocateBuffer_Conf (
   EfiStatus = EFI_UNSUPPORTED;
 
   for (Index = 0; Index < AttributesNum; Index++) {
-    ThisAttribute = AllAttributes[Index];
+    ThisAttribute = mAllAttributes[Index];
 
     if ((ThisAttribute & ValidAllocateBufferAttributes) == ThisAttribute) {
       continue;
@@ -4112,23 +4111,6 @@ SetAttributes_Conf (
   UINTN                                 AttributesNumber;
   BOOLEAN                               FoundAttribute;
 
-  UINT64       AllAttributes[14] = {
-    EFI_PCI_ATTRIBUTE_ISA_MOTHERBOARD_IO,
-    EFI_PCI_ATTRIBUTE_ISA_IO,
-    EFI_PCI_ATTRIBUTE_VGA_PALETTE_IO,
-    EFI_PCI_ATTRIBUTE_VGA_MEMORY,
-    EFI_PCI_ATTRIBUTE_VGA_IO,
-    EFI_PCI_ATTRIBUTE_IDE_PRIMARY_IO,
-    EFI_PCI_ATTRIBUTE_IDE_SECONDARY_IO,
-    EFI_PCI_ATTRIBUTE_MEMORY_WRITE_COMBINE,
-    EFI_PCI_ATTRIBUTE_MEMORY_CACHED,
-    EFI_PCI_ATTRIBUTE_MEMORY_DISABLE,
-    EFI_PCI_ATTRIBUTE_DUAL_ADDRESS_CYCLE,
-    EFI_PCI_ATTRIBUTE_ISA_IO_16,
-    EFI_PCI_ATTRIBUTE_VGA_IO_16,
-    EFI_PCI_ATTRIBUTE_VGA_PALETTE_IO_16
-  };
-
   UINT64 RequireResourceAttributes = EFI_PCI_ATTRIBUTE_MEMORY_WRITE_COMBINE |
                                      EFI_PCI_ATTRIBUTE_MEMORY_CACHED |
                                      EFI_PCI_ATTRIBUTE_MEMORY_DISABLE;
@@ -4216,7 +4198,7 @@ SetAttributes_Conf (
   FoundAttribute = FALSE;
   ThisAttribute = 0;
   for (Index = 0; Index < AttributesNumber; Index++) {
-    ThisAttribute = AllAttributes[Index];
+    ThisAttribute = mAllAttributes[Index];
     if ((ThisAttribute & SupportedAttributes) == 0) {
       if (ThisAttribute & RequireResourceAttributes) {
         continue;
@@ -4329,7 +4311,7 @@ SetAttributes_Conf (
   FoundAttribute = FALSE;
   ThisAttribute = 0;
   for (Index = 0; Index < AttributesNumber; Index++) {
-    ThisAttribute = AllAttributes[Index];
+    ThisAttribute = mAllAttributes[Index];
     if ((ThisAttribute & SupportedAttributes) == 0) {
       if (ThisAttribute & RequireResourceAttributes) {
         FoundAttribute = TRUE;

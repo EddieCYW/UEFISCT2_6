@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "DevicePathBBTestMain.h"
 
 //
@@ -93,7 +92,6 @@ BBTestDevicePathProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (InitializeBBTestDevicePathProtocol)
 
 /**
  *  Device Path Protocol Test Driver Entry point.

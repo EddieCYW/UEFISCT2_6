@@ -61,7 +61,7 @@ Revision History
 #define __ISCSIINITIATORNAMEBBTESTMAIN_H__
 
 #include "Efi.h"
-#include "iScsiInitiatorNameProtocol.h"
+#include <UEFI/Protocol/iScsiInitiatorName.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

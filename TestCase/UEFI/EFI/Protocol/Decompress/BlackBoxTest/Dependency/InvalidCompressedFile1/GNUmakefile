@@ -55,7 +55,7 @@
 #
 #--*/
 BASE_NAME=Decompress_InvalidCompressedFile1
-SOURCE_DIR=$(EFI_SOURCE)/SctPkg/TestCase/UEFI/EFI/Protocol/Decompress/BlackBoxTest/Dependency/InvalidCompressedFile1
+SOURCE_DIR=$(WORKSPACE)/SctPkg/TestCase/UEFI/EFI/Protocol/Decompress/BlackBoxTest/Dependency/InvalidCompressedFile1
 GENBIN=GenBin
 DEPENDECY=$(SOURCE_DIR)/InvalidCompressedFile1.ini
 UNAME = $(shell uname)

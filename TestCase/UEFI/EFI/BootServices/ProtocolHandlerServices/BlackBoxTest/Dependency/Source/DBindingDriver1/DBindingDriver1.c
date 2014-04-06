@@ -73,10 +73,10 @@ Abstract:
 // data definition here
 //
 #define DBINDING_DRIVER_1_PRIVATE_DATA_FROM_THIS(a) \
- _CR(a, DBINDING_DRIVER_PRIVATE_DATA, ExProt1)
+ BASE_CR(a, DBINDING_DRIVER_PRIVATE_DATA, ExProt1)
  
 #define DBINDING_DRIVER_1_PRIVATE_DATA_FROM_DRIVER_BINDING(a) \
- _CR(a, DBINDING_DRIVER_PRIVATE_DATA, DriverBinding)
+ BASE_CR(a, DBINDING_DRIVER_PRIVATE_DATA, DriverBinding)
  
 DBINDING_DRIVER_PRIVATE_DATA          *mPrivateData;
 
@@ -121,7 +121,6 @@ DBindingDriver1Unload (
 //
 // global variable for this test driver's image handle
 //
-EFI_DRIVER_ENTRY_POINT(InitializeDBindingDriver1)
 
 EFI_STATUS
 InitializeDBindingDriver1 (

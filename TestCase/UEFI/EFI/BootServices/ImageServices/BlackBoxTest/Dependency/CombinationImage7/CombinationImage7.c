@@ -68,7 +68,6 @@ InitializeCombinationImage7 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeCombinationImage7)
 
 EFI_STATUS
 InitializeCombinationImage7 (

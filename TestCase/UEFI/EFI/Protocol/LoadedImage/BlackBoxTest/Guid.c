@@ -55,9 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "Guid.h"
-
+#include "LoadedImageBBTest.h"
 
 EFI_GUID gLoadedImageTestAssertionGuid001 = EFI_TEST_LOADEDIMAGETEST_ASSERTION_001_GUID;
 

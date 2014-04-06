@@ -52,7 +52,7 @@ Abstract:
     for EFI Driver HII Configuration Access Protocol's conformance Test
 
 --*/
-#include "SctLib.h"
+
 #include "HIIConfigAccessBBTestMain.h"
 
 EFI_BROWSER_ACTION  EFI_BROWSER_ACTION_UNSUPPORTED = 2;

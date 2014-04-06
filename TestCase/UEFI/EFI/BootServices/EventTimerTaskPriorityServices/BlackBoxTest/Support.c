@@ -105,7 +105,7 @@ NotifyFunctionTplEx(
       }
     }
     
-    OldTpl = gtBS->RaiseTPL (EFI_TPL_HIGH_LEVEL);
+    OldTpl = gtBS->RaiseTPL (TPL_HIGH_LEVEL);
     gtBS->RestoreTPL (OldTpl);
 
     Buffer[Index] = EventIndex;
@@ -128,7 +128,7 @@ NotifyFunctionTpl (
   if (Context != NULL) {
     Buffer = Context;
 
-    OldTpl = gtBS->RaiseTPL (EFI_TPL_HIGH_LEVEL);
+    OldTpl = gtBS->RaiseTPL (TPL_HIGH_LEVEL);
     gtBS->RestoreTPL (OldTpl);
 
     Buffer[1]++;

@@ -61,7 +61,7 @@ Abstract:
 
 
 #include "Efi.h"
-#include "DiskIoProtocol.h"
+#include <UEFI/Protocol/DiskIo.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

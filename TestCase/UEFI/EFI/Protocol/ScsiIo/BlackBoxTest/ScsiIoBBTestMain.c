@@ -169,7 +169,6 @@ BBTestScsiIoProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestScsiIo)
 
 /**
  *  Scsi Io Protocol Test Driver Entry point.

@@ -55,42 +55,29 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = Tcp6_ENTSTest
-FILE_GUID            = 995565A5-33C0-4f40-8298-F190BE579C29
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = Tcp6_ENTSTest
+  FILE_GUID            = 995565A5-33C0-4f40-8298-F190BE579C29
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = Tcp6ENTSTestMain
 
-[sources.common]
+[Sources.common]
   Tcp6ENTSTest.c
   Tcp6ENTSTestCase.c
   Tcp6ENTSTestCase.h
 
-[includes.common]
-  .
-  ./Include
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-  $(EFI_SOURCE)/Framework
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EDK_SOURCE)/Foundation/Library/Dxe/EfiIfrSupportLib
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsProtocol
-  $(EFI_SOURCE)/SctPkg/Protocol/EntsMonitorProtocol
-  $(EFI_SOURCE)/SctPkg/TestCase/RIVL/NetworkProtocolLib/Include
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib
-  $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EASDispatcher/Include
-     
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
+  EfiTestLib
   EntsLib
-  EntsProtocolLib
-  NetworkProtocolLib
 
-[nmake.common]
-  C_STD_INCLUDE=
-  IMAGE_ENTRY_POINT=Tcp6ENTSTestMain
+[Protocols]
+  gEfiEntsProtocolGuid

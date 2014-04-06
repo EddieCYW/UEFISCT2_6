@@ -3765,7 +3765,7 @@ PciDevicePath_Func (
 
   Status = SctLocateHandle(
              ByProtocol,
-             &gEfiPciIoProtocolGuid,
+             &gBlackBoxEfiPciIoProtocolGuid,
              NULL,
              &HandleNum,
              &HandleBuffer
@@ -3782,7 +3782,7 @@ PciDevicePath_Func (
     //
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiPciIoProtocolGuid,
+                     &gBlackBoxEfiPciIoProtocolGuid,
                      &PciIo
                      );
     if (EFI_ERROR(Status)) {

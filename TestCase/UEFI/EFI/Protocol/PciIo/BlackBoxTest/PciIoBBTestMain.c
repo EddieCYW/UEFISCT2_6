@@ -412,7 +412,6 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestPciIoEntryField[] = {
 
 EFI_BB_TEST_PROTOCOL *gBBTestPciIoProtocolInterface;
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestPciIo)
 
 /*
  *  the BBTest PciIo Entry point Funcion.

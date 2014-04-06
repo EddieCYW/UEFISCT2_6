@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = AcpiTableProtocolBBTest
-FILE_GUID            = 775D6D29-5467-4794-9C5A-50EA6193144B
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = AcpiTableProtocolBBTest
+  FILE_GUID            = 775D6D29-5467-4794-9C5A-50EA6193144B
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestAcpiTableProtocol
 
 [sources.common]
   AcpiTableProtocolBBTestConformance.c
@@ -66,30 +69,14 @@ COMPONENT_TYPE       = BS_DRIVER
   AcpiTableProtocolBBTestMain.c
   Guid.c
 
-[sources.IA32]
-  AcpiTableProtocol.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.X64]
-  AcpiTableProtocol.c
-
-[sources.IPF]
-  AcpiTableProtocol.c
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestAcpiTableProtocol
+[Protocols]

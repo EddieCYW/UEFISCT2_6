@@ -62,9 +62,9 @@ UINT8                                *MemoryMap = NULL;
 UINTN                                MemoryMapSizeNeeded = 0;
 
 EFI_TPL TplArray [TPL_ARRAY_SIZE] = {
-  EFI_TPL_APPLICATION,
-  EFI_TPL_CALLBACK,
-  EFI_TPL_NOTIFY
+  TPL_APPLICATION,
+  TPL_CALLBACK,
+  TPL_NOTIFY
 };
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
@@ -211,7 +211,6 @@ BBTestMemoryAllocationServicesUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestMemoryAllocationServices)
 
 /**
  *  Memory Allocation Services Test Driver Entry point.
@@ -332,7 +331,7 @@ GetMaxFreeMemoryDescriptor (
   for (Index = 0; Index < MemoryMapSize; Index += DescriptorSize) {
     Descriptor = (EFI_MEMORY_DESCRIPTOR *) (MemoryMap + Index);
     if ((Descriptor->Type == EfiConventionalMemory) && 
-		(Descriptor->PhysicalStart + SctLShiftU64 (Descriptor->NumberOfPages, EFI_PAGE_SHIFT) < EFI_MAX_ADDRESS)) {
+		(Descriptor->PhysicalStart + SctLShiftU64 (Descriptor->NumberOfPages, EFI_PAGE_SHIFT) < MAX_ADDRESS)) {
       if (DescriptorNeeded == NULL) {
         DescriptorNeeded = Descriptor;
       } else if (Descriptor->NumberOfPages > DescriptorNeeded->NumberOfPages) {

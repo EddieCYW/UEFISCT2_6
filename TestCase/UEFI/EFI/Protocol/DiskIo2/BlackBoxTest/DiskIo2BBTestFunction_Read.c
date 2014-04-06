@@ -104,7 +104,7 @@ SCT_LIST_ENTRY  AsyncReadFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(Asy
 //
 // Async Read lock
 //
-SCT_LOCK  gAsyncReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncReadQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 //
 // Mixed Async Read Queue
@@ -122,7 +122,7 @@ SCT_LIST_ENTRY  SyncReadFailListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncRea
 //
 // Mixed Sync & Async Read lock
 //
-SCT_LOCK  gMixedReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gMixedReadQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 //
 // Async signal
@@ -191,8 +191,8 @@ DiskIo2AsyncReadData (
   // DiskIo2Token initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    DiskIo2ReadNotifyFunc,
                    DiskIo2Entity,
                    &DiskIo2Entity->DiskIo2Token.Event
@@ -274,8 +274,8 @@ EFIAPI DiskIo2AsyncReadBatchNotifyFunc (
 
     DiskIo2Entity->DiskIo2Token.Event = NULL;
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      DiskIo2AsyncReadBatchNotifyFunc,
                      TaskContext,
                      &DiskIo2Entity->DiskIo2Token.Event
@@ -358,8 +358,8 @@ DiskIo2AsyncBatchRead (
     DiskIo2Entity = CR(ListHeader->ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
  
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_CALLBACK,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_CALLBACK,
                      DiskIo2AsyncReadBatchNotifyFunc,
                      TaskContext,
                      &DiskIo2Entity->DiskIo2Token.Event
@@ -444,8 +444,8 @@ DiskIo2MixedReadData (
   // DiskIo2Token initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    DiskIo2MixedReadNotifyFunc,
                    DiskIo2Entity,
                    &DiskIo2Entity->DiskIo2Token.Event
@@ -1717,8 +1717,8 @@ BBTestReadDiskExFunctionAutoTestCheckpoint3(
   AsyncBatchReadFinished = 0;
   AsyncBatchReadToken.Event = NULL;
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    DiskIo2FinishNotifyFunc,
                    &AsyncBatchReadFinished,
                    &AsyncBatchReadToken.Event

@@ -87,7 +87,7 @@ Abstract:
                    _result, ( (_maskRes==_result) ? EFI_SUCCESS : EFI_UNSUPPORTED )\
                    );
                    
-extern EFI_GUID gEfiAuthenticationProtocolGuid;
+extern EFI_GUID gBlackBoxEfiAuthenticationProtocolGuid;
 EFI_STATUS GetAuthInfoTest( EFI_AUTHENTICATION_INFO_PROTOCOL *_this, EFI_HANDLE *handle);
 EFI_STATUS SetAuthInfoTest( EFI_AUTHENTICATION_INFO_PROTOCOL *_this, EFI_HANDLE *handle);
 

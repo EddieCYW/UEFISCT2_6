@@ -2140,7 +2140,7 @@ SetVariableConfTestSub2 (
   EFI_TPL               OldTpl;
   EFI_STATUS            ReturnedStatus;
   UINTN                 DataSize;
-  EFI_TPL               TplArray[] = {EFI_TPL_APPLICATION, EFI_TPL_CALLBACK};
+  EFI_TPL               TplArray[] = {TPL_APPLICATION, TPL_CALLBACK};
   UINT32                Attributes;
   UINT32                AttributesArray[] = {
     EFI_VARIABLE_BOOTSERVICE_ACCESS,
@@ -2459,7 +2459,7 @@ SetVariableConfTestSub4 (
   UINTN                 DataIndex;
   UINT8                 Data[MAX_BUFFER_SIZE];
   EFI_TPL               OldTpl;
-  EFI_TPL               TplArray[] = {EFI_TPL_APPLICATION, EFI_TPL_CALLBACK};
+  EFI_TPL               TplArray[] = {TPL_APPLICATION, TPL_CALLBACK};
   UINT32                AttributesArray[] = {
     EFI_VARIABLE_BOOTSERVICE_ACCESS,
     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS,

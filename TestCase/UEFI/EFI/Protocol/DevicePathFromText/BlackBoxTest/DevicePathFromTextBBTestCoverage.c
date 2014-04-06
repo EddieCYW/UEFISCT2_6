@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "DevicePathFromTextBBTestMain.h"
 
 #include EFI_PROTOCOL_DEFINITION (DebugPort)
@@ -64,8 +63,8 @@ Abstract:
 
 #define MaxDevicePathStrLen 200
 
-extern EFI_GUID gEfiDevicePathUtilitiesProtocolGuid;
-extern EFI_GUID gEfiDevicePathToTextProtocolGuid;
+extern EFI_GUID gBlackBoxEfiDevicePathUtilitiesProtocolGuid;
+extern EFI_GUID gBlackBoxEfiDevicePathToTextProtocolGuid;
 
 #define IS_HYPHEN(a)         ((a) == L'-')
 #define IS_NULL(a)           ((a) == L'\0')
@@ -284,7 +283,6 @@ EUI64StrToUInt64 (
   *EUIdValue = Sum;
 }
 
-
 STATIC
 EFI_DEVICE_PATH_PROTOCOL *
 CreateDeviceNode (
@@ -483,7 +481,7 @@ CreateCtrlDeviceNode (
                                                CtrlNodeSubType,
                                                sizeof (CONTROLLER_DEVICE_PATH)
                                                );
-  Controller->Controller  = (UINT32) SctStrToUInt (ControllerStr);
+  Controller->ControllerNumber  = (UINT32) SctStrToUInt (ControllerStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Controller;
 }
@@ -929,7 +927,7 @@ CreateVenPcAnsiDeviceNode (
                                     VenPcAnsiNodeType,
                                     VenPcAnsiNodeSubType,
                                     sizeof (VENDOR_DEVICE_PATH));
-  Vendor->Guid = gEfiPcAnsiGuid;
+  Vendor->Guid = gBlackBoxEfiPcAnsiGuid;
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Vendor;
 }
@@ -1095,11 +1093,6 @@ CreateSASExDeviceNode (
   return (EFI_DEVICE_PATH_PROTOCOL *) SasEx;
 }
 
-#ifndef EFIARM
- EFI_GUID  gEfiDebugPortProtocolGuid = EFI_DEBUGPORT_PROTOCOL_GUID;
-#endif
-
-
 #define DebugPortNodeType    3
 #define DebugPortNodeSubType 10
 
@@ -1116,7 +1109,7 @@ CreateDebugPortDeviceNode (
                                                     DebugPortNodeSubType,
                                                     sizeof(VENDOR_DEFINED_MESSAGING_DEVICE_PATH)
                                                     );
-  Vend->Guid = gEfiDebugPortProtocolGuid;
+  Vend->Guid = gBlackBoxEfiDebugPortProtocolGuid;
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Vend;
 }
@@ -1740,7 +1733,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   }
 
   Status = gtBS->LocateProtocol (
-                  &gEfiDevicePathUtilitiesProtocolGuid,
+                  &gBlackBoxEfiDevicePathUtilitiesProtocolGuid,
                   NULL,
                   &DevicePathUtilities
                   );
@@ -1749,7 +1742,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   }
 
   Status = gtBS->LocateProtocol (
-                  &gEfiDevicePathToTextProtocolGuid,
+                  &gBlackBoxEfiDevicePathToTextProtocolGuid,
                   NULL,
                   &DevicePathToText
                   );
@@ -3005,7 +2998,7 @@ DevicePathFromTextConvertTextToDevicePathCoverageTest (
   }
 
   Status = gtBS->LocateProtocol (
-                  &gEfiDevicePathUtilitiesProtocolGuid,
+                  &gBlackBoxEfiDevicePathUtilitiesProtocolGuid,
                   NULL,
                   &DevicePathUtilities
                   );
@@ -3014,7 +3007,7 @@ DevicePathFromTextConvertTextToDevicePathCoverageTest (
   }
 
   Status = gtBS->LocateProtocol (
-                  &gEfiDevicePathToTextProtocolGuid,
+                  &gBlackBoxEfiDevicePathToTextProtocolGuid,
                   NULL,
                   &DevicePathToText
                   );

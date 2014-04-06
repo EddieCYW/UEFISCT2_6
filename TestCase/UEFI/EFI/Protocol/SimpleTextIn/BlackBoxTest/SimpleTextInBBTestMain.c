@@ -55,8 +55,6 @@ Abstract:
 
 --*/
 
-
-#include "SctLib.h"
 #include "SimpleTextInBBTestMain.h"
 
 EFI_EVENT              TimerEvent;
@@ -66,7 +64,7 @@ EFI_EVENT              TimerEvent;
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
   SIMPLE_TEXT_IN_PROTOCOL_TEST_REVISION,
-  EFI_SIMPLE_TEXT_IN_PROTOCOL_GUID,
+  EFI_SIMPLE_TEXT_INPUT_PROTOCOL_GUID,
   L"Simple Input Protocol Test",
   L"UEFI Simple Input Protocol Test"
 };
@@ -167,7 +165,6 @@ BBTestSimpleTextInProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestSimpleTextIn)
 
 /**
  *  Simple Input Protocol Test Driver Entry point.
@@ -184,7 +181,7 @@ InitializeBBTestSimpleTextIn (
   EfiInitializeTestLib (ImageHandle, SystemTable);
   SctInitializeLib (ImageHandle, SystemTable);
 
-  gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
 
   return EfiInitAndInstallBBTestInterface (
               &ImageHandle,
@@ -242,7 +239,7 @@ LocateDevicePathFromSimpleTextIn (
   //
   Status = gtBS->LocateHandleBuffer (
                         ByProtocol,
-                        &gEfiSimpleTextInProtocolGuid,
+                        &gBlackBoxEfiSimpleTextInProtocolGuid,
                         NULL,
                         &NoHandles,
                         &HandleBuffer
@@ -280,7 +277,7 @@ LocateDevicePathFromSimpleTextIn (
   for (Index=0;Index<NoHandles;Index++) {
       Status = gtBS->HandleProtocol (
                         HandleBuffer[Index],
-                        &gEfiSimpleTextInProtocolGuid,
+                        &gBlackBoxEfiSimpleTextInProtocolGuid,
                         &OtherSimpleIn
                         );
     if (EFI_ERROR (Status)) {
@@ -317,7 +314,7 @@ LocateDevicePathFromSimpleTextIn (
 
   Status = gtBS->HandleProtocol (
                       HandleBuffer[Index],
-                      &gEfiDevicePathProtocolGuid,
+                      &gBlackBoxEfiDevicePathProtocolGuid,
                       DevicePath
                       );
 

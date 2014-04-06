@@ -2560,8 +2560,8 @@ BBTestRegisterDataNotifyFunctionTestCheckpoint1 (
   for ( DataType = IPsecConfigDataTypeSpd; DataType < IPsecConfigDataTypeMaximum; DataType++ ) {
   	
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_NOTIFY,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_NOTIFY,
                      EventNotifyFunc,
                      NULL,
                      &Event
@@ -2723,8 +2723,8 @@ BBTestUnregisterDataNotifyFunctionTestCheckpoint1 (
   for ( DataType = IPsecConfigDataTypeSpd; DataType < IPsecConfigDataTypeMaximum; DataType++ ) {
   	
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_NOTIFY,
+                     EVT_NOTIFY_SIGNAL,
+                     TPL_NOTIFY,
                      EventNotifyFunc,
                      NULL,
                      &Event

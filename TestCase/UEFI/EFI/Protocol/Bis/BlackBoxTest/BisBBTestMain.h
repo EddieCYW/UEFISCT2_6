@@ -62,7 +62,7 @@ Abstract:
 #include "Efi.h"
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
-#include "BisProtocol.h"
+#include <UEFI/Protocol/Bis.h>
 
 #define BIS_TEST_REVISION 0x00010000
 

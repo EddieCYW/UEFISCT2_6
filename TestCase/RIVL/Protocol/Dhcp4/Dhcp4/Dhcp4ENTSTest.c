@@ -117,7 +117,6 @@ Dhcp4ENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Dhcp4ENTSTestMain)
 
 EFI_STATUS
 Dhcp4ENTSTestMain (

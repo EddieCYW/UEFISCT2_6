@@ -58,6 +58,8 @@ Abstract:
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
 
+extern EFI_GUID gBlackBoxEfiLoadedImageProtocolGuid;
+
 //
 // data definition here
 //
@@ -79,7 +81,6 @@ BootServicesDriver1Unload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBootServicesDriver1)
 
 EFI_STATUS
 InitializeBootServicesDriver1 (
@@ -97,7 +98,7 @@ InitializeBootServicesDriver1 (
   //
   Status = gtBS->HandleProtocol (
                    ImageHandle,
-                   &gEfiLoadedImageProtocolGuid,
+                   &gBlackBoxEfiLoadedImageProtocolGuid,
                    (VOID*)&LoadedImage
                    );
   if (EFI_ERROR (Status)) {

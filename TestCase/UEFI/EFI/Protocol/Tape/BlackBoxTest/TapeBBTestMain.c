@@ -59,10 +59,6 @@ Abstract:
 #include "TapeBBTestMain.h"
 
 EFI_BB_TEST_PROTOCOL *gTapeTestProtocol = NULL;
-#ifndef EFIARM
-EFI_GUID gEfiTapeIoProtocolGuid = EFI_TAPE_IO_PROTOCOL_GUID;
-#endif
-
 EFI_TAPE_IO_PROTOCOL *gTapeIoProtocol = NULL;
 
 EFI_EVENT              TimerEvent;
@@ -140,7 +136,6 @@ EFI_BB_TEST_ENTRY_FIELD gTapeTestEntryField[] = {
 };
 
 
-EFI_DRIVER_ENTRY_POINT(InitializeTapeTest)
 /*********************************************************************************
  *  Creates/installs the BlackBox Interface and eminating Entry Point node list.
  *  @param  ImageHandle The test driver image handle
@@ -165,9 +160,9 @@ InitializeTapeTest (
   //
   // Make sure the Protocol is not already installed in the system
   //
-  //ASSERT_PROTOCOL_ALREADY_INSTALLED (NULL, &gEfiTapeIoProtocolGuid);  
+  //ASSERT_PROTOCOL_ALREADY_INSTALLED (NULL, &gBlackBoxEfiTapeIoProtocolGuid);  
   
-  Status = gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR(Status)) {
     return Status;
   }

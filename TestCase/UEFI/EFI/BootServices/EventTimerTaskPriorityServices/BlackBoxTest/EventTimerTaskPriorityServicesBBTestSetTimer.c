@@ -236,15 +236,15 @@ BBTestSetTimer_Conf_Sub1 (
   EFI_STATUS          Status;
   UINTN               Index;
   UINT32              EventTypes[] = {
-                        EFI_EVENT_NOTIFY_WAIT,
-                        EFI_EVENT_NOTIFY_SIGNAL,
+                        EVT_NOTIFY_WAIT,
+                        EVT_NOTIFY_SIGNAL,
                         0
                       };
   EFI_TEST_ASSERTION  AssertionType;
   EFI_EVENT           Event;
 
   //
-  // Walk through the event types without EFI_EVENT_TIMER
+  // Walk through the event types without EVT_TIMER
   //
   for (Index = 0; EventTypes[Index] != 0; Index++) {
     //
@@ -252,7 +252,7 @@ BBTestSetTimer_Conf_Sub1 (
     //
     Status = gtBS->CreateEvent (
                      EventTypes[Index],
-                     EFI_TPL_NOTIFY,
+                     TPL_NOTIFY,
                      NotifyFunction,
                      NULL,
                      &Event
@@ -325,8 +325,8 @@ BBTestSetTimer_Conf_Sub2 (
     // Create an event
     //
     Status = gtBS->CreateEvent (
-                     EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                     EFI_TPL_NOTIFY,
+                     EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                     TPL_NOTIFY,
                      NotifyFunction,
                      NULL,
                      &Event
@@ -392,8 +392,8 @@ BBTestSetTimer_Func_Sub1 (
   Buffer[0] = 0;  // Max
   Buffer[1] = 0;  // Used
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_NOTIFY,
+                   EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    Buffer,
                    &Event
@@ -460,8 +460,8 @@ BBTestSetTimer_Func_Sub2 (
   Buffer[0] = 0;  // Max
   Buffer[1] = 0;  // Used
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_NOTIFY,
+                   EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    Buffer,
                    &Event
@@ -528,8 +528,8 @@ BBTestSetTimer_Func_Sub3 (
   Buffer[0] = 0;  // Max
   Buffer[1] = 0;  // Used
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_NOTIFY,
+                   EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    Buffer,
                    &Event
@@ -606,8 +606,8 @@ BBTestSetTimer_Func_Sub4 (
   Buffer[0] = 0;  // Max
   Buffer[1] = 0;  // Used
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_NOTIFY,
+                   EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    Buffer,
                    &Event
@@ -684,8 +684,8 @@ BBTestSetTimer_Func_Sub5 (
   Buffer[0] = 0;  // Max
   Buffer[1] = 0;  // Used
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_NOTIFY,
+                   EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    Buffer,
                    &Event
@@ -751,8 +751,8 @@ BBTestSetTimer_Func_Sub6 (
   Buffer[0] = 0;  // Max
   Buffer[1] = 0;  // Used
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_NOTIFY,
+                   EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                   TPL_NOTIFY,
                    NotifyFunction,
                    Buffer,
                    &Event

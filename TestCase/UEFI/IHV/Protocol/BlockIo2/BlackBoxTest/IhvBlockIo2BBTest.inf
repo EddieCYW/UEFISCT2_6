@@ -56,34 +56,31 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvBlockIo2BBTest
-FILE_GUID            = 77884C3B-9379-4094-8FF1-375419666012
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvBlockIo2BBTest
+  FILE_GUID            = 77884C3B-9379-4094-8FF1-375419666012
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestBlockIo2
 
 [sources.common]
   BlockIo2BBTestMain.c
   BlockIo2BBTestMain.h
   BlockIo2BBTestConformance.c
   BlockIo2BBTestFunction.c
-  BlockIo2Protocol.c
-  BlockIoProtocol.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestBlockIo2
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gBlackBoxEfiBlockIoProtocolGuid
+  gBlackBoxEfiBlockIo2ProtocolGuid

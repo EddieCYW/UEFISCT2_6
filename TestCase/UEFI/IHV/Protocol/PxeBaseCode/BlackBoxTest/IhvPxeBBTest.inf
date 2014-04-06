@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvPxeBaseCodeBBTest
-FILE_GUID            = F1AE923F-B90E-41a8-B9E7-D7A685CE5178
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvPxeBaseCodeBBTest
+  FILE_GUID            = F1AE923F-B90E-41a8-B9E7-D7A685CE5178
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestPxeBCProtocol
 
 [sources.common]
   PxeBaseCodeBBTestSupport.c
@@ -67,28 +70,22 @@ COMPONENT_TYPE       = BS_DRIVER
   PxeBaseCodeBBTestFunction.c
   PxeBaseCodeBBTestMain.c
   PxeBaseCodeBBTestMain.h
-  PxeBaseCode.c
-  PxeBaseCode.h
-  PxeBaseCodeCallBack.c
-  PxeBaseCodeCallBack.h
   guid.c
   guid.h
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  TestProtocolLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestPxeBCProtocol
+[Protocols]
+  gEfiTestProfileLibraryGuid
+  gEfiTestLoggingLibraryGuid
+  gBlackBoxEfiSimpleNetworkProtocolGuid
+  gBlackBoxEfiPxeBaseCodeProtocolGuid
+  gBlackBoxEfiPxeBaseCodeCallbackProtocolGuid

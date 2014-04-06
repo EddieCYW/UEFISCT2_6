@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = PxeBaseCodeBBTest
-FILE_GUID            = 5EF4E509-DB24-465d-A720-4AAFBC5A83A4
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = PxeBaseCodeBBTest
+  FILE_GUID            = 5EF4E509-DB24-465d-A720-4AAFBC5A83A4
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestPxeBCProtocol
 
 [sources.common]
   PxeBaseCodeBBTestSupport.c
@@ -67,44 +70,22 @@ COMPONENT_TYPE       = BS_DRIVER
   PxeBaseCodeBBTestFunction.c
   PxeBaseCodeBBTestMain.c
   PxeBaseCodeBBTestMain.h
-  guid.c
-  guid.h
-  
-  
-[sources.IA32]
-  PxeBaseCode.c
-  PxeBaseCode.h
-  PxeBaseCodeCallBack.c
-  PxeBaseCodeCallBack.h
-  
+  Guid.c
+  Guid.h
 
-[sources.X64]
-  PxeBaseCode.c
-  PxeBaseCode.h
-  PxeBaseCodeCallBack.c
-  PxeBaseCodeCallBack.h
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.IPF]
-  PxeBaseCode.c
-  PxeBaseCode.h
-  PxeBaseCodeCallBack.c
-  PxeBaseCodeCallBack.h  
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  TestProtocolLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestPxeBCProtocol
+[Protocols]
+  gEfiTestProfileLibraryGuid
+  gEfiTestLoggingLibraryGuid
+  gBlackBoxEfiSimpleNetworkProtocolGuid
+  gBlackBoxEfiPxeBaseCodeProtocolGuid
+  gBlackBoxEfiPxeBaseCodeCallbackProtocolGuid

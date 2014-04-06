@@ -64,7 +64,7 @@ Abstract:
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 
-#include "FirmwareManagement.h"
+#include <UEFI/Protocol/FirmwareManagement.h>
 
 #define EFI_FIRMWARE_MANAGEMENT_PROTOCOL_TEST_REVISION    0x00010000
 

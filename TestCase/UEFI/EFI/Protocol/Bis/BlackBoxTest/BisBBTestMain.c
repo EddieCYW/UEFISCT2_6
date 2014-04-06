@@ -94,7 +94,6 @@ BBTestBisUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestBisProtocol)
 
 /**
  *  Bis Protocol Test Driver Entry point.

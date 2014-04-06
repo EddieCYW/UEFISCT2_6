@@ -78,7 +78,7 @@ typedef struct {
 } BUS_DRIVER_3_PRIVATE_DATA;
 
 #define BUS_DRIVER_3_PRIVATE_DATA_FROM_DRIVER_BINDING(a) \
- _CR(a, BUS_DRIVER_3_PRIVATE_DATA, DriverBinding)
+ BASE_CR(a, BUS_DRIVER_3_PRIVATE_DATA, DriverBinding)
  
 BUS_DRIVER_3_PRIVATE_DATA          *mPrivateData;
 
@@ -145,7 +145,6 @@ BusDriver3Unload (
 //
 // global variable for this test driver's image handle
 //
-EFI_DRIVER_ENTRY_POINT(InitializeBusDriver3)
 
 
 EFI_STATUS

@@ -40,7 +40,8 @@
 # matters included within this Test Suite, to which United    
 # EFI, Inc. makes no claim of right.                          
 #                                                             
-# Copyright (c) 2010 - 2012, Intel Corporation. All rights reserved.<BR> 
+# Copyright (c) 2010 - 2012, Intel Corporation. All rights reserved.<BR>
+# Copyright (c) 2014, ARM Ltd. All rights reserved.<BR>  
 #
 #
 #/*++
@@ -56,36 +57,29 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvUsbIoTest
-FILE_GUID            = A0C2541B-5DBF-4b29-B3BF-7D3BEBF35EAE
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvUsbIoTest
+  FILE_GUID            = A0C2541B-5DBF-4b29-B3BF-7D3BEBF35EAE
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestUsbIo
 
 [sources.common]
-  UsbIoProtocol.h
-  UsbIoProtocol.c
   UsbIoTest.h
   UsbIoTestMain.c
   UsbIoTestConformance.c
   Guid.c
   Guid.h
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Library/EdkIIGlueLib/Include/Library
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
-  EdkIIGlueBaseLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestUsbIo
+[Protocols]
+  gEfiTestLoggingLibraryGuid

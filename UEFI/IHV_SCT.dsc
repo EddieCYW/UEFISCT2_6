@@ -121,7 +121,6 @@ SctPkg/Protocol/TestProtocolLib.inf
 SctPkg/Library/EfiTestLib/EfiTestLib.inf
 
 SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib.inf
-SctPkg/TestCase/RIVL/NetworkProtocolLib/NetworkProtocolLib.inf
 SctPkg/Protocol/EntsProtocol/EntsProtocolLib.inf
 SctPkg/Protocol/Eftp/EftpProtocolLib.inf
 SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas.inf

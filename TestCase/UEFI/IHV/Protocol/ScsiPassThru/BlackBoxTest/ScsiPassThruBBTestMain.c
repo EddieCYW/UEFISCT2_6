@@ -197,7 +197,6 @@ BBTestScsiPassThruProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestScsiPassThru)
 
 /**
  *  Scsi Pass Through Protocol Test Driver Entry point.

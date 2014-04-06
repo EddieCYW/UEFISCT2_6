@@ -58,8 +58,8 @@ Abstract:
 #ifndef _LOADED_IMAGE_BBTEST_H
 #define _LOADED_IMAGE_BBTEST_H
 
-
-#include "Efi.h"
+#include <Base.h>
+#include "SctLib.h"
 #include <Library/EfiTestLib.h>
 #include "LoadedImageBBTestProtocolDefinition.h"
 #include "Guid.h"

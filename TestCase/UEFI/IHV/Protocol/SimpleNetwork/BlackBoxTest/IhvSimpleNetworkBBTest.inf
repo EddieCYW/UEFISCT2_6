@@ -56,35 +56,30 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvSimpleNetworkBBTest
-FILE_GUID            = 9B1085DF-5CE8-44ac-8D04-49EF8C3247FB
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvSimpleNetworkBBTest
+  FILE_GUID            = 9B1085DF-5CE8-44ac-8D04-49EF8C3247FB
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestSimpleNetworkProtocol
 
 [sources.common]
   SimpleNetworkBBTestConformance.c
   SimpleNetworkBBTestFunction.c
   SimpleNetworkBBTestMain.c
   SimpleNetworkBBTestMain.h
-  SimpleNetworkProtocol.c
-  SimpleNetworkProtocol.h
   guid.c
   guid.h
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  TestProtocolLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestSimpleNetworkProtocol
+[Protocols]
+  gEfiTestLoggingLibraryGuid

@@ -58,7 +58,7 @@ Abstract:
 
 #include "SctLib.h"
 #include "Eas.h"
-#include "SimpleNetwork.h"
+#include <UEFI/Protocol/SimpleNetwork.h>
 
 EFI_STATUS
 SimpleNetworkStart_EntsTest (

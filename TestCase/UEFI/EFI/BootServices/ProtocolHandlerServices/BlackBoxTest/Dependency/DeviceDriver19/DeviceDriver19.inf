@@ -55,32 +55,26 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = ProtocolHandlerServices_DeviceDriver19
-FILE_GUID            = 45AF36A7-C48C-4ac4-A1E6-1AEE7D5FFEED
-COMPONENT_TYPE       = BS_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ProtocolHandlerServices_DeviceDriver19
+  FILE_GUID            = 45AF36A7-C48C-4ac4-A1E6-1AEE7D5FFEED
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeDeviceDriver19
 
-[sources.common]
+[Sources.common]
   DeviceDriver19.c
-  ../../protocoldefinition.c
+  ../../ProtocolDefinition.c
 
-[includes.common]
-  .
-  ../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeDeviceDriver19
+[Protocols]

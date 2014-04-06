@@ -382,8 +382,8 @@ PollMemCheckPoint (
   //create a timer event.
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    EventNotifyWriteMem,
                    EventContext,
                    &TimeOutEvent
@@ -1386,8 +1386,8 @@ PollIoCheckPoint (
   //create a timer event.
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_TIMER | EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_TIMER | EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    EventNotifyWriteIo,
                    EventContext,
                    &TimeOutEvent

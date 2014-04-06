@@ -55,7 +55,9 @@ Abstract:
 --*/
 
 
-#include "SimpleFileSystemExProtocol.h"
+#define EFI_FILE_HANDLE_REVISION 0x00020000
+
+#include "SimpleFileSystemBBTest.h"
 
 #define VALID_DIRECTORY_ATTRIBUTES_INDEX_FOR_CREATE    8   // zero-based
 #define ALL_ATTRIBUTES_COUNT_FOR_CREATE                16
@@ -68,7 +70,7 @@ Abstract:
 //
 typedef struct {
   UINTN                             Signature;
-  EFI_FILE_PROTOCOL                 *FileIo;
+  EFI_FILE                          *FileIo;
   EFI_FILE_IO_TOKEN                 FileIoToken;
   EFI_TPL                           Tpl;
   CHAR16                            *Name;
@@ -132,7 +134,7 @@ SCT_LIST_ENTRY  AsyncOpenFileFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE
 //
 // Async Open File lock
 //
-SCT_LOCK  gAsyncOpenFileQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncOpenFileQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 //
 // Async Open Dir Queue
@@ -158,7 +160,7 @@ SCT_LIST_ENTRY  AsyncOpenExistingFileFailListHead    = INITIALIZE_SCT_LIST_HEAD_
 //
 // Async Open File lock
 //
-SCT_LOCK  gAsyncOpenExistingFileQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncOpenExistingFileQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
 
 //
 // some private functions declaration
@@ -172,7 +174,7 @@ ComposeFileNameArrayFileIo2 (
 
 EFI_STATUS
 InternalGetInfoFileIo2 (
-  EFI_FILE_PROTOCOL      *FileHandle,
+  EFI_FILE               *FileHandle,
   VOID                   **InfoBuffer,
   UINTN                  *BufferSize,
   EFI_GUID               *InfoId
@@ -185,7 +187,7 @@ InternalGetInfoFileIo2 (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test1_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -194,7 +196,7 @@ BBTestOpenExBasicTestCheckpoint1_Test1_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test1_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -203,7 +205,7 @@ BBTestOpenExBasicTestCheckpoint1_Test1_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test2_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -212,7 +214,7 @@ BBTestOpenExBasicTestCheckpoint1_Test2_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test2_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -222,7 +224,7 @@ BBTestOpenExBasicTestCheckpoint1_Test2_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test3_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -232,7 +234,7 @@ BBTestOpenExBasicTestCheckpoint1_Test3_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test3_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -241,7 +243,7 @@ BBTestOpenExBasicTestCheckpoint1_Test3_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test4_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                              *Root,
+  EFI_FILE                                       *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -251,7 +253,7 @@ BBTestOpenExBasicTestCheckpoint1_Test4_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test4_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                              *Root,
+  EFI_FILE                                       *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -261,7 +263,7 @@ BBTestOpenExBasicTestCheckpoint1_Test4_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test5_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -272,7 +274,7 @@ BBTestOpenExBasicTestCheckpoint1_Test5_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test5_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -282,7 +284,7 @@ BBTestOpenExBasicTestCheckpoint1_Test5_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test1_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -291,7 +293,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test1_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -302,7 +304,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test2_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -313,7 +315,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test2_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -323,7 +325,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test3_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -333,7 +335,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test3_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -342,7 +344,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test4_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -351,7 +353,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test4_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -361,7 +363,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test5_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -371,7 +373,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test5_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -427,7 +429,7 @@ EFIAPI FileIoOpenFileNotifyFunc (
 STATIC
 EFI_STATUS
 FileIoAsyncOpenFile (
-  IN EFI_FILE_PROTOCOL                 *Root,
+  IN EFI_FILE                          *Root,
   IN EFI_TPL                           Tpl,
   IN CHAR16                            *PureStrPointer,
   IN UINT64                            Attribute
@@ -458,8 +460,8 @@ FileIoAsyncOpenFile (
   // FileIoToken initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    FileIoOpenFileNotifyFunc,
                    FileIoEntity,
                    &FileIoEntity->FileIoToken.Event
@@ -547,7 +549,7 @@ EFIAPI FileIoOpenDirNotifyFunc (
 STATIC
 EFI_STATUS
 FileIoAsyncOpenDir (
-  IN EFI_FILE_PROTOCOL                 *Root,
+  IN EFI_FILE                          *Root,
   IN EFI_TPL                           Tpl,
   IN CHAR16                            *PureStrPointer,
   IN CHAR16                            *StrPointer,
@@ -593,8 +595,8 @@ FileIoAsyncOpenDir (
   // FileIoToken initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    FileIoOpenDirNotifyFunc,
                    FileIoOpenDirEntity,
                    &FileIoOpenDirEntity->FileIoToken.Event
@@ -614,8 +616,8 @@ FileIoAsyncOpenDir (
   }
 
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    FileIoOpenFileNotifyFunc,
                    FileIoOpenFileEntity,
                    &FileIoOpenFileEntity->FileIoToken.Event
@@ -779,7 +781,7 @@ BBTestOpenExBasicTestCheckpoint1 (
   )
 {
   EFI_STATUS                Status;
-  EFI_FILE_PROTOCOL         *Root = NULL;
+  EFI_FILE                  *Root = NULL;
   CHAR16                    *PureFileNameArray;
   UINT32                    Count;
 
@@ -992,7 +994,7 @@ Done:
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test1_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -1207,7 +1209,7 @@ BBTestOpenExBasicTestCheckpoint1_Test1_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test1_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -1222,7 +1224,7 @@ BBTestOpenExBasicTestCheckpoint1_Test1_Sync (
   UINT32                    MaxNameIndex;
   EFI_TEST_ASSERTION        AssertionType;
   EFI_FILE_IO_TOKEN         FileIoTokenSync;
-  EFI_FILE_PROTOCOL         *FileHandle;
+  EFI_FILE                  *FileHandle;
   EFI_TPL                   OldTpl; 
   //
   // Sync Token Init
@@ -1297,7 +1299,7 @@ BBTestOpenExBasicTestCheckpoint1_Test1_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test2_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -1718,14 +1720,14 @@ BBTestOpenExBasicTestCheckpoint1_Test2_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test2_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 {
-  EFI_FILE_PROTOCOL         *FileHandle;
-  EFI_FILE_PROTOCOL         *DirHandle;
+  EFI_FILE                  *FileHandle;
+  EFI_FILE                  *DirHandle;
   UINT32                    DirAttributesIndex;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
@@ -1930,13 +1932,13 @@ Done:
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test3_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 {
-  EFI_FILE_PROTOCOL         *DirHandle;
+  EFI_FILE                  *DirHandle;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   EFI_STATUS                Status;
@@ -2208,14 +2210,14 @@ BBTestOpenExBasicTestCheckpoint1_Test3_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test3_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 {
-  EFI_FILE_PROTOCOL         *FileHandle;
-  EFI_FILE_PROTOCOL         *DirHandle;
+  EFI_FILE                  *FileHandle;
+  EFI_FILE                  *DirHandle;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    FileNameIndex;
@@ -2356,14 +2358,14 @@ BBTestOpenExBasicTestCheckpoint1_Test3_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test4_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 {
-  EFI_FILE_PROTOCOL         *DirHandle1;
-  EFI_FILE_PROTOCOL         *DirHandle2;
+  EFI_FILE                  *DirHandle1;
+  EFI_FILE                  *DirHandle2;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    FileNameIndex;
@@ -2721,15 +2723,15 @@ BBTestOpenExBasicTestCheckpoint1_Test4_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test4_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 {
-  EFI_FILE_PROTOCOL         *FileHandle;
-  EFI_FILE_PROTOCOL         *DirHandle1;
-  EFI_FILE_PROTOCOL         *DirHandle2;
+  EFI_FILE                  *FileHandle;
+  EFI_FILE                  *DirHandle1;
+  EFI_FILE                  *DirHandle2;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    FileNameIndex;
@@ -2968,14 +2970,14 @@ BBTestOpenExBasicTestCheckpoint1_Test4_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test5_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 {
-  EFI_FILE_PROTOCOL         *DirHandle1;
-  EFI_FILE_PROTOCOL         *DirHandle2;
+  EFI_FILE                  *DirHandle1;
+  EFI_FILE                  *DirHandle2;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    FileNameIndex;
@@ -3369,15 +3371,15 @@ BBTestOpenExBasicTestCheckpoint1_Test5_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint1_Test5_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 {
-  EFI_FILE_PROTOCOL         *FileHandle;
-  EFI_FILE_PROTOCOL         *DirHandle1;
-  EFI_FILE_PROTOCOL         *DirHandle2;
+  EFI_FILE                  *FileHandle;
+  EFI_FILE                  *DirHandle1;
+  EFI_FILE                  *DirHandle2;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    FileNameIndex; 
@@ -3678,7 +3680,7 @@ EFIAPI FileIoOpenExistingFileNotifyFunc  (
 STATIC
 EFI_STATUS
 FileIoAsyncOpenExistingFile (
-  IN EFI_FILE_PROTOCOL                 *Root,
+  IN EFI_FILE                          *Root,
   IN EFI_TPL                           Tpl,
   IN CHAR16                            *PureStrPointer,
   IN UINT64                            Attribute,
@@ -3708,8 +3710,8 @@ FileIoAsyncOpenExistingFile (
   // FileIoToken initialization
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_SIGNAL,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_SIGNAL,
+                   TPL_CALLBACK,
                    FileIoOpenExistingFileNotifyFunc ,
                    FileIoEntity,
                    &FileIoEntity->FileIoToken.Event
@@ -3773,7 +3775,7 @@ BBTestOpenExBasicTestCheckpoint2 (
   )
 {
   EFI_STATUS                Status;
-  EFI_FILE_PROTOCOL         *Root = NULL;
+  EFI_FILE                  *Root = NULL;
   CHAR16                    *PureFileNameArray;
   UINT32                    Count;
 
@@ -3984,7 +3986,7 @@ Done:
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test1_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -4145,7 +4147,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Async (
                      CreateFileEntity->FileIo,
                      &FileInfo,
                      &InfoBufferSize,
-                     &gEfiFileInfoGuid
+                     &gBlackBoxEfiFileInfoGuid
                      );
           if (EFI_ERROR (Status)) {
             StandardLib->RecordAssertion (
@@ -4187,7 +4189,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Async (
 
           Status = CreateFileEntity->FileIo->SetInfo (
                                                CreateFileEntity->FileIo,
-                                               &gEfiFileInfoGuid,
+                                               &gBlackBoxEfiFileInfoGuid,
                                                InfoBufferSize,
                                                FileInfo
                                                );
@@ -4330,7 +4332,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Async (
                    FileIoEntity->FileIo,
                    &FileInfo,
                    &InfoBufferSize,
-                   &gEfiFileInfoGuid
+                   &gBlackBoxEfiFileInfoGuid
                    );
         if (EFI_ERROR (Status)) {
           StandardLib->RecordAssertion (
@@ -4374,7 +4376,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Async (
         
         Status = FileIoEntity->FileIo->SetInfo (
                                          FileIoEntity->FileIo,
-                                         &gEfiFileInfoGuid,
+                                         &gBlackBoxEfiFileInfoGuid,
                                          InfoBufferSize,
                                          FileInfo
                                          );
@@ -4544,7 +4546,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test1_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
@@ -4708,7 +4710,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Sync (
                      CreateFileEntity->FileIo,
                      &FileInfo,
                      &InfoBufferSize,
-                     &gEfiFileInfoGuid
+                     &gBlackBoxEfiFileInfoGuid
                      );
           if (EFI_ERROR (Status)) {
             StandardLib->RecordAssertion (
@@ -4750,7 +4752,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Sync (
 
           Status = CreateFileEntity->FileIo->SetInfo (
                                                CreateFileEntity->FileIo,
-                                               &gEfiFileInfoGuid,
+                                               &gBlackBoxEfiFileInfoGuid,
                                                InfoBufferSize,
                                                FileInfo
                                                );
@@ -4879,7 +4881,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Sync (
                    FileIoEntity->FileIo,
                    &FileInfo,
                    &InfoBufferSize,
-                   &gEfiFileInfoGuid
+                   &gBlackBoxEfiFileInfoGuid
                    );
         if (EFI_ERROR (Status)) {
           StandardLib->RecordAssertion (
@@ -4926,7 +4928,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Sync (
         
         Status = FileIoEntity->FileIo->SetInfo (
                                          FileIoEntity->FileIo,
-                                         &gEfiFileInfoGuid,
+                                         &gBlackBoxEfiFileInfoGuid,
                                          InfoBufferSize,
                                          FileInfo
                                          );
@@ -5020,13 +5022,13 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test2_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 { 
-  EFI_FILE_PROTOCOL         *DirHandle;
+  EFI_FILE                  *DirHandle;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    Loop;
@@ -5275,7 +5277,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Async (
                      CreateFileEntity->FileIo,
                      &FileInfo,
                      &InfoBufferSize,
-                     &gEfiFileInfoGuid
+                     &gBlackBoxEfiFileInfoGuid
                      );
           if (EFI_ERROR (Status)) {
             StandardLib->RecordAssertion (
@@ -5324,7 +5326,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Async (
         
           Status = CreateFileEntity->FileIo->SetInfo (
                                                CreateFileEntity->FileIo,
-                                               &gEfiFileInfoGuid,
+                                               &gBlackBoxEfiFileInfoGuid,
                                                InfoBufferSize,
                                                FileInfo
                                                );
@@ -5474,7 +5476,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Async (
                    FileIoEntity->FileIo,
                    &FileInfo,
                    &InfoBufferSize,
-                   &gEfiFileInfoGuid
+                   &gBlackBoxEfiFileInfoGuid
                    );
         if (EFI_ERROR (Status)) {
           StandardLib->RecordAssertion (
@@ -5518,7 +5520,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Async (
         
         Status = FileIoEntity->FileIo->SetInfo (
                                          FileIoEntity->FileIo,
-                                         &gEfiFileInfoGuid,
+                                         &gBlackBoxEfiFileInfoGuid,
                                          InfoBufferSize,
                                          FileInfo
                                          );
@@ -5688,13 +5690,13 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test2_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 { 
-  EFI_FILE_PROTOCOL         *DirHandle;
+  EFI_FILE                  *DirHandle;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    Loop;
@@ -5948,7 +5950,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Sync (
                      CreateFileEntity->FileIo,
                      &FileInfo,
                      &InfoBufferSize,
-                     &gEfiFileInfoGuid
+                     &gBlackBoxEfiFileInfoGuid
                      );
           if (EFI_ERROR (Status)) {
             StandardLib->RecordAssertion (
@@ -5997,7 +5999,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Sync (
         
           Status = CreateFileEntity->FileIo->SetInfo (
                                                CreateFileEntity->FileIo,
-                                               &gEfiFileInfoGuid,
+                                               &gBlackBoxEfiFileInfoGuid,
                                                InfoBufferSize,
                                                FileInfo
                                                );
@@ -6135,7 +6137,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Sync (
                    FileIoEntity->FileIo,
                    &FileInfo,
                    &InfoBufferSize,
-                   &gEfiFileInfoGuid
+                   &gBlackBoxEfiFileInfoGuid
                    );
         if (EFI_ERROR (Status)) {
           StandardLib->RecordAssertion (
@@ -6179,7 +6181,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Sync (
         
         Status = FileIoEntity->FileIo->SetInfo (
                                          FileIoEntity->FileIo,
-                                         &gEfiFileInfoGuid,
+                                         &gBlackBoxEfiFileInfoGuid,
                                          InfoBufferSize,
                                          FileInfo
                                          );
@@ -6284,13 +6286,13 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test3_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 { 
-  EFI_FILE_PROTOCOL         *DirHandle;
+  EFI_FILE                  *DirHandle;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    MaxDirAttributesIndex;
@@ -6487,7 +6489,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Async (
                      CreateFileEntity->FileIo,
                      &FileInfo,
                      &InfoBufferSize,
-                     &gEfiFileInfoGuid
+                     &gBlackBoxEfiFileInfoGuid
                      );
           if (EFI_ERROR (Status)) {
             StandardLib->RecordAssertion (
@@ -6528,7 +6530,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Async (
 
           Status = CreateFileEntity->FileIo->SetInfo (
                                                CreateFileEntity->FileIo,
-                                               &gEfiFileInfoGuid,
+                                               &gBlackBoxEfiFileInfoGuid,
                                                InfoBufferSize,
                                                FileInfo
                                                );
@@ -6669,7 +6671,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Async (
                    FileIoEntity->FileIo,
                    &FileInfo,
                    &InfoBufferSize,
-                   &gEfiFileInfoGuid
+                   &gBlackBoxEfiFileInfoGuid
                    );
         if (EFI_ERROR (Status)) {
           StandardLib->RecordAssertion (
@@ -6713,7 +6715,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Async (
         
         Status = FileIoEntity->FileIo->SetInfo (
                                          FileIoEntity->FileIo,
-                                         &gEfiFileInfoGuid,
+                                         &gBlackBoxEfiFileInfoGuid,
                                          InfoBufferSize,
                                          FileInfo
                                          );
@@ -6880,13 +6882,13 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test3_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 { 
-  EFI_FILE_PROTOCOL         *DirHandle;
+  EFI_FILE                  *DirHandle;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    MaxDirAttributesIndex;
@@ -7088,7 +7090,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Sync (
                      CreateFileEntity->FileIo,
                      &FileInfo,
                      &InfoBufferSize,
-                     &gEfiFileInfoGuid
+                     &gBlackBoxEfiFileInfoGuid
                      );
           if (EFI_ERROR (Status)) {
             StandardLib->RecordAssertion (
@@ -7129,7 +7131,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Sync (
 
           Status = CreateFileEntity->FileIo->SetInfo (
                                                CreateFileEntity->FileIo,
-                                               &gEfiFileInfoGuid,
+                                               &gBlackBoxEfiFileInfoGuid,
                                                InfoBufferSize,
                                                FileInfo
                                                );
@@ -7259,7 +7261,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Sync (
                    FileIoEntity->FileIo,
                    &FileInfo,
                    &InfoBufferSize,
-                   &gEfiFileInfoGuid
+                   &gBlackBoxEfiFileInfoGuid
                    );
         if (EFI_ERROR (Status)) {
           StandardLib->RecordAssertion (
@@ -7303,7 +7305,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Sync (
         
         Status = FileIoEntity->FileIo->SetInfo (
                                          FileIoEntity->FileIo,
-                                         &gEfiFileInfoGuid,
+                                         &gBlackBoxEfiFileInfoGuid,
                                          InfoBufferSize,
                                          FileInfo
                                          );
@@ -7405,14 +7407,14 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test4_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 { 
-  EFI_FILE_PROTOCOL         *DirHandle1;
-  EFI_FILE_PROTOCOL         *DirHandle2;
+  EFI_FILE                  *DirHandle1;
+  EFI_FILE                  *DirHandle2;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    Loop;
@@ -7715,7 +7717,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Async (
                      CreateFileEntity->FileIo,
                      &FileInfo,
                      &InfoBufferSize,
-                     &gEfiFileInfoGuid
+                     &gBlackBoxEfiFileInfoGuid
                      );
           if (EFI_ERROR (Status)) {
             StandardLib->RecordAssertion (
@@ -7770,7 +7772,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Async (
         
           Status = CreateFileEntity->FileIo->SetInfo (
                                                CreateFileEntity->FileIo,
-                                               &gEfiFileInfoGuid,
+                                               &gBlackBoxEfiFileInfoGuid,
                                                InfoBufferSize,
                                                FileInfo
                                                );
@@ -7924,7 +7926,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Async (
                    FileIoEntity->FileIo,
                    &FileInfo,
                    &InfoBufferSize,
-                   &gEfiFileInfoGuid
+                   &gBlackBoxEfiFileInfoGuid
                    );
         if (EFI_ERROR (Status)) {
           StandardLib->RecordAssertion (
@@ -7968,7 +7970,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Async (
         
         Status = FileIoEntity->FileIo->SetInfo (
                                          FileIoEntity->FileIo,
-                                         &gEfiFileInfoGuid,
+                                         &gBlackBoxEfiFileInfoGuid,
                                          InfoBufferSize,
                                          FileInfo
                                          );
@@ -8145,14 +8147,14 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test4_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 { 
-  EFI_FILE_PROTOCOL         *DirHandle1;
-  EFI_FILE_PROTOCOL         *DirHandle2;
+  EFI_FILE                  *DirHandle1;
+  EFI_FILE                  *DirHandle2;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    Loop;
@@ -8462,7 +8464,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Sync (
                      CreateFileEntity->FileIo,
                      &FileInfo,
                      &InfoBufferSize,
-                     &gEfiFileInfoGuid
+                     &gBlackBoxEfiFileInfoGuid
                      );
           if (EFI_ERROR (Status)) {
             StandardLib->RecordAssertion (
@@ -8514,7 +8516,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Sync (
         
           Status = CreateFileEntity->FileIo->SetInfo (
                                                CreateFileEntity->FileIo,
-                                               &gEfiFileInfoGuid,
+                                               &gBlackBoxEfiFileInfoGuid,
                                                InfoBufferSize,
                                                FileInfo
                                                );
@@ -8656,7 +8658,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Sync (
                    FileIoEntity->FileIo,
                    &FileInfo,
                    &InfoBufferSize,
-                   &gEfiFileInfoGuid
+                   &gBlackBoxEfiFileInfoGuid
                    );
         if (EFI_ERROR (Status)) {
           StandardLib->RecordAssertion (
@@ -8700,7 +8702,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Sync (
         
         Status = FileIoEntity->FileIo->SetInfo (
                                          FileIoEntity->FileIo,
-                                         &gEfiFileInfoGuid,
+                                         &gBlackBoxEfiFileInfoGuid,
                                          InfoBufferSize,
                                          FileInfo
                                          );
@@ -8809,14 +8811,14 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Sync (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test5_Async (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 { 
-  EFI_FILE_PROTOCOL         *DirHandle1;
-  EFI_FILE_PROTOCOL         *DirHandle2;
+  EFI_FILE                  *DirHandle1;
+  EFI_FILE                  *DirHandle2;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    Loop;
@@ -9168,7 +9170,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Async (
                      CreateFileEntity->FileIo,
                      &FileInfo,
                      &InfoBufferSize,
-                     &gEfiFileInfoGuid
+                     &gBlackBoxEfiFileInfoGuid
                      );
           if (EFI_ERROR (Status)) {
             StandardLib->RecordAssertion (
@@ -9222,7 +9224,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Async (
         
           Status = CreateFileEntity->FileIo->SetInfo (
                                                CreateFileEntity->FileIo,
-                                               &gEfiFileInfoGuid,
+                                               &gBlackBoxEfiFileInfoGuid,
                                                InfoBufferSize,
                                                FileInfo
                                                );
@@ -9378,7 +9380,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Async (
                    FileIoEntity->FileIo,
                    &FileInfo,
                    &InfoBufferSize,
-                   &gEfiFileInfoGuid
+                   &gBlackBoxEfiFileInfoGuid
                    );
         if (EFI_ERROR (Status)) {
           StandardLib->RecordAssertion (
@@ -9422,7 +9424,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Async (
         
         Status = FileIoEntity->FileIo->SetInfo (
                                          FileIoEntity->FileIo,
-                                         &gEfiFileInfoGuid,
+                                         &gBlackBoxEfiFileInfoGuid,
                                          InfoBufferSize,
                                          FileInfo
                                          );
@@ -9589,14 +9591,14 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Async (
 EFI_STATUS
 BBTestOpenExBasicTestCheckpoint2_Test5_Sync (
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
-  EFI_FILE_PROTOCOL                     *Root,
+  EFI_FILE                              *Root,
   CHAR16                                *PureFileNameArray,
   UINT32                                FixedNameCount,
   BOOLEAN                               IsStress
   )
 { 
-  EFI_FILE_PROTOCOL         *DirHandle1;
-  EFI_FILE_PROTOCOL         *DirHandle2;
+  EFI_FILE                  *DirHandle1;
+  EFI_FILE                  *DirHandle2;
   UINT32                    AttributesIndex;
   UINT32                    NameIndex;
   UINT32                    Loop;
@@ -9945,7 +9947,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Sync (
                      CreateFileEntity->FileIo,
                      &FileInfo,
                      &InfoBufferSize,
-                     &gEfiFileInfoGuid
+                     &gBlackBoxEfiFileInfoGuid
                      );
           if (EFI_ERROR (Status)) {
             StandardLib->RecordAssertion (
@@ -9998,7 +10000,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Sync (
         
           Status = CreateFileEntity->FileIo->SetInfo (
                                                CreateFileEntity->FileIo,
-                                               &gEfiFileInfoGuid,
+                                               &gBlackBoxEfiFileInfoGuid,
                                                InfoBufferSize,
                                                FileInfo
                                                );
@@ -10139,7 +10141,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Sync (
                    FileIoEntity->FileIo,
                    &FileInfo,
                    &InfoBufferSize,
-                   &gEfiFileInfoGuid
+                   &gBlackBoxEfiFileInfoGuid
                    );
         if (EFI_ERROR (Status)) {
           StandardLib->RecordAssertion (
@@ -10183,7 +10185,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Sync (
         
         Status = FileIoEntity->FileIo->SetInfo (
                                          FileIoEntity->FileIo,
-                                         &gEfiFileInfoGuid,
+                                         &gBlackBoxEfiFileInfoGuid,
                                          InfoBufferSize,
                                          FileInfo
                                          );

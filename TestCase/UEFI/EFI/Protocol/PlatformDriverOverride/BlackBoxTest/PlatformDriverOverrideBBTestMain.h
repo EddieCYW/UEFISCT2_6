@@ -61,16 +61,11 @@ Abstract:
 
 
 #include "Efi.h"
-#include "PlatformDriverOverrideProtocol.h"
+#include <UEFI/Protocol/PlatformDriverOverride.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 
 #define  PLATFORM_DRIVER_OVERRIDE_PROTOCOL_TEST_REVISION    0x00010000
-#ifdef EFIARM
-extern EFI_HANDLE DriverImageHandle;
-#else
-EFI_HANDLE DriverImageHandle;
-#endif
 
 EFI_STATUS
 InitializeBBTestPlatformDriverOverride (

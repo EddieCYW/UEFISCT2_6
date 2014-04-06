@@ -58,13 +58,13 @@ Abstract:
 #ifndef _HII_FONT_BB_TEST_MAIN
 #define _HII_FONT_BB_TEST_MAIN
 
-
-#include "Efi.h"
+#define __UEFI_INTERNAL_FORMREPRESENTATION_H__
+#include <Base.h>
+#include "SctLib.h"
 #include <Library/EfiTestLib.h>
-#include "HIIFont.h"
-#include "HiiProtocol.h"
+#include <UEFI/Protocol/Hii.h>
 #include "Guid.h"
-#include "GraphicsOutput.h"
+#include <UEFI/Protocol/GraphicsOutput.h>
 
 
 #define EFI_HII_FONT_PROTOCOL_TEST_REVISION    0x00010000

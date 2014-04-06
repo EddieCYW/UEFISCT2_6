@@ -113,7 +113,6 @@ Udp6ENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Udp6ENTSTestMain)
 
 EFI_STATUS
 Udp6ENTSTestMain (

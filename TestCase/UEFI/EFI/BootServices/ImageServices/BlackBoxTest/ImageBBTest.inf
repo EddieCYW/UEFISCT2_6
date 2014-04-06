@@ -54,13 +54,15 @@
 #   Component description file for Image Services Black-Box Test.
 #
 #--*/
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ImageServicesBBTest
+  FILE_GUID            = 54C08944-E93A-4204-9296-FC53BE02B182
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestImageBootServices
 
-[defines]
-BASE_NAME            = ImageServicesBBTest
-FILE_GUID            = 54C08944-E93A-4204-9296-FC53BE02B182
-COMPONENT_TYPE       = BS_DRIVER
-
-[sources.common]
+[Sources.common]
   ImageBBTestMain.c
   ImageBBTestConformance.c
   ImageBBTestFunction.c
@@ -70,22 +72,16 @@ COMPONENT_TYPE       = BS_DRIVER
   Guid.c
   HiiImagePackageList.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/TestCase/UEFI/EFI/Protocol/HIIDatabase/BlackBoxTest
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestImageBootServices
+[Protocols]
+  gEfiTestProfileLibraryGuid
+  gBlackBoxEfiHIIPackageListProtocolGuid

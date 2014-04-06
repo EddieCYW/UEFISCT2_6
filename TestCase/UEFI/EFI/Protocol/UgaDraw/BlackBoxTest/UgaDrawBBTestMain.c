@@ -227,7 +227,6 @@ BBTestUgaDrawProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestUgaDraw)
 
 /**
  *  UGA Draw Protocol Test Driver Entry point.
@@ -252,7 +251,7 @@ InitializeBBTestUgaDraw (
   DemoRefreshRateMax = sizeof (DemoRefreshRate) / sizeof (DEMO_REFRESH_RATE_TYPE);
   DemoColorDepthMax  = sizeof (DemoColorDepth) / sizeof (DEMO_COLOR_DEPTH_TYPE);
 
-  gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,
@@ -374,7 +373,7 @@ _IPrint (
 
   Status = gtBS->LocateHandle (
                    ByProtocol,
-                   &gEfiHiiProtocolGuid,
+                   &gBlackBoxEfiHiiProtocolGuid,
                    NULL,
                    &Size,
                    &Handle
@@ -386,7 +385,7 @@ _IPrint (
 
   Status = gtBS->HandleProtocol (
                    Handle,
-                   &gEfiHiiProtocolGuid,
+                   &gBlackBoxEfiHiiProtocolGuid,
                    &Hii
                    );
 
@@ -468,7 +467,7 @@ UgaPrintXY (
 
   Status = gtBS->HandleProtocol (
                    Handle,
-                   &gEfiSimpleTextOutProtocolGuid,
+                   &gBlackBoxEfiSimpleTextOutProtocolGuid,
                    &Sto
                    );
 
@@ -527,7 +526,7 @@ PrintXY (
 
   Status = gtBS->HandleProtocol (
                    Handle,
-                   &gEfiUgaDrawProtocolGuid,
+                   &gBlackBoxEfiUgaDrawProtocolGuid,
                    &UgaDraw
                    );
 
@@ -538,7 +537,7 @@ PrintXY (
 
   Status = gtBS->HandleProtocol (
                    Handle,
-                   &gEfiSimpleTextOutProtocolGuid,
+                   &gBlackBoxEfiSimpleTextOutProtocolGuid,
                    &Sto
                    );
 
@@ -854,7 +853,7 @@ GetGraphicsBitMapFromFV (
 
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiFirmwareVolumeProtocolGuid,
+                   &gBlackBoxEfiFirmwareVolumeProtocolGuid,
                    NULL,
                    &FvProtocolCount,
                    &FvHandles
@@ -866,7 +865,7 @@ GetGraphicsBitMapFromFV (
   for (Index = 0; Index < FvProtocolCount; Index++) {
     Status = gtBS->HandleProtocol (
                      FvHandles[Index],
-                     &gEfiFirmwareVolumeProtocolGuid,
+                     &gBlackBoxEfiFirmwareVolumeProtocolGuid,
                      (VOID **)&Fv
                      );
 
@@ -875,7 +874,7 @@ GetGraphicsBitMapFromFV (
     //
     Status = Fv->ReadSection (
                    Fv,
-                   &gEfiDefaultBmpLogoGuid,
+                   &gBlackBoxEfiDefaultBmpLogoGuid,
                    EFI_SECTION_RAW,
                    0,
                    Image,
@@ -1246,7 +1245,7 @@ LocateDevicePathFromUgaDraw (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiUgaDrawProtocolGuid,
+                   &gBlackBoxEfiUgaDrawProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -1284,7 +1283,7 @@ LocateDevicePathFromUgaDraw (
   for (Index = 0; Index < NoHandles; Index++) {
       Status = gtBS->HandleProtocol (
                        HandleBuffer[Index],
-                       &gEfiUgaDrawProtocolGuid,
+                       &gBlackBoxEfiUgaDrawProtocolGuid,
                        &OtherUgaDraw
                        );
     if (EFI_ERROR (Status)) {

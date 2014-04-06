@@ -69,7 +69,6 @@ InitializeRuntimeServicesDriver2 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeRuntimeServicesDriver2)
 
 EFI_STATUS
 InitializeRuntimeServicesDriver2 (

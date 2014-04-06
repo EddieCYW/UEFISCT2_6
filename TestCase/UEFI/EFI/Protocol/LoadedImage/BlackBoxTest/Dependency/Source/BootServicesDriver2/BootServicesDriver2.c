@@ -77,7 +77,6 @@ BootServicesDriver2Unload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBootServicesDriver2)
 
 EFI_STATUS
 InitializeBootServicesDriver2 (
@@ -99,7 +98,7 @@ InitializeBootServicesDriver2 (
   //  
   Status = gtBS->HandleProtocol (
         ImageHandle, 
-        &gEfiLoadedImageProtocolGuid, 
+        &gBlackBoxEfiLoadedImageProtocolGuid, 
         (VOID*)&LoadedImage
         ); 
   if (EFI_ERROR (Status)) {

@@ -69,7 +69,6 @@ InitializeCombinationImage5 (
   IN EFI_SYSTEM_TABLE     *SystemTable
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeCombinationImage5)
 
 EFI_STATUS
 InitializeCombinationImage5 (

@@ -64,24 +64,22 @@ COMPONENT_TYPE       = BS_DRIVER
   HIIFontBBTestConformance.c
   HIIFontBBTestFunction.c
   HIIFontBBTestMain.c
-  HIIFont.c
   Guid.c
   HIIPackageListImage.c
   
 [includes.common]
   .
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/MdePkg/Include
 
 [libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+  SctLib
+  SctGuidLib
   EfiTestLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
 [nmake.common]
   IMAGE_ENTRY_POINT=InitializeHIIFontBBTest

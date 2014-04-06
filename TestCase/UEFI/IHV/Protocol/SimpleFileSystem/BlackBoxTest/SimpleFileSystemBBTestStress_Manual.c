@@ -282,7 +282,7 @@ BBTestSimpleFileSytemExtensiveTest1 (
   // create a timer event
   //
   TimerEvent = NULL;
-  Status = gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR (Status)) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -327,7 +327,7 @@ BBTestSimpleFileSytemExtensiveTest1 (
 
     Status = gtBS->LocateHandleBuffer (
                      ByProtocol,
-                     &gEfiSimpleFileSystemProtocolGuid,
+                     &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                      NULL,
                      &NoHandles,
                      &HandleBuffer
@@ -375,7 +375,7 @@ BBTestSimpleFileSytemExtensiveTest1 (
 
         Status = gtBS->HandleProtocol (
                          HandleBuffer[Index],
-                         &gEfiSimpleFileSystemProtocolGuid,
+                         &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                          &SimpleFileSystem
                          );
         if (EFI_ERROR(Status)) {
@@ -636,7 +636,7 @@ BBTestSimpleFileSytemExtensiveTest1 (
         //
         // GetInfo from F5
         //
-        Status = InternalGetInfo (FileHandle[4], &FileInfo, &InfoBufferSize, &gEfiFileInfoGuid);
+        Status = InternalGetInfo (FileHandle[4], &FileInfo, &InfoBufferSize, &gBlackBoxEfiFileInfoGuid);
         AssertionType = EFI_TEST_ASSERTION_PASSED;
         StandardLib->RecordAssertion (
                        StandardLib,
@@ -652,7 +652,7 @@ BBTestSimpleFileSytemExtensiveTest1 (
         //
         // SetInfo for F5
         //
-        Status = FileHandle[4]->SetInfo (FileHandle[4], &gEfiFileInfoGuid, InfoBufferSize, FileInfo);
+        Status = FileHandle[4]->SetInfo (FileHandle[4], &gBlackBoxEfiFileInfoGuid, InfoBufferSize, FileInfo);
         AssertionType = EFI_TEST_ASSERTION_PASSED;
         StandardLib->RecordAssertion (
                        StandardLib,
@@ -744,7 +744,7 @@ BBTestSimpleFileSytemExtensiveTest1 (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiSimpleFileSystemProtocolGuid,
+                   &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -758,7 +758,7 @@ BBTestSimpleFileSytemExtensiveTest1 (
 
       Status = gtBS->HandleProtocol (
                        HandleBuffer[Index],
-                       &gEfiSimpleFileSystemProtocolGuid,
+                       &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                        &SimpleFileSystem
                        );
       if (EFI_ERROR (Status)) {
@@ -936,7 +936,7 @@ BBTestSimpleFileSytemExtensiveTest2 (
   // create a timer event
   //
   TimerEvent = NULL;
-  Status = gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR (Status)) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -981,7 +981,7 @@ BBTestSimpleFileSytemExtensiveTest2 (
 
     Status = gtBS->LocateHandleBuffer (
                      ByProtocol,
-                     &gEfiSimpleFileSystemProtocolGuid,
+                     &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                      NULL,
                      &NoHandles,
                      &HandleBuffer
@@ -1029,7 +1029,7 @@ BBTestSimpleFileSytemExtensiveTest2 (
 
         Status = gtBS->HandleProtocol (
                          HandleBuffer[Index],
-                         &gEfiSimpleFileSystemProtocolGuid,
+                         &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                          &SimpleFileSystem
                          );
         if (EFI_ERROR(Status)) {
@@ -1270,7 +1270,7 @@ BBTestSimpleFileSytemExtensiveTest2 (
         //
         // GetInfo from F4
         //
-        Status = InternalGetInfo (FileHandle[3], &FileInfo, &InfoBufferSize, &gEfiFileInfoGuid);
+        Status = InternalGetInfo (FileHandle[3], &FileInfo, &InfoBufferSize, &gBlackBoxEfiFileInfoGuid);
         if (EFI_NO_MEDIA == Status) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {
@@ -1290,7 +1290,7 @@ BBTestSimpleFileSytemExtensiveTest2 (
         //
         // SetInfo for F5
         //
-        Status = FileHandle[4]->SetInfo (FileHandle[4], &gEfiFileInfoGuid, InfoBufferSize, FileInfo);
+        Status = FileHandle[4]->SetInfo (FileHandle[4], &gBlackBoxEfiFileInfoGuid, InfoBufferSize, FileInfo);
         if (EFI_NO_MEDIA == Status) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {
@@ -1370,7 +1370,7 @@ BBTestSimpleFileSytemExtensiveTest2 (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiSimpleFileSystemProtocolGuid,
+                   &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -1384,7 +1384,7 @@ BBTestSimpleFileSytemExtensiveTest2 (
 
       Status = gtBS->HandleProtocol (
                        HandleBuffer[Index],
-                       &gEfiSimpleFileSystemProtocolGuid,
+                       &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                        &SimpleFileSystem
                        );
       if (EFI_ERROR (Status)) {
@@ -1485,7 +1485,7 @@ BBTestSimpleFileSytemExtensiveTest3 (
   // create a timer event
   //
   TimerEvent = NULL;
-  Status = gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR (Status)) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1519,7 +1519,7 @@ BBTestSimpleFileSytemExtensiveTest3 (
 
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiSimpleFileSystemProtocolGuid,
+                   &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -1534,7 +1534,7 @@ BBTestSimpleFileSytemExtensiveTest3 (
 
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiSimpleFileSystemProtocolGuid,
+                     &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                      &SimpleFileSystem
                      );
     if (EFI_ERROR (Status)) {
@@ -1801,7 +1801,7 @@ BBTestSimpleFileSytemExtensiveTest4 (
   // create a timer event
   //
   TimerEvent = NULL;
-  Status = gtBS->CreateEvent (EFI_EVENT_TIMER, 0, NULL, NULL, &TimerEvent);
+  Status = gtBS->CreateEvent (EVT_TIMER, 0, NULL, NULL, &TimerEvent);
   if (EFI_ERROR (Status)) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1832,8 +1832,8 @@ BBTestSimpleFileSytemExtensiveTest4 (
   // register a event for the changed system file system protocol
   //
   Status = gtBS->CreateEvent (
-                   EFI_EVENT_NOTIFY_WAIT,
-                   EFI_TPL_CALLBACK,
+                   EVT_NOTIFY_WAIT,
+                   TPL_CALLBACK,
                    TestNotifyFunction0,
                    NULL,
                    &NotifyEvent
@@ -1853,7 +1853,7 @@ BBTestSimpleFileSytemExtensiveTest4 (
   }
 
   Status = gtBS->RegisterProtocolNotify (
-                   &gEfiSimpleFileSystemProtocolGuid,
+                   &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                    NotifyEvent,
                    &Registration
                    );
@@ -1881,7 +1881,7 @@ BBTestSimpleFileSytemExtensiveTest4 (
 
     LocateStatus = gtBS->LocateHandleBuffer (
                            ByRegisterNotify,
-                           &gEfiSimpleFileSystemProtocolGuid,
+                           &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                            Registration,
                            &NoHandles,
                            &HandleBuffer
@@ -1896,7 +1896,7 @@ BBTestSimpleFileSytemExtensiveTest4 (
 
       Status = gtBS->HandleProtocol (
                        HandleBuffer[Index],
-                       &gEfiSimpleFileSystemProtocolGuid,
+                       &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                        &SimpleFileSystem
                        );
       if (EFI_ERROR (Status)) {
@@ -2080,7 +2080,7 @@ ComposeDevicePathRepository (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiSimpleFileSystemProtocolGuid,
+                   &gBlackBoxEfiSimpleFileSystemProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -2223,7 +2223,7 @@ IsRemovableDevice (
 
   Status = gtBS->HandleProtocol (
                    DeviceHandle,
-                   &gEfiBlockIoProtocolGuid,
+                   &gBlackBoxEfiBlockIoProtocolGuid,
                    &BlockIo
                    );
   if (EFI_ERROR (Status)) {
@@ -2719,7 +2719,7 @@ ForceFileSystemReinstall ()
 
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiBlockIoProtocolGuid,
+                   &gBlackBoxEfiBlockIoProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -2731,7 +2731,7 @@ ForceFileSystemReinstall ()
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiBlockIoProtocolGuid,
+                     &gBlackBoxEfiBlockIoProtocolGuid,
                      &BlockIo
                      );
     if (EFI_ERROR (Status)) {
@@ -2785,7 +2785,7 @@ IsMediaReadOnly (
 
   Status = gtBS->HandleProtocol (
                    DeviceHandle,
-                   &gEfiBlockIoProtocolGuid,
+                   &gBlackBoxEfiBlockIoProtocolGuid,
                    &BlockIo
                    );
   if (EFI_ERROR (Status)) {

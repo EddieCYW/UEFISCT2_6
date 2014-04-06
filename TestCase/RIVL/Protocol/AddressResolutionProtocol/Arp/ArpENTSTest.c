@@ -107,7 +107,6 @@ ArpENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (ArpENTSTestMain)
 
 EFI_STATUS
 ArpENTSTestMain (

@@ -55,32 +55,29 @@
 #
 #--*/
 
-[defines]
-BASE_NAME            = ImageServices_RuntimeServicesDriver5
-FILE_GUID            = 1E1959A1-3F4E-454b-8565-3004B79F686A
-COMPONENT_TYPE       = RT_DRIVER
+[Defines]
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ImageServices_RuntimeServicesDriver5
+  FILE_GUID            = 1E1959A1-3F4E-454b-8565-3004B79F686A
+  MODULE_TYPE          = DXE_RUNTIME_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeRuntimeServicesDriver5
 
-[sources.common]
+[Sources.common]
   RuntimeServicesDriver5.c
-  ../../protocoldefinition.c
+  ../../ProtocolDefinition.c
 
-[includes.common]
-  .
-  ../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeRuntimeServicesDriver5
+[Protocols]
+
+[Depex]
+  TRUE

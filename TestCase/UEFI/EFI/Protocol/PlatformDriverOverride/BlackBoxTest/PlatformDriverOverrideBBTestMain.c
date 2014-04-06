@@ -57,9 +57,6 @@ Abstract:
 
 #include "SctLib.h"
 #include "PlatformDriverOverrideBBTestMain.h"
-#ifdef EFIARM
-EFI_HANDLE DriverImageHandle;
-#endif
 
 //
 // Build Data structure here
@@ -149,7 +146,6 @@ BBTestPlatformDriverOverrideProtocolUnload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestPlatformDriverOverride)
 
 /**
  *  Platform Driver Override Protocol Test Driver Entry point.
@@ -165,8 +161,6 @@ InitializeBBTestPlatformDriverOverride (
 {
   EfiInitializeTestLib (ImageHandle, SystemTable);
   SctInitializeLib (ImageHandle, SystemTable);
-
-  DriverImageHandle = ImageHandle;
 
   return EfiInitAndInstallBBTestInterface (
            &ImageHandle,

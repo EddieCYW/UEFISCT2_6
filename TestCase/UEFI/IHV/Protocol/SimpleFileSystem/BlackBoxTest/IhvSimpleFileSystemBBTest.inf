@@ -56,12 +56,15 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvSimpleFileSystemBBTest
-FILE_GUID            = 09A28B6C-B99E-4b98-8DF3-35771D52CFB4
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvSimpleFileSystemBBTest
+  FILE_GUID            = 09A28B6C-B99E-4b98-8DF3-35771D52CFB4
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestSimpleFileSystem
 
 [sources.common]
-  Guid.c
+  guid.c
   SimpleFileSystemBBTestMain.c
   SimpleFileSystemBBTestFunction.c
   SimpleFileSystemBBTestConformance.c
@@ -72,31 +75,23 @@ COMPONENT_TYPE       = BS_DRIVER
   SimpleFileSystemExBBTestFunction_WriteEx.c
   SimpleFileSystemExBBTestFunction_FlushEx.c
   SimpleFileSystemExBBTestFunction_OpenEx.c
-  
-[sources.IA32]
-  SimpleFileSystemProtocol.c
 
-[sources.X64]
-  SimpleFileSystemProtocol.c
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.IPF]
-  SimpleFileSystemProtocol.c
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeBBTestSimpleFileSystem
+[Guids]
+  gBlackBoxEfiFileInfoGuid
+  gBlackBoxEfiFileSystemInfoGuid
+  gBlackBoxEfiFileSystemVolumeLabelInfoIdGuid
+
+[Protocols]
+  gBlackBoxEfiSimpleFileSystemProtocolGuid
+  gBlackBoxEfiBlockIoProtocolGuid
+  gEfiDevicePathProtocolGuid

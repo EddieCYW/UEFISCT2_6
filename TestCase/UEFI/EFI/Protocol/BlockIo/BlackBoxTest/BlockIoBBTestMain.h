@@ -64,7 +64,7 @@ Abstract:
 //
 
 #include "Efi.h"
-#include "BlockIoProtocol.h"
+#include <UEFI/Protocol/BlockIo.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
 

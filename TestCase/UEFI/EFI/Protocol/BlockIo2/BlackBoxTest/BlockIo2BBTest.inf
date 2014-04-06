@@ -1,4 +1,4 @@
-#
+ #
 # The material contained herein is not a license, either      
 # expressly or impliedly, to any intellectual property owned  
 # or controlled by any of the authors or developers of this   
@@ -56,35 +56,31 @@
 #--*/
 
 [defines]
-BASE_NAME            = BlockIo2BBTest
-FILE_GUID            = E3410773-4DFD-4d5c-A36A-30AE4CF17C06
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = BlockIo2BBTest
+  FILE_GUID            = E3410773-4DFD-4d5c-A36A-30AE4CF17C06
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestBlockIo2
 
 [sources.common]
   BlockIo2BBTestMain.c
   BlockIo2BBTestMain.h
   BlockIo2BBTestConformance.c
   BlockIo2BBTestFunction.c
-  BlockIo2Protocol.c
-  BlockIoProtocol.c
   Guid.c
 
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[libraries.common]
+[LibraryClasses]
+  UefiDriverEntryPoint
   SctLib
-  EfiProtocolLib
-  TestProtocolLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestBlockIo2
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gBlackBoxEfiBlockIoProtocolGuid
+  gBlackBoxEfiBlockIo2ProtocolGuid

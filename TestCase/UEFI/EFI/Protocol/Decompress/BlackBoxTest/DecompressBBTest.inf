@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = DecompressBBTest
-FILE_GUID            = a810310f-1590-4af3-8b1e-0029d19723b1
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = DecompressBBTest
+  FILE_GUID            = a810310f-1590-4af3-8b1e-0029d19723b1
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeDecompressProtocolBBTest
 
 [sources.common]
   DecompressBBTestMain.c
@@ -67,36 +70,18 @@ COMPONENT_TYPE       = BS_DRIVER
   DecompressBBTestSupport.c
   DecompressBBTestFunction.c
   DecompressBBTestConformance.c
-  guid.c
-  guid.h
+  Guid.c
+  Guid.h
 
-[sources.IA32]
-  DecompressProtocol.c
-  DecompressProtocol.h
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
 
-[sources.X64]
-  DecompressProtocol.c
-  DecompressProtocol.h
-
-[sources.IPF]
-  DecompressProtocol.c
-  DecompressProtocol.h    
-
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeDecompressProtocolBBTest
+[Protocols]
+  gEfiTestProfileLibraryGuid

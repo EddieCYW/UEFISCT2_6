@@ -56,7 +56,6 @@ Abstract:
 --*/
 
 
-#include "SctLib.h"
 #include "DebugSupportBBTestMain.h"
 
 extern volatile  UINTN InvokedExceptionCallback;

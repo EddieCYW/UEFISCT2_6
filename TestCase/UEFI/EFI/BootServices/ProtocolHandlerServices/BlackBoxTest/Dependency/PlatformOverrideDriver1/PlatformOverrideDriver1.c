@@ -82,10 +82,10 @@ typedef struct {
 } PLATFORM_OVERRIDE_PRIVATE_DATA;
 
 #define PLATFORM_OVERRIDE_PRIVATE_DATA_FROM_DRIVER_BINDING(a) \
- _CR(a, PLATFORM_OVERRIDE_PRIVATE_DATA, DriverBinding)
+ BASE_CR(a, PLATFORM_OVERRIDE_PRIVATE_DATA, DriverBinding)
 
  #define PLATFORM_OVERRIDE_PRIVATE_DATA_FROM_THIS(a) \
- _CR(a, PLATFORM_OVERRIDE_PRIVATE_DATA, PlatformOverride)
+ BASE_CR(a, PLATFORM_OVERRIDE_PRIVATE_DATA, PlatformOverride)
 
 PLATFORM_OVERRIDE_PRIVATE_DATA          *mPrivateData;
 
@@ -159,7 +159,6 @@ PlatformOverrideDriver1Unload (
 //
 // global variable for this test driver's image handle
 //
-EFI_DRIVER_ENTRY_POINT(InitializePlatformOverrideDriver1)
 
 EFI_STATUS
 InitializePlatformOverrideDriver1 (

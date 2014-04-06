@@ -118,7 +118,6 @@ Tcp6ENTSTestUnload (
   IN EFI_HANDLE                ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT (Tcp6ENTSTestMain)
 
 EFI_STATUS
 Tcp6ENTSTestMain (

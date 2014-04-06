@@ -62,8 +62,8 @@ Abstract:
 #include "SctLib.h"
 #include "EfiCompliantBbTestMain_efi.h"
 #include EFI_PROTOCOL_DEFINITION (SimpleTextIn)
-#include EFI_PROTOCOL_DEFINITION (SimpleTextOut)
-#include EFI_PROTOCOL_DEFINITION (UgaDraw)
+#include <UEFI/Protocol/SimpleTextOut.h>
+#include <UEFI/Protocol/UgaDraw.h>
 #include EFI_PROTOCOL_DEFINITION (UgaIo)
 #include EFI_PROTOCOL_DEFINITION (SimplePointer)
 #include EFI_PROTOCOL_DEFINITION (BlockIo)
@@ -479,7 +479,7 @@ CheckConsoleProtocols (
   // If warning, check with INI file to decide they must exist or not
   //
   if ((AssertionType == EFI_TEST_ASSERTION_WARNING) &&
-      (IniFile       != NULL_HANDLE               )) {
+      (IniFile       != NULL               )) {
     MaxLength = 10;
 
     Status = IniFile->GetString (
@@ -578,7 +578,7 @@ CheckGraphicalConsoleProtocols (
   // If warning, check with INI file to decide they must exist or not
   //
   if ((AssertionType == EFI_TEST_ASSERTION_WARNING) &&
-      (IniFile       != NULL_HANDLE               )) {
+      (IniFile       != NULL               )) {
     MaxLength = 10;
 
     Status = IniFile->GetString (
@@ -657,7 +657,7 @@ CheckPointerProtocols (
   // If warning, check with INI file to decide they must exist or not
   //
   if ((AssertionType == EFI_TEST_ASSERTION_WARNING) &&
-      (IniFile       != NULL_HANDLE               )) {
+      (IniFile       != NULL               )) {
     MaxLength = 10;
 
     Status = IniFile->GetString (
@@ -780,7 +780,7 @@ CheckBootFromDiskProtocols (
   // If warning, check with INI file to decide they must exist or not
   //
   if ((AssertionType == EFI_TEST_ASSERTION_WARNING) &&
-      (IniFile       != NULL_HANDLE               )) {
+      (IniFile       != NULL               )) {
     MaxLength = 10;
 
     Status = IniFile->GetString (
@@ -897,7 +897,7 @@ CheckBootFromNetworkProtocols (
   // If warning, check with INI file to decide they must exist or not
   //
   if ((AssertionType == EFI_TEST_ASSERTION_WARNING) &&
-      (IniFile       != NULL_HANDLE               )) {
+      (IniFile       != NULL               )) {
     MaxLength = 10;
 
     Status = IniFile->GetString (
@@ -977,7 +977,7 @@ CheckUartProtocols (
   // If warning, check with INI file to decide they must exist or not
   //
   if ((AssertionType == EFI_TEST_ASSERTION_WARNING) &&
-      (IniFile       != NULL_HANDLE               )) {
+      (IniFile       != NULL               )) {
     MaxLength = 10;
 
     Status = IniFile->GetString (
@@ -1090,7 +1090,7 @@ CheckPciProtocols (
   // If warning, check with INI file to decide they must exist or not
   //
   if ((AssertionType == EFI_TEST_ASSERTION_WARNING) &&
-      (IniFile       != NULL_HANDLE               )) {
+      (IniFile       != NULL               )) {
     MaxLength = 10;
 
     Status = IniFile->GetString (
@@ -1185,7 +1185,7 @@ CheckUsbProtocols (
   // If warning, check with INI file to decide they must exist or not
   //
   if ((AssertionType == EFI_TEST_ASSERTION_WARNING) &&
-      (IniFile       != NULL_HANDLE               )) {
+      (IniFile       != NULL               )) {
     MaxLength = 10;
 
     Status = IniFile->GetString (
@@ -1264,7 +1264,7 @@ CheckScsiProtocols (
   // If warning, check with INI file to decide they must exist or not
   //
   if ((AssertionType == EFI_TEST_ASSERTION_WARNING) &&
-      (IniFile       != NULL_HANDLE               )) {
+      (IniFile       != NULL               )) {
     MaxLength = 10;
 
     Status = IniFile->GetString (
@@ -1357,7 +1357,7 @@ CheckDebugProtocols (
   // If warning, check with INI file to decide they must exist or not
   //
   if ((AssertionType == EFI_TEST_ASSERTION_WARNING) &&
-      (IniFile       != NULL_HANDLE               )) {
+      (IniFile       != NULL               )) {
     MaxLength = 10;
 
     Status = IniFile->GetString (
@@ -1436,7 +1436,7 @@ CheckDriverOverrideProtocols (
   // If warning, check with INI file to decide they must exist or not
   //
   if ((AssertionType == EFI_TEST_ASSERTION_WARNING) &&
-      (IniFile       != NULL_HANDLE               )) {
+      (IniFile       != NULL               )) {
     MaxLength = 10;
 
     Status = IniFile->GetString (

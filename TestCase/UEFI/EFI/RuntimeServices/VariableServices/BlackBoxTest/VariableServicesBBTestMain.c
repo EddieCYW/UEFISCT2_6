@@ -247,7 +247,6 @@ UnloadVariableServicesBbTest (
 // Functions
 //
 
-EFI_DRIVER_ENTRY_POINT(InitializeVariableServicesBbTest)
 
 /**
  *  Creates/installs the BlackBox Interface and the Entry Point list.

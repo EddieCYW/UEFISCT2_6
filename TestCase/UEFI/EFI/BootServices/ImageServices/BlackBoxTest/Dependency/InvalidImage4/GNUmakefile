@@ -57,7 +57,7 @@
 
 
 BASE_NAME=ImageServices_InvalidImage4
-SOURCE_DIR=$(EFI_SOURCE)/SctPkg/TestCase/UEFI/EFI/BootServices/ImageServices/BlackBoxTest/Dependency/InvalidImage4
+SOURCE_DIR=$(WORKSPACE)/SctPkg/TestCase/UEFI/EFI/BootServices/ImageServices/BlackBoxTest/Dependency/InvalidImage4
 GENBIN=GenBin
 DEPENDECY=$(SOURCE_DIR)/InvalidImage4.ini
 

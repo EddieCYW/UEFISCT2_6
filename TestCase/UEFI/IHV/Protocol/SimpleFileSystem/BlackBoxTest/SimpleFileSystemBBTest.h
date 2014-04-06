@@ -60,6 +60,7 @@ Abstract:
 
 #include "Efi.h"
 #include <Library/EfiTestLib.h>
+#include <UEFI/Protocol/SimpleFileSystem.h>
 #include "guid.h"
 
 //----------------------------------//

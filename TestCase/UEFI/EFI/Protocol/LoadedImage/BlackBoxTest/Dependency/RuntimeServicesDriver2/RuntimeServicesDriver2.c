@@ -67,7 +67,6 @@ RuntimeServicesDriver2Unload (
   IN EFI_HANDLE       ImageHandle
   );
 
-EFI_DRIVER_ENTRY_POINT(InitializeRuntimeServicesDriver2)
 
 EFI_STATUS
 InitializeRuntimeServicesDriver2 (
@@ -89,7 +88,7 @@ InitializeRuntimeServicesDriver2 (
   //
   Status = gtBS->HandleProtocol (
                    ImageHandle,
-                   &gEfiLoadedImageProtocolGuid,
+                   &gBlackBoxEfiLoadedImageProtocolGuid,
                    (VOID*)&LoadedImage
                    );
   if (EFI_ERROR(Status)) {

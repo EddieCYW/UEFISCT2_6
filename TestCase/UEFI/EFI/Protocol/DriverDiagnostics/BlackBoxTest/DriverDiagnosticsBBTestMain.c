@@ -57,7 +57,6 @@ Abstract:
 
 EFI_HANDLE      mImageHandle;
 
-EFI_DRIVER_ENTRY_POINT(InitializeBBTestDriverDiagnostics)
 
 EFI_BB_TEST_PROTOCOL_FIELD gBBTestProtocolField = {
   EFI_DRIVER_DIAGNOSTICS_TEST_REVISION,
