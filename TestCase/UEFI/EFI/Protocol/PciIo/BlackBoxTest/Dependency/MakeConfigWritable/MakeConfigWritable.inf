@@ -90,7 +90,6 @@ COMPONENT_TYPE       = APPLICATION
   EfiGuidLib
   EfiProtocolLib
   EdkProtocolLib
-  EdkFrameworkProtocolLib
   EdkFrameworkGuidLib
 
 [nmake.common]
