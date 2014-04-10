@@ -310,7 +310,7 @@ BBTestSetTimer_Conf_Sub2 (
   EFI_STATUS          Status;
   UINTN               Index;
   EFI_TIMER_DELAY     InvalidTimerTypes[] = {
-                        TimerTypeMax,
+                        TimerRelative + 1, //OM: Add a condition on the UEFI spec version
                         -1,
                         0
                       };
