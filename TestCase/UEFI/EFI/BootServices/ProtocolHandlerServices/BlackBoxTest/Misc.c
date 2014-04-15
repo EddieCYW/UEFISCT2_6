@@ -508,7 +508,7 @@ LoadStartImage (
   }
 
   EntireFileName = NULL;
-  EntireFileName = PoolPrint (L"%s\\%s", mFilePath, FileName);
+  EntireFileName = SctPoolPrint (L"%s\\%s", mFilePath, FileName);
 
   FilePath = FileDevicePath (LoadImage->DeviceHandle, EntireFileName);
   if (FilePath == NULL) {

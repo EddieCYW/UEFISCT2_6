@@ -169,7 +169,7 @@ PciRead_Func (
     return EFI_OUT_OF_RESOURCES;
   }
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -802,7 +802,7 @@ PciWrite_Func (
     return EFI_OUT_OF_RESOURCES;
   }
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -1436,7 +1436,7 @@ CopyMem_Func (
     return EFI_OUT_OF_RESOURCES;
   }
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;

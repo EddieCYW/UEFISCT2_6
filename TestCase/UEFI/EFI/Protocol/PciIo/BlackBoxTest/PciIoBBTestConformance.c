@@ -538,7 +538,7 @@ PollMem_Conf (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
@@ -1165,7 +1165,7 @@ PollIo_Conf (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
@@ -1723,7 +1723,7 @@ MemRead_Conf (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (Buffer);
@@ -2286,7 +2286,7 @@ MemWrite_Conf (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (Buffer);
@@ -2847,7 +2847,7 @@ IoRead_Conf (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (Buffer);
@@ -3408,7 +3408,7 @@ IoWrite_Conf (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (Buffer);
@@ -3859,7 +3859,7 @@ PciRead_Conf (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (Buffer);
@@ -4308,7 +4308,7 @@ PciWrite_Conf (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (Buffer);
@@ -5013,7 +5013,7 @@ CopyMem_Conf (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);

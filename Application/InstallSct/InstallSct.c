@@ -138,7 +138,7 @@ InstallSct (
   //
   // Get the destination directory
   //
-  Print (L"\nGather system information ...\n");
+  SctPrint (L"\nGather system information ...\n");
   Status = GetSystemInformation ();
   if (EFI_ERROR (Status)) {
     return Status;
@@ -165,17 +165,17 @@ InstallSct (
     // Ensure it is valid file system and it has enough free space
     Status = GetFreeSpace (SctFileVolume);
     if (Status == EFI_NOT_FOUND) {
-      Print (L"'%s' is not a valid file system.\n", FsName);
+      SctPrint (L"'%s' is not a valid file system.\n", FsName);
       PrintUsage ();
       SctFreePool (SctFileVolume);
       return Status;
     } else if (EFI_ERROR (Status)) {
-      Print (L"Fail to get free space from file system '%s'.\n", FsName);
+      SctPrint (L"Fail to get free space from file system '%s'.\n", FsName);
       SctFreePool (SctFileVolume);
       return Status;
     } else if (SctFileVolume->FreeSpace < INSTALL_SCT_FREE_SPACE) {
       SctFreePool (SctFileVolume);
-      Print (L"The given file system '%s' is not big enough to install SCT (require %d MB).\n",
+      SctPrint (L"The given file system '%s' is not big enough to install SCT (require %d MB).\n",
           FsName, INSTALL_SCT_FREE_SPACE_MB);
       return EFI_VOLUME_FULL;
     }
@@ -193,7 +193,7 @@ InstallSct (
       } else if (SctStrCmp (SI->Argv[Index], L"-r") == 0) {
         mBackupPolicy = BACKUP_POLICY_REMOVE_ALL;
       } else {
-        Print (L"'%s' is not a valid option.\n", SI->Argv[Index]);
+        SctPrint (L"'%s' is not a valid option.\n", SI->Argv[Index]);
         PrintUsage ();
         return Status;
       }
@@ -203,7 +203,7 @@ InstallSct (
   //
   // Remove or backup the existing tests
   //
-  Print (L"\nCheck if SCT already installed ...\n");
+  SctPrint (L"\nCheck if SCT already installed ...\n");
 
   Status = BackupSct ();
   if (EFI_ERROR (Status)) {
@@ -213,7 +213,7 @@ InstallSct (
   //
   // Install the EFI SCT Harness
   //
-  Print (L"\nInstalling...\n");
+  SctPrint (L"\nInstalling...\n");
 
   Status = InstallTest (SctFileVolume);
   if (EFI_ERROR (Status)) {
@@ -235,7 +235,7 @@ InstallSct (
   //
   // Done
   //
-  Print (L"\nDONE!\n");
+  SctPrint (L"\nDONE!\n");
   return EFI_SUCCESS;
 }
 
@@ -249,7 +249,7 @@ PrintUsage (
   VOID
   )
 {
-  Print (
+  SctPrint (
     L"Install EFI SCT Harness, Version 0.9\n"
     L"\n"
     L"Notes: Make sure the shell commands CP, DEL, MKDIR, MV, and LS are enabled.\n"
@@ -287,7 +287,7 @@ GetSystemInformation (
     //
     // Create FS% name of file system
     //
-    SPrint (mFs[mFsCount].Name, 0, L"FS%x", Index);
+    SctSPrint (mFs[mFsCount].Name, 0, L"FS%x", Index);
 
     //
     // Get free space
@@ -315,7 +315,7 @@ GetSystemInformation (
     //
     // Create fsnt% name of file system
     //
-    SPrint (mFs[mFsCount].Name, 0, L"fsnt%x", Index);
+    SctSPrint (mFs[mFsCount].Name, 0, L"fsnt%x", Index);
   
     //
     // Get free space
@@ -345,7 +345,7 @@ GetDestination (
   // Print system information
   //
   for (Index = 0; Index < mFsCount; Index ++) {
-    Print (
+    SctPrint (
       L"  %d: %s: (Free Space: %d MB)\n",
       Index + 1,
       mFs[Index].Name,
@@ -353,7 +353,7 @@ GetDestination (
       );
   }
 
-  Print (
+  SctPrint (
     L"  Space Required: %d MB\n",
     INSTALL_SCT_FREE_SPACE / INSTALL_SCT_1M
     );
@@ -371,7 +371,7 @@ GetDestination (
       4
       );
 
-    Print (L"\n");
+    SctPrint (L"\n");
 
     //
     // Deal with the user input
@@ -385,7 +385,7 @@ GetDestination (
     //
     Index = Atoi(InputBuffer) - 1;
     if (Index >= mFsCount) {
-      Print (L"  Only 1 to %d is valid.\n", mFsCount);
+      SctPrint (L"  Only 1 to %d is valid.\n", mFsCount);
       continue;
     }
 
@@ -393,7 +393,7 @@ GetDestination (
     // Check the free space
     //
     if (mFs[Index].FreeSpace < (UINT64) INSTALL_SCT_FREE_SPACE) {
-      Print (L"  Free space is not enough.\n");
+      SctPrint (L"  Free space is not enough.\n");
       continue;
     } else {
       *SctFileVolume = &mFs[Index];
@@ -424,7 +424,7 @@ BackupSct (
     //
     if (mFs[Index].IsSctPresent & SCT_FOLDER) {
       // Generate the filename
-      TmpName = PoolPrint (L"%s:\\SCT", mFs[Index].Name);
+      TmpName = SctPoolPrint (L"%s:\\SCT", mFs[Index].Name);
       if (TmpName == NULL) {
         return EFI_OUT_OF_RESOURCES;
       }
@@ -444,7 +444,7 @@ BackupSct (
     //
     if (mFs[Index].IsSctPresent & SCT_STARTUP) {
       // Generate the filename
-      TmpName = PoolPrint (L"%s:\\startup.nsh", mFs[Index].Name);
+      TmpName = SctPoolPrint (L"%s:\\startup.nsh", mFs[Index].Name);
       if (TmpName == NULL) {
         return EFI_OUT_OF_RESOURCES;
       }
@@ -475,7 +475,7 @@ InstallTest (
   EFI_STATUS  Status;
   CHAR16*     DirName;
 
-  DirName = PoolPrint (L"%s:\\SCT", SctFileVolume->Name);
+  DirName = SctPoolPrint (L"%s:\\SCT", SctFileVolume->Name);
   if (DirName == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -512,7 +512,7 @@ InstallStartup (
   //
   // Create the startup file name
   //
-  FileName = PoolPrint (L"%s:\\Startup.nsh", SctFileVolume->Name);
+  FileName = SctPoolPrint (L"%s:\\Startup.nsh", SctFileVolume->Name);
   if (FileName == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

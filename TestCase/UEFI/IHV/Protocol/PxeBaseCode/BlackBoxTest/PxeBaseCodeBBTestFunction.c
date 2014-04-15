@@ -1827,7 +1827,7 @@ BBTestDhcpFunctionTest (
   }
 
   // Wait for user to input any key to continue
-  Print (L"\r\nConfigure and Start DHCP Server\r\n");
+  SctPrint (L"\r\nConfigure and Start DHCP Server\r\n");
   WaitForAnyInput ();
 
   Status = BcInterface->Dhcp (
@@ -1877,7 +1877,7 @@ BBTestDhcpFunctionTest (
   if (BcInterface->Mode->ProxyOfferReceived==TRUE)
         PrintPxePacket (LoggingLib, L"Proxy Offer", &BcInterface->Mode->ProxyOffer);
 
-  Print (L"\r\nPlease Check if the DHCP Packets correct?");
+  SctPrint (L"\r\nPlease Check if the DHCP Packets correct?");
   ret = WaitForUserCheck ();
   if (ret==FALSE) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1965,7 +1965,7 @@ BBTestDiscoverFunctionTest (
   }
 
   // Call Dhcp() to initialize DhcpAck & ProxyOffer field
-  Print (L"\r\nPlease Setup DHCP Server\r\n");
+  SctPrint (L"\r\nPlease Setup DHCP Server\r\n");
   WaitForAnyInput ();
   Status = BcInterface->Dhcp (BcInterface, FALSE);
   if (EFI_ERROR(Status))
@@ -2150,7 +2150,7 @@ BBTestMtftpFunctionTest (
   //
   // Get IP Address From DHCP Server
   //
-  Print (L"\r\nSetup DHCP Server\r\n");
+  SctPrint (L"\r\nSetup DHCP Server\r\n");
   WaitForAnyInput ();
   Status = BcInterface->Dhcp (BcInterface, FALSE);
   if (EFI_ERROR(Status))
@@ -2348,7 +2348,7 @@ BBTestUdpWriteFunctionTest (
   //
   // Get IP Address
   //
-  Print (L"\r\nSetup DHCP Server\r\n");
+  SctPrint (L"\r\nSetup DHCP Server\r\n");
   WaitForAnyInput ();
   Status = BcInterface->Dhcp (BcInterface, FALSE);
   if (EFI_ERROR(Status))
@@ -2807,7 +2807,7 @@ BBTestArpFunctionTest (
   //
   // Get IP Address
   //
-  Print (L"\r\nSetup DHCP Server\r\n");
+  SctPrint (L"\r\nSetup DHCP Server\r\n");
   WaitForAnyInput ();
   Status = BcInterface->Dhcp (BcInterface, FALSE);
   if (EFI_ERROR(Status))
@@ -2862,7 +2862,7 @@ BBTestArpFunctionTest (
   LOG_CHAR16_ASCII_DFLT (LoggingLib, L"Returned MAC", SctStrLen (L"Returned MAC"));
   LOG_BUF_HEX_DFLT(LoggingLib, (CHAR16*)(&MacAddr), sizeof (EFI_MAC_ADDRESS)/2);
 
-  Print (L"\r\n Is the returned MAC correct?");
+  SctPrint (L"\r\n Is the returned MAC correct?");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -3084,7 +3084,7 @@ BBTestSetParametersFunctionTest (
                    );
   }
   // Wait for user to see if ARP packet is send.
-  Print (L"\r\nIs AutoARP disabled?");
+  SctPrint (L"\r\nIs AutoARP disabled?");
 
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -3306,7 +3306,7 @@ BBTestSetPacketsFunctionTest (
     return Status;
   }
   // Call Dhcp() function to fill the fields
-  Print (L"\r\n Start DHCP Server\n");
+  SctPrint (L"\r\n Start DHCP Server\n");
   Status = BcInterface->Dhcp (BcInterface, FALSE);
   if (EFI_ERROR(Status)) {
     return Status;
@@ -3575,8 +3575,8 @@ BBTestTftpGetFileSize (
                  );
 
   // check if the returned file size is correct
-  Print (L"\r\nReturned File Len: %d", *Size);
-  Print (L"\r\nIs the result is right?");
+  SctPrint (L"\r\nReturned File Len: %d", *Size);
+  SctPrint (L"\r\nIs the result is right?");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -3715,7 +3715,7 @@ BBTestTftpReadFile  (
                    );
 
   // check if the returned file size is correct
-  Print (L"\r\n Check the returned file\n");
+  SctPrint (L"\r\n Check the returned file\n");
 
   //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Name", SctStrLen (L"File Name"));
   //LOG_CHAR8_ASCII_DFLT (LoggingLib, FileName, strlen(FileName));
@@ -3723,7 +3723,7 @@ BBTestTftpReadFile  (
   LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Size", SctStrLen (L"File Size"));
   LOG_UINT32_HEX_DFLT  (LoggingLib, Size);
 
-  Print (L"\r\n Is the returned file correct?\n");
+  SctPrint (L"\r\n Is the returned file correct?\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -3854,7 +3854,7 @@ BBTestTftpWriteFile    (
                  Status
                  );
 
-  Print (L"\r\n If the file be written to TFTP Server?\n");
+  SctPrint (L"\r\n If the file be written to TFTP Server?\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -3960,7 +3960,7 @@ BBTestTftpReadDirectory (
                    );
 
   // check if the returned file size is correct
-  Print (L"\r\n Check the returned file\n");
+  SctPrint (L"\r\n Check the returned file\n");
 
   //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Directory Name", SctStrLen (L"Directory Name"));
   //LOG_CHAR8_ASCII_DFLT(LoggingLib, FileName, strlen(FileName));
@@ -3968,7 +3968,7 @@ BBTestTftpReadDirectory (
   LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Size", SctStrLen (L"Size"));
   LOG_UINT32_HEX_DFLT(LoggingLib, Size);
 
-  Print (L"\r\n Is the returned directory correct?\n");
+  SctPrint (L"\r\n Is the returned directory correct?\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -4077,8 +4077,8 @@ BBTestMtftpGetFileSize (
     return Status;
   }
   // check if the returned file size is correct
-  Print (L"\r\n Len of %s: %d", FileName, *Size);
-  Print (L"\r\n Is the result is right?");
+  SctPrint (L"\r\n Len of %s: %d", FileName, *Size);
+  SctPrint (L"\r\n Is the result is right?");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -4198,7 +4198,7 @@ BBTestMtftpReadFile (
                  );
 
   // check if the returned file size is correct
-  Print (L"\r\n Check the returned file\n");
+  SctPrint (L"\r\n Check the returned file\n");
 
   //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Name", SctStrLen (L"File Name"));
   //LOG_CHAR8_ASCII_DFLT(LoggingLib, FileName, strlen(FileName));
@@ -4206,7 +4206,7 @@ BBTestMtftpReadFile (
   LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Size", SctStrLen (L"File Size"));
   LOG_UINT32_HEX_DFLT(LoggingLib, Size);
 
-  Print (L"\r\n Is the returned file correct?\n");
+  SctPrint (L"\r\n Is the returned file correct?\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -4330,7 +4330,7 @@ BBTestMtftpReadDirectory (
   if (EFI_UNSUPPORTED == Status)
     return Status;
   // check if the returned file size is correct
-  Print (L"\r\n Check the returned file\n");
+  SctPrint (L"\r\n Check the returned file\n");
 
   //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Name", SctStrLen (L"File Name"));
   //LOG_CHAR8_ASCII_DFLT(LoggingLib, FileName, strlen(FileName));
@@ -4340,7 +4340,7 @@ BBTestMtftpReadDirectory (
 
   // Log MTFTP Info
 
-  Print (L"\r\n Is the returned file correct?\n");
+  SctPrint (L"\r\n Is the returned file correct?\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -4516,8 +4516,8 @@ BBTestUdpWriteFuncThrGateway (
                  );
 
   // User Check the actually sent packet
-  Print (L"\r\n Please Check the actually sent packet\n");
-  Print (L"\r Is the packet correct\n");
+  SctPrint (L"\r\n Please Check the actually sent packet\n");
+  SctPrint (L"\r Is the packet correct\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -4592,8 +4592,8 @@ BBTestUdpWriteFuncPrependHeader (
                  );
 
   // User Check the actually sent packet
-  Print (L"\r\n Please Check the actually sent packet\n");
-  Print (L"\r Is the packet correct\n");
+  SctPrint (L"\r\n Please Check the actually sent packet\n");
+  SctPrint (L"\r Is the packet correct\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -4667,8 +4667,8 @@ BBTestUdpWriteFuncFrag (
                  );
 
   // User Check the actually sent packet
-  Print (L"\r\n Please Check the actually sent packet\n");
-  Print (L"\r Is the packet correct\n");
+  SctPrint (L"\r\n Please Check the actually sent packet\n");
+  SctPrint (L"\r Is the packet correct\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -4745,8 +4745,8 @@ BBTestUdpWriteFuncBasic (
                  );
 
   // User Check the actually sent packet
-  Print (L"\r\n Please Check the actually sent packet\n");
-  Print (L"\r Is the packet correct\n");
+  SctPrint (L"\r\n Please Check the actually sent packet\n");
+  SctPrint (L"\r Is the packet correct\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -4834,7 +4834,7 @@ BBTestUdpReadFuncBasic (
   VOID                                 *BufferPtr;
 
   //Wait for user send packet
-  Print (L"\r\nSend UDP Packet to this host\n");
+  SctPrint (L"\r\nSend UDP Packet to this host\n");
   WaitForAnyInput ();
 
   // Malloc for data
@@ -4877,7 +4877,7 @@ BBTestUdpReadFuncBasic (
                  );
 
   // Check BufferSize
-  Print (L"\r\nBufferSize=%d, is the returned BufferSize correct?\n", BufferSize);
+  SctPrint (L"\r\nBufferSize=%d, is the returned BufferSize correct?\n", BufferSize);
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -4934,7 +4934,7 @@ BBTestUdpReadFuncBasic (
     BufferSize = 0;
   LogUdpPacket (LoggingLib, NULL, &DestPort, &SrcIp, &SrcPort, BufferSize, BufferPtr);
   // Check Packet
-  Print (L"\r\nIs the received Packet correct?\n");
+  SctPrint (L"\r\nIs the received Packet correct?\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -4998,7 +4998,7 @@ BBTestUdpReadFuncDesIpFilter (
     return EFI_OUT_OF_RESOURCES;
 
   // Send UDP Packet dest for this host
-  Print (L"\r\nSend UDP packet to this host\n");
+  SctPrint (L"\r\nSend UDP packet to this host\n");
   WaitForAnyInput ();
 
   // Call UdpRead() to read UDP Packet
@@ -5017,7 +5017,7 @@ BBTestUdpReadFuncDesIpFilter (
 
 
   // Send UDP Packet dest for other host
-  Print (L"\r\nSend UDP packet to other host\n");
+  SctPrint (L"\r\nSend UDP packet to other host\n");
   WaitForAnyInput ();
 
   // Check return code
@@ -5042,7 +5042,7 @@ BBTestUdpReadFuncDesIpFilter (
     BufferSize = 0;
   }
   LogUdpPacket (LoggingLib, NULL, &DestPort, &SrcIp, &SrcPort, BufferSize, BufferPtr);
-  Print (L"\r\nIs the received Packet correct?\n");
+  SctPrint (L"\r\nIs the received Packet correct?\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -5138,7 +5138,7 @@ BBTestUdpReadFuncDestPortFilter (
     return EFI_OUT_OF_RESOURCES;
 
   // Send UDP Packet dest for this host
-  Print (L"\r\nSend UDP packet to this host:80\n");
+  SctPrint (L"\r\nSend UDP packet to this host:80\n");
   WaitForAnyInput ();
 
   // Call UdpRead() to read UDP Packet
@@ -5178,7 +5178,7 @@ BBTestUdpReadFuncDestPortFilter (
     BufferSize = 0;
   }
   LogUdpPacket (LoggingLib, NULL, NULL, &SrcIp, &SrcPort, BufferSize, BufferPtr);
-  Print (L"\r\nIs the received Packet correct?\n");
+  SctPrint (L"\r\nIs the received Packet correct?\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -5213,7 +5213,7 @@ BBTestUdpReadFuncDestPortFilter (
                  );
 
   // Send UDP Packet dest for this host, port 69
-  Print (L"\r\nSend UDP packet to this host:69\n");
+  SctPrint (L"\r\nSend UDP packet to this host:69\n");
   WaitForAnyInput ();
 
   // Call UdpRead() to read UDP Packet
@@ -5283,7 +5283,7 @@ BBTestUdpReadFuncSrcIpFilter (
     return EFI_OUT_OF_RESOURCES;
 
   // Send UDP Packet dest for this host
-  Print (L"\r\nSend UDP packet from allowed host\n");
+  SctPrint (L"\r\nSend UDP packet from allowed host\n");
   WaitForAnyInput ();
 
   // Call UdpRead() to read UDP Packet
@@ -5322,7 +5322,7 @@ BBTestUdpReadFuncSrcIpFilter (
     BufferSize = 0;
   }
   LogUdpPacket (LoggingLib, NULL, &DestPort, NULL, &SrcPort, BufferSize, BufferPtr);
-  Print (L"\r\nIs the received Packet correct?\n");
+  SctPrint (L"\r\nIs the received Packet correct?\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -5356,7 +5356,7 @@ BBTestUdpReadFuncSrcIpFilter (
                  );
 
   // Send UDP Packet dest for this host, port 69
-  Print (L"\r\nSend UDP packet from unallowed host\n");
+  SctPrint (L"\r\nSend UDP packet from unallowed host\n");
   WaitForAnyInput ();
 
   // Call UdpRead() to read UDP Packet
@@ -5423,7 +5423,7 @@ BBTestUdpReadFuncSrcPortFilter (
   }
 
   // Send UDP Packet dest for this host
-  Print (L"\r\nSend UDP packet (src_port = 80)\n");
+  SctPrint (L"\r\nSend UDP packet (src_port = 80)\n");
   WaitForAnyInput ();
 
   // Call UdpRead () to read UDP Packet
@@ -5462,7 +5462,7 @@ BBTestUdpReadFuncSrcPortFilter (
     BufferSize = 0;
   }
   LogUdpPacket (LoggingLib, NULL, &DestPort, &SrcIp, NULL, BufferSize, BufferPtr);
-  Print (L"\r\nIs the received Packet correct?\n");
+  SctPrint (L"\r\nIs the received Packet correct?\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -5497,7 +5497,7 @@ BBTestUdpReadFuncSrcPortFilter (
                  );
 
   // Send UDP Packet dest for this host, port 69
-  Print (L"\r\nSend UDP packet (src_port = 69)\n");
+  SctPrint (L"\r\nSend UDP packet (src_port = 69)\n");
   WaitForAnyInput ();
 
   // Call UdpRead() to read UDP Packet

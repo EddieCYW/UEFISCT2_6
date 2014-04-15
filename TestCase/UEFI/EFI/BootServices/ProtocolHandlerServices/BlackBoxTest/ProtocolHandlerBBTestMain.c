@@ -545,7 +545,7 @@ InitializeGlobalData ()
     return Status;
   }
 
-  mFilePath = PoolPrint (L"%s\\%s", FilePath, DEPENDENCY_DIR_NAME);
+  mFilePath = SctPoolPrint (L"%s\\%s", FilePath, DEPENDENCY_DIR_NAME);
 
   SctFreePool (FilePath);
 

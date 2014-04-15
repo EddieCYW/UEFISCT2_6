@@ -639,15 +639,15 @@ Returns:
   // Check report operation
   //
   if ((gFT->Operations & EFI_SCT_OPERATIONS_REPORT) != 0) {
-    Print (L"Generate test report. Expect this to take about several minutes ...\n");
+    SctPrint (L"Generate test report. Expect this to take about several minutes ...\n");
 
-    LogFilePath = PoolPrint (
+    LogFilePath = SctPoolPrint (
                     L"%s\\%s",
                     gFT->FilePath,
                     EFI_SCT_PATH_LOG
                     );
     if (LogFilePath == NULL) {
-      EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+      EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
       return EFI_OUT_OF_RESOURCES;
     }
 
@@ -661,7 +661,7 @@ Returns:
                );
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Create report file - %r", Status));
-      Print (L"  ERROR: Cannot create the report file. Status - %r\n", Status);
+      SctPrint (L"  ERROR: Cannot create the report file. Status - %r\n", Status);
       tBS->FreePool (LogFilePath);
       return Status;
     }
@@ -679,12 +679,12 @@ Returns:
                );
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Generate report file - %r", Status));
-      Print (L"  ERROR: Cannot generate the report file. Status - %r\n", Status);
+      SctPrint (L"  ERROR: Cannot generate the report file. Status - %r\n", Status);
       tBS->FreePool (LogFilePath);
       return Status;
     }
 
-    Print (L"  Succeed!\n");
+    SctPrint (L"  Succeed!\n");
     tBS->FreePool (LogFilePath);
   }
 
@@ -717,20 +717,20 @@ Routine Description:
   //
   // Create the test support file path
   //
-  FilePath = PoolPrint (
+  FilePath = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_PATH_SUPPORT
                );
   if (FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
   //
   // Load the test support files
   //
-  Print (L"Load support files ...\n");
+  SctPrint (L"Load support files ...\n");
 
   Status = LoadSupportFiles (
              gFT->DevicePath,
@@ -793,13 +793,13 @@ Routine Description:
   //
   // Create the configuration data file name
   //
-  FileName = PoolPrint (
+  FileName = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_FILE_CONFIG
                );
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -858,13 +858,13 @@ Routine Description:
   //
   // Create the category data file name
   //
-  FileName = PoolPrint (
+  FileName = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_FILE_CATEGORY
                );
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -908,20 +908,20 @@ Routine Description:
   //
   // Create the test support file path
   //
-  FilePath = PoolPrint (
+  FilePath = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_PATH_PROXY
                );
   if (FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
   //
   // Load the test support files
   //
-  Print (L"Load proxy files ...\n");
+  SctPrint (L"Load proxy files ...\n");
 
   Status = LoadProxyFiles (
              gFT->DevicePath,
@@ -961,13 +961,13 @@ Routine Description:
   //
   // Create the test cases file name
   //
-  FileName = PoolPrint (
+  FileName = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_FILE_TEST_CASE
                );
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -1011,13 +1011,13 @@ Routine Description:
   //
   // Create the test cases file name
   //
-  FileName = PoolPrint (
+  FileName = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_FILE_SKIPPED_CASE
                );
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -1072,20 +1072,20 @@ Routine Description:
   //
   // Create the test file path
   //
-  FilePath = PoolPrint (
+  FilePath = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_PATH_TEST
                );
   if (FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
   //
   // Load test files
   //
-  Print (L"Load test files ...\n");
+  SctPrint (L"Load test files ...\n");
 
   Status = LoadTestFiles (
              gFT->DevicePath,

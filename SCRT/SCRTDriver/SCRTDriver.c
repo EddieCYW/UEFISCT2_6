@@ -52,6 +52,7 @@ Module Name:
 --*/
 
 #include "SCRTDriver.h"
+#include "SctLib.h"
 
 
 CHAR16  *gVarName             = L"UEFIRuntimeVariable";
@@ -210,9 +211,9 @@ Returns:
   // Parse runtime hand off data
   //
   ConsumeHandOff(HandOffAddr, &ConfigData);
-  Printf("BitMap = 0x%x\n", ConfigData.InfoData);
+  SctAPrint ("BitMap = 0x%x\n", ConfigData.InfoData);
   if (ConfigData.BitMap.Signature != CONFIGURE_INFO_SIGNATURE) {
-    Printf ("Find Configuration Data Corrupte, Hang!!\n");
+    SctAPrint ("Find Configuration Data Corrupte, Hang!!\n");
     EFI_DEADLOOP();
   } 
   //
@@ -221,23 +222,23 @@ Returns:
   DumpRuntimeTable();
 
   InitVariableRecord(&ConfigData);
-  Printf ("==================Variable Services Test Start==================\n\n");
+  SctAPrint ("==================Variable Services Test Start==================\n\n");
   EfiVariableTestVirtual(&ConfigData);
-  Printf ("===================Variable Services Test End===================\n\n\n");
+  SctAPrint ("===================Variable Services Test End===================\n\n\n");
 
-  Printf ("====================Time Services Test Start====================\n\n");
+  SctAPrint ("====================Time Services Test Start====================\n\n");
   EfiTimeTestVirtual(&ConfigData);
-  Printf ("=====================Time Services Test End=====================\n\n\n");
+  SctAPrint ("=====================Time Services Test End=====================\n\n\n");
 
-  Printf ("==================Capsule Services Test Start===================\n\n");
+  SctAPrint ("==================Capsule Services Test Start===================\n\n");
   EfiCapsuleTestVirtual(&ConfigData);
-  Printf ("===================Capsule Services Test End====================\n\n\n");
+  SctAPrint ("===================Capsule Services Test End====================\n\n\n");
 
-  Printf ("====================Misc Services Test Start====================\n\n");
+  SctAPrint ("====================Misc Services Test Start====================\n\n");
   EfiMiscTestVirtual(&ConfigData);
-  Printf ("=====================Misc Services Test End=====================\n\n\n");
+  SctAPrint ("=====================Misc Services Test End=====================\n\n\n");
 
-  Printf ("===================Reset Services Test Start=================\n\n");
+  SctAPrint ("===================Reset Services Test Start=================\n\n");
   EfiResetTestVirtual(&ConfigData);
 
 }

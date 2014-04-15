@@ -686,7 +686,7 @@ extern EFI_GUID gEfiFileSystemVolumeLabelInfoIdGuid;
 
 
 UINTN
-Print (
+SctPrint (
   IN CHAR16                         *fmt,
   ...
   );

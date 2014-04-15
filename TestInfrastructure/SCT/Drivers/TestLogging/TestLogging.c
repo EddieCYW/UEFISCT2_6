@@ -605,14 +605,14 @@ Returns:
   Private = TEST_LOGGING_PRIVATE_DATA_FROM_TLL (This);
 
   if (Private->VerboseLevel >= EFI_VERBOSE_LEVEL_EXHAUSTIVE) {
-    SPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Enter function %s: ", FunctionName);
+    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Enter function %s: ", FunctionName);
     Status = TllWriteLogFile (Private, Buffer);
     if (EFI_ERROR (Status)) {
       return Status;
     }
 
     VA_START(Marker, Fmt);
-    VSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Fmt, Marker);
+    SctVSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Fmt, Marker);
     VA_END (Marker);
 
     if (SctStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER) {
@@ -660,14 +660,14 @@ Returns:
   Private = TEST_LOGGING_PRIVATE_DATA_FROM_TLL (This);
 
   if (Private->VerboseLevel >= EFI_VERBOSE_LEVEL_EXHAUSTIVE) {
-    SPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Exit function %s: ", FunctionName);
+    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Exit function %s: ", FunctionName);
     Status = TllWriteLogFile (Private, Buffer);
     if (EFI_ERROR (Status)) {
       return Status;
     }
 
     VA_START(Marker, Fmt);
-    VSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Fmt, Marker);
+    SctVSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Fmt, Marker);
     VA_END (Marker);
 
     if (SctStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER) {
@@ -726,9 +726,9 @@ Returns:
     for (BitPos = 0; BitPos < Length; BitPos++) {
       if (BitMask & (1<<BitPos)) {
         if (Buffer[0] == L'\0') {
-          SPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%02dH", BitPos);
+          SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%02dH", BitPos);
         } else {
-          SPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%s %02dH", Buffer, BitPos);
+          SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%s %02dH", Buffer, BitPos);
         }
       }
     }
@@ -794,17 +794,17 @@ Returns:
       // Prepare one buffer data
       //
       if (HexBuffer[0] == L'\0') {
-        SPrint (HexBuffer, EFI_MAX_PRINT_BUFFER/4, L"%04xH",
+        SctSPrint (HexBuffer, EFI_MAX_PRINT_BUFFER/4, L"%04xH",
                 Buffer[Index]);
       } else {
-        SPrint (HexBuffer, EFI_MAX_PRINT_BUFFER/4, L"%s %04xH",
+        SctSPrint (HexBuffer, EFI_MAX_PRINT_BUFFER/4, L"%s %04xH",
                 HexBuffer, Buffer[Index]);
       }
       if ((Buffer[Index] >= 0x0020) && (Buffer[Index] < 0x007F)) {
-        SPrint (AsciiBuffer, EFI_MAX_PRINT_BUFFER/4, L"%s%c",
+        SctSPrint (AsciiBuffer, EFI_MAX_PRINT_BUFFER/4, L"%s%c",
               AsciiBuffer, Buffer[Index]);
       } else {
-        SPrint (AsciiBuffer, EFI_MAX_PRINT_BUFFER/4, L"%s.",
+        SctSPrint (AsciiBuffer, EFI_MAX_PRINT_BUFFER/4, L"%s.",
               AsciiBuffer);
       }
       //
@@ -812,13 +812,13 @@ Returns:
       //
       if (Index % 8 == 7) {
         if ((Flags & EFI_DUMP_HEX) && (Flags & EFI_DUMP_ASCII)) {
-          SPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s - %s\n", Index/8*8,
+          SctSPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s - %s\n", Index/8*8,
                   HexBuffer, AsciiBuffer);
         } else if (Flags & EFI_DUMP_HEX) {
-          SPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s\n", Index/8*8,
+          SctSPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s\n", Index/8*8,
                   HexBuffer);
         } else {
-          SPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s\n", Index/8*8,
+          SctSPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s\n", Index/8*8,
                   AsciiBuffer);
         }
         TllWriteLogFile (Private, OutBuffer);
@@ -831,13 +831,13 @@ Returns:
     //
     if (Index % 8 != 0) {
       if ((Flags & EFI_DUMP_HEX) && (Flags & EFI_DUMP_ASCII)) {
-        SPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s - %s\n", Index/8*8,
+        SctSPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s - %s\n", Index/8*8,
                 HexBuffer, AsciiBuffer);
       } else if (Flags & EFI_DUMP_HEX) {
-        SPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s\n", Index/8*8,
+        SctSPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s\n", Index/8*8,
                 HexBuffer);
       } else {
-        SPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s\n", Index/8*8,
+        SctSPrint (OutBuffer, EFI_MAX_PRINT_BUFFER, L"%08x: %s\n", Index/8*8,
                 AsciiBuffer);
       }
       TllWriteLogFile (Private, OutBuffer);

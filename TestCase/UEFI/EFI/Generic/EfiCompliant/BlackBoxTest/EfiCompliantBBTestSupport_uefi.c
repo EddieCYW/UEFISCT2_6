@@ -353,7 +353,7 @@ OpenIniFile (
   //
   // Generate the INI file path
   //
-  IniFilePath = PoolPrint (
+  IniFilePath = SctPoolPrint (
                   L"%s\\%s\\%s",
                   FilePath,
                   IniPathName,

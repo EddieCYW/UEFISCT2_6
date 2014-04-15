@@ -105,7 +105,6 @@ EFI_DEVICE_PATH_PROTOCOL EndInstanceDevicePath[] = {
 //
 
 EFI_GUID tEfiGlobalVariable  = EFI_GLOBAL_VARIABLE_GUID;
-EFI_GUID tNullGuid = { 0,0,0,0,0,0,0,0,0,0,0 };
 
 //
 // Protocol IDs

@@ -69,11 +69,11 @@ RecordHandOff (
   if(Gas.AddressSpaceId == EFI_ACPI_3_0_SYSTEM_MEMORY) {
     HandOffPtr->DebuggerInfo.MmioFlag = TRUE;
     HandOffPtr->DebuggerInfo.MmioBase = (UINTN)Gas.Address;
-    Print(L"Debugger Port registered in MMIO @ 0x%x.\n", HandOffPtr->DebuggerInfo.MmioBase);
+    SctPrint(L"Debugger Port registered in MMIO @ 0x%x.\n", HandOffPtr->DebuggerInfo.MmioBase);
   } else if (Gas.AddressSpaceId == EFI_ACPI_3_0_SYSTEM_IO) {
     HandOffPtr->DebuggerInfo.MmioFlag = FALSE;
     HandOffPtr->DebuggerInfo.IoPort = (UINTN)Gas.Address;
-    Print(L"Debugger Port registered in IO port @ 0x%x.\n", HandOffPtr->DebuggerInfo.IoPort);
+    SctPrint(L"Debugger Port registered in IO port @ 0x%x.\n", HandOffPtr->DebuggerInfo.IoPort);
   }
   return EFI_SUCCESS;
 }
@@ -235,21 +235,21 @@ RuntimeHandOff (
   // First probe SPCR Table for debugger information
   //
   if (!EFI_ERROR(ProbeSPCRTable(&Gas))) {
-    Print(L"Find Debugger Port registered in SPCRTable.\n"); 
+    SctPrint(L"Find Debugger Port registered in SPCRTable.\n"); 
     Status = RecordHandOff(Gas);
     return Status;
   } else if (!EFI_ERROR(ProbePCDPTable(&Gas))) {
     //
     // If SPCR not exists, then probe PCDP.
     //
-    Print(L"Find Debugger Port registered in PCDPTable.\n"); 
+    SctPrint(L"Find Debugger Port registered in PCDPTable.\n"); 
     Status = RecordHandOff(Gas);
     return Status;    
   } else {
     //
     // If not find PCDP and SCRT, use COM2 as default.
     //
-    Print(L"No Debugger Port registered in SPCRTable and PCDPTable. Use COM1 default\n"); 
+    SctPrint(L"No Debugger Port registered in SPCRTable and PCDPTable. Use COM1 default\n"); 
     DefaultHandOff();
     return EFI_SUCCESS;
   }

@@ -3833,7 +3833,7 @@ PciDevicePath_Func (
       continue;
     }
 
-    PciAddress = LShiftU64 (Segment, 32) | Bus << 24 | Dev << 16 | Func << 8;
+    PciAddress = SctLShiftU64 (Segment, 32) | Bus << 24 | Dev << 16 | Func << 8;
 
     Status = DeviceIo->PciDevicePath (
                          DeviceIo,

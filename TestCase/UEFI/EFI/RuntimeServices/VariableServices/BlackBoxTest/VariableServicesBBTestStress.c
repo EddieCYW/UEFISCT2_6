@@ -761,7 +761,7 @@ OverflowStressTestSub1 (
     //
     // Insert a variable
     //
-    VariableName = PoolPrint (L"TestVariable_%d", Index);
+    VariableName = SctPoolPrint (L"TestVariable_%d", Index);
 
     for (DataIndex = 0; DataIndex < 10; DataIndex++) {
       Data[DataIndex] = (UINT8)DataIndex;
@@ -792,7 +792,7 @@ OverflowStressTestSub1 (
   //
   // Print out some information to avoid the user thought it is an error
   //
-  Print (L"System will cold reset after 1 second...");
+  SctPrint (L"System will cold reset after 1 second...");
   gtBS->Stall (1000000);
 
   gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
@@ -810,7 +810,7 @@ step2:
     //
     // Delete a variable
     //
-    VariableName = PoolPrint (L"TestVariable_%d", Index);
+    VariableName = SctPoolPrint (L"TestVariable_%d", Index);
 
     Status = RT->SetVariable (
                    VariableName,                // VariableName

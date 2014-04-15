@@ -883,11 +883,11 @@ BBTestReadBlocksConformanceManualTest (
     //
     // Display instruction to tell user change the media
     //
-    Print (L"Change media in device ");
+    SctPrint (L"Change media in device ");
 
     DevicePathStr = DevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
-      Print (DevicePathStr);
+      SctPrint (DevicePathStr);
 
       Status = gtBS->FreePool (DevicePathStr);
       if (EFI_ERROR(Status)) {
@@ -1006,10 +1006,10 @@ AssertionPoints2:
     //
     // Display instruction to tell user remove the media
     //
-    Print (L"Remove media in device ");
+    SctPrint (L"Remove media in device ");
     DevicePathStr = DevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
-      Print (DevicePathStr);
+      SctPrint (DevicePathStr);
       Status = gtBS->FreePool (DevicePathStr);
       if (EFI_ERROR(Status)) {
         StandardLib->RecordAssertion (
@@ -1070,11 +1070,11 @@ AssertionPoints2:
     //
     // Display instruction to tell user remove the media
     //
-    Print (L"Re-insert media into device ");
+    SctPrint (L"Re-insert media into device ");
 
     DevicePathStr = DevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
-      Print (DevicePathStr);
+      SctPrint (DevicePathStr);
 
       Status = gtBS->FreePool (DevicePathStr);
       if (EFI_ERROR(Status)) {
@@ -2050,10 +2050,10 @@ BBTestWriteBlocksConformanceManualTest (
     //
     // Display instruction to tell user change the media
     //
-    Print (L"Change media in device ");
+    SctPrint (L"Change media in device ");
     DevicePathStr = DevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
-      Print (DevicePathStr);
+      SctPrint (DevicePathStr);
 
       Status = gtBS->FreePool (DevicePathStr);
       if (EFI_ERROR(Status)) {
@@ -2173,10 +2173,10 @@ AssertionPoints2:
     //
     // Display instruction to tell user remove the media
     //
-    Print (L"Remove media in device ");
+    SctPrint (L"Remove media in device ");
     DevicePathStr = DevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
-      Print (DevicePathStr);
+      SctPrint (DevicePathStr);
 
       Status = gtBS->FreePool (DevicePathStr);
       if (EFI_ERROR(Status)) {
@@ -2239,10 +2239,10 @@ AssertionPoints2:
     //
     // Display instruction to tell user to re-insert the media
     //
-    Print (L"Re-insert media into device ");
+    SctPrint (L"Re-insert media into device ");
     DevicePathStr = DevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
-      Print (DevicePathStr);
+      SctPrint (DevicePathStr);
 
       Status = gtBS->FreePool (DevicePathStr);
       if (EFI_ERROR(Status)) {
@@ -2342,10 +2342,10 @@ AssertionPoint3:
     //
     // Display instruction to tell user to make media write-protected
     //
-    Print (L"Turn media in device into write-protected ");
+    SctPrint (L"Turn media in device into write-protected ");
     DevicePathStr = DevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
-      Print (DevicePathStr);
+      SctPrint (DevicePathStr);
 
       Status = gtBS->FreePool (DevicePathStr);
       if (EFI_ERROR(Status)) {
@@ -2442,10 +2442,10 @@ AssertionPoint3:
     // Display instruction to tell user to make media non write-protected
     //
 
-    Print (L"Turn media write-protected off ");
+    SctPrint (L"Turn media write-protected off ");
     DevicePathStr = DevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
-      Print (DevicePathStr);
+      SctPrint (DevicePathStr);
 
       Status = gtBS->FreePool (DevicePathStr);
       if (EFI_ERROR(Status)) {

@@ -1240,7 +1240,7 @@ BBTestResetFunctionAutoTest (
   // Sometimes the file system will be destroied from this point. Just add a
   // stall to avoid it. (Need investigation, I don't know it is useful or not!)
   //
-  Print (L"Wait 5 seconds for the block IO 2 device resetting...");
+  SctPrint (L"Wait 5 seconds for the block IO 2 device resetting...");
   gtBS->Stall (5000000);
 
   StandardLib->RecordAssertion (
@@ -1269,7 +1269,7 @@ BBTestResetFunctionAutoTest (
   // Sometimes the file system will be destroied from this point. Just add a
   // stall to avoid it. (Need investigation, I don't know it is useful or not!)
   //
-  Print (L"Wait 5 seconds for the block IO 2 device resetting...");
+  SctPrint (L"Wait 5 seconds for the block IO 2 device resetting...");
   gtBS->Stall (5000000);
 
   StandardLib->RecordAssertion (
@@ -1495,7 +1495,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint1(
   //
   if (MediaPresent == TRUE) {
    
-    Print (L" ================ Start to do Async ReadBlocksEx call ================ \n\n");
+    SctPrint (L" ================ Start to do Async ReadBlocksEx call ================ \n\n");
  
     for (IndexI = BlockNumber; IndexI > 0; IndexI >>= 6) {
       //
@@ -1505,7 +1505,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint1(
      
       NewBufferSize = IndexI * BlockSize;
 
-      for (NewLba = LastBlock + 1 - BlockNumber; NewLba > 0; NewLba = RShiftU64(NewLba, 8)) {
+      for (NewLba = LastBlock + 1 - BlockNumber; NewLba > 0; NewLba = SctRShiftU64(NewLba, 8)) {
         //
         // allocate aligned BufferSync
         //
@@ -1537,14 +1537,14 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint1(
       }//end of loop of Lba - LBA
     }//end of loop of BufferSize - IndexI
 
-    Print (L" ================== Async ReadBlocksEx call finshed ================== \n\n");
+    SctPrint (L" ================== Async ReadBlocksEx call finshed ================== \n\n");
 
 
 END_WAIT:
     //
     // Busy waiting 120s on all the execute entity being moved to finished queue
     //  
-    Print (L"Wait maximumly 120s for all Async Read events signaled\n\n");
+    SctPrint (L"Wait maximumly 120s for all Async Read events signaled\n\n");
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     IndexI = 0;
     
@@ -1558,13 +1558,13 @@ END_WAIT:
               &WaitIndex
               );
       IndexI++;
-      Print (L".");
+      SctPrint (L".");
       AcquireLock(&gReadQueueLock);
     }
     ReleaseLock(&gReadQueueLock);
 
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-    Print(L"\n");
+    SctPrint(L"\n");
   }
  
 
@@ -2112,7 +2112,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint3(
   BatchReadToken.TransactionStatus = EFI_NOT_READY;
 
   
-  Print (L"Create Batch Read Task List.\n\n");
+  SctPrint (L"Create Batch Read Task List.\n\n");
   //
   // Create one Batch Read task list
   //
@@ -2180,7 +2180,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint3(
     // Busy Waiting for BatchReadToken signal
     // Busy waiting 120s on all the execute entity being moved to finished queue
     //  
-    Print (L"Wait maximumly 120s for Async Batch Read events signaled\n\n");
+    SctPrint (L"Wait maximumly 120s for Async Batch Read events signaled\n\n");
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     IndexI = 0;
     
@@ -2191,11 +2191,11 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint3(
                       &WaitIndex
                       );
       IndexI++;
-      Print(L".");
+      SctPrint(L".");
     }
 
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-    Print(L"\n");
+    SctPrint(L"\n");
   }
   
 END:
@@ -2402,7 +2402,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint4(
   //
   if (MediaPresent == TRUE) {
    
-    Print (L" ============= Start to do Mixed Async & Sync ReadBlocksEx call ============= \n\n");
+    SctPrint (L" ============= Start to do Mixed Async & Sync ReadBlocksEx call ============= \n\n");
     for (IndexI = BlockNumber; IndexI > 0; IndexI >>= 6) {
       //
       // prepare test data
@@ -2439,7 +2439,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint4(
        }//end of loop of Lba - LBA
     }//end of loop of BufferSize - IndexI
 
-    Print (L" ================ Mixed Async & Sync ReadBlocksEx call finshed ================ \n\n");
+    SctPrint (L" ================ Mixed Async & Sync ReadBlocksEx call finshed ================ \n\n");
 
 
 END_WAIT:
@@ -2447,7 +2447,7 @@ END_WAIT:
     //
     // Busy waiting 120s on all the execute entity being moved to finished queue
     //  
-    Print (L"Wait maximumly 120s for all Async Read events signaled\n\n");
+    SctPrint (L"Wait maximumly 120s for all Async Read events signaled\n\n");
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     IndexI = 0;
     
@@ -2461,13 +2461,13 @@ END_WAIT:
               &WaitIndex
               );
       IndexI++;
-      Print (L".");
+      SctPrint (L".");
       AcquireLock(&gMixedReadQueueLock);
     }
     ReleaseLock(&gMixedReadQueueLock);
 
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-    Print(L"\n");
+    SctPrint(L"\n");
 
   }
  
@@ -2874,14 +2874,14 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint1(
   BlkIo2TokenFlush.Event = NULL;
   BlkIo2TokenSync.TransactionStatus = EFI_NOT_READY;
 
-  Print(L"Read Record Data.\n");
+  SctPrint(L"Read Record Data.\n");
   //
   // Record all write blocks data for recovery first
   //
   if ((MediaPresent == TRUE) && (ReadOnly == FALSE) && (LastBlock != 0)) {
 
 
-    Print (L" =================== Record Blocks Info =================== \n\n");
+    SctPrint (L" =================== Record Blocks Info =================== \n\n");
     for (IndexI = 1; IndexI < MAX_NUMBER_OF_WRITE_BLOCK_FUNC_BUFFER; IndexI++) {
       //
       // prepare test data
@@ -2945,7 +2945,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint1(
     }
 
 
-    Print (L" ================ Start to do Async WriteBlocksEx call ================ \n\n");
+    SctPrint (L" ================ Start to do Async WriteBlocksEx call ================ \n\n");
     // 
     // do Asyn write call basing on read data result 
     //
@@ -2990,7 +2990,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint1(
       }
 
     
-      Print (L" ================== Async WriteBlocksEx call finshed ================== \n\n");
+      SctPrint (L" ================== Async WriteBlocksEx call finshed ================== \n\n");
 
 END_WAIT:         
       //
@@ -3004,7 +3004,7 @@ END_WAIT:
       //
       // Busy waiting 120s on all the execute entity being moved to finished queue
       //  
-      Print (L"Wait maximumly 120s for all Async Write events signaled\n\n");
+      SctPrint (L"Wait maximumly 120s for all Async Write events signaled\n\n");
       Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
       IndexI = 0;
       
@@ -3018,13 +3018,13 @@ END_WAIT:
                 &WaitIndex
                 );
         IndexI++;
-        Print(L".");
+        SctPrint (L".");
         AcquireLock(&gWriteQueueLock);
       }
       ReleaseLock(&gWriteQueueLock);
 
       Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-      Print(L"\n");
+      SctPrint(L"\n");
     }
   }
 
@@ -3108,7 +3108,7 @@ END:
   //
   // Clean up & free all record resources
   //
-  Print (L"============ Restore All written blocks ============= \n");
+  SctPrint (L"============ Restore All written blocks ============= \n");
   while (!SctIsListEmpty (&SyncReadDataListHead)) {
     BlockIo2Entity = CR(SyncReadDataListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
     SctRemoveEntryList (&BlockIo2Entity->ListEntry);
@@ -3153,7 +3153,7 @@ END:
   if (WriteCaching) {
     BlockIo2->FlushBlocksEx (BlockIo2, &BlkIo2TokenSync);
   }
-  Print (L"============ Restore All written blocks finshed ============ \n");
+  SctPrint (L"============ Restore All written blocks finshed ============ \n");
 
   //
   // Record All write finshed test logs
@@ -3362,13 +3362,13 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint2(
   BlkIo2TokenSync.Event = NULL;
   BlkIo2TokenSync.TransactionStatus = EFI_NOT_READY;
 
-  Print(L"Read Record Data.\n");
+  SctPrint(L"Read Record Data.\n");
   //
   // Record all write blocks data for recovery first
   //
   if ((MediaPresent == TRUE) && (ReadOnly == FALSE) && (LastBlock != 0)) {
 
-    Print (L" =================== Record Blocks Info =================== \n\n");
+    SctPrint (L" =================== Record Blocks Info =================== \n\n");
 
     for (IndexI = 1; IndexI < MAX_NUMBER_OF_WRITE_BLOCK_FUNC_BUFFER; IndexI++) {
       //
@@ -3433,7 +3433,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint2(
     }
 
 
-    Print (L" ================ Start to do Sync WriteBlocksEx call ================ \n\n");
+    SctPrint (L" ================ Start to do Sync WriteBlocksEx call ================ \n\n");
     // 
     // do Asyn write call basing on read data result 
     //
@@ -3519,7 +3519,7 @@ END:
   //
   // Clean up & free all record resources
   //
-  Print (L"Restore All written blocks.\n");
+  SctPrint (L"Restore All written blocks.\n");
   if (!SctIsListEmpty (&SyncReadDataListHead)) {
     for(ListEntry = SctGetFirstNode(&SyncReadDataListHead); ; ListEntry = SctGetNextNode(&SyncReadDataListHead, ListEntry)) {
       BlockIo2Entity = CR(ListEntry, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
@@ -3689,12 +3689,12 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
   BatchWriteToken.TransactionStatus = EFI_NOT_READY;
 
   
-  Print (L"Create Batch Read Task List.\n\n");
+  SctPrint (L"Create Batch Read Task List.\n\n");
   //
   // Create one Batch Read task list
   //
   if ((MediaPresent == TRUE) && (ReadOnly == FALSE) && (LastBlock != 0)) {
-    Print (L" =================== Record Blocks Info =================== \n\n");
+    SctPrint (L" =================== Record Blocks Info =================== \n\n");
 
     for (IndexI = 1; IndexI < MAX_NUMBER_OF_WRITE_BLOCK_FUNC_BUFFER; IndexI++) {
       //
@@ -3761,7 +3761,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
     }//end of loop of BufferSize - IndexI
 
 
-    Print (L" =================== Create Test Write Blocks  =================== \n\n");
+    SctPrint (L" =================== Create Test Write Blocks  =================== \n\n");
     if (!SctIsListEmpty (&RecordListHeader)) {
       for(ListEntry = SctGetFirstNode(&RecordListHeader); ; ListEntry = SctGetNextNode(&RecordListHeader, ListEntry)) {
 
@@ -3818,7 +3818,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
     }
 
     
-    Print (L"Start to do Async Write.\n\n");
+    SctPrint (L"Start to do Async Write.\n\n");
     Status = BlockIo2AsyncBatchWrite (
                BlockIo2,
                &WriteListHeader,
@@ -3829,7 +3829,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
     // Busy Waiting BathWriteToken signal
     // Busy waiting 120s on all the execute entity being moved to finished queue
     //  
-    Print (L"Wait maximumly 120s for Async Batch Write events signaled\n\n");
+    SctPrint (L"Wait maximumly 120s for Async Batch Write events signaled\n\n");
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     
     IndexI = 0;
@@ -3842,11 +3842,11 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
               &WaitIndex
               );
       IndexI++;
-      Print(L".");
+      SctPrint(L".");
     }
     
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-    Print(L"\n");
+    SctPrint(L"\n");
   }
  
 
@@ -4111,7 +4111,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint4(
   if ((MediaPresent == TRUE) && (ReadOnly == FALSE) && (LastBlock != 0)) {
   
   
-    Print (L" =================== Record Blocks Info =================== \n\n");
+    SctPrint (L" =================== Record Blocks Info =================== \n\n");
     for (IndexI = 1; IndexI < MAX_NUMBER_OF_WRITE_BLOCK_FUNC_BUFFER; IndexI++) {
       //
       // prepare test data
@@ -4212,7 +4212,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint4(
         }
       }
 
-      Print (L" ============== Mixed Sync & Async WriteBlocksEx call finshed ============== \n\n");
+      SctPrint (L" ============== Mixed Sync & Async WriteBlocksEx call finshed ============== \n\n");
       
 END_WAIT:      
       //
@@ -4227,7 +4227,7 @@ END_WAIT:
       //
       // Busy waiting 120s on all the execute entity being moved to finished queue
       //  
-      Print (L"Wait maximumly 120s for all Async Write events signaled\n\n");
+      SctPrint (L"Wait maximumly 120s for all Async Write events signaled\n\n");
       Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
       IndexI = 0;
       
@@ -4241,13 +4241,13 @@ END_WAIT:
                 &WaitIndex
                 );
         IndexI++;
-        Print(L".");
+        SctPrint(L".");
         AcquireLock(&gMixedWriteQueueLock);
       }
       ReleaseLock(&gMixedWriteQueueLock);
   
       Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-      Print(L"\n");
+      SctPrint(L"\n");
     }
   }
 
@@ -4322,7 +4322,7 @@ END:
   //
   // Clean up & free all record resources
   //
-  Print (L"============ Restore All written blocks ============ \n");
+  SctPrint (L"============ Restore All written blocks ============ \n");
   while (!SctIsListEmpty (&SyncReadDataListHead)) {
     BlockIo2Entity = CR(SyncReadDataListHead.ForwardLink, BlockIO2_Task, ListEntry, BIO2ENTITY_SIGNATURE);
     SctRemoveEntryList (&BlockIo2Entity->ListEntry);
@@ -4367,7 +4367,7 @@ END:
   if (WriteCaching) {
     BlockIo2->FlushBlocksEx (BlockIo2, &BlkIo2TokenSync);
   }
-  Print (L"============ Restore All written blocks finshed ============ \n");
+  SctPrint (L"============ Restore All written blocks finshed ============ \n");
     
   //
   // Record All Failed Async Write case results
@@ -4672,7 +4672,7 @@ BBTestFushBlocksExFunctionAutoTestCheckpoint1(
     //
     // Busy waiting for all the flush blocks event signaled
     //
-    Print (L"Wait maximumly 60s for all Async Flush events signaled\n\n");
+    SctPrint (L"Wait maximumly 60s for all Async Flush events signaled\n\n");
     
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     Time = 0;
@@ -4691,9 +4691,9 @@ BBTestFushBlocksExFunctionAutoTestCheckpoint1(
       }
 
       Time++;
-      Print(L".");
+      SctPrint(L".");
     }
-    Print(L"\n");
+    SctPrint(L"\n");
 
     //
     // check all events have been siganaled & status been changed

@@ -250,7 +250,7 @@ BBTestLoadFileFunctionTest (
   //
   // 4.1.2.2 Call LoadFile while No Response
   //
-  Print (L"\r\nShutdown DHCP Server and TFTP Server\n");
+  SctPrint (L"\r\nShutdown DHCP Server and TFTP Server\n");
   LoadFileTestWaitForAnyInput ();
 
   LocalBufferSize = SAMPLE_BOOT_FILE_SIZE+1;
@@ -333,8 +333,8 @@ BBTestLoadFileFunctionTest (
   //      'This is a Sample Boot File.'
   // So, the File Length is 27Bytes.
   //
-  Print (L"\r\nConfigure and Start DHCP Server and TFTP Server");
-  Print (L"\r\nCopy Sample Boot File (Sample.efi) in Dependency Directory to TFTP Server");
+  SctPrint (L"\r\nConfigure and Start DHCP Server and TFTP Server");
+  SctPrint (L"\r\nCopy Sample Boot File (Sample.efi) in Dependency Directory to TFTP Server");
   LoadFileTestWaitForAnyInput ();
 
   LocalBufferSize = (SAMPLE_BOOT_FILE_SIZE+1)*2;
@@ -409,7 +409,7 @@ LoadFileTestWaitForAnyInput ()
   EFI_STATUS              Status;
   EFI_INPUT_KEY           Key;
 
-  Print (L"Press any key to continue...");
+  SctPrint (L"Press any key to continue...");
 
   //
   // Set 1 second periodic timer
@@ -442,7 +442,7 @@ LoadFileTestWaitForAnyInput ()
         break;
     }
   }
-  Print (L"\r\n");
+  SctPrint (L"\r\n");
 
   //
   // Done, cancle periodic timer

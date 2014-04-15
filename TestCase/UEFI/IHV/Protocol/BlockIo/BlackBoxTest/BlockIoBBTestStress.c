@@ -130,7 +130,7 @@ BBTestResetStressAutoTest (
     // Sometimes the file system will be destroied from this point. Just add a
     // stall to avoid it. (Need investigation, I don't know it is useful or not!)
     //
-    Print (L"Wait 5 seconds for the block device resetting...");
+    SctPrint (L"Wait 5 seconds for the block device resetting...");
     gtBS->Stall (5000000);
 
     StandardLib->RecordAssertion (
@@ -162,7 +162,7 @@ BBTestResetStressAutoTest (
     // Sometimes the file system will be destroied from this point. Just add a
     // stall to avoid it. (Need investigation, I don't know it is useful or not!)
     //
-    Print (L"Wait 5 seconds for the block device resetting...");
+    SctPrint (L"Wait 5 seconds for the block device resetting...");
     gtBS->Stall (5000000);
 
     StandardLib->RecordAssertion (

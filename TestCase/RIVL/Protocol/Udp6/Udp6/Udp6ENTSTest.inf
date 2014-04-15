@@ -95,7 +95,6 @@ COMPONENT_TYPE       = BS_DRIVER
   EntsLib
   EntsProtocolLib
   NetworkProtocolLib
-  PrintLib
 
 [nmake.common]
   C_STD_INCLUDE=

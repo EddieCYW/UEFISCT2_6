@@ -451,7 +451,7 @@ LoadAndStartImage (
     return Status;
   }
 
-  EntireFileName = PoolPrint (L"%s\\%s\\%s", FilePath, DEPENDENCY_DIR_NAME, FileName);
+  EntireFileName = SctPoolPrint (L"%s\\%s\\%s", FilePath, DEPENDENCY_DIR_NAME, FileName);
 
   SctFreePool (FilePath);
   SctFreePool (DevicePath);

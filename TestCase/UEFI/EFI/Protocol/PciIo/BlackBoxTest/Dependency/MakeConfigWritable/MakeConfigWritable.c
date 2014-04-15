@@ -74,7 +74,7 @@ MakeConfigWritable  (
     //the card has been plugged in just now and initialize the card.
     //
     if (!InitializeCard (Dev)) {
-      Print (L"Unable to init Test Card.");
+      SctPrint (L"Unable to init Test Card.");
       return  EFI_DEVICE_ERROR;
     }
   }
@@ -343,7 +343,7 @@ WriteMaskBytes (
     Buffer,
     MAX_STRING_LENGTH
     );
-  Print (L"\r\n");
+  SctPrint (L"\r\n");
 
   for (Index = 0; Buffer[Index] == L' '; Index++) {
     ;
@@ -364,7 +364,7 @@ WriteMaskBytes (
     Buffer,
     MAX_STRING_LENGTH
     );
-  Print (L"\r\n");
+  SctPrint (L"\r\n");
 
   for (Index = 0; Buffer[Index] == L' '; Index++) {
     ;

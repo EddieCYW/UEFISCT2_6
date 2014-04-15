@@ -198,7 +198,7 @@ Returns:
   if (tST->ConOut->Mode->Mode != 0) {
     Status = tST->ConOut->SetMode (tST->ConOut, 0);
     if (EFI_ERROR (Status)) {
-      Print (L"Bug and SCT can't execute: Simple Text Output Protocol should support Mode 0 ! \n");
+      SctPrint (L"Bug and SCT can't execute: Simple Text Output Protocol should support Mode 0 ! \n");
       return Status;
     }
 
@@ -273,7 +273,7 @@ Returns:
   //
   // Header
   //
-  MyPage->Header.HeaderString.Text      = PoolPrint (L"%s", EFI_SCT_NAME);
+  MyPage->Header.HeaderString.Text      = SctPoolPrint (L"%s", EFI_SCT_NAME);
   MyPage->Header.HeaderString.TextColor = EFI_WHITE;
   MyPage->Header.HeaderString.Align     = EFI_ALIGNMENT_MIDDLE;
 

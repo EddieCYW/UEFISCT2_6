@@ -60,9 +60,6 @@ Abstract:
 #include "EfiTestLib.h"
 #include "AuthenticationGuid.h"
 
-extern UINTN Print (  IN CONST CHAR16  *Format,  ...  );
-
-
 #include "SctPkg/Protocol/StandardTestLibrary/StandardTestLibrary.h"
 
 #ifdef EFIARM	

@@ -162,7 +162,7 @@ BBTestResetClearanceManualTest (
                    );
   }
 
-  Print (L"\r\nReset Clearence Test Start!\r\n");
+  SctPrint (L"\r\nReset Clearence Test Start!\r\n");
   WaitTimeOrKey (5);
 
 
@@ -218,7 +218,7 @@ BBTestResetClearanceManualTest (
   //
   // Prompt user to input from pointer device
   //
-  Print (L"\r\nPlease move the mouse or press some button!\r\n");
+  SctPrint (L"\r\nPlease move the mouse or press some button!\r\n");
   gtBS->Stall (5000000);
 
   //
@@ -400,7 +400,7 @@ BBTestResetClearanceManualTest (
   //
   // Prompt user to input from pointer device
   //
-  Print (L"\r\nPlease move mouse or press some button AGAIN!\r\n");
+  SctPrint (L"\r\nPlease move mouse or press some button AGAIN!\r\n");
   gtBS->Stall (5000000);
 
   //
@@ -639,7 +639,7 @@ BBTestGetStateExtensiveManualTest (
   }
 
 
-  Print (L"\r\nGetState Stress Test Start!\r\n");
+  SctPrint (L"\r\nGetState Stress Test Start!\r\n");
   WaitTimeOrKey (5);
 
   //
@@ -668,7 +668,7 @@ BBTestGetStateExtensiveManualTest (
   //
   // Prompt user to move or click pointer device continuously
   //
-  Print (L"\r\nMove or Click pointer device for test!!\r\nAny key to quit!\r\n");
+  SctPrint (L"\r\nMove or Click pointer device for test!!\r\nAny key to quit!\r\n");
 
   CurPosX = 0;
   CurPosY = 0;
@@ -715,7 +715,7 @@ BBTestGetStateExtensiveManualTest (
       //
       CurPosX += State.RelativeMovementX;
       CurPosY += State.RelativeMovementY;
-      Print (L"\r\nRelativeXYZ(%5d,%5d,%5d),CurPos(%5d,%5d)",
+      SctPrint (L"\r\nRelativeXYZ(%5d,%5d,%5d),CurPos(%5d,%5d)",
         State.RelativeMovementX,
         State.RelativeMovementY,
         State.RelativeMovementZ,
@@ -730,9 +730,9 @@ BBTestGetStateExtensiveManualTest (
     if (SimplePointer->Mode->LeftButton && State.LeftButton!=ButtonDownL) {
       ButtonDownL = State.LeftButton;
       if (ButtonDownL) {
-        Print (L"\r\nLeft button DOWN!");
+        SctPrint (L"\r\nLeft button DOWN!");
       } else {
-        Print (L"\r\nLeft button UP!");
+        SctPrint (L"\r\nLeft button UP!");
       }
     }
 
@@ -742,9 +742,9 @@ BBTestGetStateExtensiveManualTest (
     if (SimplePointer->Mode->RightButton && State.RightButton!=ButtonDownR) {
       ButtonDownR = State.RightButton;
       if (ButtonDownR) {
-        Print (L"\r\nRight button DOWN!");
+        SctPrint (L"\r\nRight button DOWN!");
       } else {
-        Print (L"\r\nRight button UP!");
+        SctPrint (L"\r\nRight button UP!");
       }
     }
 

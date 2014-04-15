@@ -161,7 +161,7 @@ BBTestReadKeyStrokeConformanceManualTest (
   //
   // wait for times
   //
-  Print (L"\r\nReadKeyStroke Conformance Test Start!\r\n");
+  SctPrint (L"\r\nReadKeyStroke Conformance Test Start!\r\n");
   WaitTimeOrKey (5);
 
   //
@@ -231,7 +231,7 @@ BBTestReadKeyStrokeConformanceManualTest (
   //
   // Prompt tester to input a large number of characters
   //
-  Print (L"\r\nPlease input some displayabed characters in 5 seconds\r\n");
+  SctPrint (L"\r\nPlease input some displayabed characters in 5 seconds\r\n");
 
   gtBS->Stall (5000000);
 
@@ -268,7 +268,7 @@ BBTestReadKeyStrokeConformanceManualTest (
 
   KeyBuffer[Index]=0;
 
-  Print (L"The keys input are:%s", KeyBuffer);
+  SctPrint (L"The keys input are:%s", KeyBuffer);
 
   //
   // Let's do it again
@@ -407,7 +407,7 @@ BBTestWaitForKeyConformanceManualTest (
   //
   // wait for times
   //
-  Print (L"\r\nWaitForKey Conformance Test Start!\r\n");
+  SctPrint (L"\r\nWaitForKey Conformance Test Start!\r\n");
   WaitTimeOrKey (5);
 
   //
@@ -457,7 +457,7 @@ BBTestWaitForKeyConformanceManualTest (
   //
   // Prompt tester to input some character
   //
-  Print (L"Press ONE displayable key! and NO More!");
+  SctPrint (L"Press ONE displayable key! and NO More!");
 
   //
   // WaitForKey event
@@ -482,7 +482,7 @@ BBTestWaitForKeyConformanceManualTest (
                  );
 
 
-  Print (L"\r\nThe key(s) input:");
+  SctPrint (L"\r\nThe key(s) input:");
   //
   // Call ReadKeyStroke repeatedly to receive the character.
   //
@@ -502,12 +502,12 @@ BBTestWaitForKeyConformanceManualTest (
       //
       // Unicode character
       //
-      APrint ((char*)(&Key.UnicodeChar));
+      SctAPrint ((char*)(&Key.UnicodeChar));
     } else {
       //
       // Scan code character
       //
-      Print (ScanCodeDesc (Key.ScanCode));
+      SctPrint (ScanCodeDesc (Key.ScanCode));
     }
   }
 

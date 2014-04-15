@@ -85,7 +85,7 @@ Abstract:
 #define  __WFILE__  __W2(__FILE__)
 
 //
-//Debug Print
+// Debug Print
 //
 #ifdef EFI_SYS_LOG
 
@@ -154,7 +154,7 @@ NetCommonLibSetMem (
 #define NetAsciiStrLen        SctAsciiStrLen
 #define NetAsciiStrCpy        SctAsciiStrCpy
 
-#define NetMultU64x32         MultU64x32
+#define NetMultU64x32         SctMultU64x32
 
 #define EVT_TIMER             EFI_EVENT_TIMER
 #define EVT_NOTIFY_WAIT       EFI_EVENT_NOTIFY_WAIT

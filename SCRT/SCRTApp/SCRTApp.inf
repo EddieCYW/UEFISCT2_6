@@ -91,9 +91,6 @@ COMPONENT_TYPE       = APPLICATION
   Debug.h
   ParseResult.c
 
-[sources.ARM, sources.Aarch64]
-  Print.c
-
 [includes.common]
   $(EDK_SOURCE)/Foundation
   $(EDK_SOURCE)/Foundation/Efi
@@ -112,15 +109,6 @@ COMPONENT_TYPE       = APPLICATION
 [libraries.common]
   SctLib
   
-[libraries.IA32]
-  PrintLib
-
-[libraries.x64]
-  PrintLib
-
-[libraries.IPF]
-  PrintLib
-
 [libraries.ARM, libraries.Aarch64]
   CompilerIntrinsicsLib
 

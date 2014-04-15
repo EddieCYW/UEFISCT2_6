@@ -88,7 +88,7 @@ LibInitSalAndPalProc (
 
     Status = SctGetSystemConfigurationTable(&gtEfiSalSystemTableGuid, (VOID **)(&mSalSystemTable));
     if (EFI_ERROR(Status)) {
-      Print(L"Error : Sal System Table NOT found\r\n");
+      SctPrint(L"Error : Sal System Table NOT found\r\n");
       return EFI_SUCCESS;
     }
 
@@ -111,7 +111,7 @@ LibInitSalAndPalProc (
     }
 
     if (Checksum !=0) {
-      Print(L"Error : Sal System Table checksum is invalid\r\n");
+      SctPrint(L"Error : Sal System Table checksum is invalid\r\n");
       return EFI_SUCCESS;
     }
 
@@ -119,7 +119,7 @@ LibInitSalAndPalProc (
     SalEpDesc = (SAL_ST_ENTRY_POINT_DESCRIPTOR *) LibSearchSalSystemTable (EFI_SAL_ST_ENTRY_POINT);
 
     if (SalEpDesc == NULL) {
-      Print(L"Error : Sal entry point not found\r\n");
+      SctPrint(L"Error : Sal entry point not found\r\n");
       return EFI_SUCCESS;
     }
 
@@ -129,7 +129,7 @@ LibInitSalAndPalProc (
     mSalProc                   = *(SAL_PROC *) (&PlabelPtr);
 
     if ( (mSalProc == NULL) || (mSalProcPlabel.EntryPoint == 0) ) {
-      Print(L"Error : Sal entry point invalid\r\n");
+      SctPrint(L"Error : Sal entry point invalid\r\n");
       return EFI_SUCCESS;
     }
 
@@ -140,7 +140,7 @@ LibInitSalAndPalProc (
     mPalProc                  = *(PAL_PROC *) (&PlabelPtr);
 
     if (mPalProcPlabel.EntryPoint == 0) {
-      Print(L"Error : PAL entry point invalid\r\n");
+      SctPrint(L"Error : PAL entry point invalid\r\n");
       return EFI_SUCCESS;
     }
   }

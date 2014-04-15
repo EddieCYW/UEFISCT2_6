@@ -268,9 +268,9 @@ Returns:
         //
         // Load the support file
         //
-        FileName = PoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
+        FileName = SctPoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
         if (FileName == NULL) {
-          EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+          EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
           break;
         }
 
@@ -308,9 +308,9 @@ Returns:
         //
         // Load the support files under the sub directory
         //
-        SubDir = PoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
+        SubDir = SctPoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
         if (SubDir == NULL) {
-          EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+          EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
           break;
         }
 
@@ -494,9 +494,9 @@ Returns:
   //
   // Set the config data of test recovery
   //
-  FileName = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_RECOVERY);
+  FileName = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_RECOVERY);
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     CloseStandardSupportFiles ();
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1226,9 +1226,9 @@ Returns:
         //
         // Load the support file
         //
-        FileName = PoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
+        FileName = SctPoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
         if (FileName == NULL) {
-          EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+          EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
           break;
         }
 
@@ -1266,9 +1266,9 @@ Returns:
         //
         // Load the support files under the sub directory
         //
-        SubDir = PoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
+        SubDir = SctPoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
         if (SubDir == NULL) {
-          EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+          EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
           break;
         }
 

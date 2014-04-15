@@ -241,7 +241,7 @@ LoadFileDriverBindingStart (
   // the efforts to connect the LoadFile driver will fail.
   // Don't know the reason.
   //
-  Print (L"\n");
+  SctPrint (L"\n");
 
   mLoadFileDriverDevicePath = DuplicateDevicePath (RemainingDevicePath);
 
@@ -378,7 +378,7 @@ CopySimpleFileToMemory (
     return Status;
   }
 
-  EntireFileName = PoolPrint (L"%s\\%s\\%s", FilePath, DEPENDENCY_DIR_NAME, FileName);
+  EntireFileName = SctPoolPrint (L"%s\\%s\\%s", FilePath, DEPENDENCY_DIR_NAME, FileName);
 
   Root = NULL;
   FileHandle = NULL;

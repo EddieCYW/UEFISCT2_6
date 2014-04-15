@@ -162,7 +162,7 @@ BBTestResetClearanceManualTest (
                    );
   }
 
-  Print (L"\r\nReset Clearence Test Start!\r\n");
+  SctPrint (L"\r\nReset Clearence Test Start!\r\n");
   WaitTimeOrKey (5);
 
 
@@ -218,7 +218,7 @@ BBTestResetClearanceManualTest (
   //
   // Prompt user to input from pointer device
   //
-  Print (L"\r\nPlease move the mouse or press some button!\r\n");
+  SctPrint (L"\r\nPlease move the mouse or press some button!\r\n");
   gtBS->Stall (5000000);
 
   //
@@ -401,7 +401,7 @@ BBTestResetClearanceManualTest (
   //
   // Prompt user to input from pointer device
   //
-  Print (L"\r\nPlease move mouse or press some button AGAIN!\r\n");
+  SctPrint (L"\r\nPlease move mouse or press some button AGAIN!\r\n");
   gtBS->Stall (5000000);
 
   //
@@ -643,7 +643,7 @@ BBTestGetStateExtensiveManualTest (
   }
 
 
-  Print (L"\r\nGetState Stress Test Start!\r\n");
+  SctPrint (L"\r\nGetState Stress Test Start!\r\n");
   WaitTimeOrKey (5);
 
   //
@@ -672,7 +672,7 @@ BBTestGetStateExtensiveManualTest (
   //
   // Prompt user to move or click pointer device continuously
   //
-  Print (L"\r\nMove or Click pointer device for test!!\r\nAny key to quit!\r\n");
+  SctPrint (L"\r\nMove or Click pointer device for test!!\r\nAny key to quit!\r\n");
 
   CurPosX = 0;
   CurPosY = 0;
@@ -720,7 +720,7 @@ BBTestGetStateExtensiveManualTest (
       CurPosX += State.CurrentX;
       CurPosY += State.CurrentY;
       CurPosZ += State.CurrentZ;
-      Print (L"\r\nCurrentXYZ(%5d,%5d,%5d),CurPos(%5d,%5d,%5d)",
+      SctPrint (L"\r\nCurrentXYZ(%5d,%5d,%5d),CurPos(%5d,%5d,%5d)",
         State.CurrentX,
         State.CurrentY,
         State.CurrentZ,
@@ -737,9 +737,9 @@ BBTestGetStateExtensiveManualTest (
     if ( SptAltActive==FALSE) {
      SptPressureAsZ = SupportPressureAsZExt(AbsolutePointer->Mode,&State);
       if (SptPressureAsZ ==FALSE && State.CurrentZ!=0) {
-        Print (L"\r\nActiveButton RELEASED!");
+        SctPrint (L"\r\nActiveButton RELEASED!");
       } else {
-        Print (L"\r\nActiveButton UNRELEASED!");
+        SctPrint (L"\r\nActiveButton UNRELEASED!");
       }
     }
 
@@ -747,9 +747,9 @@ BBTestGetStateExtensiveManualTest (
     if (SptAltActive==TRUE) {
      SptPressureAsZ = SupportPressureAsZ(AbsolutePointer->Mode,&State);
       if (SptPressureAsZ==TRUE && State.CurrentZ==0) {
-        Print (L"\r\nActiveButton RELEASED!");
+        SctPrint (L"\r\nActiveButton RELEASED!");
       } else {
-        Print (L"\r\nActiveButton UNRELEASED!");
+        SctPrint (L"\r\nActiveButton UNRELEASED!");
       }
     }
 

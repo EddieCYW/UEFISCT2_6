@@ -92,12 +92,12 @@ Routine Description:
   // Record an empty line to a file via shell command
   //
 
-  CmdLine = PoolPrint (
+  CmdLine = SctPoolPrint (
               L"ECHO \" \" >a %s",
               EFI_SCT_FILE_CFG
               );
   if (CmdLine == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -124,13 +124,13 @@ Routine Description:
     // Record the command to a file via shell command
     //
 
-    CmdLine = PoolPrint (
+    CmdLine = SctPoolPrint (
                 L"ECHO \"%s\" >>a %s",
                 CmdList[Index],
                 EFI_SCT_FILE_CFG
                 );
     if (CmdLine == NULL) {
-      EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+      EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
       return EFI_OUT_OF_RESOURCES;
     }
 
@@ -151,13 +151,13 @@ Routine Description:
     // Get the system configuration to a file via shell command
     //
 
-    CmdLine = PoolPrint (
+    CmdLine = SctPoolPrint (
                 L"%s >>a %s",
                 CmdList[Index],
                 EFI_SCT_FILE_CFG
                 );
     if (CmdLine == NULL) {
-      EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+      EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
       return EFI_OUT_OF_RESOURCES;
     }
 
@@ -181,13 +181,13 @@ Routine Description:
   // Get the system configuration from the file
   //
 
-  FileName = PoolPrint (
+  FileName = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_FILE_CFG
                );
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 

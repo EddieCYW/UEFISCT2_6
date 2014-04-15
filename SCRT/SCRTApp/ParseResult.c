@@ -136,7 +136,7 @@ SCRTLogProcess(
   FirstFail   = FALSE;
   Status = GetVariableRecord(&TestRecord);
   if (EFI_ERROR (Status)) {
-    Print(L"Cannot find test record variable\n");
+    SctPrint(L"Cannot find test record variable\n");
     return Status;
   }
   
@@ -150,7 +150,7 @@ SCRTLogProcess(
              0
              );
   if (EFI_ERROR (Status)) {
-    Print(L"Fail to create the Log file\n");     
+    SctPrint(L"Fail to create the Log file\n");     
     return Status;
   }
 
@@ -159,79 +159,79 @@ SCRTLogProcess(
   //
   FileInfo = LibGetFileInfo (FileHandle);
   if (FileInfo == NULL) {
-    Print(L"Fail to open the Log file\n");     
+    SctPrint(L"Fail to open the Log file\n");     
     return EFI_ABORTED;  
   } else if (FileInfo->Attribute & EFI_FILE_DIRECTORY) {
-    Print(L"It is not a file.\n");     
+    SctPrint(L"It is not a file.\n");     
     return EFI_ABORTED;
   }
 
-  Print (L"Success to get test record variable\n");
-  Print (L"Begin to parse the record...\n");
+  SctPrint (L"Success to get test record variable\n");
+  SctPrint (L"Begin to parse the record...\n");
   Request.TestData   = TestRecord.Request.TestData;
   Result.TestData    = TestRecord.Result.TestData;
 
-  Print (L"\n********************Variable Test Group*******************\n\n");
+  SctPrint (L"\n********************Variable Test Group*******************\n\n");
   SctZeroMem (Buffer, 100);
   BufferSize  = 100;
-  ASPrint(Buffer, BufferSize, "\n********************Variable Test Group*******************\n\n");
+  SctASPrint(Buffer, BufferSize, "\n********************Variable Test Group*******************\n\n");
   BufferSize = SctAsciiStrSize (Buffer);  
   LibWriteFile (FileHandle, &BufferSize, Buffer);
 
   if (Request.BitMap.SetVariable){
-    Print (L"%5s %-20s Requested\n", L" ", L"SetVariable");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"SetVariable");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"SetVariable");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"SetVariable");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);
     if (Result.BitMap.SetVariable) {
-      Print (L"%5s %-20s Pass\n", L" ", L"SetVariable");
+      SctPrint (L"%5s %-20s Pass\n", L" ", L"SetVariable");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"SetVariable");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"SetVariable");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     } else {
       FirstFail = TRUE;
-      Print (L"%5s %-20s Fail\n", L" ", L"SetVariable");
+      SctPrint (L"%5s %-20s Fail\n", L" ", L"SetVariable");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"SetVariable");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"SetVariable");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     } 
   }
 
   if (Request.BitMap.GetVariable){
-    Print (L"%5s %-20s Requested\n", L" ", L"GetVariable");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"GetVariable");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"GetVariable");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"GetVariable");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);	
     if (!FirstFail) {
       if (Result.BitMap.GetVariable) {
-        Print (L"%5s %-20s Pass\n", L" ", L"GetVariable");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"GetVariable");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"GetVariable");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"GetVariable");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail = TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"GetVariable");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"GetVariable");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"GetVariable");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"GetVariable");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"GetVariable");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"GetVariable");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"GetVariable");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"GetVariable");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }
@@ -239,438 +239,438 @@ SCRTLogProcess(
 
 
   if (Request.BitMap.GetNextVariable){
-    Print (L"%5s %-20s Requested\n", L" ", L"GetNextVariable");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"GetNextVariable");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"GetNextVariable");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"GetNextVariable");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);		
     if (!FirstFail) {
       if (Result.BitMap.GetNextVariable) {
-        Print (L"%5s %-20s Pass\n", L" ", L"GetNextVariable");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"GetNextVariable");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"GetNextVariable");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"GetNextVariable");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail  = TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"GetNextVariable");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"GetNextVariable");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"GetNextVariable");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"GetNextVariable");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"GetNextVariable");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"GetNextVariable");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"GetNextVariable");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"GetNextVariable");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     } 
   }
 
   if (Request.BitMap.QueryVariable){
-    Print (L"%5s %-20s Requested\n", L" ", L"QueryVariable");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"QueryVariable");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"QueryVariable");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"QueryVariable");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);		
     if (!FirstFail) {
       if (Result.BitMap.QueryVariable) {
-        Print (L"%5s %-20s Pass\n", L" ", L"QueryVariable");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"QueryVariable");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"QueryVariable");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"QueryVariable");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail = TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"QueryVariable");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"QueryVariable");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"QueryVariable");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"QueryVariable");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       }
     } else{
-      Print (L"%5s %-20s Not Test\n", L" ", L"QueryVariable");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"QueryVariable");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"QueryVariable");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"QueryVariable");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }
   }
 
-  Print (L"\n*********************Time Test Group**********************\n\n");
+  SctPrint (L"\n*********************Time Test Group**********************\n\n");
   SctZeroMem (Buffer, 100);
   BufferSize  = 100;
-  ASPrint(Buffer, BufferSize, "\n*********************Time Test Group**********************\n\n");
+  SctASPrint(Buffer, BufferSize, "\n*********************Time Test Group**********************\n\n");
   BufferSize = SctAsciiStrSize (Buffer);  
   LibWriteFile (FileHandle, &BufferSize, Buffer);
   
   if (Request.BitMap.GetTime){
-    Print (L"%5s %-20s Requested\n", L" ", L"GetTime");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"GetTime");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"GetTime");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"GetTime");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);	
     if (!FirstFail) {    
       if (Result.BitMap.GetTime) {
-        Print (L"%5s %-20s Pass\n", L" ", L"GetTime");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"GetTime");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"GetTime");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"GetTime");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail  = TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"GetTime");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"GetTime");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"GetTime");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"GetTime");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"GetTime");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"GetTime");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"GetTime");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"GetTime");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }
   }
 
   if (Request.BitMap.SetTime){
-    Print (L"%5s %-20s Requested\n", L" ", L"SetTime");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"SetTime");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"SetTime");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"SetTime");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);	
     if (!FirstFail) {     
       if (Result.BitMap.SetTime) {
-        Print (L"%5s %-20s Pass\n", L" ", L"SetTime");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"SetTime");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"SetTime");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"SetTime");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail  = TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"SetTime");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"SetTime");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"SetTime");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"SetTime");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"SetTime");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"SetTime");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"SetTime");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"SetTime");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }
   }
 
   if (Request.BitMap.SetWakeupTime){
-    Print (L"%5s %-20s Requested\n", L" ", L"SetWakeupTime");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"SetWakeupTime");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"SetWakeupTime");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"SetWakeupTime");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);	
     if (!FirstFail) {    
       if (Result.BitMap.SetWakeupTime) {
-        Print (L"%5s %-20s Pass\n", L" ", L"SetWakeupTime");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"SetWakeupTime");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"SetWakeupTime");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"SetWakeupTime");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail  = TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"SetWakeupTime");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"SetWakeupTime");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"SetWakeupTime");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"SetWakeupTime");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"SetWakeupTime");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"SetWakeupTime");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"SetWakeupTime");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"SetWakeupTime");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }
   }
 
   if (Request.BitMap.GetWakeupTime){
-    Print (L"%5s %-20s Requested\n", L" ", L"GetWakeupTime");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"GetWakeupTime");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"GetWakeupTime");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"GetWakeupTime");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);	
     if (!FirstFail) {
       if (Result.BitMap.GetWakeupTime) {
-        Print (L"%5s %-20s Pass\n", L" ", L"GetWakeupTime");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"GetWakeupTime");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"GetWakeupTime");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"GetWakeupTime");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail = TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"GetWakeupTime");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"GetWakeupTime");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"GetWakeupTime");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"GetWakeupTime");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"GetWakeupTime");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"GetWakeupTime");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"GetWakeupTime");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"GetWakeupTime");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }
   }
 
 
-  Print (L"\n********************Capsule Test Group********************\n\n");
+  SctPrint (L"\n********************Capsule Test Group********************\n\n");
   SctZeroMem (Buffer, 100);
   BufferSize  = 100;
-  ASPrint(Buffer, BufferSize, "\n********************Capsule Test Group********************\n\n");
+  SctASPrint(Buffer, BufferSize, "\n********************Capsule Test Group********************\n\n");
   BufferSize = SctAsciiStrSize (Buffer);  
   LibWriteFile (FileHandle, &BufferSize, Buffer);
 
   if (Request.BitMap.QueryCapsule){
-    Print (L"%5s %-20s Requested\n", L" ", L"QueryCapsule");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"QueryCapsule");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"QueryCapsule");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"QueryCapsule");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);	
     if (!FirstFail) {
       if (Result.BitMap.QueryCapsule) {
-        Print (L"%5s %-20s Pass\n", L" ", L"QueryCapsule");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"QueryCapsule");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"QueryCapsule");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"QueryCapsule");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail   =TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"QueryCapsule");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"QueryCapsule");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"QueryCapsule");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"QueryCapsule");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"QueryCapsule");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"QueryCapsule");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"QueryCapsule");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"QueryCapsule");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }
   }
 
   if (Request.BitMap.UpdateCapsule){
-    Print (L"%5s %-20s Requested\n", L" ", L"UpdateCapsule");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"UpdateCapsule");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"UpdateCapsule");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"UpdateCapsule");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);	
     if (!FirstFail) {
       if (Result.BitMap.UpdateCapsule) {
-        Print (L"%5s %-20s Pass\n", L" ", L"UpdateCapsule");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"UpdateCapsule");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"UpdateCapsule");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"UpdateCapsule");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail  = TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"UpdateCapsule");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"UpdateCapsule");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"UpdateCapsule");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"UpdateCapsule");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"UpdateCapsule");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"UpdateCapsule");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"UpdateCapsule");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"UpdateCapsule");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }
   }
 
 
-  Print (L"\n*********************Misc Test Group**********************\n\n");
+  SctPrint (L"\n*********************Misc Test Group**********************\n\n");
   SctZeroMem (Buffer, 100);
   BufferSize  = 100;
-  ASPrint(Buffer, BufferSize, "\n*********************Misc Test Group**********************\n\n");
+  SctASPrint(Buffer, BufferSize, "\n*********************Misc Test Group**********************\n\n");
   BufferSize = SctAsciiStrSize (Buffer);  
   LibWriteFile (FileHandle, &BufferSize, Buffer);
 
   if (Request.BitMap.GetNextCount){
-    Print (L"%5s %-20s Requested\n", L" ", L"GetNextCount");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"GetNextCount");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"GetNextCount");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"GetNextCount");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);	
     if (!FirstFail) {
       if (Result.BitMap.GetNextCount) {
-        Print (L"%5s %-20s Pass\n", L" ", L"GetNextCount");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"GetNextCount");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"GetNextCount");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"GetNextCount");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail  = TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"GetNextCount");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"GetNextCount");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"GetNextCount");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"GetNextCount");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"GetNextCount");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"GetNextCount");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"GetNextCount");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"GetNextCount");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }
   }
 
-  Print (L"\n*********************Reset Test Group*********************\n\n");
+  SctPrint (L"\n*********************Reset Test Group*********************\n\n");
   SctZeroMem (Buffer, 100);
   BufferSize  = 100;
-  ASPrint(Buffer, BufferSize, "\n*********************Reset Test Group*********************\n\n");
+  SctASPrint(Buffer, BufferSize, "\n*********************Reset Test Group*********************\n\n");
   BufferSize = SctAsciiStrSize (Buffer);  
   LibWriteFile (FileHandle, &BufferSize, Buffer);
 
   if (Request.BitMap.ColdReset){
-    Print (L"%5s %-20s Requested\n", L" ", L"ColdReset");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"ColdReset");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"ColdReset");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"ColdReset");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);	
     if (!FirstFail) {
       if (Result.BitMap.ColdReset) {
-        Print (L"%5s %-20s Pass\n", L" ", L"ColdReset");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"ColdReset");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"ColdReset");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"ColdReset");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail  = TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"ColdReset");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"ColdReset");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"ColdReset");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"ColdReset");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"ColdReset");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"ColdReset");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"ColdReset");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"ColdReset");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }
   }
 
   if (Request.BitMap.WarmReset){
-    Print (L"%5s %-20s Requested\n", L" ", L"WarmReset");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"WarmReset");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"WarmReset");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"WarmReset");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);	
     if (!FirstFail) {
       if (Result.BitMap.WarmReset) {
-        Print (L"%5s %-20s Pass\n", L" ", L"WarmReset");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"WarmReset");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"WarmReset");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"WarmReset");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail  = TRUE;
-        Print (L"%5s %-20s Fail\n", L" ", L"WarmReset");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"WarmReset");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"WarmReset");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"WarmReset");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"WarmReset"); 
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"WarmReset"); 
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"WarmReset");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"WarmReset");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }
   }
 
   if (Request.BitMap.ShutDown){
-    Print (L"%5s %-20s Requested\n", L" ", L"ShutDown");
+    SctPrint (L"%5s %-20s Requested\n", L" ", L"ShutDown");
     SctZeroMem (Buffer, 100);
     BufferSize = 100;
-    ASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"ShutDown");
+    SctASPrint(Buffer, BufferSize, "%5s %-20s Requested\n", L" ", L"ShutDown");
     BufferSize = SctAsciiStrSize (Buffer);
     LibWriteFile (FileHandle, &BufferSize, Buffer);	
     if (!FirstFail) {
       if (Result.BitMap.ShutDown) {
-        Print (L"%5s %-20s Pass\n", L" ", L"ShutDown");
+        SctPrint (L"%5s %-20s Pass\n", L" ", L"ShutDown");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"ShutDown");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Pass\n", L" ", L"ShutDown");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } else {
         FirstFail  = TRUE;      
-        Print (L"%5s %-20s Fail\n", L" ", L"ShutDown");
+        SctPrint (L"%5s %-20s Fail\n", L" ", L"ShutDown");
         SctZeroMem (Buffer, 100);
         BufferSize = 100;
-        ASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"ShutDown");
+        SctASPrint(Buffer, BufferSize, "%5s %-20s Fail\n", L" ", L"ShutDown");
         BufferSize = SctAsciiStrSize (Buffer);
         LibWriteFile (FileHandle, &BufferSize, Buffer);
       } 
     } else {
-      Print (L"%5s %-20s Not Test\n", L" ", L"ShutDown");
+      SctPrint (L"%5s %-20s Not Test\n", L" ", L"ShutDown");
       SctZeroMem (Buffer, 100);
       BufferSize = 100;
-      ASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"ShutDown");
+      SctASPrint(Buffer, BufferSize, "%5s %-20s Not Test\n", L" ", L"ShutDown");
       BufferSize = SctAsciiStrSize (Buffer);
       LibWriteFile (FileHandle, &BufferSize, Buffer);
     }

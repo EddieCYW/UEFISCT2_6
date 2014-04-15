@@ -110,7 +110,6 @@ extern EFI_GUID gtEfiFileSystemInfoGuid;
 extern EFI_GUID gtEfiFileSystemVolumeLabelInfoGuid;
 extern EFI_GUID tPcAnsiProtocol;
 extern EFI_GUID tVt100Protocol;
-extern EFI_GUID tNullGuid;
 extern EFI_GUID gtEfiUnknownDeviceGuid;
 
 extern EFI_GUID gtEfiPartTypeSystemPartitionGuid;
@@ -192,47 +191,6 @@ ReleaseLock (
   IN FLOCK                          *Lock
   );
 
-UINTN
-Print (
-  IN CHAR16                         *fmt,
-  ...
-  );
-
-UINTN
-SPrint (
-  OUT CHAR16                        *Str,
-  IN UINTN                          StrSize,
-  IN CHAR16                         *fmt,
-  ...
-  );
-
-UINTN
-VSPrint (
-  OUT CHAR16                        *Str,
-  IN UINTN                          StrSize,
-  IN CHAR16                         *fmt,
-  IN VA_LIST                        vargs
-  );
-
-VOID
-ValueToString (
-  IN CHAR16                         *Buffer,
-  IN BOOLEAN                        Comma,
-  IN INT64                          v
-  );
-
-VOID
-TimeToString (
-  OUT CHAR16                        *Buffer,
-  IN EFI_TIME                       *Time
-  );
-
-VOID
-GuidToString (
-  OUT CHAR16                        *Buffer,
-  IN EFI_GUID                       *Guid
-  );
-
 VOID
 Output (
   IN CHAR16                         *Str
@@ -254,49 +212,10 @@ IInput (
   IN UINTN                          StrLen
   );
 
-CHAR16 *
-PoolPrint (
-  IN CHAR16                         *fmt,
-  ...
-  );
-
-typedef struct {
-  CHAR16                            *str;
-  UINTN                             len;
-  UINTN                             maxlen;
-} POOL_PRINT;
-
-CHAR16 *
-CatPrint (
-  IN OUT POOL_PRINT                 *Str,
-  IN CHAR16                         *fmt,
-  ...
-  );
-
-UINTN
-PrintAt (
-  IN UINTN                          Column,
-  IN UINTN                          Row,
-  IN CHAR16                         *fmt,
-  ...
-  );
-
-UINTN
-APrint (
-  IN CHAR8                          *fmt,
-  ...
-  );
-
 VOID
 ValueToHex (
   IN CHAR16                         *Buffer,
   IN UINT64                         v
-  );
-
-VOID
-StatusToString (
-  OUT CHAR16                        *Buffer,
-  EFI_STATUS                        Status
   );
 
 VOID

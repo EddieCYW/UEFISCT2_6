@@ -155,8 +155,8 @@ BBTestManualTest (
   //
   // 3.1.2.2 Initialize BIS service with invalid parameters
   //
-  Print (L"\nDo you want to do invalid parameters test for Initialize()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do invalid parameters test for Initialize()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   if (PressYes ()) {
     Status = BisInterface->Initialize (
                              BisInterface,
@@ -287,8 +287,8 @@ BBTestManualTest (
   //
   // Continue?
   //
-  Print (L"\nDo you want to continue?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to continue?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   if (!PressYes ()) {
     StandardLib->RecordMessage (
                    StandardLib,
@@ -308,8 +308,8 @@ BBTestManualTest (
   //
   // 3.1.2.4 GetSignatureInfo with invalid parameters
   //
-  Print (L"\nDo you want to do invalid parameters test for GetSignatureInfo()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do invalid parameters test for GetSignatureInfo()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   if (PressYes ()) {
     Status = BisInterface->GetSignatureInfo (
                              AppHandle,
@@ -364,8 +364,8 @@ BBTestManualTest (
   //
   // 3.1.2.6 Free SignatureInfo again
   //
-  Print (L"\nDo you want to do invalid parameters test for Free()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do invalid parameters test for Free()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   if (PressYes ()) {
     Status = BisInterface->Free (
                              AppHandle,
@@ -511,8 +511,8 @@ BBTestManualTest (
   //
   // 3.1.2.9 GetBootObjectAuthorizationUpdateToken with invalid parameters
   //
-  Print (L"\nDo you want to do invalid parameters test for GetBootObjectAuthorizationUpdateToken()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do invalid parameters test for GetBootObjectAuthorizationUpdateToken()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   if (PressYes ()) {
     Status = BisInterface->GetBootObjectAuthorizationUpdateToken (
                              AppHandle,
@@ -544,8 +544,8 @@ BBTestManualTest (
   //
   // 3.1.2.10 Call UpdateBootObjectAuthorization to update Certificate (User interactive)
   //
-  Print (L"\nPlease create credential file(%s) on floppy disk for first time Certificate updating\n", CREDENTIAL_FILE_NAME);
-  Print (L"Press any key to continue\n");
+  SctPrint (L"\nPlease create credential file(%s) on floppy disk for first time Certificate updating\n", CREDENTIAL_FILE_NAME);
+  SctPrint (L"Press any key to continue\n");
   PressAnyKey ();
 
   //
@@ -640,8 +640,8 @@ BBTestManualTest (
   //
   // 3.1.2.11 Call UpdateBootObjectAuthorization to enable authorization check (User interactive)
   //
-  Print (L"\nPlease create credential file(%s) on floppy disk for authorization check enabling\n", CREDENTIAL_FILE_NAME);
-  Print (L"Press any key to continue\n");
+  SctPrint (L"\nPlease create credential file(%s) on floppy disk for authorization check enabling\n", CREDENTIAL_FILE_NAME);
+  SctPrint (L"Press any key to continue\n");
   PressAnyKey ();
 
   //
@@ -736,8 +736,8 @@ BBTestManualTest (
   //
   // 3.1.2.12 Call UpdateBootObjectAuthorization with invalid parameters
   //
-  Print (L"\nDo you want to do invalid parameters test for UpdateBootObjectAuthorization()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do invalid parameters test for UpdateBootObjectAuthorization()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   if (PressYes ()) {
     Status = BisInterface->UpdateBootObjectAuthorization (
                              AppHandle,
@@ -791,11 +791,11 @@ BBTestManualTest (
   //
   // 3.1.2.13 Call UpdateBootObjectAuthorization with invalid Credential (User interactive)
   //
-  Print (L"\nDo you want to do security violation test for UpdateBootObjectAuthorization()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do security violation test for UpdateBootObjectAuthorization()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   while (PressYes ()) {
-    Print (L"\nPlease create invalid credential file(%s) on floppy disk\n", CREDENTIAL_FILE_NAME);
-    Print (L"Press any key to continue\n");
+    SctPrint (L"\nPlease create invalid credential file(%s) on floppy disk\n", CREDENTIAL_FILE_NAME);
+    SctPrint (L"Press any key to continue\n");
     PressAnyKey ();
 
     //
@@ -814,8 +814,8 @@ BBTestManualTest (
                      CREDENTIAL_FILE_NAME,
                      Status
                      );
-      Print (L"\nDo you want to do security violation test for UpdateBootObjectAuthorization() again?\n");
-      Print (L"Please press \"Y\" or \"N\"\n");
+      SctPrint (L"\nDo you want to do security violation test for UpdateBootObjectAuthorization() again?\n");
+      SctPrint (L"Please press \"Y\" or \"N\"\n");
       continue;
     }
 
@@ -844,8 +844,8 @@ BBTestManualTest (
                    );
     gtBS->FreePool (RequestCredential.Data);
 
-    Print (L"\nDo you want to do security violation test for UpdateBootObjectAuthorization() again?\n");
-    Print (L"Please press \"Y\" or \"N\"\n");
+    SctPrint (L"\nDo you want to do security violation test for UpdateBootObjectAuthorization() again?\n");
+    SctPrint (L"Please press \"Y\" or \"N\"\n");
   }
 
   //
@@ -889,8 +889,8 @@ BBTestManualTest (
                              AppHandle,
                              Certificate
                              );
-    Print (L"\nPleaes verify the current certificate. Is current certificate correct?\n");
-    Print (L"Please press \"Y\" or \"N\"\n");
+    SctPrint (L"\nPleaes verify the current certificate. Is current certificate correct?\n");
+    SctPrint (L"Please press \"Y\" or \"N\"\n");
     if (PressYes ()) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
@@ -911,8 +911,8 @@ BBTestManualTest (
   //
   // 3.1.2.15 GetBootObjectAuthorizationCertificate with invalid parameters
   //
-  Print (L"\nDo you want to do invalid parameters test for GetBootObjectAuthorizationCertificate()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do invalid parameters test for GetBootObjectAuthorizationCertificate()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   if (PressYes ()) {
     Status = BisInterface->GetBootObjectAuthorizationCertificate (
                              AppHandle,
@@ -974,8 +974,8 @@ BBTestManualTest (
   //
   // 3.1.2.17 GetBootObjectAuthorizationCheckFlag with invalid parameters
   //
-  Print (L"\nDo you want to do invalid parameters test for GetBootObjectAuthorizationCheckFlag()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do invalid parameters test for GetBootObjectAuthorizationCheckFlag()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   if (PressYes ()) {
     Status = BisInterface->GetBootObjectAuthorizationCheckFlag (
                              AppHandle,
@@ -1007,9 +1007,9 @@ BBTestManualTest (
   //
   // 3.1.2.18 VerifyBootObject (User interactive)
   //
-  Print (L"\nPlease create credential file(%s) and data file(%s) on floppy disk\n",
+  SctPrint (L"\nPlease create credential file(%s) and data file(%s) on floppy disk\n",
          CREDENTIAL_FILE_NAME, DATA_FILE_NAME);
-  Print (L"Press any key to continue\n");
+  SctPrint (L"Press any key to continue\n");
   PressAnyKey ();
 
   //
@@ -1076,8 +1076,8 @@ BBTestManualTest (
   //
   // 3.1.2.19 VerifyBootObject with invalid parameters
   //
-  Print (L"\nDo you want to do invalid parameters test for VerifyBootObject()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do invalid parameters test for VerifyBootObject()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   if (PressYes ()) {
     Status = BisInterface->VerifyBootObject (
                              AppHandle,
@@ -1155,12 +1155,12 @@ BBTestManualTest (
   //
   // 3.1.2.20 VerifyBootObject with invalid Credential or Data object (User interactive)
   //
-  Print (L"\nDo you want to do security violation test for VerifyBootObject()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do security violation test for VerifyBootObject()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   while (PressYes ()) {
-    Print (L"\nPlease create credential file(%s) and data file(%s) on floppy disk\n",
+    SctPrint (L"\nPlease create credential file(%s) and data file(%s) on floppy disk\n",
            CREDENTIAL_FILE_NAME, DATA_FILE_NAME);
-    Print (L"Press any key to continue\n");
+    SctPrint (L"Press any key to continue\n");
     PressAnyKey ();
 
     //
@@ -1224,17 +1224,17 @@ BBTestManualTest (
       gtBS->FreePool (RequestCredential.Data);
     }
 
-    Print (L"\nDo you want to do security violation test for VerifyBootObject() again?\n");
-    Print (L"Please press \"Y\" or \"N\"\n");
+    SctPrint (L"\nDo you want to do security violation test for VerifyBootObject() again?\n");
+    SctPrint (L"Please press \"Y\" or \"N\"\n");
   }
 
   //
   // 3.1.2.21 VerifyObjectWithCredential (User interactive)
   //
-  Print (L"\nPlease create credential file(%s), certificate file(%s) and data file(%s) on floppy disk\n",
+  SctPrint (L"\nPlease create credential file(%s), certificate file(%s) and data file(%s) on floppy disk\n",
          CREDENTIAL_FILE_NAME, CERTIFICATE_FILE_NAME, DATA_FILE_NAME);
-  Print (L"The predefined section name: %s\n", SECTION_NAME);
-  Print (L"Press any key to continue\n");
+  SctPrint (L"The predefined section name: %s\n", SECTION_NAME);
+  SctPrint (L"Press any key to continue\n");
   PressAnyKey ();
 
   //
@@ -1291,7 +1291,7 @@ BBTestManualTest (
         SectionName.Length = sizeof (SECTION_NAME);
         SectionName.Data = (UINT8 *) SECTION_NAME;
         // FOR debug
-        Print (L"Length %d, SectionName %s", SectionName.Length, SectionName.Data);
+        SctPrint (L"Length %d, SectionName %s", SectionName.Length, SectionName.Data);
         Status = BisInterface->VerifyObjectWithCredential (
                                  AppHandle,
                                  &RequestCredential,
@@ -1326,8 +1326,8 @@ BBTestManualTest (
   //
   // 3.1.2.22 VerifyObjectWithCredential with invalid parameters
   //
-  Print (L"\nDo you want to do invalid parameters test for VerifyObjectWithCredential()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do invalid parameters test for VerifyObjectWithCredential()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   if (PressYes ()) {
     Status = BisInterface->VerifyObjectWithCredential (
                              AppHandle,
@@ -1459,13 +1459,13 @@ BBTestManualTest (
   //
   // 3.1.2.23 VerifyObjectWithCredential with invalid Credential, Certificate or Data object (User interactive)
   //
-  Print (L"\nDo you want to do security violation test for VerifyBootObject()?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do security violation test for VerifyBootObject()?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   while (PressYes ()) {
-    Print (L"\nPlease create credential file(%s), certificate file(%s) and data file(%s) on floppy disk\n",
+    SctPrint (L"\nPlease create credential file(%s), certificate file(%s) and data file(%s) on floppy disk\n",
            CREDENTIAL_FILE_NAME, CERTIFICATE_FILE_NAME, DATA_FILE_NAME);
-    Print (L"The predefined section name: %s\n", SECTION_NAME);
-    Print (L"Press any key to continue\n");
+    SctPrint (L"The predefined section name: %s\n", SECTION_NAME);
+    SctPrint (L"Press any key to continue\n");
     PressAnyKey ();
 
     //
@@ -1522,7 +1522,7 @@ BBTestManualTest (
           SectionName.Length = sizeof (SECTION_NAME);
           SectionName.Data = (UINT8 *) SECTION_NAME;
           // FOR debug
-          Print (L"Length %d, SectionName %s", SectionName.Length, SectionName.Data);
+          SctPrint (L"Length %d, SectionName %s", SectionName.Length, SectionName.Data);
           Status = BisInterface->VerifyObjectWithCredential (
                                    AppHandle,
                                    &RequestCredential,
@@ -1553,15 +1553,15 @@ BBTestManualTest (
       }
       gtBS->FreePool (RequestCredential.Data);
     }
-    Print (L"\nDo you want to do security violation test for VerifyBootObject() again?\n");
-    Print (L"Please press \"Y\" or \"N\"\n");
+    SctPrint (L"\nDo you want to do security violation test for VerifyBootObject() again?\n");
+    SctPrint (L"Please press \"Y\" or \"N\"\n");
   }
 
   //
   // 3.1.2.24 Call UpdateBootObjectAuthorization to disable authorization check (User interactive)
   //
-  Print (L"\nPlease create credential file(%s) on floppy disk for authorization check disabling\n", CREDENTIAL_FILE_NAME);
-  Print (L"Press any key to continue\n");
+  SctPrint (L"\nPlease create credential file(%s) on floppy disk for authorization check disabling\n", CREDENTIAL_FILE_NAME);
+  SctPrint (L"Press any key to continue\n");
   PressAnyKey ();
 
   //
@@ -1667,8 +1667,8 @@ BBTestManualTest (
   //
   // Invalid AppHandle test for all interfaces
   //
-  Print (L"\nDo you want to do invalid AppHandle test for all interfaces?\n");
-  Print (L"Please press \"Y\" or \"N\"\n");
+  SctPrint (L"\nDo you want to do invalid AppHandle test for all interfaces?\n");
+  SctPrint (L"Please press \"Y\" or \"N\"\n");
   if (PressYes ()) {
     //
     // 3.1.2.26 Shutdown BIS when AppHandle is invalid

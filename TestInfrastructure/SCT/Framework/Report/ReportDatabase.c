@@ -691,7 +691,7 @@ Routine Description:
     //
     RuntimeInforStr = StrTokenField (NULL, L"\n\r");
     if (SctStrCmp (GuidStr, SystemHangGuidStr) == 0) {
-      RuntimeInforStr = PoolPrint (L"System hang in %s - %s", TestCategoryStr, CaseNameStr);
+      RuntimeInforStr = SctPoolPrint (L"System hang in %s - %s", TestCategoryStr, CaseNameStr);
     }
 
     //
@@ -842,7 +842,7 @@ Routine Description:
   }
 
   while (ReportItem != NULL) {
-    TempBuffer = PoolPrint (
+    TempBuffer = SctPoolPrint (
                    L"\"%s\",\"%d\",\"%d\",\"%d\"\n",
                    ReportItem->TestCategory,
                    ReportItem->PassNumber + ReportItem->FailNumber,
@@ -862,7 +862,7 @@ Routine Description:
   //
   // Total summary
   //
-  TempBuffer = PoolPrint (
+  TempBuffer = SctPoolPrint (
                  L"\"Total service\\Protocol\",\"%d\",\"%d\",\"%d\"\n",
                  mReportInfor.TotalPass + mReportInfor.TotalFail,
                  mReportInfor.TotalFail,
@@ -903,7 +903,7 @@ Routine Description:
     }
 
     while (AssertionInfor != NULL) {
-      TempBuffer = PoolPrint (
+      TempBuffer = SctPoolPrint (
                      L"\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"FAIL\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
                      ReportItem->TestCategory,
                      AssertionInfor->Index,
@@ -959,7 +959,7 @@ Routine Description:
     }
 
     while (AssertionInfor != NULL) {
-      TempBuffer = PoolPrint (
+      TempBuffer = SctPoolPrint (
                      L"\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"PASS\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
                      ReportItem->TestCategory,
                      AssertionInfor->Index,

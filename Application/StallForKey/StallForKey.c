@@ -136,7 +136,7 @@ StallForKey (
     // Print the prompt information (The last blank char is used to clean up
     // the last string. Don't remove it.)
     //
-    Print (L"Press any key within %d seconds \r", Seconds);
+    SctPrint (L"Press any key within %d seconds \r", Seconds);
 
     //
     // Wait for timeout or key input

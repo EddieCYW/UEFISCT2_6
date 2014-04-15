@@ -348,7 +348,7 @@ BBTestResetFunctionManualTest (
                    );
   }
 
-  Print (L"\r\nReset Function Test Start!\r\n");
+  SctPrint (L"\r\nReset Function Test Start!\r\n");
   WaitTimeOrKey (5);
 
   //
@@ -380,7 +380,7 @@ BBTestResetFunctionManualTest (
   //
   // Prompt tester to input some characters
   //
-  Print (L"Press some displayble keys in 5 second!");
+  SctPrint (L"Press some displayble keys in 5 second!");
 
   //
   // Wait 5 seconds
@@ -456,7 +456,7 @@ BBTestResetFunctionManualTest (
   //
   // Prompt tester to input some characters
   //
-  Print (L"Press some displayble keys in 5 second AGAIN!");
+  SctPrint (L"Press some displayble keys in 5 second AGAIN!");
 
   //
   // Wait 5 seconds
@@ -610,7 +610,7 @@ BBTestReadKeyStrokeFunctionManualTest (
   //
   // wait for times
   //
-  Print (L"\r\nReadKeyStroke Function Test Start!\r\n");
+  SctPrint (L"\r\nReadKeyStroke Function Test Start!\r\n");
   WaitTimeOrKey (5);
 
   //
@@ -618,11 +618,11 @@ BBTestReadKeyStrokeFunctionManualTest (
   // ReadKeyStroke()
   //
 
-  Print (L"\r\nPress any key and wait for echo. Two ESC keys to quit");
+  SctPrint (L"\r\nPress any key and wait for echo. Two ESC keys to quit");
   while (TRUE) {
     KeyPressed = WaitTimeOrKeySimpleIn (SimpleIn, 1);
     if (KeyPressed==TRUE) {
-      Print (L"\r\nKey Pressed--");
+      SctPrint (L"\r\nKey Pressed--");
       //
       // Key Pressed!
       //
@@ -652,12 +652,12 @@ BBTestReadKeyStrokeFunctionManualTest (
         //
         // Unicode character
         //
-        APrint ((char*)(&Key.UnicodeChar));
+        SctAPrint ((char*)(&Key.UnicodeChar));
       } else {
         //
         // Scan code character
         //
-        Print (ScanCodeDesc (Key.ScanCode));
+        SctPrint (ScanCodeDesc (Key.ScanCode));
       }
       if (Key.ScanCode==SCAN_ESC) {
         if (EscPressed==TRUE) {
@@ -794,7 +794,7 @@ BBTestWaitForKeyFunctionManualTest (
   //
   // wait for times
   //
-  Print (L"\r\nWaitForKey Function Test Start!\r\n");
+  SctPrint (L"\r\nWaitForKey Function Test Start!\r\n");
   WaitTimeOrKey (5);
 
   Status = SimpleIn->Reset (SimpleIn, TRUE);
@@ -815,7 +815,7 @@ BBTestWaitForKeyFunctionManualTest (
   // Assertion Point 4.1.4.2.1
   // WaitForKey()
   //
-  Print (L"Press ONE displayable key! and NO More!");
+  SctPrint (L"Press ONE displayable key! and NO More!");
 
   //
   // WaitForKey event

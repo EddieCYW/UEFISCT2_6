@@ -76,15 +76,15 @@ MakeConfigWritableEntryPoint (
 
   Status = FindTestCard (&TestDev);
   if (EFI_ERROR(Status)) {
-    Print (L"Not found the Test Card, please insert the Pci Test Card and run this program again.\r\n");
+    SctPrint (L"Not found the Test Card, please insert the Pci Test Card and run this program again.\r\n");
     return Status;
   }
 
   Status = MakeConfigWritable (TestDev);
   if (EFI_ERROR(Status)) {
-    Print (L"Failed make the configuration space writable.\r\n");
+    SctPrint (L"Failed make the configuration space writable.\r\n");
   } else {
-    Print (L"Successfully make the configuration space writable.\r\n");
+    SctPrint (L"Successfully make the configuration space writable.\r\n");
   }
 
   SctFreePool (TestDev);

@@ -69,11 +69,11 @@ Abstract:
 #undef my_printf
 
 #ifdef DEBUG_HASHTEST
-	#define my_printf(x)  Print	
-	#define my_logMsgPrintf  Print
+	#define my_printf(x)  SctPrint	
+	#define my_logMsgPrintf  SctPrint
 #else
-	#define my_printf(x) // Print	
-	#define my_logMsgPrintf  Print
+	#define my_printf(x) // SctPrint	
+	#define my_logMsgPrintf  SctPrint
 #endif
 
 #define logMsg(_guid,_title,_message,_result,_maskRes) \

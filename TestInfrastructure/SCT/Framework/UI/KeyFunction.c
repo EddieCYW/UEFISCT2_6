@@ -795,12 +795,12 @@ Returns:
           MaxValue = MenuPage->Body.CurrentSelected->MaxValue;
           MinValue = MenuPage->Body.CurrentSelected->MinValue;
           DefaultValue = MenuPage->Body.CurrentSelected->DefaultValue;
-          MaxValueStr = PoolPrint (L"%d", MaxValue);
-          MinValueStr = PoolPrint (L"%d", MinValue);
+          MaxValueStr = SctPoolPrint (L"%d", MaxValue);
+          MinValueStr = SctPoolPrint (L"%d", MinValue);
 
           if ( CompareNumberString (Buffer, MaxValueStr) > 0 ||
                CompareNumberString (Buffer, MinValueStr) < 0) {
-            MsgDialogTitle = PoolPrint (
+            MsgDialogTitle = SctPoolPrint (
                                L"Please Input value of <%s> between [%d,%d]",
                                MenuPage->Body.CurrentSelected->ItemString.Text,
                                MinValue,
@@ -829,7 +829,7 @@ Returns:
                       EFI_MENUPAGE_BODY_BGCOLOR | EFI_ITEM_EDIT_FORECOLOR
                       );
             Status = TestPrintAt (XLeft, Ypos, Buffer);
-            SPrint (
+            SctSPrint (
               TempStr,
               EFI_MAX_EDIT_LENGTH + 1,
               L"%d",
@@ -875,7 +875,7 @@ Returns:
         if ((MenuPage->Body.CurrentSelected->ItemType & EFI_EDIT_SUB_TYPE_MASK)
                == EFI_ITEM_EDIT_NUMBER) {
           TempValue = SctAtoi (Buffer);
-          SPrint (
+          SctSPrint (
               Buffer,
               EFI_MAX_EDIT_LENGTH + 1,
               L"%d",

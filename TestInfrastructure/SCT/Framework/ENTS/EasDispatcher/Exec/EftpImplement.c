@@ -218,7 +218,7 @@ Returns:
                 (VOID **)&Image
                 );
   if (EFI_ERROR (Status)) {
-    Print (L"Error: HandleProtocol LoadedImage ! - %r\n", Status);
+    SctPrint (L"Error: HandleProtocol LoadedImage ! - %r\n", Status);
     return Status;
   }
 
@@ -228,7 +228,7 @@ Returns:
                 (VOID **)&DevicePath
                 );
   if (EFI_ERROR (Status)) {
-    Print (L"Error: HandleProtocol DevicePath ! - %r\n", Status);
+    SctPrint (L"Error: HandleProtocol DevicePath ! - %r\n", Status);
     return Status;
   }
 
@@ -238,7 +238,7 @@ Returns:
                 &DeviceHandle
                 );
   if (EFI_ERROR (Status)) {
-    Print (L"Error: LocateDevicePath SimpleFileSystem ! - %r\n", Status);
+    SctPrint (L"Error: LocateDevicePath SimpleFileSystem ! - %r\n", Status);
     return Status;
   }
 
@@ -248,7 +248,7 @@ Returns:
                 (VOID *) &SimpleFileSystem
                 );
   if (EFI_ERROR (Status)) {
-    Print (L"Error: HandleProtocol SimpleFileSystem ! - %r\n", Status);
+    SctPrint (L"Error: HandleProtocol SimpleFileSystem ! - %r\n", Status);
     return Status;
   }
 
@@ -257,7 +257,7 @@ Returns:
                               &Root
                               );
   if (EFI_ERROR (Status)) {
-    Print (L"Error: SimpleFileSystem->OpenVolume() ! - %r\n", Status);
+    SctPrint (L"Error: SimpleFileSystem->OpenVolume() ! - %r\n", Status);
     return Status;
   }
 
@@ -269,13 +269,13 @@ Returns:
                   0
                   );
   if (EFI_ERROR (Status)) {
-    Print (L"Error: Root->Open() ! - %r\n", Status);
+    SctPrint (L"Error: Root->Open() ! - %r\n", Status);
     return Status;
   }
 
   Status = Root->Close (Root);
   if (EFI_ERROR (Status)) {
-    Print (L"Error: Root->Close() ! - %r\n", Status);
+    SctPrint (L"Error: Root->Close() ! - %r\n", Status);
     return Status;
   }
 
@@ -546,14 +546,14 @@ Returns:
 
   Status                    = EftpIo->Configure (EftpIo, &EftpCfgData);
   if (EFI_ERROR (Status)) {
-    Print (L"Eftp->Configure return %r.\n", Status);
+    SctPrint (L"Eftp->Configure return %r.\n", Status);
     goto Cleanup2;
   }
 
   SctCopyMem (ModeStr, "octet", 6);
 
   if (SctStrLen ((gEasFT->Cmd)->ComdArg) > MAX_FILENAME_LEN) {
-    Print (L"Too long Filename.\n");
+    SctPrint (L"Too long Filename.\n");
     goto Cleanup2;
   }
 
@@ -586,13 +586,13 @@ Operation_start:
     Token.BufferSize  = MAX_REAL_FILE_SIZE;
     Token.Buffer      = EntsAllocatePool ((UINTN) Token.BufferSize);
 
-    Print (L"Begin download ... ");
+    SctPrint (L"Begin download ... ");
     Status = EftpIo->ReadFile (EftpIo, &Token);
     if (EFI_ERROR (Status)) {
-      Print (L"EftpIo ReadFile return %r.\n", Status);
+      SctPrint (L"EftpIo ReadFile return %r.\n", Status);
     }
 
-    Print (L"End download ! ");
+    SctPrint (L"End download ! ");
 
     if (!EFI_ERROR (Status)) {
       //
@@ -601,7 +601,7 @@ Operation_start:
       mRealFileSize = (UINTN) Token.BufferSize;
       Status        = WriteRealFile (mRealFileHandle, &mRealFileSize, Token.Buffer);
       if (EFI_ERROR (Status)) {
-        Print (L"Write File Error - %r\n", Status);
+        SctPrint (L"Write File Error - %r\n", Status);
       }
 
       if (Token.Buffer != NULL) {
@@ -610,17 +610,17 @@ Operation_start:
 
     } else if (Status == EFI_BUFFER_TOO_SMALL) {
       mTransferSize = MAX_REAL_FILE_SIZE;
-      Print (L"Buffer too small, try to allocate a larger buffer(%ld).\n", mTransferSize);
+      SctPrint (L"Buffer too small, try to allocate a larger buffer(%ld).\n", mTransferSize);
       Token.Buffer = EntsAllocatePool ((UINTN) mTransferSize);
       if (Token.Buffer == NULL) {
-        Print (L"Allocate buffer (%ld bytes) failed.\n", mTransferSize);
+        SctPrint (L"Allocate buffer (%ld bytes) failed.\n", mTransferSize);
         goto Cleanup2;
       }
 
       Token.Status = EFI_SUCCESS;
       goto Operation_start;
     } else if (EFI_ERROR (Status)) {
-      Print (L"Download error - %r\n", Status);
+      SctPrint (L"Download error - %r\n", Status);
     }
 
     break;
@@ -633,27 +633,27 @@ Operation_start:
     mTransferSize       = mRealFileSize;
     Token.Buffer        = EntsAllocatePool ((UINTN) mRealFileSize);
     if (Token.Buffer == NULL) {
-      Print (L"Allocate buffer (%ld bytes) failed.\n", mRealFileSize);
+      SctPrint (L"Allocate buffer (%ld bytes) failed.\n", mRealFileSize);
       goto Cleanup2;
     }
 
     Token.BufferSize = mRealFileSize;
     SctCopyMem (Token.Buffer, mRealFileBuffer, (UINTN) mRealFileSize);
 
-    Print (L"Begin upload ... ");
+    SctPrint (L"Begin upload ... ");
     Status = EftpIo->WriteFile (EftpIo, &Token);
     if (EFI_ERROR (Status)) {
-      Print (L"WriteFile return %r.\n", Status);
+      SctPrint (L"WriteFile return %r.\n", Status);
     }
 
-    Print (L"End upload ! ");
+    SctPrint (L"End upload ! ");
 
     if (Token.Buffer != NULL) {
       EntsFreePool (Token.Buffer);
     }
 
     if (EFI_ERROR (Status)) {
-      Print (L"Upload error - %r\n", Status);
+      SctPrint (L"Upload error - %r\n", Status);
     }
     break;
 

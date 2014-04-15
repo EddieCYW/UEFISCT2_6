@@ -1067,7 +1067,7 @@ LoadedImageTestComposeSimpleFilePath (
     return Status;
   }
 
-  EntireFileName = PoolPrint (L"%s\\%s\\%s", FileNamePath, DEPENDENCY_DIR_NAME, FileName);
+  EntireFileName = SctPoolPrint (L"%s\\%s\\%s", FileNamePath, DEPENDENCY_DIR_NAME, FileName);
 
   *FilePath = FileDevicePath (LoadImage->DeviceHandle, EntireFileName);
 

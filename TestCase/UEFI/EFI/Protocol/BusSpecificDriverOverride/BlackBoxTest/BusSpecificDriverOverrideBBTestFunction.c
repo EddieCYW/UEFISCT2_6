@@ -219,23 +219,23 @@ BBTestGetDriverFunctionManualTest (
 
   DevicePathStr = DevicePathToStr (DevicePath);
   if (DevicePathStr != NULL) {
-    Print (L"\r\nCurrent Device: %s",  DevicePathStr);
+    SctPrint (L"\r\nCurrent Device: %s",  DevicePathStr);
     gtBS->FreePool (DevicePathStr);
 
     DevicePathStr=NULL;
 
-    Print (L"\r\nTotal %d EFI driver was found!", DriverCount);
+    SctPrint (L"\r\nTotal %d EFI driver was found!", DriverCount);
     //
     // Ask, is it correct?
     //
     gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
-    Print (L"Is it correct (Y/N)?");
+    SctPrint (L"Is it correct (Y/N)?");
 
     do {
       Status = gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
     } while (EFI_ERROR(Status));
 
-    Print (L"%c\n", Key.UnicodeChar);
+    SctPrint (L"%c\n", Key.UnicodeChar);
 
     AssertionType = EFI_TEST_ASSERTION_FAILED;
     if ((Key.UnicodeChar == 'Y') || (Key.UnicodeChar == 'y')) {

@@ -166,7 +166,7 @@ QueryGoOnTesting (
   InputBuffer = NULL;
   TempBuffer  = NULL;
 
-  TempBuffer = PoolPrint (
+  TempBuffer = SctPoolPrint (
                  L"go on testing (Y/N)? please reply in %ds\r\n",
                  WAIT_TIME
                  );
@@ -222,7 +222,7 @@ GetAddress (
   InputBuffer     = NULL;
   TempBuffer      = NULL;
 
-  TempBuffer = PoolPrint (
+  TempBuffer = SctPoolPrint (
                  L"Please input the Address (Hex) in %ds.\r\n",
                  LONG_WAIT_TIME
                  );
@@ -268,7 +268,7 @@ GetTargetValue (
   InputBuffer     = NULL;
   TempBuffer      = NULL;
 
-  TempBuffer = PoolPrint (
+  TempBuffer = SctPoolPrint (
                  L"Please input the Target Value(Hex) in %ds.\r\n",
                  LONG_WAIT_TIME
                  );
@@ -315,7 +315,7 @@ GetAlternateValue (
   InputBuffer     = NULL;
   TempBuffer      = NULL;
 
-  TempBuffer = PoolPrint (
+  TempBuffer = SctPoolPrint (
                  L"Please input the Alternate Value(Hex) in %ds.\r\n",
                  LONG_WAIT_TIME
                  );
@@ -364,7 +364,7 @@ GetDataUnits (
   InputBuffer = NULL;
   TempBuffer  = NULL;
 
-  TempBuffer = PoolPrint (
+  TempBuffer = SctPoolPrint (
                  L"Please input the DataUnits(Hex) in %ds\r\n",
                  LONG_WAIT_TIME
                  );
@@ -424,7 +424,7 @@ GetAddressLength (
   InputBuffer     = NULL;
   TempBuffer      = NULL;
 
-  TempBuffer = PoolPrint (
+  TempBuffer = SctPoolPrint (
                  L"Please input the Address Length (Hex) in %ds.\r\n",
                  WAIT_TIME
                  );
@@ -470,7 +470,7 @@ GetRootBridgeIoWidth (
   InputBuffer = NULL;
   TempBuffer  = NULL;
 
-  TempBuffer = PoolPrint (
+  TempBuffer = SctPoolPrint (
                  L"Please input the Width (8/16/32/64)bits in %ds\r\n",
                  WAIT_TIME
                  );
@@ -1502,7 +1502,7 @@ GetSystemData (
   //make up the file path.
   //
   gFilePath = NULL;
-  gFilePath = PoolPrint (L"%s\\%s", TempFilePath, DEPENDECY_DIR_NAME);
+  gFilePath = SctPoolPrint (L"%s\\%s", TempFilePath, DEPENDECY_DIR_NAME);
 
   gtBS->FreePool (TempFilePath);
 

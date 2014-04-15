@@ -93,7 +93,7 @@ EFI_STATUS prepareTapeTest(int initTestFileMarkCnt, int initTestBlockMarkCnt)
     
   if(status == EFI_SUCCESS)
   {
-	Print (L"\r\n  Tape IO protocol Test will lose all data on the Tape? (Y/N)");
+	SctPrint (L"\r\n  Tape IO protocol Test will lose all data on the Tape? (Y/N)");
 	status = gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key); 
 	while(status == EFI_NOT_READY){
         status = gtST->ConIn->ReadKeyStroke(gtST->ConIn, &Key);
@@ -104,14 +104,14 @@ EFI_STATUS prepareTapeTest(int initTestFileMarkCnt, int initTestBlockMarkCnt)
            (Key.UnicodeChar != 'n'))
         {
           // check for a valid key
-          Print (L"\r\n      Invalid selection ......................... enter (Y/N)");
+          SctPrint (L"\r\n      Invalid selection ......................... enter (Y/N)");
           status = EFI_NOT_READY;
         }
     }
 
 	if((Key.UnicodeChar == 'Y') || (Key.UnicodeChar == 'y'))
 	{
-        Print (L"\r\n  Preparing tape ... ");
+        SctPrint (L"\r\n  Preparing tape ... ");
 			 	
 	  	for(index=0; index<(int)bufferSize; index++)
 	  		buffer[index] = (char)index;
@@ -119,13 +119,13 @@ EFI_STATUS prepareTapeTest(int initTestFileMarkCnt, int initTestBlockMarkCnt)
 	  	//  Note: the returned status has not check after calling TapeIoProtocol()
 	  	//  reset tape	driver	  	
 	  	status = gTapeIoProtocol->TapeReset(gTapeIoProtocol, 1);  
-	  	Print (L"\r\n  Reset tape ... %s", ((status == EFI_SUCCESS) ? L"O.K." : L"Fail!") );
+	  	SctPrint (L"\r\n  Reset tape ... %s", ((status == EFI_SUCCESS) ? L"O.K." : L"Fail!") );
 		if(status != EFI_SUCCESS)
 			goto prepareTapeTestEnd;
 			
 	  	//  goto tape begin
 	  	status = gTapeIoProtocol->TapeRewind(gTapeIoProtocol);	
-	  	Print (L"\r\n  Rewind tape I ... %s", ((status == EFI_SUCCESS) ? L"O.K." : L"Fail!") );
+	  	SctPrint (L"\r\n  Rewind tape I ... %s", ((status == EFI_SUCCESS) ? L"O.K." : L"Fail!") );
 		if(status != EFI_SUCCESS)
 			goto prepareTapeTestEnd;
 			
@@ -133,29 +133,29 @@ EFI_STATUS prepareTapeTest(int initTestFileMarkCnt, int initTestBlockMarkCnt)
 	  	initTestFileMarkCnt = (initTestFileMarkCnt<TAPE_IO_TEST_FILEMARK_CNT) ? TAPE_IO_TEST_FILEMARK_CNT : initTestFileMarkCnt;
 	  	for(index=0; index<initTestFileMarkCnt; index++)
 	  	{	  	
-	  		Print (L"\r\n  Write tape(%d, %d) ... ", index+1, initTestBlockMarkCnt);
+	  		SctPrint (L"\r\n  Write tape(%d, %d) ... ", index+1, initTestBlockMarkCnt);
 	  		for(ii=0; ii<initTestBlockMarkCnt; ii++)
 	  		{
 			  	bufferSize = MAX_TAPE_BUFFER_SIZE;
 			  	status = gTapeIoProtocol->TapeWrite(gTapeIoProtocol, &bufferSize, buffer);
-			  	Print (L"%s", ((status == EFI_SUCCESS) ? L"." : L"Fail!") );
+			  	SctPrint (L"%s", ((status == EFI_SUCCESS) ? L"." : L"Fail!") );
 			  	if(status != EFI_SUCCESS)
 					goto prepareTapeTestEnd;
 		  	}
 		  	
 		  	status = gTapeIoProtocol->TapeWriteFM(gTapeIoProtocol, 1);
-		  	Print (L" %s", ((status == EFI_SUCCESS) ? L"O.K." : L"Fail!") );
+		  	SctPrint (L" %s", ((status == EFI_SUCCESS) ? L"O.K." : L"Fail!") );
 		  	if(status != EFI_SUCCESS)
 				goto prepareTapeTestEnd;
 	  	}
 		                            
 		//  write some other FileMark
 		status = gTapeIoProtocol->TapeWriteFM(gTapeIoProtocol, 10);
-		Print (L"\r\n  WriteFM II ... %s", ((status == EFI_SUCCESS) ? L"O.K." : L"Fail!") );
+		SctPrint (L"\r\n  WriteFM II ... %s", ((status == EFI_SUCCESS) ? L"O.K." : L"Fail!") );
 
         //  goto tape begin
 	  	status = gTapeIoProtocol->TapeRewind(gTapeIoProtocol);
-	  	Print (L"\r\n  Rewind tape II ... %s", ((status == EFI_SUCCESS) ? L"O.K." : L"Fail!") );
+	  	SctPrint (L"\r\n  Rewind tape II ... %s", ((status == EFI_SUCCESS) ? L"O.K." : L"Fail!") );
 	  	
 	  	if(status != EFI_SUCCESS)
 			goto prepareTapeTestEnd;	
@@ -174,7 +174,7 @@ prepareTapeTestEnd:
   			EFI_SUCCESS
   		);  
   		
-  Print (L"\r\n  prepareTapeTest Completed.\r\n");		
+  SctPrint (L"\r\n  prepareTapeTest Completed.\r\n");		
   return status;	  
 }
 

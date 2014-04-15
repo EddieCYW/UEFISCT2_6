@@ -592,7 +592,7 @@ BBTestResetFunctionManualTestCheckpoint1 (
     //
     // Prompt tester to input some characters
     //
-    Print (L"Press some printable keys!");
+    SctPrint (L"Press some printable keys!");
 
     //
     // Wait for a input key
@@ -666,12 +666,12 @@ BBTestReadKeyStrokeExFunctionManualTestCheckpoint1 (
   //
   //Prompt the tester to start the test
   //
-  Print(L"\r\nPress any key and wait for echo. Two ESC keys to quit.");
+  SctPrint(L"\r\nPress any key and wait for echo. Two ESC keys to quit.");
   while (TRUE) {
     KeyPressed = WaitTimeOrKey( SimpleTextInputEx, 1 );
 
     if ( KeyPressed==TRUE ) {
-      Print( L"\r\nKey Pressed--" );
+      SctPrint( L"\r\nKey Pressed--" );
 
       //
       // Call ReadKeyStroke to retrieve the key
@@ -699,12 +699,12 @@ BBTestReadKeyStrokeExFunctionManualTestCheckpoint1 (
         //
         // Unicode character
         //
-        APrint( (char*)(&Key.Key.UnicodeChar) );
+        SctAPrint( (char*)(&Key.Key.UnicodeChar) );
       } else {
         //
         // Scan code character
         //
-        Print( ScanCodeDesc( Key.Key.ScanCode ) );
+        SctPrint( ScanCodeDesc( Key.Key.ScanCode ) );
       }
       //
       // Output the KeyState
@@ -800,7 +800,7 @@ BBTestSetStateFunctionManualTestCheckpoint1 (
                                        SimpleTextInputEx,
                                        ValidState+Index
                                        );		
-        Print( L"Please press a printable key." );
+        SctPrint( L"Please press a printable key." );
         gtBS->WaitForEvent( 1, &(SimpleTextInputEx->WaitForKeyEx), &WaitIndex );
         Status = SimpleTextInputEx->ReadKeyStrokeEx( SimpleTextInputEx, &Key );
         if ( EFI_ERROR(Status) )
@@ -854,7 +854,7 @@ BBTestRegisterKeyNotifyFunctionManualTestCheckpoint1 (
     return Status;
 
   //Read the input key used to register the notify function
-  Print( L"\r\nPress one key to register the notify function." );
+  SctPrint( L"\r\nPress one key to register the notify function." );
   gtBS->WaitForEvent( 1, &(SimpleTextInputEx->WaitForKeyEx), &WaitIndex );
   Status = SimpleTextInputEx->ReadKeyStrokeEx( SimpleTextInputEx, &RegisterKey );
   if ( EFI_ERROR(Status) )
@@ -896,7 +896,7 @@ BBTestRegisterKeyNotifyFunctionManualTestCheckpoint1 (
     if ( EFI_ERROR(Status) )
       return Status;
       
-    Print(L"\r\nPress the same key you used to register the notify function.");
+    SctPrint(L"\r\nPress the same key you used to register the notify function.");
     gtBS->WaitForEvent( 1, &(SimpleTextInputEx->WaitForKeyEx), &WaitIndex );
   
     //
@@ -911,7 +911,7 @@ BBTestRegisterKeyNotifyFunctionManualTestCheckpoint1 (
          (Key.KeyState.KeyToggleState == RegisterKey.KeyState.KeyToggleState) ) {
       break;
     }
-    Print( L"\r\nThe key pressed not match the registed key!" );
+    SctPrint( L"\r\nThe key pressed not match the registed key!" );
   }
 
   //
@@ -964,7 +964,7 @@ BBTestUnregisterKeyNotifyFunctionManualTestCheckpoint1 (
     return Status;
 
   //Read the input key used to register the notify function
-  Print( L"\r\nPress one key to register the notify function." );
+  SctPrint( L"\r\nPress one key to register the notify function." );
   gtBS->WaitForEvent( 1, &(SimpleTextInputEx->WaitForKeyEx), &WaitIndex );
   Status = SimpleTextInputEx->ReadKeyStrokeEx( SimpleTextInputEx, &RegisterKey );
   if ( EFI_ERROR(Status) )
@@ -1017,7 +1017,7 @@ BBTestUnregisterKeyNotifyFunctionManualTestCheckpoint1 (
     if ( EFI_ERROR(Status) )
       return Status;
       
-    Print(L"\r\nPress the same key you used to register the notify function.");
+    SctPrint(L"\r\nPress the same key you used to register the notify function.");
     gtBS->WaitForEvent( 1, &(SimpleTextInputEx->WaitForKeyEx), &WaitIndex );
   
     //
@@ -1032,7 +1032,7 @@ BBTestUnregisterKeyNotifyFunctionManualTestCheckpoint1 (
          (Key.KeyState.KeyToggleState == RegisterKey.KeyState.KeyToggleState) ) {
       break;
     }
-    Print( L"\r\nThe key pressed not match the registed key!" );
+    SctPrint( L"\r\nThe key pressed not match the registed key!" );
   }
 
   //

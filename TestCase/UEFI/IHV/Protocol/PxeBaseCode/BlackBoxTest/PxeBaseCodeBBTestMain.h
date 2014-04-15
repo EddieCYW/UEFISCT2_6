@@ -77,7 +77,7 @@ Abstract:
 
 #define MAX_UDP_SIZE 65535
 
-#define NP_Print Print
+#define NP_Print SctPrint
 
 extern UINTN                gCallBackInvoked;
 

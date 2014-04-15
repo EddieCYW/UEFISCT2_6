@@ -668,9 +668,9 @@ DisplayReportGenerator(
       FileName = SctStrDuplicate (DialogContext->FileName);
     } else if ( SctStrLen (DialogContext->FileName) > 1 &&
       SctStriCmp (DialogContext->FileName + SctStrLen (DialogContext->FileName) - 1, L".") == 0) {
-      FileName = PoolPrint (L"%scsv", DialogContext->FileName);
+      FileName = SctPoolPrint (L"%scsv", DialogContext->FileName);
     } else {
-      FileName = PoolPrint (L"%s.csv", DialogContext->FileName);
+      FileName = SctPoolPrint (L"%s.csv", DialogContext->FileName);
     }
     if (FileName == NULL) {
       tBS->FreePool (DialogContext->DevicePath);
@@ -684,7 +684,7 @@ DisplayReportGenerator(
     MenuPageRefresh (Page);
     DoDialog (MsgDialogTitle, &MsgDialogContext);
 
-    LogFilePath = PoolPrint (
+    LogFilePath = SctPoolPrint (
                     L"%s\\%s",
                     gFT->FilePath,
                     EFI_SCT_PATH_LOG
@@ -781,9 +781,9 @@ DisplayLog (
       FileName = SctStrDuplicate (DialogContext->FileName);
     }else if ( SctStrLen (DialogContext->FileName) > 1 &&
        SctStriCmp (DialogContext->FileName + SctStrLen (DialogContext->FileName) - 1, L".") == 0) {
-       FileName = PoolPrint (L"%slog", DialogContext->FileName);
+       FileName = SctPoolPrint (L"%slog", DialogContext->FileName);
     }else {
-      FileName = PoolPrint (L"%s.log", DialogContext->FileName);
+      FileName = SctPoolPrint (L"%s.log", DialogContext->FileName);
     }
     if (FileName == NULL) {
       tBS->FreePool (DialogContext->DevicePath);
@@ -801,7 +801,7 @@ DisplayLog (
     tST->ConOut->SetAttribute (tST->ConOut, EFI_BACKGROUND_BLACK | EFI_WHITE);
     tST->ConOut->ClearScreen (tST->ConOut);
 
-    CmdLine = PoolPrint (L"%s \"%s\"", gFT->ConfigData->EditCommandString, FileName);
+    CmdLine = SctPoolPrint (L"%s \"%s\"", gFT->ConfigData->EditCommandString, FileName);
     if (CmdLine != NULL) {
       Status = ShellExecute (
                  gFT->ImageHandle,
@@ -969,9 +969,9 @@ MainMenuSaveSeqFunc (
       FileName = SctStrDuplicate (DialogContext->FileName);
     }else if ( SctStrLen (DialogContext->FileName) > 1 &&
        SctStriCmp (DialogContext->FileName + SctStrLen (DialogContext->FileName) - 1, L".") == 0) {
-       FileName = PoolPrint (L"%sseq", DialogContext->FileName);
+       FileName = SctPoolPrint (L"%sseq", DialogContext->FileName);
     }else {
-      FileName = PoolPrint (L"%s.seq", DialogContext->FileName);
+      FileName = SctPoolPrint (L"%s.seq", DialogContext->FileName);
     }
     if (FileName == NULL) {
       tBS->FreePool (DialogContext->DevicePath);

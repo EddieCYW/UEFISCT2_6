@@ -693,7 +693,7 @@ step3:
                     L"System will cold reset after 1 second..."
                     );
     }
-//	Print (L"System will cold reset after 1 second...");
+//	SctPrint (L"System will cold reset after 1 second...");
     gtBS->Stall (1000000);
     gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
 

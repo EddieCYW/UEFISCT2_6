@@ -182,7 +182,7 @@ BBTestResetFunctionManualTest (
   // Reset without Extended Verification
   //
 
-  Print (L"\n\rVGA Reset without extended verification start...\n\r");
+  SctPrint (L"\n\rVGA Reset without extended verification start...\n\r");
   WaitTimeOrKey (5);
   //
   // Prepare expected Mode after call Reset.
@@ -276,7 +276,7 @@ BBTestResetFunctionManualTest (
   // Call Reset with ExtendVerification as FALSE again
   //
 
-  Print (L"\n\rVGA Reset with BLUE background without extended verification start ...\n\r");
+  SctPrint (L"\n\rVGA Reset with BLUE background without extended verification start ...\n\r");
   WaitTimeOrKey (5);
   //
   // Prepare expected Mode after call Reset.
@@ -369,7 +369,7 @@ BBTestResetFunctionManualTest (
   // Reset with Extended Verification
   //
 
-  Print (L"\n\rVGA Reset with extended verification start...\n\r");
+  SctPrint (L"\n\rVGA Reset with extended verification start...\n\r");
   WaitTimeOrKey (5);
   //
   // Prepare expected Mode after call Reset.
@@ -463,7 +463,7 @@ BBTestResetFunctionManualTest (
   // Call Reset with ExtendVerification as TRUE again
   //
 
-  Print (L"\n\rVGA Reset with BLUE background with extended verification start ...\n\r");
+  SctPrint (L"\n\rVGA Reset with BLUE background with extended verification start ...\n\r");
   WaitTimeOrKey (5);
   //
   // Prepare expected Mode after call Reset.
@@ -1161,7 +1161,7 @@ BBTestOutputStringFunctionAutoTest (
   // Output String with Normal Unicode strings
   //
 
-  Print (L"\n\rOutputString with normal Unicode strings starts\n\r");
+  SctPrint (L"\n\rOutputString with normal Unicode strings starts\n\r");
 
   //
   // clear screen for test
@@ -1289,7 +1289,7 @@ BBTestOutputStringFunctionAutoTest (
   // Output String with very long Unicode strings
   //
 
-  Print (L"\n\rOutputString with very long Unicode strings starts\n\r");
+  SctPrint (L"\n\rOutputString with very long Unicode strings starts\n\r");
 
 
   //
@@ -1424,7 +1424,7 @@ BBTestOutputStringFunctionAutoTest (
   // OutputString() with Drawing Chars
   //
 
-  Print (L"\n\rOutputString with Drawing Unicode strings starts\n\r");
+  SctPrint (L"\n\rOutputString with Drawing Unicode strings starts\n\r");
 
   //
   // clear screen for test
@@ -1532,7 +1532,7 @@ BBTestOutputStringFunctionAutoTest (
   // OutputString() with Cursor Control Chars
   //
 
-  Print (L"\n\rOutputString with CursorControl Unicode strings starts\n\r");
+  SctPrint (L"\n\rOutputString with CursorControl Unicode strings starts\n\r");
 
 
   //
@@ -1779,7 +1779,7 @@ BBTestOutputStringFunctionManualTest (
   // Output String with Normal Unicode strings
   //
 
-  Print (L"\n\rOutputString with normal Unicode strings starts\n\r");
+  SctPrint (L"\n\rOutputString with normal Unicode strings starts\n\r");
   WaitTimeOrKey (5);
 
   //
@@ -1928,7 +1928,7 @@ BBTestOutputStringFunctionManualTest (
   // Output String with very long Unicode strings
   //
 
-  Print (L"\n\rOutputString with very long Unicode strings starts\n\r");
+  SctPrint (L"\n\rOutputString with very long Unicode strings starts\n\r");
   WaitTimeOrKey (5);
 
   //
@@ -2083,7 +2083,7 @@ BBTestOutputStringFunctionManualTest (
   // OutputString() with Drawing Chars
   //
 
-  Print (L"\n\rOutputString with Drawing Unicode strings starts\n\r");
+  SctPrint (L"\n\rOutputString with Drawing Unicode strings starts\n\r");
   WaitTimeOrKey (5);
 
   //
@@ -2212,7 +2212,7 @@ BBTestOutputStringFunctionManualTest (
   // OutputString() with Cursor Control Chars
   //
 
-  Print (L"\n\rOutputString with CursorControl Unicode strings starts\n\r");
+  SctPrint (L"\n\rOutputString with CursorControl Unicode strings starts\n\r");
   WaitTimeOrKey (5);
 
   //
@@ -2354,8 +2354,8 @@ BBTestOutputStringFunctionManualTest (
   // OutputString() with Mixed chars
   //
 
-  Print (L"\n\rOutputString with input Unicode strings starts\n\r");
-  Print (L"\n\rInput character and echo on screen. press \"Esc\" key to exit this test\n\r");
+  SctPrint (L"\n\rOutputString with input Unicode strings starts\n\r");
+  SctPrint (L"\n\rInput character and echo on screen. press \"Esc\" key to exit this test\n\r");
   WaitTimeOrKey (5);
 
   //
@@ -2802,10 +2802,10 @@ BBTestQueryModeFunctionAutoTest (
   //
   Status = LocateDevicePathFromSimpleTextOut (SimpleOut, &DevicePath, StandardLib);
   if (Status == EFI_SUCCESS) {
-    Print (L"Current testing console device:\r\n");
+    SctPrint (L"Current testing console device:\r\n");
     DevicePathStr = DevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
-      Print (DevicePathStr);
+      SctPrint (DevicePathStr);
       Status = gtBS->FreePool (DevicePathStr);
       if (EFI_ERROR(Status)) {
         StandardLib->RecordAssertion (
@@ -3088,7 +3088,7 @@ BBTestSetModeFunctionManualTest (
   // SetMode()
   //
 
-  Print (L"\n\rSetMode test start...\n\r");
+  SctPrint (L"\n\rSetMode test start...\n\r");
   WaitTimeOrKey (5);
 
 
@@ -3288,7 +3288,7 @@ BBTestSetModeFunctionManualTest (
     //
     // Output mode screen boundary for user's view
     //
-    Print (L"Current screen resolution:(%d x %d)", Column, Row);
+    SctPrint (L"Current screen resolution:(%d x %d)", Column, Row);
     if (AutoJudge (5, TRUE, L"\n\rSetMode correct?\r\n") != TRUE) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
@@ -3721,7 +3721,7 @@ BBTestSetAttributeFunctionManualTest (
   // SetAttbiute()
   //
 
-  Print (L"\n\rSetAttribute test start...\n\r");
+  SctPrint (L"\n\rSetAttribute test start...\n\r");
   WaitTimeOrKey (5);
 
   //
@@ -3775,7 +3775,7 @@ BBTestSetAttributeFunctionManualTest (
     //
     // Output Current Screen background description
     //
-    Print (L"\r\nCurrent background color %s\r\n", mAttribStr[IndexBack]);
+    SctPrint (L"\r\nCurrent background color %s\r\n", mAttribStr[IndexBack]);
 
     //
     // for each foreground color
@@ -3845,7 +3845,7 @@ BBTestSetAttributeFunctionManualTest (
       //
       // Output current foreground color
       //
-      Print (L"%s\r\n", mAttribStr[IndexFore]);
+      SctPrint (L"%s\r\n", mAttribStr[IndexFore]);
     }
     if (Result==TRUE) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -3870,7 +3870,7 @@ BBTestSetAttributeFunctionManualTest (
   //
   // User's view
   //
-  Print (L"\r\nThe screen output with changed background and foreground color correct?\r\n");
+  SctPrint (L"\r\nThe screen output with changed background and foreground color correct?\r\n");
 
   if (AutoJudge (5, TRUE, L"\n\rSetAttribute correct?\r\n") != TRUE) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -4094,7 +4094,7 @@ BBTestSetAttributeFunctionAutoTest (
       //
       // Output Current Screen background description
       //
-      Print (L"\r\nCurrent background color %s\r\n", mAttribStr[IndexBack]);
+      SctPrint (L"\r\nCurrent background color %s\r\n", mAttribStr[IndexBack]);
 
       //
       // for each foreground color
@@ -4164,7 +4164,7 @@ BBTestSetAttributeFunctionAutoTest (
         //
         // Output current foreground color
         //
-        Print (L"%s\r\n", mAttribStr[IndexFore]);
+        SctPrint (L"%s\r\n", mAttribStr[IndexFore]);
       }
       if (Result==TRUE) {
         AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -4303,7 +4303,7 @@ BBTestClearScreenFunctionManualTest (
   // ClearScreen()
   //
 
-  Print (L"\n\rClearScreen test start...\n\r");
+  SctPrint (L"\n\rClearScreen test start...\n\r");
   WaitTimeOrKey (5);
 
   //
@@ -4790,7 +4790,7 @@ BBTestSetCursorPositionFunctionManualTest (
   // SetCursorPosition()
   //
 
-  Print (L"\n\rSetCursorPosition test start...\n\r");
+  SctPrint (L"\n\rSetCursorPosition test start...\n\r");
   WaitTimeOrKey (5);
 
   //
@@ -5381,7 +5381,7 @@ BBTestEnableCursorFunctionManualTest (
   // EnableCursor() with Visible as TRUE to make cursor visible
   //
 
-  Print (L"\n\rEnableCursor test start...\n\r");
+  SctPrint (L"\n\rEnableCursor test start...\n\r");
   WaitTimeOrKey (5);
 
   //
@@ -5464,7 +5464,7 @@ BBTestEnableCursorFunctionManualTest (
     //
     // Ask for user's view.
     //
-    Print (L"EnableCursor(TRUE) return EFI_UNSUPPORTED!");
+    SctPrint (L"EnableCursor(TRUE) return EFI_UNSUPPORTED!");
     if (AutoJudge (5, TRUE, L"\n\rCorrect?\r\n") != TRUE) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
@@ -5636,7 +5636,7 @@ AssertionPoint2:
     //
     // Ask for user's view.
     //
-    Print (L"EnableCursor(FALSE) return EFI_UNSUPPORTED!");
+    SctPrint (L"EnableCursor(FALSE) return EFI_UNSUPPORTED!");
     if (AutoJudge (5, TRUE, L"\n\rCorrect?\r\n") != TRUE) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {

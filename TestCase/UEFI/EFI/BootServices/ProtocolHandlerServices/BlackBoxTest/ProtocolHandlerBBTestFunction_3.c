@@ -547,7 +547,7 @@ BBTestLocateHandleInterfaceTestCheckPoint2 (
     //
     // stall 10 seconds to wait for event signal
     //
-    Print (L"Waiting a few seconds for signal ...\n");
+    SctPrint (L"Waiting a few seconds for signal ...\n");
     gtBS->Stall (STALL_10_SECONDS);
 
     //
@@ -835,7 +835,7 @@ BBTestLocateHandleInterfaceTestCheckPoint3 (
     //
     // stall 10 seconds to wait for event signal
     //
-    Print (L"Waiting a few seconds for signal ...\n");
+    SctPrint (L"Waiting a few seconds for signal ...\n");
     gtBS->Stall (STALL_10_SECONDS);
 
     OldTpl = gtBS->RaiseTPL (TplArray[Index]);
@@ -1151,7 +1151,7 @@ BBTestLocateHandleInterfaceTestCheckPoint4 (
     //
     // stall 10 seconds to wait for event signal
     //
-    Print (L"Waiting a few seconds for signal ...\n");
+    SctPrint (L"Waiting a few seconds for signal ...\n");
     gtBS->Stall (STALL_10_SECONDS);
 
     //
@@ -1297,7 +1297,7 @@ BBTestLocateHandleInterfaceTestCheckPoint4 (
     //
     // stall 10 seconds to wait for event signal
     //
-    Print (L"Waiting a few seconds for signal ...\n");
+    SctPrint (L"Waiting a few seconds for signal ...\n");
     gtBS->Stall (STALL_10_SECONDS);
 
     //
@@ -1893,7 +1893,7 @@ BBTestLocateHandleBufferInterfaceTestCheckPoint2 (
     //
     // stall 10 seconds to wait for event signal
     //
-    Print (L"Waiting a few seconds for signal ...\n");
+    SctPrint (L"Waiting a few seconds for signal ...\n");
     gtBS->Stall (STALL_10_SECONDS);
 
     OldTpl = gtBS->RaiseTPL (TplArray[Index]);
@@ -2144,7 +2144,7 @@ BBTestLocateHandleBufferInterfaceTestCheckPoint3 (
     //
     // stall 10 seconds to wait for event signal
     //
-    Print (L"Waiting a few seconds for signal ...\n");
+    SctPrint (L"Waiting a few seconds for signal ...\n");
     gtBS->Stall (STALL_10_SECONDS);
 
     OldTpl = gtBS->RaiseTPL (TplArray[Index]);

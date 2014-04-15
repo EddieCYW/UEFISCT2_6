@@ -595,18 +595,18 @@ Returns:
   //
   // Wait for either
   //
-  PrintAt (Y, X, Message);
+  SctPrintAt (Y, X, Message);
   while (AutoJudge && (Seconds > 0)) {
     if (Default == TRUE) {
-      Msg = PoolPrint (L"Yes/No?(Auto judge as Yes in %d seconds  ", Seconds);
+      Msg = SctPoolPrint (L"Yes/No?(Auto judge as Yes in %d seconds  ", Seconds);
     } else {
-      Msg = PoolPrint (L"Yes/No?(Auto judge as No in %d seconds   ", Seconds);
+      Msg = SctPoolPrint (L"Yes/No?(Auto judge as No in %d seconds   ", Seconds);
     }
 
     if (Msg == NULL) {
       return FALSE;
     } else {
-      PrintAt (Y + 40, X, Msg);
+      SctPrintAt (Y + 40, X, Msg);
       SctFreePool (Msg);
     }
 
@@ -628,7 +628,7 @@ Returns:
       // Read the key
       //
       Status = gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
-      APrint ((char *) (&Key.UnicodeChar));
+      SctAPrint ((char *) (&Key.UnicodeChar));
       switch (Key.UnicodeChar) {
       case 'Y':
       case 'y':
@@ -655,7 +655,7 @@ Returns:
     }
   }
   //
-  // Print (L"\r\n");
+  // SctPrint (L"\r\n");
   //
   // Done, cancle periodic timer event
   //

@@ -779,7 +779,7 @@ BBTestCombinationTest3 (
   // protocol4 will be installed again by device driver 1,
   // so event registered for protocol4 will be signaled
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   if (1 == NotifyTimes) {
@@ -1485,7 +1485,7 @@ BBTestCombinationTest2CheckPoint2 (
   //
   // wait some time for the events triggering
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   if (100 != NotifyTimes) {

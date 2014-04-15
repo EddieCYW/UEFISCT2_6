@@ -1038,11 +1038,11 @@ BBTestOpenExBasicTestCheckpoint1_Test1_Async (
       }
     }
   }
-  Print (L" ================== Async OpenEx call finshed ================== \n\n");
+  SctPrint (L" ================== Async OpenEx call finshed ================== \n\n");
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Open events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Open events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
       
@@ -1057,13 +1057,13 @@ BBTestOpenExBasicTestCheckpoint1_Test1_Async (
             );
     IndexI++;
   
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncOpenFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenFileQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");    
+  SctPrint (L"\n");    
 
   //
   // clear all File IO events from gOpenFileFinishQueue 
@@ -1405,11 +1405,11 @@ BBTestOpenExBasicTestCheckpoint1_Test2_Async (
       }
     }
   }
-  Print (L" ================== Async OpenEx call finshed ================== \n\n");
+  SctPrint (L" ================== Async OpenEx call finshed ================== \n\n");
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Open events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Open events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
         
@@ -1427,13 +1427,13 @@ BBTestOpenExBasicTestCheckpoint1_Test2_Async (
             );
     IndexI++;
   
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncOpenFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenFileQueueLock);
     
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");    
+  SctPrint (L"\n");    
   
   //
   // clear all File IO events from gOpenDirFinishQueue 
@@ -2030,11 +2030,11 @@ BBTestOpenExBasicTestCheckpoint1_Test3_Async (
       }
     } 
   }   
-  Print (L" ================== Async OpenEx call finshed ================== \n\n");
+  SctPrint (L" ================== Async OpenEx call finshed ================== \n\n");
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Open events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Open events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
       
@@ -2049,13 +2049,13 @@ BBTestOpenExBasicTestCheckpoint1_Test3_Async (
             );
     IndexI++;
   
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncOpenFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenFileQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");    
+  SctPrint (L"\n");    
  
   //
   // clear all File IO events from gOpenFileFinishQueue 
@@ -2543,11 +2543,11 @@ BBTestOpenExBasicTestCheckpoint1_Test4_Async (
     }
   }
   
-  Print (L" ================== Async OpenEx call finshed ================== \n\n");
+  SctPrint (L" ================== Async OpenEx call finshed ================== \n\n");
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Open events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Open events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
       
@@ -2562,13 +2562,13 @@ BBTestOpenExBasicTestCheckpoint1_Test4_Async (
             );
     IndexI++;
     
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncOpenFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenFileQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");    
+  SctPrint (L"\n");    
     
   //
   // clear all File IO events from gOpenFileFinishQueue 
@@ -3182,11 +3182,11 @@ BBTestOpenExBasicTestCheckpoint1_Test5_Async (
       }
     }    
   }      
-  Print (L" ================== Async OpenEx call finshed ================== \n\n");
+  SctPrint (L" ================== Async OpenEx call finshed ================== \n\n");
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Open events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Open events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
       
@@ -3201,13 +3201,13 @@ BBTestOpenExBasicTestCheckpoint1_Test5_Async (
             );
     IndexI++;
     
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncOpenFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenFileQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");    
+  SctPrint (L"\n");    
     
   //
   // clear all File IO events from gOpenFileFinishQueue 
@@ -4259,7 +4259,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Async (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
 
-  Print (L" ================ Start to do Async OpenFile call ================ \n\n");
+  SctPrint (L" ================ Start to do Async OpenFile call ================ \n\n");
 
   // 
   // do Asyn Open File call basing on read data result 
@@ -4281,11 +4281,11 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Async (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
 
-  Print (L" ================== Async OpenExisting File call finshed ================== \n\n"); 
+  SctPrint (L" ================== Async OpenExisting File call finshed ================== \n\n"); 
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Open events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Open events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
       
@@ -4300,13 +4300,13 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Async (
             );
     IndexI++;
     
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncOpenExistingFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");     
+  SctPrint (L"\n");     
   //
   // clear all File IO events from gOpenExistingFileFinishQueue 
   // gOpenExistingFileQueue is handled first since we use File IO openex to do open file 
@@ -4822,7 +4822,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Sync (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
    
-  Print (L" ================ Start to do Sync OpenFile call ================ \n\n");
+  SctPrint (L" ================ Start to do Sync OpenFile call ================ \n\n");
   // 
   // do Asyn Open File call basing on read data result 
   //
@@ -4857,7 +4857,7 @@ BBTestOpenExBasicTestCheckpoint2_Test1_Sync (
     } 
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
-  Print (L" ================== Sync OpenExisting File call finshed ================== \n\n");
+  SctPrint (L" ================== Sync OpenExisting File call finshed ================== \n\n");
   //
   // clear all File IO events from gOpenExistingFileFinishQueue 
   // gOpenExistingFileQueue is handled first since we use File IO openex to do open file 
@@ -5403,7 +5403,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Async (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
 
-  Print (L" ================ Start to do Async OpenFile call ================ \n\n");
+  SctPrint (L" ================ Start to do Async OpenFile call ================ \n\n");
   // 
   // do Asyn Open File call basing on read data result 
   //
@@ -5424,11 +5424,11 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Async (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);  
      
-  Print (L" ================== Async OpenExisting File call finshed ================== \n\n");
+  SctPrint (L" ================== Async OpenExisting File call finshed ================== \n\n");
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Open events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Open events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
       
@@ -5443,13 +5443,13 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Async (
             );
     IndexI++;
     
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncOpenExistingFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");    
+  SctPrint (L"\n");    
     
   //
   // clear all File IO events from gOpenExistingFileFinishQueue 
@@ -6076,7 +6076,7 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Sync (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
    
-  Print (L" ================ Start to do Sync OpenFile call ================ \n\n");
+  SctPrint (L" ================ Start to do Sync OpenFile call ================ \n\n");
   // 
   // do Asyn Open File call basing on read data result 
   //
@@ -6111,8 +6111,13 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Sync (
       }
     } 
   }
+<<<<<<< HEAD
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
   Print (L" ================== Sync OpenExisting File call finshed ================== \n\n");  
+=======
+  SctReleaseLock (&gAsyncOpenExistingFileQueueLock);
+  SctPrint (L" ================== Sync OpenExisting File call finshed ================== \n\n");  
+>>>>>>> ac90727... SctLib: Added Print API
   //
   // clear all File IO events from gOpenExistingFileFinishQueue 
   // gOpenExistingFileQueue is handled first since we use File IO openex to do open file 
@@ -6599,7 +6604,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Async (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
   
-  Print (L" ================ Start to do Async OpenFile call ================ \n\n");
+  SctPrint (L" ================ Start to do Async OpenFile call ================ \n\n");
   // 
   // do Asyn Open File call basing on read data result 
   //
@@ -6618,12 +6623,12 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Async (
     AcquireLock(&gAsyncOpenExistingFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);  
-  Print (L" ================== Async OpenExisting File call finshed ================== \n\n"); 
+  SctPrint (L" ================== Async OpenExisting File call finshed ================== \n\n"); 
 
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Open events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Open events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
       
@@ -6638,13 +6643,13 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Async (
             );
     IndexI++;
     
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncOpenExistingFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");    
+  SctPrint (L"\n");    
     
   //
   // clear all File IO events from gOpenExistingFileFinishQueue 
@@ -7199,7 +7204,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Sync (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
 
-  Print (L" ================ Start to do Sync OpenFile call ================ \n\n");
+  SctPrint (L" ================ Start to do Sync OpenFile call ================ \n\n");
   // 
   // do Asyn Open File call basing on read data result 
   //
@@ -7236,7 +7241,7 @@ BBTestOpenExBasicTestCheckpoint2_Test3_Sync (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
   
-  Print (L" ================== Sync OpenExisting File call finshed ================== \n\n");  
+  SctPrint (L" ================== Sync OpenExisting File call finshed ================== \n\n");  
   //
   // clear all File IO events from gOpenExistingFileFinishQueue 
   // gOpenExistingFileQueue is handled first since we use File IO openex to do open file 
@@ -7853,7 +7858,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Async (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
    
-  Print (L" ================ Start to do Async OpenFile call ================ \n\n");
+  SctPrint (L" ================ Start to do Async OpenFile call ================ \n\n");
   // 
   // do Asyn Open File call basing on read data result 
   //
@@ -7873,12 +7878,12 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Async (
     AcquireLock(&gAsyncOpenExistingFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);  
-  Print (L" ================== Async OpenExisting File call finshed ================== \n\n"); 
+  SctPrint (L" ================== Async OpenExisting File call finshed ================== \n\n"); 
  
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Open events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Open events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
       
@@ -7893,13 +7898,13 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Async (
             );
     IndexI++;
     
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncOpenExistingFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");    
+  SctPrint (L"\n");    
     
   //
   // clear all File IO events from gOpenExistingFileFinishQueue 
@@ -8596,7 +8601,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Sync (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
 
-  Print (L" ================ Start to do Sync OpenFile call ================ \n\n");
+  SctPrint (L" ================ Start to do Sync OpenFile call ================ \n\n");
   // 
   // do Asyn Open File call basing on read data result 
   //
@@ -8633,7 +8638,7 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Sync (
     } 
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
-  Print (L" ================== Sync OpenExisting File call finshed ================== \n\n");   
+  SctPrint (L" ================== Sync OpenExisting File call finshed ================== \n\n");   
   //
   // clear all File IO events from gOpenExistingFileFinishQueue 
   // gOpenExistingFileQueue is handled first since we use File IO openex to do open file 
@@ -9305,7 +9310,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Async (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
    
-  Print (L" ================ Start to do Async OpenFile call ================ \n\n");
+  SctPrint (L" ================ Start to do Async OpenFile call ================ \n\n");
   // 
   // do Asyn Open File call basing on read data result 
   //
@@ -9327,12 +9332,12 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Async (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock); 
 
-  Print (L" ================== Async OpenExisting File call finshed ================== \n\n"); 
+  SctPrint (L" ================== Async OpenExisting File call finshed ================== \n\n"); 
   
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Open events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Open events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
       
@@ -9347,13 +9352,13 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Async (
             );
     IndexI++;
     
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncOpenExistingFileQueueLock);
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");    
+  SctPrint (L"\n");    
     
   //
   // clear all File IO events from gOpenExistingFileFinishQueue 
@@ -10081,7 +10086,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Sync (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);
    
-  Print (L" ================ Start to do Sync OpenFile call ================ \n\n");
+  SctPrint (L" ================ Start to do Sync OpenFile call ================ \n\n");
   // 
   // do Asyn Open File call basing on read data result 
   //
@@ -10116,7 +10121,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Sync (
   }
   ReleaseLock(&gAsyncOpenExistingFileQueueLock);  
 
-  Print (L" ================== Sync OpenExisting File call finshed ================== \n\n"); 
+  SctPrint (L" ================== Sync OpenExisting File call finshed ================== \n\n"); 
   //
   // clear all File IO events from gOpenExistingFileFinishQueue 
   // gOpenExistingFileQueue is handled first since we use File IO openex to do open file 

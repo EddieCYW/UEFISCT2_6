@@ -213,7 +213,7 @@ BBTestWriteFunctionManualTest (
   //
   // Verify the functionality manually.
   //
-  Print (L"Please verify the output string is %s, right press \"Y\", wrong press \"N\"", Buffer);
+  SctPrint (L"Please verify the output string is %s, right press \"Y\", wrong press \"N\"", Buffer);
 
   //
   // Get the input key.
@@ -226,7 +226,7 @@ BBTestWriteFunctionManualTest (
       break;
     }
     else {
-      Print (L"Please press \"Y\" or \"N\"");
+      SctPrint (L"Please press \"Y\" or \"N\"");
     }
   }
   if ((Key.UnicodeChar == L'N') || (Key.UnicodeChar == L'n')) {
@@ -313,7 +313,7 @@ BBTestReadFunctionManualTest (
   //
   // Wait for the input data.
   //
-  Print (L"Please any key after input data.");
+  SctPrint (L"Please any key after input data.");
   gtBS->WaitForEvent (1, &(gtST->ConIn->WaitForKey), &WaitIndex);
   gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
 
@@ -338,7 +338,7 @@ BBTestReadFunctionManualTest (
   //
   // Verify the functionality manually.
   //
-  Print (L"Please verify the input string is %s, right press \"Y\", wrong press \"N\"", Buffer);
+  SctPrint (L"Please verify the input string is %s, right press \"Y\", wrong press \"N\"", Buffer);
 
   //
   // Get the input key.
@@ -351,7 +351,7 @@ BBTestReadFunctionManualTest (
       break;
     }
     else {
-      Print (L"Please press \"Y\" or \"N\"");
+      SctPrint (L"Please press \"Y\" or \"N\"");
     }
   }
   if ((Key.UnicodeChar == L'N') || (Key.UnicodeChar == L'n')) {
@@ -433,7 +433,7 @@ BBTestPollFunctionManualTest (
   //
   // Wait for the input data.
   //
-  Print (L"\nPress any key after input data.");
+  SctPrint (L"\nPress any key after input data.");
   gtBS->WaitForEvent (1, &(gtST->ConIn->WaitForKey), &WaitIndex);
   gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
 

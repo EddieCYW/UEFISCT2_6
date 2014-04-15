@@ -55,12 +55,15 @@ COMPONENT_TYPE  = LIBRARY
 [sources.common]
   Alloc.c
   Debug.c
+  Error.c
+  Guid.c
   Handle.c
   Init.c
   List.c
   Math.c
   Mem.c
   Misc.c
+  Print.c
   String.c
 
 [sources.Arm]

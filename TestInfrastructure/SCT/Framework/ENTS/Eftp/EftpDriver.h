@@ -56,7 +56,6 @@ Abstract:
 #ifndef _EFI_EFTP_DRIVER_H_
 #define _EFI_EFTP_DRIVER_H_
 
-#include "EfiPrintLib.h"
 #include "Eftp.h"
 
 #include EFI_PROTOCOL_DEFINITION (ManagedNetwork)

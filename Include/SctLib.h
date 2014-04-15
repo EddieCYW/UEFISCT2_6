@@ -273,6 +273,73 @@ SctWriteUnaligned32 (
 
 
 //
+// Print API
+//
+
+typedef struct {
+  CHAR16                            *str;
+  UINTN                             len;
+  UINTN                             maxlen;
+} SCT_POOL_PRINT;
+
+UINTN
+SctPrintAt (
+  IN UINTN                          Column,
+  IN UINTN                          Row,
+  IN CONST CHAR16                   *fmt,
+  ...
+  );
+
+UINTN
+SctPrint (
+  IN CONST CHAR16                   *fmt,
+  ...
+  );
+
+UINTN
+SctAPrint (
+  IN CHAR8                          *fmt,
+  ...
+  );
+
+UINTN
+SctSPrint (
+  OUT CHAR16  *Str,
+  IN UINTN    StrSize,
+  IN CHAR16   *fmt,
+  ...
+  );
+
+UINTN
+SctASPrint (
+  OUT CHAR8   *Str,
+  IN UINTN    StrSize,
+  IN CHAR8    *fmt,
+  ...
+  );
+
+UINTN
+SctVSPrint (
+  OUT CHAR16                        *Str,
+  IN UINTN                          StrSize,
+  IN CONST CHAR16                   *fmt,
+  IN VA_LIST                        vargs
+  );
+
+CHAR16 *
+SctPoolPrint (
+  IN CONST CHAR16                   *fmt,
+  ...
+  );
+
+CHAR16 *
+SctCatPrint (
+    IN OUT SCT_POOL_PRINT   *Str,
+    IN CONST CHAR16     *fmt,
+    ...
+    );
+
+//
 // Protocol & Handle API
 //
 

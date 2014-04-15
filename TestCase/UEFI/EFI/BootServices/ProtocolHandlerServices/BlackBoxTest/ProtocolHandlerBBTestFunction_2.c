@@ -7174,7 +7174,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint2 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   for (EventIndex = 0; EventIndex < 2; EventIndex++) {
@@ -7226,7 +7226,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint2 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   for (EventIndex = 0; EventIndex < 2; EventIndex++) {
@@ -7410,7 +7410,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint3 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   //
@@ -7458,7 +7458,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint3 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   //
@@ -7730,7 +7730,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint4 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   //
@@ -7766,7 +7766,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint4 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   //
@@ -8013,7 +8013,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint5 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   for (EventIndex = 0; EventIndex < 2; EventIndex++) {
@@ -8074,7 +8074,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint5 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   for (EventIndex = 0; EventIndex < 2; EventIndex++) {
@@ -8277,7 +8277,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint6 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   //
@@ -8332,7 +8332,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint6 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   //
@@ -8603,7 +8603,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint7 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   //
@@ -8645,7 +8645,7 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint7 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   //
@@ -10451,7 +10451,7 @@ BBTestInstallMultipleProtocolInterfacesInterfaceTestCheckPoint6 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   for (EventIndex = 0; EventIndex < 4; EventIndex++) {
@@ -10677,7 +10677,7 @@ BBTestInstallMultipleProtocolInterfacesInterfaceTestCheckPoint7 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   //
@@ -10936,7 +10936,7 @@ BBTestInstallMultipleProtocolInterfacesInterfaceTestCheckPoint8 (
   //
   // stall 10 seconds to wait for notify function execution
   //
-  Print (L"Waiting a few seconds for signal ...\n");
+  SctPrint (L"Waiting a few seconds for signal ...\n");
   gtBS->Stall (STALL_10_SECONDS);
 
   //

@@ -793,7 +793,7 @@ PollMem_Func (
     return EFI_OUT_OF_RESOURCES;
   }
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -1796,7 +1796,7 @@ PollIo_Func (
     return EFI_OUT_OF_RESOURCES;
   }
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -2184,7 +2184,7 @@ MemRead_Func (
     return EFI_OUT_OF_RESOURCES;
   }
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -2283,7 +2283,7 @@ MemRead_Func (
     if (EFI_ERROR(Status)) {
       continue;
     }
-    Print (L"After Get BarIndex\r\n");
+    SctPrint (L"After Get BarIndex\r\n");
     //
     //then get Offset.
     //
@@ -2297,7 +2297,7 @@ MemRead_Func (
     if (EFI_ERROR(Status)) {
       continue;
     }
-    Print (L"After Get Bar Offset\r\n");
+    SctPrint (L"After Get Bar Offset\r\n");
     //
     //get width
     //
@@ -2859,7 +2859,7 @@ MemWrite_Func (
     return EFI_OUT_OF_RESOURCES;
   }
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -3515,7 +3515,7 @@ IoRead_Func (
     return EFI_OUT_OF_RESOURCES;
   }
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;
@@ -4181,7 +4181,7 @@ IoWrite_Func (
     return EFI_OUT_OF_RESOURCES;
   }
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_IO_TEST_INI_FILE);
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
     return EFI_OUT_OF_RESOURCES;

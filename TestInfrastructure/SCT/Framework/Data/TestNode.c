@@ -257,7 +257,7 @@ Returns:
     if (Status == EFI_NOT_FOUND) {
       Index               = (UINTN) -1;
       SctGuidToStr (CategoryGuid, CategoryGuidStr);
-      CategoryName        = PoolPrint (L"Unknown\\%s", CategoryGuidStr);
+      CategoryName        = SctPoolPrint (L"Unknown\\%s", CategoryGuidStr);
       CategoryDescription = SctStrDuplicate (L"");
     } else {
       Index               = Category->Index;
@@ -952,13 +952,13 @@ GenerateCaseTreeFile(
   //
   // Prepare CaseTree file for test case sychronization with EMS
   //
-  FileName = PoolPrint (
+  FileName = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_SYNC_FILE_CASE_TREE
                );
   if (FileName == NULL) {
-    EFI_ENTS_DEBUG(( EFI_ENTS_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_ENTS_DEBUG(( EFI_ENTS_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 

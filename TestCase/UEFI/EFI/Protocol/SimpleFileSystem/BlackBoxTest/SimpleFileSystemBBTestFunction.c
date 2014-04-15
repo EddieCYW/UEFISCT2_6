@@ -7562,7 +7562,7 @@ BBTestGetInfoBasicTestCheckpoint3 (
         FileName = FileNamePool;
         for (FileIndex = 0; FileIndex < 100; FileIndex++, FileName += MAX_STRING_LENGTH) {
 
-          SPrint (FileName, MAX_STRING_LENGTH, L"%s_%d", BasicFileName, FileIndex);
+          SctSPrint (FileName, MAX_STRING_LENGTH, L"%s_%d", BasicFileName, FileIndex);
 
           Status = Root->Open (
                     Root,

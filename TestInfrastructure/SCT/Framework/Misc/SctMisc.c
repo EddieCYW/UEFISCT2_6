@@ -468,7 +468,7 @@ Routine Description:
   // HARDCODE: 256 file systems
   //
   for (Index = 0; Index < 0x100; Index ++) {
-    TempFilePath = PoolPrint (L"fs%x", Index);
+    TempFilePath = SctPoolPrint (L"fs%x", Index);
     if (TempFilePath == NULL) {
       return EFI_OUT_OF_RESOURCES;
     }
@@ -491,7 +491,7 @@ Routine Description:
   // HARDCODE: for NT32 filesystem
   //
   for (Index = 0; Index < 0x100; Index ++) {
-    TempFilePath = PoolPrint (L"fsnt%x", Index);
+    TempFilePath = SctPoolPrint (L"fsnt%x", Index);
     if (TempFilePath == NULL) {
       return EFI_OUT_OF_RESOURCES;
     }
@@ -539,7 +539,7 @@ Routine Description:
     //
     // Print the message
     //
-    Print (L"%s", Message);
+    SctPrint (L"%s", Message);
 
     //
     // Wait for a key
@@ -561,7 +561,7 @@ Routine Description:
       return Status;
     }
 
-    Print (L"%c\n", Key.UnicodeChar);
+    SctPrint (L"%c\n", Key.UnicodeChar);
 
     //
     // Check the key
@@ -600,7 +600,7 @@ Routine Description:
   EFI_STATUS    Status;
   CHAR16        *CmdLine;
 
-  CmdLine = PoolPrint (L"CD %s", DirName);
+  CmdLine = SctPoolPrint (L"CD %s", DirName);
   if (CmdLine == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -947,7 +947,7 @@ Routine Description:
   //
   // Convert an integer to a string
   //
-  SPrint (Buffer, 0, L"%d", Value);
+  SctSPrint (Buffer, 0, L"%d", Value);
 
   return EFI_SUCCESS;
 }
@@ -1003,7 +1003,7 @@ Routine Description:
   //
   // Convert a short integer to a string
   //
-  SPrint (Buffer, 0, L"%d", (UINTN) Value);
+  SctSPrint (Buffer, 0, L"%d", (UINTN) Value);
 
   return EFI_SUCCESS;
 }
@@ -1059,7 +1059,7 @@ Routine Description:
   //
   // Convert an integer to a string
   //
-  SPrint (Buffer, 0, L"0x%x", Value);
+  SctSPrint (Buffer, 0, L"0x%x", Value);
 
   return EFI_SUCCESS;
 }
@@ -1111,7 +1111,7 @@ Routine Description:
   //
   // Convert a short integer to a string
   //
-  SPrint (Buffer, 0, L"0x%x", (UINTN) Value);
+  SctSPrint (Buffer, 0, L"0x%x", (UINTN) Value);
 
   return EFI_SUCCESS;
 }
@@ -1469,7 +1469,7 @@ Routine Description:
   //
   // Convert a test level to a string
   //
-  SPrint (
+  SctSPrint (
     Buffer,
     0,
     L"%s,%s,%s",
@@ -1647,7 +1647,7 @@ Routine Description:
   //
   // Convert a case attribute to a string
   //
-  SPrint (
+  SctSPrint (
     Buffer,
     0,
     L"%s,%s,%s",

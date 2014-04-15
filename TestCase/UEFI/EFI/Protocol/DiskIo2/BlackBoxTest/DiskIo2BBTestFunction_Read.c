@@ -876,7 +876,7 @@ BBTestReadDiskExFunctionAutoTestCheckpoint1(
   //
   if ((MediaPresent == TRUE) && (LastBlock != 0)) {
    
-    Print (L" ================ Start to do Async ReadDiskEx call ================ \n\n");
+    SctPrint (L" ================ Start to do Async ReadDiskEx call ================ \n\n");
  
     for (IndexI = 0; IndexI < 9; IndexI++) {
       //
@@ -1059,14 +1059,14 @@ BBTestReadDiskExFunctionAutoTestCheckpoint1(
       }//end of loop of Offset - IndecJ
     }//end of loop of BufferSize - IndexI
 
-    Print (L" ================== Async ReadDiskEx call finshed ================== \n\n");
+    SctPrint (L" ================== Async ReadDiskEx call finshed ================== \n\n");
 
 
 END_WAIT:
     //
     // Busy waiting 120s on all the execute entity being moved to finished queue
     //  
-    Print (L"Wait maximumly 120s for all Async Read events signaled\n\n");
+    SctPrint (L"Wait maximumly 120s for all Async Read events signaled\n\n");
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     IndexI = 0;
     
@@ -1081,13 +1081,13 @@ END_WAIT:
               );
       IndexI++;
 
-      Print (L".");
+      SctPrint (L".");
       AcquireLock(&gAsyncReadQueueLock);
     }
     ReleaseLock(&gAsyncReadQueueLock);
 
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-    Print(L"\n");
+    SctPrint (L"\n");
   }
 
   //
@@ -1738,7 +1738,7 @@ BBTestReadDiskExFunctionAutoTestCheckpoint3(
   
   AsyncBatchReadToken.TransactionStatus = EFI_NOT_READY;
 
-  Print (L"Create Batch Read Task List.\n\n");
+  SctPrint (L"Create Batch Read Task List.\n\n");
   //
   // Create one Batch Read task list
   //
@@ -1939,7 +1939,7 @@ BBTestReadDiskExFunctionAutoTestCheckpoint3(
     // Busy Waiting for AsyncBatchReadToken signal
     // Busy waiting 120s on all the execute entity being moved to finished queue
     //  
-    Print (L"Wait maximumly 120s for Async Batch Read events signaled\n\n");
+    SctPrint (L"Wait maximumly 120s for Async Batch Read events signaled\n\n");
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     IndexI = 0;
     
@@ -1950,11 +1950,11 @@ BBTestReadDiskExFunctionAutoTestCheckpoint3(
                       &WaitIndex
                       );
       IndexI++;
-      Print(L".");
+      SctPrint (L".");
     }
-    Print(L"AsyncBatchReadFinished is %d\n", AsyncBatchReadFinished);
+    SctPrint (L"AsyncBatchReadFinished is %d\n", AsyncBatchReadFinished);
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-    Print(L"\n");
+    SctPrint (L"\n");
   }
   
 END:
@@ -2153,7 +2153,7 @@ BBTestReadDiskExFunctionAutoTestCheckpoint4(
   //
   if ((MediaPresent == TRUE) && (LastBlock != 0)) {
    
-    Print (L" ============= Start to do Mixed Async & Sync ReadDiskEx call ============= \n\n");
+    SctPrint (L" ============= Start to do Mixed Async & Sync ReadDiskEx call ============= \n\n");
     for (IndexI = 0; IndexI < 9; IndexI++) {
       //
       // prepare test data
@@ -2325,14 +2325,14 @@ BBTestReadDiskExFunctionAutoTestCheckpoint4(
        }//end of loop of Offset - IndexJ
     }//end of loop of BufferSize - IndexI
 
-    Print (L" ================ Mixed Async & Sync ReadDiskEx call finshed ================ \n\n");
+    SctPrint (L" ================ Mixed Async & Sync ReadDiskEx call finshed ================ \n\n");
 
 END_WAIT:
   
     //
     // Busy waiting 120s on all the execute entity being moved to finished queue
     //  
-    Print (L"Wait maximumly 120s for all Async Read events signaled\n\n");
+    SctPrint (L"Wait maximumly 120s for all Async Read events signaled\n\n");
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     IndexI = 0;
     
@@ -2346,13 +2346,13 @@ END_WAIT:
               &WaitIndex
               );
       IndexI++;
-      Print (L".");
+      SctPrint (L".");
       AcquireLock(&gMixedReadQueueLock);
     }
     ReleaseLock(&gMixedReadQueueLock);
 
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-    Print(L"\n");
+    SctPrint (L"\n");
   }
  
   //

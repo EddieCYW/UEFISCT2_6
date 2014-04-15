@@ -307,14 +307,14 @@ Returns:
   // Create the file path
   //
   if (ExecuteInfo->Category == NULL) {
-    *FilePath = PoolPrint (
+    *FilePath = SctPoolPrint (
                   L"%s\\%s\\Unknown\\%s",
                   gFT->FilePath,
                   EFI_SCT_PATH_LOG,
                   CategoryGuidStr
                   );
   } else {
-    *FilePath = PoolPrint (
+    *FilePath = SctPoolPrint (
                   L"%s\\%s\\%s",
                   gFT->FilePath,
                   EFI_SCT_PATH_LOG,
@@ -323,7 +323,7 @@ Returns:
   }
 
   if (*FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -332,7 +332,7 @@ Returns:
   //
   // Create the meta file name
   //
-  *MetaName = PoolPrint (
+  *MetaName = SctPoolPrint (
                 L"%s_%s_%s_%s.%s",
                 EntryName,
                 L"%s",              // Index
@@ -341,7 +341,7 @@ Returns:
                 L"%s"               // Extension
                 );
   if (*MetaName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     tBS->FreePool (*FilePath);
     return EFI_OUT_OF_RESOURCES;
   }
@@ -407,9 +407,9 @@ Returns:
   //
   // Convert the meta file name to number file name
   //
-  TempName = PoolPrint (MetaName, L"%d", L"%d", L"%s");
+  TempName = SctPoolPrint (MetaName, L"%d", L"%d", L"%s");
   if (TempName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     tBS->FreePool (FilePath);
     tBS->FreePool (MetaName);
     return EFI_OUT_OF_RESOURCES;
@@ -418,9 +418,9 @@ Returns:
   //
   // Create the full meta name
   //
-  *FullMetaName = PoolPrint (L"%s\\%s", FilePath, TempName);
+  *FullMetaName = SctPoolPrint (L"%s\\%s", FilePath, TempName);
   if (*FullMetaName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     tBS->FreePool (FilePath);
     tBS->FreePool (MetaName);
     tBS->FreePool (TempName);
@@ -493,9 +493,9 @@ Returns:
   //
   // Convert the meta file name to number file name
   //
-  TempName = PoolPrint (MetaName, L"%d", L"%d", L"ekl");
+  TempName = SctPoolPrint (MetaName, L"%d", L"%d", L"ekl");
   if (TempName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     tBS->FreePool (FilePath);
     tBS->FreePool (MetaName);
     return EFI_OUT_OF_RESOURCES;
@@ -504,9 +504,9 @@ Returns:
   //
   // Create the full meta name
   //
-  *FullMetaName = PoolPrint (L"%s\\%s", FilePath, TempName);
+  *FullMetaName = SctPoolPrint (L"%s\\%s", FilePath, TempName);
   if (*FullMetaName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     tBS->FreePool (FilePath);
     tBS->FreePool (MetaName);
     tBS->FreePool (TempName);
@@ -849,7 +849,7 @@ GatherConfigHandles (
     return Status;
   }
 
-  ConfigFilePath = PoolPrint (L"%s\\%s", FilePath, EFI_SCT_FILE_DEVICE_CONFIG);
+  ConfigFilePath = SctPoolPrint (L"%s\\%s", FilePath, EFI_SCT_FILE_DEVICE_CONFIG);
   if (ConfigFilePath == NULL) {
     tBS->FreePool (DevicePath);
     tBS->FreePool (FilePath);

@@ -184,7 +184,7 @@ PciRead_Func (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
@@ -869,7 +869,7 @@ PciWrite_Func (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);
@@ -1617,7 +1617,7 @@ CopyMem_Func (
   }
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PCI_ROOT_BRIDGE_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     gtBS->FreePool (PciDevicePathStr);

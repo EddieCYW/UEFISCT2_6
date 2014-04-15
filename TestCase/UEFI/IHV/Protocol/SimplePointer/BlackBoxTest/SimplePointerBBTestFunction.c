@@ -438,7 +438,7 @@ BBTestResetFunctionManualTest (
                    );
   }
 
-  Print (L"\r\nReset Without Extend Verification Test Start!\r\n");
+  SctPrint (L"\r\nReset Without Extend Verification Test Start!\r\n");
   WaitTimeOrKey (5);
 
   //
@@ -537,7 +537,7 @@ BBTestResetFunctionManualTest (
   // Step 4.
   // Prompt user to move or click corresponding pointer device
   //
-  Print (L"\r\nMove or click pointer device\r\n");
+  SctPrint (L"\r\nMove or click pointer device\r\n");
 
   if (WaitTimeOrPointer (10, SimplePointer) != TRUE) {
     goto AssertionPoints2;
@@ -634,7 +634,7 @@ BBTestResetFunctionManualTest (
   // Step 7.
   // Prompt user to move or click corresponding pointer device
   //
-  Print (L"\r\nMove or click pointer device AGAIN\r\n");
+  SctPrint (L"\r\nMove or click pointer device AGAIN\r\n");
 
   if (WaitTimeOrPointer (10, SimplePointer) != TRUE) {
     goto AssertionPoints2;
@@ -765,7 +765,7 @@ BBTestResetFunctionManualTest (
 
 AssertionPoints2:
 
-  Print (L"\r\nReset With Extend Verification Test Start!\r\n");
+  SctPrint (L"\r\nReset With Extend Verification Test Start!\r\n");
   WaitTimeOrKey (5);
 
   //
@@ -864,7 +864,7 @@ AssertionPoints2:
   // Step 4.
   // Prompt user to move or click corresponding pointer device
   //
-  Print (L"\r\nMove or click pointer device!\r\n");
+  SctPrint (L"\r\nMove or click pointer device!\r\n");
 
   if (WaitTimeOrPointer (10, SimplePointer) != TRUE) {
     return EFI_SUCCESS;
@@ -961,7 +961,7 @@ AssertionPoints2:
   // Step 7.
   // Prompt user to move or click corresponding pointer device
   //
-  Print (L"\r\nMove or click pointer device AGAIN\r\n");
+  SctPrint (L"\r\nMove or click pointer device AGAIN\r\n");
 
   if (WaitTimeOrPointer (10, SimplePointer) != TRUE) {
     return EFI_SUCCESS;
@@ -1480,7 +1480,7 @@ BBTestGetStateFunctionManualTest (
                    );
   }
 
-  Print (L"\r\nGetState Function Test Start!\r\n");
+  SctPrint (L"\r\nGetState Function Test Start!\r\n");
   WaitTimeOrKey (5);
 
   //
@@ -1570,7 +1570,7 @@ BBTestGetStateFunctionManualTest (
   // Step 4
   // Wait for User input or timeout (Move Only!!)
   //
-  Print (L"\r\nMove the pointer device and NO(!!) button pressed in 10 seconds\r\n");
+  SctPrint (L"\r\nMove the pointer device and NO(!!) button pressed in 10 seconds\r\n");
   if (WaitTimeOrPointer (10, SimplePointer) == FALSE) {
     goto Step10;
   }
@@ -1663,7 +1663,7 @@ BBTestGetStateFunctionManualTest (
   // Step 7
   // Wait for User input or timeout (Right Button Pressed Only!!)
   //
-  Print (L"\r\nPlease Press Right button not release and No move in 10 seconds\r\n");
+  SctPrint (L"\r\nPlease Press Right button not release and No move in 10 seconds\r\n");
   if (WaitTimeOrPointer (10, SimplePointer) == FALSE) {
     goto Step10;
   }
@@ -1780,7 +1780,7 @@ BBTestGetStateFunctionManualTest (
   // Step 9.1
   // Wait for User to release right button pressed
   //
-  Print (L"\r\nPlease release Right button in 10 seconds\r\n");
+  SctPrint (L"\r\nPlease release Right button in 10 seconds\r\n");
   if (WaitTimeOrPointer (10, SimplePointer) == FALSE) {
     goto Step13;
   }
@@ -1860,7 +1860,7 @@ Step10:
   // Step 10
   // Wait for User input or timeout (Left Button Pressed Only!!)
   //
-  Print (L"\r\nPlease Press Left button not release and NO move in 10 seconds\r\n");
+  SctPrint (L"\r\nPlease Press Left button not release and NO move in 10 seconds\r\n");
   if (WaitTimeOrPointer (10, SimplePointer) == FALSE) {
     goto Step13;
   }
@@ -1977,7 +1977,7 @@ Step10:
   // Step 12.1
   // Wait for User to release Left button pressed
   //
-  Print (L"\r\nPlease release Left button in 10 seconds\r\n");
+  SctPrint (L"\r\nPlease release Left button in 10 seconds\r\n");
   if (WaitTimeOrPointer (10, SimplePointer) == FALSE) {
     return EFI_SUCCESS;
   }
@@ -2056,7 +2056,7 @@ Step13:
   // Step 13
   // Wait for User input or timeout ()
   //
-  Print (L"\r\nMove the pointer device AND click buttons in 10 seconds\r\n");
+  SctPrint (L"\r\nMove the pointer device AND click buttons in 10 seconds\r\n");
   if (WaitTimeOrPointer (10, SimplePointer) == FALSE) {
     return EFI_SUCCESS;
   }
@@ -2220,7 +2220,7 @@ BBTestWaitForInputFunctionManualTest (
   }
 
 
-  Print (L"\r\nWaitForInput Function Test Start!\r\n");
+  SctPrint (L"\r\nWaitForInput Function Test Start!\r\n");
   WaitTimeOrKey (5);
 
   //
@@ -2317,8 +2317,8 @@ BBTestWaitForInputFunctionManualTest (
   // Repeat until user move or click buttons
   //
   while (TRUE) {
-    Print (L"\r\nMove the pointer device or click buttons \r\n");
-    Print (L"\r\nAny key to quit! \r\n");
+    SctPrint (L"\r\nMove the pointer device or click buttons \r\n");
+    SctPrint (L"\r\nAny key to quit! \r\n");
 
     //
     // Whether there are some keys pressed?
@@ -2372,7 +2372,7 @@ BBTestWaitForInputFunctionManualTest (
                    );
   }
 
-  Print (L"\r\nPlease Don't move or press any button of the the mouse\r\n");
+  SctPrint (L"\r\nPlease Don't move or press any button of the the mouse\r\n");
 
   gtBS->Stall (2000000);
   //

@@ -146,7 +146,7 @@ OpenTestIniFile (
   EFI_STATUS Status;
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, PXE_BC_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, PXE_BC_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -223,7 +223,7 @@ GetSystemDevicePathAndFilePath (
   //make up the file path.
   //
   gFilePath = NULL;
-  gFilePath = PoolPrint (L"%s\\%s", TempFilePath, DEPENDECY_DIR_NAME);
+  gFilePath = SctPoolPrint (L"%s\\%s", TempFilePath, DEPENDECY_DIR_NAME);
 
   gtBS->FreePool (TempFilePath);
 
@@ -319,7 +319,7 @@ GetIpAddrFromFile (
         Addr[i] = Buffer + j + 1;
         Buffer[j] = L'\0';
       } else {
-        Print (L"i=%d \n", i);
+        SctPrint (L"i=%d \n", i);
         return EFI_INVALID_PARAMETER;
       }
     }
@@ -529,7 +529,7 @@ GetAsciiStringFromFile (
   TempStr[i] = '\0';
   *String = TempStr;
 
-  Print (L"\n");
+  SctPrint (L"\n");
   return EFI_SUCCESS;
 }
 

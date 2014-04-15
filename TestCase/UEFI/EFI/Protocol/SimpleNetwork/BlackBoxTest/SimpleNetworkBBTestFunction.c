@@ -1746,7 +1746,7 @@ BBTestGetStatusFunctionTest (
   //
   // Wait for the user disconnect the machine from the LAN.
   //
-  Print (L"\nPlease disconnect the machine from the LAN, press any key within 10 seconds\n");
+  SctPrint (L"\nPlease disconnect the machine from the LAN, press any key within 10 seconds\n");
   StallForKey(10, NULL);
 
   //
@@ -1804,7 +1804,7 @@ BBTestGetStatusFunctionTest (
     }
   }
 
-  Print (L"\nNow the machine can be reconnected to the LAN, press any key within 10 seconds\n");
+  SctPrint (L"\nNow the machine can be reconnected to the LAN, press any key within 10 seconds\n");
   StallForKey(10, NULL);
 
   return EFI_SUCCESS;
@@ -2039,7 +2039,7 @@ BBTestTransmitFunctionTest (
   //
   // Verify the functionality manually.
   //
-  Print (L"Please verify whether the packet is captured by the sniffert, right press \"Y\", wrong press \"N\"");
+  SctPrint (L"Please verify whether the packet is captured by the sniffert, right press \"Y\", wrong press \"N\"");
 
   //
   // Get the input key.
@@ -2052,7 +2052,7 @@ BBTestTransmitFunctionTest (
       break;
     }
     else {
-      Print (L"Please press \"Y\" or \"N\"\n");
+      SctPrint (L"Please press \"Y\" or \"N\"\n");
     }
   }
   if ((Key.UnicodeChar == L'N') || (Key.UnicodeChar == L'n')) {
@@ -2230,7 +2230,7 @@ BBTestReceiveFunctionTest (
   //
   // Wait for the host send the packet.
   //
-  Print (L"\nWait for the host send, yes press \"Y\", no press \"N\"\n");
+  SctPrint (L"\nWait for the host send, yes press \"Y\", no press \"N\"\n");
 
   //
   // Get the input key.
@@ -2243,7 +2243,7 @@ BBTestReceiveFunctionTest (
       break;
     }
     else {
-      Print (L"Please press \"Y\" or \"N\"");
+      SctPrint (L"Please press \"Y\" or \"N\"");
     }
   }
 
@@ -2288,7 +2288,7 @@ BBTestReceiveFunctionTest (
   // Verify the functionality manually.
   //
   LoggingLib->DumpBuf (LoggingLib, EFI_VERBOSE_LEVEL_DEFAULT, (CHAR16*)Buffer, (UINT32)BufferSize/2, EFI_DUMP_HEX);
-  Print (L"Please verify whether the received packet is right?\nRight press \"Y\", wrong press \"N\"\n");
+  SctPrint (L"Please verify whether the received packet is right?\nRight press \"Y\", wrong press \"N\"\n");
 
   //
   // Get the input key.
@@ -2301,7 +2301,7 @@ BBTestReceiveFunctionTest (
       break;
     }
     else {
-      Print (L"Please press \"Y\" or \"N\"");
+      SctPrint (L"Please press \"Y\" or \"N\"");
     }
   }
   if ((Key.UnicodeChar == L'N') || (Key.UnicodeChar == L'n')) {
@@ -2337,7 +2337,7 @@ BBTestReceiveFunctionTest (
   //
   // Wait for the host send the packet.
   //
-  Print (L"Wait for the host send, yes press \"Y\", no press \"N\"");
+  SctPrint (L"Wait for the host send, yes press \"Y\", no press \"N\"");
 
   //
   // Get the input key.
@@ -2349,7 +2349,7 @@ BBTestReceiveFunctionTest (
       break;
     }
     else {
-      Print (L"Please press \"Y\" or \"N\"");
+      SctPrint (L"Please press \"Y\" or \"N\"");
     }
   }
   Status = SnpInterface->Receive (SnpInterface, &HeaderSize, &BufferSize, Buffer, &SrcAddr, &DestAddr, &Protocol);
@@ -2369,7 +2369,7 @@ BBTestReceiveFunctionTest (
   LoggingLib->DumpBuf (LoggingLib, EFI_VERBOSE_LEVEL_DEFAULT, (CHAR16*)&SrcAddr, sizeof (EFI_MAC_ADDRESS)/2, EFI_DUMP_HEX);
   LoggingLib->DumpBuf (LoggingLib, EFI_VERBOSE_LEVEL_DEFAULT, (CHAR16*)&DestAddr, sizeof (EFI_MAC_ADDRESS)/2, EFI_DUMP_HEX);
   LoggingLib->DumpBuf (LoggingLib, EFI_VERBOSE_LEVEL_DEFAULT, (CHAR16*)&Protocol, sizeof (UINT16)/2, EFI_DUMP_HEX);
-  Print (L"Please verify whether the received packet is right?\nRight press \"Y\", wrong press \"N\"\n");
+  SctPrint (L"Please verify whether the received packet is right?\nRight press \"Y\", wrong press \"N\"\n");
 
   //
   // Get the input key.
@@ -2381,7 +2381,7 @@ BBTestReceiveFunctionTest (
       break;
     }
     else {
-      Print (L"Please press \"Y\" or \"N\"");
+      SctPrint (L"Please press \"Y\" or \"N\"");
     }
   }
   if ((Key.UnicodeChar == L'N') || (Key.UnicodeChar == L'n')) {

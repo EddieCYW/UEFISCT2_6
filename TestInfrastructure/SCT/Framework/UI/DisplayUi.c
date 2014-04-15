@@ -1431,16 +1431,16 @@ Returns:
       TestNode = (EFI_SCT_TEST_NODE*)MenuItem->Context;
 
       if (IsTestRunning (TestNode)) {
-        SPrint (&Buffer[8], MAX_STRING_LEN, L"Test");
+        SctSPrint (&Buffer[8], MAX_STRING_LEN, L"Test");
       } else {
         Passes = CalculatePassNumber(TestNode); //#Pass
         Failures = CalculateFailNumber(TestNode); //#Fail
         if (Failures > 0) {
-          SPrint (&Buffer[8], MAX_STRING_LEN, L"FAIL");
+          SctSPrint (&Buffer[8], MAX_STRING_LEN, L"FAIL");
         } else if (Passes > 0) {
-          SPrint (&Buffer[8], MAX_STRING_LEN, L"PASS");
+          SctSPrint (&Buffer[8], MAX_STRING_LEN, L"PASS");
         } else {
-          SPrint (&Buffer[8], MAX_STRING_LEN, L"    ");
+          SctSPrint (&Buffer[8], MAX_STRING_LEN, L"    ");
         }
       }
       Status = TestPrintAt (X0 + EFI_ITEM_TYPE_TAG_LENGTH + 1 + EFI_MAX_CASE_ITEM_NAME_LENGTH, Ypos, Buffer);
@@ -1739,16 +1739,16 @@ Returns:
       TestNode = (EFI_SCT_TEST_NODE*)MenuItem->Context;
 
       if (IsTestRunning (TestNode)) {
-        SPrint (&Buffer[8], MAX_STRING_LEN, L"Test");
+        SctSPrint (&Buffer[8], MAX_STRING_LEN, L"Test");
       } else {
         Passes = CalculatePassNumber(TestNode); //#Pass
         Failures = CalculateFailNumber(TestNode); //#Fail
         if (Failures > 0) {
-          SPrint (&Buffer[8], MAX_STRING_LEN, L"FAIL");
+          SctSPrint (&Buffer[8], MAX_STRING_LEN, L"FAIL");
         } else if (Passes > 0) {
-          SPrint (&Buffer[8], MAX_STRING_LEN, L"PASS");
+          SctSPrint (&Buffer[8], MAX_STRING_LEN, L"PASS");
         } else {
-          SPrint (&Buffer[8], MAX_STRING_LEN, L"    ");
+          SctSPrint (&Buffer[8], MAX_STRING_LEN, L"    ");
         }
       }
       Status = TestPrintAt (X0 + EFI_ITEM_TYPE_TAG_LENGTH + 1 + EFI_MAX_CASE_ITEM_NAME_LENGTH, Ypos, Buffer);

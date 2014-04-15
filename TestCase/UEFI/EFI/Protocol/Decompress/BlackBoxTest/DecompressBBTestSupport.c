@@ -150,7 +150,7 @@ OpenTestIniFile (
   EFI_STATUS Status;
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, DECOMPRESS_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, DECOMPRESS_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -251,7 +251,7 @@ GetSystemData (
   //make up the file path.
   //
   gFilePath = NULL;
-  gFilePath = PoolPrint (L"%s\\%s", TempFilePath, DEPENDECY_DIR_NAME);
+  gFilePath = SctPoolPrint (L"%s\\%s", TempFilePath, DEPENDECY_DIR_NAME);
 
   gtBS->FreePool (TempFilePath);
 
@@ -520,7 +520,7 @@ OpenFileAndGetSize (
   //
   //make up the file name.
   //
-  FileNameBuffer = PoolPrint (L"%s\\%s", gFilePath, FileName);
+  FileNameBuffer = SctPoolPrint (L"%s\\%s", gFilePath, FileName);
   if (FileNameBuffer == NULL) {
     RootDir->Close (RootDir);
     return EFI_OUT_OF_RESOURCES;

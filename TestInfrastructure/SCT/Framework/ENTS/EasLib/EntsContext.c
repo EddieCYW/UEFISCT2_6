@@ -268,8 +268,8 @@ WriteRecordsToFile(
   FileHandle = Context->FileHandle;
 
   for (Record = RecordListHead; Record != NULL; Record = Record->Next) {
-    SctStrCpy (Buffer, Record->Key);
-    Index = SctStrLen (Record->Key);
+    SctAsciiStrCpy (Buffer, Record->Key);
+    Index = SctAsciiStrLen (Record->Key);
     Buffer[Index++] = '|';
     EntsCopyMem(Buffer + Index, &Record->Size, sizeof(UINTN));
     Index += sizeof(UINTN);
@@ -306,7 +306,7 @@ SetRecord (
   }
 
   for (Record = RecordListHead; Record != NULL; Record = Record->Next) {
-  	if (SctStrCmp (Key, Record->Key) == 0) {
+  	if (SctAsciiStrCmp (Key, Record->Key) == 0) {
       break;
     }
   }
@@ -321,7 +321,7 @@ SetRecord (
       Status = EFI_OUT_OF_RESOURCES;
       goto FreeAndReturn;
     }
-    KeyBuf = (CHAR8 *)EntsAllocateZeroPool (SctStrLen (Key) + 1);
+    KeyBuf = (CHAR8 *)EntsAllocateZeroPool (SctAsciiStrLen (Key) + 1);
     if (KeyBuf == NULL) {
       EntsFreePool(Record);
       Status = EFI_OUT_OF_RESOURCES;
@@ -334,7 +334,7 @@ SetRecord (
       Status = EFI_OUT_OF_RESOURCES;
       goto FreeAndReturn;
     }
-    SctStrCpy (KeyBuf, Key);
+    SctAsciiStrCpy (KeyBuf, Key);
 	EntsCopyMem(ValueBuf, RecordValue, RecordSize);
     Record->Key    = KeyBuf;
     Record->Size   = RecordSize;
@@ -397,7 +397,7 @@ GetRecord (
   // the records in the list are same as the ones in file
   //
   for (Record = RecordListHead; Record != NULL; Record = Record->Next) {
-    if (SctStrCmp (Record->Key, Key) == 0) {
+    if (SctAsciiStrCmp (Record->Key, Key) == 0) {
       break;
     }
   }
@@ -447,12 +447,12 @@ DelRecord (
   if (RecordListHead == NULL) {
     return EFI_NOT_FOUND;
   } else {
-    if (SctStrCmp (Key, RecordListHead->Key) == 0) {
+    if (SctAsciiStrCmp (Key, RecordListHead->Key) == 0) {
       Record = RecordListHead;
 	  RecordListHead = RecordListHead->Next;
     } else {
       for (Record = RecordListHead; Record->Next != NULL; Record = Record->Next) {
-        if (SctStrCmp (Key, Record->Next->Key) == 0) {
+        if (SctAsciiStrCmp (Key, Record->Next->Key) == 0) {
           break;
         }
       }
@@ -793,11 +793,11 @@ SetContextRecord (
   }
 
   Unicode2Ascii(AsciiKey, Key);
-  if (SctStrLen (AsciiKey) + Size + 1 > MAX_RECORD_LEN) {
+  if (SctAsciiStrLen (AsciiKey) + Size + 1 > MAX_RECORD_LEN) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (SctStrChr (AsciiKey, '=') != NULL) {
+  if (SctAsciiStrChr (AsciiKey, '=') != NULL) {
     EFI_ENTS_DEBUG((EFI_ENTS_D_ERROR, L"The KEY of record can not contain ="));
     return EFI_INVALID_PARAMETER;
   }

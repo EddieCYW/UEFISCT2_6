@@ -208,29 +208,6 @@ Returns:
 
 
 VOID 
-Printf (
-  IN   CHAR8  *Format,
-  ...
-  )
-/*++
-
-Routine Description:
-
-  Print a formatted string to COM1 and COM2 synchronously.
-
-Arguments:
-
-  Format  - Format string.
-  ...     - Vararg list consumed by processing Format.
- 
-Returns:
-
-  NONE
-
---*/  
-;
-
-VOID 
 RecordAssertion (
   IN   EFI_TEST_ASSERTION    Status,
   IN   EFI_GUID              EventId,

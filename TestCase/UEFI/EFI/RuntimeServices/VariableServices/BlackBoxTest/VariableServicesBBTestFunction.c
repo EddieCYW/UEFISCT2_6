@@ -2228,7 +2228,7 @@ SetVariableFuncTestSub6 (
       //
       // Insert a variable
       //
-      VariableName = PoolPrint (L"TestVariable_%d_%d", Index, SubIndex);
+      VariableName = SctPoolPrint (L"TestVariable_%d_%d", Index, SubIndex);
       OldTpl = gtBS->RaiseTPL (TplArray[Index]);
 
       for (DataIndex = 0; DataIndex < 10; DataIndex++) {
@@ -2274,7 +2274,7 @@ SetVariableFuncTestSub6 (
   //
   // Print out some information to avoid the user thought it is an error
   //
-  Print (L"System will cold reset after 1 second...");
+  SctPrint (L"System will cold reset after 1 second...");
   gtBS->Stall (1000000);
 
   gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
@@ -2296,7 +2296,7 @@ step2:
       //
       // Get the variable
       //
-      VariableName = PoolPrint (L"TestVariable_%d_%d", Index, SubIndex);
+      VariableName = SctPoolPrint (L"TestVariable_%d_%d", Index, SubIndex);
 
       DataSize = MAX_BUFFER_SIZE;
       Status = RT->GetVariable (
@@ -2489,7 +2489,7 @@ SetVariableFuncTestSub7 (
       //
       // Insert a variable
       //
-      VariableName = PoolPrint (L"TestVariable_%d_%d", Index, SubIndex);
+      VariableName = SctPoolPrint (L"TestVariable_%d_%d", Index, SubIndex);
       OldTpl = gtBS->RaiseTPL (TplArray[Index]);
 
       for (DataIndex = 0; DataIndex < 10; DataIndex++) {
@@ -2535,7 +2535,7 @@ SetVariableFuncTestSub7 (
   //
   // Print out some information to avoid the user thought it is an error
   //
-  Print (L"System will cold reset after 1 second...");
+  SctPrint (L"System will cold reset after 1 second...");
   gtBS->Stall (1000000);
 
   gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
@@ -2555,7 +2555,7 @@ step2:
       //
       // Get the variable
       //
-      VariableName = PoolPrint (L"TestVariable_%d_%d", Index, SubIndex);
+      VariableName = SctPoolPrint (L"TestVariable_%d_%d", Index, SubIndex);
 
       DataSize = MAX_BUFFER_SIZE;
       Status = RT->GetVariable (
@@ -3075,7 +3075,7 @@ HardwareErrorRecordFuncTest (
   //
   // Prompt the user about the cold reset and reset the system
   //
-  Print (L"\r\nSystem will cold reset after 1 second...");
+  SctPrint (L"\r\nSystem will cold reset after 1 second...");
   gtBS->Stall (1000000);
 
   gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);

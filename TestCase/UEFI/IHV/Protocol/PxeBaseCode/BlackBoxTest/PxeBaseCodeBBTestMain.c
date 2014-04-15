@@ -504,7 +504,7 @@ WaitForAnyInput ()
   EFI_STATUS              Status;
   EFI_INPUT_KEY           Key;
 
-  Print (L"Press any key to continue...");
+  SctPrint (L"Press any key to continue...");
 
   //
   // Set 1 second periodic timer
@@ -537,7 +537,7 @@ WaitForAnyInput ()
         break;
     }
   }
-  Print (L"\r\n");
+  SctPrint (L"\r\n");
 
   //
   // Done, cancle periodic timer
@@ -558,7 +558,7 @@ WaitForUserCheck ()
   EFI_INPUT_KEY           Key;
   BOOLEAN                 PressYes=FALSE;
 
-  Print (L"\r\nPress \"Y\" or \"N\"...");
+  SctPrint (L"\r\nPress \"Y\" or \"N\"...");
 
   //
   // Set 1 second periodic timer
@@ -583,7 +583,7 @@ WaitForUserCheck ()
         // Read the key
         //
         Status = gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
-        APrint ((char *)(&Key.UnicodeChar));
+        SctAPrint ((char *)(&Key.UnicodeChar));
         switch (Key.UnicodeChar) {
           case 'Y':
           case 'y':
@@ -598,7 +598,7 @@ WaitForUserCheck ()
             break;
 
           default :
-            Print (L"\n");
+            SctPrint (L"\n");
             break;
         }
         break;
@@ -607,7 +607,7 @@ WaitForUserCheck ()
         break;
     }
   }
-  Print (L"\r\n");
+  SctPrint (L"\r\n");
 
   //
   // Done, cancle periodic timer

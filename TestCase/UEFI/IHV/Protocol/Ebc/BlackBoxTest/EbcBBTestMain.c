@@ -227,7 +227,7 @@ InitializeBBTestEbcProtocol (
     return Status;
   }
 
-  gFilePath = PoolPrint (L"%s\\%s\\%s", TempFilePath, DEPENDECY_DIR_NAME, EBC_DRIVER_NAME);
+  gFilePath = SctPoolPrint (L"%s\\%s\\%s", TempFilePath, DEPENDECY_DIR_NAME, EBC_DRIVER_NAME);
   gtBS->FreePool (TempFilePath);
   if (gFilePath == NULL) {
     gtBS->FreePool (gDevicePath);

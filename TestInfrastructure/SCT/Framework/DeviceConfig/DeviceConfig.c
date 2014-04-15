@@ -192,13 +192,13 @@ SctDeviceConfig (
   //
   // Create the name of device configuration file
   //
-  FileName = PoolPrint (
+  FileName = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_FILE_DEVICE_CONFIG
                );
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -246,7 +246,7 @@ SctDeviceConfig (
     // Let user choose the operation
     //
     Input (L"-", InputBuffer, 10);
-    Print (L"\n");
+    SctPrint (L"\n");
 
     DeviceConfigParser (InputBuffer, &Option, &Index);
 
@@ -370,7 +370,7 @@ PageBreakPrint (
   Length  = SctStrLen (String);
   if (Row + (Length + MaxColumns - 1) / MaxColumns >= MaxRows) {
     Row = 0;
-    Print (L"  Press 'q' to exit, any other key to continue");
+    SctPrint (L"  Press 'q' to exit, any other key to continue");
 
     for (; ;) {
       tBS->Stall (10000);
@@ -380,7 +380,7 @@ PageBreakPrint (
                             &Key
                             );
       if (!EFI_ERROR (Status)) {
-        Print (L"\n");
+        SctPrint (L"\n");
 
         if ((Key.UnicodeChar == L'Q') || (Key.UnicodeChar == L'q')) {
           return EFI_ABORTED;
@@ -395,7 +395,7 @@ PageBreakPrint (
   // Print out
   //
   Row += (Length + MaxColumns - 1) / MaxColumns;
-  Print (L"%s", String);
+  SctPrint (L"%s", String);
 
   return EFI_SUCCESS;
 }
@@ -406,7 +406,7 @@ DeviceConfigHelp (
   VOID
   )
 {
-  Print (
+  SctPrint (
     L"H           - Print this help information\n"
     L"I <Handle>  - Insert one device into the configuration file\n"
     L"L           - List all devices in the configuration file\n"
@@ -457,7 +457,7 @@ DeviceConfigInsert (
   }
 
   if ((HandleIndex == 0) || (HandleIndex > NoHandles)) {
-    Print (L"  Invalid handle number!\n");
+    SctPrint (L"  Invalid handle number!\n");
     tBS->FreePool (HandleBuffer);
     return EFI_INVALID_PARAMETER;
   }
@@ -474,7 +474,7 @@ DeviceConfigInsert (
                  (VOID **)&DevicePath
                  );
   if (EFI_ERROR (Status)) {
-    Print (L"  Invalid handle number!\n");
+    SctPrint (L"  Invalid handle number!\n");
     return EFI_INVALID_PARAMETER;
   }
 
@@ -516,7 +516,7 @@ DeviceConfigInsert (
   //
   // Device Type, let user choose the device type
   //
-  Print (
+  SctPrint (
     L"Select the device type:\n"
     L"  R - SCSI Raid\n"
     L"  F - SCSI Fiber\n"
@@ -529,7 +529,7 @@ DeviceConfigInsert (
     );
 
   Input (L"Enter choice: ", InputBuffer, 2);
-  Print (L"\n");
+  SctPrint (L"\n");
 
   while (TRUE) {
     Buffer = NULL;
@@ -568,7 +568,7 @@ DeviceConfigInsert (
     }
 
     Input (L"Invalid input! Enter choice again: ", InputBuffer, 2);
-    Print (L"\n");
+    SctPrint (L"\n");
   }
 
   //
@@ -579,7 +579,7 @@ DeviceConfigInsert (
     InputBuffer,
     2
     );
-  Print (L"\n");
+  SctPrint (L"\n");
 
   while (TRUE) {
     Buffer = NULL;
@@ -608,7 +608,7 @@ DeviceConfigInsert (
     }
 
     Input (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
-    Print (L"\n");
+    SctPrint (L"\n");
   }
 
   //
@@ -619,7 +619,7 @@ DeviceConfigInsert (
     InputBuffer,
     2
     );
-  Print (L"\n");
+  SctPrint (L"\n");
 
   while (TRUE) {
     Buffer = NULL;
@@ -648,7 +648,7 @@ DeviceConfigInsert (
     }
 
     Input (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
-    Print (L"\n");
+    SctPrint (L"\n");
   }
 
   //
@@ -659,7 +659,7 @@ DeviceConfigInsert (
     InputBuffer,
     2
     );
-  Print (L"\n");
+  SctPrint (L"\n");
 
   while (TRUE) {
     Buffer = NULL;
@@ -688,7 +688,7 @@ DeviceConfigInsert (
     }
 
     Input (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
-    Print (L"\n");
+    SctPrint (L"\n");
   }
 
   //
@@ -699,7 +699,7 @@ DeviceConfigInsert (
     InputBuffer,
     2
     );
-  Print (L"\n");
+  SctPrint (L"\n");
 
   while (TRUE) {
     Buffer = NULL;
@@ -728,7 +728,7 @@ DeviceConfigInsert (
     }
 
     Input (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
-    Print (L"\n");
+    SctPrint (L"\n");
   }
 
   //
@@ -739,7 +739,7 @@ DeviceConfigInsert (
     InputBuffer,
     2
     );
-  Print (L"\n");
+  SctPrint (L"\n");
 
   while (TRUE) {
     Buffer = NULL;
@@ -768,7 +768,7 @@ DeviceConfigInsert (
     }
 
     Input (L"Invalid input! Enter again [Y(Default)/N]: ", InputBuffer, 2);
-    Print (L"\n");
+    SctPrint (L"\n");
   }
 
   //
@@ -814,14 +814,14 @@ DeviceConfigList (
       return Status;
     }
 
-    Print (L"%x: %s\n", Order + 1, Buffer);
+    SctPrint (L"%x: %s\n", Order + 1, Buffer);
   }
 
   //
   // No device in the configuration file
   //
   if (OrderNum == 0) {
-    Print (L"  No device in the configuration file.\n");
+    SctPrint (L"  No device in the configuration file.\n");
   }
 
   //
@@ -855,7 +855,7 @@ DeviceConfigRemove (
   }
 
   if ((OrderIndex == 0) || (OrderIndex > OrderNum)) {
-    Print (L"  Invalid index number!\n");
+    SctPrint (L"  Invalid index number!\n");
     return EFI_INVALID_PARAMETER;
   }
 
@@ -875,10 +875,10 @@ DeviceConfigRemove (
     return Status;
   }
 
-  Print (L"Remove '%s'.\n", Buffer);
+  SctPrint (L"Remove '%s'.\n", Buffer);
 
   Input (L"Are you sure? [Y/N]: ", InputBuffer, 2);
-  Print (L"\n");
+  SctPrint (L"\n");
 
   while (TRUE) {
     if ((InputBuffer[0] == L'N') || (InputBuffer[0] == L'n')) {
@@ -897,7 +897,7 @@ DeviceConfigRemove (
     }
 
     Input (L"Invalid input! Enter again [Y/N]: ", InputBuffer, 2);
-    Print (L"\n");
+    SctPrint (L"\n");
   }
 
   //
@@ -926,7 +926,7 @@ DeviceConfigScan (
   //
   if ((ScanType != SCAN_DEVICES_ALL            ) &&
       (ScanType != SCAN_DEVICES_WITH_OPTION_ROM)) {
-    Print (L"  Invalid scan type!\n");
+    SctPrint (L"  Invalid scan type!\n");
     return EFI_INVALID_PARAMETER;
   }
 
@@ -997,7 +997,7 @@ DeviceConfigScan (
     // Print out the device information
     //
     DevicePathStr = LibDevicePathToStr (DevicePath);
-    TempStr = PoolPrint (L"%x: %s\n", Index + 1, DevicePathStr);
+    TempStr = SctPoolPrint (L"%x: %s\n", Index + 1, DevicePathStr);
     tBS->FreePool (DevicePathStr);
 
     Status = PageBreakPrint (FALSE, TempStr);
@@ -1023,7 +1023,7 @@ DeviceConfigScan (
   // No device with Option ROM
   //
   if (!Found) {
-    Print (L"  No device with Option ROM.\n");
+    SctPrint (L"  No device with Option ROM.\n");
   }
 
   //
@@ -1056,7 +1056,7 @@ DeviceConfigVerbose (
   }
 
   if ((OrderIndex == 0) || (OrderIndex > OrderNum)) {
-    Print (L"  Invalid index number!\n");
+    SctPrint (L"  Invalid index number!\n");
     return EFI_INVALID_PARAMETER;
   }
 
@@ -1080,7 +1080,7 @@ DeviceConfigVerbose (
     return Status;
   }
 
-  Print (L"Device Path : %s\n", Buffer);
+  SctPrint (L"Device Path : %s\n", Buffer);
 
   //
   // Device type
@@ -1096,7 +1096,7 @@ DeviceConfigVerbose (
     return Status;
   }
 
-  Print (L"Device Type : %s\n", Buffer);
+  SctPrint (L"Device Type : %s\n", Buffer);
 
   //
   // Driver Binding Protocol
@@ -1112,7 +1112,7 @@ DeviceConfigVerbose (
     return Status;
   }
 
-  Print (L"Driver Binding Protocol : %s\n", Buffer);
+  SctPrint (L"Driver Binding Protocol : %s\n", Buffer);
 
   //
   // Driver Diagnostics Protocol
@@ -1128,7 +1128,7 @@ DeviceConfigVerbose (
     return Status;
   }
 
-  Print (L"Driver Diagnostics Protocol : %s\n", Buffer);
+  SctPrint (L"Driver Diagnostics Protocol : %s\n", Buffer);
 
   //
   // Driver Configuration Protocol
@@ -1144,7 +1144,7 @@ DeviceConfigVerbose (
     return Status;
   }
 
-  Print (L"Driver Configuration Protocol : %s\n", Buffer);
+  SctPrint (L"Driver Configuration Protocol : %s\n", Buffer);
 
   //
   // Unload Supported function
@@ -1160,7 +1160,7 @@ DeviceConfigVerbose (
     return Status;
   }
 
-  Print (L"Unload Supported : %s\n", Buffer);
+  SctPrint (L"Unload Supported : %s\n", Buffer);
 
   //
   // Runtime Supported
@@ -1176,7 +1176,7 @@ DeviceConfigVerbose (
     return Status;
   }
 
-  Print (L"Runtime Supported : %s\n", Buffer);
+  SctPrint (L"Runtime Supported : %s\n", Buffer);
 
   //
   // Done
@@ -1281,9 +1281,9 @@ DeviceConfigScanDrivers (
                                       &DriverName
                                       );
             if (!EFI_ERROR (Status)) {
-              TempStr = PoolPrint (L"  Managed by driver <%s>\n", DriverName);
+              TempStr = SctPoolPrint (L"  Managed by driver <%s>\n", DriverName);
             } else {
-              TempStr = PoolPrint (L"  Managed by driver <UNKNOWN>\n");
+              TempStr = SctPoolPrint (L"  Managed by driver <UNKNOWN>\n");
             }
 
             Status = PageBreakPrint (FALSE, TempStr);
@@ -1307,7 +1307,7 @@ DeviceConfigScanDrivers (
                          );
           if (!EFI_ERROR (Status)) {
             FilePathStr = LibDevicePathToStr (LoadedImage->FilePath);
-            TempStr = PoolPrint (L"  Managed by driver : %s\n", FilePathStr);
+            TempStr = SctPoolPrint (L"  Managed by driver : %s\n", FilePathStr);
             tBS->FreePool (FilePathStr);
 
             Status = PageBreakPrint (FALSE, TempStr);

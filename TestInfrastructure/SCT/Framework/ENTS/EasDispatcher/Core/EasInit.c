@@ -445,7 +445,7 @@ Returns:
   //
   // Create the test file path
   //
-  FilePath = PoolPrint (L"%s\\%s", gEasFT->FilePath, EFI_NETWORK_PATH_SUPPORT);
+  FilePath = SctPoolPrint (L"%s\\%s", gEasFT->FilePath, EFI_NETWORK_PATH_SUPPORT);
   if (FilePath == NULL) {
     EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"Pool print - %r", EFI_OUT_OF_RESOURCES));
     return EFI_OUT_OF_RESOURCES;
@@ -517,7 +517,7 @@ Returns:
   //
   // Create the test file path
   //
-  FilePath = PoolPrint (L"%s\\%s", gEasFT->FilePath, EFI_NETWORK_PATH_TEST);
+  FilePath = SctPoolPrint (L"%s\\%s", gEasFT->FilePath, EFI_NETWORK_PATH_TEST);
   if (FilePath == NULL) {
     EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"Pool print - %r", EFI_OUT_OF_RESOURCES));
     return EFI_OUT_OF_RESOURCES;

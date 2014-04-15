@@ -3849,7 +3849,7 @@ Returns:
 
       //
       // make sure there is no device present on each port
-      // Print(L"make sure there is no device present on each port, Press any key to continue\n");
+      // SctPrint(L"make sure there is no device present on each port, Press any key to continue\n");
       //
       StandardLib->RecordMessage (
                      StandardLib,
@@ -3877,7 +3877,7 @@ Returns:
         }
       }
       //
-      // Print(L"Plug a device into a port, Press any key to continue\n");
+      // SctPrint(L"Plug a device into a port, Press any key to continue\n");
       //
       StandardLib->RecordMessage (
                      StandardLib,
@@ -3904,7 +3904,7 @@ Returns:
             (PortStatus.PortChangeStatus & USB_PORT_STAT_C_CONNECTION)
             ) {
           //
-          // Print(L"Pull out the device from the port, Press any key to continue\n");
+          // SctPrint(L"Pull out the device from the port, Press any key to continue\n");
           //
           StandardLib->RecordMessage (
                          StandardLib,
@@ -4099,7 +4099,7 @@ Returns:
 
       //
       // make sure there is no device present on each port
-      // Print(L"make sure there is no device present on each port and pull a usb keyboard into a port, Press any key to continue\n");
+      // SctPrint(L"make sure there is no device present on each port and pull a usb keyboard into a port, Press any key to continue\n");
       //
       StandardLib->RecordMessage (
                      StandardLib,
@@ -4128,7 +4128,7 @@ Returns:
               ((PortStatus.PortStatus & USB_PORT_STAT_HIGH_SPEED) == 0)
               ) {
             //
-            // Print(L"Pull out the usb keyboard from the port and plug a usb1.0 zip, Press any key to continue\n");
+            // SctPrint(L"Pull out the usb keyboard from the port and plug a usb1.0 zip, Press any key to continue\n");
             //
             StandardLib->RecordMessage (
                            StandardLib,
@@ -4153,7 +4153,7 @@ Returns:
                 ((PortStatus.PortStatus & USB_PORT_STAT_HIGH_SPEED) == 0)
                 ) {
               //
-              // Print(L"Pull out the usb1.0 zip from the port and plug a usb2.0 zip, Press any key to continue\n");
+              // SctPrint(L"Pull out the usb1.0 zip from the port and plug a usb2.0 zip, Press any key to continue\n");
               //
               StandardLib->RecordMessage (
                             StandardLib,
@@ -6123,7 +6123,7 @@ Returns:
       MaskTimerInterrupt ();
 
       //
-      // Print(L"Make sure that there is no device on each port\n");
+      // SctPrint(L"Make sure that there is no device on each port\n");
       //
       StandardLib->RecordMessage (
                      StandardLib,
@@ -6132,7 +6132,7 @@ Returns:
                      Str
                      );
       //
-      // Print(L"Plug a device into a port\n");
+      // SctPrint(L"Plug a device into a port\n");
       //
       StandardLib->RecordMessage (
                      StandardLib,
@@ -6141,7 +6141,7 @@ Returns:
                      Str
                      );
       //
-      // Print(L"Pull out the device from the port\n");
+      // SctPrint(L"Pull out the device from the port\n");
       //
       StandardLib->RecordMessage (
                      StandardLib,
@@ -6150,7 +6150,7 @@ Returns:
                      Str
                      );
       //
-      // Print(L"Press any key to continue\n");
+      // SctPrint(L"Press any key to continue\n");
       //
       StandardLib->RecordMessage (StandardLib, EFI_VERBOSE_LEVEL_DEFAULT, L"Waiting for 20s\n");
       //

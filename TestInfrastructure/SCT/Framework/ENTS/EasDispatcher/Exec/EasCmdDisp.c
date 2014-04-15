@@ -404,7 +404,7 @@ Returns:
   Status = ShellExecute (mImageHandle, (gEasFT->Cmd)->ComdArg, FALSE);
   tRT->GetTime (&EndTime, NULL);
   EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"dispatch:(%s)", (gEasFT->Cmd)->ComdArg));
-  Print (L"dispatch:(%s) - %r\n", (gEasFT->Cmd)->ComdArg, Status);
+  SctPrint (L"dispatch:(%s) - %r\n", (gEasFT->Cmd)->ComdArg, Status);
   if (Status == EFI_OUT_OF_RESOURCES) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -474,7 +474,7 @@ Returns:
   TestFile  = (gEasFT->Cmd)->TestFile;
   Status    = ExecElet (TestFile, (gEasFT->Cmd)->ComdInterface);
   if (EFI_ERROR (Status)) {
-    Print (L"Error in dispatch: Exec status - %r\n", Status);
+    SctPrint (L"Error in dispatch: Exec status - %r\n", Status);
     return Status;
   }
 
@@ -551,7 +551,7 @@ Returns:
   //
   Status = SendAppACK (Cmd);
   if (EFI_ERROR (Status)) {
-    Print (L"PostDispathch: Error in SendAppACK - %r\n", Status);
+    SctPrint (L"PostDispathch: Error in SendAppACK - %r\n", Status);
     EmptyCmd (Cmd);
     return Status;
   }
@@ -1452,13 +1452,13 @@ Returns:
     //
     Status = tBS->LocateProtocol (&gEfiCpuArchProtocolGuid, NULL, (VOID **)&Cpu);
     if (EFI_ERROR (Status)) {
-      Print (L"Locate CpuArch protocol error\n");
+      SctPrint (L"Locate CpuArch protocol error\n");
     }
   }
 
   Status = Cpu->GetTimerValue (Cpu, 0, &(CurrentTicker), &TimerPeriod);
   if (EFI_ERROR (Status)) {
-    Print (L"Get Timer Vaule error\n");
+    SctPrint (L"Get Timer Vaule error\n");
   }
   //
   // TimePeriod: according to the implementation, the meaning of 'TimerPeriod'
@@ -1470,10 +1470,10 @@ Returns:
     ExecTick = MAX_U64_VAL - StartTick + EndTick;
   }
   //
-  // ExecTime = MultU64x32(DivU64x32(ExecTick, 1000000, NULL), (UINTN)TimerPeriod);
+  // ExecTime = SctMultU64x32(SctDivU64x32(ExecTick, 1000000, NULL), (UINTN)TimerPeriod);
   //
-  ExecTime = DivU64x32 (MultU64x32 (ExecTick, (UINTN) TimerPeriod), 1000000, NULL);
-  Print (
+  ExecTime = SctDivU64x32 (SctMultU64x32 (ExecTick, (UINTN) TimerPeriod), 1000000, NULL);
+  SctPrint (
     L"StartTick: %d, EndTick: %d, TimePeriod: %d, ExecTime: %d\n",
     (UINTN) StartTick,
     (UINTN) EndTick,
@@ -1538,7 +1538,7 @@ Returns:
   Status = ShellExecute (mImageHandle, (gEasFT->Cmd)->ComdArg, FALSE);
   tRT->GetTime (&EndTime, NULL);
   EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"dispatch:(%s)", (gEasFT->Cmd)->ComdArg));
-  Print (L"dispatch:(%s) - %r\n", (gEasFT->Cmd)->ComdArg, Status);
+  SctPrint (L"dispatch:(%s) - %r\n", (gEasFT->Cmd)->ComdArg, Status);
   if (Status == EFI_OUT_OF_RESOURCES) {
     return EFI_OUT_OF_RESOURCES;
   }

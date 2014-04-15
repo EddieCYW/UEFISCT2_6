@@ -172,7 +172,7 @@ Returns:
   //
   // set current value
   //
-  SPrint (
+  SctSPrint (
     EditBuffer,
     EFI_MAX_EDIT_LENGTH + 1,
     L"%d",
@@ -275,7 +275,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
   if (gFT->ConfigData->BiosId != NULL) {
-    SPrint (EditBuffer, EFI_MAX_EDIT_LENGTH + 1, L"%s", gFT->ConfigData->BiosId);
+    SctSPrint (EditBuffer, EFI_MAX_EDIT_LENGTH + 1, L"%s", gFT->ConfigData->BiosId);
   } else {
     EditBuffer[0] = L'\0';
   }
@@ -307,7 +307,7 @@ Returns:
     DestroyMenuPage (Page);
     return EFI_OUT_OF_RESOURCES;
   }
-  SPrint(EditBuffer,EFI_MAX_EDIT_LENGTH+1,L"%d",gFT->ConfigData->PlatformNumber);
+  SctSPrint(EditBuffer,EFI_MAX_EDIT_LENGTH+1,L"%d",gFT->ConfigData->PlatformNumber);
 
   Status = AddEditMenuItem (
              EFI_ITEM_EDIT_NUMBER,
@@ -347,7 +347,7 @@ Returns:
     DestroyMenuPage (Page);
     return EFI_OUT_OF_RESOURCES;
   }
-  SPrint (
+  SctSPrint (
     EditBuffer,
     EFI_MAX_EDIT_LENGTH + 1,
     L"%d",
@@ -393,7 +393,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
   if (gFT->ConfigData->ScenarioString != NULL) {
-    SPrint (EditBuffer, EFI_MAX_EDIT_LENGTH + 1, L"%s", gFT->ConfigData->ScenarioString);
+    SctSPrint (EditBuffer, EFI_MAX_EDIT_LENGTH + 1, L"%s", gFT->ConfigData->ScenarioString);
   } else {
     EditBuffer[0] = L'\0';
   }
@@ -427,7 +427,7 @@ Returns:
   }
 
   if (gFT->ConfigData->EditCommandString != NULL) {
-    SPrint (EditBuffer, EFI_MAX_EDIT_LENGTH + 1, L"%s", gFT->ConfigData->EditCommandString);
+    SctSPrint (EditBuffer, EFI_MAX_EDIT_LENGTH + 1, L"%s", gFT->ConfigData->EditCommandString);
   } else {
     EditBuffer[0] = L'\0';
   }
@@ -600,7 +600,7 @@ Returns:
           DestroyMenuPage (MenuPage);
           return EFI_OUT_OF_RESOURCES;
         }
-        SPrint (
+        SctSPrint (
           EditBuffer,
           EFI_MAX_EDIT_LENGTH + 1,
           L"%d",
@@ -631,13 +631,13 @@ Returns:
         }
 
         if (ENABLE_SCREEN_OUTPUT_DEFAULT == TRUE) {
-          SPrint (
+          SctSPrint (
             EditBuffer,
             EFI_MAX_EDIT_LENGTH + 1,
             L"True"
             );
         } else {
-          SPrint (
+          SctSPrint (
             EditBuffer,
             EFI_MAX_EDIT_LENGTH + 1,
             L"False"
@@ -674,7 +674,7 @@ Returns:
           DestroyMenuPage (MenuPage);
           return EFI_OUT_OF_RESOURCES;
         }
-        SPrint (
+        SctSPrint (
           EditBuffer,
           EFI_MAX_EDIT_LENGTH + 1,
           L"%s",
@@ -703,7 +703,7 @@ Returns:
           DestroyMenuPage (MenuPage);
           return EFI_OUT_OF_RESOURCES;
         }
-        SPrint (
+        SctSPrint (
           EditBuffer,
           EFI_MAX_EDIT_LENGTH + 1,
           L"%d",
@@ -728,7 +728,7 @@ Returns:
           DestroyMenuPage (MenuPage);
           return EFI_OUT_OF_RESOURCES;
         }
-        SPrint (
+        SctSPrint (
           EditBuffer,
           EFI_MAX_EDIT_LENGTH + 1,
           L"%d",
@@ -753,7 +753,7 @@ Returns:
           DestroyMenuPage (MenuPage);
           return EFI_OUT_OF_RESOURCES;
         }
-        SPrint (
+        SctSPrint (
           EditBuffer,
           EFI_MAX_EDIT_LENGTH + 1,
           L"%s",
@@ -778,7 +778,7 @@ Returns:
           DestroyMenuPage (MenuPage);
           return EFI_OUT_OF_RESOURCES;
         }
-        SPrint (
+        SctSPrint (
           EditBuffer,
           EFI_MAX_EDIT_LENGTH + 1,
           L"%s",
@@ -916,7 +916,7 @@ Returns:
     MenuItem = MenuItem->Next;
   }
   if (ItemValueChanged) {
-    FileName = PoolPrint (L"%s\\%s",gFT->FilePath,EFI_SCT_FILE_CONFIG);
+    FileName = SctPoolPrint (L"%s\\%s",gFT->FilePath,EFI_SCT_FILE_CONFIG);
 
     //
     //save config data into profile
@@ -1077,7 +1077,7 @@ Returns:
 
       Buffer[0] = L'\0';
       SctStrCat (Buffer, L"Max:");
-      SPrint (Buffer, MAX_STRING_LEN, L"%s   %d", Buffer, MaxValue);
+      SctSPrint (Buffer, MAX_STRING_LEN, L"%s   %d", Buffer, MaxValue);
 
       Status = TestPrintAt (X0, Y1 - 2, Buffer);
 
@@ -1085,7 +1085,7 @@ Returns:
 
       Buffer[0] = L'\0';
       SctStrCat (Buffer, L"Min:");
-      SPrint (Buffer, MAX_STRING_LEN, L"%s   %d", Buffer, MinValue);
+      SctSPrint (Buffer, MAX_STRING_LEN, L"%s   %d", Buffer, MinValue);
 
       Status = TestPrintAt (X0, Y1 - 1, Buffer);
     }

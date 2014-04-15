@@ -952,7 +952,7 @@ Returns:
     TestPoint.Result.BitMap.ColdReset = 1;
     SetVariableRecord(&TestPoint);              
     Port80(0xC1);
-    Printf ("RT.ResetSystem - Machine should Cold Reset!");
+    SctAPrint ("RT.ResetSystem - Machine should Cold Reset!");
     //
     // Call shutdown to complete the test.
     //
@@ -980,7 +980,7 @@ Returns:
     TestPoint.Result.BitMap.WarmReset = 1;
     SetVariableRecord(&TestPoint);              
     Port80(0xC2);
-    Printf ("RT.ResetSystem - Machine should Warm Reset!");
+    SctAPrint ("RT.ResetSystem - Machine should Warm Reset!");
     //
     // Call shutdown to complete the test.
     //
@@ -1008,7 +1008,7 @@ Returns:
     TestPoint.Result.BitMap.ShutDown = 1;
     SetVariableRecord(&TestPoint);              
     Port80(0xC3); 
-    Printf ("RT.ResetSystem - Machine should Shutdown!");
+    SctAPrint ("RT.ResetSystem - Machine should Shutdown!");
     //
     // Call shutdown to complete the test.
     //

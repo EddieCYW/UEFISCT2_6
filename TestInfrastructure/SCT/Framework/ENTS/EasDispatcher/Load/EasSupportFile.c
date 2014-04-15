@@ -143,7 +143,7 @@ Returns:
   //
   // Trace information
   //
-  Print (L"Load support files ...\n");
+  SctPrint (L"Load support files ...\n");
   EFI_ENTS_STATUS ((L"Load support files ..."));
   //
   // Check parameters
@@ -241,7 +241,7 @@ Returns:
       //
       // Initialize Filename
       //
-      FileName = PoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
+      FileName = SctPoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
       if (FileName == NULL) {
         EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"Pool print - %r", EFI_OUT_OF_RESOURCES));
         break;
@@ -294,7 +294,7 @@ Returns:
         //
         // Load the test files under the sub directory
         //
-        SubDir = PoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
+        SubDir = SctPoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
         if (SubDir == NULL) {
           EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"Pool print - %r", EFI_OUT_OF_RESOURCES));
           break;

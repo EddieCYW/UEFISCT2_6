@@ -485,7 +485,7 @@ ImageTestComposeSimpleFilePath (
     return Status;
   }
 
-  EntireFileName = PoolPrint (L"%s\\%s\\%s", FileNamePath, DEPENDENCY_DIR_NAME, FileName);
+  EntireFileName = SctPoolPrint (L"%s\\%s\\%s", FileNamePath, DEPENDENCY_DIR_NAME, FileName);
 
   *FilePath = FileDevicePath (LoadImage->DeviceHandle, EntireFileName);
 
@@ -573,7 +573,7 @@ ImageTestCopySimpleFileToMemory (
   }
 
   EntireFileName = NULL;
-  EntireFileName = PoolPrint (L"%s\\%s", mFilePath, FileName);
+  EntireFileName = SctPoolPrint (L"%s\\%s", mFilePath, FileName);
 
   Root = NULL;
   FileHandle = NULL;
@@ -1045,7 +1045,7 @@ InitializeGlobalData (
     return Status;
   }
 
-  mFilePath = PoolPrint (L"%s\\%s", FilePath, DEPENDENCY_DIR_NAME);
+  mFilePath = SctPoolPrint (L"%s\\%s", FilePath, DEPENDENCY_DIR_NAME);
 
   SctFreePool (FilePath);
   SctFreePool (DevicePath);

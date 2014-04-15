@@ -149,7 +149,7 @@ DirFileExist (
   //
   // Create command line to list the directory or file
   //
-  CmdLine = PoolPrint (
+  CmdLine = SctPoolPrint (
               L"LS \"%s\" > NUL",
               Name
               );
@@ -167,7 +167,7 @@ DirFileExist (
              );
 
   if (Status == EFI_INVALID_PARAMETER) {
-    Print (L"Error: Could not execute \"%s\"\n", CmdLine);
+    SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);
     SctFreePool (CmdLine);
     return Status;
   }
@@ -240,7 +240,7 @@ CreateDir (
       //
       // Create command line to create this directory
       //
-      CmdLine = PoolPrint (
+      CmdLine = SctPoolPrint (
                   L"MKDIR \"%s\"",
                   TmpName
                   );
@@ -258,7 +258,7 @@ CreateDir (
                  FALSE
                  );
       if (EFI_ERROR (Status)) {
-        Print (L"Error: Could not execute \"%s\"\n", CmdLine);
+        SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);
         SctFreePool (CmdLine);
         SctFreePool (TmpName);
         return Status;
@@ -289,7 +289,7 @@ RemoveDirFile (
   //
   // Create command line to delete this directory or file
   //
-  CmdLine = PoolPrint (
+  CmdLine = SctPoolPrint (
               L"DEL -q \"%s\"",
               Name
               );
@@ -306,7 +306,7 @@ RemoveDirFile (
              FALSE
              );
   if (EFI_ERROR (Status)) {
-    Print (L"Error: Could not execute \"%s\"\n", CmdLine);
+    SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);
     SctFreePool (CmdLine);
     return Status;
   }
@@ -327,7 +327,6 @@ BackupDirFile (
 {
   EFI_STATUS  Status;
   CHAR16      *CmdLine;
-
   CHAR16      *PathName;
   CHAR16      *FileName;
   CHAR16      *TmpName;
@@ -361,7 +360,7 @@ BackupDirFile (
     //
     // Create the backup file name
     //
-    TmpName = PoolPrint (
+    TmpName = SctPoolPrint (
                 L"\"%s\\%s.bak%d\"",
                 PathName,
                 Index,
@@ -397,7 +396,7 @@ BackupDirFile (
   //
   // Create command line to backup it
   //
-  CmdLine = PoolPrint (
+  CmdLine = SctPoolPrint (
               L"MV \"%s\" \"%s\\%s.bak%d\"",
               Name,
               PathName,
@@ -420,7 +419,7 @@ BackupDirFile (
              FALSE
              );
   if (EFI_ERROR (Status)) {
-    Print (L"Error: Could not execute \"%s\"\n", CmdLine);
+    SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);
     SctFreePool (CmdLine);
     return Status;
   }
@@ -478,7 +477,7 @@ CopyDirFile (
   //
   // Create command line to copy it
   //
-  CmdLine = PoolPrint (
+  CmdLine = SctPoolPrint (
               L"CP %s -q \"%s\" \"%s\"",
               Recursive ? L"-r" : L"",
               SrcName,
@@ -497,7 +496,7 @@ CopyDirFile (
              FALSE
              );
   if (EFI_ERROR (Status)) {
-    Print (L"Error: Could not execute \"%s\"\n", CmdLine);
+    SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);
     SctFreePool (CmdLine);
     return Status;
   }
@@ -532,7 +531,7 @@ ProcessExistingSctFile (
     //
     // User input his selection
     //
-    Prompt = PoolPrint (
+    Prompt = SctPoolPrint (
                L"Found the existing %s '%s'.\n"
                L"Select (B)ackup, Backup (A)ll, (R)emove, Remove A(l)l. 'q' to exit:",
                Name, FileName
@@ -550,7 +549,7 @@ ProcessExistingSctFile (
         InputBuffer,
         2
         );
-      Print (L"\n");
+      SctPrint (L"\n");
 
       //
       // Deal with the user input
@@ -588,7 +587,7 @@ ProcessExistingSctFile (
     break;
 
   case BACKUP_POLICY_NONE:
-    Print (L"Error: An instance of SCT (%s) has been found. "
+    SctPrint (L"Error: An instance of SCT (%s) has been found. "
            L"Please remove or backup it before to install a new one.\n",
            FileName);
 
@@ -613,7 +612,7 @@ CheckForInstalledSct (
   //
   // Check for 'SCT' folder
   //
-  TmpName = PoolPrint (L"%s:\\SCT", FileVolume->Name);
+  TmpName = SctPoolPrint (L"%s:\\SCT", FileVolume->Name);
   if (TmpName == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -621,19 +620,19 @@ CheckForInstalledSct (
   // Exist or not?
   Status = DirFileExist (TmpName, &Exist);
   if (EFI_ERROR (Status)) {
-    FreePool (TmpName);
+    SctFreePool (TmpName);
     return Status;
   }
 
   if (Exist) {
     FileVolume->IsSctPresent |= SCT_FOLDER;
   }
-  FreePool (TmpName);
+  SctFreePool (TmpName);
 
   //
   // Check for SCT startup script
   //
-  TmpName = PoolPrint (L"%s:\\startup.nsh", FileVolume->Name);
+  TmpName = SctPoolPrint (L"%s:\\startup.nsh", FileVolume->Name);
   if (TmpName == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

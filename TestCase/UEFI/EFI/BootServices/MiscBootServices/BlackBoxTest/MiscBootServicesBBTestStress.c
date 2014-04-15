@@ -701,7 +701,7 @@ BBTestGetNextMonotonicCountStressTest (
     //
     // Print out some information to avoid the user thought it is an error
     //
-    Print (L"System will cold reset after 1 second...");
+    SctPrint (L"System will cold reset after 1 second...");
     gtBS->Stall (1000000);
 
     gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);

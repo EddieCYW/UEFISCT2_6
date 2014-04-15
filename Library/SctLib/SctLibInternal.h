@@ -54,6 +54,9 @@
 
 extern CONST CHAR8 mHex[];
 extern EFI_UNICODE_COLLATION_PROTOCOL   *UnicodeInterface;
+extern UINTN                            EfiDebugMask;
+
+extern EFI_GUID                         mEfiUnknownDeviceGuid;
 
 //
 // Default pool allocation type
@@ -94,6 +97,18 @@ VOID
 LibStubStrLwrUpr (
   IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
   IN CHAR16                           *Str
+  );
+
+VOID
+StatusToString (
+  OUT CHAR16          *Buffer,
+  IN EFI_STATUS       Status
+  );
+
+VOID
+GuidToString (
+  OUT CHAR16      *Buffer,
+  IN EFI_GUID     *Guid
   );
 
 #endif

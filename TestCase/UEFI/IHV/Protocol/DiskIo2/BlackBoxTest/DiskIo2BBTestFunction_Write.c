@@ -613,13 +613,13 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint1(
   DiskIo2TokenSync.Event             = NULL;
   DiskIo2TokenSync.TransactionStatus = EFI_NOT_READY;
 
-  Print(L"Read Record Data.\n");
+  SctPrint (L"Read Record Data.\n");
   //
   // Record all write disk data for recovery first
   //
   
   if ((MediaPresent == TRUE) && (ReadOnly == FALSE)) {
-    Print (L" =================== Record Disk Info =================== \n\n");
+    SctPrint (L" =================== Record Disk Info =================== \n\n");
     for (IndexI = 0; IndexI < 8; IndexI++) {
       switch (IndexI) {
         case 0:
@@ -816,7 +816,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint1(
     ReadCompleted = TRUE;
   
   
-    Print (L" ================ Start to do Async WriteDiskEx call ================ \n\n");
+    SctPrint (L" ================ Start to do Async WriteDiskEx call ================ \n\n");
     // 
     // do Asyn write call basing on read data result 
     //
@@ -865,14 +865,14 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint1(
         }
       }
   
-      Print (L" ================== Async WriteDiskEx call finshed ================== \n\n"); 
+      SctPrint (L" ================== Async WriteDiskEx call finshed ================== \n\n"); 
 
 END_WAIT:   
      
       //
       // Busy waiting 120s on all the execute entity being moved to finished queue
       //  
-      Print (L"Wait maximumly 120s for all Async Write events signaled\n\n");
+      SctPrint (L"Wait maximumly 120s for all Async Write events signaled\n\n");
       Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
       IndexI = 0;
     
@@ -886,13 +886,13 @@ END_WAIT:
                 &WaitIndex
                 );
         IndexI++;
-        Print(L".");
+        SctPrint(L".");
         AcquireLock(&gAsyncWriteQueueLock);
       }
       ReleaseLock(&gAsyncWriteQueueLock);
    
       Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-      Print(L"\n");
+      SctPrint (L"\n");
     }
   }
   
@@ -963,7 +963,7 @@ END:
   //
   // Clean up & free all record resources
   //
-  Print (L"============ Restore All written disk ============= \n");
+  SctPrint (L"============ Restore All written disk ============= \n");
   while (!SctIsListEmpty(&SyncReadDataListHead)) {
     DiskIo2EntityRead = CR(SyncReadDataListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
     SctRemoveEntryList(&DiskIo2EntityRead->ListEntry);
@@ -1005,7 +1005,7 @@ END:
     gtBS->FreePool(DiskIo2EntityRead);
   }
      
-  Print (L"============ Record All written disk finshed ============ \n");
+  SctPrint (L"============ Record All written disk finshed ============ \n");
 
   //
   // Record All write finshed test logs
@@ -1195,13 +1195,13 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint2(
   DiskIo2TokenSync.Event = NULL;
   DiskIo2TokenSync.TransactionStatus = EFI_NOT_READY;
    
-  Print(L"Read Record Data.\n");
+  SctPrint (L"Read Record Data.\n");
   //
   // Record all write disk data for recovery first
   //
   if ((MediaPresent == TRUE) && (ReadOnly == FALSE)) {
   
-    Print (L" =================== Record Disk Info =================== \n\n");
+    SctPrint (L" =================== Record Disk Info =================== \n\n");
    
     for (IndexI = 0; IndexI < 8; IndexI++) {
       //
@@ -1404,7 +1404,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint2(
       }
     }
  
-    Print (L" ================ Start to do Sync WriteDiskEx call ================ \n\n");
+    SctPrint (L" ================ Start to do Sync WriteDiskEx call ================ \n\n");
     // 
     // do Asyn write call basing on read data result 
     //
@@ -1496,7 +1496,7 @@ END:
   //
   // Clean up & free all record resources
   //
-  Print (L"Restore All written disk.\n");
+  SctPrint (L"Restore All written disk.\n");
   if (!SctIsListEmpty(&SyncReadDataListHead)) {
     for(ListEntry = SctGetFirstNode(&SyncReadDataListHead); ; ListEntry = SctGetNextNode(&SyncReadDataListHead, ListEntry)) {
       DiskIo2EntityRead = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
@@ -1695,13 +1695,13 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
     goto END;
   }
   
-  Print (L"Create Batch Read Task List.\n\n");
+  SctPrint (L"Create Batch Read Task List.\n\n");
   
   //
   // Create one Batch Read task list
   //
   if ((MediaPresent == TRUE) && (ReadOnly == FALSE)) {
-    Print (L" =================== Record Disk Info =================== \n\n");
+    SctPrint (L" =================== Record Disk Info =================== \n\n");
     for (IndexI = 0; IndexI < 8; IndexI++) {
       //
       // prepare test data
@@ -1906,7 +1906,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
     }//end of loop of BufferSize - IndexI
      
      
-    Print (L" =================== Create Test Write Disk  =================== \n\n");
+    SctPrint (L" =================== Create Test Write Disk  =================== \n\n");
     if (!SctIsListEmpty(&ReadListHeader)) {
       for(ListEntry = SctGetFirstNode(&ReadListHeader); ; ListEntry = SctGetNextNode(&ReadListHeader, ListEntry)) {
         
@@ -1962,7 +1962,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
       }
     }
 
-    Print (L"Start to do Async Write.\n\n");
+    SctPrint (L"Start to do Async Write.\n\n");
     Status = DiskIo2AsyncBatchWrite (
                DiskIo2,
                &WriteListHeader,
@@ -1976,7 +1976,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
     // Busy Waiting BathWriteToken signal
     // Busy waiting 120s on all the execute entity being moved to finished queue
     //  
-    Print (L"Wait maximumly 120s for Async Batch Write events signaled\n\n");
+    SctPrint (L"Wait maximumly 120s for Async Batch Write events signaled\n\n");
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
      
     IndexI = 0;
@@ -1989,11 +1989,11 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
               &WaitIndex
               );
       IndexI++;
-      Print(L".");
+      SctPrint (L".");
     }
     
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-    Print(L"\n");
+    SctPrint (L"\n");
   }
   
   

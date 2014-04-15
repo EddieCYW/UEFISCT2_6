@@ -646,11 +646,11 @@ Returns:
           &RxInfo.Token[Index].Event
           );
     //
-    // Print (L"Create 100 Token\n");
+    // SctPrint (L"Create 100 Token\n");
     //
   }
   //
-  // Print (L"BF Receive 100 Token\n");
+  // SctPrint (L"BF Receive 100 Token\n");
   //
   for (Index = 0; Index < 100; Index++) {
     Status = Mnp->Receive (Mnp, &RxInfo.Token[Index]);

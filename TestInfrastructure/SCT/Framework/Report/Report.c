@@ -131,9 +131,9 @@ Returns:
   //
   for (InstanceIndex = 0; TRUE; InstanceIndex ++) {
     for (IterationIndex = 0; TRUE; IterationIndex ++) {
-      FileName = PoolPrint (MetaName, InstanceIndex, IterationIndex);
+      FileName = SctPoolPrint (MetaName, InstanceIndex, IterationIndex);
       if (FileName == NULL) {
-        EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+        EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
         return EFI_OUT_OF_RESOURCES;
       }
 
@@ -171,9 +171,9 @@ Returns:
   //
   // The maximum instance index is found
   //
-  FileName = PoolPrint (MetaName, *Index, *Iteration);
+  FileName = SctPoolPrint (MetaName, *Index, *Iteration);
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -279,9 +279,9 @@ Returns:
   //
   for (InstanceIndex = 0; TRUE; InstanceIndex ++) {
     for (IterationIndex = 0; TRUE; IterationIndex ++) {
-      FileName = PoolPrint (MetaName, InstanceIndex, IterationIndex);
+      FileName = SctPoolPrint (MetaName, InstanceIndex, IterationIndex);
       if (FileName == NULL) {
-        EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+        EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
         return EFI_OUT_OF_RESOURCES;
       }
 
@@ -500,9 +500,9 @@ Returns:
       //
       // Read the file to a buffer
       //
-      FileName = PoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
+      FileName = SctPoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
       if (FileName == NULL) {
-        EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+        EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
         return EFI_OUT_OF_RESOURCES;
       }
 
@@ -589,9 +589,9 @@ Returns:
       //
       // Get the report information from the sub directories
       //
-      FileName = PoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
+      FileName = SctPoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
       if (FileName == NULL) {
-        EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+        EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
         return EFI_OUT_OF_RESOURCES;
       }
 
@@ -693,9 +693,9 @@ Arguments:
   //
   // Load the GUID database
   //
-  FileName = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_GUID_DATABASE);
+  FileName = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_GUID_DATABASE);
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     tBS->FreePool (ConfigBuffer);
     return EFI_OUT_OF_RESOURCES;
   }

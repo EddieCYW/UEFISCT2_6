@@ -581,7 +581,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
   //
   if ((MediaPresent == TRUE) && (ReadOnly == FALSE) && (WriteCaching == TRUE)) {
    
-    Print (L" ================ Start to do Async FlushDiskEx call ================ \n\n");
+    SctPrint (L" ================ Start to do Async FlushDiskEx call ================ \n\n");
   
     for (Index = 0; Index < 30; Index++) {
       //
@@ -696,14 +696,14 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
                     
       }//end of loop of Offset - Index
   
-      Print (L" ================== Async FlushDiskEx call finshed ================== \n\n");
+      SctPrint (L" ================== Async FlushDiskEx call finshed ================== \n\n");
   
   
   
       //
       // Busy waiting 60s on all the execute entity being moved to finished queue
       //  
-      Print (L"Wait maximumly 60s for all Async Flush events signaled\n\n");
+      SctPrint (L"Wait maximumly 60s for all Async Flush events signaled\n\n");
       Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
       Index = 0;
       
@@ -717,13 +717,13 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
                 &WaitIndex
                 );
         Index++;
-        Print (L".");
+        SctPrint (L".");
         AcquireLock(&gAsyncFlushQueueLock);
       }
       ReleaseLock(&gAsyncFlushQueueLock);
   
       Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-      Print(L"\n");
+      SctPrint (L"\n");
     }
   
   
@@ -1150,7 +1150,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint3(
   BatchFlushToken.TransactionStatus = EFI_NOT_READY;
      
   
-  Print (L"Create Batch Flush Task List.\n\n");
+  SctPrint (L"Create Batch Flush Task List.\n\n");
   //
   // Create one Batch Flush task list
   //
@@ -1281,7 +1281,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint3(
     // Busy Waiting for BatchFlushToken signal
     // Busy waiting 60s on all the execute entity being moved to finished queue
     //  
-    Print (L"Wait maximumly 60s for Async Batch Read events signaled\n\n");
+    SctPrint (L"Wait maximumly 60s for Async Batch Read events signaled\n\n");
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     Index = 0;
     
@@ -1292,11 +1292,11 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint3(
                       &WaitIndex
                       );
       Index++;
-      Print(L".");
+      SctPrint (L".");
     }
     
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-    Print(L"\n");
+    SctPrint (L"\n");
   }
 
 END:

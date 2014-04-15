@@ -2489,7 +2489,7 @@ Returns:
     return FALSE;
   }
 
-  Str1 = PoolPrint(L"%s:%s", Str, ItemContext->FileName);
+  Str1 = SctPoolPrint(L"%s:%s", Str, ItemContext->FileName);
   if (Str1 == NULL) {
     return FALSE;
   }
@@ -2499,16 +2499,16 @@ Returns:
   //
   switch (DirDialog->Type) {
     case EFI_FILE_DIALOG_TYPE_OPEN_FILE:
-      SPrint (DirDialog->Title, MAX_CHAR, L"%s: %s", L" Open File", Str1);
+      SctSPrint (DirDialog->Title, MAX_CHAR, L"%s: %s", L" Open File", Str1);
       break;
 
     case EFI_FILE_DIALOG_TYPE_SAVE_FILE:
-      SPrint (DirDialog->Title, MAX_CHAR, L"%s: %s", L" Save File", Str1);
+      SctSPrint (DirDialog->Title, MAX_CHAR, L"%s: %s", L" Save File", Str1);
       break;
 
     default:
       DirDialog->Type  = EFI_FILE_DIALOG_TYPE_OPEN_FILE;
-      SPrint (DirDialog->Title, MAX_CHAR, L" Open File");
+      SctSPrint (DirDialog->Title, MAX_CHAR, L" Open File");
       break;
   }
 
@@ -2591,7 +2591,7 @@ Returns:
         continue;
       }
 
-      SPrint (Buffer, MAX_CHAR, L" %s %s",
+      SctSPrint (Buffer, MAX_CHAR, L" %s %s",
               DirInfo->Attribute & EFI_FILE_DIRECTORY ? L"<DIR>" : L"     ",
               DirInfo->FileName
              );
@@ -3090,16 +3090,16 @@ Returns:
 
   switch (FileSystemDialog->Type) {
     case EFI_FILE_DIALOG_TYPE_OPEN_FILE:
-      SPrint(FileSystemDialog->Title, MAX_CHAR, L" Open File");
+      SctSPrint(FileSystemDialog->Title, MAX_CHAR, L" Open File");
       break;
 
     case EFI_FILE_DIALOG_TYPE_SAVE_FILE:
-      SPrint(FileSystemDialog->Title, MAX_CHAR, L" Save File");
+      SctSPrint(FileSystemDialog->Title, MAX_CHAR, L" Save File");
       break;
 
     default:
       FileSystemDialog->Type  = EFI_FILE_DIALOG_TYPE_OPEN_FILE;
-      SPrint(FileSystemDialog->Title, MAX_CHAR, L" Open File");
+      SctSPrint(FileSystemDialog->Title, MAX_CHAR, L" Open File");
       break;
   }
 
@@ -3182,7 +3182,7 @@ Returns:
     Str = NULL;
     Status = SctMapNameFromDevice (Context->DevicePath, &Str);
     if (!EFI_ERROR(Status)) {
-      SPrint (Buffer, MAX_CHAR, L"<VOL> %s", Str);
+      SctSPrint (Buffer, MAX_CHAR, L"<VOL> %s", Str);
       tBS->FreePool (Str);
     } else {
       LogFreeFileSystemDialogItemContext (Context);
@@ -3250,7 +3250,7 @@ Returns:
     Str = NULL;
     Status = SctMapNameFromDevice (Context->DevicePath, &Str);
     if (!EFI_ERROR(Status)) {
-      SPrint (Buffer, MAX_CHAR, L"<VOL> %s", Str);
+      SctSPrint (Buffer, MAX_CHAR, L"<VOL> %s", Str);
       tBS->FreePool (Str);
     } else {
       LogFreeFileSystemDialogItemContext (Context);
@@ -3482,11 +3482,11 @@ Returns:
   //Append dir path
   //
   if (DialogContext->FileType == EFI_FILTER_FILE_TYPE_CSV) {
-    Context->FileName       = PoolPrint(L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_REPORT);
+    Context->FileName       = SctPoolPrint(L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_REPORT);
   } else if (DialogContext->FileType == EFI_FILTER_FILE_TYPE_SEQ) {
-    Context->FileName       = PoolPrint(L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_SEQUENCE);
+    Context->FileName       = SctPoolPrint(L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_SEQUENCE);
   } else if (DialogContext->FileType == EFI_FILTER_FILE_TYPE_LOG) {
-    Context->FileName       = PoolPrint(L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_LOG);
+    Context->FileName       = SctPoolPrint(L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_LOG);
   } else {
     Context->FileName       = SctStrDuplicate (gFT->FilePath);
   }
@@ -3506,7 +3506,7 @@ Returns:
   Str = NULL;
   Status = SctMapNameFromDevice (Context->DevicePath, &Str);
   if (!EFI_ERROR(Status)) {
-    SPrint (Buffer, MAX_CHAR, L"%s:", Str);
+    SctSPrint (Buffer, MAX_CHAR, L"%s:", Str);
     tBS->FreePool (Str);
   } else {
     LogFreeFileSystemDialogItemContext (Context);
@@ -3514,13 +3514,13 @@ Returns:
   }
 
   if (DialogContext->FileType == EFI_FILTER_FILE_TYPE_CSV) {
-    Str1 = PoolPrint(L"%s%s\\%s", Buffer, gFT->FilePath, EFI_SCT_PATH_REPORT);
+    Str1 = SctPoolPrint(L"%s%s\\%s", Buffer, gFT->FilePath, EFI_SCT_PATH_REPORT);
   } else if (DialogContext->FileType == EFI_FILTER_FILE_TYPE_SEQ) {
-    Str1 = PoolPrint(L"%s%s\\%s", Buffer, gFT->FilePath, EFI_SCT_PATH_SEQUENCE);
+    Str1 = SctPoolPrint(L"%s%s\\%s", Buffer, gFT->FilePath, EFI_SCT_PATH_SEQUENCE);
   } else if (DialogContext->FileType == EFI_FILTER_FILE_TYPE_LOG) {
-    Str1 = PoolPrint(L"%s%s\\%s", Buffer, gFT->FilePath, EFI_SCT_PATH_LOG);
+    Str1 = SctPoolPrint(L"%s%s\\%s", Buffer, gFT->FilePath, EFI_SCT_PATH_LOG);
   } else {
-    Str1 = PoolPrint(L"%s%s", Buffer, gFT->FilePath);
+    Str1 = SctPoolPrint(L"%s%s", Buffer, gFT->FilePath);
   }
   if (Str1 == NULL) {
     LogFreeFileSystemDialogItemContext (Context);
@@ -3532,11 +3532,11 @@ Returns:
   //
   switch (FileSystemDialog->Type) {
     case EFI_FILE_DIALOG_TYPE_OPEN_FILE:
-      FileSystemDialog->Title = PoolPrint(L"%s:  %s", L"    Open File", Str1);
+      FileSystemDialog->Title = SctPoolPrint(L"%s:  %s", L"    Open File", Str1);
       break;
 
     case EFI_FILE_DIALOG_TYPE_SAVE_FILE:
-      FileSystemDialog->Title = PoolPrint(L"%s:  %s", L"    Save File", Str1);
+      FileSystemDialog->Title = SctPoolPrint(L"%s:  %s", L"    Save File", Str1);
       break;
 
     default:

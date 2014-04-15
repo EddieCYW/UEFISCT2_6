@@ -1788,10 +1788,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.2
   //
-  SPrint(text, MaxDevicePathStrLen * 2, L"%d,0x123456789ABCDEF,0xFEDCBA9876543210", EfiMaxMemoryType);
+  SctSPrint(text, MaxDevicePathStrLen * 2, L"%d,0x123456789ABCDEF,0xFEDCBA9876543210", EfiMaxMemoryType);
   pDevicePath = CreateMemMapDeviceNode(text);
 
-  SPrint(text, MaxDevicePathStrLen * 2, L"MemoryMapped(%d,0x123456789ABCDEF,0xFEDCBA9876543210)", EfiMaxMemoryType);
+  SctSPrint(text, MaxDevicePathStrLen * 2, L"MemoryMapped(%d,0x123456789ABCDEF,0xFEDCBA9876543210)", EfiMaxMemoryType);
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;

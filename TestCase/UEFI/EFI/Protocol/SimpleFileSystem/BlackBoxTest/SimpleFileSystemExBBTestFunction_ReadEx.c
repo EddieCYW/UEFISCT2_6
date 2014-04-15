@@ -625,13 +625,13 @@ BBTestReadExBasicTestCheckpoint1 (
       }
     }
   
-    Print (L" ================== Async ReadEx call finshed ================== \n\n");
+    SctPrint (L" ================== Async ReadEx call finshed ================== \n\n");
   
 
     //
     // Busy waiting 120s on all the execute entity being moved to finished queue
     //  
-    Print (L"Wait maximumly 120s for all Async Read events signaled\n\n");
+    SctPrint (L"Wait maximumly 120s for all Async Read events signaled\n\n");
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     IndexI = 0;
       
@@ -646,13 +646,13 @@ BBTestReadExBasicTestCheckpoint1 (
               );
       IndexI++;
   
-      Print (L".");
+      SctPrint (L".");
       AcquireLock(&gAsyncReadQueueLock);
     }
     ReleaseLock(&gAsyncReadQueueLock);
   
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-    Print(L"\n");
+    SctPrint (L"\n");
  
     //
     // clear all File IO events from gReadFinishQueue 
@@ -1258,12 +1258,12 @@ BBTestReadExBasicTestCheckpoint3 (
   }
   
   
-  Print (L" ================== Async ReadEx call finshed ================== \n\n");
+  SctPrint (L" ================== Async ReadEx call finshed ================== \n\n");
   
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Read events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Read events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
     
@@ -1278,13 +1278,13 @@ BBTestReadExBasicTestCheckpoint3 (
             );
     IndexI++;
   
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncReadQueueLock);
   }
   ReleaseLock(&gAsyncReadQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");
+  SctPrint (L"\n");
 
   //
   // clear all File IO events from gReadDirFinishQueue 

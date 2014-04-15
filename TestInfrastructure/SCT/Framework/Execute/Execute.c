@@ -182,19 +182,19 @@ Returns:
   EFI_FILE_HANDLE                  RootDir;
   EFI_DEVICE_PATH_PROTOCOL         *DevicePath = gFT->DevicePath;
   
-  Print (L"Test preparing...\n");
+  SctPrint (L"Test preparing...\n");
 
   //
   // 1. Create verbose state file for system reset 
   // startup.nsh will check it to decide whether attach -v option during restart
   //
-  FileName = PoolPrint (
+  FileName = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_PATH_VERBOSE
                );
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -314,19 +314,19 @@ Returns:
   EFI_FILE_HANDLE                  RootDir;
   EFI_DEVICE_PATH_PROTOCOL         *DevicePath = gFT->DevicePath;
   
-  Print (L"Continue test preparing...\n");
+  SctPrint (L"Continue test preparing...\n");
  
   //
   // 1. Create verbose state file for system reset 
   // startup.nsh will check it to decide whether attach -v option during restart
   //
-  FileName = PoolPrint (
+  FileName = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_PATH_VERBOSE
                );
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -499,13 +499,13 @@ Routine Description:
   //
   // Create the name of test case file
   //
-  FileName = PoolPrint (
+  FileName = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_FILE_TEST_CASE
                );
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -603,13 +603,13 @@ Routine Description:
   //
   // Create the name of test case file
   //
-  FileName = PoolPrint (
+  FileName = SctPoolPrint (
                L"%s\\%s",
                gFT->FilePath,
                EFI_SCT_FILE_TEST_CASE
                );
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -672,13 +672,13 @@ Routine Description:
     // Calculate the number of remained cases
     //
     GetTestCaseRemainNum(&Remain);
-    Print(L"  Remained test cases: %d\n", Remain);
+    SctPrint(L"  Remained test cases: %d\n", Remain);
 
     //
     // Send assertion to remotion computer in passive mode to inform case begin.
     //
     if (gFT->Operations & EFI_SCT_OPERATIONS_PASSIVEMODE) {
-      SPrint (DescBuff, 256, L"%s Case Begins!\n", ExecuteInfo->TestCase->Name);
+      SctSPrint (DescBuff, 256, L"%s Case Begins!\n", ExecuteInfo->TestCase->Name);
       Status = NetRecordAssertion(NET_EFI_TEST_ASSERTION_CASE_BEGIN, ExecuteInfo->TestCase->Guid, DescBuff);
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"NetRecordAssertion - %r", Status));
@@ -699,7 +699,7 @@ Routine Description:
     // Send assertion to remotion computer in passive mode to inform case end.
     //
     if (gFT->Operations & EFI_SCT_OPERATIONS_PASSIVEMODE) {
-      SPrint (DescBuff, 256, L"PASS(%d) WARN(%d) FAIL(%d)\n", ExecuteInfo->TestCase->Passes, ExecuteInfo->TestCase->Warnings, ExecuteInfo->TestCase->Failures);
+      SctSPrint (DescBuff, 256, L"PASS(%d) WARN(%d) FAIL(%d)\n", ExecuteInfo->TestCase->Passes, ExecuteInfo->TestCase->Warnings, ExecuteInfo->TestCase->Failures);
       Status = NetRecordAssertion(NET_EFI_TEST_ASSERTION_CASE_OVER, ExecuteInfo->TestCase->Guid, DescBuff);
       if (EFI_ERROR (Status)) {
         EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"NetRecordAssertion - %r", Status));
@@ -911,7 +911,7 @@ ExecuteMdeLibraryInstance (
 
       NoInstance = GetLibInstanceNo(Link);
 
-      Print (L"\nNumber of library instance: %hd\n", NoInstance); 
+      SctPrint (L"\nNumber of library instance: %hd\n", NoInstance); 
         
       while (ExecuteInfo->Index < NoInstance) {
         //
@@ -927,11 +927,11 @@ ExecuteMdeLibraryInstance (
 		//
         // Print out the library instance name
         //
-        Print (L"\n\n");
-        Print (L"************************************************************\n");
-        Print (L"Library instance name: %hs\n", MdkLibInstance->Name);
-        Print (L"************************************************************\n");
-        Print (L"\n");
+        SctPrint (L"\n\n");
+        SctPrint (L"************************************************************\n");
+        SctPrint (L"Library instance name: %hs\n", MdkLibInstance->Name);
+        SctPrint (L"************************************************************\n");
+        SctPrint (L"\n");
 
         while (ExecuteInfo->Iteration < ExecuteInfo->TestCase->Iterations) {
           //
@@ -947,10 +947,10 @@ ExecuteMdeLibraryInstance (
           //
           // Process information
           //
-          Print (L"  Configuration table item test: %hs\n", ExecuteInfo->TestCase->Name);
-          Print (L"  Library instance name: %hs\n", MdkLibInstance->Name);
-          Print (L"  Instances: %hd/%hd\n", ExecuteInfo->Index + 1, NoInstance);
-          Print (L"  Iterations: %hd/%hd\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
+          SctPrint (L"  Configuration table item test: %hs\n", ExecuteInfo->TestCase->Name);
+          SctPrint (L"  Library instance name: %hs\n", MdkLibInstance->Name);
+          SctPrint (L"  Instances: %hd/%hd\n", ExecuteInfo->Index + 1, NoInstance);
+          SctPrint (L"  Iterations: %hd/%hd\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
 
           //
           // Start the test case with configuration table item
@@ -1043,8 +1043,8 @@ Routine Description:
       //
       // Process information
       //
-      Print (L"  Generic services test: %s\n", ExecuteInfo->TestCase->Name);
-      Print (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
+      SctPrint (L"  Generic services test: %s\n", ExecuteInfo->TestCase->Name);
+      SctPrint (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
 
       //
       // Start the test case with NULL interface
@@ -1074,8 +1074,8 @@ Routine Description:
       //
       // Process information
       //
-      Print (L"  Boot services test: %s\n", ExecuteInfo->TestCase->Name);
-      Print (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
+      SctPrint (L"  Boot services test: %s\n", ExecuteInfo->TestCase->Name);
+      SctPrint (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
 
       //
       // Start the test case with BS interface
@@ -1105,8 +1105,8 @@ Routine Description:
       //
       // Process information
       //
-      Print (L"  Runtime services test: %s\n", ExecuteInfo->TestCase->Name);
-      Print (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
+      SctPrint (L"  Runtime services test: %s\n", ExecuteInfo->TestCase->Name);
+      SctPrint (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
 
       //
       // Start the test case with RT interface
@@ -1140,13 +1140,13 @@ Routine Description:
         //
         // Create the name of test case file
         //
-        FileName = PoolPrint (
+        FileName = SctPoolPrint (
                      L"%s\\%s",
                      gFT->FilePath,
                      EFI_SCT_FILE_SKIPPED_CASE
                      );
         if (FileName == NULL) {
-          EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+          EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
           return EFI_OUT_OF_RESOURCES;
         }
         
@@ -1216,9 +1216,9 @@ Routine Description:
           //
           // Process information
           //
-          Print (L"  Protocol test: %s\n", ExecuteInfo->TestCase->Name);
-          Print (L"  Instances: %d/%d\n", HandleIndex + 1, NoHandles);
-          Print (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
+          SctPrint (L"  Protocol test: %s\n", ExecuteInfo->TestCase->Name);
+          SctPrint (L"  Instances: %d/%d\n", HandleIndex + 1, NoHandles);
+          SctPrint (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
   
           Status = ExecuteBbTestInstance (
                      ExecuteInfo,
@@ -1263,7 +1263,7 @@ Routine Description:
         
         NoInstance = GetLibInstanceNo(Link);
 
-        Print (L"\nNumber of library instance: %hd\n", NoInstance); 
+        SctPrint (L"\nNumber of library instance: %hd\n", NoInstance); 
         
         while (ExecuteInfo->Index < NoInstance) {
           //
@@ -1279,11 +1279,11 @@ Routine Description:
           //
           // Print out the library instance name
           //
-          Print (L"\n\n");
-          Print (L"************************************************************\n");
-          Print (L"Library instance name: %hs\n", MdkLibInstance->Name);
-          Print (L"************************************************************\n");
-          Print (L"\n");
+          SctPrint (L"\n\n");
+          SctPrint (L"************************************************************\n");
+          SctPrint (L"Library instance name: %hs\n", MdkLibInstance->Name);
+          SctPrint (L"************************************************************\n");
+          SctPrint (L"\n");
           
           while (ExecuteInfo->Iteration < ExecuteInfo->TestCase->Iterations) {
             //
@@ -1299,10 +1299,10 @@ Routine Description:
             //
             // Process information
             //
-            Print (L"  Configuration table item test: %hs\n", ExecuteInfo->TestCase->Name);
-            Print (L"  Library instance name: %hs\n", MdkLibInstance->Name);
-            Print (L"  Instances: %hd/%hd\n", ExecuteInfo->Index + 1, NoInstance);
-            Print (L"  Iterations: %hd/%hd\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
+            SctPrint (L"  Configuration table item test: %hs\n", ExecuteInfo->TestCase->Name);
+            SctPrint (L"  Library instance name: %hs\n", MdkLibInstance->Name);
+            SctPrint (L"  Instances: %hd/%hd\n", ExecuteInfo->Index + 1, NoInstance);
+            SctPrint (L"  Iterations: %hd/%hd\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
 
             //
             // Start the test case with configuration table item
@@ -1372,8 +1372,8 @@ Routine Description:
     //
     // Process infromation
     //
-    Print (L"  White-box test: %s\n", ExecuteInfo->TestCase->Name);
-    Print (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
+    SctPrint (L"  White-box test: %s\n", ExecuteInfo->TestCase->Name);
+    SctPrint (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
 
     Status = ExecuteWbTestInstance (ExecuteInfo, WbTest->ClientHandle);
     if (EFI_ERROR (Status)) {
@@ -1433,8 +1433,8 @@ Routine Description:
     //
     // Process infromation
     //
-    Print (L"  Application test: %s\n", ExecuteInfo->TestCase->Name);
-    Print (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
+    SctPrint (L"  Application test: %s\n", ExecuteInfo->TestCase->Name);
+    SctPrint (L"  Iterations: %d/%d\n", ExecuteInfo->Iteration + 1, ExecuteInfo->TestCase->Iterations);
 
     Status = ExecuteApTestInstance (ExecuteInfo);
     if (EFI_ERROR (Status)) {
@@ -1741,13 +1741,13 @@ Routine Description:
       //
       // Invoke the test entry point
       //
-      CmdLine = PoolPrint (
+      CmdLine = SctPoolPrint (
                   L"\"%s\" %s",
                   ExecuteInfo->TestFile->FileName,
                   ApEntry->Parameters
                   );
       if (CmdLine == NULL) {
-        EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+        EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
       }
 
       if (CmdLine != NULL) {
@@ -1876,13 +1876,13 @@ Routine Description:
   ConfigData->SystemLogFile.EnableScreenOutput = FALSE;
   ConfigData->SystemLogFile.DevicePath         = gFT->DevicePath;
   ConfigData->SystemLogFile.FileName           =
-    PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_SUMMARY_LOG);
+    SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_SUMMARY_LOG);
   ConfigData->SystemLogFile.OverwriteFile      = gFT->IsFirstTimeExecute;
 
   ConfigData->SystemKeyFile.EnableScreenOutput = FALSE;
   ConfigData->SystemKeyFile.DevicePath         = gFT->DevicePath;
   ConfigData->SystemKeyFile.FileName           =
-    PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_SUMMARY_EKL);
+    SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_SUMMARY_EKL);
   ConfigData->SystemKeyFile.OverwriteFile      = gFT->IsFirstTimeExecute;
 
   //
@@ -1891,13 +1891,13 @@ Routine Description:
   ConfigData->CaseLogFile.EnableScreenOutput   = gFT->ConfigData->EnableScreenOutput;
   ConfigData->CaseLogFile.DevicePath           = gFT->DevicePath;
   ConfigData->CaseLogFile.FileName             =
-    PoolPrint (FullMetaName, ExecuteInfo->Index, ExecuteInfo->Iteration, L"log");
+    SctPoolPrint (FullMetaName, ExecuteInfo->Index, ExecuteInfo->Iteration, L"log");
   ConfigData->CaseLogFile.OverwriteFile        = (BOOLEAN) !ConfigData->IsRecovery;
 
   ConfigData->CaseKeyFile.EnableScreenOutput   = FALSE;
   ConfigData->CaseKeyFile.DevicePath           = gFT->DevicePath;
   ConfigData->CaseKeyFile.FileName             =
-    PoolPrint (FullMetaName, ExecuteInfo->Index, ExecuteInfo->Iteration, L"ekl");
+    SctPoolPrint (FullMetaName, ExecuteInfo->Index, ExecuteInfo->Iteration, L"ekl");
   ConfigData->CaseKeyFile.OverwriteFile        = (BOOLEAN) !ConfigData->IsRecovery;
 
   //

@@ -103,9 +103,9 @@ Returns:
   //
   // Create the name of recovery file
   //
-  FileName = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_RECOVERY);
+  FileName = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_RECOVERY);
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -164,9 +164,9 @@ Returns:
   //
   // Save the test cases
   //
-  FileName = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_TEST_CASE);
+  FileName = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_TEST_CASE);
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -197,9 +197,9 @@ Returns:
   //
   // Remove the skipped case
   //
-  FileName = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_SKIPPED_CASE);
+  FileName = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_SKIPPED_CASE);
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
   
@@ -228,9 +228,9 @@ Returns:
   //
   // Remove Overall
   //
-  FilePath = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_OVERALL);
+  FilePath = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_OVERALL);
   if (FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
   
@@ -260,9 +260,9 @@ Returns:
   //
   // Remove the Sct.log and Sct.cfg
   //
-  FilePath = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_LOG);
+  FilePath = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_LOG);
   if (FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
   
@@ -278,9 +278,9 @@ Returns:
 
   tBS->FreePool (FilePath);
 
-  FilePath = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_CFG);
+  FilePath = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_CFG);
   if (FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
   
@@ -299,9 +299,9 @@ Returns:
   //
   // Remove the log files
   //
-  FilePath = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_LOG);
+  FilePath = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_LOG);
   if (FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -334,9 +334,9 @@ Returns:
   //
   // Remove the .verbose.mode File
   //
-  FilePath = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_VERBOSE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_VERBOSE);
   if (FilePath == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
   Status = RemoveFile (
@@ -391,9 +391,9 @@ Returns:
   //
   // Save the test cases
   //
-  FileName = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_TEST_CASE);
+  FileName = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_TEST_CASE);
   if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"PoolPrint: Out of resources"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -435,9 +435,9 @@ Returns:
   //
   // Convert the meta name with wildcard character '*'
   //
-  TempName = PoolPrint (MetaName, L"*", L"*", L"*");
+  TempName = SctPoolPrint (MetaName, L"*", L"*", L"*");
   if (TempName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"PoolPrint: Out of resource"));
+    EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"SctPoolPrint: Out of resource"));
     tBS->FreePool (FilePath);
     tBS->FreePool (MetaName);
     return EFI_OUT_OF_RESOURCES;
@@ -605,7 +605,7 @@ Routine Description:
       //
       // It is a directory
       //
-      SubDir = PoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
+      SubDir = SctPoolPrint (L"%s\\%s", FilePath, FileInfo->FileName);
 
       Status = RemoveMetaFiles (
                  DevicePath,

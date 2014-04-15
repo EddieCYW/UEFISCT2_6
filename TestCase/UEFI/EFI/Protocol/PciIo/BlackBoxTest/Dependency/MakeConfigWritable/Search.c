@@ -195,7 +195,7 @@ FoundTestCardUnderRB (
 
         if (NewCard) {
 
-          Print (L"Found a Special Card\r\n");
+          SctPrint (L"Found a Special Card\r\n");
           Status = AllocateNewDevice (
                      RootBridgeIo,
                      TestDev,

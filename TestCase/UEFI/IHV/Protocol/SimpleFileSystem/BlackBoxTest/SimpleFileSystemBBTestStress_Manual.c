@@ -2086,7 +2086,7 @@ ComposeDevicePathRepository (
                    &HandleBuffer
                    );
   if (EFI_ERROR (Status) || (NoHandles == 0)) {
-    Print (
+    SctPrint (
       L"%a,%d: Generic Error: Locate Simple File System Protocol fail, Status - %r",
       __FILE__,
       (UINTN)__LINE__,
@@ -2106,7 +2106,7 @@ ComposeDevicePathRepository (
                      &DevicePath
                      );
     if (EFI_ERROR (Status)) {
-      Print (
+      SctPrint (
         L"%a,%d: Retrieve device path fail, Status - %r",
         __FILE__,
         (UINTN)__LINE__,
@@ -2121,7 +2121,7 @@ ComposeDevicePathRepository (
     NewDevicePath = NULL;
     NewDevicePath = DuplicateDevicePath (DevicePath);
     if (NewDevicePath == NULL) {
-      Print (
+      SctPrint (
         L"%a,%d: Generic Error: DuplicateDevicePath fail",
         __FILE__,
         (UINTN)__LINE__
@@ -2267,7 +2267,7 @@ CreateSampleDirFileTree (
                      EFI_FILE_DIRECTORY
                      );
     if (EFI_ERROR (Status)) {
-      Print (
+      SctPrint (
         L"%a,%d: Generic Error: Create Directory %s fail, Status - %r",
         __FILE__,
         (UINTN)__LINE__,
@@ -2291,7 +2291,7 @@ CreateSampleDirFileTree (
                              0
                              );
     if (EFI_ERROR (Status)) {
-      Print (
+      SctPrint (
         L"%a,%d: Generic Error: Create File %s fail, Status - %r",
         __FILE__,
         (UINTN)__LINE__,
@@ -2318,7 +2318,7 @@ CreateSampleDirFileTree (
                              0
                              );
     if (EFI_ERROR (Status)) {
-      Print (
+      SctPrint (
         L"%a,%d: Generic Error: Create File %s fail, Status - %r",
         __FILE__,
         (UINTN)__LINE__,
@@ -2343,7 +2343,7 @@ CreateSampleDirFileTree (
                    0
                    );
   if (EFI_ERROR (Status)) {
-    Print (
+    SctPrint (
       L"%a,%d: Generic Error: Create File %s fail, Status - %r",
       __FILE__,
       (UINTN)__LINE__,
@@ -2518,9 +2518,9 @@ PrintStartTestMessage (
     return;
   }
 
-  Print (PrintMessage);
+  SctPrint (PrintMessage);
 
-  Print (L"%s %d %s", PrintString1, TriggerTimeInSeconds, PrintString2);
+  SctPrint (L"%s %d %s", PrintString1, TriggerTimeInSeconds, PrintString2);
 
   //
   // Set up a wait list for a key and the timer
@@ -2531,7 +2531,7 @@ PrintStartTestMessage (
 
   while (NoWait) {
 
-    Print (L"\rYes/No?(Auto judge as No in %d seconds)", TriggerTimeInSeconds);
+    SctPrint (L"\rYes/No?(Auto judge as No in %d seconds)", TriggerTimeInSeconds);
 
     Status = gtBS->WaitForEvent (NoWait, WaitList, &WaitIndex);
 
@@ -2551,7 +2551,7 @@ PrintStartTestMessage (
         // Read the key
         //
         Status = gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
-        APrint ((char*)(&Key.UnicodeChar));
+        SctAPrint ((char*)(&Key.UnicodeChar));
         switch (Key.UnicodeChar) {
           case 'Y':
           case 'y':
@@ -2564,7 +2564,7 @@ PrintStartTestMessage (
             *PressYes = FALSE;
             break;
           default :
-            Print (L"\n");
+            SctPrint (L"\n");
             break;
         }
         break;
@@ -2575,7 +2575,7 @@ PrintStartTestMessage (
         //
     }
   }
-  Print (L"\r\n");
+  SctPrint (L"\r\n");
 
   //
   // Done, cancle periodic timer
@@ -2625,10 +2625,10 @@ PrintDevicePathAndAskForInput (
   }
 
   if (DevicePath != NULL) {
-    Print (L"Device of %s\n", DevicePathString);
+    SctPrint (L"Device of %s\n", DevicePathString);
   }
-  Print (PrintMessage);
-  Print (L"%s %d %s", PrintString1, TriggerTimeInSeconds, PrintString2);
+  SctPrint (PrintMessage);
+  SctPrint (L"%s %d %s", PrintString1, TriggerTimeInSeconds, PrintString2);
 
   //
   // Set up a wait list for a key and the timer
@@ -2639,7 +2639,7 @@ PrintDevicePathAndAskForInput (
 
   while (NoWait) {
 
-    Print (L"\rYes/No?(Auto judge as No in %d seconds)", TriggerTimeInSeconds);
+    SctPrint (L"\rYes/No?(Auto judge as No in %d seconds)", TriggerTimeInSeconds);
 
     Status = gtBS->WaitForEvent (NoWait, WaitList, &WaitIndex);
 
@@ -2659,7 +2659,7 @@ PrintDevicePathAndAskForInput (
         // Read the key
         //
         Status = gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
-        APrint ((char*)(&Key.UnicodeChar));
+        SctAPrint ((char*)(&Key.UnicodeChar));
         switch (Key.UnicodeChar) {
           case 'Y':
           case 'y':
@@ -2672,7 +2672,7 @@ PrintDevicePathAndAskForInput (
             *PressYes = FALSE;
             break;
           default :
-            Print (L"\n");
+            SctPrint (L"\n");
             break;
         }
         break;
@@ -2683,7 +2683,7 @@ PrintDevicePathAndAskForInput (
         //
     }
   }
-  Print (L"\r\n");
+  SctPrint (L"\r\n");
 
   //
   // Done, cancle periodic timer

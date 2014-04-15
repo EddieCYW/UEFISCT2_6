@@ -317,7 +317,7 @@ AuthenticationTestWaitForAnyInput ()
   EFI_STATUS              Status;
   EFI_INPUT_KEY           Key;
 
-  Print (L"\r\nPress any key to continue...");
+  SctPrint (L"\r\nPress any key to continue...");
 
   //
   // Set 1 second periodic timer
@@ -350,7 +350,7 @@ AuthenticationTestWaitForAnyInput ()
         break;
     }
   }
-  Print (L"\r\n");
+  SctPrint (L"\r\n");
 
   //
   // Done, cancle periodic timer

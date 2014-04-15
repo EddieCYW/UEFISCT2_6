@@ -172,7 +172,7 @@ BBTestProcessExtFunctionTest (
     //
     Ip4InitIPsecConfigDataTransport (Ip4Head);
 
-    Print(L"Create InBound & OutBound SPD/SAD {SHA1HMAC, 3DESCBC} for Ip4 Transport Mode.\n"); 
+    SctPrint(L"Create InBound & OutBound SPD/SAD {SHA1HMAC, 3DESCBC} for Ip4 Transport Mode.\n"); 
     //
     // InBound SPD
     //
@@ -218,7 +218,7 @@ BBTestProcessExtFunctionTest (
   
  
     
-    Print(L"Remove created InBound & OutBound SPD/SAD {SHA1HMAC, 3DESCBC} for Ip4 Transport Mode.\n\n\n"); 
+    SctPrint(L"Remove created InBound & OutBound SPD/SAD {SHA1HMAC, 3DESCBC} for Ip4 Transport Mode.\n\n\n"); 
     
     Status = IpSecConf->SetData(
                           IpSecConf,
@@ -271,7 +271,7 @@ BBTestProcessExtFunctionTest (
     SctZeroMem (OutBoundEncKeyIp4Transport, 128);
     SctCopyMem (OutBoundEncKeyIp4Transport, "ipv4readylogo3aescbcout1", 24);
 
-    Print(L"Create InBound & OutBound SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Transport Mode.\n"); 
+    SctPrint(L"Create InBound & OutBound SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Transport Mode.\n"); 
 
     //
     // InBound SPD
@@ -318,7 +318,7 @@ BBTestProcessExtFunctionTest (
     BBTestProcessExtFunctionTestCheckpoint2( StandardLib, IPsec2);
     
         
-    Print(L"Remove created InBound & OutBound SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Transport Mode.\n\n\n"); 
+    SctPrint(L"Remove created InBound & OutBound SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Transport Mode.\n\n\n"); 
     Status = IpSecConf->SetData(
                           IpSecConf,
                           IPsecConfigDataTypeSpd,
@@ -357,7 +357,7 @@ BBTestProcessExtFunctionTest (
     //
     // 3. Tunnel mode with NULL OptionBuffer & zero OptionLen , Use algorithm {SHA1HMAC, 3DESCBC}
     //
-    Print(L"Create SPD/SAD {SHA1HMAC, 3DESCBC} for Ip4 Tunnel Mode.\n"); 
+    SctPrint(L"Create SPD/SAD {SHA1HMAC, 3DESCBC} for Ip4 Tunnel Mode.\n"); 
 
     Ip4InitIPsecConfigDataTunnel(Ip4Head);
 
@@ -388,7 +388,7 @@ BBTestProcessExtFunctionTest (
     //
     // Remove SPD/SAD Tunnel Mode configuration through IPSEC_CONFIG_PROTOCOL
     //
-    Print(L"Remove created SPD/SAD {SHA1HMAC, 3DESCBC} for Ip4 Tunnel Mode.\n\n\n"); 
+    SctPrint(L"Remove created SPD/SAD {SHA1HMAC, 3DESCBC} for Ip4 Tunnel Mode.\n\n\n"); 
 
     Status = IpSecConf->SetData(
                           IpSecConf,
@@ -420,7 +420,7 @@ BBTestProcessExtFunctionTest (
     SctCopyMem (EncKeyIp4Tunnel, "ipv4readylogo3aescbcout1", 24);
 
     
-    Print(L"Create SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Tunnel Mode.\n"); 
+    SctPrint(L"Create SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Tunnel Mode.\n"); 
 
     //
     // SPD
@@ -448,7 +448,7 @@ BBTestProcessExtFunctionTest (
     //
     // Remove SPD/SAD Tunnel Mode configuration through IPSEC_CONFIG_PROTOCOL
     //
-    Print(L"Remove created SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Tunnel Mode.\n"); 
+    SctPrint(L"Remove created SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Tunnel Mode.\n"); 
 
     Status = IpSecConf->SetData(
                           IpSecConf,
@@ -486,7 +486,7 @@ BBTestProcessExtFunctionTest (
     //
     Ip6InitIPsecConfigDataTransport (Ip6Head);
     
-    Print(L"Create InBound & OutBound SPD/SAD {SHA1HMAC, 3DESCBC} for IP6 Transport Mode.\n");
+    SctPrint(L"Create InBound & OutBound SPD/SAD {SHA1HMAC, 3DESCBC} for IP6 Transport Mode.\n");
 
     //
     // InBound SPD
@@ -534,7 +534,7 @@ BBTestProcessExtFunctionTest (
 
     
     
-    Print(L"Remove created InBound & OutBound SPD/SAD {SHA1HMAC, 3DESCBC} for IP6 Transport Mode.\n\n\n"); 
+    SctPrint(L"Remove created InBound & OutBound SPD/SAD {SHA1HMAC, 3DESCBC} for IP6 Transport Mode.\n\n\n"); 
     
     Status = IpSecConf->SetData(
                           IpSecConf,
@@ -587,7 +587,7 @@ BBTestProcessExtFunctionTest (
     SctZeroMem (OutBoundEncKeyIp6Transport, 128);
     SctCopyMem (OutBoundEncKeyIp6Transport, "ipv6readylogo3aescbcout1", 24);
 
-    Print(L"Create InBound & OutBound SPD/SAD {SHA1HMAC, AESCBC} for Ip6 Transport Mode.\n"); 
+    SctPrint(L"Create InBound & OutBound SPD/SAD {SHA1HMAC, AESCBC} for Ip6 Transport Mode.\n"); 
 
     //
     // InBound SPD
@@ -634,7 +634,7 @@ BBTestProcessExtFunctionTest (
     BBTestProcessExtFunctionTestCheckpoint6( StandardLib, IPsec2);
     
         
-    Print(L"Remove created InBound & OutBound SPD/SAD {SHA1HMAC, AESCBC} for Ip6 Transport Mode.\n\n\n"); 
+    SctPrint(L"Remove created InBound & OutBound SPD/SAD {SHA1HMAC, AESCBC} for Ip6 Transport Mode.\n\n\n"); 
     Status = IpSecConf->SetData(
                           IpSecConf,
                           IPsecConfigDataTypeSpd,
@@ -673,7 +673,7 @@ BBTestProcessExtFunctionTest (
     //
     // 7. Tunnel mode with NULL OptionBuffer & zero OptionLen , Use algorithm {SHA1HMAC, 3DESCBC}
     //
-    Print(L"Create SPD/SAD {SHA1HMAC, 3DESCBC} for Ip6 Tunnel Mode.\n"); 
+    SctPrint(L"Create SPD/SAD {SHA1HMAC, 3DESCBC} for Ip6 Tunnel Mode.\n"); 
 
     Ip6InitIPsecConfigDataTunnel(Ip6Head);
 
@@ -704,7 +704,7 @@ BBTestProcessExtFunctionTest (
     //
     // Remove SPD/SAD Tunnel Mode configuration through IPSEC_CONFIG_PROTOCOL
     //
-    Print(L"Remove created SPD/SAD {SHA1HMAC, 3DESCBC} for Ip6 Tunnel Mode.\n\n\n"); 
+    SctPrint(L"Remove created SPD/SAD {SHA1HMAC, 3DESCBC} for Ip6 Tunnel Mode.\n\n\n"); 
 
     Status = IpSecConf->SetData(
                           IpSecConf,
@@ -736,7 +736,7 @@ BBTestProcessExtFunctionTest (
     SctCopyMem (EncKeyIp6Tunnel, "ipv6readylogo3aescbcout1", 24);
 
     
-    Print(L"Create SPD/SAD {SHA1HMAC, AESCBC} for Ip6 Tunnel Mode.\n"); 
+    SctPrint(L"Create SPD/SAD {SHA1HMAC, AESCBC} for Ip6 Tunnel Mode.\n"); 
 
     //
     // SPD
@@ -764,7 +764,7 @@ BBTestProcessExtFunctionTest (
     //
     // Remove SPD/SAD Tunnel Mode configuration through IPSEC_CONFIG_PROTOCOL
     //
-    Print(L"Remove created SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Tunnel Mode.\n"); 
+    SctPrint(L"Remove created SPD/SAD {SHA1HMAC, AESCBC} for Ip4 Tunnel Mode.\n"); 
 
     Status = IpSecConf->SetData(
                           IpSecConf,

@@ -324,12 +324,12 @@ AutoJudge (
   //
   // Wait for either
   //
-  Print (Message);
+  SctPrint (Message);
   while (NoWait) {
     if (Default==TRUE) {
-      Print (L"\rYes/No?(Auto judge as Yes in %d seconds", Seconds);
+      SctPrint (L"\rYes/No?(Auto judge as Yes in %d seconds", Seconds);
     } else {
-      Print (L"\rYes/No?(Auto judge as No in %d seconds", Seconds);
+      SctPrint (L"\rYes/No?(Auto judge as No in %d seconds", Seconds);
     }
 
     Status = gtBS->WaitForEvent (NoWait, WaitList, &WaitIndex);
@@ -350,7 +350,7 @@ AutoJudge (
         // Read the key
         //
         Status = SimpleTextInputEx->ReadKeyStrokeEx (SimpleTextInputEx, &Key);
-        APrint ((char*)(&Key.Key.UnicodeChar));
+        SctAPrint ((char*)(&Key.Key.UnicodeChar));
         switch (Key.Key.UnicodeChar) {
           case 'Y':
           case 'y':
@@ -363,7 +363,7 @@ AutoJudge (
             PressYes = FALSE;
             break;
           default :
-            Print (L"\n");
+            SctPrint (L"\n");
             break;
         }
         break;
@@ -374,7 +374,7 @@ AutoJudge (
         //
     }
   }
-  Print (L"\r\n");
+  SctPrint (L"\r\n");
 
   //
   // Done, cancle periodic timer
@@ -491,36 +491,36 @@ KeyStatePrint (
   IN EFI_KEY_STATE KeyState
 )
 {
-  Print( L"\r\nKeyShiftState is: %x", KeyState.KeyShiftState );
-  Print( L"\r\nKeyToggleState is: %x\r\n", KeyState.KeyToggleState );
+  SctPrint( L"\r\nKeyShiftState is: %x", KeyState.KeyShiftState );
+  SctPrint( L"\r\nKeyToggleState is: %x\r\n", KeyState.KeyToggleState );
   
   if ( KeyState.KeyShiftState & EFI_RIGHT_SHIFT_PRESSED )
-    Print( L"RIGHT_SHIFT_PRESSED  " );
+    SctPrint( L"RIGHT_SHIFT_PRESSED  " );
   if ( KeyState.KeyShiftState & EFI_LEFT_SHIFT_PRESSED )
-    Print( L"LEFT_SHIFT_PRESSED  " );
+    SctPrint( L"LEFT_SHIFT_PRESSED  " );
   if ( KeyState.KeyShiftState & EFI_RIGHT_CONTROL_PRESSED )
-    Print( L"RIGHT_CONTROL_PRESSED  " );
+    SctPrint( L"RIGHT_CONTROL_PRESSED  " );
   if ( KeyState.KeyShiftState & EFI_LEFT_CONTROL_PRESSED )
-    Print( L"LEFT_CONTROL_PRESSED  " );
+    SctPrint( L"LEFT_CONTROL_PRESSED  " );
   if ( KeyState.KeyShiftState & EFI_RIGHT_ALT_PRESSED )
-    Print( L"RIGHT_ALT_PRESSED  " );
+    SctPrint( L"RIGHT_ALT_PRESSED  " );
   if ( KeyState.KeyShiftState & EFI_LEFT_ALT_PRESSED )
-    Print( L"LEFT_ALT_PRESSED  " );
+    SctPrint( L"LEFT_ALT_PRESSED  " );
   if ( KeyState.KeyShiftState & EFI_RIGHT_LOGO_PRESSED )
-    Print( L"RIGHT_LOGO_PRESSED  " );
+    SctPrint( L"RIGHT_LOGO_PRESSED  " );
   if ( KeyState.KeyShiftState & EFI_LEFT_LOGO_PRESSED )
-    Print( L"LEFT_LOGO_PRESSED  " );
+    SctPrint( L"LEFT_LOGO_PRESSED  " );
   if ( KeyState.KeyShiftState & EFI_MENU_KEY_PRESSED )
-    Print( L"MENU_KEY_PRESSED  " );
+    SctPrint( L"MENU_KEY_PRESSED  " );
   if ( KeyState.KeyShiftState & EFI_SYS_REQ_PRESSED )
-    Print( L"EFI_SYS_REQ_PRESSED  " );
+    SctPrint( L"EFI_SYS_REQ_PRESSED  " );
 
   if ( KeyState.KeyToggleState & EFI_SCROLL_LOCK_ACTIVE )
-    Print( L"SCROLL_LOCK_ACTIVE  " );
+    SctPrint( L"SCROLL_LOCK_ACTIVE  " );
   if ( KeyState.KeyToggleState & EFI_NUM_LOCK_ACTIVE )
-    Print( L"NUM_LOCK_ACTIVE  " );
+    SctPrint( L"NUM_LOCK_ACTIVE  " );
   if ( KeyState.KeyToggleState & EFI_CAPS_LOCK_ACTIVE )
-    Print( L"CAPS_LOCK_ACTIVE  " );
+    SctPrint( L"CAPS_LOCK_ACTIVE  " );
 
   return EFI_SUCCESS;
 }

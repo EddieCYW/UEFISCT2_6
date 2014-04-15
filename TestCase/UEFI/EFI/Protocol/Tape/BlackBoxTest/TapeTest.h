@@ -114,8 +114,8 @@ BBTestTapeFunctionReset (
 extern void TapeTestWaitForAnyInput (void);
 //#define _TestWaitForAnyInput() TapeTestWaitForAnyInput()
 
-#define my_printf(x)  Print	x
-#define my_logMsgPrintf  Print
+#define my_printf(x)  SctPrint	x
+#define my_logMsgPrintf  SctPrint
 
 #define logMsg(_guid,_title,_message,_result,_maskRes) \
   StandardLib->RecordAssertion (StandardLib,\

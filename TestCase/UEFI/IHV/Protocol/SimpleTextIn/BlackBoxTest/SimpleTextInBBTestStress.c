@@ -160,7 +160,7 @@ BBTestReadKeyStrokeManualTest (
   //
   // wait for times
   //
-  Print (L"\r\nReadKeyStroke Stress Test Start!\r\n");
+  SctPrint (L"\r\nReadKeyStroke Stress Test Start!\r\n");
   WaitTimeOrKey (5);
 
   //
@@ -181,7 +181,7 @@ BBTestReadKeyStrokeManualTest (
                    Status
                    );
   }
-  Print (L"\r\nPlease input some displayabed characters in 5 seconds\r\n");
+  SctPrint (L"\r\nPlease input some displayabed characters in 5 seconds\r\n");
 
   gtBS->Stall (5000000);
 
@@ -218,7 +218,7 @@ BBTestReadKeyStrokeManualTest (
 
   KeyBuffer[Index] = 0;
 
-  Print (L"The keys input are:%s", KeyBuffer);
+  SctPrint (L"The keys input are:%s", KeyBuffer);
 
   //
   // Prompt for user judge

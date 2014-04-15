@@ -295,7 +295,7 @@ Decompress_Conf (
                );
 
     if (EFI_ERROR(Status)) {
-      Print (L"Get InvalidCompressedFileName Error\r\n");
+      SctPrint (L"Get InvalidCompressedFileName Error\r\n");
       continue;
     }
 
@@ -309,7 +309,7 @@ Decompress_Conf (
                );
 
     if (EFI_ERROR(Status)) {
-      Print (L"Can not open the File :%s\r\n", CompressedFileName);
+      SctPrint (L"Can not open the File :%s\r\n", CompressedFileName);
       gtBS->FreePool (CompressedFileName);
       continue;
     }
@@ -322,7 +322,7 @@ Decompress_Conf (
 
     if (CompressedFileBuffer == NULL) {
       CompressedFHandle->Close (CompressedFHandle);
-      Print (L"Can not allocate %xh buffer.\r\n", CompressedFileSize);
+      SctPrint (L"Can not allocate %xh buffer.\r\n", CompressedFileSize);
       continue;
     }
 
@@ -338,7 +338,7 @@ Decompress_Conf (
 
     if (EFI_ERROR(Status)) {
       gtBS->FreePool (CompressedFileBuffer);
-      Print (L"File Read Error Status %r\r\n", Status);
+      SctPrint (L"File Read Error Status %r\r\n", Status);
       continue;
     }
 
@@ -379,7 +379,7 @@ Decompress_Conf (
 
     if (DecompressBuffer == NULL) {
       gtBS->FreePool (CompressedFileBuffer);
-      Print (L"Can not allocate %xh buffer.\r\n", DestinationSize);
+      SctPrint (L"Can not allocate %xh buffer.\r\n", DestinationSize);
       continue;
     }
 
@@ -388,7 +388,7 @@ Decompress_Conf (
     if (ScratchBuffer == NULL) {
       gtBS->FreePool (CompressedFileBuffer);
       gtBS->FreePool (DecompressBuffer);
-      Print (L"Can not allocate %xh buffer.\r\n", ScratchSize);
+      SctPrint (L"Can not allocate %xh buffer.\r\n", ScratchSize);
       continue;
     }
 
@@ -474,7 +474,7 @@ Decompress_Conf (
                );
 
     if (EFI_ERROR(Status)) {
-      Print (L"Get CompressedFileName Error\r\n");
+      SctPrint (L"Get CompressedFileName Error\r\n");
       continue;
     }
 
@@ -488,7 +488,7 @@ Decompress_Conf (
                );
 
     if (EFI_ERROR(Status)) {
-      Print (L"Can not open the File :%s\r\n", CompressedFileName);
+      SctPrint (L"Can not open the File :%s\r\n", CompressedFileName);
       gtBS->FreePool (CompressedFileName);
       continue;
     }
@@ -501,7 +501,7 @@ Decompress_Conf (
 
     if (CompressedFileBuffer == NULL) {
       CompressedFHandle->Close (CompressedFHandle);
-      Print (L"Can not allocate %xh buffer.\r\n", CompressedFileSize);
+      SctPrint (L"Can not allocate %xh buffer.\r\n", CompressedFileSize);
       continue;
     }
 
@@ -516,7 +516,7 @@ Decompress_Conf (
     CompressedFHandle->Close (CompressedFHandle);
 
     if (EFI_ERROR(Status)) {
-      Print (L"File Read Error Status %r\r\n", Status);
+      SctPrint (L"File Read Error Status %r\r\n", Status);
       gtBS->FreePool (CompressedFileBuffer);
       continue;
     }
@@ -557,7 +557,7 @@ Decompress_Conf (
     DecompressBuffer = SctAllocatePool ((DestinationSize == 0) ? 128 : DestinationSize);
     if (DecompressBuffer == NULL) {
       gtBS->FreePool (CompressedFileBuffer);
-      Print (L"Can not allocate %xh buffer.\r\n", DestinationSize);
+      SctPrint (L"Can not allocate %xh buffer.\r\n", DestinationSize);
       continue;
     }
 
@@ -565,7 +565,7 @@ Decompress_Conf (
     if (ScratchBuffer == NULL) {
       gtBS->FreePool (CompressedFileBuffer);
       gtBS->FreePool (DecompressBuffer);
-      Print (L"Can not allocate %xh buffer.\r\n", ScratchSize);
+      SctPrint (L"Can not allocate %xh buffer.\r\n", ScratchSize);
       continue;
     }
 

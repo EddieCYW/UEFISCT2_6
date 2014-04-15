@@ -873,7 +873,7 @@ Notes:
   }
   //
   // If we found a match, then copy it to the user's buffer.
-  // Otherwise SPrint the hex value into their buffer.
+  // Otherwise SctSPrint the hex value into their buffer.
   //
   if (EMsg != NULL) {
     EntsStrCpy (Buffer, EMsg);

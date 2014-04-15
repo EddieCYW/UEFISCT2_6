@@ -97,7 +97,7 @@ Returns:
   //
   // Open the system log file
   //
-  FileName = PoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_LOG);
+  FileName = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_LOG);
   if (FileName == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -196,7 +196,7 @@ Routine Description:
   }
 
   VA_START (Marker, Format);
-  VSPrint (Buffer, EFI_SCT_MAX_BUFFER_SIZE, Format, Marker);
+  SctVSPrint (Buffer, EFI_SCT_MAX_BUFFER_SIZE, Format, Marker);
   VA_END (Marker);
 
   //
@@ -204,15 +204,15 @@ Routine Description:
   //
   switch (Level) {
   case EFI_SCT_D_ERROR:
-    String = PoolPrint (L"ERROR: %s\n", Buffer);
+    String = SctPoolPrint (L"ERROR: %s\n", Buffer);
     break;
 
   case EFI_SCT_D_DEBUG:
-    String = PoolPrint (L"DEBUG: %s\n", Buffer);
+    String = SctPoolPrint (L"DEBUG: %s\n", Buffer);
     break;
 
   case EFI_SCT_D_TRACE:
-    String = PoolPrint (L"TRACE: %s\n", Buffer);
+    String = SctPoolPrint (L"TRACE: %s\n", Buffer);
     break;
 
   default:
@@ -236,7 +236,7 @@ Routine Description:
     //
     // Print the message into screen before calling InitializeDebugServices
     //
-    Print (String);
+    SctPrint (String);
   }
 
   tBS->FreePool (String);

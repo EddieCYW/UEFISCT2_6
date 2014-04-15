@@ -690,7 +690,7 @@ BBTestDhcpConformanceTest (
   //
   // Wait for user setup test environment
   //
-  Print (L"\r\nPlease Shutdown DHCP Server\r\n");
+  SctPrint (L"\r\nPlease Shutdown DHCP Server\r\n");
   WaitForAnyInput ();
 
   //
@@ -716,7 +716,7 @@ BBTestDhcpConformanceTest (
   //
   // Wait for close PXE option
   //
-  Print (L"\r\nClose PXE Option of DHCP Server\r\n");
+  SctPrint (L"\r\nClose PXE Option of DHCP Server\r\n");
   WaitForAnyInput ();
 
   //
@@ -764,7 +764,7 @@ BBTestDhcpConformanceTest (
   //
   // Wait for setup Dhcp Server
   //
-  Print (L"\r\nSetup Dhcp Server\r\n");
+  SctPrint (L"\r\nSetup Dhcp Server\r\n");
   WaitForAnyInput ();
 
   Status = BcInterface->Dhcp (BcInterface, FALSE);
@@ -881,7 +881,7 @@ BBTestDiscoverConformanceTest (
   //
   // Get IP
   //
-  Print (L"\r\nPlease Setup DHCP Server\r\n");
+  SctPrint (L"\r\nPlease Setup DHCP Server\r\n");
   WaitForAnyInput ();
   Status = BcInterface->Dhcp (BcInterface, FALSE);
   if (EFI_ERROR(Status))
@@ -901,7 +901,7 @@ BBTestDiscoverConformanceTest (
   //
   // Wait for user setup test environment
   //
-  Print (L"\r\nPlease Shutdown Boot Server\r\n");
+  SctPrint (L"\r\nPlease Shutdown Boot Server\r\n");
   WaitForAnyInput ();
 
   //
@@ -953,7 +953,7 @@ BBTestDiscoverConformanceTest (
   //
   // Wait for setup Boot Server
   //
-  Print (L"\r\nSetup BOOT Server environment\r\n");
+  SctPrint (L"\r\nSetup BOOT Server environment\r\n");
   WaitForAnyInput ();
 
   Status = BcInterface->Discover (
@@ -1162,7 +1162,7 @@ BBTestMtftpConformanceTest (
   //
   // Get IP
   //
-  Print (L"\r\nPlease Setup DHCP Server\r\n");
+  SctPrint (L"\r\nPlease Setup DHCP Server\r\n");
   WaitForAnyInput ();
   Status = BcInterface->Dhcp (BcInterface, FALSE);
   if (EFI_ERROR(Status))
@@ -1186,7 +1186,7 @@ BBTestMtftpConformanceTest (
   //
   // Stop TFTP Server
   //
-  Print (L"\r\nStop TFTP Server\r\n");
+  SctPrint (L"\r\nStop TFTP Server\r\n");
   WaitForAnyInput ();
 
   Status = BcInterface->Mtftp (
@@ -1217,7 +1217,7 @@ BBTestMtftpConformanceTest (
                  Status
                  );
 
-  Print (L"\r\nDoes ICMP Destination Unreachable Packet Captured by Sniffer?\r\n");
+  SctPrint (L"\r\nDoes ICMP Destination Unreachable Packet Captured by Sniffer?\r\n");
   if (TRUE == WaitForUserCheck ()){
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -1240,7 +1240,7 @@ BBTestMtftpConformanceTest (
   //
   // Shutdown TFTP Server
   //
-  Print (L"\r\nShutdown M/TFTP Server\r\n");
+  SctPrint (L"\r\nShutdown M/TFTP Server\r\n");
   WaitForAnyInput ();
 
   Status = BcInterface->Mtftp (
@@ -1277,7 +1277,7 @@ BBTestMtftpConformanceTest (
   //
   // Delete requested file
   //
-  Print (L"\r\nDelete Requested File from M/TFTP Server\r\n");
+  SctPrint (L"\r\nDelete Requested File from M/TFTP Server\r\n");
   WaitForAnyInput ();
 
   Status = BcInterface->Mtftp (
@@ -1365,7 +1365,7 @@ BBTestMtftpConformanceTest (
   //
   // Change File to READ-ONLY
   //
-  Print (L"\r\nChange the requested file to READ-ONLY\r\n");
+  SctPrint (L"\r\nChange the requested file to READ-ONLY\r\n");
   WaitForAnyInput ();
 
   Status = gtBS->AllocatePool (EfiBootServicesData, (UINT32)Size, &Buffer);
@@ -1580,7 +1580,7 @@ BBTestUdpWriteConformanceTest (
   //
   // Get IP
   //
-  Print (L"\r\nPlease Setup DHCP Server\r\n");
+  SctPrint (L"\r\nPlease Setup DHCP Server\r\n");
   WaitForAnyInput ();
   Status = BcInterface->Dhcp (BcInterface, FALSE);
   if (EFI_ERROR(Status))
@@ -1790,7 +1790,7 @@ BBTestUdpReadConformanceTest (
   //
   // Get IP
   //
-  Print (L"\r\nPlease Setup DHCP Server\r\n");
+  SctPrint (L"\r\nPlease Setup DHCP Server\r\n");
   WaitForAnyInput ();
   Status = BcInterface->Dhcp (BcInterface, FALSE);
   if (EFI_ERROR(Status))
@@ -1956,7 +1956,7 @@ BBTestUdpReadConformanceTest (
   Status = HookReturnAbortCallBack (EFI_PXE_BASE_CODE_FUNCTION_UDP_READ, BcInterface);
 
   //Wait for user send packet
-  Print (L"\r\nSend UDP Packet to this host");
+  SctPrint (L"\r\nSend UDP Packet to this host");
   WaitForAnyInput ();
 
   BufferSize = MAX_UDP_SIZE;
@@ -2358,7 +2358,7 @@ BBTestArpConformanceManualTest (
   //
   // Get IP
   //
-  Print (L"\r\nPlease Setup DHCP Server\r\n");
+  SctPrint (L"\r\nPlease Setup DHCP Server\r\n");
   WaitForAnyInput ();
   Status = BcInterface->Dhcp (BcInterface, FALSE);
   if (EFI_ERROR(Status))

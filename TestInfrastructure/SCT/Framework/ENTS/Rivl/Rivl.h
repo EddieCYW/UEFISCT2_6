@@ -81,7 +81,7 @@ Abstract:
 #define RIVL_DEBUG_PRINT
 
 #ifdef RIVL_DEBUG_PRINT
-#define RIVL_DEBUG(a) Print a
+#define RIVL_DEBUG(a) SctPrint a
 #else
 #define RIVL_DEBUG(a)
 #endif

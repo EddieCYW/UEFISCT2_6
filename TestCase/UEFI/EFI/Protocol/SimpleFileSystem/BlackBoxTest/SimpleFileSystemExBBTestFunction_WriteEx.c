@@ -622,12 +622,12 @@ BBTestWriteExBasicTestCheckpoint1 (
     }
   }
   
-  Print (L" ================== Async WriteEx call finshed ================== \n\n");
+  SctPrint (L" ================== Async WriteEx call finshed ================== \n\n");
 
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Write events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Write events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
     
@@ -642,13 +642,13 @@ BBTestWriteExBasicTestCheckpoint1 (
             );
     IndexI++;
   
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncWriteQueueLock);
   }
   ReleaseLock(&gAsyncWriteQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");
+  SctPrint (L"\n");
  
   //
   // clear all File IO events from gWriteFinishQueue 
@@ -1368,12 +1368,12 @@ BBTestWriteExBasicTestCheckpoint3 (
     }
   }
   
-  Print (L" ================== Async WriteEx call finshed ================== \n\n");
+  SctPrint (L" ================== Async WriteEx call finshed ================== \n\n");
   
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Write events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Write events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
       
@@ -1388,13 +1388,13 @@ BBTestWriteExBasicTestCheckpoint3 (
             );
     IndexI++;
   
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncWriteMultiQueueLock);
   }
   ReleaseLock(&gAsyncWriteMultiQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");
+  SctPrint (L"\n");
  
   //
   // clear all File IO events from gWriteFinishQueue 

@@ -76,12 +76,12 @@ Returns:
   
 --*/  
 {
-  Print(L"SCRTApp Usage:\n");
-  Print(L"  -f  FileName  FileName is test case configuration file\n");
-  Print(L"  -g  FileName  FileName is test case result/log file\n");
-  Print(L"Example:\n");
-  Print(L"SCRTApp -f SCRT.conf\n");
-  Print(L"SCRTApp -g SCRT.log\n");
+  SctPrint(L"SCRTApp Usage:\n");
+  SctPrint(L"  -f  FileName  FileName is test case configuration file\n");
+  SctPrint(L"  -g  FileName  FileName is test case result/log file\n");
+  SctPrint(L"Example:\n");
+  SctPrint(L"SCRTApp -f SCRT.conf\n");
+  SctPrint(L"SCRTApp -g SCRT.log\n");
 }
 
 
@@ -161,7 +161,7 @@ Returns:
   ArgIndex = (UINT32)SI->Argc;
 
   if ((ArgIndex != 3) || ((SctStrCmp (SI->Argv[1], L"-f")) && (SctStrCmp(SI->Argv[1], L"-g")))) {
-    Print(L"SCRTApp: invalid option\n");
+    SctPrint(L"SCRTApp: invalid option\n");
     PrintUsage ();
     return EFI_INVALID_PARAMETER;
   } else {
@@ -183,7 +183,7 @@ Returns:
                0
                );
     if (EFI_ERROR (Status)) {
-      Print(L"Fail to open the configuration file\n");     
+      SctPrint(L"Fail to open the configuration file\n");     
       return Status;
     }
   
@@ -192,10 +192,10 @@ Returns:
     //
     FileInfo = LibGetFileInfo (FileHandle);
     if (FileInfo == NULL) {
-      Print(L"Fail to open the configuration file\n");     
+      SctPrint(L"Fail to open the configuration file\n");     
       return EFI_ABORTED;  
     } else if (FileInfo->Attribute & EFI_FILE_DIRECTORY) {
-      Print(L"Fail to open the configuration file\n");     
+      SctPrint(L"Fail to open the configuration file\n");     
       return EFI_ABORTED;
     }
 
@@ -234,18 +234,18 @@ Returns:
       if (SctCompareGuid (&gRuntimeFuncAddressGuid, &(tST->ConfigurationTable[Index].VendorGuid)) == 0) {
         StubTable = tST->ConfigurationTable[Index].VendorTable;
         if (StubTable->Signature != SCRT_STUB_TABLE_SIGNATURE) {
-          Print(L"Find Corrupted SCRT Table!\n");
+          SctPrint(L"Find Corrupted SCRT Table!\n");
           EFI_DEADLOOP();
         } else {
           SctTableFound =TRUE;
           VirtualFunc = (UINTN)StubTable->FuncAddr;
-          Print(L"Find RuntimeFunc @ 0x%x registered in SCRT Table\n",VirtualFunc);        
+          SctPrint(L"Find RuntimeFunc @ 0x%x registered in SCRT Table\n",VirtualFunc);        
         }
       }
     }
 
     if (!SctTableFound) {
-      Print(L"Fail to find SCRT Table!\n");
+      SctPrint(L"Fail to find SCRT Table!\n");
       EFI_DEADLOOP();
     }
   

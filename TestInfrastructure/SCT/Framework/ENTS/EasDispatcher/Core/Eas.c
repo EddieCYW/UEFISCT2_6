@@ -170,7 +170,7 @@ Returns:
   UINTN                     BufferSize;
   EFI_ENTS_MONITOR_PROTOCOL *EntsMonitor;
 
-  Print (L"\n!!!Enter Main\n");
+  SctPrint (L"\n!!!Enter Main\n");
 
   BufferSize  = 0;
   Buffer      = NULL;

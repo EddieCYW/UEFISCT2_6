@@ -187,7 +187,7 @@ BBTestResetSystemInterfaceTest (
     //
     // Print out some information to avoid the user thought it is an error
     //
-    Print (L"System will cold reset after 1 second...");
+    SctPrint (L"System will cold reset after 1 second...");
     gtBS->Stall (1000000);
 
     OldTpl = gtBS->RaiseTPL (TplArray[Index]);
@@ -245,7 +245,7 @@ ResetSystemStep2:
     //
     // Print out some information to avoid the user thought it is an error
     //
-    Print (L"System will warm reset after 1 second...");
+    SctPrint (L"System will warm reset after 1 second...");
     gtBS->Stall (1000000);
 
     OldTpl = gtBS->RaiseTPL (TplArray[Index]);
@@ -402,7 +402,7 @@ BBTestResetSystemManualTest (
     // And the stall a second is required to make sure the recovery data has
     // been written into the storage device.
     //
-    Print (L"System will shut down (or cold reset) after 1 second...");
+    SctPrint (L"System will shut down (or cold reset) after 1 second...");
     gtBS->Stall (1000000);
 
     OldTpl = gtBS->RaiseTPL (TplArray[Index]);

@@ -1097,14 +1097,14 @@ WriteStressTestSub1 (
   //
   // Print out message
   //
-  Print (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
-  Print (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
-  Print (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
-  Print (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
-  Print (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
-  Print (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
+  SctPrint (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
+  SctPrint (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
+  SctPrint (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
+  SctPrint (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
+  SctPrint (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
+  SctPrint (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
 
-  Print (L"Press any key to receive data from serial port...\n");
+  SctPrint (L"Press any key to receive data from serial port...\n");
   gtBS->WaitForEvent (1, &(gtST->ConIn->WaitForKey), &WaitIndex);
   gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
 
@@ -1244,13 +1244,13 @@ WriteStressTestSub2 (
               //
               // Print out message
               //
-              Print (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
-              Print (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
-              Print (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
-              Print (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
-              Print (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
-              Print (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
-              Print (L"Press any key to receive data from serial port...\n");
+              SctPrint (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
+              SctPrint (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
+              SctPrint (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
+              SctPrint (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
+              SctPrint (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
+              SctPrint (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
+              SctPrint (L"Press any key to receive data from serial port...\n");
               gtBS->WaitForEvent (1, &(gtST->ConIn->WaitForKey), &WaitIndex);
               gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
 
@@ -1392,13 +1392,13 @@ WriteStressTestSub3 (
     //
     // Print out message
     //
-    Print (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
-    Print (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
-    Print (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
-    Print (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
-    Print (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
-    Print (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
-    Print (L"Press any key to receive data from serial port...\n");
+    SctPrint (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
+    SctPrint (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
+    SctPrint (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
+    SctPrint (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
+    SctPrint (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
+    SctPrint (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
+    SctPrint (L"Press any key to receive data from serial port...\n");
     gtBS->WaitForEvent (1, &(gtST->ConIn->WaitForKey), &WaitIndex);
     gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
 
@@ -1526,13 +1526,13 @@ ReadStressTestSub1 (
   //
   // Print out message
   //
-  Print (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
-  Print (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
-  Print (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
-  Print (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
-  Print (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
-  Print (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
-  Print (L"Please send data to serial port and confirm by stroke a key...\n");
+  SctPrint (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
+  SctPrint (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
+  SctPrint (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
+  SctPrint (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
+  SctPrint (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
+  SctPrint (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
+  SctPrint (L"Please send data to serial port and confirm by stroke a key...\n");
 
   gtBS->WaitForEvent (1, &(gtST->ConIn->WaitForKey), &WaitIndex);
   gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
@@ -1689,13 +1689,13 @@ ReadStressTestSub2 (
               //
               // Print out message
               //
-              Print (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
-              Print (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
-              Print (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
-              Print (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
-              Print (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
-              Print (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
-              Print (L"Please send data to serial port and confirm by key stroke...\n");
+              SctPrint (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
+              SctPrint (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
+              SctPrint (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
+              SctPrint (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
+              SctPrint (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
+              SctPrint (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
+              SctPrint (L"Please send data to serial port and confirm by key stroke...\n");
               gtBS->WaitForEvent (1, &(gtST->ConIn->WaitForKey), &WaitIndex);
               gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
               //
@@ -1857,13 +1857,13 @@ ReadStressTestSub3 (
     //
     // Print out message
     //
-    Print (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
-    Print (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
-    Print (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
-    Print (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
-    Print (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
-    Print (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
-    Print (L"Please send data to serial port and confirm by key stroke...\n");
+    SctPrint (L"BaudRate         = %d\n", SerialIo->Mode->BaudRate);
+    SctPrint (L"ReceiveFifoDepth = %d\n", SerialIo->Mode->ReceiveFifoDepth);
+    SctPrint (L"Timeout          = %d\n", SerialIo->Mode->Timeout);
+    SctPrint (L"Parity           = %s\n", gParityString[SerialIo->Mode->Parity]);
+    SctPrint (L"DataBits         = %d\n", SerialIo->Mode->DataBits);
+    SctPrint (L"StopBits         = %s\n", gStopBitsString[SerialIo->Mode->StopBits]);
+    SctPrint (L"Please send data to serial port and confirm by key stroke...\n");
     gtBS->WaitForEvent (1, &(gtST->ConIn->WaitForKey), &WaitIndex);
     gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
     //

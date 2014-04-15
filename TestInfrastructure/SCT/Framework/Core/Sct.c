@@ -137,7 +137,7 @@ Returns:
   OldTPL = tBS->RaiseTPL(EFI_TPL_HIGH_LEVEL);
   if(OldTPL != EFI_TPL_APPLICATION) {
     tBS->RestoreTPL(OldTPL);
-    Print(L"ERROR: SCT should run at EFI_TPL_APPLICATION level\n");
+    SctPrint(L"ERROR: SCT should run at EFI_TPL_APPLICATION level\n");
 	return EFI_SUCCESS;
   }
   tBS->RestoreTPL(OldTPL);
@@ -147,7 +147,7 @@ Returns:
   //
   Status = InitializeFrameworkTable (ImageHandle, SystemTable);
   if (EFI_ERROR (Status)) {
-    Print (L"ERROR: Cannot initialize the framework table. Status - %r\n", Status);
+    SctPrint (L"ERROR: Cannot initialize the framework table. Status - %r\n", Status);
     return Status;
   }
 
@@ -161,7 +161,7 @@ Returns:
   //
   Status = ParseCommandLine (ImageHandle);
   if (EFI_ERROR (Status)) {
-    Print (L"ERROR: Invalid command line. Status - %r\n", Status);
+    SctPrint (L"ERROR: Invalid command line. Status - %r\n", Status);
     FreeFrameworkTable ();
     return Status;
   }
@@ -171,7 +171,7 @@ Returns:
   //
   Status = SctMainFunc (ImageHandle, SystemTable);
   if (EFI_ERROR (Status)) {
-    Print (L"ERROR: Cannot do the operations. Status - %r\n", Status);
+    SctPrint (L"ERROR: Cannot do the operations. Status - %r\n", Status);
     FreeFrameworkTable ();
     return Status;
   }
@@ -181,14 +181,14 @@ Returns:
   //
   Status = FreeFrameworkTable ();
   if (EFI_ERROR (Status)) {
-    Print (L"ERROR: Cannot free the framework table. Status - %r\n", Status);
+    SctPrint (L"ERROR: Cannot free the framework table. Status - %r\n", Status);
     return Status;
   }
 
   //
   // Done
   //
-  Print (L"Done!\n");
+  SctPrint (L"Done!\n");
   return EFI_SUCCESS;
 }
 
@@ -209,7 +209,7 @@ Routine Description:
 
 --*/
 {
-  Print (
+  SctPrint (
     L"%s\n"
     L"\n"
     L"usage:\n"

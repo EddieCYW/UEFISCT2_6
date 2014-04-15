@@ -308,12 +308,12 @@ AutoJudge(
   //
   // Wait for either
   //
-  Print (Message);
+  SctPrint (Message);
   while (NoWait) {
     if (Default == TRUE) {
-      Print(L"\rYes/No?(Auto judge as Yes in %d seconds)",Seconds);
+      SctPrint(L"\rYes/No?(Auto judge as Yes in %d seconds)",Seconds);
     } else {
-      Print(L"\rYes/No?(Auto judge as No in %d seconds)",Seconds);
+      SctPrint(L"\rYes/No?(Auto judge as No in %d seconds)",Seconds);
     }
 
     Status = gtBS->WaitForEvent (NoWait, WaitList, &WaitIndex);
@@ -334,7 +334,7 @@ AutoJudge(
         // Read the key
         //
         Status = gtST->ConIn->ReadKeyStroke (gtST->ConIn, &Key);
-        APrint ((char*)(&Key.UnicodeChar));
+        SctAPrint ((char*)(&Key.UnicodeChar));
         switch( Key.UnicodeChar ) {
           case 'Y':
           case 'y':
@@ -347,7 +347,7 @@ AutoJudge(
             PressYes = FALSE;
             break;
           default :
-            Print(L"\n");
+            SctPrint(L"\n");
             break;
         }
         break;
@@ -358,7 +358,7 @@ AutoJudge(
         //
     }
   }
-  Print (L"\r\n");
+  SctPrint (L"\r\n");
 
   //
   // Done, cancle periodic timer

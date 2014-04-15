@@ -123,7 +123,7 @@ BBTestResetFunctionAutoTest (
   // Sometimes the file system will be destroied from this point. Just add a
   // stall to avoid it. (Need investigation, I don't know it is useful or not!)
   //
-  Print (L"Wait 5 seconds for the block device resetting...");
+  SctPrint (L"Wait 5 seconds for the block device resetting...");
   gtBS->Stall (5000000);
 
   StandardLib->RecordAssertion (
@@ -152,7 +152,7 @@ BBTestResetFunctionAutoTest (
   // Sometimes the file system will be destroied from this point. Just add a
   // stall to avoid it. (Need investigation, I don't know it is useful or not!)
   //
-  Print (L"Wait 5 seconds for the block device resetting...");
+  SctPrint (L"Wait 5 seconds for the block device resetting...");
   gtBS->Stall (5000000);
 
   StandardLib->RecordAssertion (
@@ -1204,14 +1204,14 @@ BBTestMediaIntegrityManualTest (
     //
     for (Index = 0; Index < 2; Index++) {
       if (MediaPresent == TRUE) {
-        Print (L"Remove media in device ");
+        SctPrint (L"Remove media in device ");
       } else {
-        Print (L"Insert media into device ");
+        SctPrint (L"Insert media into device ");
       }
 
       DevicePathStr = DevicePathToStr (DevicePath);
       if (DevicePathStr != NULL) {
-        Print (DevicePathStr);
+        SctPrint (DevicePathStr);
 
         Status = gtBS->FreePool (DevicePathStr);
         if (EFI_ERROR(Status)) {
@@ -1303,14 +1303,14 @@ AssertionPoint2:
   if (RemovableMedia == TRUE) {
 
     if (MediaPresent == TRUE) {
-      Print (L"Change media  in device ");
+      SctPrint (L"Change media  in device ");
     } else {
-      Print (L"Insert media into device ");
+      SctPrint (L"Insert media into device ");
     }
 
     DevicePathStr = DevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
-      Print (DevicePathStr);
+      SctPrint (DevicePathStr);
 
       Status = gtBS->FreePool (DevicePathStr);
       if (EFI_ERROR(Status)) {
@@ -1437,14 +1437,14 @@ AssertionPoint2:
     // Restore environment
     //
     if (MediaPresent == TRUE) {
-      Print (L"Change media back in device ");
+      SctPrint (L"Change media back in device ");
     } else {
-      Print (L"Remove media from device ");
+      SctPrint (L"Remove media from device ");
     }
 
     DevicePathStr = DevicePathToStr (DevicePath);
     if (DevicePathStr != NULL) {
-      Print (DevicePathStr);
+      SctPrint (DevicePathStr);
 
       Status = gtBS->FreePool (DevicePathStr);
       if (EFI_ERROR(Status)) {

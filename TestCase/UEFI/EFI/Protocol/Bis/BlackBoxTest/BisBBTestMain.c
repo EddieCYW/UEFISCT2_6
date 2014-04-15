@@ -520,7 +520,7 @@ PressYes ()
     } else if ((Key.UnicodeChar == L'N') || (Key.UnicodeChar == L'n')) {
       return FALSE;
     } else {
-      Print (L"Please press \"Y\" or \"N\"\n");
+      SctPrint (L"Please press \"Y\" or \"N\"\n");
     }
   }
 }

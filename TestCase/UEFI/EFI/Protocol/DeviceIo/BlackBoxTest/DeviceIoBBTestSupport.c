@@ -175,7 +175,7 @@ CreateAllDevIoDevices (
 
     gDevIoDevices[Index].DevicePath = DevicePath;
   }
-  Print (L"found %d DeviceIo interface.", HandleNum);
+  SctPrint (L"found %d DeviceIo interface.", HandleNum);
 
   gDevIoDevNumber = HandleNum;
 
@@ -310,7 +310,7 @@ OpenTestIniFile (
   EFI_STATUS Status;
 
   FilePath = NULL;
-  FilePath = PoolPrint (L"%s\\%s", gFilePath, DEVICE_IO_TEST_INI_FILE);
+  FilePath = SctPoolPrint (L"%s\\%s", gFilePath, DEVICE_IO_TEST_INI_FILE);
 
   if (FilePath == NULL) {
     return EFI_OUT_OF_RESOURCES;
@@ -732,7 +732,7 @@ GetSystemData (
   // make up the file path.
   //
   gFilePath = NULL;
-  gFilePath = PoolPrint (L"%s\\%s", TempFilePath, DEPENDECY_DIR_NAME);
+  gFilePath = SctPoolPrint (L"%s\\%s", TempFilePath, DEPENDECY_DIR_NAME);
   gtBS->FreePool (TempFilePath);
   if (gFilePath == NULL) {
     gtBS->FreePool (TempDevicePath);

@@ -210,7 +210,7 @@ void TapeTestWaitForAnyInput (void)
   EFI_STATUS              Status;
   EFI_INPUT_KEY           Key;
 
-  Print (L"\r\nPress any key to continue...");
+  SctPrint (L"\r\nPress any key to continue...");
 
   //
   // Set 1 second periodic timer
@@ -243,7 +243,7 @@ void TapeTestWaitForAnyInput (void)
         break;
     }
   }
-  Print (L"\r\n");
+  SctPrint (L"\r\n");
 
   //
   // Done, cancel periodic timer
@@ -269,7 +269,7 @@ getStandardLibInterface( EFI_HANDLE SupportHandle )
                    );
   if (EFI_ERROR(Status))
   {
-  	Print (L"\r\nHandleProtocol(StandardLib) Fail(%Xh) !", Status);
+  	SctPrint (L"\r\nHandleProtocol(StandardLib) Fail(%Xh) !", Status);
     return Status;
   }
 
@@ -282,11 +282,11 @@ getStandardLibInterface( EFI_HANDLE SupportHandle )
                    );
   if (EFI_ERROR(Status))
   {
-  	Print (L"\r\nHandleProtocol(LoggingLib) Fail(%Xh) !", Status);
+  	SctPrint (L"\r\nHandleProtocol(LoggingLib) Fail(%Xh) !", Status);
     return Status;
   }
   
-  //Print (L"\r\ngetStandardLibInterface successful.");
+  //SctPrint (L"\r\ngetStandardLibInterface successful.");
   return Status;
 
 }

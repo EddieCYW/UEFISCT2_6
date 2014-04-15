@@ -698,38 +698,38 @@ Returns:
 
 VOID
 _DevPathPci (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     PCI_DEVICE_PATH         *Pci;
 
     Pci = DevPath;
-    CatPrint(Str, L"Pci(%x|%x)", Pci->Device, Pci->Function);
+    SctCatPrint(Str, L"Pci(%x|%x)", Pci->Device, Pci->Function);
 }
 
 VOID
 _DevPathPccard (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     PCCARD_DEVICE_PATH      *Pccard;
 
     Pccard = DevPath;
-    CatPrint(Str, L"Pcmcia(Function%x)", Pccard->FunctionNumber);
+    SctCatPrint(Str, L"Pcmcia(Function%x)", Pccard->FunctionNumber);
 }
 
 VOID
 _DevPathMemMap (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     MEMMAP_DEVICE_PATH      *MemMap;
 
     MemMap = DevPath;
-    CatPrint(Str, L"MemMap(%d:%.lx-%.lx)",
+    SctCatPrint(Str, L"MemMap(%d:%.lx-%.lx)",
         MemMap->MemoryType,
         MemMap->StartingAddress,
         MemMap->EndingAddress
@@ -738,21 +738,21 @@ _DevPathMemMap (
 
 VOID
 _DevPathController (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     CONTROLLER_DEVICE_PATH  *Controller;
 
     Controller = DevPath;
-    CatPrint(Str, L"Ctrl(%d)",
+    SctCatPrint(Str, L"Ctrl(%d)",
         Controller->Controller
         );
 }
 
 VOID
 _DevPathVendor (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
@@ -768,22 +768,22 @@ _DevPathVendor (
     default:                    Type = L"?";         break;
     }
 
-    CatPrint(Str, L"Ven%s(%g", Type, &Vendor->Guid);
+    SctCatPrint(Str, L"Ven%s(%g", Type, &Vendor->Guid);
     if (SctCompareGuid (&Vendor->Guid, &gtEfiUnknownDeviceGuid) == 0) {
         //
         // GUID used by EFI to enumerate an EDD 1.1 device
         //
         UnknownDevPath = (UNKNOWN_DEVICE_VENDOR_DEVICE_PATH *)Vendor;
-        CatPrint(Str, L":%02x)", UnknownDevPath->LegacyDriveLetter);
+        SctCatPrint(Str, L":%02x)", UnknownDevPath->LegacyDriveLetter);
     } else {
-        CatPrint(Str, L")");
+        SctCatPrint(Str, L")");
     }
 }
 
 
 VOID
 _DevPathAcpi (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
@@ -791,16 +791,16 @@ _DevPathAcpi (
 
     Acpi = DevPath;
     if ((Acpi->HID & PNP_EISA_ID_MASK) == PNP_EISA_ID_CONST) {
-        CatPrint(Str, L"Acpi(PNP%04x,%x)", EISA_ID_TO_NUM (Acpi->HID), Acpi->UID);
+        SctCatPrint(Str, L"Acpi(PNP%04x,%x)", EISA_ID_TO_NUM (Acpi->HID), Acpi->UID);
     } else {
-        CatPrint(Str, L"Acpi(%08x,%x)", Acpi->HID, Acpi->UID);
+        SctCatPrint(Str, L"Acpi(%08x,%x)", Acpi->HID, Acpi->UID);
     }
 }
 
 
 VOID
 _DevPathExtendedAcpi (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
@@ -861,45 +861,45 @@ _DevPathExtendedAcpi (
     //
     // Print out the device path string
     //
-    CatPrint (Str, L"Acpi(");
+    SctCatPrint (Str, L"Acpi(");
     if (HIDStrIndex != 0) {
-        CatPrint (Str, L"%a,", AsChar8Array + HIDStrIndex);
+        SctCatPrint (Str, L"%a,", AsChar8Array + HIDStrIndex);
     } else {
         if ((ExtendedAcpi->HID & PNP_EISA_ID_MASK) == PNP_EISA_ID_CONST) {
-            CatPrint (Str, L"PNP%04x,", EISA_ID_TO_NUM (ExtendedAcpi->HID));
+            SctCatPrint (Str, L"PNP%04x,", EISA_ID_TO_NUM (ExtendedAcpi->HID));
         } else {
-            CatPrint (Str, L"%08x,", ExtendedAcpi->HID);
+            SctCatPrint (Str, L"%08x,", ExtendedAcpi->HID);
         }
     }
 
     if (CIDStrIndex != 0) {
-        CatPrint (Str, L"%a,", AsChar8Array + CIDStrIndex);
+        SctCatPrint (Str, L"%a,", AsChar8Array + CIDStrIndex);
     } else {
         if ((ExtendedAcpi->CID & PNP_EISA_ID_MASK) == PNP_EISA_ID_CONST) {
-            CatPrint (Str, L"PNP%04x,", EISA_ID_TO_NUM (ExtendedAcpi->CID));
+            SctCatPrint (Str, L"PNP%04x,", EISA_ID_TO_NUM (ExtendedAcpi->CID));
         } else {
-            CatPrint (Str, L"%08x,", ExtendedAcpi->CID);
+            SctCatPrint (Str, L"%08x,", ExtendedAcpi->CID);
         }
     }
 
     if (UIDStrIndex != 0) {
-        CatPrint (Str, L"%a)", AsChar8Array + UIDStrIndex);
+        SctCatPrint (Str, L"%a)", AsChar8Array + UIDStrIndex);
     } else {
-        CatPrint (Str, L"%x)", ExtendedAcpi->UID);
+        SctCatPrint (Str, L"%x)", ExtendedAcpi->UID);
     }
 }
 
 
 VOID
 _DevPathAtapi (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     ATAPI_DEVICE_PATH       *Atapi;
 
     Atapi = DevPath;
-    CatPrint(Str, L"Ata(%s,%s)",
+    SctCatPrint(Str, L"Ata(%s,%s)",
         Atapi->PrimarySecondary ? L"Secondary" : L"Primary",
         Atapi->SlaveMaster ? L"Slave" : L"Master"
         );
@@ -907,59 +907,59 @@ _DevPathAtapi (
 
 VOID
 _DevPathScsi (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     SCSI_DEVICE_PATH        *Scsi;
 
     Scsi = DevPath;
-    CatPrint(Str, L"Scsi(Pun%x,Lun%x)", Scsi->Pun, Scsi->Lun);
+    SctCatPrint(Str, L"Scsi(Pun%x,Lun%x)", Scsi->Pun, Scsi->Lun);
 }
 
 
 VOID
 _DevPathFibre (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     FIBRECHANNEL_DEVICE_PATH    *Fibre;
 
     Fibre = DevPath;
-    CatPrint(Str, L"Fibre(Wwn%lx,Lun%x)", Fibre->WWN, Fibre->Lun);
+    SctCatPrint(Str, L"Fibre(Wwn%lx,Lun%x)", Fibre->WWN, Fibre->Lun);
 }
 
 VOID
 _DevPath1394 (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     F1394_DEVICE_PATH       *F1394;
 
     F1394 = DevPath;
-    CatPrint(Str, L"1394(%g)", &F1394->Guid);
+    SctCatPrint(Str, L"1394(%g)", &F1394->Guid);
 }
 
 
 
 VOID
 _DevPathUsb (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     USB_DEVICE_PATH         *Usb;
 
     Usb = DevPath;
-    CatPrint(Str, L"Usb(%x, %x)", Usb->ParentPortNumber, Usb->InterfaceNumber);
+    SctCatPrint(Str, L"Usb(%x, %x)", Usb->ParentPortNumber, Usb->InterfaceNumber);
 }
 
 
 VOID
 _DevPathUsbClass (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
@@ -967,7 +967,7 @@ _DevPathUsbClass (
     USB_CLASS_DEVICE_PATH         *UsbClass;
 
     UsbClass = DevPath;
-    CatPrint(Str, L"Usb Class(%x, %x, %x, %x, %x)",
+    SctCatPrint(Str, L"Usb Class(%x, %x, %x, %x, %x)",
               UsbClass->VendorId,
               UsbClass->ProductId,
               UsbClass->DeviceClass,
@@ -979,19 +979,19 @@ _DevPathUsbClass (
 
 VOID
 _DevPathI2O (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     I2O_DEVICE_PATH         *I2O;
 
     I2O = DevPath;
-    CatPrint(Str, L"I2O(%x)", I2O->Tid);
+    SctCatPrint(Str, L"I2O(%x)", I2O->Tid);
 }
 
 VOID
 _DevPathMacAddr (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
@@ -1006,24 +1006,24 @@ _DevPathMacAddr (
         HwAddressSize = 6;
     }
 
-    CatPrint(Str, L"Mac(");
+    SctCatPrint(Str, L"Mac(");
 
     for(Index = 0; Index < HwAddressSize; Index++) {
-        CatPrint(Str, L"%02x",MAC->MacAddress.Addr[Index]);
+        SctCatPrint(Str, L"%02x",MAC->MacAddress.Addr[Index]);
     }
-    CatPrint(Str, L")");
+    SctCatPrint(Str, L")");
 }
 
 VOID
 _DevPathIPv4 (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     IPv4_DEVICE_PATH     *IP;
 
     IP = DevPath;
-    CatPrint(Str, L"IPv4(%d.%d.%d.%d:%d)",IP->RemoteIpAddress.Addr[0],
+    SctCatPrint(Str, L"IPv4(%d.%d.%d.%d:%d)",IP->RemoteIpAddress.Addr[0],
                                        IP->RemoteIpAddress.Addr[1],
                                        IP->RemoteIpAddress.Addr[2],
                                        IP->RemoteIpAddress.Addr[3],
@@ -1032,31 +1032,31 @@ _DevPathIPv4 (
 
 VOID
 _DevPathIPv6 (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     IPv6_DEVICE_PATH     *IP;
 
     IP = DevPath;
-    CatPrint(Str, L"IP-v6(not-done)");
+    SctCatPrint(Str, L"IP-v6(not-done)");
 }
 
 VOID
 _DevPathInfiniBand (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     INFINIBAND_DEVICE_PATH  *InfiniBand;
 
     InfiniBand = DevPath;
-    CatPrint(Str, L"InfiniBand(not-done)");
+    SctCatPrint(Str, L"InfiniBand(not-done)");
 }
 
 VOID
 _DevPathUart (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
@@ -1075,30 +1075,30 @@ _DevPathUart (
     }
 
     if (Uart->BaudRate == 0) {
-        CatPrint(Str, L"Uart(DEFAULT %c",Parity);
+        SctCatPrint(Str, L"Uart(DEFAULT %c",Parity);
     } else {
-        CatPrint(Str, L"Uart(%d %c",Uart->BaudRate,Parity);
+        SctCatPrint(Str, L"Uart(%d %c",Uart->BaudRate,Parity);
     }
 
     if (Uart->DataBits == 0) {
-        CatPrint(Str, L"D");
+        SctCatPrint(Str, L"D");
     } else {
-        CatPrint(Str, L"%d",Uart->DataBits);
+        SctCatPrint(Str, L"%d",Uart->DataBits);
     }
 
     switch (Uart->StopBits) {
-        case 0  : CatPrint(Str, L"D)");   break;
-        case 1  : CatPrint(Str, L"1)");   break;
-        case 2  : CatPrint(Str, L"1.5)"); break;
-        case 3  : CatPrint(Str, L"2)");   break;
-        default : CatPrint(Str, L"x)");   break;
+        case 0  : SctCatPrint(Str, L"D)");   break;
+        case 1  : SctCatPrint(Str, L"1)");   break;
+        case 2  : SctCatPrint(Str, L"1.5)"); break;
+        case 3  : SctCatPrint(Str, L"2)");   break;
+        default : SctCatPrint(Str, L"x)");   break;
     }
 }
 
 
 VOID
 _DevPathHardDrive (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
@@ -1107,19 +1107,19 @@ _DevPathHardDrive (
     Hd = DevPath;
     switch (Hd->SignatureType) {
         case SIGNATURE_TYPE_MBR:
-            CatPrint(Str, L"HD(Part%d,Sig%08x)",
+            SctCatPrint(Str, L"HD(Part%d,Sig%08x)",
                 Hd->PartitionNumber,
                 *((UINT32 *)(&(Hd->Signature[0])))
                 );
             break;
         case SIGNATURE_TYPE_GUID:
-            CatPrint(Str, L"HD(Part%d,Sig%g)",
+            SctCatPrint(Str, L"HD(Part%d,Sig%g)",
                 Hd->PartitionNumber,
                 (EFI_GUID *) &(Hd->Signature[0])
                 );
             break;
         default:
-            CatPrint(Str, L"HD(Part%d,MBRType=%02x,SigType=%02x)",
+            SctCatPrint(Str, L"HD(Part%d,MBRType=%02x,SigType=%02x)",
                 Hd->PartitionNumber,
                 Hd->MBRType,
                 Hd->SignatureType
@@ -1130,57 +1130,57 @@ _DevPathHardDrive (
 
 VOID
 _DevPathCDROM (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     CDROM_DEVICE_PATH       *Cd;
 
     Cd = DevPath;
-    CatPrint(Str, L"CDROM(Entry%x)", Cd->BootEntry);
+    SctCatPrint(Str, L"CDROM(Entry%x)", Cd->BootEntry);
 }
 
 VOID
 _DevPathFilePath (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     FILEPATH_DEVICE_PATH    *Fp;
 
     Fp = DevPath;
-    CatPrint(Str, L"%s", Fp->PathName);
+    SctCatPrint(Str, L"%s", Fp->PathName);
 }
 
 VOID
 _DevPathMediaProtocol (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     MEDIA_PROTOCOL_DEVICE_PATH  *MediaProt;
 
     MediaProt = DevPath;
-    CatPrint(Str, L"%g", &MediaProt->Protocol);
+    SctCatPrint(Str, L"%g", &MediaProt->Protocol);
 }
 
 #if (EFI_SPECIFICATION_VERSION < 0x00020000)
 VOID
 _DevPathFvFilePath (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
     MEDIA_FW_VOL_FILEPATH_DEVICE_PATH   *FvFilePath;
 
     FvFilePath = DevPath;
-    CatPrint(Str, L"%g", &FvFilePath->NameGuid);
+    SctCatPrint(Str, L"%g", &FvFilePath->NameGuid);
 }
 #endif
 
 VOID
 _DevPathBssBss (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
@@ -1198,33 +1198,33 @@ _DevPathBssBss (
     default:                            Type = L"?";            break;
     }
 
-    CatPrint(Str, L"Bss-%s(%a)", Type, Bss->String);
+    SctCatPrint(Str, L"Bss-%s(%a)", Type, Bss->String);
 }
 
 
 VOID
 _DevPathEndInstance (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
-    CatPrint(Str, L",");
+    SctCatPrint(Str, L",");
 }
 
 VOID
 _DevPathNodeUnknown (
-    IN OUT POOL_PRINT       *Str,
+    IN OUT SCT_POOL_PRINT       *Str,
     IN VOID                 *DevPath
     )
 {
-    CatPrint(Str, L"?");
+    SctCatPrint(Str, L"?");
 }
 
 
 struct {
   UINT8   Type;
   UINT8   SubType;
-  VOID    (*Function)(POOL_PRINT *, VOID *);
+  VOID    (*Function)(SCT_POOL_PRINT *, VOID *);
 } DevPathTable[] = {
   HARDWARE_DEVICE_PATH,   HW_PCI_DP,                        _DevPathPci,
   HARDWARE_DEVICE_PATH,   HW_PCCARD_DP,                     _DevPathPccard,
@@ -1272,9 +1272,9 @@ DevicePathToStr (
 
 --*/
 {
-  POOL_PRINT                  Str;
+  SCT_POOL_PRINT                  Str;
   EFI_DEVICE_PATH_PROTOCOL    *DevPathNode;
-  VOID                        (*DumpNode)(POOL_PRINT *, VOID *);
+  VOID                        (*DumpNode)(SCT_POOL_PRINT *, VOID *);
   UINTN                       Index, NewSize;
 
   SctZeroMem (&Str, sizeof(Str));
@@ -1321,7 +1321,7 @@ DevicePathToStr (
     //  Put a path seperator in if needed
     //
     if (Str.len  &&  DumpNode != _DevPathEndInstance) {
-      CatPrint (&Str, L"/");
+      SctCatPrint (&Str, L"/");
     }
 
     //

@@ -568,12 +568,12 @@ BBTestFlushExBasicTestCheckpoint1 (
   }
     
   
-  Print (L" ================== Async FlushEx call finshed ================== \n\n");
+  SctPrint (L" ================== Async FlushEx call finshed ================== \n\n");
   
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Write events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Write events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
     
@@ -588,13 +588,13 @@ BBTestFlushExBasicTestCheckpoint1 (
             );
     IndexI++;
   
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncFlushFileQueueLock);
   }
   ReleaseLock(&gAsyncFlushFileQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");
+  SctPrint (L"\n");
 
   //
   // clear all File IO events from gFlushFileFinishQueue 
@@ -1014,12 +1014,12 @@ BBTestFlushExBasicTestCheckpoint3 (
     
   }
     
-  Print (L" ================== Async FlushEx call finshed ================== \n\n");
+  SctPrint (L" ================== Async FlushEx call finshed ================== \n\n");
 
   //
   // Busy waiting 120s on all the execute entity being moved to finished queue
   //  
-  Print (L"Wait maximumly 120s for all Async Write events signaled\n\n");
+  SctPrint (L"Wait maximumly 120s for all Async Write events signaled\n\n");
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
     
@@ -1034,13 +1034,13 @@ BBTestFlushExBasicTestCheckpoint3 (
             );
     IndexI++;
   
-    Print (L".");
+    SctPrint (L".");
     AcquireLock(&gAsyncFlushDirQueueLock);
   }
   ReleaseLock(&gAsyncFlushDirQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
-  Print(L"\n");
+  SctPrint (L"\n");
  
   //
   // clear all File IO events from gFlushDirFinishQueue 

@@ -55,7 +55,38 @@ Abstract:
 
 --*/
 
-#include "lib.h"
+#include "SctLibInternal.h"
+
+#include EFI_GUID_DEFINITION (GlobalVariable)
+#include EFI_GUID_DEFINITION (Gpt)
+
+#include EFI_PROTOCOL_DEFINITION (BlockIo)
+#include EFI_PROTOCOL_DEFINITION (DeviceIo)
+#include EFI_PROTOCOL_DEFINITION (DevicePath)
+#include EFI_PROTOCOL_DEFINITION (DiskIo)
+#include EFI_PROTOCOL_DEFINITION (EfiNetworkInterfaceIdentifier)
+#include EFI_PROTOCOL_DEFINITION (FileInfo)
+#include EFI_PROTOCOL_DEFINITION (FileSystemInfo)
+#include EFI_PROTOCOL_DEFINITION (LoadedImage)
+#include EFI_PROTOCOL_DEFINITION (LoadFile)
+#include EFI_PROTOCOL_DEFINITION (PxeBaseCodeCallBack)
+#include EFI_PROTOCOL_DEFINITION (PxeBaseCode)
+#include EFI_PROTOCOL_DEFINITION (SerialIo)
+#include EFI_PROTOCOL_DEFINITION (SimpleFileSystem)
+#include EFI_PROTOCOL_DEFINITION (SimpleNetwork)
+#include EFI_PROTOCOL_DEFINITION (SimpleTextIn)
+#include EFI_PROTOCOL_DEFINITION (SimpleTextOut)
+#include EFI_PROTOCOL_DEFINITION (UnicodeCollation)
+#include EFI_PROTOCOL_DEFINITION (VariableStore)
+
+EFI_GUID mEfiUnknownDeviceGuid = UNKNOWN_DEVICE_GUID;
+
+STATIC EFI_GUID mNullGuid = { 0,0,0,0,0,0,0,0,0,0,0 };
+
+STATIC EFI_GUID mPcAnsiProtocol    = DEVICE_PATH_MESSAGING_PC_ANSI;
+STATIC EFI_GUID mVt100Protocol     = DEVICE_PATH_MESSAGING_VT_100;
+// STATIC EFI_GUID mVt100PlusProtocol = DEVICE_PATH_MESSAGING_VT_100_PLUS;
+// STATIC EFI_GUID mVtUtf8Protocol    = DEVICE_PATH_MESSAGING_VT_UTF8;
 
 //
 // Additional Known guids
@@ -86,36 +117,36 @@ struct {
   EFI_GUID        *Guid;
   CHAR16          *GuidName;
 } KnownGuids[] = {
-  &tNullGuid,                  L"G0",
-  &tEfiGlobalVariable,         L"Efi",
+  &mNullGuid,                  L"G0",
+  &gEfiGlobalVariableGuid,         L"Efi",
 
-  &gtEfiVariableStoreProtocolGuid,     L"varstore",
-  &gtEfiDevicePathProtocolGuid,        L"dpath",
-  &gtEfiLoadedImageProtocolGuid,       L"image",
-  &gtEfiSimpleTextInProtocolGuid,      L"txtin",
-  &gtEfiSimpleTextOutProtocolGuid,     L"txtout",
-  &gtEfiBlockIoProtocolGuid,           L"blkio",
-  &gtEfiDiskIoProtocolGuid,            L"diskio",
-  &gtEfiSimpleFileSystemProtocolGuid,  L"fs",
-  &gtEfiLoadFileProtocolGuid,          L"load",
-  &gtEfiDeviceIoProtocolGuid,          L"DevIo",
+  &gEfiVariableStoreProtocolGuid,     L"varstore",
+  &gEfiDevicePathProtocolGuid,        L"dpath",
+  &gEfiLoadedImageProtocolGuid,       L"image",
+  &gEfiSimpleTextInProtocolGuid,      L"txtin",
+  &gEfiSimpleTextOutProtocolGuid,     L"txtout",
+  &gEfiBlockIoProtocolGuid,           L"blkio",
+  &gEfiDiskIoProtocolGuid,            L"diskio",
+  &gEfiSimpleFileSystemProtocolGuid,  L"fs",
+  &gEfiLoadFileProtocolGuid,          L"load",
+  &gEfiDeviceIoProtocolGuid,          L"DevIo",
 
-  &tGenericFileInfo,                   L"GenFileInfo",
-  &gtEfiFileSystemInfoGuid,            L"FileSysInfo",
+  &gEfiFileInfoGuid,                   L"GenFileInfo",
+  &gEfiFileSystemInfoGuid,            L"FileSysInfo",
 
-  &gtEfiUnicodeCollationProtocolGuid,  L"UnicodeCollation",
-  &gtEfiSerialIoProtocolGuid,          L"serialio",
-  &gtEfiSimpleNetworkProtocolGuid,     L"net",
-  &gtEfiNetworkInterfaceIdentifierProtocolGuid,    L"nii",
-  &gtEfiPxeBaseCodeProtocolGuid,       L"pxebc",
-  &gtEfiPxeCallbackProtocolGuid,       L"pxecb",
+  &gEfiUnicodeCollationProtocolGuid,  L"UnicodeCollation",
+  &gEfiSerialIoProtocolGuid,          L"serialio",
+  &gEfiSimpleNetworkProtocolGuid,     L"net",
+  &gEfiNetworkInterfaceIdentifierProtocolGuid,    L"nii",
+  &gEfiPxeBaseCodeProtocolGuid,       L"pxebc",
+  &gEfiPxeBaseCodeCallbackProtocolGuid,       L"pxecb",
 
-  &tPcAnsiProtocol,            L"PcAnsi",
-  &tVt100Protocol,             L"Vt100",
-  &gtEfiUnknownDeviceGuid,             L"Unknown Device",
+  &mPcAnsiProtocol,            L"PcAnsi",
+  &mVt100Protocol,             L"Vt100",
+  &mEfiUnknownDeviceGuid,             L"Unknown Device",
 
-  &gtEfiPartTypeSystemPartitionGuid,    L"ESP",
-  &gtEfiPartTypeLegacyMbrGuid,          L"GPT MBR",
+  &gEfiPartTypeSystemPartGuid,    L"ESP",
+  &gEfiPartTypeLegacyMbrGuid,          L"GPT MBR",
 
   &ShellInterfaceProtocol,    L"ShellInt",
   &SEnvId,                    L"SEnv",
@@ -128,12 +159,6 @@ struct {
 
 SCT_LIST_ENTRY          GuidList;
 
-
-VOID
-GuidToString (
-  OUT CHAR16      *Buffer,
-  IN EFI_GUID     *Guid
-  )
 /*++
 
 Routine Description:
@@ -149,6 +174,11 @@ Returns:
   none
 
 --*/
+VOID
+GuidToString (
+  OUT CHAR16      *Buffer,
+  IN EFI_GUID     *Guid
+  )
 {
 
   UINTN           Index;
@@ -158,7 +188,7 @@ Returns:
   //
   for (Index=0; KnownGuids[Index].Guid; Index++) {
     if (SctCompareGuid (Guid, KnownGuids[Index].Guid) == 0) {
-      SPrint (Buffer, 0, KnownGuids[Index].GuidName);
+      SctSPrint (Buffer, 0, KnownGuids[Index].GuidName);
       return ;
     }
   }
@@ -166,7 +196,7 @@ Returns:
   //
   // Else dump it
   //
-  SPrint (Buffer, 0, L"%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x",
+  SctSPrint (Buffer, 0, L"%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x",
         Guid->Data1,
         Guid->Data2,
         Guid->Data3,

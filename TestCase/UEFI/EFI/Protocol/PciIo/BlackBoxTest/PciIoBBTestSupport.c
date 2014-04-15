@@ -188,7 +188,7 @@ QueryGoOnTesting (
   //
   InputBuffer = NULL;
   TempBuffer  = NULL;
-  TempBuffer = PoolPrint (L"go on testing (Y/N)? please reply in %ds\r\n", WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"go on testing (Y/N)? please reply in %ds\r\n", WAIT_TIME);
   if (TempBuffer == NULL) {
     return FALSE;
   }
@@ -239,7 +239,7 @@ GetBarIndex (
   BarIndex    = 0;
   InputBuffer = NULL;
   TempBuffer  = NULL;
-  TempBuffer = PoolPrint (L"Please input the BarIndex (0-5) in %ds\r\n", WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"Please input the BarIndex (0-5) in %ds\r\n", WAIT_TIME);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -278,7 +278,7 @@ GetSrcBarIndex (
   SrcBarIndex    = 0;
   InputBuffer = NULL;
   TempBuffer  = NULL;
-  TempBuffer = PoolPrint (L"Please input the Src Bar Index (0-5) in %ds\r\n", WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"Please input the Src Bar Index (0-5) in %ds\r\n", WAIT_TIME);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -319,7 +319,7 @@ GetDestBarIndex (
   DestBarIndex  = 0;
   InputBuffer   = NULL;
   TempBuffer    = NULL;
-  TempBuffer = PoolPrint (L"Please input the Dest Bar Index (0-5) in %ds\r\n", WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"Please input the Dest Bar Index (0-5) in %ds\r\n", WAIT_TIME);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -362,7 +362,7 @@ GetAddressOffset (
   InputBuffer     = NULL;
   TempBuffer      = NULL;
 
-  TempBuffer = PoolPrint (L"Please input the Address Offset(Hex) in %ds.\r\n", LONG_WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"Please input the Address Offset(Hex) in %ds.\r\n", LONG_WAIT_TIME);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -407,7 +407,7 @@ GetSrcAddressOffset (
   InputBuffer     = NULL;
   TempBuffer      = NULL;
 
-  TempBuffer = PoolPrint (L"Please input the Src Address Offset(Hex) in %ds.\r\n", LONG_WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"Please input the Src Address Offset(Hex) in %ds.\r\n", LONG_WAIT_TIME);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -451,7 +451,7 @@ GetDestAddressOffset (
   InputBuffer     = NULL;
   TempBuffer      = NULL;
 
-  TempBuffer = PoolPrint (L"Please input the Dest Address Offset(Hex) in %ds.\r\n", LONG_WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"Please input the Dest Address Offset(Hex) in %ds.\r\n", LONG_WAIT_TIME);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -493,7 +493,7 @@ GetTargetValue (
   InputBuffer     = NULL;
   TempBuffer      = NULL;
 
-  TempBuffer = PoolPrint (L"Please input the Target Value(Hex) in %ds.\r\n", LONG_WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"Please input the Target Value(Hex) in %ds.\r\n", LONG_WAIT_TIME);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -536,7 +536,7 @@ GetDataUnits (
 
   InputBuffer = NULL;
   TempBuffer  = NULL;
-  TempBuffer = PoolPrint (L"Please input the DataUnits(Hex) in %ds\r\n", LONG_WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"Please input the DataUnits(Hex) in %ds\r\n", LONG_WAIT_TIME);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -590,7 +590,7 @@ GetAddressLength (
   InputBuffer     = NULL;
   TempBuffer      = NULL;
 
-  TempBuffer = PoolPrint (L"Please input the Address Length (Hex) in %ds.\r\n", WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"Please input the Address Length (Hex) in %ds.\r\n", WAIT_TIME);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -630,7 +630,7 @@ GetAlternateValue (
   InputBuffer     = NULL;
   TempBuffer      = NULL;
 
-  TempBuffer = PoolPrint (L"Please input the Alternate Value(Hex) in %ds.\r\n", LONG_WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"Please input the Alternate Value(Hex) in %ds.\r\n", LONG_WAIT_TIME);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -671,7 +671,7 @@ GetPciIoWidth (
 
   InputBuffer = NULL;
   TempBuffer  = NULL;
-  TempBuffer = PoolPrint (L"Please input the Width (8/16/32/64)bits in %ds\r\n", WAIT_TIME);
+  TempBuffer = SctPoolPrint (L"Please input the Width (8/16/32/64)bits in %ds\r\n", WAIT_TIME);
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1640,7 +1640,7 @@ GetSystemData (
   //make up the file path.
   //
   gFilePath = NULL;
-  gFilePath = PoolPrint (L"%s\\%s", TempFilePath, DEPENDECY_DIR_NAME);
+  gFilePath = SctPoolPrint (L"%s\\%s", TempFilePath, DEPENDECY_DIR_NAME);
 
   gtBS->FreePool (TempFilePath);
 

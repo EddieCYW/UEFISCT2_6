@@ -565,7 +565,7 @@ Returns:
       return EFI_OUT_OF_RESOURCES;
     }
 
-    SPrint (
+    SctSPrint (
       TempString,
       (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
       L"0"
@@ -575,7 +575,7 @@ Returns:
     MenuItem = MenuItem -> Next;
     while (MenuItem != NULL) {
       if (SctAtoi (MenuItem->ItemValue) != 0) {
-        SPrint (
+        SctSPrint (
           TempString,
           (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
           L"%s",
@@ -604,14 +604,14 @@ Returns:
     }
 
     if (IterEqual) {
-      SPrint (
+      SctSPrint (
         ParentMenuItem->ItemValue,
         (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
         L"%s",
         TempString
         );
     } else {
-        SPrint (
+        SctSPrint (
         ParentMenuItem->ItemValue,
         (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
         L"*"
@@ -683,7 +683,7 @@ Returns:
   if (MenuItem->Status == EFI_ITEM_SELECT_NONE ) {
     MenuItem->Status = EFI_ITEM_SELECT_ALL;
     SelectTestNode (TestNode, 1);
-    SPrint (
+    SctSPrint (
       MenuItem->ItemValue,
       (EFI_MAX_ITER_EDIT_LENGTH + 1) * 2,
       L"1"
@@ -691,7 +691,7 @@ Returns:
   } else {
     MenuItem->Status = EFI_ITEM_SELECT_NONE;
     UnSelectTestNode (TestNode);
-    SPrint (
+    SctSPrint (
       MenuItem->ItemValue,
       (EFI_MAX_ITER_EDIT_LENGTH + 1) * 2,
       L"0"
@@ -1099,7 +1099,7 @@ Returns:
       Order = GetTestCaseOrder (&TestNode->Guid);
       Buffer[0] = L'\0';
       SctStrCat (Buffer, L"Order:");
-      SPrint (Buffer, MAX_STRING_LEN, L"%s %d", Buffer, Order);
+      SctSPrint (Buffer, MAX_STRING_LEN, L"%s %d", Buffer, Order);
       if (SctStrLen (Buffer) > (X1 - X0 - 7)) {
         Buffer [X1 - X0 - 7] = L'\0';
       }
@@ -1112,7 +1112,7 @@ Returns:
       Passes = CalculatePassNumber(TestNode);
       Buffer[0] = L'\0';
       SctStrCat (Buffer, L"Pass:");
-      SPrint (Buffer, MAX_STRING_LEN, L"%s  %d", Buffer, Passes);
+      SctSPrint (Buffer, MAX_STRING_LEN, L"%s  %d", Buffer, Passes);
       if (SctStrLen (Buffer) > (X1 - X0 - 7)) {
         Buffer [X1 - X0 - 7] = L'\0';
       }
@@ -1125,7 +1125,7 @@ Returns:
       Failures = CalculateFailNumber(TestNode);
       Buffer[0] = L'\0';
       SctStrCat (Buffer, L"Fail:");
-      SPrint (Buffer, MAX_STRING_LEN, L"%s  %d", Buffer, Failures);
+      SctSPrint (Buffer, MAX_STRING_LEN, L"%s  %d", Buffer, Failures);
       if (SctStrLen (Buffer) > (X1 - X0 - 7)) {
         Buffer [X1 - X0 - 7] = L'\0';
       }
@@ -1482,7 +1482,7 @@ GetIterString(
         //
         // set iteration value
         //
-        SPrint (
+        SctSPrint (
           IterString,
           (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
           L"*"
@@ -1493,7 +1493,7 @@ GetIterString(
         if (Count == 0) {
           TempValue = (UINT32) SctAtoi (TempString);
           if (TempValue != 0) {
-            SPrint (
+            SctSPrint (
               IterString,
               (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
               L"%s",
@@ -1503,7 +1503,7 @@ GetIterString(
           }
         } else {
           if ((SctAtoi (TempString) > 0 ) && TempValue != SctAtoi (TempString)) {
-            SPrint (
+            SctSPrint (
               IterString,
               (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
               L"*"
@@ -1516,7 +1516,7 @@ GetIterString(
     } //end for
 
     if (Count == 0) {
-      SPrint (
+      SctSPrint (
         IterString,
         (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
         L"0"
@@ -1524,7 +1524,7 @@ GetIterString(
     }
   } else {
     IterNumber = GetTestCaseIterations (&TestNode->Guid);
-    SPrint (
+    SctSPrint (
       IterString,
       (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
       L"%d",

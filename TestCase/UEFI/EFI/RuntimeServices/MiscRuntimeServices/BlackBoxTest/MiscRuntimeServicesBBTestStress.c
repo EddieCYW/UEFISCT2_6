@@ -194,7 +194,7 @@ BBTestResetSystemStressTest (
       //
       // Print out some information to avoid the user thought it is an error
       //
-      Print (L"System will cold reset after 1 second...");
+      SctPrint (L"System will cold reset after 1 second...");
       gtBS->Stall (1000000);
 
       OldTpl = gtBS->RaiseTPL (TplArray[Index]);
@@ -249,7 +249,7 @@ StressTestStep2:
       //
       // Print out some information to avoid the user thought it is an error
       //
-      Print (L"System will warm reset after 1 second...");
+      SctPrint (L"System will warm reset after 1 second...");
       gtBS->Stall (1000000);
 
       OldTpl = gtBS->RaiseTPL (TplArray[Index]);
@@ -405,7 +405,7 @@ BBTestResetSystemManualStressTest (
       //
       // Print out some information to avoid the user thought it is an error
       //
-      Print (L"System will shut down (or cold reset) after 1 second...");
+      SctPrint (L"System will shut down (or cold reset) after 1 second...");
       gtBS->Stall (1000000);
 
       OldTpl = gtBS->RaiseTPL (TplArray[Index]);

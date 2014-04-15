@@ -122,10 +122,10 @@ Abstract:
 #define EFTP_DEBUG_WARN(PrintArg)
 #define EFTP_DEBUG_VERBOSE(PrintArg)
 /*
-#define EFTP_DEBUG_PACKET(PrintArg)               Print PrintArg
-#define EFTP_DEBUG_ERROR(PrintArg)                Print PrintArg
-#define EFTP_DEBUG_WARN(PrintArg)                 Print PrintArg
-#define EFTP_DEBUG_VERBOSE(PrintArg)              Print PrintArg
+#define EFTP_DEBUG_PACKET(PrintArg)               SctPrint PrintArg
+#define EFTP_DEBUG_ERROR(PrintArg)                SctPrint PrintArg
+#define EFTP_DEBUG_WARN(PrintArg)                 SctPrint PrintArg
+#define EFTP_DEBUG_VERBOSE(PrintArg)              SctPrint PrintArg
 */
 #endif
 //

@@ -63,13 +63,10 @@ COMPONENT_TYPE  = LIBRARY
   console.c
   data.c
   dpath.c
-  error.c
   event.c
-  guid.c
   hand.c
   lock.c
   misc.c
-  print.c
   str.c
   rtdata.c
 
