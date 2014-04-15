@@ -470,7 +470,14 @@ CopyDirFile (
 
   Length   = SctStrLen (PathName);
 
+  // The PathName always starts with 'FS%i:\\'
   for (Index = 0; Index < Length; Index ++) {
+    if (PathName[Length - Index - 1] == L'\\') {
+      break;
+    }
+  }
+
+  for (Index = Index + 1; Index < Length; Index++) {
     if (PathName[Length - Index - 1] == L'\\') {
       PathName[Length - Index - 1] = L'\0';
       break;
