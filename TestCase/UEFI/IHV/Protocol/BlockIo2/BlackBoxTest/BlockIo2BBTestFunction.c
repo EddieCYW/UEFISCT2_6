@@ -1900,7 +1900,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint2(
       //
       NewBufferSize = IndexI * BlockSize;
 
-      for (NewLba = LastBlock + 1 - BlockNumber; NewLba > 0; NewLba = RShiftU64(NewLba, 8)) {
+      for (NewLba = LastBlock + 1 - BlockNumber; NewLba > 0; NewLba = SctRShiftU64(NewLba, 8)) {
         //
         // Sync Call ReadBlocksEx with the specified LBA and BufferSize
         //
@@ -2124,7 +2124,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint3(
       //
       NewBufferSize = IndexI * BlockSize;
 
-      for (NewLba = LastBlock + 1 - BlockNumber; NewLba > 0; NewLba = RShiftU64(NewLba, 8)) {
+      for (NewLba = LastBlock + 1 - BlockNumber; NewLba > 0; NewLba = SctRShiftU64(NewLba, 8)) {
         //
         // To avoid the LOG information is destroyed, the LOG information will
         // be recorded after the original data is written again.
@@ -2411,7 +2411,7 @@ BBTestReadBlocksExFunctionAutoTestCheckpoint4(
      
       NewBufferSize = IndexI * BlockSize;
 
-      for (NewLba = LastBlock + 1 - BlockNumber; NewLba > 0; NewLba = RShiftU64(NewLba, 8)) {
+      for (NewLba = LastBlock + 1 - BlockNumber; NewLba > 0; NewLba = SctRShiftU64(NewLba, 8)) {
         //
         // allocate aligned BufferSync
         //
@@ -2889,7 +2889,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint1(
       //
       NewBufferSize = IndexI * BlockSize;
 
-      for (NewLba = RShiftU64(LastBlock, 1); NewLba < RShiftU64(LastBlock, 1) + MAX_DIFFERENT_LBA_FOR_TEST; NewLba++) {
+      for (NewLba = SctRShiftU64(LastBlock, 1); NewLba < SctRShiftU64(LastBlock, 1) + MAX_DIFFERENT_LBA_FOR_TEST; NewLba++) {
         //
         // To avoid the LOG information being destroyed, the LOG information will
         // be recorded after the original data blocks are recovered.
@@ -3377,7 +3377,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint2(
       //
       NewBufferSize = IndexI * BlockSize;
 
-      for (NewLba = RShiftU64(LastBlock, 1); NewLba < RShiftU64(LastBlock, 1) + MAX_DIFFERENT_LBA_FOR_TEST; NewLba++) {
+      for (NewLba = SctRShiftU64(LastBlock, 1); NewLba < SctRShiftU64(LastBlock, 1) + MAX_DIFFERENT_LBA_FOR_TEST; NewLba++) {
         //
         // To avoid the LOG information is destroied, the LOG information will
         // be recorded after the original data is written again.
@@ -3703,7 +3703,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
       //
       NewBufferSize = IndexI * BlockSize;
 
-      for (NewLba = RShiftU64(LastBlock, 1); NewLba < RShiftU64(LastBlock, 1) + MAX_DIFFERENT_LBA_FOR_TEST; NewLba++) {
+      for (NewLba = SctRShiftU64(LastBlock, 1); NewLba < SctRShiftU64(LastBlock, 1) + MAX_DIFFERENT_LBA_FOR_TEST; NewLba++) {
         //
         // To avoid the LOG information is destroied, the LOG information will
         // be recorded after the original data is written again.
@@ -4119,7 +4119,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint4(
       //
       NewBufferSize = IndexI * BlockSize;
   
-      for (NewLba = RShiftU64(LastBlock, 1); NewLba < RShiftU64(LastBlock, 1) + MAX_DIFFERENT_LBA_FOR_TEST; NewLba++) {
+      for (NewLba = SctRShiftU64(LastBlock, 1); NewLba < SctRShiftU64(LastBlock, 1) + MAX_DIFFERENT_LBA_FOR_TEST; NewLba++) {
         //
         // To avoid the LOG information being destroyed, the LOG information will
         // be recorded after the original data blocks are recovered.

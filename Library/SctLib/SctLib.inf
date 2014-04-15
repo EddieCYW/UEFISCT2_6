@@ -58,6 +58,7 @@ COMPONENT_TYPE  = LIBRARY
   Handle.c
   Init.c
   List.c
+  Math.c
   Mem.c
   Misc.c
   String.c

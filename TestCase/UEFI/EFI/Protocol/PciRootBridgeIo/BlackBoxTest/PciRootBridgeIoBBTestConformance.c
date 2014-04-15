@@ -2310,7 +2310,7 @@ PciRead_Conf (
   //set valid value.
   //
 
-  Address = LShiftU64 (RBDev->PriBus, 24);
+  Address = SctLShiftU64 (RBDev->PriBus, 24);
   DataBuffer = SctAllocatePool (32);
   //
   //Call Pci.Read with Width as EfiPciWidthMaximum.
@@ -2672,7 +2672,7 @@ PciWrite_Conf (
   //set valid value.
   //
 
-  Address = LShiftU64 (RBDev->PriBus, 24);
+  Address = SctLShiftU64 (RBDev->PriBus, 24);
   DataBuffer = SctAllocatePool (32);
 
   //

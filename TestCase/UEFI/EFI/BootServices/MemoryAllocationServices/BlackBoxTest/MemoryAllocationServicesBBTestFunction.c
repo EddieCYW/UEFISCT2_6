@@ -514,7 +514,7 @@ BBTestAllocatePagesInterfaceTest (
       } else {
         PageNum = (UINTN)Descriptor.NumberOfPages;
         Memory = Descriptor.PhysicalStart +
-                 LShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT);
+                 SctLShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT);
         OldTpl = gtBS->RaiseTPL (TplArray[Index]);
         Status = gtBS->AllocatePages (
                          AllocateMaxAddress,
@@ -566,8 +566,8 @@ BBTestAllocatePagesInterfaceTest (
                        AllocatePagesMemoryType[TypeIndex]
                        );
         if (Memory <= Descriptor.PhysicalStart +
-             LShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT) -
-             LShiftU64 (PageNum/3, EFI_PAGE_SHIFT)) {
+             SctLShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT) -
+             SctLShiftU64 (PageNum/3, EFI_PAGE_SHIFT)) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -591,7 +591,7 @@ BBTestAllocatePagesInterfaceTest (
                        Memory
                        );
         Memory2 = Descriptor.PhysicalStart +
-                 LShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT);
+                 SctLShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT);
         OldTpl = gtBS->RaiseTPL (TplArray[Index]);
         Status = gtBS->AllocatePages (
                          AllocateMaxAddress,
@@ -643,8 +643,8 @@ BBTestAllocatePagesInterfaceTest (
                        AllocatePagesMemoryType[TypeIndex]
                        );
         if ( Memory2 <= Descriptor.PhysicalStart +
-             LShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT) -
-             LShiftU64 (PageNum/3, EFI_PAGE_SHIFT)) {
+             SctLShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT) -
+             SctLShiftU64 (PageNum/3, EFI_PAGE_SHIFT)) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -993,7 +993,7 @@ BBTestAllocatePagesInterfaceTest (
         Start   = (Start + 0x10000) & 0xFFFFFFFFFFFF0000;
         PageNum = PageNum - EFI_SIZE_TO_PAGES(0x10000);
 
-        Memory = Start + (LShiftU64 (PageNum/3, EFI_PAGE_SHIFT) & 0xFFFFFFFFFFFF0000);
+        Memory = Start + (SctLShiftU64 (PageNum/3, EFI_PAGE_SHIFT) & 0xFFFFFFFFFFFF0000);
 
         OldTpl = gtBS->RaiseTPL (TplArray[Index]);
         Status = gtBS->AllocatePages (
@@ -1045,7 +1045,7 @@ BBTestAllocatePagesInterfaceTest (
                        TplArray[Index],
                        AllocatePagesMemoryType[TypeIndex]
                        );
-        if (Memory == Start + (LShiftU64 (PageNum/3, EFI_PAGE_SHIFT) & 0xFFFFFFFFFFFF0000)) {
+        if (Memory == Start + (SctLShiftU64 (PageNum/3, EFI_PAGE_SHIFT) & 0xFFFFFFFFFFFF0000)) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1116,7 +1116,7 @@ BBTestAllocatePagesInterfaceTest (
         Start   = (Start + 0x10000) & 0xFFFFFFFFFFFF0000;
         PageNum = PageNum - EFI_SIZE_TO_PAGES(0x10000);
 
-        Memory  = Start + (LShiftU64 (PageNum * 2 / 3, EFI_PAGE_SHIFT) & 0xFFFFFFFFFFFF0000);
+        Memory  = Start + (SctLShiftU64 (PageNum * 2 / 3, EFI_PAGE_SHIFT) & 0xFFFFFFFFFFFF0000);
 
         OldTpl = gtBS->RaiseTPL (TplArray[Index]);
         Status = gtBS->AllocatePages (
@@ -1168,7 +1168,7 @@ BBTestAllocatePagesInterfaceTest (
                        TplArray[Index],
                        AllocatePagesMemoryType[TypeIndex]
                        );
-        if (Memory == Start + (LShiftU64 (PageNum * 2 / 3, EFI_PAGE_SHIFT) & 0xFFFFFFFFFFFF0000)) {
+        if (Memory == Start + (SctLShiftU64 (PageNum * 2 / 3, EFI_PAGE_SHIFT) & 0xFFFFFFFFFFFF0000)) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {
           AssertionType = EFI_TEST_ASSERTION_FAILED;

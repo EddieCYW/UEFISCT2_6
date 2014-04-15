@@ -1730,7 +1730,7 @@ GetNextMonotonicCountStep2:
                    TplArray[Index]
                    );
 
-    if (RShiftU64 (Count2, 32) == RShiftU64 (Count, 32) + 1) {
+    if (SctRShiftU64 (Count2, 32) == SctRShiftU64 (Count, 32) + 1) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_FAILED;

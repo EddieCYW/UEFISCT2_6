@@ -176,31 +176,6 @@ MetaiMatch (
   IN CHAR16                         *Pattern
   );
 
-UINT64
-LShiftU64 (
-  IN UINT64                         Operand,
-  IN UINTN                          Count
-  );
-
-UINT64
-RShiftU64 (
-  IN UINT64                         Operand,
-  IN UINTN                          Count
-  );
-
-UINT64
-MultU64x32 (
-  IN UINT64                         Multiplicand,
-  IN UINTN                          Multiplier
-  );
-
-UINT64
-DivU64x32 (
-  IN UINT64                         Dividend,
-  IN UINTN                          Divisor,
-  OUT UINTN                         *Remainder OPTIONAL
-  );
-
 VOID
 InitializeLock (
   IN OUT FLOCK                      *Lock,

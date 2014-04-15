@@ -487,7 +487,7 @@ CheckMemoryType (
   for (Index = 0; Index < MemoryMapSize; Index += DescriptorSize) {
     Descriptor = (EFI_MEMORY_DESCRIPTOR *) (MemoryMap + Index);
     Start = Descriptor->PhysicalStart;
-    End = Start + LShiftU64 (Descriptor->NumberOfPages, EFI_PAGE_SHIFT) - 1;
+    End = Start + SctLShiftU64 (Descriptor->NumberOfPages, EFI_PAGE_SHIFT) - 1;
     if ((Start <= Memory) && (MemoryEnd <= End) &&
         (Descriptor->Type == Type)) {
       gtBS->FreePool (

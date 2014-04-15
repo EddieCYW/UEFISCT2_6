@@ -573,7 +573,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
   LastBlock        = BlockIo2->Media->LastBlock;
   
   
-  LastOffset       = MultU64x32 (LastBlock+1, BlockSize);
+  LastOffset       = SctMultU64x32 (LastBlock+1, BlockSize);
   
   //
   // Assertion Point 5.2.2.1
@@ -604,19 +604,19 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
           Offset = 2 * BlockSize;
           break;
         case 3:
-          Offset = MultU64x32 (LastBlock , BlockSize);
+          Offset = SctMultU64x32 (LastBlock , BlockSize);
           break;
         case 4:
-          Offset = MultU64x32 (LastBlock-1 , BlockSize);
+          Offset = SctMultU64x32 (LastBlock-1 , BlockSize);
           break;
         case 5:
-          Offset = MultU64x32 (DivU64x32 (LastBlock, 2, &Remainder) , BlockSize);
+          Offset = SctMultU64x32 (SctDivU64x32 (LastBlock, 2, &Remainder) , BlockSize);
           break;
         case 6:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize);
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize);
           break;
         case 7:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize);
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize);
           break;
   
         case 10:
@@ -626,19 +626,19 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
           Offset = 2 * BlockSize + 1;
           break;
         case 12:
-          Offset = MultU64x32 (LastBlock , BlockSize) + 1;
+          Offset = SctMultU64x32 (LastBlock , BlockSize) + 1;
           break;
         case 13:
-          Offset = MultU64x32 (LastBlock-1 , BlockSize) + 1;
+          Offset = SctMultU64x32 (LastBlock-1 , BlockSize) + 1;
           break;
         case 14:
-          Offset = MultU64x32 (DivU64x32 (LastBlock, 2, &Remainder) , BlockSize) + 1;
+          Offset = SctMultU64x32 (SctDivU64x32 (LastBlock, 2, &Remainder) , BlockSize) + 1;
           break;
         case 15:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) + 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) + 1;
           break;
         case 16:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) + 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) + 1;
           break;
   
         case 20:
@@ -648,19 +648,19 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
           Offset = 2 * BlockSize - 1;
           break;
         case 22:
-          Offset = MultU64x32 (LastBlock , BlockSize) - 1;
+          Offset = SctMultU64x32 (LastBlock , BlockSize) - 1;
           break;
         case 23:
-          Offset = MultU64x32 (LastBlock-1 , BlockSize) - 1;
+          Offset = SctMultU64x32 (LastBlock-1 , BlockSize) - 1;
           break;
         case 24:
-          Offset = MultU64x32 (DivU64x32 (LastBlock, 2, &Remainder) , BlockSize) - 1;
+          Offset = SctMultU64x32 (SctDivU64x32 (LastBlock, 2, &Remainder) , BlockSize) - 1;
           break;
         case 25:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) - 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) - 1;
           break;
         case 26:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) - 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) - 1;
           break;
   
         default:
@@ -902,7 +902,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint2(
   IoAlign          = BlockIo2->Media->IoAlign;
   LastBlock        = BlockIo2->Media->LastBlock;
      
-  LastOffset       = MultU64x32 (LastBlock+1, BlockSize);
+  LastOffset       = SctMultU64x32 (LastBlock+1, BlockSize);
      
      
      
@@ -942,19 +942,19 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint2(
           Offset = 2 * BlockSize;
           break;
         case 3:
-          Offset = MultU64x32 (LastBlock , BlockSize);
+          Offset = SctMultU64x32 (LastBlock , BlockSize);
           break;
         case 4:
-          Offset = MultU64x32 (LastBlock-1 , BlockSize);
+          Offset = SctMultU64x32 (LastBlock-1 , BlockSize);
           break;
         case 5:
-          Offset = MultU64x32 (DivU64x32 (LastBlock, 2, &Remainder) , BlockSize);
+          Offset = SctMultU64x32 (SctDivU64x32 (LastBlock, 2, &Remainder) , BlockSize);
           break;
         case 6:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize);
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize);
           break;
         case 7:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize);
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize);
           break;
      
         case 10:
@@ -964,19 +964,19 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint2(
           Offset = 2 * BlockSize + 1;
           break;
         case 12:
-          Offset = MultU64x32 (LastBlock , BlockSize) + 1;
+          Offset = SctMultU64x32 (LastBlock , BlockSize) + 1;
           break;
         case 13:
-          Offset = MultU64x32 (LastBlock-1 , BlockSize) + 1;
+          Offset = SctMultU64x32 (LastBlock-1 , BlockSize) + 1;
           break;
         case 14:
-          Offset = MultU64x32 (DivU64x32 (LastBlock, 2, &Remainder) , BlockSize) + 1;
+          Offset = SctMultU64x32 (SctDivU64x32 (LastBlock, 2, &Remainder) , BlockSize) + 1;
           break;
         case 15:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) + 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) + 1;
           break;
         case 16:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) + 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) + 1;
           break;
      
         case 20:
@@ -986,19 +986,19 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint2(
           Offset = 2 * BlockSize - 1;
           break;
         case 22:
-          Offset = MultU64x32 (LastBlock , BlockSize) - 1;
+          Offset = SctMultU64x32 (LastBlock , BlockSize) - 1;
           break;
         case 23:
-          Offset = MultU64x32 (LastBlock-1 , BlockSize) - 1;
+          Offset = SctMultU64x32 (LastBlock-1 , BlockSize) - 1;
           break;
         case 24:
-          Offset = MultU64x32 (DivU64x32 (LastBlock, 2, &Remainder) , BlockSize) - 1;
+          Offset = SctMultU64x32 (SctDivU64x32 (LastBlock, 2, &Remainder) , BlockSize) - 1;
           break;
         case 25:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) - 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) - 1;
           break;
         case 26:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) - 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) - 1;
           break;
      
         default:
@@ -1111,7 +1111,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint3(
   IoAlign          = BlockIo2->Media->IoAlign;
   LastBlock        = BlockIo2->Media->LastBlock;
      
-  LastOffset       = MultU64x32 (LastBlock+1, BlockSize);
+  LastOffset       = SctMultU64x32 (LastBlock+1, BlockSize);
      
      
   //
@@ -1177,19 +1177,19 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint3(
           Offset = 2 * BlockSize;
           break;
         case 3:
-          Offset = MultU64x32 (LastBlock , BlockSize);
+          Offset = SctMultU64x32 (LastBlock , BlockSize);
           break;
         case 4:
-          Offset = MultU64x32 (LastBlock-1 , BlockSize);
+          Offset = SctMultU64x32 (LastBlock-1 , BlockSize);
           break;
         case 5:
-          Offset = MultU64x32 (DivU64x32 (LastBlock, 2, &Remainder) , BlockSize);
+          Offset = SctMultU64x32 (SctDivU64x32 (LastBlock, 2, &Remainder) , BlockSize);
           break;
         case 6:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize);
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize);
           break;
         case 7:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize);
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize);
           break;
       
         case 10:
@@ -1199,19 +1199,19 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint3(
           Offset = 2 * BlockSize + 1;
           break;
         case 12:
-          Offset = MultU64x32 (LastBlock , BlockSize) + 1;
+          Offset = SctMultU64x32 (LastBlock , BlockSize) + 1;
           break;
         case 13:
-          Offset = MultU64x32 (LastBlock-1 , BlockSize) + 1;
+          Offset = SctMultU64x32 (LastBlock-1 , BlockSize) + 1;
           break;
         case 14:
-          Offset = MultU64x32 (DivU64x32 (LastBlock, 2, &Remainder) , BlockSize) + 1;
+          Offset = SctMultU64x32 (SctDivU64x32 (LastBlock, 2, &Remainder) , BlockSize) + 1;
           break;
         case 15:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) + 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) + 1;
           break;
         case 16:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) + 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) + 1;
           break;
       
         case 20:
@@ -1221,19 +1221,19 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint3(
           Offset = 2 * BlockSize - 1;
           break;
         case 22:
-          Offset = MultU64x32 (LastBlock , BlockSize) - 1;
+          Offset = SctMultU64x32 (LastBlock , BlockSize) - 1;
           break;
         case 23:
-          Offset = MultU64x32 (LastBlock-1 , BlockSize) - 1;
+          Offset = SctMultU64x32 (LastBlock-1 , BlockSize) - 1;
           break;
         case 24:
-          Offset = MultU64x32 (DivU64x32 (LastBlock, 2, &Remainder) , BlockSize) - 1;
+          Offset = SctMultU64x32 (SctDivU64x32 (LastBlock, 2, &Remainder) , BlockSize) - 1;
           break;
         case 25:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) - 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) - 1) , BlockSize) - 1;
           break;
         case 26:
-          Offset = MultU64x32 ((DivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) - 1;
+          Offset = SctMultU64x32((SctDivU64x32 (LastBlock, 2, &Remainder) + 1) , BlockSize) - 1;
           break;
       
         default:

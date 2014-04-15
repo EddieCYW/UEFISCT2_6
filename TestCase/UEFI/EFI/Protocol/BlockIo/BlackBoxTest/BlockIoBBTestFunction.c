@@ -350,7 +350,7 @@ BBTestReadBlocksFunctionAutoTest (
           NewLba = IndexJ + LastBlock - 2 * MAX_DIFFERENT_LBA_FOR_TEST - MAX_DIFFERENT_BUFFERSIZE_FOR_TEST;
         } else {
           // from (LastBlock/2 - MAX_DIFFERENT_LBA_FOR_TEST/2) to (LastBlock/2 + MAX_DIFFERENT_LBA_FOR_TEST/2)
-          NewLba = IndexJ - 2 * MAX_DIFFERENT_LBA_FOR_TEST + (DivU64x32 (LastBlock, 2, &Remainder) - MAX_DIFFERENT_LBA_FOR_TEST / 2);
+          NewLba = IndexJ - 2 * MAX_DIFFERENT_LBA_FOR_TEST + (SctDivU64x32 (LastBlock, 2, &Remainder) - MAX_DIFFERENT_LBA_FOR_TEST / 2);
         }
 
         //
@@ -662,7 +662,7 @@ BBTestWriteBlocksFunctionAutoTest (
           NewLba = IndexJ + LastBlock - 2 * MAX_DIFFERENT_LBA_FOR_TEST - MAX_DIFFERENT_BUFFERSIZE_FOR_TEST;
         } else {
           // from (LastBlock/2 - MAX_DIFFERENT_LBA_FOR_TEST/2) to (LastBlock/2 + MAX_DIFFERENT_LBA_FOR_TEST/2)
-          NewLba = IndexJ - 2 * MAX_DIFFERENT_LBA_FOR_TEST + (DivU64x32 (LastBlock, 2, &Remainder) - MAX_DIFFERENT_LBA_FOR_TEST / 2);
+          NewLba = IndexJ - 2 * MAX_DIFFERENT_LBA_FOR_TEST + (SctDivU64x32 (LastBlock, 2, &Remainder) - MAX_DIFFERENT_LBA_FOR_TEST / 2);
         }
 
         //

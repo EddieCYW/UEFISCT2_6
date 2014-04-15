@@ -667,7 +667,7 @@ EntsValueToString (
   }
 
   while (v) {
-    v       = (INT64) DivU64x32 ((UINT64) v, 10, &r);
+    v       = (INT64) SctDivU64x32 ((UINT64) v, 10, &r);
     *(p1++) = (CHAR8) ((CHAR8) r + '0');
   }
 
@@ -769,7 +769,7 @@ EntsValueToHex (
 
   while (v) {
     *(p1++) = Hex[v & 0xf];
-    v       = RShiftU64 (v, 4);
+    v       = SctRShiftU64 (v, 4);
   }
 
   while (p1 != str) {

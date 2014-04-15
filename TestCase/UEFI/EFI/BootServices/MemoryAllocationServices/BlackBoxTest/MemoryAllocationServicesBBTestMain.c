@@ -332,7 +332,7 @@ GetMaxFreeMemoryDescriptor (
   for (Index = 0; Index < MemoryMapSize; Index += DescriptorSize) {
     Descriptor = (EFI_MEMORY_DESCRIPTOR *) (MemoryMap + Index);
     if ((Descriptor->Type == EfiConventionalMemory) && 
-		(Descriptor->PhysicalStart + LShiftU64 (Descriptor->NumberOfPages, EFI_PAGE_SHIFT) < EFI_MAX_ADDRESS)) {
+		(Descriptor->PhysicalStart + SctLShiftU64 (Descriptor->NumberOfPages, EFI_PAGE_SHIFT) < EFI_MAX_ADDRESS)) {
       if (DescriptorNeeded == NULL) {
         DescriptorNeeded = Descriptor;
       } else if (Descriptor->NumberOfPages > DescriptorNeeded->NumberOfPages) {

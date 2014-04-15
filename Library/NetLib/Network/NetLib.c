@@ -454,7 +454,7 @@ NetAsciiStrToU64 (
 
   if (Str != NULL) {
     for (; *Str >= '0' && *Str <= '9'; ++Str) {
-      Num = MultU64x32 (Num, 10) +*Str - '0';
+      Num = SctMultU64x32 (Num, 10) +*Str - '0';
     }
   }
 

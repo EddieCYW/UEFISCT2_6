@@ -283,7 +283,7 @@ Returns:
   MemEntry++;
   
   MemEntry->BaseAddress = mNewIva + mPageSizeMap.PageSize;
-  MemEntry->EndAddress  = LShiftU64 (1, SizeOfMemorySpace) - 1;
+  MemEntry->EndAddress  = SctLShiftU64 (1, SizeOfMemorySpace) - 1;
   MemEntry->MemAttrib   = MA_WBU;
   MemEntry->PageSize    = GetProperTlbPageSize (MemEntry->BaseAddress, MemEntry->EndAddress);
  

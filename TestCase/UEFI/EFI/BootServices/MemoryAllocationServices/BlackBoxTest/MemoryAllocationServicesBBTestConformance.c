@@ -617,7 +617,7 @@ BBTestAllocatePagesConsistencyTest (
                    );
   } else {
     Memory = Descriptor.PhysicalStart +
-             LShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT);
+             SctLShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT);
     Status = gtBS->AllocatePages (
                      AllocateAddress,
                      EfiBootServicesData,
@@ -757,7 +757,7 @@ BBTestFreePagesConsistencyTest (
                    );
   } else {
     Memory = Descriptor.PhysicalStart +
-             LShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT);
+             SctLShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT);
     Status = gtBS->FreePages (
                      Memory, // invalid
                      1
@@ -1042,10 +1042,10 @@ BBTestAllocatePoolConsistencyTest (
                    );
   } else {
     Size = (UINTN)-1;
-    if (LShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT) + 1 < (UINT64)Size) {
+    if (SctLShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT) + 1 < (UINT64)Size) {
       Status = gtBS->AllocatePool (
                        EfiBootServicesData,
-                       (UINTN)LShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT) + 1,
+                       (UINTN)SctLShiftU64 (Descriptor.NumberOfPages, EFI_PAGE_SHIFT) + 1,
                        (VOID **)&Memory
                        );
       if (Status == EFI_OUT_OF_RESOURCES) {

@@ -349,7 +349,7 @@ GetDestination (
       L"  %d: %s: (Free Space: %d MB)\n",
       Index + 1,
       mFs[Index].Name,
-      (UINTN) DivU64x32 (mFs[Index].FreeSpace, INSTALL_SCT_1M, NULL)
+      (UINTN) SctDivU64x32 (mFs[Index].FreeSpace, INSTALL_SCT_1M, NULL)
       );
   }
 

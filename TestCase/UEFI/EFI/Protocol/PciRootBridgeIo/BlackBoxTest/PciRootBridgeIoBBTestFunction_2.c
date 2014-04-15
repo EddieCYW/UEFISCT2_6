@@ -470,7 +470,7 @@ PciRead_Func (
     for (RepeatIndex = 0; RepeatIndex < 2; RepeatIndex++) {
 
       if (RepeatIndex == 1) {
-        Address = (Address & 0xFFFFFF00) | LShiftU64 ((Address & 0xFF), 32);
+        Address = (Address & 0xFFFFFF00) | SctLShiftU64 ((Address & 0xFF), 32);
       }
 
       //
@@ -1156,7 +1156,7 @@ PciWrite_Func (
     for (RepeatIndex = 0; RepeatIndex < 2; RepeatIndex++) {
 
       if (RepeatIndex == 1) {
-        Address = (Address & 0xFFFFFF00) | LShiftU64 ((Address & 0xFF), 32);
+        Address = (Address & 0xFFFFFF00) | SctLShiftU64 ((Address & 0xFF), 32);
       }
 
       //

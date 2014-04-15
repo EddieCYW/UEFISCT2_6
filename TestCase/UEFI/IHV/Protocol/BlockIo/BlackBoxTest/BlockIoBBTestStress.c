@@ -580,7 +580,7 @@ BBTestReadBlocksStressAutoTest (
 
       IndexJ = 0;
       while (1) {
-        if ((IndexJ > DivU64x32 (LastBlock, 2, &Remainder)) || (IndexJ > MAX_REPEAT_OF_STRESS_TEST)) {
+        if ((IndexJ > SctDivU64x32 (LastBlock, 2, &Remainder)) || (IndexJ > MAX_REPEAT_OF_STRESS_TEST)) {
           break;
         }
 
@@ -1360,7 +1360,7 @@ BBTestWriteBlocksStressAutoTest (
         //
         // Parameter verification on Lba
         //
-        if (MultU64x32 (NewLba, BlockSize) + NewBufferSize > BufferSize) {
+        if (SctMultU64x32 (NewLba, BlockSize) + NewBufferSize > BufferSize) {
           break;
         }
 
@@ -1369,7 +1369,7 @@ BBTestWriteBlocksStressAutoTest (
                                   MediaId,
                                   NewLba,
                                   NewBufferSize,
-                                  (VOID*)(Buffer + MultU64x32 (NewLba, BlockSize))
+                                  (VOID*)(Buffer + SctMultU64x32 (NewLba, BlockSize))
                                   );
         if (EFI_ERROR(StatusWrite1)) {
           AssertionTypeWrite1 = EFI_TEST_ASSERTION_FAILED;
@@ -1559,7 +1559,7 @@ BBTestWriteBlocksStressAutoTest (
         //
         // Parameter verification on Lba
         //
-        if (MultU64x32 (NewLba, BlockSize) + NewBufferSize > BufferSize) {
+        if (SctMultU64x32 (NewLba, BlockSize) + NewBufferSize > BufferSize) {
           break;
         }
 
@@ -1571,7 +1571,7 @@ BBTestWriteBlocksStressAutoTest (
                                   MediaId,
                                   NewLba,
                                   NewBufferSize,
-                                  (VOID*)(Buffer + MultU64x32 (NewLba, BlockSize))
+                                  (VOID*)(Buffer + SctMultU64x32 (NewLba, BlockSize))
                                   );
         if (EFI_ERROR(StatusWrite1)) {
           AssertionTypeWrite1 = EFI_TEST_ASSERTION_FAILED;

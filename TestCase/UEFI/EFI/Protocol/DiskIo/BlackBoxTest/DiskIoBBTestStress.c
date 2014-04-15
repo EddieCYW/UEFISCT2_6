@@ -175,7 +175,7 @@ BBTestReadDiskStressAutoTest (
 
   BufferSize        = (((UINT32)LastBlock)*BlockSize)>MAX_NUMBER_OF_READ_DISK_BUFFER ? \
                                 MAX_NUMBER_OF_READ_DISK_BUFFER:((UINT32)LastBlock)*BlockSize;
-  LastOffset        = MultU64x32 (LastBlock+1, BlockSize);
+  LastOffset        = SctMultU64x32 (LastBlock+1, BlockSize);
 
   if (BufferSize == 0) {
     BufferSize = 1;
@@ -518,7 +518,7 @@ BBTestReadDiskStressAutoTest (
 
       IndexJ = 0;
       while (1) {
-        if ((IndexJ > DivU64x32 (LastBlock, 2, &Remainder)) || (IndexJ > MAX_REPEAT_OF_STRESS_TEST)) {
+        if ((IndexJ > SctDivU64x32 (LastBlock, 2, &Remainder)) || (IndexJ > MAX_REPEAT_OF_STRESS_TEST)) {
           break;
         }
 
@@ -752,7 +752,7 @@ BBTestWriteDiskStressAutoTest (
 
   BufferSize        = (((UINT32)LastBlock)*BlockSize)>MAX_NUMBER_OF_READ_DISK_BUFFER ? \
                                 MAX_NUMBER_OF_READ_DISK_BUFFER:((UINT32)LastBlock)*BlockSize;
-  LastOffset        = MultU64x32 (LastBlock+1, BlockSize);
+  LastOffset        = SctMultU64x32 (LastBlock+1, BlockSize);
 
   if (BufferSize == 0) {
     BufferSize = 1;
@@ -1657,7 +1657,7 @@ BBTestWriteDiskStressAutoTest (
 
       IndexJ = 0;
       while (1) {
-        if ((IndexJ > DivU64x32 (LastBlock, 2, &Remainder)) || (IndexJ > MAX_REPEAT_OF_STRESS_TEST)) {
+        if ((IndexJ > SctDivU64x32 (LastBlock, 2, &Remainder)) || (IndexJ > MAX_REPEAT_OF_STRESS_TEST)) {
           break;
         }
 

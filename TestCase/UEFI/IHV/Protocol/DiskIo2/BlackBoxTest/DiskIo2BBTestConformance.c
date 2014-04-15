@@ -222,7 +222,7 @@ BBTestReadDiskExConformanceAutoTest (
 
   BufferSize        = (((UINT32)LastBlock)*BlockSize)>MAX_NUMBER_OF_READ_DISK_BUFFER ? \
                                 MAX_NUMBER_OF_READ_DISK_BUFFER:((UINT32)LastBlock)*BlockSize;
-  LastOffset        = MultU64x32 (LastBlock+1, BlockSize);
+  LastOffset        = SctMultU64x32 (LastBlock+1, BlockSize);
 
   if (BufferSize == 0) {
     BufferSize = 1;
@@ -652,7 +652,7 @@ BBTestWriteDiskExConformanceAutoTest (
 
   BufferSize        = (((UINT32)LastBlock)*BlockSize)>MAX_NUMBER_OF_READ_DISK_BUFFER ? \
                                 MAX_NUMBER_OF_READ_DISK_BUFFER:((UINT32)LastBlock)*BlockSize;
-  LastOffset        = MultU64x32 (LastBlock+1, BlockSize);
+  LastOffset        = SctMultU64x32 (LastBlock+1, BlockSize);
 
   if (BufferSize == 0) {
     BufferSize = 1;
@@ -1134,7 +1134,7 @@ BBTestFlushDiskExConformanceAutoTest (
   IoAlign          = BlockIo2->Media->IoAlign;
   LastBlock        = BlockIo2->Media->LastBlock;
      
-  LastOffset       = MultU64x32 (LastBlock+1, BlockSize);
+  LastOffset       = SctMultU64x32 (LastBlock+1, BlockSize);
      
   //
   // If the floppy is ejected without "map -r", after first readdiskex() or writediskex()

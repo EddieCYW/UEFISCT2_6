@@ -272,13 +272,13 @@ EUI64StrToUInt64 (
   UINT64  Sum;
 
   for (Index = 0; Index < 8; Index++) {
-    EUIStrPart[Index] = SplitStr (&EUIStr, L'-');
+    EUIStrPart[Index] = SctSplitStr (&EUIStr, L'-');
 	Xtoi64(EUIStrPart[Index], &EUId[Index]);
   }
 
   Sum = EUId[0];
   for (Index = 1; Index < 8; Index++) {
-    Sum = LShiftU64(Sum, 8);
+    Sum = SctLShiftU64(Sum, 8);
 	Sum = Sum + EUId[Index];
   }
   *EUIdValue = Sum;
@@ -1065,7 +1065,7 @@ CreateSASExDeviceNode (
                                         SASExNodeSubType,
                                         sizeof (SASEX_DEVICE_PATH)
                                         );
-  
+
   StrToUInt8Array (AddressStr, SasEx->SasAddress);
   StrToUInt8Array (LunStr, SasEx->Lun);
   SasEx->RelativeTargetPort = (UINT16) SctStrToUInt (RTPStr);
@@ -1489,15 +1489,15 @@ CreateNVMEDeviceNode (
   CHAR16              *EUIStr;
   NVME_DEVICE_PATH    *NVMe;
 
-  NSIDStr = SplitStr (&TextDeviceNode, L',');
-  EUIStr  = SplitStr (&TextDeviceNode, L',');
+  NSIDStr = SctSplitStr (&TextDeviceNode, L',');
+  EUIStr  = SctSplitStr (&TextDeviceNode, L',');
   NVMe  = (NVME_DEVICE_PATH *) CreateDeviceNode (
                                  NVMeNodeType,
                                  NVMeNodeSubType,
                                  sizeof (NVME_DEVICE_PATH)
                                  );
 
-  NVMe->NamespaceId = (UINT32) StrToUInt (NSIDStr);
+  NVMe->NamespaceId = (UINT32) SctStrToUInt (NSIDStr);
 
   EUI64StrToUInt64 (EUIStr, &NVMe->EUId);
 
@@ -2861,18 +2861,18 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   // NVMe(0xAB124BEF,AB-CD-EF-01-23-45-67-89)
   //
  
-  StrCpy (text, L"0xAB124BEF,AB-CD-EF-01-23-45-67-89");
+  SctStrCpy (text, L"0xAB124BEF,AB-CD-EF-01-23-45-67-89");
   pDevicePath = CreateNVMEDeviceNode(text);
 
-  StrCpy (text, L"NVMe(0xAB124BEF,AB-CD-EF-01-23-45-67-89)");
+  SctStrCpy (text, L"NVMe(0xAB124BEF,AB-CD-EF-01-23-45-67-89)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
-  if (EfiCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
+  if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  FreePool (pDevicePath);
-  FreePool (pReDevicePath);
+  SctFreePool (pDevicePath);
+  SctFreePool (pReDevicePath);
 
   StandardLib->RecordAssertion (
                 StandardLib,

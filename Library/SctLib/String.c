@@ -946,24 +946,24 @@ SctStrToUInt64 (
     c = *Str;
 
     if (Base == 16) {
-      if (RShiftU64 (Value, 60)) {
+      if (SctRShiftU64 (Value, 60)) {
         //
         // Overflow here x16
         //
         return ;
       }
 
-      NewValue = LShiftU64 (Value, 4);
+      NewValue = SctLShiftU64 (Value, 4);
     } else {
-      if (RShiftU64 (Value, 61)) {
+      if (SctRShiftU64 (Value, 61)) {
         //
         // Overflow here x8
         //
         return ;
       }
 
-      NewValue  = LShiftU64 (Value, 3);
-      Value     = LShiftU64 (Value, 1);
+      NewValue  = SctLShiftU64 (Value, 3);
+      Value     = SctLShiftU64 (Value, 1);
       NewValue += Value;
       if (NewValue < Value) {
         //

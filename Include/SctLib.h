@@ -166,6 +166,35 @@ SctIsNodeAtEnd (
   );
 
 //
+// Math API
+//
+
+UINT64
+SctLShiftU64 (
+  IN UINT64                         Operand,
+  IN UINTN                          Count
+  );
+
+UINT64
+SctRShiftU64 (
+  IN UINT64                         Operand,
+  IN UINTN                          Count
+  );
+
+UINT64
+SctMultU64x32 (
+  IN UINT64                         Multiplicand,
+  IN UINTN                          Multiplier
+  );
+
+UINT64
+SctDivU64x32 (
+  IN UINT64                         Dividend,
+  IN UINTN                          Divisor,
+  OUT UINTN                         *Remainder OPTIONAL
+  );
+
+//
 // Memory API
 //
 

@@ -1618,7 +1618,7 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
   Text = DevicePathToText->ConvertDeviceNodeToText (pDeviceNode1, FALSE, FALSE);
   pDeviceNode2 = SctConvertTextToDeviceNode(Text);
 
-  if ((pDeviceNode2 != NULL) && (EfiCompareMem (pDeviceNode2, pDeviceNode1, DevicePathNodeLength(pDeviceNode1)) == 0)) {
+  if ((pDeviceNode2 != NULL) && (SctCompareMem (pDeviceNode2, pDeviceNode1, DevicePathNodeLength(pDeviceNode1)) == 0)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1635,14 +1635,14 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
                 Text
                 );
   if (pDeviceNode1 != NULL) {
-    FreePool (pDeviceNode1);
+    SctFreePool (pDeviceNode1);
   }
   if (pDeviceNode2 != NULL) {
-    FreePool (pDeviceNode2);
+    SctFreePool (pDeviceNode2);
   }
   if (Text != NULL) {
-    FreePool (Text);
-  }  
+    SctFreePool (Text);
+  }
 
   return EFI_SUCCESS;
 }

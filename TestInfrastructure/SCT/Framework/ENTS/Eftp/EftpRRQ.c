@@ -1738,7 +1738,7 @@ Returns:
 
     DataLen = PacketLen - EFTP_HEADER_LEN;
 
-    Start   = MultU64x32 (BlkNo - 1, Opt->BlkSize);
+    Start   = SctMultU64x32 (BlkNo - 1, Opt->BlkSize);
 
     if (Start + DataLen > MAX_REAL_FILE_SIZE) {
       EFTP_DEBUG_ERROR ((L"EftpRrqSaveBlk: User provided buffer is too small.\n"));

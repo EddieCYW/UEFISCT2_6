@@ -2231,7 +2231,7 @@ XToUint64 (
       }
 
       if ((Char >= '0'  &&  Char <= '9')  ||  (Char >= 'A'  &&  Char <= 'F')) {
-        U64 = LShiftU64 (U64, 4)  |  (Char - (Char >= 'A' ? 'A'-10 : '0'));
+        U64 = SctLShiftU64 (U64, 4)  |  (Char - (Char >= 'A' ? 'A'-10 : '0'));
       } else {
         break;
       }
@@ -2263,7 +2263,7 @@ AToUint64 (
     Char = *(Str++);
     while (Char) {
       if (Char >= '0' && Char <= '9') {
-        U64 = MultU64x32 (U64 , 10) + Char - '0';
+        U64 = SctMultU64x32 (U64 , 10) + Char - '0';
       } else {
         break;
       }

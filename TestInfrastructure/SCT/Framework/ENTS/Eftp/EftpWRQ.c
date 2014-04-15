@@ -1036,7 +1036,7 @@ Returns:
   Pkt = Buf->Packet;
 
   if (Private->Token->Buffer != NULL) {
-    End   = MultU64x32 (BlkNo, Opt->BlkSize);
+    End   = SctMultU64x32 (BlkNo, Opt->BlkSize);
     Start = End - Opt->BlkSize;
 
     if (End > Private->Token->BufferSize) {

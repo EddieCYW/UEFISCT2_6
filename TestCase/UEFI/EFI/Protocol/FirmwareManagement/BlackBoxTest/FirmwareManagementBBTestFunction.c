@@ -475,7 +475,7 @@ BBTestGetImageInfoFunctionTestCheckpoint1 (
                    p->AttributesSupported,
                    p->AttributesSetting
                    );
-    for (j = 1, k = 0; j <= IMAGE_ATTRIBUTE_IN_USE; j = LShiftU64(j, 1), k++) {
+    for (j = 1, k = 0; j <= IMAGE_ATTRIBUTE_IN_USE; j = SctLShiftU64(j, 1), k++) {
       BitField = Attribute[k];
       if ((p->AttributesSupported & j) != j) {
         BitSetting = L"Not Supported";
@@ -866,7 +866,7 @@ BBTestGetPackageInfoFunctionTestCheckpoint1 (
                  AttributesSupported,
                  AttributesSetting
                  );
-  for (j = 1, k = 0; j <= PACKAGE_ATTRIBUTE_AUTHENTICATION_REQUIRED; j = LShiftU64(j, 1), k++) {
+  for (j = 1, k = 0; j <= PACKAGE_ATTRIBUTE_AUTHENTICATION_REQUIRED; j = SctLShiftU64(j, 1), k++) {
     BitField = Attribute[k];
     if ((AttributesSupported & j) != j) {
       BitSetting = L"Not Supported";

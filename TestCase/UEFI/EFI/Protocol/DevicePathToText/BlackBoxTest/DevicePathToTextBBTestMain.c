@@ -366,7 +366,7 @@ Xtoi64 (
 
   *Data = 0;
   Length = sizeof (UINT64);
-  HexStringToBuf ((UINT8 *) Data, &Length, TrimHexStr (Str), NULL);
+  SctHexStringToBuf ((UINT8 *) Data, &Length, TrimHexStr (Str), NULL);
 }
 
 STATIC
@@ -382,14 +382,14 @@ EUI64StrToUInt64 (
   UINT64  Sum;
 
   for (Index = 0; Index < 8; Index++) {
-    EUIStrPart[Index] = SplitStr (&EUIStr, L'-');
-	Xtoi64(EUIStrPart[Index], &EUId[Index]);
+    EUIStrPart[Index] = SctSplitStr (&EUIStr, L'-');
+    Xtoi64(EUIStrPart[Index], &EUId[Index]);
   }
 
   Sum = EUId[0];
   for (Index = 1; Index < 8; Index++) {
-    Sum = LShiftU64(Sum, 8);
-	Sum = Sum + EUId[Index];
+    Sum = SctLShiftU64(Sum, 8);
+    Sum = Sum + EUId[Index];
   }
   *EUIdValue = Sum;
 }
@@ -3262,21 +3262,21 @@ BuildNVMeDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"NSID", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    NVMe->NamespaceId = (UINT32) StrToUInt (ParamIdentifierVal);
+    NVMe->NamespaceId = (UINT32) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"EUI", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-	EUI64StrToUInt64 (ParamIdentifierVal, &NVMe->EUId);
+    EUI64StrToUInt64 (ParamIdentifierVal, &NVMe->EUId);
   } else {
   	goto InValidText;
   }
 
   return (EFI_DEVICE_PATH_PROTOCOL *) NVMe;
 InValidText:
-  FreePool(NVMe);
+  SctFreePool(NVMe);
   return NULL;
 }
 

@@ -1678,14 +1678,14 @@ Returns:
 ;
 
 UINT64
-RShiftU64 (
+SctRShiftU64 (
   IN UINT64                         Operand,
   IN UINTN                          Count
   )
 ;
 
 UINT64
-DivU64x32 (
+SctDivU64x32 (
   IN UINT64                         Dividend,
   IN UINTN                          Divisor,
   OUT UINTN                         *Remainder OPTIONAL
