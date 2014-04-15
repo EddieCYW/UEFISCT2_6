@@ -125,7 +125,7 @@ SCT_LIST_ENTRY  AsyncWriteFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(As
 //
 // Async Write File lock
 //
-FLOCK  gAsyncWriteQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncWriteQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 
 //
 // Async Write Multi Files Queue
@@ -137,7 +137,7 @@ SCT_LIST_ENTRY  AsyncWriteMultiFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIAB
 //
 // Async Write Multi Files lock
 //
-FLOCK  gAsyncWriteMultiQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncWriteMultiQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 
 
 //
@@ -169,10 +169,10 @@ EFIAPI FileIoWriteOneFileNotifyFunc (
   // Remove entity from WriteExecuteListHead &  add entity to WriteFinishListHead
   // All FileIoWriteOneFile Notify function run at Call Back level only once, So no locks required
   //
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   SctRemoveEntryList(&FileIoEntity->ListEntry);
   SctInsertTailList(&AsyncWriteFinishListHead, &FileIoEntity->ListEntry);
-  ReleaseLock(&gAsyncWriteQueueLock);
+  SctReleaseLock (&gAsyncWriteQueueLock);
 
   return EFI_SUCCESS;
 }
@@ -246,9 +246,9 @@ FileIoAsyncWriteOneFile(
     return Status;
   }
 
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   SctInsertTailList(&AsyncWriteExecuteListHead, &FileIoEntity->ListEntry);
-  ReleaseLock(&gAsyncWriteQueueLock);
+  SctReleaseLock (&gAsyncWriteQueueLock);
   
   //
   // Async WriteEx Call
@@ -261,10 +261,10 @@ FileIoAsyncWriteOneFile(
   gtBS->RestoreTPL (OldTpl);
   
   if (EFI_ERROR (Status)) {
-    AcquireLock(&gAsyncWriteQueueLock);
+    SctAcquireLock (&gAsyncWriteQueueLock);
     SctRemoveEntryList(&FileIoEntity->ListEntry);
     SctInsertTailList(&AsyncWriteFailListHead, &FileIoEntity->ListEntry);    
-    ReleaseLock(&gAsyncWriteQueueLock);
+    SctReleaseLock (&gAsyncWriteQueueLock);
   }
 
   //
@@ -306,10 +306,10 @@ EFIAPI FileIoWriteMultiFilesNotifyFunc (
   // Remove entity from WriteMultiExecuteListHead &  add entity to WriteMultiFinishListHead
   // All FileIoWriteMultiFiles Notify function run at Call Back level only once, So no locks required
   //
-  AcquireLock(&gAsyncWriteMultiQueueLock);
+  SctAcquireLock (&gAsyncWriteMultiQueueLock);
   SctRemoveEntryList(&FileIoEntity->ListEntry);
   SctInsertTailList(&AsyncWriteMultiFinishListHead, &FileIoEntity->ListEntry);
-  ReleaseLock(&gAsyncWriteMultiQueueLock);
+  SctReleaseLock (&gAsyncWriteMultiQueueLock);
   return EFI_SUCCESS;
 }
 
@@ -377,9 +377,9 @@ FileIoAsyncWriteMultiFiles (
     return Status;
   }
 
-  AcquireLock(&gAsyncWriteMultiQueueLock);
+  SctAcquireLock (&gAsyncWriteMultiQueueLock);
   SctInsertTailList(&AsyncWriteMultiExecuteListHead, &FileIoEntity->ListEntry);
-  ReleaseLock(&gAsyncWriteMultiQueueLock);
+  SctReleaseLock (&gAsyncWriteMultiQueueLock);
   
   //
   // Async WriteEx Call
@@ -390,10 +390,10 @@ FileIoAsyncWriteMultiFiles (
                      );
   
   if (EFI_ERROR (Status)) {
-    AcquireLock(&gAsyncWriteMultiQueueLock);
+    SctAcquireLock (&gAsyncWriteMultiQueueLock);
     SctRemoveEntryList(&FileIoEntity->ListEntry);
     SctInsertTailList(&AsyncWriteMultiFailListHead, &FileIoEntity->ListEntry);    
-    ReleaseLock(&gAsyncWriteMultiQueueLock);
+    SctReleaseLock (&gAsyncWriteMultiQueueLock);
   }
 
   //
@@ -631,9 +631,9 @@ BBTestWriteExBasicTestCheckpoint1 (
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
     
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   while (!SctIsListEmpty(&AsyncWriteExecuteListHead) && IndexI < 120) {
-    ReleaseLock(&gAsyncWriteQueueLock);
+    SctReleaseLock (&gAsyncWriteQueueLock);
     
     gtBS->WaitForEvent (                   
             1,
@@ -643,9 +643,9 @@ BBTestWriteExBasicTestCheckpoint1 (
     IndexI++;
   
     SctPrint (L".");
-    AcquireLock(&gAsyncWriteQueueLock);
+    SctAcquireLock (&gAsyncWriteQueueLock);
   }
-  ReleaseLock(&gAsyncWriteQueueLock);
+  SctReleaseLock (&gAsyncWriteQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
   SctPrint (L"\n");
@@ -655,11 +655,11 @@ BBTestWriteExBasicTestCheckpoint1 (
   // gWriteFinshQueue is handled first since we use File IO Write to do Write buffer validation 
   // Here no logs should be wrote to this file device to keep data intact
   //
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   if (!SctIsListEmpty(&AsyncWriteFinishListHead)) {
     for(ListEntry = SctGetFirstNode(&AsyncWriteFinishListHead); ; ListEntry = SctGetNextNode(&AsyncWriteFinishListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-      ReleaseLock(&gAsyncWriteQueueLock);
+      SctReleaseLock (&gAsyncWriteQueueLock);
 
       //
       // Check & record every File Io execution entity status 
@@ -760,7 +760,7 @@ BBTestWriteExBasicTestCheckpoint1 (
       }else {
         FileIoEntity->AssertionType = EFI_TEST_ASSERTION_FAILED;
 	  }
-      AcquireLock(&gAsyncWriteQueueLock);
+      SctAcquireLock (&gAsyncWriteQueueLock);
       //
       // Last list node handled
       //
@@ -769,16 +769,16 @@ BBTestWriteExBasicTestCheckpoint1 (
       }
     }
   }
-  ReleaseLock(&gAsyncWriteQueueLock);
+  SctReleaseLock (&gAsyncWriteQueueLock);
   
   //
   // Record All Finished Write case results
   //
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   while (!SctIsListEmpty(&AsyncWriteFinishListHead)) {
     FileIoEntity = CR(AsyncWriteFinishListHead.ForwardLink, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);   
     SctRemoveEntryList(&FileIoEntity->ListEntry);
-    ReleaseLock(&gAsyncWriteQueueLock);
+    SctReleaseLock (&gAsyncWriteQueueLock);
 
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -802,18 +802,18 @@ BBTestWriteExBasicTestCheckpoint1 (
     }
     gtBS->CloseEvent(FileIoEntity->FileIoToken.Event);
     gtBS->FreePool(FileIoEntity);
-    AcquireLock(&gAsyncWriteQueueLock);
+    SctAcquireLock (&gAsyncWriteQueueLock);
   }
-  ReleaseLock(&gAsyncWriteQueueLock);
+  SctReleaseLock (&gAsyncWriteQueueLock);
 
   //
   // If WriteFailListHead is not empty, which means some Async Calls are wrong 
   //
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   while(!SctIsListEmpty(&AsyncWriteFailListHead)) {
     FileIoEntity = CR(AsyncWriteFailListHead.ForwardLink, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
     SctRemoveEntryList(&FileIoEntity->ListEntry);
-    ReleaseLock(&gAsyncWriteQueueLock);
+    SctReleaseLock (&gAsyncWriteQueueLock);
     StandardLib->RecordAssertion (
                    StandardLib,
                    EFI_TEST_ASSERTION_FAILED,
@@ -837,19 +837,19 @@ BBTestWriteExBasicTestCheckpoint1 (
      gtBS->CloseEvent(FileIoEntity->FileIoToken.Event);
      gtBS->FreePool(FileIoEntity);
        
-     AcquireLock(&gAsyncWriteQueueLock);
+     SctAcquireLock (&gAsyncWriteQueueLock);
   }
-  ReleaseLock(&gAsyncWriteQueueLock);  
+  SctReleaseLock (&gAsyncWriteQueueLock);  
   
   //
   // If WriteExecuteList is not empty, which means some token events havn't been signaled yet
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   if (!SctIsListEmpty(&AsyncWriteExecuteListHead)) {
     for(ListEntry = SctGetFirstNode(&AsyncWriteExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncWriteExecuteListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-      ReleaseLock(&gAsyncWriteQueueLock);
+      SctReleaseLock (&gAsyncWriteQueueLock);
     
       StandardLib->RecordAssertion (
                      StandardLib,
@@ -864,13 +864,13 @@ BBTestWriteExBasicTestCheckpoint1 (
                      FileIoEntity->Tpl
                      );
 
-      AcquireLock(&gAsyncWriteQueueLock);
+      SctAcquireLock (&gAsyncWriteQueueLock);
       if (SctIsNodeAtEnd(&AsyncWriteExecuteListHead, ListEntry)) {
         break;
       }
     }
   }
-  ReleaseLock(&gAsyncWriteQueueLock);
+  SctReleaseLock (&gAsyncWriteQueueLock);
 
   FileHandle->Delete(FileHandle);  
   Root->Close(Root);
@@ -1377,9 +1377,9 @@ BBTestWriteExBasicTestCheckpoint3 (
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
       
-  AcquireLock(&gAsyncWriteMultiQueueLock);
+  SctAcquireLock (&gAsyncWriteMultiQueueLock);
   while (!SctIsListEmpty(&AsyncWriteMultiExecuteListHead) && IndexI < 120) {
-    ReleaseLock(&gAsyncWriteMultiQueueLock);
+    SctReleaseLock (&gAsyncWriteMultiQueueLock);
       
     gtBS->WaitForEvent (                   
             1,
@@ -1389,9 +1389,9 @@ BBTestWriteExBasicTestCheckpoint3 (
     IndexI++;
   
     SctPrint (L".");
-    AcquireLock(&gAsyncWriteMultiQueueLock);
+    SctAcquireLock (&gAsyncWriteMultiQueueLock);
   }
-  ReleaseLock(&gAsyncWriteMultiQueueLock);
+  SctReleaseLock (&gAsyncWriteMultiQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
   SctPrint (L"\n");
@@ -1401,11 +1401,11 @@ BBTestWriteExBasicTestCheckpoint3 (
   // gWriteFinshQueue is handled first since we use File IO Write to do Write buffer validation 
   // Here no logs should be wrote to this file device to keep data intact
   //
-  AcquireLock(&gAsyncWriteMultiQueueLock);
+  SctAcquireLock (&gAsyncWriteMultiQueueLock);
   if (!SctIsListEmpty(&AsyncWriteMultiFinishListHead)) {
     for (ListEntry = SctGetFirstNode(&AsyncWriteMultiFinishListHead); ; ListEntry = SctGetNextNode(&AsyncWriteMultiFinishListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-      ReleaseLock(&gAsyncWriteMultiQueueLock);
+      SctReleaseLock (&gAsyncWriteMultiQueueLock);
 
       FileIoEntity->AssertionType = EFI_TEST_ASSERTION_PASSED;;
       //
@@ -1502,7 +1502,7 @@ BBTestWriteExBasicTestCheckpoint3 (
       } else {
         FileIoEntity->AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
-      AcquireLock(&gAsyncWriteMultiQueueLock);
+      SctAcquireLock (&gAsyncWriteMultiQueueLock);
       //
       // Last list node handled
       //
@@ -1511,16 +1511,16 @@ BBTestWriteExBasicTestCheckpoint3 (
       }
     }
   }
-  ReleaseLock(&gAsyncWriteMultiQueueLock);
+  SctReleaseLock (&gAsyncWriteMultiQueueLock);
     
   //
   // Record All Finished Write case results
   //
-  AcquireLock(&gAsyncWriteMultiQueueLock);
+  SctAcquireLock (&gAsyncWriteMultiQueueLock);
   while (!SctIsListEmpty(&AsyncWriteMultiFinishListHead)) {
     FileIoEntity = CR(AsyncWriteMultiFinishListHead.ForwardLink, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);   
     SctRemoveEntryList(&FileIoEntity->ListEntry);
-    ReleaseLock(&gAsyncWriteMultiQueueLock);
+    SctReleaseLock (&gAsyncWriteMultiQueueLock);
       
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1543,19 +1543,19 @@ BBTestWriteExBasicTestCheckpoint3 (
     }
     gtBS->CloseEvent(FileIoEntity->FileIoToken.Event);
     gtBS->FreePool(FileIoEntity);
-    AcquireLock(&gAsyncWriteMultiQueueLock);
+    SctAcquireLock (&gAsyncWriteMultiQueueLock);
   }
-  ReleaseLock(&gAsyncWriteMultiQueueLock);
+  SctReleaseLock (&gAsyncWriteMultiQueueLock);
 
 
   //
   // If WriteMultiFailListHead is not empty, which means some Async Calls are wrong 
   //
-  AcquireLock(&gAsyncWriteMultiQueueLock);
+  SctAcquireLock (&gAsyncWriteMultiQueueLock);
   while(!SctIsListEmpty(&AsyncWriteMultiFailListHead)) {
     FileIoEntity = CR(AsyncWriteMultiFailListHead.ForwardLink, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
     SctRemoveEntryList(&FileIoEntity->ListEntry);
-    ReleaseLock(&gAsyncWriteMultiQueueLock);
+    SctReleaseLock (&gAsyncWriteMultiQueueLock);
         
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1580,20 +1580,20 @@ BBTestWriteExBasicTestCheckpoint3 (
     gtBS->CloseEvent(FileIoEntity->FileIoToken.Event);
     gtBS->FreePool(FileIoEntity);
          
-    AcquireLock(&gAsyncWriteMultiQueueLock);
+    SctAcquireLock (&gAsyncWriteMultiQueueLock);
   }
-  ReleaseLock(&gAsyncWriteMultiQueueLock);
+  SctReleaseLock (&gAsyncWriteMultiQueueLock);
       
     
   //
   // If WriteMultiExecuteList is not empty, which means some token events havn't been signaled yet
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
-  AcquireLock(&gAsyncWriteMultiQueueLock);
+  SctAcquireLock (&gAsyncWriteMultiQueueLock);
   if (!SctIsListEmpty(&AsyncWriteMultiExecuteListHead)) {
     for(ListEntry = SctGetFirstNode(&AsyncWriteMultiExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncWriteMultiExecuteListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoWrite_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-      ReleaseLock(&gAsyncWriteMultiQueueLock);
+      SctReleaseLock (&gAsyncWriteMultiQueueLock);
       
       StandardLib->RecordAssertion (
                      StandardLib,
@@ -1608,13 +1608,13 @@ BBTestWriteExBasicTestCheckpoint3 (
                      (UINTN)FileIoEntity->SetPosition
                      );
 
-      AcquireLock(&gAsyncWriteMultiQueueLock);
+      SctAcquireLock (&gAsyncWriteMultiQueueLock);
       if (SctIsNodeAtEnd(&AsyncWriteMultiExecuteListHead, ListEntry)) {
         break;
       }
     }
   }
-  ReleaseLock(&gAsyncWriteMultiQueueLock);
+  SctReleaseLock (&gAsyncWriteMultiQueueLock);
      
   for (Index = 0; Index < 3; Index++){
     if ( FileHandle[Index] != NULL){

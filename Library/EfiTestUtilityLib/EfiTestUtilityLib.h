@@ -176,22 +176,6 @@ MetaiMatch (
   );
 
 VOID
-InitializeLock (
-  IN OUT FLOCK                      *Lock,
-  IN EFI_TPL                        Priority
-  );
-
-VOID
-AcquireLock (
-  IN FLOCK                          *Lock
-  );
-
-VOID
-ReleaseLock (
-  IN FLOCK                          *Lock
-  );
-
-VOID
 Output (
   IN CHAR16                         *Str
   );

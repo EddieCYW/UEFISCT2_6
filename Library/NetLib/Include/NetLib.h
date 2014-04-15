@@ -176,12 +176,12 @@ NetCommonLibSetMem (
 #define NET_ATOMIC_INC(x)  __asm{ lock;inc x; }
 #define NET_ATOMIC_DEC(x)  __asm{ lock;dec x; }
 
-#define NET_LOCK         EFI_LOCK
+#define NET_LOCK         SCT_LOCK
 
 //VOID  NET_LOCK_INIT(NET_LOCK *x)
 //Default TPL is EFI_TPL_CALLBACK+1. Because the input processing runs at EFI_TPL_CALLBACK,
 //So we can just raise current TPL to EFI_TPL_CALLBACK
-#define NET_LOCK_INIT(x)             EfiInitializeLock(x, NET_TPL_LOCK)
+#define NET_LOCK_INIT(x)             SctInitializeLock(x, NET_TPL_LOCK)
 
 
 //VOID  NET_LOCK_INIT_GLOBAL_LOCK(NET_LOCK *x)
@@ -189,7 +189,7 @@ NetCommonLibSetMem (
 //In single processor environment, the extreme case is to disable any interrupt.
 //In multiple processor environment, the extreme case is to disable all interrupts on every processor.
 //In EFI/Tiano environment, it only need to raise current TPL to EFI_TPL_NOTIFY or more higher.
-#define NET_LOCK_INIT_GLOBAL_LOCK(x) EfiInitializeLock(x,NET_TPL_GLOBAL_LOCK)
+#define NET_LOCK_INIT_GLOBAL_LOCK(x) SctInitializeLock(x,NET_TPL_GLOBAL_LOCK)
 
 //
 //EFI_STATUS NET_TRYLOCK (IN NET_LOCK  *x)
@@ -207,7 +207,7 @@ NetCommonLibSetMem (
 //NOTE:After calling NET_TRYLOCK and the lock is obtained, additional NET_TRYLOCK 
 //MAY be called WITHOUT self-deadlock, and the lock remains until unlocked.
 //
-#define NET_TRYLOCK(x)   EfiAcquireLockOrFail(x)
+#define NET_TRYLOCK(x)   SctAcquireLockOrFail(x)
 
 //
 //VOID  NET_SPINLOCK (IN NET_LOCK  *x)
@@ -234,7 +234,7 @@ NetCommonLibSetMem (
 //
 
 //VOID  NET_UNLOCK (IN NET_LOCK  *x)
-#define NET_UNLOCK(x)    EfiReleaseLock(x)
+#define NET_UNLOCK(x)    SctReleaseLock(x)
 
 //flag : UINTN
 #define NET_DISABLE_INTERRUPT(flag) (flag = tBS->RaiseTPL(EFI_TPL_HIGH_LEVEL))

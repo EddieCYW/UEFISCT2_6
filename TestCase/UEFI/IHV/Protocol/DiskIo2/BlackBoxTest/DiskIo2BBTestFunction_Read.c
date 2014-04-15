@@ -104,7 +104,7 @@ SCT_LIST_ENTRY  AsyncReadFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(Asy
 //
 // Async Read lock
 //
-FLOCK  gAsyncReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 
 //
 // Mixed Async Read Queue
@@ -122,7 +122,7 @@ SCT_LIST_ENTRY  SyncReadFailListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncRea
 //
 // Mixed Sync & Async Read lock
 //
-FLOCK  gMixedReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gMixedReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 
 //
 // Async signal
@@ -144,10 +144,10 @@ EFIAPI DiskIo2ReadNotifyFunc (
   // Remove entity from ReadExecuteListHead &  add entity to ReadFinishListHead
   // All DiskIo2 Notify function run at Call Back level only once, So no locks required
   //
-  AcquireLock(&gAsyncReadQueueLock);
+  SctAcquireLock (&gAsyncReadQueueLock);
   SctRemoveEntryList(&DiskIo2Entity->ListEntry);
   SctInsertTailList(&AsyncReadFinishListHead, &DiskIo2Entity->ListEntry);
-  ReleaseLock(&gAsyncReadQueueLock);
+  SctReleaseLock (&gAsyncReadQueueLock);
 }
 
 
@@ -205,9 +205,9 @@ DiskIo2AsyncReadData (
   DiskIo2Entity->DiskIo2Token.TransactionStatus = EFI_NOT_READY;
   DiskIo2Entity->Buffer                         = Buffer;
 
-  AcquireLock(&gAsyncReadQueueLock);
+  SctAcquireLock (&gAsyncReadQueueLock);
   SctInsertTailList(&AsyncReadExecuteListHead, &DiskIo2Entity->ListEntry);
-  ReleaseLock(&gAsyncReadQueueLock);
+  SctReleaseLock (&gAsyncReadQueueLock);
   
   //
   // Async ReadDiskEx Call
@@ -222,10 +222,10 @@ DiskIo2AsyncReadData (
                       );
   
   if (EFI_ERROR (Status)) {
-    AcquireLock(&gAsyncReadQueueLock);
+    SctAcquireLock (&gAsyncReadQueueLock);
     SctRemoveEntryList(&DiskIo2Entity->ListEntry);
     SctInsertTailList(&AsyncReadFailListHead, &DiskIo2Entity->ListEntry);    
-    ReleaseLock(&gAsyncReadQueueLock);
+    SctReleaseLock (&gAsyncReadQueueLock);
 
     DiskIo2Entity->Buffer = NULL;
 
@@ -470,9 +470,9 @@ DiskIo2MixedReadData (
   //
   // Acquire lock to add entity to Execution ListHead
   //
-  AcquireLock(&gMixedReadQueueLock);
+  SctAcquireLock (&gMixedReadQueueLock);
   SctInsertTailList(&MixedReadExecuteListHead, &DiskIo2Entity->ListEntry);
-  ReleaseLock(&gMixedReadQueueLock);
+  SctReleaseLock (&gMixedReadQueueLock);
   
   //
   // Async ReadDiskEx Call
@@ -496,10 +496,10 @@ DiskIo2MixedReadData (
     // Failed Status Event should never be signaled, so remove this entity from the list
     // Put failure execution into fail List
     //
-    AcquireLock(&gMixedReadQueueLock);
+    SctAcquireLock (&gMixedReadQueueLock);
     SctRemoveEntryList(&DiskIo2Entity->ListEntry);
     SctInsertTailList(&MixedReadFailListHead, &DiskIo2Entity->ListEntry);
-    ReleaseLock(&gMixedReadQueueLock);
+    SctReleaseLock (&gMixedReadQueueLock);
 
     gtBS->FreePool(Buffer);
 
@@ -1070,9 +1070,9 @@ END_WAIT:
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     IndexI = 0;
     
-    AcquireLock(&gAsyncReadQueueLock);
+    SctAcquireLock (&gAsyncReadQueueLock);
     while (!SctIsListEmpty(&AsyncReadExecuteListHead) && IndexI < 120) {
-      ReleaseLock(&gAsyncReadQueueLock);
+      SctReleaseLock (&gAsyncReadQueueLock);
     
       gtBS->WaitForEvent (                   
               1,
@@ -1082,9 +1082,9 @@ END_WAIT:
       IndexI++;
 
       SctPrint (L".");
-      AcquireLock(&gAsyncReadQueueLock);
+      SctAcquireLock (&gAsyncReadQueueLock);
     }
-    ReleaseLock(&gAsyncReadQueueLock);
+    SctReleaseLock (&gAsyncReadQueueLock);
 
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
     SctPrint (L"\n");
@@ -1095,11 +1095,11 @@ END_WAIT:
   // gReadFinshQueue is handled first since we use Disk IO read to do read buffer validation 
   // Here no logs should be wrote to this disk device to keep data intact
   //
-  AcquireLock(&gAsyncReadQueueLock);
+  SctAcquireLock (&gAsyncReadQueueLock);
   if (!SctIsListEmpty(&AsyncReadFinishListHead)) {
     for(ListEntry = SctGetFirstNode(&AsyncReadFinishListHead); ; ListEntry = SctGetNextNode(&AsyncReadFinishListHead, ListEntry)) {
       DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-      ReleaseLock(&gAsyncReadQueueLock);
+      SctReleaseLock (&gAsyncReadQueueLock);
 
       //
       // Check & record every Disk IO2 execution entity status 
@@ -1149,7 +1149,7 @@ END_WAIT:
           DiskIo2Entity->AssertionType = EFI_TEST_ASSERTION_FAILED;
         }
 
-      AcquireLock(&gAsyncReadQueueLock);
+      SctAcquireLock (&gAsyncReadQueueLock);
       //
       // Last list node handled
       //
@@ -1158,16 +1158,16 @@ END_WAIT:
       }
     }
   }
-  ReleaseLock(&gAsyncReadQueueLock);
+  SctReleaseLock (&gAsyncReadQueueLock);
  
   //
   // Record All Finished Read case results
   //
-  AcquireLock(&gAsyncReadQueueLock);
+  SctAcquireLock (&gAsyncReadQueueLock);
   while (!SctIsListEmpty(&AsyncReadFinishListHead)) {
     DiskIo2Entity = CR(AsyncReadFinishListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);   
     SctRemoveEntryList(&DiskIo2Entity->ListEntry);
-    ReleaseLock(&gAsyncReadQueueLock);
+    SctReleaseLock (&gAsyncReadQueueLock);
     
     if (DiskIo2Entity->MemCompared == TRUE) {
       StandardLib->RecordAssertion (
@@ -1206,19 +1206,19 @@ END_WAIT:
     gtBS->CloseEvent(DiskIo2Entity->DiskIo2Token.Event);
     gtBS->FreePool(DiskIo2Entity);
 
-    AcquireLock(&gAsyncReadQueueLock);
+    SctAcquireLock (&gAsyncReadQueueLock);
   }  
-  ReleaseLock(&gAsyncReadQueueLock);
+  SctReleaseLock (&gAsyncReadQueueLock);
 
 
   //
   // If ReadFailListHead is not empty, which means some Async Calls are wrong 
   //
-  AcquireLock(&gAsyncReadQueueLock);
+  SctAcquireLock (&gAsyncReadQueueLock);
   while(!SctIsListEmpty(&AsyncReadFailListHead)) {
     DiskIo2Entity = CR(AsyncReadFailListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
     SctRemoveEntryList(&DiskIo2Entity->ListEntry);
-    ReleaseLock(&gAsyncReadQueueLock);
+    SctReleaseLock (&gAsyncReadQueueLock);
     
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1242,20 +1242,20 @@ END_WAIT:
      gtBS->CloseEvent(DiskIo2Entity->DiskIo2Token.Event);
      gtBS->FreePool(DiskIo2Entity);
      
-     AcquireLock(&gAsyncReadQueueLock);
+     SctAcquireLock (&gAsyncReadQueueLock);
   }
-  ReleaseLock(&gAsyncReadQueueLock);
+  SctReleaseLock (&gAsyncReadQueueLock);
   
 
   //
   // If ReadExecuteList is not empty, which means some token events havn't been signaled yet
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
-  AcquireLock(&gAsyncReadQueueLock);
+  SctAcquireLock (&gAsyncReadQueueLock);
   if (!SctIsListEmpty(&AsyncReadExecuteListHead)) {
     for(ListEntry = SctGetFirstNode(&AsyncReadExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncReadExecuteListHead, ListEntry)) {
       DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-      ReleaseLock(&gAsyncReadQueueLock);
+      SctReleaseLock (&gAsyncReadQueueLock);
   
       StandardLib->RecordAssertion (
                      StandardLib,
@@ -1272,13 +1272,13 @@ END_WAIT:
                      DiskIo2Entity->Buffer
                      );
   
-      AcquireLock(&gAsyncReadQueueLock);
+      SctAcquireLock (&gAsyncReadQueueLock);
       if (SctIsNodeAtEnd(&AsyncReadExecuteListHead, ListEntry)) {
         break;
       }
     }
   }
-  ReleaseLock(&gAsyncReadQueueLock);
+  SctReleaseLock (&gAsyncReadQueueLock);
 
   return EFI_SUCCESS;
 }
@@ -2336,9 +2336,9 @@ END_WAIT:
     Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
     IndexI = 0;
     
-    AcquireLock(&gMixedReadQueueLock);
+    SctAcquireLock (&gMixedReadQueueLock);
     while (!SctIsListEmpty(&MixedReadExecuteListHead) && IndexI < 120) {
-      ReleaseLock(&gMixedReadQueueLock);
+      SctReleaseLock (&gMixedReadQueueLock);
     
       gtBS->WaitForEvent (                   
               1,
@@ -2347,9 +2347,9 @@ END_WAIT:
               );
       IndexI++;
       SctPrint (L".");
-      AcquireLock(&gMixedReadQueueLock);
+      SctAcquireLock (&gMixedReadQueueLock);
     }
-    ReleaseLock(&gMixedReadQueueLock);
+    SctReleaseLock (&gMixedReadQueueLock);
 
     Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
     SctPrint (L"\n");
@@ -2360,11 +2360,11 @@ END_WAIT:
   // gReadFinshQueue is handled first since we use Disk IO read to do read buffer validation 
   // Here no logs should be wrote to this disk device to keep data intact
   //
-  AcquireLock(&gMixedReadQueueLock);
+  SctAcquireLock (&gMixedReadQueueLock);
   if (!SctIsListEmpty(&MixedReadFinishListHead)) {
     for(ListEntry = SctGetFirstNode(&MixedReadFinishListHead); ; ListEntry = SctGetNextNode(&MixedReadFinishListHead, ListEntry)) {
       DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-      ReleaseLock(&gMixedReadQueueLock);
+      SctReleaseLock (&gMixedReadQueueLock);
 
       //
       // Check & record every Disk IO2 execution entity status 
@@ -2416,7 +2416,7 @@ END_WAIT:
          DiskIo2Entity->AssertionType = EFI_TEST_ASSERTION_FAILED;
         }
 
-      AcquireLock(&gMixedReadQueueLock);
+      SctAcquireLock (&gMixedReadQueueLock);
       //
       // Last list node handled
       //
@@ -2425,17 +2425,17 @@ END_WAIT:
       }
     }
   }
-  ReleaseLock(&gMixedReadQueueLock);
+  SctReleaseLock (&gMixedReadQueueLock);
 
   
   //
   // Record All Finished Read case results
   //
-  AcquireLock(&gMixedReadQueueLock);
+  SctAcquireLock (&gMixedReadQueueLock);
   while (!SctIsListEmpty(&MixedReadFinishListHead)) {
     DiskIo2Entity = CR(MixedReadFinishListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
     SctRemoveEntryList(&DiskIo2Entity->ListEntry);
-    ReleaseLock(&gMixedReadQueueLock);
+    SctReleaseLock (&gMixedReadQueueLock);
 
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -2460,9 +2460,9 @@ END_WAIT:
     gtBS->FreePool(DiskIo2Entity);
   
   
-    AcquireLock(&gMixedReadQueueLock);
+    SctAcquireLock (&gMixedReadQueueLock);
   }  
-  ReleaseLock(&gMixedReadQueueLock);
+  SctReleaseLock (&gMixedReadQueueLock);
 
   
   //

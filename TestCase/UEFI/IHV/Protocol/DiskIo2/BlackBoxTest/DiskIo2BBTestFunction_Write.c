@@ -109,7 +109,7 @@ SCT_LIST_ENTRY  SyncReadDataListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncRea
 //
 // Async Write lock
 //
-FLOCK gAsyncWriteQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK gAsyncWriteQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 
 //
 //  Sync Write Queue
@@ -142,10 +142,10 @@ EFIAPI DiskIo2WriteNotifyFunc (
   // Remove entity from WriteExecuteListHead &  add entity to WriteFinishListHead
   // All DiskIo2 Notify function run at Call Back level only once, So no locks required
   //
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   SctRemoveEntryList(&DiskIo2Entity->ListEntry);
   SctInsertTailList(&AsyncWriteFinishListHead, &DiskIo2Entity->ListEntry);
-  ReleaseLock(&gAsyncWriteQueueLock);
+  SctReleaseLock (&gAsyncWriteQueueLock);
 }
 
 
@@ -212,9 +212,9 @@ DiskIo2AsyncWriteData (
   //
   // Acquire lock to add entity to Write Execution ListHead
   //
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   SctInsertTailList(&AsyncWriteExecuteListHead, &DiskIo2Entity->ListEntry);
-  ReleaseLock(&gAsyncWriteQueueLock);
+  SctReleaseLock (&gAsyncWriteQueueLock);
   
   DiskIo2Entity->Buffer      = Buffer;
   DiskIo2Entity->Signature   = DISKIO2ENTITY_SIGNATURE;
@@ -242,14 +242,14 @@ DiskIo2AsyncWriteData (
     //
     // Failed Status Event should never be signaled, so remove this entity from the list
     //
-    AcquireLock(&gAsyncWriteQueueLock);
+    SctAcquireLock (&gAsyncWriteQueueLock);
     SctRemoveEntryList(&DiskIo2Entity->ListEntry);
     
     // 
     // Put failure execution into fail List
     //
     SctInsertTailList(&AsyncWriteFailListHead, &DiskIo2Entity->ListEntry);
-    ReleaseLock(&gAsyncWriteQueueLock);
+    SctReleaseLock (&gAsyncWriteQueueLock);
 
     DiskIo2Entity->Buffer = NULL;
 
@@ -875,10 +875,11 @@ END_WAIT:
       SctPrint (L"Wait maximumly 120s for all Async Write events signaled\n\n");
       Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
       IndexI = 0;
+      IndexI = 0;
     
-      AcquireLock(&gAsyncWriteQueueLock);
+      SctAcquireLock (&gAsyncWriteQueueLock);
       while (!SctIsListEmpty(&AsyncWriteExecuteListHead) && IndexI < 120) {
-        ReleaseLock(&gAsyncWriteQueueLock);
+        SctReleaseLock (&gAsyncWriteQueueLock);
  
         gtBS->WaitForEvent (
                 1,
@@ -887,9 +888,9 @@ END_WAIT:
                 );
         IndexI++;
         SctPrint(L".");
-        AcquireLock(&gAsyncWriteQueueLock);
+        SctAcquireLock (&gAsyncWriteQueueLock);
       }
-      ReleaseLock(&gAsyncWriteQueueLock);
+      SctReleaseLock (&gAsyncWriteQueueLock);
    
       Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
       SctPrint (L"\n");
@@ -901,11 +902,11 @@ END_WAIT:
   // gWriteFinishQueue is handled first since we use Disk IO write to do write buffer validation 
   // Here no logs should be wrote to this disk device to keep data intact
   //
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   if (!SctIsListEmpty(&AsyncWriteFinishListHead)) {
     for(ListEntry = SctGetFirstNode(&AsyncWriteFinishListHead); ; ListEntry = SctGetNextNode(&AsyncWriteFinishListHead, ListEntry)) {
       DiskIo2EntityWrite = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-      ReleaseLock(&gAsyncWriteQueueLock);
+      SctReleaseLock (&gAsyncWriteQueueLock);
      
       //
       // Check written data of each successful Disk IO2 execution 
@@ -950,14 +951,14 @@ END_WAIT:
       } else {
         DiskIo2EntityWrite->AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
-  
-      AcquireLock(&gAsyncWriteQueueLock);
+
+      SctAcquireLock (&gAsyncWriteQueueLock);
       if (SctIsNodeAtEnd(&AsyncWriteFinishListHead, ListEntry)) {
         break;
       }
     }
   }
-  ReleaseLock(&gAsyncWriteQueueLock);
+  SctReleaseLock (&gAsyncWriteQueueLock);
   
 END:
   //
@@ -1010,12 +1011,12 @@ END:
   //
   // Record All write finshed test logs
   //  
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   while (!SctIsListEmpty(&AsyncWriteFinishListHead)) {
     DiskIo2EntityWrite = CR(AsyncWriteFinishListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
     
     SctRemoveEntryList(&DiskIo2EntityWrite->ListEntry);
-    ReleaseLock(&gAsyncWriteQueueLock);
+    SctReleaseLock (&gAsyncWriteQueueLock);
     
      
     if (DiskIo2EntityWrite->MemCompared == TRUE) {
@@ -1061,9 +1062,9 @@ END:
     }
     gtBS->FreePool(DiskIo2EntityWrite);
     
-    AcquireLock(&gAsyncWriteQueueLock);
+    SctAcquireLock (&gAsyncWriteQueueLock);
   }  
-  ReleaseLock(&gAsyncWriteQueueLock);
+  SctReleaseLock (&gAsyncWriteQueueLock);
    
   //
   // If WriteFailListHead is not empty, which means some Async Calls are wrong 
@@ -1095,11 +1096,11 @@ END:
   //
   // Be careful, All the entities in Execution list should NOT be freed here! 
   //
-  AcquireLock(&gAsyncWriteQueueLock);
+  SctAcquireLock (&gAsyncWriteQueueLock);
   if (!SctIsListEmpty(&AsyncWriteExecuteListHead)) {
     for(ListEntry = SctGetFirstNode(&AsyncWriteExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncWriteExecuteListHead, ListEntry)) {
       DiskIo2EntityWrite = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-      ReleaseLock(&gAsyncWriteQueueLock);
+      SctReleaseLock (&gAsyncWriteQueueLock);
   
       StandardLib->RecordAssertion (
                      StandardLib,
@@ -1116,14 +1117,14 @@ END:
                      DiskIo2EntityWrite->Buffer
                      );
   
-      AcquireLock(&gAsyncWriteQueueLock);
+      SctAcquireLock (&gAsyncWriteQueueLock);
       if (SctIsNodeAtEnd(&AsyncWriteExecuteListHead, ListEntry)) {
         break;
       }
     }
   }
   
-  ReleaseLock(&gAsyncWriteQueueLock);
+  SctReleaseLock (&gAsyncWriteQueueLock);
   
   return EFI_SUCCESS;
 }

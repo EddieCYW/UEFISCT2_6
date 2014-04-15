@@ -102,7 +102,7 @@ SCT_LIST_ENTRY  AsyncFlushFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE(As
 //
 // Async Flush lock
 //
-FLOCK gAsyncFlushQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK gAsyncFlushQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 
 
 //
@@ -127,10 +127,10 @@ EFIAPI DiskIo2FlushNotifyFunc (
   // Remove entity from AsyncFlushExecuteListHead &  add entity to AsyncFlushFinishListHead
   // All DiskIo2 Notify function run at Call Back level only once, So no locks required
   //
-  AcquireLock(&gAsyncFlushQueueLock);
+  SctAcquireLock (&gAsyncFlushQueueLock);
   SctRemoveEntryList(&DiskIo2Entity->ListEntry);
   SctInsertTailList(&AsyncFlushFinishListHead, &DiskIo2Entity->ListEntry);
-  ReleaseLock(&gAsyncFlushQueueLock);
+  SctReleaseLock (&gAsyncFlushQueueLock);
 }
 
 
@@ -186,9 +186,9 @@ DiskIo2AsyncFlushData (
   //
   // Acquire lock to add entity to Execution ListHead
   //
-  AcquireLock(&gAsyncFlushQueueLock);
+  SctAcquireLock (&gAsyncFlushQueueLock);
   SctInsertTailList(&AsyncFlushExecuteListHead, &DiskIo2Entity->ListEntry);
-  ReleaseLock(&gAsyncFlushQueueLock);
+  SctReleaseLock (&gAsyncFlushQueueLock);
   
 
   //
@@ -206,13 +206,13 @@ DiskIo2AsyncFlushData (
     //
     // Failed Status Event should never be signaled, so remove this entity from the list
     //
-    AcquireLock(&gAsyncFlushQueueLock);
+    SctAcquireLock (&gAsyncFlushQueueLock);
     SctRemoveEntryList(&DiskIo2Entity->ListEntry);
     // 
     // Put failure execution into fail List
     //
     SctInsertTailList(&AsyncFlushFailListHead, &DiskIo2Entity->ListEntry);
-    ReleaseLock(&gAsyncFlushQueueLock);
+    SctReleaseLock (&gAsyncFlushQueueLock);
 
     DiskIo2Entity->Buffer = NULL;
   }
@@ -707,9 +707,9 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
       Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
       Index = 0;
       
-      AcquireLock(&gAsyncFlushQueueLock);
+      SctAcquireLock (&gAsyncFlushQueueLock);
       while (!SctIsListEmpty(&AsyncFlushExecuteListHead) && Index < 60) {
-        ReleaseLock(&gAsyncFlushQueueLock);
+        SctReleaseLock (&gAsyncFlushQueueLock);
         
         gtBS->WaitForEvent (   
                 1,
@@ -718,9 +718,9 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
                 );
         Index++;
         SctPrint (L".");
-        AcquireLock(&gAsyncFlushQueueLock);
+        SctAcquireLock (&gAsyncFlushQueueLock);
       }
-      ReleaseLock(&gAsyncFlushQueueLock);
+      SctReleaseLock (&gAsyncFlushQueueLock);
   
       Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
       SctPrint (L"\n");
@@ -733,11 +733,11 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
     // gFlushFinshQueue is handled first since we use Disk IO flush to do flush buffer validation 
     // Here no logs should be wrote to this disk device to keep data intact
     //
-    AcquireLock(&gAsyncFlushQueueLock);
+    SctAcquireLock (&gAsyncFlushQueueLock);
     if (!SctIsListEmpty(&AsyncFlushFinishListHead)) {
       for(ListEntry = SctGetFirstNode(&AsyncFlushFinishListHead); ; ListEntry = SctGetNextNode(&AsyncFlushFinishListHead, ListEntry)) {
         DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-        ReleaseLock(&gAsyncFlushQueueLock);
+        SctReleaseLock (&gAsyncFlushQueueLock);
            
         //
         // Check & record every Disk IO2 execution entity status 
@@ -749,7 +749,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
             DiskIo2Entity->AssertionType = EFI_TEST_ASSERTION_FAILED;
         }
     
-        AcquireLock(&gAsyncFlushQueueLock);
+        SctAcquireLock (&gAsyncFlushQueueLock);
         //
         // Last list node handled
         //
@@ -766,7 +766,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
       DiskIo2Entity = CR(AsyncFlushFinishListHead.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
    
       SctRemoveEntryList(&DiskIo2Entity->ListEntry);
-      ReleaseLock(&gAsyncFlushQueueLock);
+      SctReleaseLock (&gAsyncFlushQueueLock);
    
       StandardLib->RecordAssertion (
                      StandardLib,
@@ -782,9 +782,9 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
     
       gtBS->CloseEvent(DiskIo2Entity->DiskIo2Token.Event);
       gtBS->FreePool(DiskIo2Entity);
-      AcquireLock(&gAsyncFlushQueueLock);
+      SctAcquireLock (&gAsyncFlushQueueLock);
     }
-    ReleaseLock(&gAsyncFlushQueueLock);
+    SctReleaseLock (&gAsyncFlushQueueLock);
   
     //
     // If AsyncFlushFailListHead is not empty, which means some Async Calls are wrong 
@@ -816,11 +816,11 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
     //
     // Be careful, All the entities in Execution List should NOT be freed here!
     //
-    AcquireLock(&gAsyncFlushQueueLock);
+    SctAcquireLock (&gAsyncFlushQueueLock);
     if (!SctIsListEmpty(&AsyncFlushExecuteListHead)) {
       for(ListEntry = SctGetFirstNode(&AsyncFlushExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncFlushExecuteListHead, ListEntry)) {
         DiskIo2Entity = CR(ListEntry, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
-        ReleaseLock(&gAsyncFlushQueueLock);
+        SctReleaseLock (&gAsyncFlushQueueLock);
            
         StandardLib->RecordAssertion (
                        StandardLib,
@@ -835,7 +835,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
                        DiskIo2Entity->Offset
                        );
                     
-        AcquireLock(&gAsyncFlushQueueLock);
+        SctAcquireLock (&gAsyncFlushQueueLock);
         //
         // Last list node handled
         //
@@ -845,7 +845,7 @@ BBTestFlushDiskExFunctionAutoTestCheckpoint1(
       }
     }
     
-    ReleaseLock(&gAsyncFlushQueueLock);
+    SctReleaseLock (&gAsyncFlushQueueLock);
     
     return EFI_SUCCESS;
 }

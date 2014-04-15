@@ -65,10 +65,8 @@ COMPONENT_TYPE  = LIBRARY
   dpath.c
   event.c
   hand.c
-  lock.c
   misc.c
   str.c
-  rtdata.c
 
 [includes.common]
   .

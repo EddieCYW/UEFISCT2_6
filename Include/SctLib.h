@@ -195,6 +195,39 @@ SctDivU64x32 (
   );
 
 //
+// Lock API
+//
+
+typedef struct {
+    EFI_TPL     Tpl;
+    EFI_TPL     OwnerTpl;
+    UINTN       Lock;
+} SCT_LOCK;
+
+#define SCT_INITIALIZE_LOCK_VARIABLE(Tpl) {Tpl,0,0}
+
+VOID
+SctInitializeLock (
+  IN OUT SCT_LOCK                   *Lock,
+  IN EFI_TPL                        Priority
+  );
+
+VOID
+SctAcquireLock (
+  IN SCT_LOCK                       *Lock
+  );
+
+VOID
+SctReleaseLock (
+  IN SCT_LOCK                       *Lock
+  );
+
+EFI_STATUS
+SctAcquireLockOrFail (
+  IN SCT_LOCK  *Lock
+  );
+
+//
 // Memory API
 //
 

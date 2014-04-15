@@ -109,6 +109,4 @@ LibMatchDevicePaths (
 extern BOOLEAN                          LibInitialized;
 extern EFI_UNICODE_COLLATION_PROTOCOL   *UnicodeInterface;
 extern EFI_UNICODE_COLLATION_PROTOCOL   LibStubUnicodeInterface;
-extern EFI_RAISE_TPL                    LibRuntimeRaiseTPL;
-extern EFI_RESTORE_TPL                  LibRuntimeRestoreTPL;
 extern UINTN                            EfiDebugMask;

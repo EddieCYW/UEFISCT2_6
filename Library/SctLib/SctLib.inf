@@ -60,6 +60,7 @@ COMPONENT_TYPE  = LIBRARY
   Handle.c
   Init.c
   List.c
+  Lock.c
   Math.c
   Mem.c
   Misc.c

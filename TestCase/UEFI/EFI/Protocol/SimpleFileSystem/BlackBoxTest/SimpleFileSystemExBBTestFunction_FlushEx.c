@@ -120,7 +120,7 @@ SCT_LIST_ENTRY  AsyncFlushFileFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABL
 //
 // Async Flush File lock
 //
-FLOCK  gAsyncFlushFileQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncFlushFileQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 
 
 //
@@ -133,7 +133,7 @@ SCT_LIST_ENTRY  AsyncFlushDirFailListHead    = INITIALIZE_SCT_LIST_HEAD_VARIABLE
 //
 // Async Flush Dir lock
 //
-FLOCK  gAsyncFlushDirQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
+SCT_LOCK  gAsyncFlushDirQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
 
 
 
@@ -154,10 +154,10 @@ EFIAPI FileIoFlushFileNotifyFunc (
   // Remove entity from FlushFileExecuteListHead &  add entity to FlushFileFinishListHead
   // All FileIoFlushFile Notify function run at Call Back level only once, So no locks required
   //
-  AcquireLock(&gAsyncFlushFileQueueLock);
+  SctAcquireLock (&gAsyncFlushFileQueueLock);
   SctRemoveEntryList(&FileIoEntity->ListEntry);
   SctInsertTailList(&AsyncFlushFileFinishListHead, &FileIoEntity->ListEntry);
-  ReleaseLock(&gAsyncFlushFileQueueLock);
+  SctReleaseLock (&gAsyncFlushFileQueueLock);
 }
 
 
@@ -214,9 +214,9 @@ FileIoAsyncFlushFileData (
   FileIoEntity->Tpl                    = Tpl;
   FileIoEntity->FileIoToken.Status     = EFI_NOT_READY;
 
-  AcquireLock(&gAsyncFlushFileQueueLock);
+  SctAcquireLock (&gAsyncFlushFileQueueLock);
   SctInsertTailList(&AsyncFlushFileExecuteListHead, &FileIoEntity->ListEntry);
-  ReleaseLock(&gAsyncFlushFileQueueLock);
+  SctReleaseLock (&gAsyncFlushFileQueueLock);
   
   //
   // Async FlushEx Call
@@ -229,10 +229,10 @@ FileIoAsyncFlushFileData (
   gtBS->RestoreTPL (OldTpl);
   
   if (EFI_ERROR (Status)) {
-    AcquireLock(&gAsyncFlushFileQueueLock);
+    SctAcquireLock (&gAsyncFlushFileQueueLock);
     SctRemoveEntryList(&FileIoEntity->ListEntry);
     SctInsertTailList(&AsyncFlushFileFailListHead, &FileIoEntity->ListEntry);    
-    ReleaseLock(&gAsyncFlushFileQueueLock);
+    SctReleaseLock (&gAsyncFlushFileQueueLock);
   }
 
   //
@@ -260,10 +260,10 @@ EFIAPI FileIoFlushDirNotifyFunc (
   // Remove entity from FlushDirExecuteListHead &  add entity to FlushDirFinishListHead
   // All FileIoFlushDir Notify function run at Call Back level only once, So no locks required
   //
-  AcquireLock(&gAsyncFlushDirQueueLock);
+  SctAcquireLock (&gAsyncFlushDirQueueLock);
   SctRemoveEntryList(&FileIoEntity->ListEntry);
   SctInsertTailList(&AsyncFlushDirFinishListHead, &FileIoEntity->ListEntry);
-  ReleaseLock(&gAsyncFlushDirQueueLock);
+  SctReleaseLock (&gAsyncFlushDirQueueLock);
 }
 
 
@@ -319,9 +319,9 @@ FileIoAsyncFlushDirData (
   FileIoEntity->Tpl                    = Tpl;
   FileIoEntity->FileIoToken.Status     = EFI_NOT_READY;
 
-  AcquireLock(&gAsyncFlushDirQueueLock);
+  SctAcquireLock (&gAsyncFlushDirQueueLock);
   SctInsertTailList(&AsyncFlushDirExecuteListHead, &FileIoEntity->ListEntry);
-  ReleaseLock(&gAsyncFlushDirQueueLock);
+  SctReleaseLock (&gAsyncFlushDirQueueLock);
   
   //
   // Async FlushEx Call
@@ -334,10 +334,10 @@ FileIoAsyncFlushDirData (
   gtBS->RestoreTPL (OldTpl);
   
   if (EFI_ERROR (Status)) {
-    AcquireLock(&gAsyncFlushDirQueueLock);
+    SctAcquireLock (&gAsyncFlushDirQueueLock);
     SctRemoveEntryList(&FileIoEntity->ListEntry);
     SctInsertTailList(&AsyncFlushDirFailListHead, &FileIoEntity->ListEntry);    
-    ReleaseLock(&gAsyncFlushDirQueueLock);
+    SctReleaseLock (&gAsyncFlushDirQueueLock);
     FileIoEntity->StatusAsync        = Status;
     return Status;
   }
@@ -577,9 +577,9 @@ BBTestFlushExBasicTestCheckpoint1 (
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
     
-  AcquireLock(&gAsyncFlushFileQueueLock);
+  SctAcquireLock (&gAsyncFlushFileQueueLock);
   while (!SctIsListEmpty(&AsyncFlushFileExecuteListHead) && IndexI < 120) {
-    ReleaseLock(&gAsyncFlushFileQueueLock);
+    SctReleaseLock (&gAsyncFlushFileQueueLock);
     
     gtBS->WaitForEvent (                   
             1,
@@ -589,9 +589,9 @@ BBTestFlushExBasicTestCheckpoint1 (
     IndexI++;
   
     SctPrint (L".");
-    AcquireLock(&gAsyncFlushFileQueueLock);
+    SctAcquireLock (&gAsyncFlushFileQueueLock);
   }
-  ReleaseLock(&gAsyncFlushFileQueueLock);
+  SctReleaseLock (&gAsyncFlushFileQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
   SctPrint (L"\n");
@@ -600,11 +600,11 @@ BBTestFlushExBasicTestCheckpoint1 (
   // clear all File IO events from gFlushFileFinishQueue 
   // Here no logs should be wrote to this file device to keep data intact
   //
-  AcquireLock(&gAsyncFlushFileQueueLock);
+  SctAcquireLock (&gAsyncFlushFileQueueLock);
     if (!SctIsListEmpty(&AsyncFlushFileFinishListHead)) {
       for(ListEntry = SctGetFirstNode(&AsyncFlushFileFinishListHead); ; ListEntry = SctGetNextNode(&AsyncFlushFileFinishListHead, ListEntry)) {
         FileIoEntity = CR(ListEntry, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-        ReleaseLock(&gAsyncFlushFileQueueLock);
+        SctReleaseLock (&gAsyncFlushFileQueueLock);
 
         FileIoEntity->AssertionType = EFI_TEST_ASSERTION_FAILED;
         //
@@ -614,7 +614,7 @@ BBTestFlushExBasicTestCheckpoint1 (
             && FileIoEntity->StatusAsync == EFI_SUCCESS) {
                 FileIoEntity->AssertionType = EFI_TEST_ASSERTION_PASSED;
         }
-        AcquireLock(&gAsyncFlushFileQueueLock);
+        SctAcquireLock (&gAsyncFlushFileQueueLock);
         //
         // Last list node handled
         //
@@ -624,16 +624,16 @@ BBTestFlushExBasicTestCheckpoint1 (
 
       }
     }
-  ReleaseLock(&gAsyncFlushFileQueueLock);
+  SctReleaseLock (&gAsyncFlushFileQueueLock);
     
   //
   // Record All Finished Flush case results
   //
-  AcquireLock(&gAsyncFlushFileQueueLock);
+  SctAcquireLock (&gAsyncFlushFileQueueLock);
   while (!SctIsListEmpty(&AsyncFlushFileFinishListHead)) {
     FileIoEntity = CR(AsyncFlushFileFinishListHead.ForwardLink, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);   
     SctRemoveEntryList(&FileIoEntity->ListEntry);
-    ReleaseLock(&gAsyncFlushFileQueueLock);
+    SctReleaseLock (&gAsyncFlushFileQueueLock);
 
     FileHandle = FileIoEntity->FileIo;
 
@@ -651,18 +651,18 @@ BBTestFlushExBasicTestCheckpoint1 (
       
     gtBS->CloseEvent(FileIoEntity->FileIoToken.Event);
     gtBS->FreePool(FileIoEntity);
-    AcquireLock(&gAsyncFlushFileQueueLock);
+    SctAcquireLock (&gAsyncFlushFileQueueLock);
   }
-  ReleaseLock(&gAsyncFlushFileQueueLock);
+  SctReleaseLock (&gAsyncFlushFileQueueLock);
 
   //
   // If FlushFileFailListHead is not empty, which means some Async Calls are wrong 
   //
-  AcquireLock(&gAsyncFlushFileQueueLock);
+  SctAcquireLock (&gAsyncFlushFileQueueLock);
   while(!SctIsListEmpty(&AsyncFlushFileFailListHead)) {
     FileIoEntity = CR(AsyncFlushFileFailListHead.ForwardLink, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
     SctRemoveEntryList(&FileIoEntity->ListEntry);
-    ReleaseLock(&gAsyncFlushFileQueueLock);
+    SctReleaseLock (&gAsyncFlushFileQueueLock);
 
     FileHandle = FileIoEntity->FileIo;
 
@@ -680,19 +680,19 @@ BBTestFlushExBasicTestCheckpoint1 (
      gtBS->CloseEvent(FileIoEntity->FileIoToken.Event);     
 
      gtBS->FreePool(FileIoEntity);
-     AcquireLock(&gAsyncFlushFileQueueLock);
+     SctAcquireLock (&gAsyncFlushFileQueueLock);
   }
-  ReleaseLock(&gAsyncFlushFileQueueLock);
+  SctReleaseLock (&gAsyncFlushFileQueueLock);
     
   //
   // If FlushFileExecuteList is not empty, which means some token events havn't been signaled yet
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
-  AcquireLock(&gAsyncFlushFileQueueLock);
+  SctAcquireLock (&gAsyncFlushFileQueueLock);
   if (!SctIsListEmpty(&AsyncFlushFileExecuteListHead)) {
     for(ListEntry = SctGetFirstNode(&AsyncFlushFileExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncFlushFileExecuteListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-      ReleaseLock(&gAsyncFlushFileQueueLock);
+      SctReleaseLock (&gAsyncFlushFileQueueLock);
 
 
       StandardLib->RecordAssertion (
@@ -706,13 +706,13 @@ BBTestFlushExBasicTestCheckpoint1 (
                      FileIoEntity->Tpl
                      );
 
-      AcquireLock(&gAsyncFlushFileQueueLock);
+      SctAcquireLock (&gAsyncFlushFileQueueLock);
       if (SctIsNodeAtEnd(&AsyncFlushFileExecuteListHead, ListEntry)) {
         break;
       }
     }
   }
-  ReleaseLock(&gAsyncFlushFileQueueLock);
+  SctReleaseLock (&gAsyncFlushFileQueueLock);
 
   FileHandle->Delete(FileHandle);
   FileHandle = NULL;
@@ -1023,9 +1023,9 @@ BBTestFlushExBasicTestCheckpoint3 (
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
   IndexI = 0;
     
-  AcquireLock(&gAsyncFlushDirQueueLock);
+  SctAcquireLock (&gAsyncFlushDirQueueLock);
   while (!SctIsListEmpty(&AsyncFlushDirExecuteListHead) && IndexI < 120) {
-    ReleaseLock(&gAsyncFlushDirQueueLock);
+    SctReleaseLock (&gAsyncFlushDirQueueLock);
     
     gtBS->WaitForEvent (                   
             1,
@@ -1035,9 +1035,9 @@ BBTestFlushExBasicTestCheckpoint3 (
     IndexI++;
   
     SctPrint (L".");
-    AcquireLock(&gAsyncFlushDirQueueLock);
+    SctAcquireLock (&gAsyncFlushDirQueueLock);
   }
-  ReleaseLock(&gAsyncFlushDirQueueLock);
+  SctReleaseLock (&gAsyncFlushDirQueueLock);
   
   Status = gtBS->SetTimer (TimerEvent, TimerCancel, 0);
   SctPrint (L"\n");
@@ -1046,11 +1046,11 @@ BBTestFlushExBasicTestCheckpoint3 (
   // clear all File IO events from gFlushDirFinishQueue 
   // Here no logs should be wrote to this file device to keep data intact
   //
-  AcquireLock(&gAsyncFlushDirQueueLock);
+  SctAcquireLock (&gAsyncFlushDirQueueLock);
     if (!SctIsListEmpty(&AsyncFlushDirFinishListHead)) {
       for(ListEntry = SctGetFirstNode(&AsyncFlushDirFinishListHead); ; ListEntry = SctGetNextNode(&AsyncFlushDirFinishListHead, ListEntry)) {
         FileIoEntity = CR(ListEntry, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-        ReleaseLock(&gAsyncFlushDirQueueLock);
+        SctReleaseLock (&gAsyncFlushDirQueueLock);
 
         FileIoEntity->AssertionType = EFI_TEST_ASSERTION_FAILED;
         //
@@ -1060,7 +1060,7 @@ BBTestFlushExBasicTestCheckpoint3 (
             && FileIoEntity->StatusAsync == EFI_SUCCESS) {
                 FileIoEntity->AssertionType = EFI_TEST_ASSERTION_PASSED;
         }
-        AcquireLock(&gAsyncFlushDirQueueLock);
+        SctAcquireLock (&gAsyncFlushDirQueueLock);
         //
         // Last list node handled
         //
@@ -1069,16 +1069,16 @@ BBTestFlushExBasicTestCheckpoint3 (
         } 
       }
     }
-  ReleaseLock(&gAsyncFlushDirQueueLock);
+  SctReleaseLock (&gAsyncFlushDirQueueLock);
     
   //
   // Record All Finished Flush case results
   //
-  AcquireLock(&gAsyncFlushDirQueueLock);
+  SctAcquireLock (&gAsyncFlushDirQueueLock);
   while (!SctIsListEmpty(&AsyncFlushDirFinishListHead)) {
     FileIoEntity = CR(AsyncFlushDirFinishListHead.ForwardLink, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);   
     SctRemoveEntryList(&FileIoEntity->ListEntry);
-    ReleaseLock(&gAsyncFlushDirQueueLock);
+    SctReleaseLock (&gAsyncFlushDirQueueLock);
 	
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1095,19 +1095,19 @@ BBTestFlushExBasicTestCheckpoint3 (
     gtBS->CloseEvent(FileIoEntity->FileIoToken.Event);
     
     gtBS->FreePool(FileIoEntity);
-    AcquireLock(&gAsyncFlushDirQueueLock);
+    SctAcquireLock (&gAsyncFlushDirQueueLock);
   }
-  ReleaseLock(&gAsyncFlushDirQueueLock);
+  SctReleaseLock (&gAsyncFlushDirQueueLock);
   
 
   //
   // If FlushDirFailListHead is not empty, which means some Async Calls are wrong 
   //
-  AcquireLock(&gAsyncFlushDirQueueLock);
+  SctAcquireLock (&gAsyncFlushDirQueueLock);
   while(!SctIsListEmpty(&AsyncFlushDirFailListHead)) {
     FileIoEntity = CR(AsyncFlushDirFailListHead.ForwardLink, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
     SctRemoveEntryList(&FileIoEntity->ListEntry);
-    ReleaseLock(&gAsyncFlushDirQueueLock);
+    SctReleaseLock (&gAsyncFlushDirQueueLock);
 
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -1124,19 +1124,19 @@ BBTestFlushExBasicTestCheckpoint3 (
    
      gtBS->FreePool(FileIoEntity);
        
-     AcquireLock(&gAsyncFlushDirQueueLock);
+     SctAcquireLock (&gAsyncFlushDirQueueLock);
   }
-  ReleaseLock(&gAsyncFlushDirQueueLock);
+  SctReleaseLock (&gAsyncFlushDirQueueLock);
     
   //
   // If FlushDirExecuteList is not empty, which means some token events havn't been signaled yet
   // Be careful, All the entities in Execution List should NOT be freed here!
   //
-  AcquireLock(&gAsyncFlushDirQueueLock);
+  SctAcquireLock (&gAsyncFlushDirQueueLock);
   if (!SctIsListEmpty(&AsyncFlushDirExecuteListHead)) {
     for(ListEntry = SctGetFirstNode(&AsyncFlushDirExecuteListHead); ; ListEntry = SctGetNextNode(&AsyncFlushDirExecuteListHead, ListEntry)) {
       FileIoEntity = CR(ListEntry, FileIoFlush_Task, ListEntry, FILEIOENTITY_SIGNATURE);
-      ReleaseLock(&gAsyncFlushDirQueueLock);
+      SctReleaseLock (&gAsyncFlushDirQueueLock);
     
       StandardLib->RecordAssertion (
                      StandardLib,
@@ -1149,13 +1149,13 @@ BBTestFlushExBasicTestCheckpoint3 (
                      FileIoEntity->Tpl
                      );
 
-      AcquireLock(&gAsyncFlushDirQueueLock);
+      SctAcquireLock (&gAsyncFlushDirQueueLock);
       if (SctIsNodeAtEnd(&AsyncFlushDirExecuteListHead, ListEntry)) {
         break;
       }
     }
   }
-  ReleaseLock(&gAsyncFlushDirQueueLock);
+  SctReleaseLock (&gAsyncFlushDirQueueLock);
 
   for (TplIndex = 0; TplIndex < TPL_ARRAY_SIZE; TplIndex++) {
   	if (FileHandle[TplIndex] != NULL)
