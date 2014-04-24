@@ -150,23 +150,6 @@
   RELEASE_*_*_CC_FLAGS  = -DMDEPKG_NDEBUG
 
 [Libraries]
-EdkCompatibilityPkg/Foundation/Guid/EdkGuidLib.inf
-EdkCompatibilityPkg/Foundation/Framework/Guid/EdkFrameworkGuidLib.inf
-EdkCompatibilityPkg/Foundation/Efi/Guid/EfiGuidLib.inf
-
-EdkCompatibilityPkg/Foundation/Protocol/EdkProtocolLib.inf
-EdkCompatibilityPkg/Foundation/Efi/Protocol/EfiProtocolLib.inf
-
-SctPkg/Protocol/TestProtocolLib.inf
-SctPkg/Library/EfiTestLib/EfiTestLib.inf
-
-SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib-edk1.inf
-SctPkg/TestCase/RIVL/NetworkProtocolLib/NetworkProtocolLib.inf
-SctPkg/Protocol/EntsProtocol/EntsProtocolLib.inf
-SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas-edk1.inf
-SctPkg/Library/NetLib/NetLib.inf
-SctPkg/Library/SctLib/SctLib-edk1.inf
-
   SctPkg/Library/SctLib/SctLib.inf
   SctPkg/Library/SctGuidLib/SctGuidLib.inf
   SctPkg/Library/EfiTestLib/EfiTestLib.inf
@@ -187,10 +170,6 @@ SctPkg/Library/SctLib/SctLib-edk1.inf
 [Libraries.IPF,Libraries.IA32,Libraries.X64]
   EdkCompatibilityPkg/Foundation/Library/CompilerStub/CompilerStubLib.inf
   EdkCompatibilityPkg/Foundation/Library/EdkIIGlueLib/Library/BaseLib/BaseLib.inf
-
-[Libraries.Arm, Libraries.Aarch64]
-  EdkCompatibilityPkg/Foundation/Library/CompilerStub/CompilerStubLib.inf
-  ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
 
 [LibraryClasses.common]
   UefiApplicationEntryPoint|MdePkg/Library/UefiApplicationEntryPoint/UefiApplicationEntryPoint.inf
@@ -514,8 +493,6 @@ SctPkg/TestCase/RIVL/Protocol/Tcp4/Tcp4ServiceBinding/Tcp4ServiceBindingENTSTest
 
 SctPkg/TestCase/RIVL/Protocol/Tcp6/Tcp6/Tcp6ENTSTest.inf
 SctPkg/TestCase/RIVL/Protocol/Tcp6/Tcp6ServiceBinding/Tcp6ServiceBindingENTSTest.inf
-
-SctPkg/TestInfrastructure/SCT/Framework/Sct.inf
 
 [Components.IA32, Components.X64]
   SctPkg/TestCase/UEFI/EFI/Generic/ExeMode/BlackBoxTest/ExeModeBBTest.inf

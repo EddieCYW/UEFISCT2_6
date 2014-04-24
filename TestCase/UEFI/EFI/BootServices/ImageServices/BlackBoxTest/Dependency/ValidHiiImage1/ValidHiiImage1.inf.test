@@ -56,19 +56,11 @@
 #--*/
 
 [defines]
-BASE_NAME            = ImageServices_ValidHiiImage1
-FILE_GUID            = E106D131-E5F2-4670-A4F5-7BA4FC0829C0
-COMPONENT_TYPE       = APPLICATION
-CUSTOM_MAKEFILE      = makefile
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ImageServices_ValidHiiImage1
+  FILE_GUID            = E106D131-E5F2-4670-A4F5-7BA4FC0829C0
+  MODULE_TYPE          = UEFI_APPLICATION
+  VERSION_STRING       = 1.0
+  CUSTOM_MAKEFILE      = makefile
 
 [sources.common]
-
-
-[includes.common]
-
-
-[libraries.common]
-
-
-[nmake.common]
-

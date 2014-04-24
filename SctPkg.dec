@@ -34,14 +34,6 @@
   TestInfrastructure/SCT/Framework/Include
   TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Include/
   TestInfrastructure/SCT/Framework/ENTS/Rivl
-  
-  # Legacy
-  ../EdkCompatibilityPkg/Foundation/Include
-  ../EdkCompatibilityPkg/Foundation/Include/Aarch64
-  ../EdkCompatibilityPkg/Foundation/Efi
-  ../EdkCompatibilityPkg/Foundation/Efi/Include
-  ../EdkCompatibilityPkg/Foundation/Framework
-  ../EdkCompatibilityPkg/Foundation/Framework/Include
 
 [Guids.common]
   gEfiNullGuid = { 0x00000000, 0x0000, 0x0000, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }

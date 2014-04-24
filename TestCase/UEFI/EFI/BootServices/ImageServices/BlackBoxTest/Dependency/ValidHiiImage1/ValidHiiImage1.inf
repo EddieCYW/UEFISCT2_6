@@ -56,38 +56,28 @@
 #--*/
 
 [defines]
-BASE_NAME            = ImageServices_ValidHiiImage1
-FILE_GUID            = E106D131-E5F2-4670-A4F5-7BA4FC0829C0
-COMPONENT_TYPE       = APPLICATION
-#
-#Comment out CUSTOM_MAKEFILE tag to build the image from sources.
-#
-CUSTOM_MAKEFILE      = MSFT| makefile
-CUSTOM_MAKEFILE      = GCC | GNUmakefile
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = ImageServices_ValidHiiImage1
+  FILE_GUID            = E106D131-E5F2-4670-A4F5-7BA4FC0829C0
+  MODULE_TYPE          = UEFI_APPLICATION
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeValidHiiImage1
+
+  #
+  # Comment out CUSTOM_MAKEFILE tag to build the image from sources.
+  #
+  CUSTOM_MAKEFILE      = MSFT| makefile
+  CUSTOM_MAKEFILE      = GCC | GNUmakefile
 
 [sources.common]
   ValidHiiImage1.c
   ../../ProtocolDefinition.c
   ../../Misc.c
 
-[includes.common]
-  .
-  ../../
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/Include
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
 
-[libraries.common]
-  EfiGuidLib
-  EfiProtocolLib
-  TestProtocolLib
-  EfiTestLib
-
-[nmake.common]
-  IMAGE_ENTRY_POINT=InitializeValidHiiImage1
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  SctLib
