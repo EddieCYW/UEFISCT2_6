@@ -87,7 +87,7 @@ typedef struct {
 //
 #define EFI_INI_FILE_PRIVATE_DATA_SIGNATURE   EFI_SIGNATURE_32('I','N','I','F')
 
-#define MAX_STRING_LEN      250
+#define MAX_STRING_LEN      100
 #define MAX_LINE_LEN        512
 
 //
@@ -99,16 +99,16 @@ typedef struct _COMMENTLINE COMMENTLINE;
 
 struct _INI {
   UINT32                          commentNo;
-  CHAR8                           *ptrSection;
-  CHAR8                           *ptrEntry;
-  CHAR8                           *ptrValue;
+  CHAR8                           ptrSection[MAX_STRING_LEN + 1];
+  CHAR8                           ptrEntry[MAX_STRING_LEN + 1];
+  CHAR8                           ptrValue[MAX_STRING_LEN + 1];
   INI                             *ptrNext;
 };
 
 
 struct _COMMENTLINE {
   UINT32                          commentNo;
-  CHAR8                           *ptrComment;
+  CHAR8                           ptrComment[MAX_LINE_LEN];
   COMMENTLINE                     *ptrNext;
 };
 

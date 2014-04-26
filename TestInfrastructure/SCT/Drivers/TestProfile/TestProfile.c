@@ -40,7 +40,8 @@
   matters included within this Test Suite, to which United      
   EFI, Inc. makes no claim of right.                           
                                                                 
-  Copyright (c) 2006 - 2012, Intel Corporation. All rights reserved.<BR>   
+  Copyright (c) 2006 - 2012, Intel Corporation. All rights reserved.<BR>
+  Portion of Copyright (c) 2013 - 2014, ARM Ltd. All rights reserved.<BR>
    
 --*/
 /*++
@@ -288,11 +289,6 @@ _rmComment (
   IN COMMENTLINE                  **CmtHead,
   IN INI                          *ptrItem
 );
-
-CHAR16 *
-TplStrDuplicate (
-  IN CHAR16             *String
-  );
 
 //
 // Name and Description of EFI_TEST_PROFILE_LIBRARY_PROTOCOL
@@ -652,7 +648,7 @@ Returns:
   UINTN                             Index;
   UINTN                             Number;
   UINTN                             BufSize;
-  CHAR8                             ptrLine[MAX_LINE_LEN] ;
+  CHAR8                             ptrLine[MAX_LINE_LEN];
   UINT8                             Buffer[MAX_LINE_LEN * 2];
   CHAR8                             ptrSection[MAX_STRING_LEN + 1] ;
   UINT32                            commentNo ;
@@ -1077,7 +1073,7 @@ Returns:
   //
   // Get system file path
   //
-  *FilePath = TplStrDuplicate (Private->FilePath);
+  *FilePath = SctStrDuplicate (Private->FilePath);
   if (*FilePath == NULL) {
     tBS->FreePool (*DevicePath);
     *DevicePath = NULL;
@@ -1160,13 +1156,12 @@ Returns:
   CHAR8                   ptrCurSection[MAX_STRING_LEN + 1];
   BOOLEAN                 first;
   UINT32                  commentNo;
-
   EFI_STATUS              Status;
   EFI_HANDLE              DeviceHandle;
   EFI_FILE_HANDLE         RootDir;
   EFI_FILE_HANDLE         Handle;
   UINTN                   BufSize;
-  CHAR8                   Buffer[MAX_LINE_LEN];
+  CHAR8                   Buffer[MAX_LINE_LEN + 3];
   CHAR8                   Line[MAX_LINE_LEN * 2];
 
   EFI_SIMPLE_FILE_SYSTEM_PROTOCOL  *Vol;
@@ -1355,7 +1350,7 @@ Returns:
       //
       // write the entry and value line
       //
-      SctAsciiStrCpy (Buffer, ptrCur->ptrEntry);
+      SctAsciiStrnCpy (Buffer, ptrCur->ptrEntry, MAX_STRING_LEN);
       SctAsciiStrCat (Buffer, "=");
       SctAsciiStrCat (Buffer, ptrCur->ptrValue);
       SctAsciiStrCat (Buffer, "\r\n");
@@ -1561,7 +1556,6 @@ Returns:
   CHAR8   tmpSection[MAX_STRING_LEN + 1];
   CHAR8   tmpEntry[MAX_STRING_LEN + 1];
   CHAR8   tmpString[MAX_STRING_LEN + 1];
-  CHAR8   *tmpPtr;
 
   EFI_INI_FILE_PRIVATE_DATA   *Private;
 
@@ -1614,12 +1608,7 @@ Returns:
     if (SctAsciiStriCmp (tmpSection, ptrCur->ptrSection) == 0) {
       if (SctAsciiStriCmp (tmpEntry, ptrCur->ptrEntry) == 0) {
         if (SctAsciiStriCmp (tmpString, ptrCur->ptrValue) != 0) {
-          tmpPtr = SctAsciiStrDuplicate (tmpString);
-          if (tmpPtr == NULL) {
-            return EFI_OUT_OF_RESOURCES;
-          }
-          SctFreePool (ptrCur->ptrValue);
-          ptrCur->ptrValue = tmpPtr;
+          SctAsciiStrnCpy (ptrCur->ptrValue, tmpString, MAX_STRING_LEN);
           Private->Modified = TRUE;
         }
         return EFI_SUCCESS;
@@ -1633,25 +1622,14 @@ Returns:
   // if not, should add a new item
   //
   ptrNew = (INI *) SctAllocatePool (sizeof(INI));
-  SctZeroMem (ptrNew, sizeof(INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrSection = SctAsciiStrDuplicate (tmpSection);
-  if (ptrNew->ptrSection == NULL) {
-    _freeItem (ptrNew);
-    return EFI_OUT_OF_RESOURCES;
-  }
-  ptrNew->ptrEntry = SctAsciiStrDuplicate (tmpEntry);
-  if (ptrNew->ptrEntry == NULL) {
-    _freeItem (ptrNew);
-    return EFI_OUT_OF_RESOURCES;
-  }
-  ptrNew->ptrValue = SctAsciiStrDuplicate (tmpString);
-  if (ptrNew->ptrValue == NULL) {
-    _freeItem (ptrNew) ;
-    return EFI_OUT_OF_RESOURCES;
-  }
+  ptrNew->commentNo = 0;
+  ptrNew->ptrNext = NULL;
+  SctAsciiStrnCpy (ptrNew->ptrSection, tmpSection, MAX_STRING_LEN);
+  SctAsciiStrnCpy (ptrNew->ptrEntry, tmpEntry, MAX_STRING_LEN);
+  SctAsciiStrnCpy (ptrNew->ptrValue, tmpString, MAX_STRING_LEN);
 
   //
   // 1. if only section is found
@@ -1672,29 +1650,15 @@ Returns:
   //
   ptrCur = ptrNew;
 
-  ptrNew = (INI *) SctAllocatePool (sizeof(INI));
-  SctZeroMem (ptrNew, sizeof(INI));
+  ptrNew = (INI *) SctAllocatePool (sizeof (INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrSection = SctAsciiStrDuplicate (tmpSection);
-  if (ptrNew->ptrSection == NULL) {
-    _freeItem (ptrNew);
-    _freeItem (ptrCur);
-    return EFI_OUT_OF_RESOURCES;
-  }
-  ptrNew->ptrEntry = SctAsciiStrDuplicate ("");
-  if (ptrNew->ptrEntry == NULL) {
-    _freeItem (ptrNew);
-    _freeItem (ptrCur);
-    return EFI_OUT_OF_RESOURCES;
-  }
-  ptrNew->ptrValue = SctAsciiStrDuplicate ("");
-  if (ptrNew->ptrValue == NULL) {
-    _freeItem (ptrNew);
-    _freeItem (ptrCur);
-    return EFI_OUT_OF_RESOURCES;
-  }
+  ptrNew->commentNo = 0;
+  ptrNew->ptrNext = NULL;
+  SctAsciiStrnCpy (ptrNew->ptrSection, tmpSection, MAX_STRING_LEN);
+  SctAsciiStrCpy (ptrNew->ptrEntry, "");
+  SctAsciiStrCpy (ptrNew->ptrValue, "");
 
   ptrCur->commentNo = 0;
   ptrCur->ptrNext   = NULL;
@@ -1948,7 +1912,6 @@ Returns:
   CHAR8 tmpSection[MAX_STRING_LEN + 1];
   CHAR8 tmpEntry[MAX_STRING_LEN + 1];
   CHAR8 tmpString[MAX_STRING_LEN + 1];
-  CHAR8 *tmpPtr;
 
   EFI_INI_FILE_PRIVATE_DATA        *Private;
 
@@ -2009,13 +1972,8 @@ Returns:
     }
     if ((SctAsciiStriCmp (tmpSection, ptrCur->ptrSection ) == 0) &&
         (SctAsciiStriCmp (tmpEntry, ptrCur->ptrEntry )     == 0)) {
-      if (SctAsciiStriCmp ( tmpString, ptrCur->ptrValue) != 0) {
-        tmpPtr = SctAsciiStrDuplicate (tmpString);
-        if (tmpPtr == NULL) {
-          return EFI_OUT_OF_RESOURCES;
-        }
-        SctFreePool (ptrCur->ptrValue);
-        ptrCur->ptrValue = tmpPtr;
+      if (SctAsciiStriCmp (tmpString, ptrCur->ptrValue) != 0) {
+        SctAsciiStrnCpy (ptrCur->ptrValue, tmpString, MAX_STRING_LEN);
         Private->Modified = TRUE;
       }
       return EFI_SUCCESS;
@@ -2028,25 +1986,14 @@ Returns:
   // if not, should add a new item
   //
   ptrNew = (INI *) SctAllocatePool (sizeof(INI));
-  SctZeroMem (ptrNew, sizeof(INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrSection = SctAsciiStrDuplicate (tmpSection);
-  if (ptrNew->ptrSection == NULL) {
-    _freeItem (ptrNew);
-    return EFI_OUT_OF_RESOURCES;
-  }
-  ptrNew->ptrEntry = SctAsciiStrDuplicate (tmpEntry);
-  if (ptrNew->ptrEntry == NULL) {
-    _freeItem (ptrNew);
-    return EFI_OUT_OF_RESOURCES;
-  }
-  ptrNew->ptrValue = SctAsciiStrDuplicate (tmpString);
-  if (ptrNew->ptrValue == NULL) {
-    _freeItem (ptrNew);
-    return EFI_OUT_OF_RESOURCES;
-  }
+  ptrNew->commentNo = 0;
+  ptrNew->ptrNext = NULL;
+  SctAsciiStrnCpy (ptrNew->ptrSection, tmpSection, MAX_STRING_LEN);
+  SctAsciiStrnCpy (ptrNew->ptrEntry, tmpEntry, MAX_STRING_LEN);
+  SctAsciiStrnCpy (ptrNew->ptrValue, tmpString, MAX_STRING_LEN);
 
   //
   // 1. if only section is found
@@ -2068,28 +2015,14 @@ Returns:
   ptrCur = ptrNew;
 
   ptrNew = (INI *)SctAllocatePool (sizeof(INI));
-  SctZeroMem (ptrNew, sizeof(INI));
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrSection = SctAsciiStrDuplicate (tmpSection);
-  if ( ptrNew->ptrSection == NULL ) {
-    _freeItem (ptrNew);
-    _freeItem (ptrCur);
-    return EFI_OUT_OF_RESOURCES;
-  }
-  ptrNew->ptrEntry = SctAsciiStrDuplicate ("");
-  if ( ptrNew->ptrEntry == NULL ) {
-    _freeItem (ptrNew);
-    _freeItem (ptrCur);
-    return EFI_OUT_OF_RESOURCES;
-  }
-  ptrNew->ptrValue = SctAsciiStrDuplicate ("");
-  if ( ptrNew->ptrValue == NULL ) {
-    _freeItem (ptrNew);
-    _freeItem (ptrCur);
-    return EFI_OUT_OF_RESOURCES;
-  }
+  ptrNew->commentNo = 0;
+  ptrNew->ptrNext = NULL;
+  SctAsciiStrnCpy (ptrNew->ptrSection, tmpSection, MAX_STRING_LEN);
+  SctAsciiStrCpy (ptrNew->ptrEntry, "");
+  SctAsciiStrCpy (ptrNew->ptrValue, "");
 
   ptrCur->commentNo = 0;
   ptrCur->ptrNext   = NULL;
@@ -2335,19 +2268,8 @@ Routine Description:
 
 --*/
 {
-  INI         *ptrCur;
   INI         *ptrTmp;
-  COMMENTLINE *ptrCommentCur;
   COMMENTLINE *ptrCommentTmp;
-
-  ptrCur = IniFile->Head;
-
-  while (ptrCur != NULL) {
-    SctFreePool (ptrCur->ptrSection);
-    SctFreePool (ptrCur->ptrEntry);
-    SctFreePool (ptrCur->ptrValue);
-    ptrCur = ptrCur->ptrNext;
-  }
 
   while (IniFile->Head != NULL) {
     ptrTmp = IniFile->Head->ptrNext;
@@ -2355,13 +2277,6 @@ Routine Description:
     IniFile->Head = ptrTmp;
   }
   IniFile->Tail = NULL;
-
-  ptrCommentCur = IniFile->CommentLineHead;
-
-  while (ptrCommentCur != NULL) {
-    SctFreePool (ptrCommentCur->ptrComment);
-    ptrCommentCur = ptrCommentCur->ptrNext;
-  }
 
   while (IniFile->CommentLineHead != NULL) {
     ptrCommentTmp = IniFile->CommentLineHead->ptrNext;
@@ -2404,14 +2319,15 @@ Routine Description:
 
     if (*isSectionGot == TRUE) {
       ptrItem = (INI *)SctAllocatePool (sizeof(INI));
-      ptrItem->ptrSection = (CHAR8 *) SctAllocateZeroPool (SctAsciiStrLen (ptrSection) + 1);
-      ptrItem->ptrEntry   = (CHAR8 *) SctAllocateZeroPool (SctAsciiStrLen (ptrEntry) + 1);
-      ptrItem->ptrValue   = (CHAR8 *) SctAllocateZeroPool (SctAsciiStrLen (ptrValue) + 1);
+      if (ptrItem == NULL) {
+        return;
+      }
 
       ptrItem->commentNo = *commentNo;
-      SctAsciiStrCpy (ptrItem->ptrSection, ptrSection);
-      SctAsciiStrCpy (ptrItem->ptrEntry, ptrEntry);
-      SctAsciiStrCpy (ptrItem->ptrValue, ptrValue);
+      ptrItem->ptrNext = NULL;
+      SctAsciiStrnCpy (ptrItem->ptrSection, ptrSection, MAX_STRING_LEN);
+      SctAsciiStrnCpy (ptrItem->ptrEntry, ptrEntry, MAX_STRING_LEN);
+      SctAsciiStrnCpy (ptrItem->ptrValue, ptrValue, MAX_STRING_LEN);
 
       (*commentNo) ++;
 
@@ -2451,10 +2367,11 @@ Routine Description:
   ptrStr[Index] = '\0';
 
   ptrCommentLineNew = (COMMENTLINE *) SctAllocatePool (sizeof (COMMENTLINE));
-  ptrCommentLineNew->ptrComment = (CHAR8 *) SctAllocateZeroPool (SctAsciiStrLen (ptrStr) + 1);
+  ptrCommentLineNew->commentNo = 0;
+  ptrCommentLineNew->ptrNext = NULL;
+  SctAsciiStrnCpy (ptrCommentLineNew->ptrComment, ptrStr, MAX_LINE_LEN);
 
   ptrCommentLineNew->commentNo = *commentNo;
-  SctAsciiStrCpy (ptrCommentLineNew->ptrComment, ptrStr);
 
   if (IniFile->CommentLineHead == NULL) {
     IniFile->CommentLineHead = ptrCommentLineNew;
@@ -2504,15 +2421,17 @@ Routine Description:
   }
 
   ptrItem = (INI *)SctAllocatePool (sizeof(INI));
+  if (ptrItem == NULL) {
+    return;
+  }
 
-  ptrItem->ptrSection = (CHAR8 *) SctAllocateZeroPool (SctAsciiStrLen (ptrSection) + 1);
-  ptrItem->ptrEntry   = (CHAR8 *) SctAllocateZeroPool (sizeof(CHAR8));
-  ptrItem->ptrValue   = (CHAR8 *) SctAllocateZeroPool (sizeof(CHAR8));
-
-  ptrItem->commentNo  = *commentNo;
-  SctAsciiStrCpy (ptrItem->ptrSection, ptrSection);
+  ptrItem->commentNo = 0;
+  ptrItem->ptrNext = NULL;
+  SctAsciiStrnCpy (ptrItem->ptrSection, ptrSection, MAX_STRING_LEN);
   SctAsciiStrCpy (ptrItem->ptrEntry, "");
   SctAsciiStrCpy (ptrItem->ptrValue, "");
+
+  ptrItem->commentNo  = *commentNo;
 
   (*commentNo) ++;
 
@@ -2705,18 +2624,6 @@ Routine Description:
 
 --*/
 {
-  if (ptrItem->ptrSection != NULL) {
-    SctFreePool (ptrItem->ptrSection);
-    ptrItem->ptrSection = NULL;
-  }
-  if (ptrItem->ptrEntry != NULL) {
-    SctFreePool (ptrItem->ptrEntry);
-    ptrItem->ptrEntry = NULL;
-  }
-  if (ptrItem->ptrValue != NULL) {
-    SctFreePool (ptrItem->ptrValue);
-    ptrItem->ptrValue = NULL;
-  }
   SctFreePool (ptrItem);
 }
 
@@ -2735,7 +2642,6 @@ _rmComment (
   while (ptrCmtCur != NULL) {
     if (ptrCmtCur->commentNo == ptrItem->commentNo) {
       ptrCmtNext = ptrCmtCur->ptrNext;
-      SctFreePool (ptrCmtCur->ptrComment);
       SctFreePool (ptrCmtCur);
       if (ptrCmtPrev == NULL) {
         *CmtHead = ptrCmtNext;
@@ -2748,30 +2654,4 @@ _rmComment (
       ptrCmtCur = ptrCmtCur->ptrNext;
     }
   }
-}
-
-CHAR16 *
-TplStrDuplicate (
-  IN CHAR16             *String
-  )
-{
-  EFI_STATUS  Status;
-  CHAR16      *Buffer;
-
-  if (String == NULL) {
-    return NULL;
-  }
-
-  Status = tBS->AllocatePool (
-                  EfiBootServicesData,
-                  (SctStrLen (String) + 1) * sizeof(CHAR16),
-                  (VOID **)&Buffer
-                  );
-  if (EFI_ERROR (Status)) {
-    return NULL;
-  }
-
-  SctStrCpy (Buffer, String);
-
-  return Buffer;
 }
