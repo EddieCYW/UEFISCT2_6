@@ -41,6 +41,7 @@
   EFI, Inc. makes no claim of right.                            
                                                                 
   Copyright (c) 2010 - 2013, Intel Corporation. All rights reserved.<BR>   
+  Portions of Copyright (c) 2013 - 2014, ARM Ltd. All rights reserved.<BR>
    
 --*/
 /*++
@@ -585,6 +586,7 @@ Returns:
   EFI_STATUS                      Status;
   VA_LIST                         Marker;
   CHAR16                          Buffer[EFI_MAX_PRINT_BUFFER];
+  CHAR16                          AssertionDetail[EFI_MAX_PRINT_BUFFER];
   CHAR16                          AssertionType[10];
   STANDARD_TEST_PRIVATE_DATA      *Private;
 
@@ -595,6 +597,17 @@ Returns:
   //
   if (SctStrLen (Description) + 14 > EFI_MAX_PRINT_BUFFER) {
     return EFI_BAD_BUFFER_SIZE;
+  }
+
+  //
+  // Build assertion detail string
+  //
+  VA_START(Marker, Detail);
+  SctVSPrint (AssertionDetail, EFI_MAX_PRINT_BUFFER, Detail, Marker);
+  VA_END (Marker);
+
+  if ( SctStrLen (AssertionDetail) + 5 < EFI_MAX_PRINT_BUFFER) {
+    SctStrCat (AssertionDetail, L"\r\n");
   }
 
   //
@@ -618,26 +631,13 @@ Returns:
     break;
   }
 
-  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%s -- %s\n", Description, AssertionType);
-  Status = StslWriteLogFile (Private, Buffer);
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
-
-  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%g\n", &EventId);
-  Status = StslWriteLogFile (Private, Buffer);
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
-
-  VA_START(Marker, Detail);
-  SctVSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Detail, Marker);
-  VA_END (Marker);
-
-  if ( SctStrLen (Buffer) + 5 < EFI_MAX_PRINT_BUFFER ) {
-    SctStrCat (Buffer, L"\r\n\r\n");
-  }
-
+  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER,
+      L"%s -- %s\n"
+      L"%g\n"
+      L"%s\n",
+      Description, AssertionType,
+      &EventId,
+      AssertionDetail);
   Status = StslWriteLogFile (Private, Buffer);
   if (EFI_ERROR (Status)) {
     return Status;
@@ -652,21 +652,11 @@ Returns:
   //
   // write key file detail line
   //
-  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%g:%s|%s:",
-          &EventId, AssertionType, Description);
-  Status = StslWriteKeyFile (Private, Buffer);
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
-
-  VA_START(Marker, Detail);
-  SctVSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Detail, Marker);
-  VA_END (Marker);
-
+  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%g:%s|%s:%s",
+          &EventId, AssertionType, Description, AssertionDetail);
   if ( SctStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER ) {
     SctStrCat (Buffer, L"\r\n");
   }
-
   Status = StslWriteKeyFile (Private, Buffer);
   if (EFI_ERROR (Status)) {
     return Status;
@@ -1110,35 +1100,27 @@ Returns:
   //
 
   if (Private->IsRecovery) {
-    //
-    // ----------------------------------
-    //
-    StslWriteLogFile (Private, DashLine);
-
-    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"      *********RECOVERY*********\n");
+    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER,
+        L"%s"
+        L"      *********RECOVERY*********\n"
+        L"%s",
+        DashLine, DashLine);
     StslWriteLogFile (Private, Buffer);
-
-    //
-    // ----------------------------------
-    //
-    StslWriteLogFile (Private, DashLine);
 
     CurrentTime = &Private->StartTime;
     tRT->GetTime (CurrentTime, NULL);
 
   } else {
-    //
-    // ----------------------------------
-    //
-    StslWriteLogFile (Private, DashLine);
-
-    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%s\n", Private->EntryName);
-    StslWriteLogFile (Private, Buffer);
-    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Revision 0x%08x\n", Private->TestRevision);
-    StslWriteLogFile (Private, Buffer);
-    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Test Entry Point GUID: %g\n", &Private->EntryId);
-    StslWriteLogFile (Private, Buffer);
-    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Test Support Library GUIDs: \n");
+    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER,
+        L"%s"
+        L"%s\n"
+        L"Revision 0x%08x\n"
+        L"Test Entry Point GUID: %g\n"
+        L"Test Support Library GUIDs: \n",
+        DashLine,
+        Private->EntryName,
+        Private->TestRevision,
+        &Private->EntryId);
     StslWriteLogFile (Private, Buffer);
 
     Guid = Private->SupportProtocols;
@@ -1148,39 +1130,31 @@ Returns:
       Guid ++;
     }
 
-    //
-    // ----------------------------------
-    //
-    StslWriteLogFile (Private, DashLine);
-
-    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%s\n", Private->BiosId);
+    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER,
+        L"%s"
+        L"%s\n"
+        L"Test Configuration #%d\n"
+        L"%s"
+        L"%s\n"
+        L"%s",
+        DashLine,
+        Private->BiosId,
+        Private->ConfigurationNumber,
+        DashLine,
+        Private->EntryDescription,
+        DashLine);
     StslWriteLogFile (Private, Buffer);
-    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Test Configuration #%d\n", Private->ConfigurationNumber);
-    StslWriteLogFile (Private, Buffer);
-
-    //
-    // ----------------------------------
-    //
-    StslWriteLogFile (Private, DashLine);
-
-    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%s\n", Private->EntryDescription);
-    StslWriteLogFile (Private, Buffer);
-
-    //
-    // ----------------------------------
-    //
-    StslWriteLogFile (Private, DashLine);
 
     StslWriteLogFileName (Private);
+
     CurrentTime = &Private->StartTime;
     tRT->GetTime (CurrentTime, NULL);
-    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Test Started: %t\n", CurrentTime);
+    SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER,
+        L"Test Started: %t\n"
+        L"%s",
+        CurrentTime,
+        DashLine);
     StslWriteLogFile (Private, Buffer);
-
-    //
-    // ----------------------------------
-    //
-    StslWriteLogFile (Private, DashLine);
 
     //
     // Write key file header line
@@ -1276,34 +1250,32 @@ Returns:
   }
 
   StslWriteLogFile (Private, Buffer);
-  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"  Passes........... %d\n", Private->PassCount);
-  StslWriteLogFile (Private, Buffer);
-  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"  Warnings......... %d\n", Private->WarningCount);
-  StslWriteLogFile (Private, Buffer);
-  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"  Errors........... %d\n", Private->FailCount);
-  StslWriteLogFile (Private, Buffer);
-
-  //
-  // ----------------------------------
-  //
-  StslWriteLogFile (Private, DashLine);
-
-  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%s\n", Private->BiosId);
-  StslWriteLogFile (Private, Buffer);
-  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Revision 0x%08x\n", Private->TestRevision);
-  StslWriteLogFile (Private, Buffer);
-  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Test Entry Point GUID: %g\n", &Private->EntryId);
+  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER,
+      L"  Passes........... %d\n"
+      L"  Warnings......... %d\n"
+      L"  Errors........... %d\n",
+      Private->PassCount,
+      Private->WarningCount,
+      Private->FailCount);
   StslWriteLogFile (Private, Buffer);
 
-  //
-  // ----------------------------------
-  //
-  StslWriteLogFile (Private, DashLine);
+  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER,
+      L"%s" // -------------------------------------
+      L"%s\n"
+      L"Revision 0x%08x\n"
+      L"Test Entry Point GUID: %g\n"
+      L"%s", // -------------------------------------
+      DashLine,
+      Private->BiosId,
+      Private->TestRevision,
+      &Private->EntryId,
+      DashLine);
+  StslWriteLogFile (Private, Buffer);
 
   StslWriteLogFileName (Private);
+
   tRT->GetTime (&CurrentTime, NULL);
-  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"Test Finished: %t\n", &CurrentTime);
-  StslWriteLogFile (Private, Buffer);
+
   SecondsElapsed = SecondsElapsedFromBaseYear (
                      Private->StartTime.Year,
                      CurrentTime.Year,
@@ -1349,13 +1321,14 @@ Returns:
   //        L"Elapsed Time: %d Days %02d:%02d:%02d\n",
   //        DaysElapsed, HoursElapsed, MunitesElapsed, SecondsElapsed);
   
-  StslWriteLogFile (Private, Buffer1);
-  StslWriteLogFile (Private, L"\r\n");
-
-  //
-  // ----------------------------------
-  //
-  StslWriteLogFile (Private, DashLine);
+  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER,
+      L"Test Finished: %t\n"
+      L"%s\r\n"
+      L"%s", // -----------------------------
+      &CurrentTime,
+      Buffer1,
+      DashLine);
+  StslWriteLogFile (Private, Buffer);
 
   //
   // Write key file terminator line

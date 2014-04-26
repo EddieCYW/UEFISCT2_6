@@ -69,7 +69,7 @@ Abstract:
 // Global definitions
 //
 
-#define EFI_MAX_PRINT_BUFFER                768
+#define EFI_MAX_PRINT_BUFFER                1024
 
 //
 // Private data structures
