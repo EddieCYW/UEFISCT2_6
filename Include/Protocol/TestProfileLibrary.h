@@ -441,6 +441,34 @@ Returns:
 ;
 
 //
+// EFI Test Profile Library Protocol API - IniFlush
+//
+typedef
+EFI_STATUS
+(EFIAPI *EFI_TPL_INI_FLUSH) (
+  IN  EFI_TEST_PROFILE_LIBRARY_PROTOCOL         *This,
+  IN  EFI_INI_FILE                              *FileHandle
+  )
+/*++
+
+Routine Description:
+
+  Flush an INI file.
+
+Arguments:
+
+  This          - Test profile library protocol instance.
+
+  FileHandle    - The file handle to be flushed.
+
+Returns:
+
+  EFI_SUCCESS if everything is correct.
+
+--*/
+;
+
+//
 // EFI Test Profile Library Protocol API - IniClose
 //
 typedef
@@ -545,6 +573,7 @@ struct _EFI_TEST_PROFILE_LIBRARY_PROTOCOL {
   CHAR16                                *Description;
   EFI_TPL_INI_OPEN                      EfiIniOpen;
   EFI_TPL_INI_CREATE                    EfiIniCreate;
+  EFI_TPL_INI_FLUSH                     EfiIniFlush;
   EFI_TPL_INI_CLOSE                     EfiIniClose;
   EFI_TPL_GET_SYSTEM_DEVICE_PATH        EfiGetSystemDevicePath;
   EFI_TPL_SET_SYSTEM_DEVICE_PATH        EfiSetSystemDevicePath;

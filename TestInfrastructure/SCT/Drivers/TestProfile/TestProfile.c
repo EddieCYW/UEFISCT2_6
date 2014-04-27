@@ -116,6 +116,13 @@ AtslEfiIniCreate (
 
 EFI_STATUS
 EFIAPI
+AtslEfiIniFlush (
+  IN EFI_TEST_PROFILE_LIBRARY_PROTOCOL     *This,
+  IN EFI_INI_FILE_HANDLE                    FileHandle
+  );
+
+EFI_STATUS
+EFIAPI
 AtslEfiIniClose (
   IN EFI_TEST_PROFILE_LIBRARY_PROTOCOL     *This,
   IN EFI_INI_FILE_HANDLE                    FileHandle
@@ -527,6 +534,7 @@ Returns:
   Private->TestProfile.Description         = gAtslDescription;
   Private->TestProfile.EfiIniOpen          = AtslEfiIniOpen;
   Private->TestProfile.EfiIniCreate        = AtslEfiIniCreate;
+  Private->TestProfile.EfiIniFlush         = AtslEfiIniFlush;
   Private->TestProfile.EfiIniClose         = AtslEfiIniClose;
   Private->TestProfile.EfiGetSystemDevicePath    = AtslEfiGetSystemDevicePath;
   Private->TestProfile.EfiSetSystemDevicePath    = AtslEfiSetSystemDevicePath;
@@ -1016,6 +1024,38 @@ Returns:
   RootDir->Close (RootDir);
   *FileHandle = &(NewIniFile->Handle);
   return EFI_SUCCESS;
+}
+
+EFI_STATUS
+EFIAPI
+AtslEfiIniFlush (
+  IN EFI_TEST_PROFILE_LIBRARY_PROTOCOL     *This,
+  IN EFI_INI_FILE_HANDLE                    FileHandle
+  )
+/*++
+
+Routine Description:
+
+  One interface function of the TestProfileLibrary to flush an ini file.
+
+Arguments:
+
+  This        - the protocol instance structure.
+  FileHandle  - ini file to be flushed.
+
+Returns:
+
+  EFI_SUCCESS - the ini file was closed successfully.
+
+--*/
+{
+  EFI_STATUS                      Status;
+  EFI_INI_FILE_PRIVATE_DATA       *IniFile;
+
+  IniFile = EFI_INI_FILE_PRIVATE_DATA_FROM_THIS (FileHandle);
+
+  Status = FileHandle->Flush (FileHandle);
+  return Status;
 }
 
 EFI_STATUS
