@@ -146,6 +146,17 @@ Returns:
   gFT->SeqFileName   = NULL;
   gFT->RepFileName   = NULL;
 
+  gFT->TestCaseFileName = SctPoolPrint (
+                 L"%s\\%s",
+                 gFT->FilePath,
+                 EFI_SCT_FILE_TEST_CASE
+                 );
+  if (gFT->TestCaseFileName == NULL) {
+    FreeFrameworkTable ();
+    return Status;
+  }
+  gFT->TestCaseIniFile = NULL;
+
   gFT->IsFirstTimeExecute = TRUE;
 
   //
@@ -194,6 +205,14 @@ Routine Description:
 
 --*/
 {
+  //
+  // Close/Free the INI file
+  //
+  tBS->FreePool (gFT->TestCaseFileName);
+  if (gFT->TestCaseIniFile != NULL) {
+    gFT->TplProtocol->EfiIniClose (gFT->TplProtocol, gFT->TestCaseIniFile);
+  }
+
   //
   // Close the standard test support files
   //

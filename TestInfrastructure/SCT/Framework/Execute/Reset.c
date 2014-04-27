@@ -161,38 +161,20 @@ Returns:
     return Status;
   }
 
-  //
-  // Save the test cases
-  //
-  FileName = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_TEST_CASE);
-  if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
-    return EFI_OUT_OF_RESOURCES;
-  }
-
-  Status = SaveTestCases (
-             gFT->DevicePath,
-             FileName,
-             &gFT->TestCaseList
-             );
+  Status = SaveTestCases ();
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Save test cases - %r", Status));
-    tBS->FreePool (FileName);
     return Status;
   }
   
   Status = RemoveFile (
              gFT->DevicePath,
-             FileName
+             gFT->TestCaseFileName
              );
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Remove TestCase.ini - %r", Status));
-    tBS->FreePool (FileName);
     return Status;
   }
-  
-
-  tBS->FreePool (FileName);
 
   //
   // Remove the skipped case
@@ -377,7 +359,6 @@ Returns:
 --*/
 {
   EFI_STATUS            Status;
-  CHAR16                *FileName;
   CHAR16                *FilePath;
   CHAR16                *MetaName;
   CHAR16                *TempName;
@@ -388,27 +369,11 @@ Returns:
   ExecuteInfo->TestCase->Passes   = EFI_SCT_TEST_CASE_RUNNING;
   ExecuteInfo->TestCase->Failures = EFI_SCT_TEST_CASE_RUNNING;
 
-  //
-  // Save the test cases
-  //
-  FileName = SctPoolPrint (L"%s\\%s", gFT->FilePath, EFI_SCT_FILE_TEST_CASE);
-  if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
-    return EFI_OUT_OF_RESOURCES;
-  }
-
-  Status = SaveTestCases (
-             gFT->DevicePath,
-             FileName,
-             &gFT->TestCaseList
-             );
+  Status = SaveTestCases ();
   if (EFI_ERROR(Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Save test cases - %r", Status));
-    tBS->FreePool (FileName);
     return Status;
   }
-
-  tBS->FreePool (FileName);
 
   //
   // Remove the recovery file

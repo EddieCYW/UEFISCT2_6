@@ -304,8 +304,11 @@ typedef struct {
   EFI_SCT_OPERATIONS                  Operations;
   CHAR16                              *SeqFileName;
   CHAR16                              *RepFileName;
+  CHAR16                              *TestCaseFileName;
 
   BOOLEAN                             IsFirstTimeExecute;
+
+  EFI_INI_FILE_HANDLE                 TestCaseIniFile;
 
   EFI_SCT_CONFIG_DATA                 *ConfigData;
 

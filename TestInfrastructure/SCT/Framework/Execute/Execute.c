@@ -462,7 +462,6 @@ Routine Description:
 {
   EFI_STATUS            Status;
   EFI_SCT_EXECUTE_INFO  ExecuteInfo;
-  CHAR16                *FileName;
 
   //
   // Initialize the execute information
@@ -496,31 +495,11 @@ Routine Description:
     return Status;
   }
 
-  //
-  // Create the name of test case file
-  //
-  FileName = SctPoolPrint (
-               L"%s\\%s",
-               gFT->FilePath,
-               EFI_SCT_FILE_TEST_CASE
-               );
-  if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
-    return EFI_OUT_OF_RESOURCES;
-  }
-
-  Status = SaveTestCases (
-             gFT->DevicePath,
-             FileName,
-             &gFT->TestCaseList
-             );
+  Status = SaveTestCases ();
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Save test cases - %r", Status));
-    tBS->FreePool (FileName);
     return Status;
   }
-
-  tBS->FreePool (FileName);
 
   //
   // Done
@@ -544,7 +523,6 @@ Routine Description:
   EFI_STATUS            Status;
   EFI_SCT_EXECUTE_INFO  ExecuteInfo;
   CHAR16                *FullMetaName;
-  CHAR16                *FileName;
 
   //
   // Initialize the execute information
@@ -600,31 +578,11 @@ Routine Description:
     return Status;
   }
 
-  //
-  // Create the name of test case file
-  //
-  FileName = SctPoolPrint (
-               L"%s\\%s",
-               gFT->FilePath,
-               EFI_SCT_FILE_TEST_CASE
-               );
-  if (FileName == NULL) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"SctPoolPrint: Out of resources"));
-    return EFI_OUT_OF_RESOURCES;
-  }
-
-  Status = SaveTestCases (
-             gFT->DevicePath,
-             FileName,
-             &gFT->TestCaseList
-             );
+  Status = SaveTestCases ();
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Save test cases - %r", Status));
-    tBS->FreePool (FileName);
     return Status;
   }
-
-  tBS->FreePool (FileName);
 
   //
   // Done

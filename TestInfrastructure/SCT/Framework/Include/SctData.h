@@ -137,9 +137,7 @@ LoadTestCases (
 
 EFI_STATUS
 SaveTestCases (
-  IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
-  IN CHAR16                       *FileName,
-  IN SCT_LIST_ENTRY               *TestCaseList
+  VOID
   );
 
 EFI_STATUS

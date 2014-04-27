@@ -255,9 +255,7 @@ Returns:
 
 EFI_STATUS
 SaveTestCases (
-  IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath,
-  IN CHAR16                       *FileName,
-  IN SCT_LIST_ENTRY               *TestCaseList
+  VOID
   )
 /*++
 
@@ -283,48 +281,44 @@ Returns:
   EFI_INI_FILE_HANDLE   IniFile;
   SCT_LIST_ENTRY        *Link;
   EFI_SCT_TEST_CASE     *TestCase;
-
-  //
-  // Check parameters
-  //
-  if ((DevicePath == NULL) || (FileName == NULL) || (TestCaseList == NULL)) {
-    return EFI_INVALID_PARAMETER;
-  }
+  SCT_LIST_ENTRY        *TestCaseList;
 
   //
   // Debug information
   //
-  EFI_SCT_DEBUG ((EFI_SCT_D_TRACE, L"Save test cases into <%s>", FileName));
+  EFI_SCT_DEBUG ((EFI_SCT_D_TRACE, L"Save test cases into <%s>", gFT->TestCaseFileName));
 
   //
-  // Open the file
+  // Open/Create the TestCase file if not done yet
   //
-  Status = gFT->TplProtocol->EfiIniOpen (
-                               gFT->TplProtocol,
-                               DevicePath,
-                               FileName,
-                               &IniFile
-                               );
-  if (EFI_ERROR (Status) && (Status != EFI_NOT_FOUND)) {
-    EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Open test case file - %r", Status));
-    return Status;
-  }
-
-  if (Status == EFI_NOT_FOUND) {
-    //
-    // Not exist, create the file
-    //
-    Status = gFT->TplProtocol->EfiIniCreate (
+  if (gFT->TestCaseIniFile == NULL) {
+    Status = gFT->TplProtocol->EfiIniOpen (
                                  gFT->TplProtocol,
-                                 DevicePath,
-                                 FileName,
-                                 &IniFile
+                                 gFT->DevicePath,
+                                 gFT->TestCaseFileName,
+                                 &gFT->TestCaseIniFile
                                  );
-    if (EFI_ERROR (Status)) {
-      EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Create test case file - %r", Status));
+    if (EFI_ERROR (Status) && (Status != EFI_NOT_FOUND)) {
       return Status;
     }
+
+    // Not exist, create the file
+    if (Status == EFI_NOT_FOUND) {
+      Status = gFT->TplProtocol->EfiIniCreate (
+                                   gFT->TplProtocol,
+                                   gFT->DevicePath,
+                                   gFT->TestCaseFileName,
+                                   &gFT->TestCaseIniFile
+                                   );
+      if (EFI_ERROR (Status)) {
+        return Status;
+      }
+    }
   }
+
+  // Initial variables
+  TestCaseList = &gFT->TestCaseList;
+  IniFile      = gFT->TestCaseIniFile;
 
   //
   // Remove the original test cases
@@ -366,7 +360,7 @@ Returns:
   //
   // Close the file
   //
-  gFT->TplProtocol->EfiIniClose (
+  gFT->TplProtocol->EfiIniFlush (
                       gFT->TplProtocol,
                       IniFile
                       );
