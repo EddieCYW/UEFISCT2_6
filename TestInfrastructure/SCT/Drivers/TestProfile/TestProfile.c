@@ -649,11 +649,14 @@ Returns:
   UINTN                             Number;
   UINTN                             BufSize;
   CHAR8                             ptrLine[MAX_LINE_LEN];
-  UINT8                             Buffer[MAX_LINE_LEN * 2];
+  EFI_PHYSICAL_ADDRESS              BufferPhysicalAddress;
+  UINT8                             *Buffer;
   CHAR8                             ptrSection[MAX_STRING_LEN + 1] ;
   UINT32                            commentNo ;
   BOOLEAN                           isSectionGot ;
   EFI_SIMPLE_FILE_SYSTEM_PROTOCOL   *Vol;
+  UINTN                             FileInfoSize;
+  EFI_FILE_INFO                     *FileInfo;
 
   //
   // Check the parameters
@@ -750,21 +753,41 @@ Returns:
                       0
                       );
   if (EFI_ERROR (Status)) {
-    _freeIniFile (NewIniFile);
-    RootDir->Close (RootDir);
-    return Status;
+    goto EXIT_CLOSE_ROOT_DIR;
   }
+
+  //
+  // Get the file size
+  //
+  FileInfoSize = sizeof(EFI_FILE_INFO) + 1024;
+  FileInfo = SctAllocateZeroPool (FileInfoSize);
+  if (FileInfo == NULL) {
+    Status = EFI_OUT_OF_RESOURCES;
+    goto EXIT_CLOSE_HANDLE;
+  }
+
+  Status = Handle->GetInfo (Handle, &gEfiFileInfoGuid, &FileInfoSize, FileInfo);
+  if (EFI_ERROR (Status)) {
+    goto EXIT_CLOSE_HANDLE;
+  }
+
+  //
+  // Read the entire file into a Buffer
+  //
+  Status = tBS->AllocatePages (AllocateAnyPages, EfiBootServicesData, EFI_SIZE_TO_PAGES (FileInfo->FileSize), &BufferPhysicalAddress);
+  if (EFI_ERROR (Status)) {
+    goto EXIT_FREE_FILEINFO;
+  }
+
+  BufSize = FileInfo->FileSize;
+  Buffer = (UINT8*)(UINTN)BufferPhysicalAddress;
 
   //
   // Determine the file type: unicode or ansi
   //
-  BufSize = MAX_LINE_LEN * 2;
   Status = Handle->Read (Handle, &BufSize, Buffer);
   if (EFI_ERROR (Status)) {
-    _freeIniFile (NewIniFile);
-    Handle->Close (Handle);
-    RootDir->Close (RootDir);
-    return Status;
+    goto EXIT_FREE_BUFFER;
   }
 
   if ((BufSize >= 2) && (Buffer[0] == 0xff) && (Buffer[1] == 0xfe)) {
@@ -773,44 +796,32 @@ Returns:
   } else {
     Number = 0;
   }
-  Index = 0;
 
   //
   // process the profile line by line
   //
-  while (BufSize != 0) {
-    while (Number < BufSize) {
-      ptrLine[Index++] = Buffer[Number];
-      if ((Buffer[Number] == '\n') || (Index >= MAX_LINE_LEN - 1)) {
-        //
-        // a line is read, process it
-        //
-        ptrLine[Index] = '\0';
-        Index = 0;
-        _prosessLine (
-          NewIniFile,
-          ptrLine,
-          ptrSection,
-          &isSectionGot,
-          &commentNo
-        );
-      }
-
-      if (NewIniFile->isUnicode) {
-        Number += 2;
-      } else {
-        Number ++;
-      }
+  Index = 0;
+  while (Number < BufSize) {
+    ptrLine[Index++] = Buffer[Number];
+    if (Buffer[Number] == '\n') {
+      //
+      // a line is read, process it
+      //
+      ptrLine[Index] = '\0';
+      Index = 0;
+      _prosessLine (
+        NewIniFile,
+        ptrLine,
+        ptrSection,
+        &isSectionGot,
+        &commentNo
+      );
     }
 
-    Number = 0;
-    BufSize = MAX_LINE_LEN * 2;
-    Status = Handle->Read (Handle, &BufSize, Buffer);
-    if (EFI_ERROR (Status)) {
-      _freeIniFile (NewIniFile);
-      Handle->Close (Handle);
-      RootDir->Close (RootDir);
-      return Status;
+    if (NewIniFile->isUnicode) {
+      Number += 2;
+    } else {
+      Number++;
     }
   }
 
@@ -818,7 +829,6 @@ Returns:
   // process the last line without '\n'
   //
   ptrLine[Index] = '\0';
-  Index = 0;
   _prosessLine (
     NewIniFile,
     ptrLine,
@@ -830,10 +840,23 @@ Returns:
   //
   // close the profile, and return file handle
   //
-  Handle->Close (Handle);
-  RootDir->Close (RootDir);
   *FileHandle = &(NewIniFile->Handle);
-  return EFI_SUCCESS;
+  Status = EFI_SUCCESS;
+
+EXIT_FREE_BUFFER:
+  tBS->FreePages (BufferPhysicalAddress, EFI_SIZE_TO_PAGES (FileInfo->FileSize));
+EXIT_FREE_FILEINFO:
+  tBS->FreePool (FileInfo);
+EXIT_CLOSE_HANDLE:
+  Handle->Close (Handle);
+EXIT_CLOSE_ROOT_DIR:
+  RootDir->Close (RootDir);
+
+  if (EFI_ERROR (Status)) {
+    _freeIniFile (NewIniFile);
+  }
+
+  return Status;
 }
 
 EFI_STATUS
