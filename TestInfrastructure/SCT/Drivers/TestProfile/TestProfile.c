@@ -1176,15 +1176,16 @@ Returns:
 {
   INI                     *ptrCur;
   COMMENTLINE             *ptrCmtCur;
-  CHAR8                   ptrCurSection[MAX_STRING_LEN + 1];
   BOOLEAN                 first;
   UINT32                  commentNo;
   EFI_STATUS              Status;
   EFI_HANDLE              DeviceHandle;
   EFI_FILE_HANDLE         RootDir;
   EFI_FILE_HANDLE         Handle;
-  UINTN                   BufSize;
-  CHAR8                   Buffer[MAX_LINE_LEN + 3];
+  UINTN                   BufferSize;
+  UINTN                   BufferUnicodeSize;
+  CHAR8                   Buffer[MAX_LINE_LEN * 10];
+  CHAR16                  BufferUnicode[MAX_LINE_LEN * 10 * sizeof(CHAR16)];
   CHAR8                   Line[MAX_LINE_LEN * 2];
 
   EFI_SIMPLE_FILE_SYSTEM_PROTOCOL  *Vol;
@@ -1275,7 +1276,6 @@ Returns:
   }
 
   ptrCur = Private->Head ;
-  SctAsciiStrCpy (ptrCurSection, "");
   first = TRUE;
 
   //
@@ -1284,8 +1284,8 @@ Returns:
   if (Private->isUnicode) {
     Buffer[0] = 0xff;
     Buffer[1] = 0xfe;
-    BufSize = 2;
-    Status = Handle->Write (Handle, &BufSize, Buffer);
+    BufferSize = 2;
+    Status = Handle->Write (Handle, &BufferSize, Buffer);
     if (EFI_ERROR (Status)) {
       Handle->Close (Handle);
       RootDir->Close (RootDir);
@@ -1304,21 +1304,26 @@ Returns:
       //
       if (first) {
         first = FALSE;
+        Buffer[0] = '\0';
       } else {
-        SctAsciiStrCpy (Buffer, "\r\n");
-        BufSize = SctAsciiStrLen (Buffer);
+        //
+        // Flush the previous section
+        //
         if (Private->isUnicode) {
-          SctAsciiToUnicode ((CHAR16 *)Line, Buffer, BufSize + 1);
-          BufSize *= 2;
-          Status = Handle->Write (Handle, &BufSize, Line);
+          BufferSize = SctAsciiStrLen (Buffer) + 1;
+          BufferUnicodeSize = BufferSize * sizeof (CHAR16);
+          SctAsciiToUnicode (BufferUnicode, Buffer, BufferSize);
+          Status = Handle->Write (Handle, &BufferUnicodeSize, BufferUnicode);
         } else {
-          Status = Handle->Write (Handle, &BufSize, Buffer);
+          Status = Handle->Write (Handle, &BufferSize, Buffer);
         }
         if (EFI_ERROR (Status)) {
           Handle->Close (Handle);
           RootDir->Close (RootDir);
           return Status;
         }
+
+        SctAsciiStrCpy (Buffer, "\r\n");
       }
     }
 
@@ -1329,21 +1334,9 @@ Returns:
     while (ptrCmtCur != NULL) {
       if (ptrCmtCur->commentNo == ptrCur->commentNo) {
         commentNo = ptrCmtCur->commentNo;
-        SctAsciiStrCpy (Buffer, ptrCmtCur->ptrComment);
-        SctAsciiStrCat (Buffer, "\r\n");
-        BufSize = SctAsciiStrLen (Buffer);
-        if (Private->isUnicode) {
-          SctAsciiToUnicode ((CHAR16 *)Line, Buffer, BufSize + 1);
-          BufSize *= 2;
-          Status = Handle->Write (Handle, &BufSize, Line);
-        } else {
-          Status = Handle->Write (Handle, &BufSize, Buffer);
-        }
-        if (EFI_ERROR (Status)) {
-          Handle->Close (Handle);
-          RootDir->Close (RootDir);
-          return Status;
-        }
+        SctAsciiStrCpy (Line, ptrCmtCur->ptrComment);
+        SctAsciiStrCat (Line, "\r\n");
+        SctAsciiStrCat (Buffer, Line);
       }
       ptrCmtCur = ptrCmtCur->ptrNext ;
     }
@@ -1352,47 +1345,39 @@ Returns:
       //
       // new section, write the section head
       //
-      SctAsciiStrCpy (ptrCurSection, ptrCur->ptrSection);
-      SctAsciiStrCpy (Buffer, "[");
-      SctAsciiStrCat (Buffer, ptrCurSection);
-      SctAsciiStrCat (Buffer, "]\r\n");
-      BufSize = SctAsciiStrLen (Buffer);
-      if (Private->isUnicode) {
-        SctAsciiToUnicode ((CHAR16 *)Line, Buffer, BufSize + 1);
-        BufSize *= 2;
-        Status = Handle->Write (Handle, &BufSize, Line);
-      } else {
-        Status = Handle->Write (Handle, &BufSize, Buffer);
-      }
-      if (EFI_ERROR (Status)) {
-        Handle->Close (Handle);
-        RootDir->Close (RootDir);
-        return Status;
-      }
+      SctAsciiStrCpy (Line, "[");
+      SctAsciiStrCat (Line, ptrCur->ptrSection);
+      SctAsciiStrCat (Line, "]\r\n");
+      SctAsciiStrCat (Buffer, Line);
     } else {
       //
       // write the entry and value line
       //
-      SctAsciiStrnCpy (Buffer, ptrCur->ptrEntry, MAX_STRING_LEN);
-      SctAsciiStrCat (Buffer, "=");
-      SctAsciiStrCat (Buffer, ptrCur->ptrValue);
-      SctAsciiStrCat (Buffer, "\r\n");
-      BufSize = SctAsciiStrLen (Buffer);
-      if (Private->isUnicode) {
-        SctAsciiToUnicode ((CHAR16 *)Line, Buffer, BufSize + 1);
-        BufSize *= 2;
-        Status = Handle->Write (Handle, &BufSize, Line);
-      } else {
-        Status = Handle->Write (Handle, &BufSize, Buffer);
-      }
-      if (EFI_ERROR (Status)) {
-        Handle->Close (Handle);
-        RootDir->Close (RootDir);
-        return Status;
-      }
+      SctAsciiStrnCpy (Line, ptrCur->ptrEntry, MAX_STRING_LEN);
+      SctAsciiStrCat (Line, "=");
+      SctAsciiStrCat (Line, ptrCur->ptrValue);
+      SctAsciiStrCat (Line, "\r\n");
+      SctAsciiStrCat (Buffer, Line);
     }
 
     ptrCur = ptrCur->ptrNext;
+  }
+
+  //
+  // Flush the last section
+  //
+  if (Private->isUnicode) {
+    BufferSize = SctAsciiStrLen (Buffer) + 1;
+    BufferUnicodeSize = BufferSize * sizeof (CHAR16);
+    SctAsciiToUnicode (BufferUnicode, Buffer, BufferSize);
+    Status = Handle->Write (Handle, &BufferUnicodeSize, BufferUnicode);
+  } else {
+    Status = Handle->Write (Handle, &BufferSize, Buffer);
+  }
+  if (EFI_ERROR (Status)) {
+    Handle->Close (Handle);
+    RootDir->Close (RootDir);
+    return Status;
   }
 
   //
@@ -1400,25 +1385,30 @@ Returns:
   //
   ptrCmtCur = Private->CommentLineHead;
   commentNo ++;
+  Buffer[0] = '\0';
   while (ptrCmtCur != NULL) {
     if (ptrCmtCur->commentNo >= commentNo) {
-      SctAsciiStrCpy (Buffer, ptrCmtCur->ptrComment);
-      SctAsciiStrCat (Buffer, "\r\n");
-      BufSize = SctAsciiStrLen (Buffer);
-      if (Private->isUnicode) {
-        SctAsciiToUnicode ((CHAR16 *)Line, Buffer, BufSize + 1);
-        BufSize *= 2;
-        Status = Handle->Write (Handle, &BufSize, Line);
-      } else {
-        Status = Handle->Write (Handle, &BufSize, Buffer);
-      }
-      if (EFI_ERROR (Status)) {
-        Handle->Close (Handle);
-        RootDir->Close (RootDir);
-        return Status;
-      }
+      SctAsciiStrCpy (Line, ptrCmtCur->ptrComment);
+      SctAsciiStrCat (Line, "\r\n");
+      SctAsciiStrCat (Buffer, Line);
     }
     ptrCmtCur = ptrCmtCur->ptrNext;
+  }
+
+  if (Buffer[0] != '\0') {
+    if (Private->isUnicode) {
+      BufferSize = SctAsciiStrLen (Buffer) + 1;
+      BufferUnicodeSize = BufferSize * sizeof (CHAR16);
+      SctAsciiToUnicode (BufferUnicode, Buffer, BufferSize);
+      Status = Handle->Write (Handle, &BufferUnicodeSize, BufferUnicode);
+    } else {
+      Status = Handle->Write (Handle, &BufferSize, Buffer);
+    }
+    if (EFI_ERROR (Status)) {
+      Handle->Close (Handle);
+      RootDir->Close (RootDir);
+      return Status;
+    }
   }
 
   Handle->Flush (Handle);
