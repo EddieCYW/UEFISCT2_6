@@ -82,16 +82,21 @@ CreateDir (
   );
 
 EFI_STATUS
-CopyDirFile (
-  IN CHAR16             *SrcName,
-  IN CHAR16             *DstName,
-  IN BOOLEAN            Recursive
-  );
-
-EFI_STATUS
 ProcessExistingSctFile (
   IN  CHAR16*         Name,
   IN  CHAR16*         FileName
+  );
+
+EFI_STATUS
+CopyDir(
+  IN CHAR16             *SrcName,
+  IN CHAR16             *DstName
+  );
+
+EFI_STATUS
+CopyFile (
+  IN CHAR16             *SrcName,
+  IN CHAR16             *DstName
   );
 
 EFI_STATUS

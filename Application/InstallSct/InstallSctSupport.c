@@ -1,45 +1,45 @@
 /*++
-  The material contained herein is not a license, either        
-  expressly or impliedly, to any intellectual property owned    
-  or controlled by any of the authors or developers of this     
-  material or to any contribution thereto. The material         
-  contained herein is provided on an "AS IS" basis and, to the  
-  maximum extent permitted by applicable law, this information  
-  is provided AS IS AND WITH ALL FAULTS, and the authors and    
-  developers of this material hereby disclaim all other         
-  warranties and conditions, either express, implied or         
-  statutory, including, but not limited to, any (if any)        
-  implied warranties, duties or conditions of merchantability,  
-  of fitness for a particular purpose, of accuracy or           
-  completeness of responses, of results, of workmanlike         
-  effort, of lack of viruses and of lack of negligence, all     
-  with regard to this material and any contribution thereto.    
-  Designers must not rely on the absence or characteristics of  
-  any features or instructions marked "reserved" or             
-  "undefined." The Unified EFI Forum, Inc. reserves any         
-  features or instructions so marked for future definition and  
-  shall have no responsibility whatsoever for conflicts or      
-  incompatibilities arising from future changes to them. ALSO,  
-  THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,  
-  QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR            
-  NON-INFRINGEMENT WITH REGARD TO THE TEST SUITE AND ANY        
-  CONTRIBUTION THERETO.                                         
-                                                                
-  IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THIS MATERIAL OR  
-  ANY CONTRIBUTION THERETO BE LIABLE TO ANY OTHER PARTY FOR     
-  THE COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST      
-  PROFITS, LOSS OF USE, LOSS OF DATA, OR ANY INCIDENTAL,        
-  CONSEQUENTIAL, DIRECT, INDIRECT, OR SPECIAL DAMAGES WHETHER   
-  UNDER CONTRACT, TORT, WARRANTY, OR OTHERWISE, ARISING IN ANY  
-  WAY OUT OF THIS OR ANY OTHER AGREEMENT RELATING TO THIS       
-  DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF     
-  THE POSSIBILITY OF SUCH DAMAGES.                              
-                                                                
-  Copyright 2006 - 2012 Unified EFI, Inc. All  
-  Rights Reserved, subject to all existing rights in all        
-  matters included within this Test Suite, to which United      
-  EFI, Inc. makes no claim of right.                            
-                                                                
+  The material contained herein is not a license, either
+  expressly or impliedly, to any intellectual property owned
+  or controlled by any of the authors or developers of this
+  material or to any contribution thereto. The material
+  contained herein is provided on an "AS IS" basis and, to the
+  maximum extent permitted by applicable law, this information
+  is provided AS IS AND WITH ALL FAULTS, and the authors and
+  developers of this material hereby disclaim all other
+  warranties and conditions, either express, implied or
+  statutory, including, but not limited to, any (if any)
+  implied warranties, duties or conditions of merchantability,
+  of fitness for a particular purpose, of accuracy or
+  completeness of responses, of results, of workmanlike
+  effort, of lack of viruses and of lack of negligence, all
+  with regard to this material and any contribution thereto.
+  Designers must not rely on the absence or characteristics of
+  any features or instructions marked "reserved" or
+  "undefined." The Unified EFI Forum, Inc. reserves any
+  features or instructions so marked for future definition and
+  shall have no responsibility whatsoever for conflicts or
+  incompatibilities arising from future changes to them. ALSO,
+  THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+  QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR
+  NON-INFRINGEMENT WITH REGARD TO THE TEST SUITE AND ANY
+  CONTRIBUTION THERETO.
+
+  IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THIS MATERIAL OR
+  ANY CONTRIBUTION THERETO BE LIABLE TO ANY OTHER PARTY FOR
+  THE COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST
+  PROFITS, LOSS OF USE, LOSS OF DATA, OR ANY INCIDENTAL,
+  CONSEQUENTIAL, DIRECT, INDIRECT, OR SPECIAL DAMAGES WHETHER
+  UNDER CONTRACT, TORT, WARRANTY, OR OTHERWISE, ARISING IN ANY
+  WAY OUT OF THIS OR ANY OTHER AGREEMENT RELATING TO THIS
+  DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF
+  THE POSSIBILITY OF SUCH DAMAGES.
+
+  Copyright 2006 - 2012 Unified EFI, Inc. All
+  Rights Reserved, subject to all existing rights in all
+  matters included within this Test Suite, to which United
+  EFI, Inc. makes no claim of right.
+
   Copyright (c) 2010 - 2012, Intel Corporation. All rights reserved.<BR>
   Portions copyright (c) 2014, ARM Ltd. All rights reserved.
 
@@ -193,96 +193,6 @@ DirFileExist (
   return EFI_SUCCESS;
 }
 
-
-EFI_STATUS
-CreateDir (
-  IN CHAR16             *DirName
-  )
-{
-  EFI_STATUS  Status;
-  CHAR16      *CmdLine;
-  CHAR16      *TmpName;
-  UINTN       Index;
-  BOOLEAN     Done;
-  BOOLEAN     Exist;
-  EFI_STATUS  CmdStatus;
-
-  //
-  // Create the temp name
-  //
-  TmpName = SctStrDuplicate (DirName);
-  if (TmpName == NULL) {
-    return EFI_OUT_OF_RESOURCES;
-  }
-
-  //
-  // Create the directory one by one layer
-  //
-  Done = FALSE;
-
-  for (Index = 0; !Done; Index ++) {
-    if (TmpName[Index] == L'\0') {
-      Done = TRUE;
-    }
-
-    if ((TmpName[Index] == L'\\') || (TmpName[Index] == L'\0')){
-      TmpName[Index] = L'\0';
-
-      //
-      // Exist or not?
-      //
-      Status = DirFileExist (TmpName, &Exist);
-      if (EFI_ERROR (Status)) {
-        SctFreePool (TmpName);
-        return Status;
-      }
-
-      if (Exist) {
-        TmpName[Index] = L'\\';
-        continue;
-      }
-
-      //
-      // Create command line to create this directory
-      //
-      CmdLine = SctPoolPrint (
-                  L"MKDIR \"%s\"",
-                  TmpName
-                  );
-      if (CmdLine == NULL) {
-        SctFreePool (TmpName);
-        return EFI_OUT_OF_RESOURCES;
-      }
-
-      //
-      // Execute shell command
-      //
-      Status = SctShellExecute (
-                 &gImageHandle,
-                 CmdLine,
-                 FALSE,
-                 NULL,
-                 &CmdStatus
-                 );
-      if (EFI_ERROR (Status) || EFI_ERROR (CmdStatus)) {
-        SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);
-        SctFreePool (CmdLine);
-        SctFreePool (TmpName);
-        return Status;
-      }
-
-      SctFreePool (CmdLine);
-      TmpName[Index] = L'\\';
-    }
-  }
-
-  SctFreePool (TmpName);
-
-  //
-  // Done
-  //
-  return EFI_SUCCESS;
-}
 
 STATIC
 EFI_STATUS
@@ -445,91 +355,297 @@ BackupDirFile (
   return EFI_SUCCESS;
 }
 
+// TODO share this code
+STATIC
+BOOLEAN
+IsDirectory (
+  EFI_FILE_PROTOCOL *File
+  )
+{
+  BOOLEAN        Return;
+  EFI_FILE_INFO *FileInfo;
+  EFI_STATUS     Status;
+
+  Status = SctGetFileInfo ((EFI_FILE_HANDLE) File, &FileInfo);
+  if (EFI_ERROR (Status)) {
+    DEBUG ((EFI_D_ERROR, "IsDirectory(): %r\n", Status));
+    return FALSE;
+  }
+
+  if ((FileInfo->Attribute & EFI_FILE_DIRECTORY) != 0) {
+    Return = TRUE;
+  } else {
+    Return = FALSE;
+  }
+
+  SctFreePool (FileInfo);
+
+  return Return;
+}
+
+STATIC
+EFI_STATUS
+CopyFileWorker (
+  IN EFI_FILE_PROTOCOL *Src,
+  IN EFI_FILE_PROTOCOL *Dst
+  )
+{
+  EFI_STATUS Status;
+  VOID      *Buffer;
+  UINTN      BufferSize;
+
+  // TODO WAT
+  #define BUFFER_SIZE 0x10000
+
+  if (IsDirectory (Src) || IsDirectory (Dst)) {
+    return EFI_INVALID_PARAMETER;
+  }
+
+  Buffer = SctAllocatePool (BUFFER_SIZE);
+  if (Buffer == NULL) {
+    return EFI_OUT_OF_RESOURCES;
+  }
+
+  while (TRUE) {
+    BufferSize = BUFFER_SIZE;
+
+    Status = Src->Read (Src, &BufferSize, Buffer);
+    if (EFI_ERROR (Status)) {
+      break;
+    }
+
+    if (BufferSize == 0) {
+      break;
+    }
+
+    Status = Dst->Write (Dst, &BufferSize, Buffer);
+    if (EFI_ERROR (Status)) {
+      break;
+    }
+  }
+
+  Status = Dst->Flush (Dst);
+
+  SctFreePool (Buffer);
+  return Status;
+}
 
 EFI_STATUS
-CopyDirFile (
-  IN CHAR16             *SrcName,
-  IN CHAR16             *DstName,
-  IN BOOLEAN            Recursive
+CopyFile (
+  IN CHAR16             *SrcFullPath,
+  IN CHAR16             *DstFullPath
+  )
+{
+  EFI_STATUS                       Status;
+  EFI_DEVICE_PATH_PROTOCOL        *DevicePath;
+  CHAR16                          *DstName;
+  EFI_SIMPLE_FILE_SYSTEM_PROTOCOL *Volume;
+  EFI_FILE_PROTOCOL               *DstRoot;
+  EFI_FILE_PROTOCOL               *DstFile;
+  EFI_FILE_PROTOCOL               *SrcFile;
+
+  //
+  // Open the root directory of the destination filesystem
+  //
+  Status = SctGetFilesystemDevicePath (DstFullPath, &DevicePath, &DstName);
+  if (EFI_ERROR (Status)) {
+    return Status;
+  }
+
+  Status = SctDevicePathToInterface (
+             &gEfiSimpleFileSystemProtocolGuid,
+             DevicePath,
+             (VOID **) &Volume
+             );
+  if (EFI_ERROR (Status)) {
+    return Status;
+  }
+
+  Status = Volume->OpenVolume (Volume, &DstRoot);
+  if (EFI_ERROR (Status)) {
+    return Status;
+  }
+
+  // Open/Create the destination file
+  Status = SctCreateFile (DstRoot, DstName, &DstFile);
+
+  //
+  // Open the source file
+  //
+  Status = SctOpenFileByName (SrcFullPath, &SrcFile, EFI_FILE_MODE_READ, 0);
+  if (EFI_ERROR (Status)) {
+    return Status;
+  }
+
+  return CopyFileWorker (SrcFile, DstFile);
+}
+
+/*
+  Helper function to allocate and read an EFI_FILE_INFO out of a directory
+*/
+STATIC
+EFI_STATUS
+ReadDirectoryEntry (
+  IN      EFI_FILE_PROTOCOL *Directory,
+  IN  OUT UINTN             *BufferSize,
+  IN  OUT EFI_FILE_INFO    **FileInfo     OPTIONAL
   )
 {
   EFI_STATUS  Status;
-  EFI_STATUS  CmdStatus;
-  CHAR16      *CmdLine;
-  CHAR16      *PathName;
-  UINTN       Index;
-  UINTN       Length;
 
-  //
-  // Split to the path name
-  //
-  PathName = SctStrDuplicate (DstName);
-  if (PathName == NULL) {
-    return EFI_OUT_OF_RESOURCES;
-  }
-
-  Length   = SctStrLen (PathName);
-
-  // The PathName always starts with 'FS%i:\\'
-  for (Index = 0; Index < Length; Index ++) {
-    if (PathName[Length - Index - 1] == L'\\') {
-      break;
-    }
-  }
-
-  for (Index = Index + 1; Index < Length; Index++) {
-    if (PathName[Length - Index - 1] == L'\\') {
-      PathName[Length - Index - 1] = L'\0';
-      break;
-    }
-  }
-
-  //
-  // Create the parent directory
-  //
-  Status = CreateDir (PathName);
-  if (EFI_ERROR (Status)) {
-    SctFreePool (PathName);
+  Status = Directory->Read (Directory, BufferSize, *FileInfo);
+  if (Status != EFI_BUFFER_TOO_SMALL) {
     return Status;
   }
 
-  SctFreePool (PathName);
+  //
+  // Allocate a new buffer of suitable size
+  //
 
-  //
-  // Create command line to copy it
-  //
-  CmdLine = SctPoolPrint (
-              L"CP %s -q \"%s\" \"%s\"",
-              Recursive ? L"-r" : L"",
-              SrcName,
-              DstName
+  // Free the old buffer if required
+  if (*FileInfo != NULL) {
+    SctFreePool (*FileInfo);
+  }
+
+  *FileInfo = SctAllocatePool (*BufferSize);
+  if (*FileInfo == NULL) {
+    return EFI_OUT_OF_RESOURCES;
+  }
+
+  return Directory->Read (Directory, BufferSize, *FileInfo);
+}
+
+/*
+  Worker function for CopyDir
+*/
+STATIC
+EFI_STATUS
+InternalRecursiveCopy (
+  IN EFI_FILE_PROTOCOL *SrcDir,
+  IN EFI_FILE_PROTOCOL *DstDir
+  )
+{
+  EFI_STATUS         Status;
+  EFI_FILE_PROTOCOL *SubCopyDst;
+  EFI_FILE_PROTOCOL *SubCopySrc;
+  UINTN              BufferSize;
+  EFI_FILE_INFO     *FileInfo;
+
+  BufferSize = 0;
+  FileInfo = NULL;
+
+  // Loop through each file in the subdirectory
+  while (TRUE) {
+    Status = ReadDirectoryEntry (SrcDir, &BufferSize, &FileInfo);
+    if (EFI_ERROR (Status)) {
+      return Status;
+    }
+    if (BufferSize == 0) {
+      break;
+    }
+
+    // Skip "." and ".."
+    if (SctStrCmp (FileInfo->FileName, L".") == 0 ||
+        SctStrCmp (FileInfo->FileName, L"..") == 0) {
+      continue;
+    }
+
+    // Open source file
+    Status = DstDir->Open (
+                       SrcDir,
+                       &SubCopySrc,
+                       FileInfo->FileName,
+                       EFI_FILE_MODE_READ,
+                       0
               );
-  if (CmdLine == NULL) {
-    return EFI_OUT_OF_RESOURCES;
+    ASSERT_EFI_ERROR (Status);
+    if (EFI_ERROR (Status)) {
+      break;
+    }
+
+    // Open/Create destination file
+    Status = DstDir->Open (
+                        DstDir,
+                        &SubCopyDst,
+                        FileInfo->FileName,
+                        EFI_FILE_MODE_READ | EFI_FILE_MODE_WRITE | EFI_FILE_MODE_CREATE,
+                        FileInfo->Attribute
+                        );
+    if (EFI_ERROR (Status)) {
+      break;
   }
 
-  //
-  // Execute shell command
-  //
-  Status = SctShellExecute (
-             &gImageHandle,
-             CmdLine,
-             FALSE,
-             NULL,
-             &CmdStatus
-             );
-  if (EFI_ERROR (Status)) {
-    SctPrint (L"Error: Could not execute \"%s\"\n", CmdLine);
-    SctFreePool (CmdLine);
+    if (FileInfo->Attribute & EFI_FILE_DIRECTORY) {
+      //
+      // Recursively copy subdirectory
+      //
+
+      // The destination file may already have existed. Check it is a directory.
+      if (!IsDirectory (SubCopyDst)) {
+        // File previously existed and wasn't a directory
+        // TODO Handle this
+        DEBUG ((EFI_D_ERROR, "NOPE\n"));
+        Status = EFI_ABORTED;
+        break;
+      }
+
+        DEBUG ((EFI_D_ERROR, "Descending into %s...\n", FileInfo->FileName));
+        InternalRecursiveCopy (SubCopySrc, SubCopyDst);
+        DEBUG ((EFI_D_ERROR, "...Returning from %s\n", FileInfo->FileName));
+      } else {
+        DEBUG ((EFI_D_ERROR, "Copying %s...\n", FileInfo->FileName));
+        CopyFileWorker (SubCopySrc, SubCopyDst);
+      }
+
+      SubCopySrc->Close (SubCopySrc);
+      SubCopyDst->Close (SubCopyDst);
+    }
+
+    SctFreePool (FileInfo);
     return Status;
   }
 
-  SctFreePool (CmdLine);
+/*
+  Recursively copy the contents of the source directory to the destination
+  directory. Equivalent to "cp -r SrcName\* DstName" in the UEFI Shell.
+*/
+EFI_STATUS
+CopyDir (
+  IN CHAR16             *SrcName,
+  IN CHAR16             *DstName
+  )
+{
+  EFI_STATUS                       Status;
+  EFI_FILE_PROTOCOL               *SrcFile;
+  EFI_FILE_PROTOCOL               *DstFile;
 
   //
-  // Done
+  // Open the source and destination files
   //
-  return EFI_SUCCESS;
+
+  Status = SctOpenFileByName (
+                  DstName,
+                  &DstFile,
+                  EFI_FILE_MODE_READ | EFI_FILE_MODE_WRITE | EFI_FILE_MODE_CREATE,
+                  EFI_FILE_DIRECTORY
+                  );
+  if (EFI_ERROR (Status)) {
+    return Status;
+  }
+  Status = SctOpenFileByName (SrcName, &SrcFile, EFI_FILE_MODE_READ, 0);
+  if (EFI_ERROR (Status)) {
+    return Status;
+  }
+
+  // Check both files are directories
+  if (!IsDirectory (SrcFile) || !IsDirectory (DstFile)) {
+    return EFI_INVALID_PARAMETER;
+  }
+
+  DEBUG ((EFI_D_ERROR, "Copying %s to %s\n", SrcName, DstName));
+
+  // Do the recursive copy
+  return InternalRecursiveCopy (SrcFile, DstFile);
 }
 
 EFI_STATUS

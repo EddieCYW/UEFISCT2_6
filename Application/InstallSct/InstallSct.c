@@ -476,31 +476,28 @@ InstallTest (
   )
 {
   EFI_STATUS  Status;
-  CHAR16*     DirName;
+  CHAR16*     TargetDirName;
+  CHAR16*     SourceDirName;
 
-  DirName = SctPoolPrint (L"%s:\\SCT", SctFileVolume->Name);
-  if (DirName == NULL) {
+  TargetDirName = SctPoolPrint (L"%s:\\SCT", SctFileVolume->Name);
+  if (TargetDirName == NULL) {
+    return EFI_OUT_OF_RESOURCES;
+  }
+
+  Status = SctExpandRelativePath (INSTALL_SCT_PLATFORM_NAME, &SourceDirName);
+  if (EFI_ERROR (Status)) {
+    SctFreePool (TargetDirName);
     return EFI_OUT_OF_RESOURCES;
   }
 
   //
   // Copy the EFI SCT Harness
   //
-  Status = CopyDirFile (
-             INSTALL_SCT_PLATFORM_NAME,
-             DirName,
-             TRUE                           // Recursive
-             );
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
+  Status = CopyDir (SourceDirName, TargetDirName);
 
-  SctFreePool (DirName);
-
-  //
-  // Done
-  //
-  return EFI_SUCCESS;
+  SctFreePool (SourceDirName);
+  SctFreePool (TargetDirName);
+  return Status;
 }
 
 
@@ -510,30 +507,33 @@ InstallStartup (
   )
 {
   EFI_STATUS  Status;
-  CHAR16      *FileName;
+  CHAR16      *TargetFileName;
+  CHAR16      *SourceFileName;
 
   //
   // Create the startup file name
   //
-  FileName = SctPoolPrint (L"%s:\\Startup.nsh", SctFileVolume->Name);
-  if (FileName == NULL) {
+  TargetFileName = SctPoolPrint (L"%s:\\Startup.nsh", SctFileVolume->Name);
+  if (TargetFileName == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
 
   //
   // Copy the startup script file
   //
-  Status = CopyDirFile (
-             INSTALL_SCT_STARTUP_FILE,
-             FileName,
-             FALSE                          // Not recursive
-             );
+  Status = SctExpandRelativePath (INSTALL_SCT_STARTUP_FILE, &SourceFileName);
   if (EFI_ERROR (Status)) {
-    SctFreePool (FileName);
+    SctFreePool (TargetFileName);
     return Status;
   }
 
-  SctFreePool (FileName);
+  Status = CopyFile (SourceFileName, TargetFileName);
+  if (EFI_ERROR (Status)) {
+    SctFreePool (TargetFileName);
+    return Status;
+  }
+
+  SctFreePool (TargetFileName);
 
   //
   // Done
