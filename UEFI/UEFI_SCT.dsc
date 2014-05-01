@@ -139,11 +139,11 @@
 # 177:  "function <static function> was declared but never referenced"
   RVCT:*_*_ARM_CC_FLAGS    = --diag_remark=167 --diag_suppress=167,1295,188,550,1,68,111,177
 
-  *_*_AARCH64_CC_FLAGS         = -D EFIARM $(GCC_VER_MACRO)
-  GCC:*_*_AARCH64_CC_FLAGS     = -D EFIARM $(GCC_VER_MACRO) -ffreestanding -nostdinc -nostdlib -Wno-error=unused-function -Wno-error=unused-but-set-variable -Wno-error
-  *_*_AARCH64_VFRPP_FLAGS      = -D EFIARM $(GCC_VER_MACRO)
-  *_*_AARCH64_APP_FLAGS        = -D EFIARM $(GCC_VER_MACRO)
-  *_*_AARCH64_PP_FLAGS         = -D EFIARM $(GCC_VER_MACRO)
+  *_*_AARCH64_CC_FLAGS         = -D EFIAARCH64 -I$(WORKSPACE)/MdePkg/Include/AArch64 $(GCC_VER_MACRO)
+  GCC:*_*_AARCH64_CC_FLAGS     = -D EFIAARCH64 $(GCC_VER_MACRO) -ffreestanding -nostdinc -nostdlib -Wno-error=unused-function -Wno-error=unused-but-set-variable -Wno-error
+  *_*_AARCH64_VFRPP_FLAGS      = -D EFIAARCH64 $(GCC_VER_MACRO)
+  *_*_AARCH64_APP_FLAGS        = -D EFIAARCH64 $(GCC_VER_MACRO)
+  *_*_AARCH64_PP_FLAGS         = -D EFIAARCH64 $(GCC_VER_MACRO)
   RVCT:*_*_AARCH64_DLINK_FLAGS = --muldefweak
 
   DEBUG_*_*_CC_FLAGS  = -DEFI_DEBUG

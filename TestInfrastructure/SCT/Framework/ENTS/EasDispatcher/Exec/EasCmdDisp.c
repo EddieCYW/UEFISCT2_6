@@ -59,7 +59,7 @@ Abstract:
 #include "Eas.h"
 #include "Cpu.h"
 
-#ifndef EFIARM
+#if !defined(EFIARM) & !defined(EFIAARCH64)
 #include "CpuFuncs.h"
 #endif
 
@@ -1080,7 +1080,7 @@ Returns:
       //
       // It is an application
       //
-#ifdef EFIARM
+#if defined(EFIARM) | defined(EFIAARCH64)
       StartTick = 0;
 #else 
       StartTick = EfiReadTsc ();
@@ -1090,7 +1090,7 @@ Returns:
                     &ExitDataSize,
                     &ExitData
                     );
-#ifdef EFIARM
+#if defined(EFIARM) | defined(EFIAARCH64)
       StopTick = 0;
 #else 
       StopTick = EfiReadTsc ();
@@ -1185,13 +1185,13 @@ Returns:
   //
   // Call the entry point
   //
-#ifdef EFIARM
+#if defined(EFIARM) | defined(EFIAARCH64)
       StartTick = 0;
 #else 
       StartTick = EfiReadTsc ();
 #endif
   TestStatus  = EntsInterface->EntsInterfaceEntry (EntsProtocol->ClientInterface);
-#ifdef EFIARM
+#if defined(EFIARM) | defined(EFIAARCH64)
       StopTick = 0;
 #else 
       StopTick = EfiReadTsc ();
