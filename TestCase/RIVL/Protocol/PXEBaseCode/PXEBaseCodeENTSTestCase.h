@@ -56,6 +56,7 @@ Abstract:
 #ifndef _PXEBASECODE_ENTS_TESTCASE_H_
 #define _PXEBASECODE_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
 

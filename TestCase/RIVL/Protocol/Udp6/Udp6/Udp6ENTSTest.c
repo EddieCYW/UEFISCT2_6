@@ -53,8 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
-#include "SctLib.h"
 #include "Udp6ENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
@@ -146,7 +144,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
         );
 
@@ -163,7 +161,7 @@ Returns:
 
   gUdp6EntsProtocolInterface->ClientName        = gUdp6ProtocolName;
   gUdp6EntsProtocolInterface->ClientAttribute   = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL_SERVICE_BINDING_RELATED;
-  gUdp6EntsProtocolInterface->ClientGuid        = &gEfiUdp6ProtocolGuid;
+  gUdp6EntsProtocolInterface->ClientGuid        = &gBlackBoxEfiUdp6ProtocolGuid;
   gUdp6EntsProtocolInterface->ClientHandle      = NULL;
   gUdp6EntsProtocolInterface->ClientInterface   = NULL;
   gUdp6EntsProtocolInterface->EntsInterfaceList = gUdp6EntsInterfaceList;

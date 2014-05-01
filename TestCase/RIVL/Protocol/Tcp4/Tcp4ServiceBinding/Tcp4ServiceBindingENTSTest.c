@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Tcp4ServiceBindingENTSTestCase.h"
 
 static CHAR16     gTcp4ServiceBindingProtocolName[] = L"Tcp4ServiceBinding";
@@ -115,7 +114,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -131,7 +130,7 @@ Returns:
   }
 
   Status = EntsNetworkServiceBindingGetControllerHandle (
-             &gEfiTcp4ServiceBindingProtocolGuid, 
+             &gBlackBoxEfiTcp4ServiceBindingProtocolGuid,
              &ClientHandle
              );
   if (EFI_ERROR(Status)) {
@@ -140,7 +139,7 @@ Returns:
 
   gTcp4ServiceBindingEntsProtocolInterface->ClientName        = gTcp4ServiceBindingProtocolName;
   gTcp4ServiceBindingEntsProtocolInterface->ClientAttribute   = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
-  gTcp4ServiceBindingEntsProtocolInterface->ClientGuid        = &gEfiTcp4ServiceBindingProtocolGuid;
+  gTcp4ServiceBindingEntsProtocolInterface->ClientGuid        = &gBlackBoxEfiTcp4ServiceBindingProtocolGuid;
   gTcp4ServiceBindingEntsProtocolInterface->ClientHandle      = ClientHandle;
   gTcp4ServiceBindingEntsProtocolInterface->ClientInterface   = NULL;
   gTcp4ServiceBindingEntsProtocolInterface->EntsInterfaceList = gTcp4ServiceBindingEntsInterfaceList;

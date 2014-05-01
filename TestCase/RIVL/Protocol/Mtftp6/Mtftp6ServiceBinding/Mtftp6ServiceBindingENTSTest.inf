@@ -55,29 +55,34 @@
 #
 #--*/
 
-[Defines]
-  INF_VERSION          = 0x00010005
-  BASE_NAME            = Mtftp6ServiceBinding_ENTSTest
-  FILE_GUID            = 2D4A55D8-17E4-462e-8327-478D5BD6DA5C
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = Mtftp6ServiceBindingENTSTestMain
+[defines]
+BASE_NAME            = Mtftp6ServiceBinding_ENTSTest
+FILE_GUID            = 2D4A55D8-17E4-462e-8327-478D5BD6DA5C
+COMPONENT_TYPE       = BS_DRIVER
 
-[Sources.common]
+[sources.common]
   Mtftp6ServiceBindingENTSTest.c
   Mtftp6ServiceBindingENTSTestCase.h
   Mtftp6ServiceBindingENTSTestCase.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
-  SctPkg/UEFI/UEFI.dec
+[includes.common]
+  .
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
+  $(WORKSPACE)/MdePkg/Include
 
-[LibraryClasses]
-  UefiDriverEntryPoint
+[libraries.common]
   SctLib
+  SctGuidLib
   EfiTestLib
   EntsLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
-[Protocols]
-  gEfiEntsProtocolGuid
+[nmake.common]
+  C_STD_INCLUDE=
+  IMAGE_ENTRY_POINT=Mtftp6ServiceBindingENTSTestMain
+

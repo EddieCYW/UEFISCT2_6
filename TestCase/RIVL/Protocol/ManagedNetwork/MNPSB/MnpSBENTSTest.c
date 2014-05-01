@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "MnpSBENTSTestCase.h"
 
 static CHAR16     gMnpServiceBindingProtocolName[] = L"MnpServiceBinding";
@@ -115,7 +114,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -131,7 +130,7 @@ Returns:
   }
 
   Status = EntsNetworkServiceBindingGetControllerHandle (
-             &gEfiManagedNetworkServiceBindingProtocolGuid, 
+             &gBlackBoxEfiManagedNetworkServiceBindingProtocolGuid,
              &ClientHandle
              );
   if (EFI_ERROR(Status)) {
@@ -141,7 +140,7 @@ Returns:
   gMnpServiceBindingEntsProtocolInterface->ClientName         = gMnpServiceBindingProtocolName;
   gMnpServiceBindingEntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
   gMnpServiceBindingEntsProtocolInterface->ClientHandle       = ClientHandle;
-  gMnpServiceBindingEntsProtocolInterface->ClientGuid         = &gEfiManagedNetworkServiceBindingProtocolGuid;
+  gMnpServiceBindingEntsProtocolInterface->ClientGuid         = &gBlackBoxEfiManagedNetworkServiceBindingProtocolGuid;
   gMnpServiceBindingEntsProtocolInterface->ClientInterface    = NULL;
   gMnpServiceBindingEntsProtocolInterface->EntsInterfaceList  = gMnpServiceBindingEntsInterfaceList;
   gMnpServiceBindingEntsProtocolInterface->RuntimeInfo        = gMnpServiceBindingRuntimeInfo;

@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Dhcp4ENTSTestCase.h"
 
 static CHAR16     gDhcp4ProtocolName[] = L"Dhcp4";
@@ -149,7 +148,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -167,7 +166,7 @@ Returns:
   gDhcp4EntsProtocolInterface->ClientName         = gDhcp4ProtocolName;
   gDhcp4EntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL_SERVICE_BINDING_RELATED;
   gDhcp4EntsProtocolInterface->ClientHandle       = NULL;
-  gDhcp4EntsProtocolInterface->ClientGuid         = &gEfiDhcp4ProtocolGuid;
+  gDhcp4EntsProtocolInterface->ClientGuid         = &gBlackBoxEfiDhcp4ProtocolGuid;
   gDhcp4EntsProtocolInterface->ClientInterface    = NULL;
   gDhcp4EntsProtocolInterface->EntsInterfaceList  = gDhcp4EntsInterfaceList;
   gDhcp4EntsProtocolInterface->RuntimeInfo        = gDhcp4RuntimeInfo;

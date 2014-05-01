@@ -53,8 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
-#include "SctLib.h"
 #include "Ip6ENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
@@ -151,7 +149,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -168,7 +166,7 @@ Returns:
 
   gIp6EntsProtocolInterface->ClientName         = gIp6ProtocolName;
   gIp6EntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL_SERVICE_BINDING_RELATED;
-  gIp6EntsProtocolInterface->ClientGuid         = &gEfiIp6ProtocolGuid;
+  gIp6EntsProtocolInterface->ClientGuid         = &gBlackBoxEfiIp6ProtocolGuid;
   gIp6EntsProtocolInterface->ClientHandle       = NULL;
   gIp6EntsProtocolInterface->ClientInterface    = NULL;
   gIp6EntsProtocolInterface->EntsInterfaceList  = gIp6EntsInterfaceList;

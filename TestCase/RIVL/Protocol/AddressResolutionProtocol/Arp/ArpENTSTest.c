@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "ArpENTSTestCase.h"
 
 static CHAR16     gArpProtocolName[] = L"Arp";
@@ -139,7 +138,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -156,7 +155,7 @@ Returns:
 
   gArpEntsProtocolInterface->ClientName         = gArpProtocolName;
   gArpEntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL_SERVICE_BINDING_RELATED;
-  gArpEntsProtocolInterface->ClientGuid         = &gEfiArpProtocolGuid;
+  gArpEntsProtocolInterface->ClientGuid         = &gBlackBoxEfiArpProtocolGuid;
   gArpEntsProtocolInterface->ClientHandle       = NULL;
   gArpEntsProtocolInterface->ClientInterface    = NULL;
   gArpEntsProtocolInterface->EntsInterfaceList  = gArpEntsInterfaceList;

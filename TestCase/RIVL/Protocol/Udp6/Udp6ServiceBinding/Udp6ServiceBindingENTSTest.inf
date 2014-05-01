@@ -56,28 +56,32 @@
 #--*/
 
 [Defines]
-  INF_VERSION          = 0x00010005
-  BASE_NAME            = Udp6ServiceBinding_ENTSTest
-  FILE_GUID            = D19405F6-7886-4cb2-9334-EF1188CDC401
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = Udp6ServiceBindingENTSTestMain
+BASE_NAME            = Udp6ServiceBinding_ENTSTest
+FILE_GUID            = D19405F6-7886-4cb2-9334-EF1188CDC401
+COMPONENT_TYPE       = BS_DRIVER
 
 [Sources.common]
   Udp6ServiceBindingENTSTest.c
   Udp6ServiceBindingENTSTestCase.h
   Udp6ServiceBindingENTSTestCase.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
-  SctPkg/UEFI/UEFI.dec
+[includes.common]
+  .
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
+  $(WORKSPACE)/MdePkg/Include
 
-[LibraryClasses]
-  UefiDriverEntryPoint
+[libraries.common]
   SctLib
+  SctGuidLib
   EfiTestLib
   EntsLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
-[Protocols]
-  gEfiEntsProtocolGuid
+[nmake.common]
+  C_STD_INCLUDE=
+  IMAGE_ENTRY_POINT=Udp6ServiceBindingENTSTestMain

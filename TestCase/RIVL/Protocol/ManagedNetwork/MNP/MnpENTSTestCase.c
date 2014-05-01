@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "MnpENTSTestCase.h"
 
 typedef struct _MNP_TEST_RXINFO {
@@ -140,7 +139,7 @@ Returns:
 // Mnp.GetModeData
 //
 static EFI_MANAGED_NETWORK_CONFIG_DATA  *MnpGetModeDataConfigData;
-static EFI_SIMPLE_NETWORK_MODE_DATA     *SnpGetModeDataModeData;
+static EFI_SIMPLE_NETWORK_MODE          *SnpGetModeDataModeData;
 static EFI_STATUS                       *MnpGetModeDataStatus;
 
 ENTS_ARG_FIELD                          gMnpGetModeDataArgField[] = {

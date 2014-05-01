@@ -53,13 +53,9 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
-#include "SctLib.h"
 #include "Dhcp6ENTSTestCase.h"
 #include "EfiTest.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
-
-EFI_GUID gEfiDhcp6ProtocolGuid=EFI_DHCP6_PROTOCOL_GUID;
 
 static CHAR16     gDhcp6ProtocolName[] = L"Dhcp6";
 
@@ -154,7 +150,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -172,7 +168,7 @@ Returns:
   gDhcp6EntsProtocolInterface->ClientName         = gDhcp6ProtocolName;
   gDhcp6EntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL_SERVICE_BINDING_RELATED;
   gDhcp6EntsProtocolInterface->ClientHandle       = NULL;
-  gDhcp6EntsProtocolInterface->ClientGuid         = &gEfiDhcp6ProtocolGuid;
+  gDhcp6EntsProtocolInterface->ClientGuid         = &gBlackBoxEfiDhcp6ProtocolGuid;
   gDhcp6EntsProtocolInterface->ClientInterface    = NULL;
   gDhcp6EntsProtocolInterface->EntsInterfaceList  = gDhcp6EntsInterfaceList;
   gDhcp6EntsProtocolInterface->RuntimeInfo        = gDhcp6RuntimeInfo;

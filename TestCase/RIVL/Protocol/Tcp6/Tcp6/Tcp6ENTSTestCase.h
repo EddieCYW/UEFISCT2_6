@@ -56,15 +56,16 @@ Abstract:
 #ifndef _TCP6_ENTS_TESTCASE_H_
 #define _TCP6_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "EfiTest.h"
 #include EFI_TEST_PROTOCOL_DEFINITION(EntsProtocol)
 #include "Eas.h"
 #include <Library/EntsLib.h>
 #include <UEFI/Protocol/SimpleNetwork.h>
-#include "ManagedNetwork.h"
-#include "Ip6.h"
-#include "Tcp6.h"
+#include <UEFI/Protocol/ManagedNetwork.h>
+#include <UEFI/Protocol/Ip6.h>
+#include <UEFI/Protocol/Tcp6.h>
 
 EFI_STATUS
 Tcp6GetModeData_EntsTest (

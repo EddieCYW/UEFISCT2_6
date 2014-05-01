@@ -56,12 +56,16 @@ Abstract:
 #ifndef _UDP6_SERVICE_BINDING_ENTS_TESTCASE_H_
 #define _UDP6_SERVICE_BINDING_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "EfiTest.h"
 #include EFI_TEST_PROTOCOL_DEFINITION(EntsProtocol)
 #include "Eas.h"
 #include <Library/EntsLib.h>
-#include "Udp6.h"
+#include <UEFI/Protocol/Udp6.h>
+#include <Protocol/ServiceBinding.h>
+
+typedef EFI_SERVICE_BINDING_PROTOCOL EFI_UDP6_SERVICE_BINDING_PROTOCOL;
 
 EFI_STATUS
 Udp6ServiceBindingCreateChild_EntsTest (

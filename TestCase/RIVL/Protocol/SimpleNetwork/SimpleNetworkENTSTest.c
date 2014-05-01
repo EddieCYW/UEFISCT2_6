@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "SimpleNetworkENTSTestCase.h"
 
 static CHAR16     gSimpleNetworkProtocolName[]      = L"SimpleNetwork";
@@ -102,7 +101,7 @@ ENTS_INTERFACE    gSimpleNetworkEntsInterfaceList[] = {
     gSimpleNetworkStatisticsArgField
   },
   {
-    L"MCastIPtoMAC",
+    L"MCastIpToMac",
     SimpleNetworkMCastIPToMAC_EntsTest,
     gSimpleNetworkMCastIPToMACArgField
   },
@@ -188,7 +187,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
         );
 
@@ -205,7 +204,7 @@ Returns:
 
   gSimpleNetworkEntsProtocolInterface->ClientName         = gSimpleNetworkProtocolName;
   gSimpleNetworkEntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
-  gSimpleNetworkEntsProtocolInterface->ClientGuid         = &gEfiSimpleNetworkProtocolGuid;
+  gSimpleNetworkEntsProtocolInterface->ClientGuid         = &gBlackBoxEfiSimpleNetworkProtocolGuid;
   gSimpleNetworkEntsProtocolInterface->ClientHandle       = NULL;
   gSimpleNetworkEntsProtocolInterface->ClientInterface    = NULL;
   gSimpleNetworkEntsProtocolInterface->EntsInterfaceList  = gSimpleNetworkEntsInterfaceList;

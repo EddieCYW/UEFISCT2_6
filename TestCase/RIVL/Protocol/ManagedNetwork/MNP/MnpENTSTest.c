@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "MnpENTSTestCase.h"
 
 static CHAR16     gMnpProtocolName[] = L"Mnp";
@@ -159,7 +158,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -177,7 +176,7 @@ Returns:
   gMnpEntsProtocolInterface->ClientName         = gMnpProtocolName;
   gMnpEntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL_SERVICE_BINDING_RELATED;
   gMnpEntsProtocolInterface->ClientHandle       = NULL;
-  gMnpEntsProtocolInterface->ClientGuid         = &gEfiManagedNetworkProtocolGuid;
+  gMnpEntsProtocolInterface->ClientGuid         = &gBlackBoxEfiManagedNetworkProtocolGuid;
   gMnpEntsProtocolInterface->ClientInterface    = NULL;
   gMnpEntsProtocolInterface->EntsInterfaceList  = gMnpEntsInterfaceList;
   gMnpEntsProtocolInterface->RuntimeInfo        = gMnpRuntimeInfo;

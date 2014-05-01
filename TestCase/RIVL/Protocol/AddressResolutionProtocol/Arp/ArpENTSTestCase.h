@@ -56,9 +56,10 @@ Abstract:
 #ifndef _ARP_ENTS_TESTCASE_H_
 #define _ARP_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
-#include "Arp.h"
+#include <UEFI/Protocol/Arp.h>
 
 EFI_STATUS
 ArpConfig_EntsTest (

@@ -55,9 +55,10 @@ Abstract:
 #ifndef _MTFTP4_SERVICE_BINDING_ENTS_TESTCASE_H_
 #define _MTFTP4_SERVICE_BINDING_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
-#include "Mtftp4.h"
+#include <UEFI/Protocol/Mtftp4.h>
 
 EFI_STATUS
 Mtftp4ServiceBindingCreateChild_EntsTest (

@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Tcp4ENTSTestCase.h"
 
 static CHAR16     gTcp4ProtocolName[]       = L"Tcp4";
@@ -154,7 +153,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
         );
 
@@ -171,7 +170,7 @@ Returns:
 
   gTcp4EntsProtocolInterface->ClientName        = gTcp4ProtocolName;
   gTcp4EntsProtocolInterface->ClientAttribute   = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL_SERVICE_BINDING_RELATED;
-  gTcp4EntsProtocolInterface->ClientGuid        = &gEfiTcp4ProtocolGuid;
+  gTcp4EntsProtocolInterface->ClientGuid        = &gBlackBoxEfiTcp4ProtocolGuid;
   gTcp4EntsProtocolInterface->ClientHandle      = NULL;
   gTcp4EntsProtocolInterface->ClientInterface   = NULL;
   gTcp4EntsProtocolInterface->EntsInterfaceList = gTcp4EntsInterfaceList;

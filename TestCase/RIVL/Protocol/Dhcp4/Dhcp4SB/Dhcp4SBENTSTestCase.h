@@ -56,9 +56,10 @@ Abstract:
 #ifndef _MANAGEDNETWORK_SB_ENTS_TESTCASE_H_
 #define _MANAGEDNETWORK_SB_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
-#include "Dhcp4.h"
+#include <UEFI/Protocol/Dhcp4.h>
 
 EFI_STATUS
 Dhcp4CreateChild_EntsTest (

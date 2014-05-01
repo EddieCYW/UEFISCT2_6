@@ -55,29 +55,33 @@
 #
 #--*/
 
-[Defines]
-  INF_VERSION          = 0x00010005
-  BASE_NAME            = Ip4_ENTSTest
-  FILE_GUID            = 9F825126-F495-4488-B784-DA04C5EC396B
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = Ip4ENTSTestMain
+[defines]
+BASE_NAME            = Ip4_ENTSTest
+FILE_GUID            = 9F825126-F495-4488-B784-DA04C5EC396B
+COMPONENT_TYPE       = BS_DRIVER
 
-[Sources.common]
+[sources.common]
   Ip4ENTSTest.c
   Ip4ENTSTestCase.h
   Ip4ENTSTestCase.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
-  SctPkg/UEFI/UEFI.dec
+[includes.common]
+  .
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
+  $(WORKSPACE)/MdePkg/Include
 
-[LibraryClasses]
-  UefiDriverEntryPoint
+[libraries.common]
   SctLib
+  SctGuidLib
   EfiTestLib
   EntsLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
-[Protocols]
-  gEfiEntsProtocolGuid
+[nmake.common]
+  C_STD_INCLUDE=
+  IMAGE_ENTRY_POINT=Ip4ENTSTestMain

@@ -56,9 +56,10 @@ Abstract:
 #ifndef _TCP4_ENTS_TESTCASE_H_
 #define _TCP4_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
-#include "Tcp4.h"
+#include <UEFI/Protocol/Tcp4.h>
 
 EFI_STATUS
 Tcp4GetModeData_EntsTest (

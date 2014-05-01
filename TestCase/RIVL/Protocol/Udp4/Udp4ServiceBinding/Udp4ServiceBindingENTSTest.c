@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Udp4ServiceBindingENTSTestCase.h"
 
 static CHAR16     gUdp4ServiceBindingProtocolName[] = L"Udp4ServiceBinding";
@@ -115,7 +114,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
         );
 
@@ -131,7 +130,7 @@ Returns:
   }
 
   Status = EntsNetworkServiceBindingGetControllerHandle (
-             &gEfiUdp4ServiceBindingProtocolGuid, 
+             &gBlackBoxEfiUdp4ServiceBindingProtocolGuid,
              &ClientHandle
              );
   if (EFI_ERROR(Status)) {
@@ -140,7 +139,7 @@ Returns:
 
   gUdp4ServiceBindingEntsProtocolInterface->ClientName        = gUdp4ServiceBindingProtocolName;
   gUdp4ServiceBindingEntsProtocolInterface->ClientAttribute   = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
-  gUdp4ServiceBindingEntsProtocolInterface->ClientGuid        = &gEfiUdp4ServiceBindingProtocolGuid;
+  gUdp4ServiceBindingEntsProtocolInterface->ClientGuid        = &gBlackBoxEfiUdp4ServiceBindingProtocolGuid;
   gUdp4ServiceBindingEntsProtocolInterface->ClientHandle      = ClientHandle;
   gUdp4ServiceBindingEntsProtocolInterface->ClientInterface   = NULL;
   gUdp4ServiceBindingEntsProtocolInterface->EntsInterfaceList = gUdp4ServiceBindingEntsInterfaceList;

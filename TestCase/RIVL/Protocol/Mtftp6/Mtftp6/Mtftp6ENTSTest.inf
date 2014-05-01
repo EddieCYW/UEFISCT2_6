@@ -55,29 +55,33 @@
 #
 #--*/
 
-[Defines]
-  INF_VERSION          = 0x00010005
-  BASE_NAME            = Mtftp6_ENTSTest
-  FILE_GUID            = 62D93034-AC9D-443e-B6E5-D92C7A03D09A
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = Mtftp6ENTSTestMain
+[defines]
+BASE_NAME            = Mtftp6_ENTSTest
+FILE_GUID            = 62D93034-AC9D-443e-B6E5-D92C7A03D09A
+COMPONENT_TYPE       = BS_DRIVER
 
-[Sources.common]
+[sources.common]
   Mtftp6ENTSTest.c
   Mtftp6ENTSTestCase.c
   Mtftp6ENTSTestCase.h
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
-  SctPkg/UEFI/UEFI.dec
+[includes.common]
+  .
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
+  $(WORKSPACE)/MdePkg/Include
 
-[LibraryClasses]
-  UefiDriverEntryPoint
+[libraries.common]
   SctLib
+  SctGuidLib
   EfiTestLib
   EntsLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
-[Protocols]
-  gEfiEntsProtocolGuid
+[nmake.common]
+  C_STD_INCLUDE=
+  IMAGE_ENTRY_POINT=Mtftp6ENTSTestMain

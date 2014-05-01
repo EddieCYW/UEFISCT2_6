@@ -55,29 +55,35 @@
 #
 #--*/
 
-[Defines]
-  INF_VERSION          = 0x00010005
-  BASE_NAME            = Ip6_ENTSTest
-  FILE_GUID            = 22A3B176-E8B9-43b7-B130-32FE26F72739
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = Ip6ENTSTestMain
+[defines]
+BASE_NAME            = Ip6_ENTSTest
+FILE_GUID            = 22A3B176-E8B9-43b7-B130-32FE26F72739                       
 
-[Sources.common]
+COMPONENT_TYPE       = BS_DRIVER
+
+[sources.common]
   Ip6ENTSTest.c
   Ip6ENTSTestCase.h
   Ip6ENTSTestCase.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
-  SctPkg/UEFI/UEFI.dec
+[includes.common]
+  .
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
+  $(WORKSPACE)/MdePkg/Include
 
-[LibraryClasses]
-  UefiDriverEntryPoint
+[libraries.common]
   SctLib
+  SctGuidLib
   EfiTestLib
   EntsLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
-[Protocols]
-  gEfiEntsProtocolGuid
+[nmake.common]
+  C_STD_INCLUDE=
+  IMAGE_ENTRY_POINT=Ip6ENTSTestMain
+

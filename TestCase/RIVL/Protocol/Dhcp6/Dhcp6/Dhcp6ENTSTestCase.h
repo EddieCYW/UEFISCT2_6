@@ -56,12 +56,13 @@ Abstract:
 #ifndef _DHCP6_ENTS_TESTCASE_H_
 #define _DHCP6_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "EfiTest.h"
 #include EFI_TEST_PROTOCOL_DEFINITION(EntsProtocol)
 #include "Eas.h"
 #include <Library/EntsLib.h>
-#include "Dhcp6.h"
+#include <UEFI/Protocol/Dhcp6.h>
 
 EFI_STATUS
 Dhcp6Config_EntsTest (

@@ -56,12 +56,13 @@ Abstract:
 #ifndef _MTFTP6_ENTS_TESTCASE_H_
 #define _MTFTP6_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "EfiTest.h"
 #include EFI_TEST_PROTOCOL_DEFINITION(EntsProtocol)
 #include "Eas.h"
 #include <Library/EntsLib.h>
-#include "Mtftp6.h"
+#include <UEFI/Protocol/Mtftp6.h>
 
 EFI_STATUS
 Mtftp6GetModeData_EntsTest (

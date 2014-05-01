@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Mtftp4ServiceBindingENTSTestCase.h"
 
 static CHAR16     gMtftp4ServiceBindingProtocolName[] = L"Mtftp4ServiceBinding";
@@ -115,7 +114,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -131,7 +130,7 @@ Returns:
   }
 
   Status = EntsNetworkServiceBindingGetControllerHandle (
-             &gEfiMtftp4ServiceBindingProtocolGuid, 
+             &gBlackBoxEfiMtftp4ServiceBindingProtocolGuid,
              &ClientHandle
              );
   if (EFI_ERROR(Status)) {
@@ -140,7 +139,7 @@ Returns:
 
   gMtftp4ServiceBindingEntsProtocolInterface->ClientName        = gMtftp4ServiceBindingProtocolName;
   gMtftp4ServiceBindingEntsProtocolInterface->ClientAttribute   = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
-  gMtftp4ServiceBindingEntsProtocolInterface->ClientGuid        = &gEfiMtftp4ServiceBindingProtocolGuid;
+  gMtftp4ServiceBindingEntsProtocolInterface->ClientGuid        = &gBlackBoxEfiMtftp4ServiceBindingProtocolGuid;
   gMtftp4ServiceBindingEntsProtocolInterface->ClientHandle      = ClientHandle;
   gMtftp4ServiceBindingEntsProtocolInterface->ClientInterface   = NULL;
   gMtftp4ServiceBindingEntsProtocolInterface->EntsInterfaceList = gMtftp4ServiceBindingEntsInterfaceList;

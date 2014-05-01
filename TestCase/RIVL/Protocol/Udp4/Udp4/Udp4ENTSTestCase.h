@@ -56,9 +56,10 @@ Abstract:
 #ifndef _UDP4_ENTS_TESTCASE_H_
 #define _UDP4_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
-#include "Udp4.h"
+#include <UEFI/Protocol/Udp4.h>
 
 EFI_STATUS
 Udp4GetModeData_EntsTest (

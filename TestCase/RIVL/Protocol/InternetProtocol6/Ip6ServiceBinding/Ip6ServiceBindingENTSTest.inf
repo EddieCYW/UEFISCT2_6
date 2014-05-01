@@ -55,29 +55,35 @@
 #
 #--*/
 
-[Defines]
-  INF_VERSION          = 0x00010005
-  BASE_NAME            = Ip6ServiceBinding_ENTSTest
-  FILE_GUID            = D2AA81EA-1A54-4d17-B03D-719F5C60A6EC
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = Ip6ServiceBindingENTSTestMain
+[defines]
+BASE_NAME            = Ip6ServiceBinding_ENTSTest
+FILE_GUID            = D2AA81EA-1A54-4d17-B03D-719F5C60A6EC                       
 
-[Sources.common]
+COMPONENT_TYPE       = BS_DRIVER
+
+[sources.common]
   Ip6ServiceBindingENTSTest.c
   Ip6ServiceBindingENTSTestCase.h
   Ip6ServiceBindingENTSTestCase.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
-  SctPkg/UEFI/UEFI.dec
+[includes.common]
+  .
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
+  $(WORKSPACE)/MdePkg/Include
 
-[LibraryClasses]
-  UefiDriverEntryPoint
+[libraries.common]
   SctLib
+  SctGuidLib
   EfiTestLib
   EntsLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
-[Protocols]
-  gEfiEntsProtocolGuid
+[nmake.common]
+  C_STD_INCLUDE=
+  IMAGE_ENTRY_POINT=Ip6ServiceBindingENTSTestMain
+

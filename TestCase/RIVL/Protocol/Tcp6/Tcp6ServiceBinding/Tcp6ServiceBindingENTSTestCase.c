@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Tcp6ServiceBindingENTSTestCase.h"
 
 //

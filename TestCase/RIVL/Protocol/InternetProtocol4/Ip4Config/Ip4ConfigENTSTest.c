@@ -53,8 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
-//#include "SctLib.h"
 #include "Ip4ConfigENTSTestCase.h"
 //#include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
@@ -121,7 +119,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -138,7 +136,7 @@ Returns:
 
   gIp4ConfigEntsProtocolInterface->ClientName         = gIp4ConfigProtocolName;
   gIp4ConfigEntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
-  gIp4ConfigEntsProtocolInterface->ClientGuid         = &gEfiIp4ConfigProtocolGuid;
+  gIp4ConfigEntsProtocolInterface->ClientGuid         = &gBlackBoxEfiIp4ConfigProtocolGuid;
   gIp4ConfigEntsProtocolInterface->ClientHandle       = NULL;
   gIp4ConfigEntsProtocolInterface->ClientInterface    = NULL;
   gIp4ConfigEntsProtocolInterface->EntsInterfaceList  = gIp4ConfigEntsInterfaceList;

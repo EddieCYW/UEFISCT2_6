@@ -56,9 +56,13 @@ Abstract:
 #ifndef _UDP4_SERVICE_BINDING_ENTS_TESTCASE_H_
 #define _UDP4_SERVICE_BINDING_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
-#include "Udp4.h"
+#include <UEFI/Protocol/Udp4.h>
+#include <Protocol/ServiceBinding.h>
+
+typedef EFI_SERVICE_BINDING_PROTOCOL EFI_UDP4_SERVICE_BINDING_PROTOCOL;
 
 EFI_STATUS
 Udp4ServiceBindingCreateChild_EntsTest (

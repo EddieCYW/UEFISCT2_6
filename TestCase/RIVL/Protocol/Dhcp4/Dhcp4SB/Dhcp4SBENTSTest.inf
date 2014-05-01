@@ -55,28 +55,32 @@
 #
 #--*/
 
-[Defines]
-  INF_VERSION          = 0x00010005
-  BASE_NAME            = Dhcp4SB_ENTSTest
-  FILE_GUID            = 5F442A3D-AA4A-4d10-A30C-7BC57283D730
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = Dhcp4SBENTSTestMain
+[defines]
+BASE_NAME            = Dhcp4SB_ENTSTest
+FILE_GUID            = 5F442A3D-AA4A-4d10-A30C-7BC57283D730
+COMPONENT_TYPE       = BS_DRIVER
 
-[Sources.common]
+[sources.common]
   Dhcp4SBENTSTest.c
   Dhcp4SBENTSTestCase.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
-  SctPkg/UEFI/UEFI.dec
+[includes.common]
+  .
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
+  $(WORKSPACE)/MdePkg/Include
 
-[LibraryClasses]
-  UefiDriverEntryPoint
+[libraries.common]
   SctLib
+  SctGuidLib
   EfiTestLib
   EntsLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
-[Protocols]
-  gEfiEntsProtocolGuid
+[nmake.common]
+  C_STD_INCLUDE=
+  IMAGE_ENTRY_POINT=Dhcp4SBENTSTestMain

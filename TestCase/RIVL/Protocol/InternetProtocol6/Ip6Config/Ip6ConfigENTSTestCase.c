@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Ip6ConfigENTSTestCase.h"
 //
 // Ip6Config.SetData

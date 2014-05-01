@@ -56,9 +56,10 @@ Abstract:
 #ifndef _MANAGEDNETWORK_ENTS_TESTCASE_H_
 #define _MANAGEDNETWORK_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
-#include "ManagedNetwork.h"
+#include <UEFI/Protocol/ManagedNetwork.h>
 
 EFI_STATUS
 MnpConfig_EntsTest (

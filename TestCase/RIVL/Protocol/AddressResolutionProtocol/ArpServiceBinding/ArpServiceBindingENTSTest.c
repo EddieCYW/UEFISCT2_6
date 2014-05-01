@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "ArpServiceBindingENTSTestCase.h"
 
 static CHAR16     gArpServiceBindingProtocolName[] = L"ArpServiceBinding";
@@ -115,7 +114,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -131,7 +130,7 @@ Returns:
   }
 
   Status = EntsNetworkServiceBindingGetControllerHandle (
-             &gEfiArpServiceBindingProtocolGuid, 
+             &gBlackBoxEfiArpServiceBindingProtocolGuid,
              &ClientHandle
              );
   if (EFI_ERROR(Status)) {
@@ -140,7 +139,7 @@ Returns:
 
   gArpServiceBindingEntsProtocolInterface->ClientName         = gArpServiceBindingProtocolName;
   gArpServiceBindingEntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
-  gArpServiceBindingEntsProtocolInterface->ClientGuid         = &gEfiArpServiceBindingProtocolGuid;
+  gArpServiceBindingEntsProtocolInterface->ClientGuid         = &gBlackBoxEfiArpServiceBindingProtocolGuid;
   gArpServiceBindingEntsProtocolInterface->ClientHandle       = ClientHandle;
   gArpServiceBindingEntsProtocolInterface->ClientInterface    = NULL;
   gArpServiceBindingEntsProtocolInterface->EntsInterfaceList  = gArpServiceBindingEntsInterfaceList;

@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Ip4ENTSTestCase.h"
 
 static CHAR16     gIp4ProtocolName[] = L"Ip4";
@@ -144,7 +143,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -161,7 +160,7 @@ Returns:
 
   gIp4EntsProtocolInterface->ClientName         = gIp4ProtocolName;
   gIp4EntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL_SERVICE_BINDING_RELATED;
-  gIp4EntsProtocolInterface->ClientGuid         = &gEfiIp4ProtocolGuid;
+  gIp4EntsProtocolInterface->ClientGuid         = &gBlackBoxEfiIp4ProtocolGuid;
   gIp4EntsProtocolInterface->ClientHandle       = NULL;
   gIp4EntsProtocolInterface->ClientInterface    = NULL;
   gIp4EntsProtocolInterface->EntsInterfaceList  = gIp4EntsInterfaceList;

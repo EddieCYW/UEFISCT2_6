@@ -56,9 +56,10 @@ Abstract:
 #ifndef _ARP_SERVICE_BINDING_ENTS_TESTCASE_H_
 #define _ARP_SERVICE_BINDING_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
-#include "Arp.h"
+#include <UEFI/Protocol/Arp.h>
 
 EFI_STATUS
 ArpServiceBindingCreateChild_EntsTest (

@@ -55,29 +55,35 @@
 #
 #--*/
 
-[Defines]
-  INF_VERSION          = 0x00010005
-  BASE_NAME            = Ip6Config_ENTSTest
-  FILE_GUID            = 0280EF45-39FA-4437-BD41-1028531D654C
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = Ip6ConfigENTSTestMain
+[defines]
+BASE_NAME            = Ip6Config_ENTSTest
+FILE_GUID            = 0280EF45-39FA-4437-BD41-1028531D654C                      
 
-[Sources.common]
+COMPONENT_TYPE       = BS_DRIVER
+
+[sources.common]
   Ip6ConfigENTSTest.c
   Ip6ConfigENTSTestCase.h
   Ip6ConfigENTSTestCase.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
-  SctPkg/UEFI/UEFI.dec
+[includes.common]
+  .
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
+  $(WORKSPACE)/MdePkg/Include
 
-[LibraryClasses]
-  UefiDriverEntryPoint
+[libraries.common]
   SctLib
+  SctGuidLib
   EfiTestLib
   EntsLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
-[Protocols]
-  gEfiEntsProtocolGuid
+[nmake.common]
+  C_STD_INCLUDE=
+  IMAGE_ENTRY_POINT=Ip6ConfigENTSTestMain
+

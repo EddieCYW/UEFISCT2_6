@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Udp4ENTSTestCase.h"
 
 static CHAR16     gUdp4ProtocolName[]       = L"Udp4";
@@ -149,7 +148,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
         );
 
@@ -166,7 +165,7 @@ Returns:
 
   gUdp4EntsProtocolInterface->ClientName        = gUdp4ProtocolName;
   gUdp4EntsProtocolInterface->ClientAttribute   = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL_SERVICE_BINDING_RELATED;
-  gUdp4EntsProtocolInterface->ClientGuid        = &gEfiUdp4ProtocolGuid;
+  gUdp4EntsProtocolInterface->ClientGuid        = &gBlackBoxEfiUdp4ProtocolGuid;
   gUdp4EntsProtocolInterface->ClientHandle      = NULL;
   gUdp4EntsProtocolInterface->ClientInterface   = NULL;
   gUdp4EntsProtocolInterface->EntsInterfaceList = gUdp4EntsInterfaceList;

@@ -53,13 +53,8 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
-#include "SctLib.h"
 #include "Dhcp6SBENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
-
-EFI_GUID gEfiDhcp6ServiceBindingProtocolGuid 
-           = EFI_DHCP6_SERVICE_BINDING_PROTOCOL_GUID;
 
 static CHAR16     gDhcp6ServiceBindingProtocolName[] = L"Dhcp6ServiceBinding";
 
@@ -120,7 +115,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -136,7 +131,7 @@ Returns:
   }
 
   Status = EntsNetworkServiceBindingGetControllerHandle (
-             &gEfiDhcp6ServiceBindingProtocolGuid, 
+             &gBlackBoxEfiDhcp6ServiceBindingProtocolGuid,
              &ClientHandle
              );
   if (EFI_ERROR(Status)) {
@@ -146,7 +141,7 @@ Returns:
   gDhcp6ServiceBindingEntsProtocolInterface->ClientName         = gDhcp6ServiceBindingProtocolName;
   gDhcp6ServiceBindingEntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
   gDhcp6ServiceBindingEntsProtocolInterface->ClientHandle       = ClientHandle;
-  gDhcp6ServiceBindingEntsProtocolInterface->ClientGuid         = &gEfiDhcp6ServiceBindingProtocolGuid;
+  gDhcp6ServiceBindingEntsProtocolInterface->ClientGuid         = &gBlackBoxEfiDhcp6ServiceBindingProtocolGuid;
   gDhcp6ServiceBindingEntsProtocolInterface->ClientInterface    = NULL;
   gDhcp6ServiceBindingEntsProtocolInterface->EntsInterfaceList  = gDhcp6ServiceBindingEntsInterfaceList;
   gDhcp6ServiceBindingEntsProtocolInterface->RuntimeInfo        = gDhcp6ServiceBindingRuntimeInfo;

@@ -53,15 +53,8 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
-#include "SctLib.h"
 #include "Ip6ConfigENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
-#ifdef EFIARM
-extern EFI_GUID  gEfiIp6ConfigProtocolGuid;
-#else
-EFI_GUID  gEfiIp6ConfigProtocolGuid = EFI_IP6_CONFIG_PROTOCOL_GUID;
-#endif
 static CHAR16     gIp6ConfigProtocolName[] = L"Ip6Config";
 
 CHAR16            *gIp6ConfigRuntimeInfo;
@@ -131,7 +124,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -147,7 +140,7 @@ Returns:
   }
 
   Status = EntsNetworkServiceBindingGetControllerHandle (
-             &gEfiIp6ConfigProtocolGuid,
+             &gBlackBoxEfiIp6ConfigProtocolGuid,
              &ClientHandle
              );
   if (EFI_ERROR(Status)) {
@@ -156,7 +149,7 @@ Returns:
 
   gIp6ConfigEntsProtocolInterface->ClientName         = gIp6ConfigProtocolName;
   gIp6ConfigEntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
-  gIp6ConfigEntsProtocolInterface->ClientGuid         = &gEfiIp6ConfigProtocolGuid;
+  gIp6ConfigEntsProtocolInterface->ClientGuid         = &gBlackBoxEfiIp6ConfigProtocolGuid;
   gIp6ConfigEntsProtocolInterface->ClientHandle       = ClientHandle;
   gIp6ConfigEntsProtocolInterface->ClientInterface    = NULL;
   gIp6ConfigEntsProtocolInterface->EntsInterfaceList  = gIp6ConfigEntsInterfaceList;

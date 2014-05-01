@@ -56,9 +56,13 @@ Abstract:
 #ifndef _IP4_SERVICE_BINDING_ENTS_TESTCASE_H_
 #define _IP4_SERVICE_BINDING_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
 #include <UEFI/Protocol/Ip4.h>
+#include <Protocol/ServiceBinding.h>
+
+typedef EFI_SERVICE_BINDING_PROTOCOL EFI_IP4_SERVICE_BINDING_PROTOCOL;
 
 EFI_STATUS
 Ip4ServiceBindingCreateChild_EntsTest (

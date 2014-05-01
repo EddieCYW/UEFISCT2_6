@@ -56,9 +56,13 @@ Abstract:
 #ifndef _MANAGEDNETWORK_SB_ENTS_TESTCASE_H_
 #define _MANAGEDNETWORK_SB_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
-#include "ManagedNetwork.h"
+#include <UEFI/Protocol/ManagedNetwork.h>
+#include <Protocol/ServiceBinding.h>
+
+typedef EFI_SERVICE_BINDING_PROTOCOL EFI_MNP_SERVICE_BINDING_PROTOCOL;
 
 EFI_STATUS
 MnpCreateChild_EntsTest (

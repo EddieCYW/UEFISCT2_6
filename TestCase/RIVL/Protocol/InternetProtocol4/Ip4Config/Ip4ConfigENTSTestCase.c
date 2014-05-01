@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Ip4ConfigENTSTestCase.h"
 
 //

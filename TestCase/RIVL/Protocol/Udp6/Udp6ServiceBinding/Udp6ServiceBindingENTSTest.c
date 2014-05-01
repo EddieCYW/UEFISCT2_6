@@ -53,8 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
-#include "SctLib.h"
 #include "Udp6ServiceBindingENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
@@ -117,7 +115,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
         );
 
@@ -133,7 +131,7 @@ Returns:
   }
 
   Status = EntsNetworkServiceBindingGetControllerHandle (
-             &gEfiUdp6ServiceBindingProtocolGuid, 
+             &gBlackBoxEfiUdp6ServiceBindingProtocolGuid,
              &ClientHandle
              );
   if (EFI_ERROR(Status)) {
@@ -142,7 +140,7 @@ Returns:
 
   gUdp6ServiceBindingEntsProtocolInterface->ClientName        = gUdp6ServiceBindingProtocolName;
   gUdp6ServiceBindingEntsProtocolInterface->ClientAttribute   = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
-  gUdp6ServiceBindingEntsProtocolInterface->ClientGuid        = &gEfiUdp6ServiceBindingProtocolGuid;
+  gUdp6ServiceBindingEntsProtocolInterface->ClientGuid        = &gBlackBoxEfiUdp6ServiceBindingProtocolGuid;
   gUdp6ServiceBindingEntsProtocolInterface->ClientHandle      = ClientHandle;
   gUdp6ServiceBindingEntsProtocolInterface->ClientInterface   = NULL;
   gUdp6ServiceBindingEntsProtocolInterface->EntsInterfaceList = gUdp6ServiceBindingEntsInterfaceList;

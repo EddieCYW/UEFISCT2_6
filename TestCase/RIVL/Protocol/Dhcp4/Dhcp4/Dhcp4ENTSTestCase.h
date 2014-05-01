@@ -56,9 +56,10 @@ Abstract:
 #ifndef _DHCP4_ENTS_TESTCASE_H_
 #define _DHCP4_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
-#include "Dhcp4.h"
+#include <UEFI/Protocol/Dhcp4.h>
 
 EFI_STATUS
 Dhcp4Config_EntsTest (

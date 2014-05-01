@@ -53,8 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
-#include "SctLib.h"
 #include "Mtftp6ServiceBindingENTSTestCase.h"
 #include EFI_PROTOCOL_DEFINITION (LoadedImage)
 
@@ -117,7 +115,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
         );
 
@@ -133,7 +131,7 @@ Returns:
   }
 
   Status = EntsNetworkServiceBindingGetControllerHandle (
-             &gEfiMtftp6ServiceBindingProtocolGuid, 
+             &gBlackBoxEfiMtftp6ServiceBindingProtocolGuid,
              &ClientHandle
              );
   if (EFI_ERROR(Status)) {
@@ -142,7 +140,7 @@ Returns:
 
   gMtftp6ServiceBindingEntsProtocolInterface->ClientName        = gMtftp6ServiceBindingProtocolName;
   gMtftp6ServiceBindingEntsProtocolInterface->ClientAttribute   = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
-  gMtftp6ServiceBindingEntsProtocolInterface->ClientGuid        = &gEfiMtftp6ServiceBindingProtocolGuid;
+  gMtftp6ServiceBindingEntsProtocolInterface->ClientGuid        = &gBlackBoxEfiMtftp6ServiceBindingProtocolGuid;
   gMtftp6ServiceBindingEntsProtocolInterface->ClientHandle      = ClientHandle;
   gMtftp6ServiceBindingEntsProtocolInterface->ClientInterface   = NULL;
   gMtftp6ServiceBindingEntsProtocolInterface->EntsInterfaceList = gMtftp6ServiceBindingEntsInterfaceList;

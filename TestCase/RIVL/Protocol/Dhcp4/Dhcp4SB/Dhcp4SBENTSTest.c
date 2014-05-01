@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Dhcp4SBENTSTestCase.h"
 
 static CHAR16     gDhcp4ServiceBindingProtocolName[] = L"Dhcp4ServiceBinding";
@@ -115,7 +114,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -131,7 +130,7 @@ Returns:
   }
 
   Status = EntsNetworkServiceBindingGetControllerHandle (
-             &gEfiDhcp4ServiceBindingProtocolGuid, 
+             &gBlackBoxEfiDhcp4ServiceBindingProtocolGuid,
              &ClientHandle
              );
   if (EFI_ERROR(Status)) {
@@ -141,7 +140,7 @@ Returns:
   gDhcp4ServiceBindingEntsProtocolInterface->ClientName         = gDhcp4ServiceBindingProtocolName;
   gDhcp4ServiceBindingEntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
   gDhcp4ServiceBindingEntsProtocolInterface->ClientHandle       = ClientHandle;
-  gDhcp4ServiceBindingEntsProtocolInterface->ClientGuid         = &gEfiDhcp4ServiceBindingProtocolGuid;
+  gDhcp4ServiceBindingEntsProtocolInterface->ClientGuid         = &gBlackBoxEfiDhcp4ServiceBindingProtocolGuid;
   gDhcp4ServiceBindingEntsProtocolInterface->ClientInterface    = NULL;
   gDhcp4ServiceBindingEntsProtocolInterface->EntsInterfaceList  = gDhcp4ServiceBindingEntsInterfaceList;
   gDhcp4ServiceBindingEntsProtocolInterface->RuntimeInfo        = gDhcp4ServiceBindingRuntimeInfo;

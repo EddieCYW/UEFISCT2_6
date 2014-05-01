@@ -56,28 +56,32 @@
 #--*/
 
 [Defines]
-  INF_VERSION          = 0x00010005
-  BASE_NAME            = ArpServiceBinding_ENTSTest
-  FILE_GUID            = 30C95D2F-093E-4a8a-81D5-D649EB73856A
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = ArpServiceBindingENTSTestMain
+BASE_NAME            = ArpServiceBinding_ENTSTest
+FILE_GUID            = 30C95D2F-093E-4a8a-81D5-D649EB73856A
+COMPONENT_TYPE       = BS_DRIVER
 
 [Sources.common]
   ArpServiceBindingENTSTest.c
   ArpServiceBindingENTSTestCase.h
   ArpServiceBindingENTSTestCase.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
-  SctPkg/UEFI/UEFI.dec
+[includes.common]
+  .
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Include
+  $(WORKSPACE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/Rivl
+  $(WORKSPACE)/MdePkg/Include
 
-[LibraryClasses]
-  UefiDriverEntryPoint
+[libraries.common]
   SctLib
+  SctGuidLib
   EfiTestLib
   EntsLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
-[Protocols]
-  gEfiEntsProtocolGuid
+[nmake.common]
+  C_STD_INCLUDE=
+  IMAGE_ENTRY_POINT=ArpServiceBindingENTSTestMain

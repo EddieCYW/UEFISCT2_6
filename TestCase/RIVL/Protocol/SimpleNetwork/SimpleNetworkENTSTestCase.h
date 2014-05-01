@@ -56,6 +56,7 @@ Abstract:
 #ifndef _SIMPLENETWORK_ENTS_TESTCASE_H_
 #define _SIMPLENETWORK_ENTS_TESTCASE_H_
 
+#include <Base.h>
 #include "SctLib.h"
 #include "Eas.h"
 #include <UEFI/Protocol/SimpleNetwork.h>

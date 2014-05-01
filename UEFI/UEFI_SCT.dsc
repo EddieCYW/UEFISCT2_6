@@ -170,6 +170,9 @@ SctPkg/Library/SctLib/SctLib-edk1.inf
   SctPkg/Library/SctLib/SctLib.inf
   SctPkg/Library/SctGuidLib/SctGuidLib.inf
   SctPkg/Library/EfiTestLib/EfiTestLib.inf
+
+  SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib.inf
+
   MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
 
 [Libraries.ARM]

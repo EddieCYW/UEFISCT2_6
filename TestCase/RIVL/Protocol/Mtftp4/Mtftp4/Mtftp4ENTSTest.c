@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "Mtftp4ENTSTestCase.h"
 
 static CHAR16     gMtftp4ProtocolName[]       = L"Mtftp4";
@@ -144,7 +143,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID **) &LoadedImage
         );
 
@@ -161,7 +160,7 @@ Returns:
 
   gMtftp4EntsProtocolInterface->ClientName        = gMtftp4ProtocolName;
   gMtftp4EntsProtocolInterface->ClientAttribute   = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL_SERVICE_BINDING_RELATED;
-  gMtftp4EntsProtocolInterface->ClientGuid        = &gEfiMtftp4ProtocolGuid;
+  gMtftp4EntsProtocolInterface->ClientGuid        = &gBlackBoxEfiMtftp4ProtocolGuid;
   gMtftp4EntsProtocolInterface->ClientHandle      = NULL;
   gMtftp4EntsProtocolInterface->ClientInterface   = NULL;
   gMtftp4EntsProtocolInterface->EntsInterfaceList = gMtftp4EntsInterfaceList;

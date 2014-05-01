@@ -53,7 +53,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "PXEBaseCodeENTSTestCase.h"
 
 static CHAR16     gPXEBaseCodeProtocolName[]      = L"PXEBaseCode";
@@ -178,7 +177,7 @@ Returns:
 
   tBS->HandleProtocol (
         ImageHandle,
-        &gEfiLoadedImageProtocolGuid,
+        &gBlackBoxEfiLoadedImageProtocolGuid,
         (VOID *) &LoadedImage
         );
 
@@ -195,7 +194,7 @@ Returns:
 
   gPXEBaseCodeEntsProtocolInterface->ClientName         = gPXEBaseCodeProtocolName;
   gPXEBaseCodeEntsProtocolInterface->ClientAttribute    = ENTS_PROTOCOL_ATTRIBUTE_PROTOCOL;
-  gPXEBaseCodeEntsProtocolInterface->ClientGuid         = &gEfiPxeBaseCodeProtocolGuid;
+  gPXEBaseCodeEntsProtocolInterface->ClientGuid         = &gBlackBoxEfiPxeBaseCodeProtocolGuid;
   gPXEBaseCodeEntsProtocolInterface->ClientHandle       = NULL;
   gPXEBaseCodeEntsProtocolInterface->ClientInterface    = NULL;
   gPXEBaseCodeEntsProtocolInterface->EntsInterfaceList  = gPXEBaseCodeEntsInterfaceList;
