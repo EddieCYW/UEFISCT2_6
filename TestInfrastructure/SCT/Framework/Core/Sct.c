@@ -256,27 +256,6 @@ STATIC UINT32 SCT_VALID_OPERATIONS[] = {
 };
 
 STATIC
-EFI_STATUS
-SctCmdLineGetReportName (
-  IN EFI_HANDLE                   ImageHandle,
-  IN CHAR16                       *ArgStr
-  )
-{
-  EFI_STATUS                      Status;
-  CHAR16                          *RelativePath;
-
-  Status = EFI_SUCCESS;
-
-  RelativePath = SctPoolPrint (L"%s\\%s", EFI_SCT_PATH_REPORT, ArgStr);
-
-  Status = SctExpandRelativePath (RelativePath, &gFT->RepFileName);
-
-  SctFreePool (RelativePath);
-
-  return Status;
-}
-
-STATIC
 VOID
 SctCmdLineGetMonitorName (
   IN CHAR16                       *ArgStr
@@ -294,23 +273,17 @@ SctCmdLineGetMonitorName (
 
 STATIC
 EFI_STATUS
-SctCmdLineGetSequenceFileName (
-  IN EFI_HANDLE                   ImageHandle,
-  IN CHAR16                       *ArgStr
+SctCmdLineGetFileName (
+  IN  CHAR16    *Directory,
+  IN  CHAR16    *ArgStr,
+  OUT CHAR16   **Path
   )
 {
-  EFI_STATUS                      Status;
-  CHAR16                          *RelativePath;
-
-  Status = EFI_SUCCESS;
-
-  RelativePath = SctPoolPrint (L"%s\\%s", EFI_SCT_PATH_SEQUENCE, ArgStr);
-
-  Status = SctExpandRelativePath (RelativePath, &gFT->SeqFileName);
-
-  SctFreePool (RelativePath);
-
-  return Status;
+  *Path = SctPoolPrint (L"%s\\%s\\%s", gFT->FilePath, Directory, ArgStr);
+  if (*Path == NULL) {
+    return EFI_OUT_OF_RESOURCES;
+  }
+  return EFI_SUCCESS;
 }
 
 #define SCT_OPERATION_MASK(OP)    (gFT->Operations |= (OP))
@@ -349,8 +322,8 @@ ParseCommandLine (
           EFI_SCT_DEBUG((EFI_SCT_D_ERROR, L"Not set the report file name"));
           return EFI_NOT_FOUND;
         }
-		Status = SctCmdLineGetReportName(ImageHandle, Argv[Index]);
-		if (EFI_ERROR(Status)) {
+        Status = SctCmdLineGetFileName(EFI_SCT_PATH_REPORT, Argv[Index], &gFT->RepFileName);
+        if (EFI_ERROR(Status)) {
           EFI_SCT_DEBUG((EFI_SCT_D_ERROR, L"Get report file name fail - %r", Status));
           return Status;
         }
@@ -375,7 +348,7 @@ ParseCommandLine (
           EFI_SCT_DEBUG((EFI_SCT_D_ERROR, L"Not set the sequence file name"));
           return EFI_NOT_FOUND;
         }
-        Status = SctCmdLineGetSequenceFileName(ImageHandle, Argv[Index]);
+        Status = SctCmdLineGetFileName(EFI_SCT_PATH_SEQUENCE, Argv[Index], &gFT->SeqFileName);
         if (EFI_ERROR(Status)) {
           EFI_SCT_DEBUG((EFI_SCT_D_ERROR, L"get sequence file name fail - %r", Status));
           return Status;
