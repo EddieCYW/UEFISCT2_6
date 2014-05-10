@@ -1076,9 +1076,7 @@ Returns:
   DestinationX  = 0;
   DestinationY  = 0;
   Delta         = 0;
-  //
-  // EFI_DEADLOOP();
-  //
+
   GraphicsOutput = (EFI_GRAPHICS_OUTPUT_PROTOCOL *) ClientInterface;
 
   if ((Status = InitTestEnv (SupportHandle, &StandardLib, GraphicsOutput)) != EFI_SUCCESS) {

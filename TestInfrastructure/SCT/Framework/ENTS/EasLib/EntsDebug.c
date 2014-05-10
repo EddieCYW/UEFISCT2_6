@@ -793,9 +793,8 @@ Retry:
   	goto Retry;
   }
 
-  if(EFI_ERROR(Status))
-  {
-    EFI_DEADLOOP();
+  if(EFI_ERROR(Status)) {
+    return NULL;
   }
 
   //
