@@ -120,11 +120,12 @@
   GCC:*_*_IPF_APP_FLAGS    = -D EFI64 $(GCC_VER_MACRO)
   GCC:*_*_IPF_PP_FLAGS     = -D EFI64 $(GCC_VER_MACRO)
 
-  *_*_ARM_CC_FLAGS     = -D EFIARM $(GCC_VER_MACRO)
-  GCC:*_*_ARM_CC_FLAGS = -D EFIARM $(GCC_VER_MACRO) -ffreestanding -nostdinc -nostdlib -Wno-error=unused-function -Wno-error=unused-but-set-variable -Wno-error=implicit-function-declaration -Wno-error
-  *_*_ARM_VFRPP_FLAGS  = -D EFIARM $(GCC_VER_MACRO)
-  *_*_ARM_APP_FLAGS    = -D EFIARM $(GCC_VER_MACRO)
-  *_*_ARM_PP_FLAGS     = -D EFIARM $(GCC_VER_MACRO)
+  #TODO: OM - fixme RVCT:*_*_ARM_CC_FLAGS = -D EFIARM $(GCC_VER_MACRO)
+  *_*_ARM_CC_FLAGS = -D EFIARM
+  GCC:*_*_ARM_CC_FLAGS  = -D EFIARM $(GCC_VER_MACRO) -ffreestanding -nostdinc -nostdlib -Wno-error=unused-function -Wno-error=unused-but-set-variable -Wno-error=implicit-function-declaration -Wno-error
+  *_*_ARM_VFRPP_FLAGS   = -D EFIARM $(GCC_VER_MACRO)
+  *_*_ARM_APP_FLAGS     = -D EFIARM $(GCC_VER_MACRO)
+  *_*_ARM_PP_FLAGS      = -D EFIARM $(GCC_VER_MACRO)
 
   RVCT:*_*_ARM_DLINK_FLAGS = --muldefweak
 # 167:  "argument of type <type1> is incompatible with parameter of type # <type2>"
