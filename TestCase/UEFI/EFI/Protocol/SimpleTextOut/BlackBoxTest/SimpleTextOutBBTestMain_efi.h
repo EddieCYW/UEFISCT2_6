@@ -65,7 +65,6 @@ Abstract:
 #include EFI_PROTOCOL_DEFINITION (DevicePath)
 #include EFI_PROTOCOL_DEFINITION (UgaDraw)
 
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "EfiCommonLib.h"
 

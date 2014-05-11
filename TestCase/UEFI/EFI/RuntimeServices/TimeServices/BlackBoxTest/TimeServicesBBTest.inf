@@ -80,13 +80,11 @@ COMPONENT_TYPE       = BS_DRIVER
   $(EFI_SOURCE)/
   $(EFI_SOURCE)/SctPkg/Include
   $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestUtilityLib
 
 [libraries.common]
   EfiProtocolLib
   TestProtocolLib
   EfiTestLib
-  EfiTestUtilityLib
   EdkFrameworkGuidLib
 
 [libraries.ARM, libraries.Aarch64]

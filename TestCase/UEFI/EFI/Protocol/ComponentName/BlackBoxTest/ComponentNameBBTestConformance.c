@@ -1016,7 +1016,7 @@ FindMatchedDeviceHandle (
   //
   // find controller handles managed by the component name handle.
   //
-  Status = LibGetManagedControllerHandles (
+  Status = SctGetManagedControllerHandles (
              ComponentNameHandle,
              &ControllerHandleCount,
              &ControllerHandleBuffer
@@ -1098,7 +1098,7 @@ FindMatchedBusHandle (
   //
   // find controller handles managed by the component name handle.
   //
-  Status = LibGetManagedControllerHandles (
+  Status = SctGetManagedControllerHandles (
              ComponentNameHandle,
              &ControllerHandleCount,
              &ControllerHandleBuffer
@@ -1110,7 +1110,7 @@ FindMatchedBusHandle (
   for (Index = 0; Index < ControllerHandleCount; Index++) {
     ChildControllerHandleBuffer = NULL;
 
-    Status = LibGetManagedChildControllerHandles (
+    Status = SctGetManagedChildControllerHandles (
                ComponentNameHandle,
                ControllerHandleBuffer[Index],
                &NumberOfChildren,

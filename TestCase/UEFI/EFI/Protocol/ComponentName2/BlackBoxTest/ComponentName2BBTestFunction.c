@@ -356,7 +356,7 @@ BBTestGetControllerNameFuncTestCheckpoint1 (
   //
   // find controller handles managed by the component name handle.
   //
-  Status = LibGetManagedControllerHandles (
+  Status = SctGetManagedControllerHandles (
              ComponentNameHandle,
              &ControllerHandleCount,
              &ControllerHandleBuffer
@@ -585,7 +585,7 @@ BBTestGetControllerNameFuncTestCheckpoint2 (
   //
   // find controller handles managed by the component name handle.
   //
-  Status = LibGetManagedControllerHandles (
+  Status = SctGetManagedControllerHandles (
              ComponentNameHandle,
              &ControllerHandleCount,
              &ControllerHandleBuffer
@@ -641,7 +641,7 @@ BBTestGetControllerNameFuncTestCheckpoint2 (
   
         ChildControllerHandleBuffer = NULL;
   
-        Status = LibGetManagedChildControllerHandles (
+        Status = SctGetManagedChildControllerHandles (
                    ComponentNameHandle,
                    ControllerHandleBuffer[Index],
                    &NumberOfChildren,
@@ -708,7 +708,7 @@ BBTestGetControllerNameFuncTestCheckpoint2 (
   
         ChildControllerHandleBuffer = NULL;
   
-        Status = LibGetManagedChildControllerHandles (
+        Status = SctGetManagedChildControllerHandles (
                    ComponentNameHandle,
                    ControllerHandleBuffer[Index],
                    &NumberOfChildren,

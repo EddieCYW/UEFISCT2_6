@@ -110,7 +110,6 @@ COMPONENT_TYPE  = LIBRARY
   $(EDK_SOURCE)/Foundation/Include/IndustryStandard
   $(EDK_SOURCE)/Foundation/Library/Dxe/Include
   $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestUtilityLib
   $(EFI_SOURCE)/SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/
   
 [libraries.common]

@@ -60,7 +60,6 @@ Abstract:
 
 #include "Efi.h"
 #include "EfiCommonLib.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "DriverConfigurationProtocol.h"
 #include "guid.h"

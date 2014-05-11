@@ -63,7 +63,6 @@ Abstract:
 #include "DevicePathUtilities.h"
 #include "DevicePathToText.h"
 #include "Guid.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "EfiCommonLib.h"
 

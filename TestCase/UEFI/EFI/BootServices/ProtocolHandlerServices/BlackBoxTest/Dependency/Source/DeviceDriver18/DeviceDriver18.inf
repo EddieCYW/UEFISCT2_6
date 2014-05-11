@@ -78,7 +78,6 @@ COMPONENT_TYPE       = BS_DRIVER
   $(EFI_SOURCE)/
   $(EFI_SOURCE)/SctPkg/Include
   $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestUtilityLib
 
 [libraries.common]
   EfiGuidLib
@@ -86,7 +85,6 @@ COMPONENT_TYPE       = BS_DRIVER
   TestProtocolLib
   EfiCommonLib
   EfiTestLib
-  EfiTestUtilityLib
 
 [nmake.common]
   IMAGE_ENTRY_POINT=InitializeDeviceDriver18

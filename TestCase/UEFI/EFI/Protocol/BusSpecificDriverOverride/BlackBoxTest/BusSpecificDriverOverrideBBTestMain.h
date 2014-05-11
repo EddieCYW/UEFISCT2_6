@@ -61,7 +61,6 @@ Abstract:
 
 
 #include "Efi.h"
-#include "EfiTestUtilityLib.h"
 #include "Guid.h"
 #include "EfiTestLib.h"
 #include "BusSpecificDriverOverrideProtocol.h"

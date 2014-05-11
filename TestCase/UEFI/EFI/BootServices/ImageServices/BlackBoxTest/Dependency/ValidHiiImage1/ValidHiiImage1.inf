@@ -85,7 +85,6 @@ CUSTOM_MAKEFILE      = GCC | GNUmakefile
   $(EFI_SOURCE)/Include
   $(EFI_SOURCE)/SctPkg/Include
   $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestUtilityLib
 
 [libraries.common]
   EfiGuidLib
@@ -93,7 +92,6 @@ CUSTOM_MAKEFILE      = GCC | GNUmakefile
   TestProtocolLib
   EfiCommonLib
   EfiTestLib
-  EfiTestUtilityLib
 
 [nmake.common]
   IMAGE_ENTRY_POINT=InitializeValidHiiImage1

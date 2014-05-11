@@ -59,7 +59,6 @@ Abstract:
 
 #include "Efi.h"
 #include "EfiCommonLib.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "DriverDiagnostics2Protocol.h"
 #include "Guid.h"

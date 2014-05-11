@@ -80,13 +80,11 @@ COMPONENT_TYPE       = BS_DRIVER
   $(EDK_SOURCE)/Foundation/Library/Dxe/Include
   $(EFI_SOURCE)/
   $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestUtilityLib
 
 [libraries.common]
   SctLib
   TestProtocolLib
   EfiTestLib
-  EfiTestUtilityLib
   Graphics
 
 [nmake.common]

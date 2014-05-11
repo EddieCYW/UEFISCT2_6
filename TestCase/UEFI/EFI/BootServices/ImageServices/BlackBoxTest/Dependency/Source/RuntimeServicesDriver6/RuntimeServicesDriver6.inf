@@ -79,7 +79,6 @@ COMPONENT_TYPE       = RT_DRIVER
   $(EFI_SOURCE)/
   $(EFI_SOURCE)/SctPkg/Include
   $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestUtilityLib
 
 [libraries.common]
   EfiGuidLib
@@ -87,7 +86,6 @@ COMPONENT_TYPE       = RT_DRIVER
   TestProtocolLib
   EfiCommonLib
   EfiTestLib
-  EfiTestUtilityLib
 
 [nmake.common]
   IMAGE_ENTRY_POINT=InitializeRuntimeServicesDriver6

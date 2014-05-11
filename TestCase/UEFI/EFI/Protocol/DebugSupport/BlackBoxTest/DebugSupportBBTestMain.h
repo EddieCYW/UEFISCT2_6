@@ -63,7 +63,6 @@ Abstract:
 #include "Efi.h"
 #include "DebugSupportProtocol.h"
 #include "Guid.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 
 #define  DEBUG_SUPPORT_PROTOCOL_TEST_REVISION    0x00010000

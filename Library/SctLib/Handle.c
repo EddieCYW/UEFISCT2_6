@@ -440,3 +440,136 @@ Error:
 
   return Status;
 }
+
+STATIC
+EFI_STATUS
+LibGetHandleDatabaseSubset (
+  EFI_HANDLE  DriverBindingHandle,
+  EFI_HANDLE  ControllerHandle,
+  UINT32      Mask,
+  UINTN       *MatchingHandleCount,
+  EFI_HANDLE  **MatchingHandleBuffer
+  )
+
+{
+  EFI_STATUS  Status;
+  UINTN       HandleCount;
+  EFI_HANDLE  *HandleBuffer;
+  UINT32      *HandleType;
+  UINTN       HandleIndex;
+
+  *MatchingHandleCount  = 0;
+  if (MatchingHandleBuffer != NULL) {
+    *MatchingHandleBuffer = NULL;
+  }
+
+  HandleBuffer = NULL;
+  HandleType   = NULL;
+
+  Status = SctScanHandleDatabase (
+             DriverBindingHandle,
+             NULL,
+             ControllerHandle,
+             NULL,
+             &HandleCount,
+             &HandleBuffer,
+             &HandleType
+             );
+  if (EFI_ERROR (Status)) {
+    goto Done;
+  }
+
+  //
+  // Count the number of handles that match the attributes in Mask
+  //
+  for (HandleIndex = 0; HandleIndex < HandleCount; HandleIndex++) {
+    if ((HandleType[HandleIndex] & Mask) == Mask) {
+      (*MatchingHandleCount)++;
+    }
+  }
+
+  //
+  // If no handles match the attributes in Mask then return EFI_NOT_FOUND
+  //
+  if (*MatchingHandleCount == 0) {
+    Status = EFI_NOT_FOUND;
+    goto Done;
+  }
+
+  if (MatchingHandleBuffer == NULL) {
+    Status = EFI_SUCCESS;
+    goto Done;
+  }
+
+  //
+  // Allocate a handle buffer for the number of handles that matched the attributes in Mask
+  //
+  Status = tBS->AllocatePool (
+                 EfiBootServicesData,
+                 *MatchingHandleCount * sizeof (EFI_HANDLE),
+                 (VOID **)MatchingHandleBuffer
+                 );
+  if (EFI_ERROR (Status)) {
+    goto Done;
+  }
+
+  //
+  // Fill the allocated buffer with the handles that matched the attributes in Mask
+  //
+  *MatchingHandleCount = 0;
+  for (HandleIndex = 0; HandleIndex < HandleCount; HandleIndex++) {
+    if ((HandleType[HandleIndex] & Mask) == Mask) {
+      (*MatchingHandleBuffer)[(*MatchingHandleCount)++] = HandleBuffer[HandleIndex];
+    }
+  }
+
+  Status = EFI_SUCCESS;
+
+Done:
+
+  //
+  // Free the buffers alocated by SctScanHandleDatabase()
+  //
+  if (HandleBuffer != NULL) {
+    tBS->FreePool (HandleBuffer);
+  }
+
+  if (HandleType != NULL) {
+    tBS->FreePool (HandleType);
+  }
+
+  return Status;
+}
+
+EFI_STATUS
+SctGetManagedChildControllerHandles (
+  EFI_HANDLE  DriverBindingHandle,
+  EFI_HANDLE  ControllerHandle,
+  UINTN       *ChildControllerHandleCount,
+  EFI_HANDLE  **ChildControllerHandleBuffer
+  )
+{
+  return LibGetHandleDatabaseSubset (
+           DriverBindingHandle,
+           ControllerHandle,
+           SCT_HANDLE_TYPE_CHILD_HANDLE | SCT_HANDLE_TYPE_DEVICE_HANDLE,
+           ChildControllerHandleCount,
+           ChildControllerHandleBuffer
+           );
+}
+
+EFI_STATUS
+SctGetManagedControllerHandles (
+  EFI_HANDLE  DriverBindingHandle,
+  UINTN       *ControllerHandleCount,
+  EFI_HANDLE  **ControllerHandleBuffer
+  )
+{
+  return LibGetHandleDatabaseSubset (
+           DriverBindingHandle,
+           NULL,
+           SCT_HANDLE_TYPE_CONTROLLER_HANDLE | SCT_HANDLE_TYPE_DEVICE_HANDLE,
+           ControllerHandleCount,
+           ControllerHandleBuffer
+           );
+}

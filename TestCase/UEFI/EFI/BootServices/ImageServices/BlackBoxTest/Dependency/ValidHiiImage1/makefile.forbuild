@@ -201,14 +201,6 @@ INC = $(INC) -I $(EFI_SOURCE)\SctPkg\Library\EfiTestLib\X64
 !ELSE
 !MESSAGE Warning: include dir $(EFI_SOURCE)\SctPkg\Library\EfiTestLib does not exist
 !ENDIF
-!IF EXIST($(EFI_SOURCE)\SctPkg\Library\EfiTestUtilityLib)
-INC = $(INC) -I $(EFI_SOURCE)\SctPkg\Library\EfiTestUtilityLib
-!IF EXIST($(EFI_SOURCE)\SctPkg\Library\EfiTestUtilityLib\X64)
-INC = $(INC) -I $(EFI_SOURCE)\SctPkg\Library\EfiTestUtilityLib\X64
-!ENDIF
-!ELSE
-!MESSAGE Warning: include dir $(EFI_SOURCE)\SctPkg\Library\EfiTestUtilityLib does not exist
-!ENDIF
 
 !IF EXIST($(DEST_DIR_OUTPUT))
 INC = $(INC) -I $(DEST_DIR_OUTPUT)

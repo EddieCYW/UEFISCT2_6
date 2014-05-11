@@ -58,7 +58,6 @@ Abstract:
 
 
 #include "SctLib.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "RandomNumberProtocol.h"
 #include "EfiCommonLib.h"

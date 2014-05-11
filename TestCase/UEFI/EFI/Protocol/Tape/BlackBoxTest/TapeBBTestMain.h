@@ -61,7 +61,6 @@ Abstract:
 
 #include "SctLib.h"
 
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include EFI_TEST_PROTOCOL_DEFINITION(TestLoggingLibrary)
 

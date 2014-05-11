@@ -213,7 +213,7 @@ BBTestRunDiagnosticsFuncTestCheckpoint1 (
   //
   // find controller handles managed by the Driver Diagnostics handle.
   //
-  Status = LibGetManagedControllerHandles (
+  Status = SctGetManagedControllerHandles (
              DriverDiagnostics2Handle,
              &ControllerHandleCount,
              &ControllerHandleBuffer
@@ -451,7 +451,7 @@ BBTestRunDiagnosticsFuncTestCheckpoint2 (
   //
   // find controller handles managed by the Driver Diagnostics handle.
   //
-  Status = LibGetManagedControllerHandles (
+  Status = SctGetManagedControllerHandles (
              DriverDiagnostics2Handle,
              &ControllerHandleCount,
              &ControllerHandleBuffer
@@ -505,7 +505,7 @@ BBTestRunDiagnosticsFuncTestCheckpoint2 (
   
         ChildControllerHandleBuffer = NULL;
   
-        Status = LibGetManagedChildControllerHandles (
+        Status = SctGetManagedChildControllerHandles (
                    DriverDiagnostics2Handle,
                    ControllerHandleBuffer[Index],
                    &NumberOfChildren,
@@ -575,7 +575,7 @@ BBTestRunDiagnosticsFuncTestCheckpoint2 (
   
         ChildControllerHandleBuffer = NULL;
   
-        Status = LibGetManagedChildControllerHandles (
+        Status = SctGetManagedChildControllerHandles (
                    DriverDiagnostics2Handle,
                    ControllerHandleBuffer[Index],
                    &NumberOfChildren,

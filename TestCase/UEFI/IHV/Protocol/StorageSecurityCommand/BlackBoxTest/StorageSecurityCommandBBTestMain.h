@@ -66,7 +66,6 @@ Abstract:
 #include "Efi.h"
 #include "StorageSecurityCommandProtocol.h"
 #include "Guid.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "EfiCommonLib.h"
 #include "DevicePathUtilities.h"

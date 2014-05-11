@@ -59,7 +59,6 @@ Abstract:
 #define _DECOMPRESSTEST_H
 
 #include "Efi.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "DecompressProtocol.h"
 #include "Guid.h"

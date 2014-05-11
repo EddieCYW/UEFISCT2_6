@@ -79,17 +79,15 @@ COMPONENT_TYPE       = BS_DRIVER
   $(EDK_SOURCE)/Foundation/Framework/Include
   $(EDK_SOURCE)/Foundation/Include/IndustryStandard
   $(EDK_SOURCE)/Foundation/Library/Dxe/Include
-  $(EFI_SOURCE)/
-  $(EFI_SOURCE)/SctPkg/Include
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestUtilityLib
+  $(WORKSPACE)/
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/SctPkg/Library/EfiTestLib
 
 [libraries.common]
   EfiProtocolLib
   TestProtocolLib
   EfiCommonLib
   EfiTestLib
-  EfiTestUtilityLib
 
 [nmake.common]
   IMAGE_ENTRY_POINT=InitializeAdapterInfoBBTest

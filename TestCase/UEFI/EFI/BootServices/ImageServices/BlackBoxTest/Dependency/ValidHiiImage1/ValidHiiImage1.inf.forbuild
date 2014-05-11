@@ -81,7 +81,6 @@ CUSTOM_MAKEFILE      = makefile
   $(EFI_SOURCE)\Include
   $(EFI_SOURCE)\SctPkg\Include
   $(EFI_SOURCE)\SctPkg\Library\EfiTestLib
-  $(EFI_SOURCE)\SctPkg\Library\EfiTestUtilityLib
   $(OUTPUT_DIR)
 
 [libraries.common]
@@ -90,7 +89,6 @@ CUSTOM_MAKEFILE      = makefile
   TestProtocolLib
   EfiCommonLib
   EfiTestLib
-  EfiTestUtilityLib
 
 [nmake.common]
   IMAGE_ENTRY_POINT=InitializeValidHiiImage1

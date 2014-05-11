@@ -46,7 +46,6 @@
 
 #include "SctLibInternal.h"
 
-// Defined by EfiTestUtilityLib
 extern EFI_MEMORY_TYPE              PoolAllocationType;
 
 /*++

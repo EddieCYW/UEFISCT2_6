@@ -64,7 +64,6 @@ References:
 #define __GRAPHICS_OUTPUT_BBTEST_H__
 
 #include "Efi.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "GraphicsOutputProtocol.h"
 

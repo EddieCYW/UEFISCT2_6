@@ -60,9 +60,12 @@ Abstract:
 
 #include "Efi.h"
 #include "EfiCommonLib.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "Guid.h"
+
+#include EFI_PROTOCOL_DEFINITION (BlockIo)
+#include EFI_PROTOCOL_DEFINITION (FileSystemInfo)
+#include EFI_PROTOCOL_DEFINITION (FileSystemVolumeLabelInfo)
 
 //----------------------------------//
 //

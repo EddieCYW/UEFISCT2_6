@@ -118,7 +118,6 @@ COMPONENT_TYPE       = RT_DRIVER
   SctLib
   EfiCommonLib
   EfiGuidLib
-  EfiTestUtilityLib
 
 [libraries.ARM, libraries.Aarch64]
   CompilerIntrinsicsLib

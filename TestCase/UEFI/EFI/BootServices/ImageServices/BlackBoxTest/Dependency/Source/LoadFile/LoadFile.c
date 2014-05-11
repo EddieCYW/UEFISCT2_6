@@ -58,7 +58,6 @@ Abstract:
 
 #include "ProtocolDefinition.h"
 #include "EfiTest.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 
 #include EFI_PROTOCOL_DEFINITION (DevicePath)

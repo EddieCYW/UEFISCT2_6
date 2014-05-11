@@ -639,6 +639,21 @@ SctScanHandleDatabase (
   UINT32      **HandleType
   );
 
+EFI_STATUS
+SctGetManagedChildControllerHandles (
+  EFI_HANDLE  DriverBindingHandle,
+  EFI_HANDLE  ControllerHandle,
+  UINTN       *ChildControllerHandleCount,
+  EFI_HANDLE  **ChildControllerHandleBuffer
+  );
+
+EFI_STATUS
+SctGetManagedControllerHandles (
+  EFI_HANDLE  DriverBindingHandle,
+  UINTN       *ControllerHandleCount,
+  EFI_HANDLE  **ControllerHandleBuffer
+  );
+
 //
 // Shell API
 //

@@ -163,7 +163,6 @@ EdkCompatibilityPkg/Foundation/Library/RuntimeDxe/EfiRuntimeLib/EfiRuntimeLib.in
 
 SctPkg/Protocol/TestProtocolLib.inf
 SctPkg/Library/EfiTestLib/EfiTestLib.inf
-SctPkg/Library/EfiTestUtilityLib/EfiTestUtilityLib.inf
 
 SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib.inf
 SctPkg/TestCase/RIVL/NetworkProtocolLib/NetworkProtocolLib.inf

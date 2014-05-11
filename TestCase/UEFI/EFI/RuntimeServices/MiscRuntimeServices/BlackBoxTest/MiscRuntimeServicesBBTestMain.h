@@ -60,7 +60,6 @@ Abstract:
 #define _MISC_RUNTIME_SERVICES
 
 #include "Efi.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "Guid.h"
 #include "EfiCapsule.h"

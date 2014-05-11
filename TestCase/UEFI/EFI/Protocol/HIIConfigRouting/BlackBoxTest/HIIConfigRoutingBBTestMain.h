@@ -61,7 +61,6 @@ Abstract:
 #include "Efi.h"
 #include "HIIConfigRouting.h"
 #include "Guid.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "EfiCommonLib.h"
 

@@ -63,7 +63,6 @@ Abstract:
 #include "Efi.h"
 #include "PlatformToDriverConfigurationProtocol.h"
 #include "Guid.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 
 #define  PLATFORM_TO_DRIVER_CONFIGURATION_PROTOCOL_TEST_REVISION    0x00010000

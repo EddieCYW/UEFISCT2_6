@@ -79,7 +79,6 @@ COMPONENT_TYPE       = APPLICATION
   $(EFI_SOURCE)/
   $(EFI_SOURCE)/SctPkg/Include
   $(EFI_SOURCE)/SctPkg/Library/EfiTestLib
-  $(EFI_SOURCE)/SctPkg/Library/EfiTestUtilityLib
 
 [libraries.common]
   EfiGuidLib
@@ -87,7 +86,6 @@ COMPONENT_TYPE       = APPLICATION
   TestProtocolLib
   EfiCommonLib
   EfiTestLib
-  EfiTestUtilityLib
 
 [nmake.common]
   IMAGE_ENTRY_POINT=InitializeCombinationImage8

@@ -65,7 +65,6 @@ Abstract:
 #include EFI_PROTOCOL_DEFINITION (SimpleTextOut)
 #include EFI_PROTOCOL_DEFINITION (GraphicsOutput)
 
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 
 

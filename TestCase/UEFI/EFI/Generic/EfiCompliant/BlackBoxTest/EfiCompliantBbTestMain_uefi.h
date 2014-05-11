@@ -63,7 +63,6 @@ Abstract:
 //
 
 #include "SctLib.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "Guid_uefi.h"
 

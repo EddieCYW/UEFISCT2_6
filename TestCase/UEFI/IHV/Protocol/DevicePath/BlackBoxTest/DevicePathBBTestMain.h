@@ -61,7 +61,6 @@ Abstract:
 #include "Efi.h"
 #include "DevicePathProtocol.h"
 #include "Guid.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 
 #define  DEVICE_PATH_PROTOCOL_TEST_REVISION    0x00010001

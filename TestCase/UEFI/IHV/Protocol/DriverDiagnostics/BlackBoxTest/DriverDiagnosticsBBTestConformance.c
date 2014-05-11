@@ -753,7 +753,7 @@ FindMatchedDeviceHandle (
   //
   // find controller handles managed by the DriverDiagnosticsHandle.
   //
-  Status = LibGetManagedControllerHandles (
+  Status = SctGetManagedControllerHandles (
              DriverDiagnosticsHandle,
              &ControllerHandleCount,
              &ControllerHandleBuffer

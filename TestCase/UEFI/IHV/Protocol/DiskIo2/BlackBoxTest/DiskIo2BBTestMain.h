@@ -63,7 +63,6 @@ Abstract:
 #include "Efi.h"
 #include "DiskIo2Protocol.h"
 #include "Guid.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "BlockIo2Protocol.h"
 

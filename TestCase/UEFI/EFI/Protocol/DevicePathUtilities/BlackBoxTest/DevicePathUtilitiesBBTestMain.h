@@ -71,7 +71,6 @@ typedef EFI_DEVICE_PATH_PROTOCOL  EFI_DEVICE_PATH;
 #endif
 
 #include "Guid.h"
-#include "EfiTestUtilityLib.h"
 #include "EfiTestLib.h"
 #include "EfiCommonLib.h"
 
