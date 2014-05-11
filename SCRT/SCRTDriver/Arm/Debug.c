@@ -58,23 +58,6 @@ UINTN                 mHandOffPtr        =  0;
 EFI_PHYSICAL_ADDRESS  mIoPortSpaceAddress = 0;
 
 
-VOID
-UartReadWrite (
-  IN BOOLEAN                 ReadFlag,
-  IN EFI_PHYSICAL_ADDRESS    Address,
-  IN OUT UINT8               *Data
-  )
-{
-  if (ReadFlag) {
-    MEMORY_FENCE (); 
-    *Data = *(volatile UINT8 *)(UINTN)Address;
-  } else {
-    *(volatile UINT8 *)(UINTN)Address = *Data;
-    MEMORY_FENCE (); 
-  }
-}
-
-
 EFI_STATUS
 ConsumeHandOff (
   IN  UINTN         HandOffAddr,
@@ -104,70 +87,6 @@ ConsumeHandOff (
    }
 
    return EFI_SUCCESS;
-}
-
-
-
-
-VOID
-Send2IO (
-  UINT64     Address,
-  CHAR8      *String
-  )
-{
-  UINT8 Data;
-  CHAR8 *Ptr;
-
-  Ptr = String;
-  //
-  // Send text message to IO UART
-  //
-  while (*Ptr) {
-    EfiIoRead (EfiCpuIoWidthUint8, Address + 0x5, 1, &Data);
-    //
-    // Wait until Line Status Register (LSR) Bit5 Transmitter Holding 
-    // Register Empty(THRE) is high, then write.
-    //
-    while ((Data & 0x20) == 0) {
-      EfiIoRead (EfiCpuIoWidthUint8, Address + 0x5, 1, &Data);
-    }
-    Data = *Ptr++;
-    //
-    // Write data into Transmit Buffer Register
-    //
-    EfiIoWrite (EfiCpuIoWidthUint8, Address, 1, &Data);
-  }
-}
-
-
-VOID
-Send2MMIO (
-  UINT64     Address,
-  CHAR8      *String
-  )
-{
-  UINT8 Data;
-  CHAR8 *Ptr;
-
-  Ptr = String;
-  //
-  // Send text message to MMIO UART
-  //
-  while (*Ptr) {
-    UartReadWrite(TRUE, Address + 0x5, &Data);
-    //
-    // Wait until Line Status Register (LSR) Bit5 Transmitter Holding 
-    // Register Empty(THRE) is high, then write.
-    //
-    while ((Data & 0x20) == 0) {
-      UartReadWrite(TRUE, Address + 0x5, &Data);
-    }
-    Data = *Ptr++;
-    //
-    // Write data into Transmit Buffer Register
-    //
-    UartReadWrite(FALSE, Address, &Data);
-  }
 }
 
 
