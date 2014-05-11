@@ -104,7 +104,7 @@ FindTestCard (
   HandleNum    = 0;
   EfiStatus    = EFI_NOT_FOUND;
 
-  Status = LibLocateHandle(
+  Status = SctLocateHandle(
              ByProtocol,
              &gEfiPciRootBridgeIoProtocolGuid,
              NULL,

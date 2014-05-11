@@ -1406,7 +1406,7 @@ DevicePathStrFromProtocol (
   //Found = FALSE;
   Str = NULL;
   HandleNum    = 0;
-  Status      = LibLocateHandle(
+  Status      = SctLocateHandle(
                   ByProtocol,
                   Guid,
                   NULL,
@@ -1482,7 +1482,7 @@ GetFilePathByName (
   HandleNum    = 0;
   HandleBuffer = NULL;
 
-  Status  = LibLocateHandle(
+  Status  = SctLocateHandle(
                   ByProtocol,
                   &gEfiLoadedImageProtocolGuid,
                   NULL,

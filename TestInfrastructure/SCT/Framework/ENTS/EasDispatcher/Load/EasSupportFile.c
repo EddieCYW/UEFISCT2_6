@@ -784,7 +784,7 @@ Returns:
   BOOLEAN     Parent;
   BOOLEAN     Device;
 
-  Status = LibLocateHandle (
+  Status = SctLocateHandle (
             AllHandles,
             NULL,
             NULL,
@@ -803,7 +803,7 @@ Returns:
     //
     // Scan the handle database
     //
-    Status = LibScanHandleDatabase (
+    Status = SctScanHandleDatabase (
               NULL,
               NULL,
               AllHandleBuffer[Index],
@@ -817,24 +817,24 @@ Returns:
     }
 
     Device = TRUE;
-    if (HandleType[Index] & EFI_HANDLE_TYPE_DRIVER_BINDING_HANDLE) {
+    if (HandleType[Index] & SCT_HANDLE_TYPE_DRIVER_BINDING_HANDLE) {
       Device = FALSE;
     }
 
-    if (HandleType[Index] & EFI_HANDLE_TYPE_IMAGE_HANDLE) {
+    if (HandleType[Index] & SCT_HANDLE_TYPE_IMAGE_HANDLE) {
       Device = FALSE;
     }
 
     if (Device) {
       Parent = FALSE;
       for (HandleIndex = 0; HandleIndex < HandleCount; HandleIndex++) {
-        if (HandleType[HandleIndex] & EFI_HANDLE_TYPE_PARENT_HANDLE) {
+        if (HandleType[HandleIndex] & SCT_HANDLE_TYPE_PARENT_HANDLE) {
           Parent = TRUE;
         }
       }
 
       if (!Parent) {
-        if (HandleType[Index] & EFI_HANDLE_TYPE_DEVICE_HANDLE) {
+        if (HandleType[Index] & SCT_HANDLE_TYPE_DEVICE_HANDLE) {
           Status = tBS->ConnectController (
                         AllHandleBuffer[Index],
                         NULL,

@@ -57,79 +57,6 @@ Abstract:
 
 #include "lib.h"
 
-
-BOOLEAN
-GrowBuffer(
-  IN OUT EFI_STATUS   *Status,
-  IN OUT VOID         **Buffer,
-  IN UINTN            BufferSize
-  )
-/*++
-
-Routine Description:
-
-    Helper function called as part of the code needed
-    to allocate the proper sized buffer for various
-    EFI interfaces.
-
-Arguments:
-
-    Status      - Current status
-
-    Buffer      - Current allocated buffer, or NULL
-
-    BufferSize  - Current buffer size needed
-
-Returns:
-
-    TRUE - if the buffer was reallocated and the caller
-    should try the API again.
-
---*/
-{
-  BOOLEAN         TryAgain;
-
-  //
-  // If this is an initial request, buffer will be null with a new buffer size
-  //
-
-  if (!*Buffer && BufferSize) {
-    *Status = EFI_BUFFER_TOO_SMALL;
-  }
-
-  //
-  // If the status code is "buffer too small", resize the buffer
-  //
-
-  TryAgain = FALSE;
-  if (*Status == EFI_BUFFER_TOO_SMALL) {
-
-    if (*Buffer) {
-      SctFreePool (*Buffer);
-    }
-
-    *Buffer = SctAllocatePool (BufferSize);
-
-    if (*Buffer) {
-      TryAgain = TRUE;
-    } else {
-      *Status = EFI_OUT_OF_RESOURCES;
-    }
-  }
-
-  //
-  // If there's an error, free the buffer
-  //
-
-  if (!TryAgain && EFI_ERROR(*Status) && *Buffer) {
-    SctFreePool (*Buffer);
-    *Buffer = NULL;
-  }
-
-  return TryAgain;
-}
-
-
 EFI_MEMORY_DESCRIPTOR *
 LibMemoryMap (
   OUT UINTN               *NoEntries,
@@ -280,243 +207,6 @@ Returns:
 }
 
 EFI_STATUS
-LibGetSystemConfigurationTable(
-  IN EFI_GUID *TableGuid,
-  IN OUT VOID **Table
-  )
-/*++
-
-Routine Description:
-  Function returns a system configuration table that is stored in the
-  EFI System Table based on the provided GUID.
-
-Arguments:
-  TableGuid        - A pointer to the table's GUID type.
-
-  Table            - On exit, a pointer to a system configuration table.
-
-Returns:
-
-  EFI_SUCCESS      - A configuration table matching TableGuid was found
-
-  EFI_NOT_FOUND    - A configuration table matching TableGuid was not found
-
---*/
-{
-  UINTN Index;
-
-  for(Index=0;Index<tST->NumberOfTableEntries;Index++) {
-    if (CompareGuid(TableGuid,&(tST->ConfigurationTable[Index].VendorGuid))==0) {
-      *Table = tST->ConfigurationTable[Index].VendorTable;
-      return EFI_SUCCESS;
-    }
-  }
-  return EFI_NOT_FOUND;
-}
-
-EFI_STATUS
-LibScanHandleDatabase (
-  EFI_HANDLE  DriverBindingHandle,       OPTIONAL
-  UINT32      *DriverBindingHandleIndex, OPTIONAL
-  EFI_HANDLE  ControllerHandle,          OPTIONAL
-  UINT32      *ControllerHandleIndex,    OPTIONAL
-  UINTN       *HandleCount,
-  EFI_HANDLE  **HandleBuffer,
-  UINT32      **HandleType
-  )
-
-{
-  EFI_STATUS                           Status;
-  UINTN                                HandleIndex;
-  EFI_GUID                             **ProtocolGuidArray;
-  UINTN                                ArrayCount;
-  UINTN                                ProtocolIndex;
-  EFI_OPEN_PROTOCOL_INFORMATION_ENTRY  *OpenInfo;
-  UINTN                                OpenInfoCount;
-  UINTN                                OpenInfoIndex;
-  UINTN                                ChildIndex;
-  BOOLEAN                              DriverBindingHandleIndexValid;
-  BOOLEAN                              ControllerHandleIndexValid;
-
-  DriverBindingHandleIndexValid = FALSE;
-  if (DriverBindingHandleIndex != NULL) {
-    *DriverBindingHandleIndex = 0xffffffff;
-  }
-  ControllerHandleIndexValid = FALSE;
-  if (ControllerHandleIndex != NULL) {
-    *ControllerHandleIndex    = 0xffffffff;
-  }
-  *HandleCount              = 0;
-  *HandleBuffer             = NULL;
-  *HandleType               = NULL;
-
-  //
-  // Retrieve the list of all handles from the handle database
-  //
-  Status = tBS->LocateHandleBuffer (
-                 AllHandles,
-                 NULL,
-                 NULL,
-                 HandleCount,
-                 HandleBuffer
-                 );
-  if (EFI_ERROR (Status)) {
-    goto Error;
-  }
-
-  Status = tBS->AllocatePool (
-                 EfiBootServicesData,
-                 *HandleCount * sizeof(UINT32),
-                 (VOID **)HandleType
-                 );
-  if (EFI_ERROR (Status)) {
-    goto Error;
-  }
-
-  for (HandleIndex = 0; HandleIndex < *HandleCount; HandleIndex++) {
-
-    //
-    // Assume that the handle type is unknown
-    //
-    (*HandleType)[HandleIndex] = EFI_HANDLE_TYPE_UNKNOWN;
-
-    if (DriverBindingHandle != NULL && DriverBindingHandleIndex != NULL && (*HandleBuffer)[HandleIndex] == DriverBindingHandle) {
-      *DriverBindingHandleIndex = (UINT32)HandleIndex;
-      DriverBindingHandleIndexValid = TRUE;
-    }
-
-    if (ControllerHandle != NULL && ControllerHandleIndex != NULL && (*HandleBuffer)[HandleIndex] == ControllerHandle) {
-      *ControllerHandleIndex = (UINT32)HandleIndex;
-      ControllerHandleIndexValid = TRUE;
-    }
-
-  }
-
-  for (HandleIndex = 0; HandleIndex < *HandleCount; HandleIndex++) {
-
-    //
-    // Retrieve the list of all the protocols on each handle
-    //
-    Status = tBS->ProtocolsPerHandle (
-                   (*HandleBuffer)[HandleIndex],
-                   &ProtocolGuidArray,
-                   &ArrayCount
-                   );
-    if (!EFI_ERROR (Status)) {
-
-      for (ProtocolIndex = 0; ProtocolIndex < ArrayCount; ProtocolIndex++) {
-
-        if (CompareGuid (ProtocolGuidArray[ProtocolIndex], &gEfiLoadedImageProtocolGuid) == 0) {
-          (*HandleType)[HandleIndex] |= EFI_HANDLE_TYPE_IMAGE_HANDLE;
-        }
-
-        if (CompareGuid (ProtocolGuidArray[ProtocolIndex], &gEfiDriverBindingProtocolGuid) == 0) {
-          (*HandleType)[HandleIndex] |= EFI_HANDLE_TYPE_DRIVER_BINDING_HANDLE;
-        }
-
-        if (CompareGuid (ProtocolGuidArray[ProtocolIndex], &gEfiDriverConfigurationProtocolGuid) == 0) {
-          (*HandleType)[HandleIndex] |= EFI_HANDLE_TYPE_DRIVER_CONFIGURATION_HANDLE;
-        }
-
-        if (CompareGuid (ProtocolGuidArray[ProtocolIndex], &gEfiDriverDiagnosticsProtocolGuid) == 0) {
-          (*HandleType)[HandleIndex] |= EFI_HANDLE_TYPE_DRIVER_DIAGNOSTICS_HANDLE;
-        }
-
-        if (CompareGuid (ProtocolGuidArray[ProtocolIndex], &gEfiComponentNameProtocolGuid) == 0) {
-          (*HandleType)[HandleIndex] |= EFI_HANDLE_TYPE_COMPONENT_NAME_HANDLE;
-        }
-
-        if (CompareGuid (ProtocolGuidArray[ProtocolIndex], &gEfiDevicePathProtocolGuid) == 0) {
-          (*HandleType)[HandleIndex] |= EFI_HANDLE_TYPE_DEVICE_HANDLE;
-        }
-
-        //
-        // Retrieve the list of agents that have opened each protocol
-        //
-        Status = tBS->OpenProtocolInformation (
-                       (*HandleBuffer)[HandleIndex],
-                       ProtocolGuidArray[ProtocolIndex],
-                       &OpenInfo,
-                       &OpenInfoCount
-                       );
-        if (!EFI_ERROR (Status)) {
-
-          for (OpenInfoIndex=0; OpenInfoIndex < OpenInfoCount; OpenInfoIndex++) {
-            if (DriverBindingHandle != NULL && OpenInfo[OpenInfoIndex].AgentHandle == DriverBindingHandle) {
-              if ((OpenInfo[OpenInfoIndex].Attributes & EFI_OPEN_PROTOCOL_BY_DRIVER) == EFI_OPEN_PROTOCOL_BY_DRIVER) {
-                //
-                // Mark the device handle as being managed by the driver specified by DriverBindingHandle
-                //
-                (*HandleType)[HandleIndex] |= (EFI_HANDLE_TYPE_DEVICE_HANDLE | EFI_HANDLE_TYPE_CONTROLLER_HANDLE);
-                //
-                // Mark the DriverBindingHandle as being a driver that is managing at least one controller
-                //
-                if (DriverBindingHandleIndexValid) {
-                  (*HandleType)[*DriverBindingHandleIndex] |= EFI_HANDLE_TYPE_DEVICE_DRIVER;
-                }
-              }
-              if ((OpenInfo[OpenInfoIndex].Attributes & EFI_OPEN_PROTOCOL_BY_CHILD_CONTROLLER) == EFI_OPEN_PROTOCOL_BY_CHILD_CONTROLLER) {
-                //
-                // Mark the DriverBindingHandle as being a driver that is managing at least one child controller
-                //
-                if (DriverBindingHandleIndexValid) {
-                  (*HandleType)[*DriverBindingHandleIndex] |= EFI_HANDLE_TYPE_BUS_DRIVER;
-                }
-              }
-
-              if (ControllerHandle != NULL && (*HandleBuffer)[HandleIndex] == ControllerHandle) {
-                if ((OpenInfo[OpenInfoIndex].Attributes & EFI_OPEN_PROTOCOL_BY_CHILD_CONTROLLER) == EFI_OPEN_PROTOCOL_BY_CHILD_CONTROLLER) {
-                  for (ChildIndex = 0; ChildIndex < *HandleCount; ChildIndex++) {
-                    if ((*HandleBuffer)[ChildIndex] == OpenInfo[OpenInfoIndex].ControllerHandle) {
-                      (*HandleType)[ChildIndex] |= (EFI_HANDLE_TYPE_DEVICE_HANDLE | EFI_HANDLE_TYPE_CHILD_HANDLE);
-                    }
-                  }
-                }
-              }
-            }
-
-            if (DriverBindingHandle == NULL && OpenInfo[OpenInfoIndex].ControllerHandle == ControllerHandle) {
-              if ((OpenInfo[OpenInfoIndex].Attributes & EFI_OPEN_PROTOCOL_BY_DRIVER) == EFI_OPEN_PROTOCOL_BY_DRIVER) {
-                for (ChildIndex = 0; ChildIndex < *HandleCount; ChildIndex++) {
-                  if ((*HandleBuffer)[ChildIndex] == OpenInfo[OpenInfoIndex].AgentHandle) {
-                    (*HandleType)[ChildIndex] |= EFI_HANDLE_TYPE_DEVICE_DRIVER;
-                  }
-                }
-              }
-              if ((OpenInfo[OpenInfoIndex].Attributes & EFI_OPEN_PROTOCOL_BY_CHILD_CONTROLLER) == EFI_OPEN_PROTOCOL_BY_CHILD_CONTROLLER) {
-                (*HandleType)[HandleIndex] |= EFI_HANDLE_TYPE_PARENT_HANDLE;
-                for (ChildIndex = 0; ChildIndex < *HandleCount; ChildIndex++) {
-                  if ((*HandleBuffer)[ChildIndex] == OpenInfo[OpenInfoIndex].AgentHandle) {
-                    (*HandleType)[ChildIndex] |= EFI_HANDLE_TYPE_BUS_DRIVER;
-                  }
-                }
-              }
-            }
-          }
-          tBS->FreePool (OpenInfo);
-        }
-      }
-      tBS->FreePool (ProtocolGuidArray);
-    }
-  }
-
-  return EFI_SUCCESS;
-
-Error:
-  if (*HandleType != NULL) {
-    tBS->FreePool (*HandleType);
-  }
-  if (*HandleBuffer != NULL) {
-    tBS->FreePool (*HandleBuffer);
-  }
-  *HandleCount = 0;
-  *HandleBuffer = NULL;
-  *HandleType   = NULL;
-
-  return Status;
-}
-
-EFI_STATUS
 LibGetHandleDatabaseSubset (
   EFI_HANDLE  DriverBindingHandle,
   EFI_HANDLE  ControllerHandle,
@@ -540,7 +230,7 @@ LibGetHandleDatabaseSubset (
   HandleBuffer = NULL;
   HandleType   = NULL;
 
-  Status = LibScanHandleDatabase (
+  Status = SctScanHandleDatabase (
              DriverBindingHandle,
              NULL,
              ControllerHandle,
@@ -602,7 +292,7 @@ LibGetHandleDatabaseSubset (
 Done:
 
   //
-  // Free the buffers alocated by LibScanHandleDatabase()
+  // Free the buffers alocated by SctScanHandleDatabase()
   //
   if (HandleBuffer != NULL) {
     tBS->FreePool (HandleBuffer);
@@ -627,7 +317,7 @@ LibGetManagedChildControllerHandles (
   return LibGetHandleDatabaseSubset (
            DriverBindingHandle,
            ControllerHandle,
-           EFI_HANDLE_TYPE_CHILD_HANDLE | EFI_HANDLE_TYPE_DEVICE_HANDLE,
+           SCT_HANDLE_TYPE_CHILD_HANDLE | SCT_HANDLE_TYPE_DEVICE_HANDLE,
            ChildControllerHandleCount,
            ChildControllerHandleBuffer
            );
@@ -644,7 +334,7 @@ LibGetManagedControllerHandles (
   return LibGetHandleDatabaseSubset (
            DriverBindingHandle,
            NULL,
-           EFI_HANDLE_TYPE_CONTROLLER_HANDLE | EFI_HANDLE_TYPE_DEVICE_HANDLE,
+           SCT_HANDLE_TYPE_CONTROLLER_HANDLE | SCT_HANDLE_TYPE_DEVICE_HANDLE,
            ControllerHandleCount,
            ControllerHandleBuffer
            );

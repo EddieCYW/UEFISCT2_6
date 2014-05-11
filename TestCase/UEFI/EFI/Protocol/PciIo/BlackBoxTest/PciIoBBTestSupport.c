@@ -1506,7 +1506,7 @@ InitializeCaseEnvironment (
   //get PciRootBrigeIo Protocol Interface.
   //
   HandleNum    = 0;
-  Status      = LibLocateHandle (
+  Status      = SctLocateHandle (
                   ByProtocol,
                   &gEfiPciRootBridgeIoProtocolGuid,
                   NULL,
@@ -1529,7 +1529,7 @@ InitializeCaseEnvironment (
   //locate all the pci Io protocols.
   //
   HandleNum    = 0;
-  Status      = LibLocateHandle (
+  Status      = SctLocateHandle (
                   ByProtocol,
                   &gEfiPciIoProtocolGuid,
                   NULL,

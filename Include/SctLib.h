@@ -135,4 +135,59 @@ SctCompareMem (
   IN UINTN                          len
   );
 
+//
+// Protocol & Handle API
+//
+
+#define SCT_HANDLE_TYPE_UNKNOWN                      0x000
+#define SCT_HANDLE_TYPE_IMAGE_HANDLE                 0x001
+#define SCT_HANDLE_TYPE_DRIVER_BINDING_HANDLE        0x002
+#define SCT_HANDLE_TYPE_DEVICE_DRIVER                0x004
+#define SCT_HANDLE_TYPE_BUS_DRIVER                   0x008
+#define SCT_HANDLE_TYPE_DRIVER_CONFIGURATION_HANDLE  0x010
+#define SCT_HANDLE_TYPE_DRIVER_DIAGNOSTICS_HANDLE    0x020
+#define SCT_HANDLE_TYPE_COMPONENT_NAME_HANDLE        0x040
+#define SCT_HANDLE_TYPE_DEVICE_HANDLE                0x080
+#define SCT_HANDLE_TYPE_PARENT_HANDLE                0x100
+#define SCT_HANDLE_TYPE_CONTROLLER_HANDLE            0x200
+#define SCT_HANDLE_TYPE_CHILD_HANDLE                 0x400
+
+EFI_STATUS
+SctGetSystemConfigurationTable (
+  IN EFI_GUID                       *TableGuid,
+  IN OUT VOID                       **Table
+  );
+
+EFI_STATUS
+SctLocateProtocol (
+  IN  EFI_GUID    *ProtocolGuid,
+  OUT VOID        **Interface
+  );
+
+EFI_STATUS
+SctGetPeiProtocol (
+  IN EFI_GUID      *ProtocolGuid,
+  IN OUT VOID      **Interface
+  );
+
+EFI_STATUS
+SctLocateHandle (
+  IN EFI_LOCATE_SEARCH_TYPE       SearchType,
+  IN EFI_GUID                     *Protocol OPTIONAL,
+  IN VOID                         *SearchKey OPTIONAL,
+  IN OUT UINTN                    *NoHandles,
+  OUT EFI_HANDLE                  **Buffer
+  );
+
+EFI_STATUS
+SctScanHandleDatabase (
+  EFI_HANDLE  DriverBindingHandle,       OPTIONAL
+  UINT32      *DriverBindingHandleIndex, OPTIONAL
+  EFI_HANDLE  ControllerHandle,          OPTIONAL
+  UINT32      *ControllerHandleIndex,    OPTIONAL
+  UINTN       *HandleCount,
+  EFI_HANDLE  **HandleBuffer,
+  UINT32      **HandleType
+  );
+
 #endif

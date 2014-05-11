@@ -1562,7 +1562,7 @@ BBTestUninstallMultipleProtocolInterfacesConsistencyTest (
 }
 
 /**
- *  @brief Entrypoint for gtBS->LocateHandle() Consistency Test.
+ *  @brief Entrypoint for gtBS->LocateHandle () Consistency Test.
  *         6 checkpoints will be tested.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL
  *  @param ClientInterface A pointer to the interface array under test
@@ -2425,7 +2425,7 @@ BBTestHandleProtocolConsistencyTest (
 
 
 /**
- *  @brief Entrypoint for gtBS->LocateProtocol() Consistency Test.
+ *  @brief Entrypoint for gtBS->LocateProtocol () Consistency Test.
  *         3 check points will be tested.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL
  *  @param ClientInterface A pointer to the interface array under test

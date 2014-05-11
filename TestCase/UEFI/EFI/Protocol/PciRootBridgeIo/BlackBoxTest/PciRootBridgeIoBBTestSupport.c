@@ -1016,7 +1016,7 @@ InitializeCaseEnvironment (
     return EFI_SUCCESS;
   }
 
-  Status      = LibLocateHandle (
+  Status      = SctLocateHandle (
                   ByProtocol,
                   &gEfiPciRootBridgeIoProtocolGuid,
                   NULL,

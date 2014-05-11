@@ -173,11 +173,6 @@ BBTestEbcUnload (
 //
 // Prototypes of Internal Functions
 //
-STATIC EFI_STATUS
-GetPeiProtocol (
-  IN EFI_GUID      *ProtocolGuid,
-  IN OUT VOID      **Interface
-  );
 
 EFI_DRIVER_ENTRY_POINT(InitializeBBTestEbcProtocol)
 
@@ -207,8 +202,8 @@ InitializeBBTestEbcProtocol (
   //
   // Get Pei Protocols
   //
-  GetPeiProtocol (&gEfiPeiFlushInstructionCacheGuid, &gEfiPeiFlushInstructionCache);
-  GetPeiProtocol (&gEfiPeiPeCoffLoaderGuid, &gEfiPeiPeCoffLoader);
+  SctGetPeiProtocol (&gEfiPeiFlushInstructionCacheGuid, &gEfiPeiFlushInstructionCache);
+  SctGetPeiProtocol (&gEfiPeiPeCoffLoaderGuid, &gEfiPeiPeCoffLoader);
 
   //
   // Use profile lib at here just for less effect on the current system. It is
@@ -269,39 +264,6 @@ BBTestEbcUnload (
            ImageHandle,
            gBBTestProtocolInterface
            );
-}
-
-/**
- *  Get the Pei Protocol Interface from the Hob list.
- *  @param ProtocolGuid Pei Protocol Guid.
- *  @param Interface Pei Protocol interface to be returned.
- *  @return EFI_SUCCESS the protocol interface is got successfully.
- *  @return EFI_NOT_FOUND the protocol Guid is not found
- */
-EFI_STATUS
-GetPeiProtocol (
-  IN EFI_GUID      *ProtocolGuid,
-  IN OUT VOID      **Interface
-  )
-{
-  EFI_STATUS  Status;
-  VOID        *HobList;
-  VOID        *Buffer;
-
-  Status = EfiLibGetSystemConfigurationTable (&gEfiHobListGuid, &HobList);
-
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
-
-  Status = GetNextGuidHob (&HobList, ProtocolGuid, &Buffer, NULL);
-  if (EFI_ERROR(Status)) {
-    return Status;
-  }
-
-  *Interface = (VOID *)(*(UINTN *)(Buffer));
-
-  return Status;
 }
 
 /**

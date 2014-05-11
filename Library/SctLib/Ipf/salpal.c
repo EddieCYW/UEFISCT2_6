@@ -86,7 +86,7 @@ LibInitSalAndPalProc (
     mSalSystemTable = NULL;
 
 
-    Status = LibGetSystemConfigurationTable(&gtEfiSalSystemTableGuid, (VOID **)(&mSalSystemTable));
+    Status = SctGetSystemConfigurationTable(&gtEfiSalSystemTableGuid, (VOID **)(&mSalSystemTable));
     if (EFI_ERROR(Status)) {
       Print(L"Error : Sal System Table NOT found\r\n");
       return EFI_SUCCESS;

@@ -124,7 +124,7 @@ CreateAllDevIoDevices (
   HandleNum     = 0;
   HandleBuffer = NULL;
 
-  Status      = LibLocateHandle (
+  Status      = SctLocateHandle (
                   ByProtocol,
                   &gEfiDeviceIoProtocolGuid,
                   NULL,

@@ -147,7 +147,7 @@ BBTestGetDriverConformanceAutoTest (
   //
 
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
+  SctLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
 
   for (HandleIndex = 0; HandleIndex < HandlesNo; HandleIndex++) {
     DriverImageHandle = NULL;
@@ -278,7 +278,7 @@ BBTestGetDriverPathConformanceAutoTest (
   //
 
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
+  SctLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
 
 
   for(HandleIndex = 0; HandleIndex < HandlesNo; HandleIndex++)
@@ -380,7 +380,7 @@ BBTestDriverLoadedConformanceAutoTest (
   PlatformDriverOverride = (EFI_PLATFORM_DRIVER_OVERRIDE_PROTOCOL *)ClientInterface;
 
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
+  SctLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
 
   ControllerHandle = NULL;
   DriverImagePath = NULL;

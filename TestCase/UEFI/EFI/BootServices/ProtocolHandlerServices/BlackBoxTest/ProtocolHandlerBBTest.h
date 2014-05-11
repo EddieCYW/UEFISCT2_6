@@ -937,7 +937,7 @@ BBTestUninstallMultipleProtocolInterfacesInterfaceTestCheckPoint10 (
   );
 
 //
-// Checkpoint Functions for LocateHandle()
+// Checkpoint Functions for SctLocateHandle ()
 //
 
 EFI_STATUS
@@ -989,7 +989,7 @@ BBTestHandleProtocolInterfaceTestCheckPoint1 (
   );
 
 //
-// Checkpoint Functions for LocateProtocol()
+// Checkpoint Functions for SctLocateProtocol ()
 //
 
 EFI_STATUS

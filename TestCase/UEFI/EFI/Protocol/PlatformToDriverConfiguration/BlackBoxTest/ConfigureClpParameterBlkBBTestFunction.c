@@ -239,7 +239,7 @@ BBTestCLPCommandAutoTest (
  //
  
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
+  SctLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
 
   //
   //  get protocol Instance
@@ -495,7 +495,7 @@ BBTestCLPReturnStringAutoTest (
  //
  
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
+  SctLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
 
   //
   //  get protocol Instance
@@ -768,7 +768,7 @@ BBTestCLPCmdStatusAutoTest (
  //
  
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
+  SctLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
 
   //
   //  get protocol Instance
@@ -988,7 +988,7 @@ BBTestCLPErrorValueAutoTest (
  //
  
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
+  SctLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
 
   //
   //  get protocol Instance
@@ -1249,7 +1249,7 @@ BBTestCLPMessageCodeAutoTest (
  //
  
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
+  SctLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
 
   //
   //  get protocol Instance

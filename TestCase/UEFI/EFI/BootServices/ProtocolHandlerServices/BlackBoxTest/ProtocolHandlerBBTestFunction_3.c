@@ -59,7 +59,7 @@ Abstract:
 #include "Misc.h"
 
 //
-// Checkpoint Functions for LocateHandle()
+// Checkpoint Functions for SctLocateHandle ()
 //
 EFI_STATUS
 BBTestLocateHandleInterfaceTestCheckPoint1 (
@@ -551,7 +551,7 @@ BBTestLocateHandleInterfaceTestCheckPoint2 (
     gtBS->Stall (STALL_10_SECONDS);
 
     //
-    // according to EFI spec, LocateHandle() returns the
+    // according to EFI spec, SctLocateHandle () returns the
     // next handle that is new for the registration. Only one handle is
     // returned at a time, and the caller must loop until no more handles
     // are returned.
@@ -2570,7 +2570,7 @@ NextLoop:
 }
 
 //
-// Checkpoint Functions for LocateProtocol()
+// Checkpoint Functions for SctLocateProtocol ()
 //
 
 EFI_STATUS

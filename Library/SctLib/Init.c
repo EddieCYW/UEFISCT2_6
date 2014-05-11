@@ -126,7 +126,7 @@ InitializeUnicodeSupport (
   // If we don't know it, lookup the current language code
   //
 
-  LibLocateHandle (ByProtocol, &gEfiUnicodeCollationProtocolGuid, NULL, &NoHandles, &Handles);
+  SctLocateHandle (ByProtocol, &gEfiUnicodeCollationProtocolGuid, NULL, &NoHandles, &Handles);
   if (!LangCode || !NoHandles) {
     goto Done;
   }

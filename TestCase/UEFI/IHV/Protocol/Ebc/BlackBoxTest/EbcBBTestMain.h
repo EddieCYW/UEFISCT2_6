@@ -191,12 +191,6 @@ BBTestGetVersionConformanceTest (
 // Prototypes of Internal Functions
 //
 EFI_STATUS
-GetPeiProtocol (
-  IN EFI_GUID      *ProtocolGuid,
-  IN OUT VOID      **Interface
-  );
-
-EFI_STATUS
 ReadEbcDriver (
   IN OUT VOID    **Buffer,
   IN OUT UINTN   *Size

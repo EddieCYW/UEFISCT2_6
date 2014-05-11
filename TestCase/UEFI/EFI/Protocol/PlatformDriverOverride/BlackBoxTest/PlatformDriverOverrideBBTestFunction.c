@@ -120,7 +120,7 @@ BBTestGetDriverFunctionAutoTest (
   //
 
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
+  SctLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
 
   for (HandleIndex = 0; HandleIndex < HandlesNo; HandleIndex++) {
     DriverImageHandle = NULL;
@@ -216,7 +216,7 @@ BBTestGetDriverPathFunctionAutoTest (
   //
 
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
+  SctLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
 
 
   for (HandleIndex = 0; HandleIndex < HandlesNo; HandleIndex++) {
@@ -318,7 +318,7 @@ BBTestDriverLoadedFunctionAutoTest (
   //
 
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
+  SctLocateHandle (AllHandles, NULL, NULL, &HandlesNo, &Handles);
 
   ControllerHandle = NULL;
   DriverImagePath = NULL;

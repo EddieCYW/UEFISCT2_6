@@ -3763,7 +3763,7 @@ PciDevicePath_Func (
   HandleNum     = 0;
   HandleBuffer = NULL;
 
-  Status = LibLocateHandle(
+  Status = SctLocateHandle(
              ByProtocol,
              &gEfiPciIoProtocolGuid,
              NULL,

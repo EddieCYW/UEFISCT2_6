@@ -3139,7 +3139,7 @@ Returns:
   // Search by simple file system protocol
   //
   FsHandles = NULL;
-  LibLocateHandle(
+  SctLocateHandle(
             ByProtocol,
             &gEfiSimpleFileSystemProtocolGuid,
             NULL,
@@ -3208,7 +3208,7 @@ Returns:
   // add loadfileprotocol devices
   //
   LoadFileHandles = NULL;
-  LibLocateHandle (
+  SctLocateHandle (
      ByProtocol,
      &gEfiLoadFileProtocolGuid,
      NULL,

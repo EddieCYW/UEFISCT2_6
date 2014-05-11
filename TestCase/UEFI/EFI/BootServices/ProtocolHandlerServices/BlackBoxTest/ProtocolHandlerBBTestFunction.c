@@ -700,7 +700,7 @@ BBTestUninstallMultipleProtocolInterfacesInterfaceTest (
 }
 
 /**
- *  @brief Entrypoint for gtBS->LocateHandle() Interface Function Test.
+ *  @brief Entrypoint for gtBS->LocateHandle () Interface Function Test.
  *         3 checkpoints will be tested.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL
  *  @param ClientInterface A pointer to the interface array under test
@@ -890,7 +890,7 @@ BBTestHandleProtocolInterfaceTest (
 
 
 /**
- *  @brief Entrypoint for gtBS->LocateProtocol() Interface Function Test.
+ *  @brief Entrypoint for gtBS->LocateProtocol () Interface Function Test.
  *         2 checkpoints will be tested.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL
  *  @param ClientInterface A pointer to the interface array under test

@@ -117,7 +117,7 @@ BBTestQueryConformanceAutoTest (
   PlatformToDriverConfiguration = (EFI_PLATFORM_TO_DRIVER_CONFIGURATION_PROTOCOL *)ClientInterface;
   
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
+  SctLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
   
   ParameterTypeGuid = &gEfiPlatformToDriverConfigurationClpGuid;
   *ParameterClpBlockSize = sizeof( EFI_CONFIGURE_CLP_PARAMETER_BLK );
@@ -358,7 +358,7 @@ BBTestResponseConformanceAutoTest (
   PlatformToDriverConfiguration = (EFI_PLATFORM_TO_DRIVER_CONFIGURATION_PROTOCOL *)ClientInterface;
 
   // Get all the handles in the system.
-  LibLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
+  SctLocateHandle (AllHandles, NULL, NULL, &CtrlerHandleNo, &CtrlerHandles);
   
   ParameterTypeGuid = &gEfiPlatformToDriverConfigurationClpGuid;
   *ParameterClpBlockSize = sizeof( EFI_CONFIGURE_CLP_PARAMETER_BLK );
