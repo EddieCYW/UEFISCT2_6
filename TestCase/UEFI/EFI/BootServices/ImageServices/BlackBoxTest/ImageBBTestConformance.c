@@ -875,7 +875,7 @@ BBTestExitBootServicesConsistencyTest (
   //
   // Print out some information to avoid the user thought it is an error
   //
-  Print (L"System will cold reset after 2 second. please run this test again...");
+  SctPrint (L"System will cold reset after 2 second. please run this test again...");
   gtBS->Stall (2000000);
 
   //

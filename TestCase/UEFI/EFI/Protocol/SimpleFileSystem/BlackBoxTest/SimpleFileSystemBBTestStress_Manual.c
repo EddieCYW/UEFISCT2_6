@@ -270,13 +270,13 @@ BBTestSimpleFileSytemExtensiveTest1 (
   TestedDevicePathAmount = 0;
   DevicePathAmount = 0;
 
-  EfiStrCpy (FileName[0], L"File1");
-  EfiStrCpy (FileName[1], L"File2");
-  EfiStrCpy (FileName[2], L"File3");
-  EfiStrCpy (FileName[3], L"File4");
-  EfiStrCpy (FileName[4], L"File5");
+  SctStrCpy (FileName[0], L"File1");
+  SctStrCpy (FileName[1], L"File2");
+  SctStrCpy (FileName[2], L"File3");
+  SctStrCpy (FileName[3], L"File4");
+  SctStrCpy (FileName[4], L"File5");
 
-  EfiStrCpy (NewFileName, L"newfile");
+  SctStrCpy (NewFileName, L"newfile");
 
   //
   // create a timer event
@@ -924,13 +924,13 @@ BBTestSimpleFileSytemExtensiveTest2 (
   DevicePathAmount = 0;
   TestedDevicePathAmount = 0;
 
-  EfiStrCpy (FileName[0], L"File1");
-  EfiStrCpy (FileName[1], L"File2");
-  EfiStrCpy (FileName[2], L"File3");
-  EfiStrCpy (FileName[3], L"File4");
-  EfiStrCpy (FileName[4], L"File5");
+  SctStrCpy (FileName[0], L"File1");
+  SctStrCpy (FileName[1], L"File2");
+  SctStrCpy (FileName[2], L"File3");
+  SctStrCpy (FileName[3], L"File4");
+  SctStrCpy (FileName[4], L"File5");
 
-  EfiStrCpy (NewFileName, L"newfile");
+  SctStrCpy (NewFileName, L"newfile");
 
   //
   // create a timer event
@@ -1478,8 +1478,8 @@ BBTestSimpleFileSytemExtensiveTest3 (
   HandleBuffer = NULL;
   TimerEvent = NULL;
 
-  EfiStrCpy (NewFileName, L"BBTestSimpleFileSytemExtensiveTest3_NewFile");
-  EfiStrCpy (FileName, L"BBTestSimpleFileSytemExtensiveTest3_ExistingFile");
+  SctStrCpy (NewFileName, L"BBTestSimpleFileSytemExtensiveTest3_NewFile");
+  SctStrCpy (FileName, L"BBTestSimpleFileSytemExtensiveTest3_ExistingFile");
 
   //
   // create a timer event
@@ -1790,12 +1790,12 @@ BBTestSimpleFileSytemExtensiveTest4 (
   TimerEvent = NULL;
   NotifyEvent = NULL;
 
-  EfiStrCpy (DirName[0], L"BBTestSimpleFileSytemExtensiveTest4_Dir1");
-  EfiStrCpy (DirName[1], L"BBTestSimpleFileSytemExtensiveTest4_Dir2");
-  EfiStrCpy (DirName[2], L"BBTestSimpleFileSytemExtensiveTest4_Dir3");
-  EfiStrCpy (DirName[3], L"BBTestSimpleFileSytemExtensiveTest4_Dir4");
+  SctStrCpy (DirName[0], L"BBTestSimpleFileSytemExtensiveTest4_Dir1");
+  SctStrCpy (DirName[1], L"BBTestSimpleFileSytemExtensiveTest4_Dir2");
+  SctStrCpy (DirName[2], L"BBTestSimpleFileSytemExtensiveTest4_Dir3");
+  SctStrCpy (DirName[3], L"BBTestSimpleFileSytemExtensiveTest4_Dir4");
 
-  EfiStrCpy (ExistingFileName, L"BBTestSimpleFileSytemExtensiveTest4_ExistingFile");
+  SctStrCpy (ExistingFileName, L"BBTestSimpleFileSytemExtensiveTest4_ExistingFile");
 
   //
   // create a timer event
@@ -2245,14 +2245,14 @@ CreateSampleDirFileTree (
   CHAR16                    FileName[5][100];
   CHAR16                    DirName[2][100];
 
-  EfiStrCpy (FileName[0], L"File1");
-  EfiStrCpy (FileName[1], L"File2");
-  EfiStrCpy (FileName[2], L"File3");
-  EfiStrCpy (FileName[3], L"File4");
-  EfiStrCpy (FileName[4], L"File5");
+  SctStrCpy (FileName[0], L"File1");
+  SctStrCpy (FileName[1], L"File2");
+  SctStrCpy (FileName[2], L"File3");
+  SctStrCpy (FileName[3], L"File4");
+  SctStrCpy (FileName[4], L"File5");
 
-  EfiStrCpy (DirName[0], L"Dir1");
-  EfiStrCpy (DirName[1], L"Dir2");
+  SctStrCpy (DirName[0], L"Dir1");
+  SctStrCpy (DirName[1], L"Dir2");
 
   //
   // create D1 and D2.
@@ -2412,14 +2412,14 @@ DeleteSampleDirFileTree (
   CHAR16                    FileName[5][100];
   CHAR16                    DirName[2][100];
 
-  EfiStrCpy (FileName[0], L"File1");
-  EfiStrCpy (FileName[1], L"File2");
-  EfiStrCpy (FileName[2], L"File3");
-  EfiStrCpy (FileName[3], L"File4");
-  EfiStrCpy (FileName[4], L"File5");
+  SctStrCpy (FileName[0], L"File1");
+  SctStrCpy (FileName[1], L"File2");
+  SctStrCpy (FileName[2], L"File3");
+  SctStrCpy (FileName[3], L"File4");
+  SctStrCpy (FileName[4], L"File5");
 
-  EfiStrCpy (DirName[0], L"Dir1");
-  EfiStrCpy (DirName[1], L"Dir2");
+  SctStrCpy (DirName[0], L"Dir1");
+  SctStrCpy (DirName[1], L"Dir2");
 
   //
   // Open D1 and D2.
@@ -2509,8 +2509,8 @@ PrintStartTestMessage (
   CHAR16                      PrintString1[100];
   CHAR16                      PrintString2[200];
 
-  EfiStrCpy (PrintString1, L"\nTestCase will wait");
-  EfiStrCpy (PrintString2, L"seconds.\nplease enter Y or y for continue. \nplease enter N or n,or wait for the timer expire for skip.\n.");
+  SctStrCpy (PrintString1, L"\nTestCase will wait");
+  SctStrCpy (PrintString2, L"seconds.\nplease enter Y or y for continue. \nplease enter N or n,or wait for the timer expire for skip.\n.");
 
   *PressYes = FALSE;
   Status = gtBS->SetTimer (TimerEvent, TimerPeriodic, 10000000);
@@ -2606,8 +2606,8 @@ PrintDevicePathAndAskForInput (
   CHAR16                      PrintString1[100];
   CHAR16                      PrintString2[200];
 
-  EfiStrCpy (PrintString1, L"\nTestCase will wait");
-  EfiStrCpy (PrintString2, L"seconds.\nIf done, please enter Y or y. \nIf not,please enter N or n, or wait for the timer expire.\n.");
+  SctStrCpy (PrintString1, L"\nTestCase will wait");
+  SctStrCpy (PrintString2, L"seconds.\nIf done, please enter Y or y. \nIf not,please enter N or n, or wait for the timer expire.\n.");
 
   //
   // default is FALSE

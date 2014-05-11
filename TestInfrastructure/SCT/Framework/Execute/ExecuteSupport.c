@@ -951,7 +951,7 @@ GatherConfigHandles (
 
       DevicePathStr = LibDevicePathToStr (DevicePath);
 
-      if (StrCmp (Buffer, DevicePathStr) == 0) {
+      if (SctStrCmp (Buffer, DevicePathStr) == 0) {
         tBS->FreePool (DevicePathStr);
         break;
       }

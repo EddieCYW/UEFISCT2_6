@@ -52,6 +52,7 @@
 
 #include EFI_PROTOCOL_DEFINITION (UnicodeCollation)
 
+extern CONST CHAR8 mHex[];
 extern EFI_UNICODE_COLLATION_PROTOCOL   *UnicodeInterface;
 
 //
@@ -73,6 +74,26 @@ EfiDebugVariable (
 EFI_STATUS
 EfiDebugAssertInit (
   VOID
+  );
+
+BOOLEAN
+GrowBuffer (
+  IN OUT EFI_STATUS   *Status,
+  IN OUT VOID         **Buffer,
+  IN UINTN            BufferSize
+  );
+
+INTN
+LibStubStriCmp (
+  IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
+  IN CHAR16                           *s1,
+  IN CHAR16                           *s2
+  );
+
+VOID
+LibStubStrLwrUpr (
+  IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
+  IN CHAR16                           *Str
   );
 
 #endif

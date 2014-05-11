@@ -523,7 +523,7 @@ Returns:
       //
       // Get the index and iteration from the file name
       //
-      TempName = StrDuplicate (FileInfo->FileName);
+      TempName = SctStrDuplicate (FileInfo->FileName);
 
       //
       // The following function didn't allocate memory for CaseIndexStr and
@@ -581,8 +581,8 @@ Returns:
       //
       // Skip the '.' and '..' dir
       //
-      if ((StrCmp (FileInfo->FileName, L".")  == 0) ||
-          (StrCmp (FileInfo->FileName, L"..") == 0)) {
+      if ((SctStrCmp (FileInfo->FileName, L".")  == 0) ||
+          (SctStrCmp (FileInfo->FileName, L"..") == 0)) {
         continue;
       }
 
@@ -746,7 +746,7 @@ Arguments:
   //
   // Convert the buffer to ASCII buffer
   //
-  AsciiBufferSize = StrLen(Buffer) + 1;
+  AsciiBufferSize = SctStrLen (Buffer) + 1;
 
   Status = tBS->AllocatePool (
                  EfiBootServicesData,
@@ -760,7 +760,7 @@ Arguments:
     return Status;
   }
 
-  Status = UnicodeToAscii (Buffer, AsciiBuffer);
+  Status = SctUnicodeToAscii (AsciiBuffer, Buffer, SctStrLen (Buffer));
   if (EFI_ERROR (Status)) {
     EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Convert Unicode to ASCII - %r", Status));
     tBS->FreePool (ConfigBuffer);

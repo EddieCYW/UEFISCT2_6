@@ -89,7 +89,7 @@ StrToBuf (
 
   for(Index = 0; Index < StrLength; Index++, Str++) {
 
-    IsHexDigit (&Digit, *Str);
+    SctIsHexDigit (&Digit, *Str);
 
     //
     // For odd charaters, write the upper nibble for each buffer byte,
@@ -121,7 +121,7 @@ StrToGuid (
   EFI_STATUS  Status;
 
   BufferLength = sizeof (Guid->Data1);
-  Status = HexStringToBuf ((UINT8 *) &Guid->Data1, &BufferLength, Str, &ConvertedStrLen);
+  Status = SctHexStringToBuf ((UINT8 *) &Guid->Data1, &BufferLength, Str, &ConvertedStrLen);
   if (EFI_ERROR (Status)) {
     return Status;
   }
@@ -133,7 +133,7 @@ StrToGuid (
   }
 
   BufferLength = sizeof (Guid->Data2);
-  Status = HexStringToBuf ((UINT8 *) &Guid->Data2, &BufferLength, Str, &ConvertedStrLen);
+  Status = SctHexStringToBuf ((UINT8 *) &Guid->Data2, &BufferLength, Str, &ConvertedStrLen);
   if (EFI_ERROR (Status)) {
     return Status;
   }
@@ -145,7 +145,7 @@ StrToGuid (
   }
 
   BufferLength = sizeof (Guid->Data3);
-  Status = HexStringToBuf ((UINT8 *) &Guid->Data3, &BufferLength, Str, &ConvertedStrLen);
+  Status = SctHexStringToBuf ((UINT8 *) &Guid->Data3, &BufferLength, Str, &ConvertedStrLen);
   if (EFI_ERROR (Status)) {
     return Status;
   }
@@ -179,9 +179,9 @@ ConvertEisaIDFromStr (
   )
 {
   if ((Str[0] == L'P') && (Str[1] == L'N') && (Str[2] == L'P')) {
-    return EISA_PNP_ID(xtoi(Str + 3));
+    return EISA_PNP_ID(SctXtoi (Str + 3));
   }
-  return (UINT32)xtoi(Str);
+  return (UINT32)SctXtoi (Str);
 }
 
 STATIC
@@ -195,13 +195,13 @@ ConvertStrToIPv4Addr (
   CHAR16  *AddrStart;
   CHAR16  *AddrEnd;
 
-  AddrStart = (CHAR16 *)SctAllocateCopyPool (StrLen(Str) * 2 + 2, Str);
+  AddrStart = (CHAR16 *)SctAllocateCopyPool (SctStrLen (Str) * 2 + 2, Str);
   for (Index = 0; Index < 4; Index++) {
-    AddrEnd   = StrChr(AddrStart, L'.');
+    AddrEnd   = SctStrChr (AddrStart, L'.');
     if (AddrEnd != NULL) {
       *AddrEnd  = L'\0';
     }
-    IPv4Addr->Addr[Index] = (UINT8) Atoi (AddrStart);
+    IPv4Addr->Addr[Index] = (UINT8) SctAtoi (AddrStart);
     AddrStart = AddrEnd + 1;
   }
 }
@@ -218,13 +218,13 @@ ConvertStrToIPv6Addr (
   CHAR16  *AddrEnd;
   UINT16  Data;
 
-  AddrStart = (CHAR16 *)SctAllocateCopyPool (StrLen(Str) * 2 + 2, Str);
+  AddrStart = (CHAR16 *)SctAllocateCopyPool (SctStrLen (Str) * 2 + 2, Str);
   for (Index = 0; Index < 8; Index++) {
-    AddrEnd   = StrChr(AddrStart, L':');
+    AddrEnd   = SctStrChr (AddrStart, L':');
     if (AddrEnd != NULL) {
       *AddrEnd  = L'\0';
     }
-    Data = (UINT16) xtoi (AddrStart);
+    Data = (UINT16) SctXtoi (AddrStart);
     IPv6Addr->Addr[Index * 2]     = (UINT8) (Data >> 8);
     IPv6Addr->Addr[Index * 2 + 1] = (UINT8) (Data & 0xff);
     AddrStart = AddrEnd + 1;
@@ -352,7 +352,7 @@ DevicePathToTextConvertDeviceNodeToTextCoverageTest (
   //
   // VenHw(5AF6C71E-1261-4637-9838-C4E9913D1DBB,0123456789ABCDEF)
   //
-  Length = (EfiStrLen (L"0123456789ABCDEF") + 1) / 2;
+  Length = (SctStrLen (L"0123456789ABCDEF") + 1) / 2;
   pDeviceNode1 = DevicePathUtilities->CreateDeviceNode (0x1, 0x4, 20 + (UINT16)Length);
   StrToGuid (L"5AF6C71E-1261-4637-9838-C4E9913D1DBB", &((VENDOR_DEVICE_PATH *)pDeviceNode1)->Guid);
   StrToBuf (((UINT8 *) pDeviceNode1) + 20, Length, L"0123456789ABCDEF");

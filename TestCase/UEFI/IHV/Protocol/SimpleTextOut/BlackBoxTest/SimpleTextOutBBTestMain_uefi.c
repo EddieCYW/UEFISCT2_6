@@ -448,7 +448,7 @@ _IPrint (
     }
   }
 
-  for (Index = 0; Index < EfiStrLen (Buffer); Index++) {
+  for (Index = 0; Index < SctStrLen (Buffer); Index++) {
     StringIndex = (UINT16)Index;
     Status = Hii->GetGlyph (Hii, UnicodeWeight, &StringIndex, (UINT8 **)&Glyph, &GlyphWidth, &GlyphStatus);
     if (EFI_ERROR (Status)) {
@@ -456,9 +456,9 @@ _IPrint (
     }
 
     if (Foreground == NULL || Background == NULL) {
-      Status = Hii->GlyphToBlt (Hii, (UINT8 *)Glyph, mEfiColors[Sto->Mode->Attribute & 0x0f], mEfiColors[Sto->Mode->Attribute >> 4], EfiStrLen (Buffer), GlyphWidth, GLYPH_HEIGHT, &LineBuffer[Index * GLYPH_WIDTH]);
+      Status = Hii->GlyphToBlt (Hii, (UINT8 *)Glyph, mEfiColors[Sto->Mode->Attribute & 0x0f], mEfiColors[Sto->Mode->Attribute >> 4], SctStrLen (Buffer), GlyphWidth, GLYPH_HEIGHT, &LineBuffer[Index * GLYPH_WIDTH]);
     } else {
-      Status = Hii->GlyphToBlt (Hii, (UINT8 *)Glyph, *Foreground, *Background, EfiStrLen (Buffer), GlyphWidth, GLYPH_HEIGHT, &LineBuffer[Index * GLYPH_WIDTH]);
+      Status = Hii->GlyphToBlt (Hii, (UINT8 *)Glyph, *Foreground, *Background, SctStrLen (Buffer), GlyphWidth, GLYPH_HEIGHT, &LineBuffer[Index * GLYPH_WIDTH]);
     }
   }
 
@@ -473,9 +473,9 @@ _IPrint (
                                   0,
                                   X,
                                   Y,
-                                  GLYPH_WIDTH * EfiStrLen (Buffer),
+                                  GLYPH_WIDTH * SctStrLen (Buffer),
                                   GLYPH_HEIGHT,
-                                  GLYPH_WIDTH * EfiStrLen (Buffer) * sizeof (EFI_GRAPHICS_OUTPUT_BLT_PIXEL)
+                                  GLYPH_WIDTH * SctStrLen (Buffer) * sizeof (EFI_GRAPHICS_OUTPUT_BLT_PIXEL)
                                   );
 
 Error:

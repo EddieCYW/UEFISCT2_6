@@ -954,7 +954,7 @@ GetImageDevicePath (
   while (!IsDevicePathEnd (TempDeviceNode)) {
     if ((DevicePathType (TempDeviceNode) == MEDIA_DEVICE_PATH) &&
         (DevicePathSubType (TempDeviceNode) == MEDIA_FILEPATH_DP)) {
-      TempFilePath = StrDuplicate (((FILEPATH_DEVICE_PATH *)TempDeviceNode)->PathName);
+      TempFilePath = SctStrDuplicate (((FILEPATH_DEVICE_PATH *)TempDeviceNode)->PathName);
       break;
     }
     TempDeviceNode = NextDevicePathNode (TempDeviceNode);

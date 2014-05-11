@@ -283,7 +283,7 @@ BBTestExtractConfigConformanceTestCheckpoint1 (
   EFI_STRING            Results = NULL;
   EFI_STRING            ResultsPtr = NULL;
   UINTN                 Len = 0;
-  EFI_STRING            Pointer = NULL;
+  CHAR16*               Pointer = NULL;
   UINT8                 IfMulti = 0;
   
   EFI_STRING            Request = NULL;
@@ -298,7 +298,7 @@ BBTestExtractConfigConformanceTestCheckpoint1 (
                               );
 
   if ( Status == EFI_SUCCESS ) {
-    Len = StrLen(Results);
+    Len = SctStrLen (Results);
     //
     // Make sure the size of Request is enough to hold <MultiConfigRequest> 
     // if original Results is not Multi
@@ -318,15 +318,15 @@ BBTestExtractConfigConformanceTestCheckpoint1 (
   SctFreePool (Results);
   Results = NULL;
 
-  if ( EfiStrStr(Request, L"GUID=") != NULL ) {
-    Pointer = EfiStrStr(Request, L"GUID=");
+  if ( SctStrStr (Request, L"GUID=") != NULL ) {
+    Pointer = SctStrStr (Request, L"GUID=");
     Pointer++;
-    if ( EfiStrStr(Pointer, L"GUID=") != NULL )
+    if ( SctStrStr (Pointer, L"GUID=") != NULL )
 	  IfMulti = 1;
   }
   
   if ( IfMulti == 0 ) {
-    EfiStrCat( Request, L"&GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000acf&grag&star");
+    SctStrCat ( Request, L"&GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000acf&grag&star");
   }
 
   Status = HIIConfigAccess->ExtractConfig (
@@ -336,7 +336,7 @@ BBTestExtractConfigConformanceTestCheckpoint1 (
                               &Results
                               );
   
-  if ( (EFI_INVALID_PARAMETER != Status) || (EfiStrnCmp (Progress, L"&GUID=", 6) != 0) ) {
+  if ( (EFI_INVALID_PARAMETER != Status) || (SctStrnCmp (Progress, L"&GUID=", 6) != 0) ) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -385,7 +385,7 @@ BBTestExtractConfigConformanceTestCheckpoint2 (
     return Status;
   }
 
-  Request = (EFI_STRING) SctAllocateZeroPool ( 2 * StrLen(MultiConfigAltResp) + 2 );
+  Request = (EFI_STRING) SctAllocateZeroPool ( 2 * SctStrLen (MultiConfigAltResp) + 2 );
   if (Request == NULL) {
     gtBS->FreePool (MultiConfigAltResp);
 	gtBS->FreePool (DevicePath);
@@ -463,7 +463,7 @@ BBTestExtractConfigConformanceTestCheckpoint3 (
     return Status;
   }
 
-  Request = (EFI_STRING) SctAllocateZeroPool ( 2 * StrLen(MultiConfigAltResp) + 2 );
+  Request = (EFI_STRING) SctAllocateZeroPool ( 2 * SctStrLen (MultiConfigAltResp) + 2 );
   if (Request == NULL) {
     gtBS->FreePool (MultiConfigAltResp);
 	gtBS->FreePool (DevicePath);
@@ -537,7 +537,7 @@ BBTestExtractConfigConformanceTestCheckpoint4 (
                               &Results
                               );
   
-  if ( ((EFI_INVALID_PARAMETER == Status) && (EfiStrnCmp (Progress, L"&Jack&Rons&Nash&Mary", 20) == 0)) ||
+  if ( ((EFI_INVALID_PARAMETER == Status) && (SctStrnCmp (Progress, L"&Jack&Rons&Nash&Mary", 20) == 0)) ||
     ((EFI_NOT_FOUND == Status) && (Progress == Request)) ) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -625,7 +625,7 @@ BBTestRouteConfigConformanceTestCheckpoint2 (
     return Status;
   }
 
-  Config = (EFI_STRING) SctAllocateZeroPool ( 2 * StrLen(MultiConfigAltResp) + 2 );
+  Config = (EFI_STRING) SctAllocateZeroPool ( 2 * SctStrLen (MultiConfigAltResp) + 2 );
   if (Config == NULL) {
     gtBS->FreePool (MultiConfigAltResp);
 	gtBS->FreePool (DevicePath);

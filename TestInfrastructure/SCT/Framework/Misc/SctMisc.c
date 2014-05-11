@@ -63,11 +63,6 @@ Abstract:
 //
 
 UINTN
-SctXtoi (
-  CHAR16                          *Str
-  );
-
-UINTN
 SctHexStrnToInt (
   IN CHAR16                       *String,
   IN UINTN                        Length
@@ -182,7 +177,7 @@ Routine Description:
     TempStr ++;
   }
 
-  *FileName = StrDuplicate (TempStr + 1);
+  *FileName = SctStrDuplicate (TempStr + 1);
   if (*FileName == NULL) {
     SctFreePool (*DevicePath);
     ShellFreeFileList (&FileList);
@@ -234,9 +229,9 @@ Routine Description:
   //
   // Remove the file name from full name
   //
-  for (Index = 0; Index < StrLen (FileName); Index++) {
-    if (FileName[StrLen (FileName) - Index - 1] == L'\\') {
-      FileName[StrLen (FileName) - Index - 1] = L'\0';
+  for (Index = 0; Index < SctStrLen (FileName); Index++) {
+    if (FileName[SctStrLen (FileName) - Index - 1] == L'\\') {
+      FileName[SctStrLen (FileName) - Index - 1] = L'\0';
       break;
     }
   }
@@ -326,32 +321,6 @@ Routine Description:
 }
 
 
-VOID
-SctStrnCpy (
-  OUT CHAR16                      *Dst,
-  IN CHAR16                       *Src,
-  IN UINTN                        Length
-  )
-/*++
-
-Routine Description:
-
-  Copy characters from one string to another.
-
---*/
-{
-  UINTN   SrcIndex;
-  UINTN   DstIndex;
-
-  SrcIndex = DstIndex = 0;
-  while (DstIndex < Length) {
-      Dst[DstIndex] = Src[SrcIndex];
-      DstIndex ++;
-      SrcIndex ++;
-  }
-}
-
-
 CHAR16 *
 SctGetShortFilePathAndName (
   IN CHAR16                       *FileName,
@@ -376,7 +345,7 @@ Routine Description:
   //
   // Allocate new memory to store the short file path and name
   //
-  Length = StrLen (FileName) - StrLen (RootFilePath) - 1;
+  Length = SctStrLen (FileName) - SctStrLen (RootFilePath) - 1;
 
   Status = tBS->AllocatePool (
                  EfiBootServicesData,
@@ -387,7 +356,7 @@ Routine Description:
     return NULL;
   }
 
-  StrCpy (ShortFileName, FileName + StrLen(RootFilePath) + 1);
+  SctStrCpy (ShortFileName, FileName + SctStrLen (RootFilePath) + 1);
 
   //
   // Remove the extension name
@@ -426,7 +395,7 @@ Routine Description:
   //
   // Find the last '\' or '/'
   //
-  for (Index = StrLen(FileName) - 1; Index >= 0; Index --) {
+  for (Index = SctStrLen (FileName) - 1; Index >= 0; Index --) {
     if ((FileName[Index] == L'\\') || (FileName[Index] == L'/')) {
       break;
     }
@@ -696,7 +665,7 @@ Routine Description:
   //
   // Create the parent directory
   //
-  StringEnd = FileName + StrLen(FileName) - 1;
+  StringEnd = FileName + SctStrLen (FileName) - 1;
   while (StringEnd >= FileName) {
     if ((*StringEnd == L'\\') || (*StringEnd == L'/')) {
       break;
@@ -708,7 +677,7 @@ Routine Description:
     CSaved = *StringEnd;
     *StringEnd = L'\0';
 
-    if (StrLen(FileName) != 0) {
+    if (SctStrLen (FileName) != 0) {
       Status = SctCreateDirectory (RootDir, FileName);
       if (EFI_ERROR (Status)) {
         *StringEnd = CSaved;
@@ -763,7 +732,7 @@ Routine Description:
   //
   // Create the parent directory
   //
-  StringEnd = FileName + StrLen(FileName) - 1;
+  StringEnd = FileName + SctStrLen (FileName) - 1;
   while (StringEnd >= FileName) {
     if ((*StringEnd == L'\\') || (*StringEnd == L'/')) {
       break;
@@ -775,7 +744,7 @@ Routine Description:
     CSaved = *StringEnd;
     *StringEnd = L'\0';
 
-    if (StrLen(FileName) != 0) {
+    if (SctStrLen (FileName) != 0) {
       Status = SctCreateDirectory (RootDir, FileName);
       if (EFI_ERROR (Status)) {
         *StringEnd = CSaved;
@@ -1006,9 +975,9 @@ Routine Description:
   // Convert a string to an integer
   //
   if (Buffer[0] == L'-') {
-    *Value = (UINTN) (0 - Atoi (Buffer + 1));
+    *Value = (UINTN) (0 - SctAtoi (Buffer + 1));
   } else {
-    *Value = Atoi (Buffer);
+    *Value = SctAtoi (Buffer);
   }
 
   return EFI_SUCCESS;
@@ -1062,9 +1031,9 @@ Routine Description:
   // Convert a string to a short integer
   //
   if (Buffer[0] == L'-') {
-    *Value = (UINT32) (0 - Atoi (Buffer + 1));
+    *Value = (UINT32) (0 - SctAtoi (Buffer + 1));
   } else {
-    *Value = (UINT32) Atoi (Buffer);
+    *Value = (UINT32) SctAtoi (Buffer);
   }
 
   return EFI_SUCCESS;
@@ -1196,9 +1165,9 @@ Routine Description:
   // Convert a boolean to a string
   //
   if (Value) {
-    StrCpy (Buffer, L"True");
+    SctStrCpy (Buffer, L"True");
   } else {
-    StrCpy (Buffer, L"False");
+    SctStrCpy (Buffer, L"False");
   }
 
   return EFI_SUCCESS;
@@ -1222,9 +1191,9 @@ Routine Description:
     return EFI_INVALID_PARAMETER;
   }
 
-  if (StriCmp (Buffer, L"True") == 0) {
+  if (SctStriCmp (Buffer, L"True") == 0) {
     *Value = TRUE;
-  } else if (StriCmp (Buffer, L"False") == 0) {
+  } else if (SctStriCmp (Buffer, L"False") == 0) {
     *Value = FALSE;
   } else {
     return EFI_UNSUPPORTED;
@@ -1402,7 +1371,7 @@ Routine Description:
     }
 
     GuidArray ++;
-    StrCpy (Buffer + 36, L",");
+    SctStrCpy (Buffer + 36, L",");
     Buffer += 37;
   }
 
@@ -1436,7 +1405,7 @@ Routine Description:
   //
   // Convert a string to the tokens
   //
-  TempBuffer = StrDuplicate (Buffer);
+  TempBuffer = SctStrDuplicate (Buffer);
 
   Status = SctStrTokens (TempBuffer, &NumberOfTokens, &Tokens);
   if (EFI_ERROR (Status)) {
@@ -1540,7 +1509,7 @@ Routine Description:
   //
   // Convert a string to the tokens
   //
-  TempBuffer = StrDuplicate (Buffer);
+  TempBuffer = SctStrDuplicate (Buffer);
 
   Status = SctStrTokens (TempBuffer, &NumberOfTokens, &Tokens);
   if (EFI_ERROR (Status)) {
@@ -1558,11 +1527,11 @@ Routine Description:
       continue;
     }
 
-    if (StriCmp (Tokens[Index], L"Minimal") == 0) {
+    if (SctStriCmp (Tokens[Index], L"Minimal") == 0) {
       *TestLevel |= EFI_TEST_LEVEL_MINIMAL;
-    } else if (StriCmp (Tokens[Index], L"Default") == 0) {
+    } else if (SctStriCmp (Tokens[Index], L"Default") == 0) {
       *TestLevel |= EFI_TEST_LEVEL_DEFAULT;
-    } else if (StriCmp (Tokens[Index], L"Exhaustive") == 0) {
+    } else if (SctStriCmp (Tokens[Index], L"Exhaustive") == 0) {
       *TestLevel |= EFI_TEST_LEVEL_EXHAUSTIVE;
     } else {
       tBS->FreePool (TempBuffer);
@@ -1599,19 +1568,19 @@ Routine Description:
   //
   switch (VerboseLevel) {
   case EFI_VERBOSE_LEVEL_QUIET:
-    StrCpy (Buffer, L"Quiet");
+    SctStrCpy (Buffer, L"Quiet");
     break;
   case EFI_VERBOSE_LEVEL_MINIMAL:
-    StrCpy (Buffer, L"Minimal");
+    SctStrCpy (Buffer, L"Minimal");
     break;
   case EFI_VERBOSE_LEVEL_DEFAULT:
-    StrCpy (Buffer, L"Default");
+    SctStrCpy (Buffer, L"Default");
     break;
   case EFI_VERBOSE_LEVEL_NOISY:
-    StrCpy (Buffer, L"Noisy");
+    SctStrCpy (Buffer, L"Noisy");
     break;
   case EFI_VERBOSE_LEVEL_EXHAUSTIVE:
-    StrCpy (Buffer, L"Exhaustive");
+    SctStrCpy (Buffer, L"Exhaustive");
     break;
   default:
     return EFI_UNSUPPORTED;
@@ -1641,15 +1610,15 @@ Routine Description:
   //
   // Convert a string to a verbose level
   //
-  if (StriCmp (Buffer, L"Quiet") == 0) {
+  if (SctStriCmp (Buffer, L"Quiet") == 0) {
     *VerboseLevel = EFI_VERBOSE_LEVEL_QUIET;
-  } else if (StriCmp (Buffer, L"Minimal") == 0) {
+  } else if (SctStriCmp (Buffer, L"Minimal") == 0) {
     *VerboseLevel = EFI_VERBOSE_LEVEL_MINIMAL;
-  } else if (StriCmp (Buffer, L"Default") == 0) {
+  } else if (SctStriCmp (Buffer, L"Default") == 0) {
     *VerboseLevel = EFI_VERBOSE_LEVEL_DEFAULT;
-  } else if (StriCmp (Buffer, L"Noisy") == 0) {
+  } else if (SctStriCmp (Buffer, L"Noisy") == 0) {
     *VerboseLevel = EFI_VERBOSE_LEVEL_NOISY;
-  } else if (StriCmp (Buffer, L"Exhaustive") == 0) {
+  } else if (SctStriCmp (Buffer, L"Exhaustive") == 0) {
     *VerboseLevel = EFI_VERBOSE_LEVEL_EXHAUSTIVE;
   } else {
     return EFI_UNSUPPORTED;
@@ -1718,7 +1687,7 @@ Routine Description:
   //
   // Convert a string to the tokens
   //
-  TempBuffer = StrDuplicate (Buffer);
+  TempBuffer = SctStrDuplicate (Buffer);
 
   Status = SctStrTokens (TempBuffer, &NumberOfTokens, &Tokens);
   if (EFI_ERROR (Status)) {
@@ -1736,11 +1705,11 @@ Routine Description:
       continue;
     }
 
-    if (StriCmp (Tokens[Index], L"Manual") == 0) {
+    if (SctStriCmp (Tokens[Index], L"Manual") == 0) {
       *CaseAttribute |= EFI_TEST_CASE_MANUAL;
-    } else if (StriCmp (Tokens[Index], L"Destructive") == 0) {
+    } else if (SctStriCmp (Tokens[Index], L"Destructive") == 0) {
       *CaseAttribute |= EFI_TEST_CASE_DESTRUCTIVE;
-    } else if (StriCmp (Tokens[Index], L"ResetRequired") == 0) {
+    } else if (SctStriCmp (Tokens[Index], L"ResetRequired") == 0) {
       *CaseAttribute |= EFI_TEST_CASE_RESET_REQUIRED;
     } else {
       tBS->FreePool (TempBuffer);
@@ -1768,7 +1737,7 @@ Routine Description:
 
 --*/
 {
-  if ((Str == NULL) || (SubStr == NULL) || (StrLen(Str) < StrLen(SubStr))) {
+  if ((Str == NULL) || (SubStr == NULL) || (SctStrLen (Str) < SctStrLen (SubStr))) {
     return FALSE;
   }
 
@@ -1782,7 +1751,7 @@ Routine Description:
   //
   // Compare
   //
-  if (StrnCmp (Str, SubStr, StrLen(SubStr)) == 0) {
+  if (SctStrnCmp (Str, SubStr, SctStrLen (SubStr)) == 0) {
     return TRUE;
   } else {
     return FALSE;
@@ -1805,16 +1774,16 @@ Routine Description:
 {
   CHAR16  *Temp;
 
-  if ((Str == NULL) || (SubStr == NULL) || (StrLen(Str) < StrLen(SubStr))) {
+  if ((Str == NULL) || (SubStr == NULL) || (SctStrLen (Str) < SctStrLen (SubStr))) {
     return FALSE;
   }
 
-  Temp = Str + StrLen(Str) - StrLen(SubStr);
+  Temp = Str + SctStrLen (Str) - SctStrLen (SubStr);
 
   //
   // Compare
   //
-  if (StriCmp (Temp, SubStr) == 0) {
+  if (SctStriCmp (Temp, SubStr) == 0) {
     return TRUE;
   } else {
     return FALSE;
@@ -1837,12 +1806,12 @@ Routine Description:
 {
   CHAR16  *Temp;
 
-  if ((Str == NULL) || (SubStr == NULL) || (StrLen(Str) < StrLen(SubStr))) {
+  if ((Str == NULL) || (SubStr == NULL) || (SctStrLen (Str) < SctStrLen (SubStr))) {
     return NULL;
   }
 
-  Temp = StrDuplicate (Str);
-  SctStrnCpy (Temp, SubStr, StrLen(SubStr));
+  Temp = SctStrDuplicate (Str);
+  SctStrnCpy (Temp, SubStr, SctStrLen (SubStr));
 
   return Temp;
 }
@@ -1863,60 +1832,15 @@ Routine Description:
 {
   CHAR16  *Temp;
 
-  if ((Str == NULL) || (SubStr == NULL) || (StrLen(Str) < StrLen(SubStr))) {
+  if ((Str == NULL) || (SubStr == NULL) || (SctStrLen (Str) < SctStrLen (SubStr))) {
     return NULL;
   }
 
-  Temp = StrDuplicate (Str);
-  StrCpy (Temp + StrLen(Str) - StrLen(SubStr), SubStr);
+  Temp = SctStrDuplicate (Str);
+  SctStrCpy (Temp + SctStrLen (Str) - SctStrLen (SubStr), SubStr);
 
   return Temp;
 }
-
-
-//
-// Internal functions implementation
-//
-
-UINTN
-SctXtoi (
-  CHAR16                          *String
-  )
-/*++
-
-Routine Description:
-
-  Convert a hexadecimal stromg to an integer.
-
---*/
-{
-  UINTN   Index;
-  UINTN   Value;
-
-  //
-  // Skip the preceeding L"0x"
-  //
-  if ((String[0] == L'0') && ((String[1] == L'x') || (String[1] == L'X'))) {
-    String += 2;
-  }
-
-  Value = 0;
-
-  for (Index = 0; String[Index] != L'\0'; Index ++) {
-    if ((String[Index] >= L'0') && (String[Index] <= L'9')) {
-      Value = (Value << 4) + (String[Index] - L'0');
-    } else if ((String[Index] >= L'A') && (String[Index] <= L'F')) {
-      Value = (Value << 4) + (String[Index] - L'A' + 10);
-    } else if ((String[Index] >= L'a') && (String[Index] <= L'f')) {
-      Value = (Value << 4) + (String[Index] - L'a' + 10);
-    } else {
-      return 0;
-    }
-  }
-
-  return Value;
-}
-
 
 UINTN
 SctHexStrnToInt (

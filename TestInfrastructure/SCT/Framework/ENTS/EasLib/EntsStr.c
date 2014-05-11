@@ -56,9 +56,10 @@ Abstract:
 --*/
 #include "Efi.h"
 #include "EntsLib.h"
+#include "SctLib.h"
 
 #define IsDigit(c)    ((c) >= L'0' && (c) <= L'9')
-#define IsHexDigit(c) (((c) >= L'a' && (c) <= L'f') || ((c) >= L'A' && (c) <= L'F'))
+#define SctIsHexDigit(c) (((c) >= L'a' && (c) <= L'f') || ((c) >= L'A' && (c) <= L'F'))
 
 struct {
   EFI_STATUS  Status;
@@ -233,27 +234,6 @@ EntsStrCmp (
   return *s1 -*s2;
 }
 
-STATIC
-INTN
-StrnCmp (
-  IN CHAR16   *s1,
-  IN CHAR16   *s2,
-  IN UINTN    len
-  )
-{
-  while (*s1 && len) {
-    if (*s1 != *s2) {
-      break;
-    }
-
-    s1 += 1;
-    s2 += 1;
-    len -= 1;
-  }
-
-  return len ? *s1 -*s2 : 0;
-}
-
 VOID
 EntsStrCpy (
   IN CHAR16   *Dest,
@@ -288,18 +268,7 @@ EntsStrLen (
   return len;
 }
 
-STATIC
-UINTN
-StrSize (
-  IN CHAR16   *s1
-  )
-{
-  UINTN len;
 
-  for (len = 0; *s1; s1 += 1, len += 1)
-    ;
-  return (len + 1) * sizeof (CHAR16);
-}
 
 VOID
 EntsStrTrim (
@@ -355,7 +324,7 @@ EntsStrDuplicate (
   CHAR16  *Dest;
   UINTN   Size;
 
-  Size  = StrSize (Src);
+  Size  = SctStrSize (Src);
   Dest  = EntsAllocatePool (Size);
   if (Dest) {
     EntsCopyMem (Dest, Src, Size);
@@ -381,16 +350,6 @@ EntsLibStubStrLwrUpr (
     )
 {
 	return;
-}
-
-STATIC
-INTN
-StriCmp (
-  IN CHAR16   *s1,
-  IN CHAR16   *s2
-  )
-{
-  return EntsUnicodeInterface->StriColl (EntsUnicodeInterface, s1, s2);
 }
 
 STATIC
@@ -531,39 +490,6 @@ EntsLibStubMetaiMatch (
   )
 {
   return MetaMatch (String, Pattern);
-}
-
-STATIC
-UINTN
-Atoi (
-  CHAR16  *str
-  )
-{
-  UINTN   u;
-  CHAR16  c;
-
-  //
-  // skip preceeding white space
-  //
-  while (*str && *str == ' ') {
-    str += 1;
-  }
-  //
-  // convert digits
-  //
-  u = 0;
-  c = *(str++);
-  while (c) {
-    if (c >= '0' && c <= '9') {
-      u = (u * 10) + c - '0';
-    } else {
-      break;
-    }
-
-    c = *(str++);
-  }
-
-  return u;
 }
 
 EFI_STATUS
@@ -975,9 +901,9 @@ Returns:
   // Convert a string to a value
   //
   if (Buffer[0] == L'-') {
-    *Value = (UINTN) (0 - Atoi (Buffer + 1));
+    *Value = (UINTN) (0 - SctAtoi (Buffer + 1));
   } else {
-    *Value = Atoi (Buffer);
+    *Value = SctAtoi (Buffer);
   }
 
   return EFI_SUCCESS;
@@ -997,7 +923,7 @@ EntsStrToUINTN (
 
   if (Str[Index] == L'0' && (Str[Index + 1] == L'x' || Str[Index + 1] == L'X')) {
     Index += 2;
-    while (IsDigit (Str[Index]) || IsHexDigit (Str[Index])) {
+    while (IsDigit (Str[Index]) || SctIsHexDigit (Str[Index])) {
       if (a2i (Str[Index]) < 0) {
         return -1;
       }
@@ -1035,7 +961,7 @@ EntsHexStrToUINTN (
   Index = 0;
   Temp  = 0;
 
-  while (IsDigit (Str[Index]) || IsHexDigit (Str[Index])) {
+  while (IsDigit (Str[Index]) || SctIsHexDigit (Str[Index])) {
     if (a2i (Str[Index]) < 0) {
       return -1;
     }
@@ -1214,9 +1140,9 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  if (StriCmp (Buffer, L"True") == 0) {
+  if (SctStriCmp (Buffer, L"True") == 0) {
     *Value = TRUE;
-  } else if (StriCmp (Buffer, L"False") == 0) {
+  } else if (SctStriCmp (Buffer, L"False") == 0) {
     *Value = FALSE;
   } else {
     return EFI_UNSUPPORTED;
@@ -1264,7 +1190,7 @@ Returns:
   //
   // Compare
   //
-  if (StrnCmp (Str, Temp, EntsStrLen (Temp)) == 0) {
+  if (SctStrnCmp (Str, Temp, EntsStrLen (Temp)) == 0) {
     return TRUE;
   } else {
     return FALSE;
@@ -1305,7 +1231,7 @@ Returns:
   //
   // Compare
   //
-  if (StriCmp (Temp, SubStr) == 0) {
+  if (SctStriCmp (Temp, SubStr) == 0) {
     return TRUE;
   } else {
     return FALSE;

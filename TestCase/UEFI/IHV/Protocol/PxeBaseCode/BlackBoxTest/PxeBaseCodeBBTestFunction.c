@@ -2460,7 +2460,7 @@ BBTestUdpReadFunctionTest (
     return Status;
   }
   // Set IPFilter to our sample setting
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Set New Filter: ", StrLen (L"Set New Filter: "));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Set New Filter: ", SctStrLen (L"Set New Filter: "));
   BcIpFilter.Filters = EFI_PXE_BASE_CODE_IP_FILTER_STATION_IP;
   BcIpFilter.IpCnt = 2;
   SetIpAddress ((EFI_IP_ADDRESS *)&(BcIpFilter.IpList[0]), 0x12345678);
@@ -2521,26 +2521,26 @@ BBTestUdpReadFunctionTest (
   }
 
   // Basic Function
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"UdpRead: basic test", StrLen (L"UdpRead: basic test"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"UdpRead: basic test", SctStrLen (L"UdpRead: basic test"));
   BBTestUdpReadFuncBasic(BcInterface, StandardLib, LoggingLib, &BcIpFilter);
 
  // Dest IP Filter
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"UdpRead: Dest Ip Filter", StrLen (L"UdpRead: Dest Ip Filter"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"UdpRead: Dest Ip Filter", SctStrLen (L"UdpRead: Dest Ip Filter"));
   COPY_IP_FILTER (&BcIpFilter, &BcInterface->Mode->IpFilter);
   BBTestUdpReadFuncDesIpFilter (BcInterface, StandardLib, LoggingLib, &BcIpFilter);
 
   // Dest Port Filter
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"UdpRead: Dest Port Filter", StrLen (L"UdpRead: Dest Port Filter"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"UdpRead: Dest Port Filter", SctStrLen (L"UdpRead: Dest Port Filter"));
   COPY_IP_FILTER (&BcIpFilter, &BcInterface->Mode->IpFilter);
   BBTestUdpReadFuncDestPortFilter (BcInterface, StandardLib, LoggingLib, &BcIpFilter);
 
   // Source IP Filter
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"UdpRead: Source Ip Filter", StrLen (L"UdpRead: Source Ip Filter"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"UdpRead: Source Ip Filter", SctStrLen (L"UdpRead: Source Ip Filter"));
   COPY_IP_FILTER (&BcIpFilter, &BcInterface->Mode->IpFilter);
   BBTestUdpReadFuncSrcIpFilter (BcInterface, StandardLib, LoggingLib, FileHandle, &BcIpFilter);
 
   // Source Port Filter
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"UdpRead: Source Port Filter", StrLen (L"UdpRead: Source Port Filter"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"UdpRead: Source Port Filter", SctStrLen (L"UdpRead: Source Port Filter"));
   COPY_IP_FILTER (&BcIpFilter, &BcInterface->Mode->IpFilter);
   BBTestUdpReadFuncSrcPortFilter (BcInterface, StandardLib, LoggingLib, &BcIpFilter);
 
@@ -2859,7 +2859,7 @@ BBTestArpFunctionTest (
                  );
 
   // Print Returned MAC address
-  LOG_CHAR16_ASCII_DFLT (LoggingLib, L"Returned MAC", StrLen (L"Returned MAC"));
+  LOG_CHAR16_ASCII_DFLT (LoggingLib, L"Returned MAC", SctStrLen (L"Returned MAC"));
   LOG_BUF_HEX_DFLT(LoggingLib, (CHAR16*)(&MacAddr), sizeof (EFI_MAC_ADDRESS)/2);
 
   Print (L"\r\n Is the returned MAC correct?");
@@ -3542,7 +3542,7 @@ BBTestTftpGetFileSize (
   }
 
   // Display Server IP and File Name
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Server Ip", StrLen (L"Server Ip"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Server Ip", SctStrLen (L"Server Ip"));
   LOG_BUF_HEX_DFLT(LoggingLib, (CHAR16*)&ServerIp, sizeof (EFI_IP_ADDRESS)/2);
   //LOG_IP_HEX_DFLT(LoggingLib, ServerIp.v4.Addr);
 
@@ -3717,10 +3717,10 @@ BBTestTftpReadFile  (
   // check if the returned file size is correct
   Print (L"\r\n Check the returned file\n");
 
-  //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Name", StrLen(L"File Name"));
+  //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Name", SctStrLen (L"File Name"));
   //LOG_CHAR8_ASCII_DFLT (LoggingLib, FileName, strlen(FileName));
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Size", StrLen (L"File Size"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Size", SctStrLen (L"File Size"));
   LOG_UINT32_HEX_DFLT  (LoggingLib, Size);
 
   Print (L"\r\n Is the returned file correct?\n");
@@ -3962,10 +3962,10 @@ BBTestTftpReadDirectory (
   // check if the returned file size is correct
   Print (L"\r\n Check the returned file\n");
 
-  //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Directory Name", StrLen(L"Directory Name"));
+  //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Directory Name", SctStrLen (L"Directory Name"));
   //LOG_CHAR8_ASCII_DFLT(LoggingLib, FileName, strlen(FileName));
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Size", StrLen (L"Size"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Size", SctStrLen (L"Size"));
   LOG_UINT32_HEX_DFLT(LoggingLib, Size);
 
   Print (L"\r\n Is the returned directory correct?\n");
@@ -4200,10 +4200,10 @@ BBTestMtftpReadFile (
   // check if the returned file size is correct
   Print (L"\r\n Check the returned file\n");
 
-  //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Name", StrLen(L"File Name"));
+  //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Name", SctStrLen (L"File Name"));
   //LOG_CHAR8_ASCII_DFLT(LoggingLib, FileName, strlen(FileName));
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Size", StrLen (L"File Size"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Size", SctStrLen (L"File Size"));
   LOG_UINT32_HEX_DFLT(LoggingLib, Size);
 
   Print (L"\r\n Is the returned file correct?\n");
@@ -4332,10 +4332,10 @@ BBTestMtftpReadDirectory (
   // check if the returned file size is correct
   Print (L"\r\n Check the returned file\n");
 
-  //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Name", StrLen(L"File Name"));
+  //LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Name", SctStrLen (L"File Name"));
   //LOG_CHAR8_ASCII_DFLT(LoggingLib, FileName, strlen(FileName));
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Size", StrLen (L"File Size"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"File Size", SctStrLen (L"File Size"));
   LOG_UINT32_HEX_DFLT(LoggingLib, Size);
 
   // Log MTFTP Info

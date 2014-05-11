@@ -58,7 +58,6 @@ Abstract:
 #include "SctLib.h"
 #include "EfiTest.h"
 #include "TestProfile.h"
-#include "TestProfileSupport.h"
 
 //
 // Prototypes
@@ -669,7 +668,7 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsLen (FileName) > MAX_STRING_LEN) {
+  if (SctStrLen (FileName) > MAX_STRING_LEN) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -682,7 +681,7 @@ Returns:
   }
   _initFile (NewIniFile);
 
-  NewIniFile->FileName = WcsDup (FileName);
+  NewIniFile->FileName = SctStrDuplicate (FileName);
   if ( NewIniFile->FileName == NULL ) {
     _freeIniFile (NewIniFile);
     return EFI_OUT_OF_RESOURCES;
@@ -889,7 +888,7 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsLen (FileName) > MAX_STRING_LEN) {
+  if (SctStrLen (FileName) > MAX_STRING_LEN) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -902,7 +901,7 @@ Returns:
   }
   _initFile (NewIniFile);
 
-  NewIniFile->FileName = WcsDup (FileName);
+  NewIniFile->FileName = SctStrDuplicate (FileName);
   if ( NewIniFile->FileName == NULL ) {
     _freeIniFile (NewIniFile);
     return EFI_OUT_OF_RESOURCES;
@@ -1260,7 +1259,7 @@ Returns:
   }
 
   ptrCur = Private->Head ;
-  StrCpy (ptrCurSection, "");
+  SctAsciiStrCpy (ptrCurSection, "");
   first = TRUE;
 
   //
@@ -1290,10 +1289,10 @@ Returns:
       if (first) {
         first = FALSE;
       } else {
-        StrCpy (Buffer, "\r\n");
-        BufSize = StrLen (Buffer);
+        SctAsciiStrCpy (Buffer, "\r\n");
+        BufSize = SctAsciiStrLen (Buffer);
         if (Private->isUnicode) {
-          MbsToWcs ((CHAR16 *)Line, Buffer, BufSize + 1);
+          SctAsciiToUnicode ((CHAR16 *)Line, Buffer, BufSize + 1);
           BufSize *= 2;
           Status = Handle->Write (Handle, &BufSize, Line);
         } else {
@@ -1314,11 +1313,11 @@ Returns:
     while (ptrCmtCur != NULL) {
       if (ptrCmtCur->commentNo == ptrCur->commentNo) {
         commentNo = ptrCmtCur->commentNo;
-        StrCpy (Buffer, ptrCmtCur->ptrComment);
-        StrCat (Buffer, "\r\n");
-        BufSize = StrLen (Buffer);
+        SctAsciiStrCpy (Buffer, ptrCmtCur->ptrComment);
+        SctAsciiStrCat (Buffer, "\r\n");
+        BufSize = SctAsciiStrLen (Buffer);
         if (Private->isUnicode) {
-          MbsToWcs ((CHAR16 *)Line, Buffer, BufSize + 1);
+          SctAsciiToUnicode ((CHAR16 *)Line, Buffer, BufSize + 1);
           BufSize *= 2;
           Status = Handle->Write (Handle, &BufSize, Line);
         } else {
@@ -1337,13 +1336,13 @@ Returns:
       //
       // new section, write the section head
       //
-      StrCpy (ptrCurSection, ptrCur->ptrSection);
-      StrCpy (Buffer, "[");
-      StrCat (Buffer, ptrCurSection);
-      StrCat (Buffer, "]\r\n");
-      BufSize = StrLen (Buffer);
+      SctAsciiStrCpy (ptrCurSection, ptrCur->ptrSection);
+      SctAsciiStrCpy (Buffer, "[");
+      SctAsciiStrCat (Buffer, ptrCurSection);
+      SctAsciiStrCat (Buffer, "]\r\n");
+      BufSize = SctAsciiStrLen (Buffer);
       if (Private->isUnicode) {
-        MbsToWcs ((CHAR16 *)Line, Buffer, BufSize + 1);
+        SctAsciiToUnicode ((CHAR16 *)Line, Buffer, BufSize + 1);
         BufSize *= 2;
         Status = Handle->Write (Handle, &BufSize, Line);
       } else {
@@ -1358,13 +1357,13 @@ Returns:
       //
       // write the entry and value line
       //
-      StrCpy (Buffer, ptrCur->ptrEntry);
-      StrCat (Buffer, "=");
-      StrCat (Buffer, ptrCur->ptrValue);
-      StrCat (Buffer, "\r\n");
-      BufSize = StrLen (Buffer);
+      SctAsciiStrCpy (Buffer, ptrCur->ptrEntry);
+      SctAsciiStrCat (Buffer, "=");
+      SctAsciiStrCat (Buffer, ptrCur->ptrValue);
+      SctAsciiStrCat (Buffer, "\r\n");
+      BufSize = SctAsciiStrLen (Buffer);
       if (Private->isUnicode) {
-        MbsToWcs ((CHAR16 *)Line, Buffer, BufSize + 1);
+        SctAsciiToUnicode ((CHAR16 *)Line, Buffer, BufSize + 1);
         BufSize *= 2;
         Status = Handle->Write (Handle, &BufSize, Line);
       } else {
@@ -1387,11 +1386,11 @@ Returns:
   commentNo ++;
   while (ptrCmtCur != NULL) {
     if (ptrCmtCur->commentNo >= commentNo) {
-      StrCpy (Buffer, ptrCmtCur->ptrComment);
-      StrCat (Buffer, "\r\n");
-      BufSize = StrLen (Buffer);
+      SctAsciiStrCpy (Buffer, ptrCmtCur->ptrComment);
+      SctAsciiStrCat (Buffer, "\r\n");
+      BufSize = SctAsciiStrLen (Buffer);
       if (Private->isUnicode) {
-        MbsToWcs ((CHAR16 *)Line, Buffer, BufSize + 1);
+        SctAsciiToUnicode ((CHAR16 *)Line, Buffer, BufSize + 1);
         BufSize *= 2;
         Status = Handle->Write (Handle, &BufSize, Line);
       } else {
@@ -1466,27 +1465,27 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  WcsCpy (String, L"");
+  SctStrCpy (String, L"");
 
-  if (WcsLen (Section) > MAX_STRING_LEN || WcsLen(Entry) > MAX_STRING_LEN) {
+  if (SctStrLen (Section) > MAX_STRING_LEN || SctStrLen (Entry) > MAX_STRING_LEN) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrEntry, Entry, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrEntry, Entry, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
 
-  StrCpy (tmpSection, ptrSection);
+  SctAsciiStrCpy (tmpSection, ptrSection);
   _alltrim (tmpSection);
 
-  StrCpy (tmpEntry, ptrEntry);
+  SctAsciiStrCpy (tmpEntry, ptrEntry);
   _alltrim (tmpEntry);
 
-  if (StrLen (tmpSection) == 0 || StrLen (tmpEntry) == 0) {
+  if (SctAsciiStrLen (tmpSection) == 0 || SctAsciiStrLen (tmpEntry) == 0) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -1503,17 +1502,17 @@ Returns:
     //
     // the same, so find the field
     //
-    if ((StriCmp (tmpSection, ptrCur->ptrSection) == 0) &&
-        (StriCmp (tmpEntry, ptrCur->ptrEntry)     == 0)) {
-      if (StrLen (ptrCur->ptrValue) < *maxLength) {
-        StrCpy (ptrString, ptrCur->ptrValue);
-        MbsToWcs (String, ptrString, StrLen(ptrString) + 1);
+    if ((SctAsciiStriCmp (tmpSection, ptrCur->ptrSection) == 0) &&
+        (SctAsciiStriCmp (tmpEntry, ptrCur->ptrEntry)     == 0)) {
+      if (SctAsciiStrLen (ptrCur->ptrValue) < *maxLength) {
+        SctAsciiStrCpy (ptrString, ptrCur->ptrValue);
+        SctAsciiToUnicode (String, ptrString, SctAsciiStrLen (ptrString) + 1);
         return EFI_SUCCESS;
       } else {
-        StrnCpy (ptrString, ptrCur->ptrValue, *maxLength - 1);
+        SctAsciiStrnCpy (ptrString, ptrCur->ptrValue, *maxLength - 1);
         ptrString[*maxLength-1] = '\0';
-        MbsToWcs (String, ptrString, StrLen(ptrString) + 1);
-        *maxLength = (UINT32) (StrLen (ptrCur->ptrValue) + 1);
+        SctAsciiToUnicode (String, ptrString, SctAsciiStrLen (ptrString) + 1);
+        *maxLength = (UINT32) (SctAsciiStrLen (ptrCur->ptrValue) + 1);
         return EFI_BUFFER_TOO_SMALL;
       }
     }
@@ -1577,35 +1576,35 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsLen (Section) > MAX_STRING_LEN ||
-      WcsLen (Entry)   > MAX_STRING_LEN ||
-      WcsLen (String)  > MAX_STRING_LEN) {
+  if (SctStrLen (Section) > MAX_STRING_LEN ||
+      SctStrLen (Entry)   > MAX_STRING_LEN ||
+      SctStrLen (String)  > MAX_STRING_LEN) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrEntry, Entry, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrEntry, Entry, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
 
-  StrCpy (tmpSection, ptrSection);
+  SctAsciiStrCpy (tmpSection, ptrSection);
   _alltrim (tmpSection);
 
-  StrCpy (tmpEntry, ptrEntry);
+  SctAsciiStrCpy (tmpEntry, ptrEntry);
   _alltrim (tmpEntry);
 
-  if (StrLen (tmpSection) == 0 || StrLen (tmpEntry) == 0) {
+  if (SctAsciiStrLen (tmpSection) == 0 || SctAsciiStrLen (tmpEntry) == 0) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrString, String, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrString, String, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
 
-  StrCpy (tmpString, ptrString);
+  SctAsciiStrCpy (tmpString, ptrString);
   _alltrim (tmpString);
 
   //
@@ -1614,10 +1613,10 @@ Returns:
   ptrCur = Private->Head;
   ptrPrev = NULL;
   while (ptrCur != NULL) {
-    if (StriCmp (tmpSection, ptrCur->ptrSection) == 0) {
-      if (StriCmp (tmpEntry, ptrCur->ptrEntry) == 0) {
-        if (StriCmp (tmpString, ptrCur->ptrValue) != 0) {
-          tmpPtr = StrDup (tmpString);
+    if (SctAsciiStriCmp (tmpSection, ptrCur->ptrSection) == 0) {
+      if (SctAsciiStriCmp (tmpEntry, ptrCur->ptrEntry) == 0) {
+        if (SctAsciiStriCmp (tmpString, ptrCur->ptrValue) != 0) {
+          tmpPtr = SctAsciiStrDuplicate (tmpString);
           if (tmpPtr == NULL) {
             return EFI_OUT_OF_RESOURCES;
           }
@@ -1640,17 +1639,17 @@ Returns:
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrSection = StrDup (tmpSection);
+  ptrNew->ptrSection = SctAsciiStrDuplicate (tmpSection);
   if (ptrNew->ptrSection == NULL) {
     _freeItem (ptrNew);
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrEntry = StrDup (tmpEntry);
+  ptrNew->ptrEntry = SctAsciiStrDuplicate (tmpEntry);
   if (ptrNew->ptrEntry == NULL) {
     _freeItem (ptrNew);
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrValue = StrDup (tmpString);
+  ptrNew->ptrValue = SctAsciiStrDuplicate (tmpString);
   if (ptrNew->ptrValue == NULL) {
     _freeItem (ptrNew) ;
     return EFI_OUT_OF_RESOURCES;
@@ -1680,19 +1679,19 @@ Returns:
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrSection = StrDup (tmpSection);
+  ptrNew->ptrSection = SctAsciiStrDuplicate (tmpSection);
   if (ptrNew->ptrSection == NULL) {
     _freeItem (ptrNew);
     _freeItem (ptrCur);
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrEntry = StrDup ("");
+  ptrNew->ptrEntry = SctAsciiStrDuplicate ("");
   if (ptrNew->ptrEntry == NULL) {
     _freeItem (ptrNew);
     _freeItem (ptrCur);
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrValue = StrDup ("");
+  ptrNew->ptrValue = SctAsciiStrDuplicate ("");
   if (ptrNew->ptrValue == NULL) {
     _freeItem (ptrNew);
     _freeItem (ptrCur);
@@ -1752,16 +1751,16 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
-  StrCpy (tmpSection, ptrSection);
+  SctAsciiStrCpy (tmpSection, ptrSection);
   _alltrim (tmpSection);
 
   ptrCur = Private->Head;
   ptrPrev = NULL;
   while (ptrCur != NULL) {
-    if (StriCmp (tmpSection, ptrCur->ptrSection) == 0) {
+    if (SctAsciiStriCmp (tmpSection, ptrCur->ptrSection) == 0) {
       Private->Modified = TRUE;
       _rmComment (&(Private->CommentLineHead), ptrCur);
       ptrNext = ptrCur->ptrNext;
@@ -1843,27 +1842,27 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  WcsCpy (String, L"");
+  SctStrCpy (String, L"");
 
-  if (WcsLen (Section) > MAX_STRING_LEN || WcsLen (Entry) > MAX_STRING_LEN) {
+  if (SctStrLen (Section) > MAX_STRING_LEN || SctStrLen (Entry) > MAX_STRING_LEN) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrEntry, Entry, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrEntry, Entry, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
 
-  StrCpy (tmpSection, ptrSection);
+  SctAsciiStrCpy (tmpSection, ptrSection);
   _alltrim (tmpSection);
 
-  StrCpy (tmpEntry, ptrEntry);
+  SctAsciiStrCpy (tmpEntry, ptrEntry);
   _alltrim (tmpEntry);
 
-  if (StrLen (tmpSection) == 0 || StrLen (tmpEntry) == 0) {
+  if (SctAsciiStrLen (tmpSection) == 0 || SctAsciiStrLen (tmpEntry) == 0) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -1888,17 +1887,17 @@ Returns:
       //
       break;
     }
-    if ((StriCmp (tmpSection, ptrCur->ptrSection) == 0) &&
-        (StriCmp (tmpEntry, ptrCur->ptrEntry)     == 0)) {
-      if (StrLen (ptrCur->ptrValue) < *maxLength) {
-        StrCpy (ptrString, ptrCur->ptrValue);
-        MbsToWcs (String, ptrString, StrLen(ptrString) + 1);
+    if ((SctAsciiStriCmp (tmpSection, ptrCur->ptrSection) == 0) &&
+        (SctAsciiStriCmp (tmpEntry, ptrCur->ptrEntry)     == 0)) {
+      if (SctAsciiStrLen (ptrCur->ptrValue) < *maxLength) {
+        SctAsciiStrCpy (ptrString, ptrCur->ptrValue);
+        SctAsciiToUnicode (String, ptrString, SctAsciiStrLen (ptrString) + 1);
         return EFI_SUCCESS;
       } else {
-        StrnCpy (ptrString, ptrCur->ptrValue, *maxLength - 1);
+        SctAsciiStrnCpy (ptrString, ptrCur->ptrValue, *maxLength - 1);
         ptrString[*maxLength-1] = '\0';
-        MbsToWcs (String, ptrString, StrLen(ptrString) + 1 );
-        *maxLength = (UINT32) (StrLen (ptrCur->ptrValue) + 1);
+        SctAsciiToUnicode (String, ptrString, SctAsciiStrLen (ptrString) + 1 );
+        *maxLength = (UINT32) (SctAsciiStrLen (ptrCur->ptrValue) + 1);
         return EFI_BUFFER_TOO_SMALL;
       }
     }
@@ -1964,35 +1963,35 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsLen (Section) > MAX_STRING_LEN ||
-      WcsLen (Entry)   > MAX_STRING_LEN ||
-      WcsLen (String)  > MAX_STRING_LEN) {
+  if (SctStrLen (Section) > MAX_STRING_LEN ||
+      SctStrLen (Entry)   > MAX_STRING_LEN ||
+      SctStrLen (String)  > MAX_STRING_LEN) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrEntry, Entry, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrEntry, Entry, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
 
-  StrCpy (tmpSection, ptrSection);
+  SctAsciiStrCpy (tmpSection, ptrSection);
   _alltrim (tmpSection);
 
-  StrCpy (tmpEntry, ptrEntry);
+  SctAsciiStrCpy (tmpEntry, ptrEntry);
   _alltrim (tmpEntry);
 
-  if (StrLen (tmpSection) == 0 || StrLen (tmpEntry) == 0) {
+  if (SctAsciiStrLen (tmpSection) == 0 || SctAsciiStrLen (tmpEntry) == 0) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrString, String, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrString, String, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
 
-  StrCpy (tmpString, ptrString);
+  SctAsciiStrCpy (tmpString, ptrString);
   _alltrim (tmpString);
 
   //
@@ -2010,10 +2009,10 @@ Returns:
       //
       break;
     }
-    if ((StriCmp (tmpSection, ptrCur->ptrSection ) == 0) &&
-        (StriCmp (tmpEntry, ptrCur->ptrEntry )     == 0)) {
-      if (StriCmp( tmpString, ptrCur->ptrValue) != 0) {
-        tmpPtr = StrDup (tmpString);
+    if ((SctAsciiStriCmp (tmpSection, ptrCur->ptrSection ) == 0) &&
+        (SctAsciiStriCmp (tmpEntry, ptrCur->ptrEntry )     == 0)) {
+      if (SctAsciiStriCmp ( tmpString, ptrCur->ptrValue) != 0) {
+        tmpPtr = SctAsciiStrDuplicate (tmpString);
         if (tmpPtr == NULL) {
           return EFI_OUT_OF_RESOURCES;
         }
@@ -2035,17 +2034,17 @@ Returns:
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrSection = StrDup (tmpSection);
+  ptrNew->ptrSection = SctAsciiStrDuplicate (tmpSection);
   if (ptrNew->ptrSection == NULL) {
     _freeItem (ptrNew);
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrEntry = StrDup (tmpEntry);
+  ptrNew->ptrEntry = SctAsciiStrDuplicate (tmpEntry);
   if (ptrNew->ptrEntry == NULL) {
     _freeItem (ptrNew);
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrValue = StrDup (tmpString);
+  ptrNew->ptrValue = SctAsciiStrDuplicate (tmpString);
   if (ptrNew->ptrValue == NULL) {
     _freeItem (ptrNew);
     return EFI_OUT_OF_RESOURCES;
@@ -2075,19 +2074,19 @@ Returns:
   if (ptrNew == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrSection = StrDup (tmpSection);
+  ptrNew->ptrSection = SctAsciiStrDuplicate (tmpSection);
   if ( ptrNew->ptrSection == NULL ) {
     _freeItem (ptrNew);
     _freeItem (ptrCur);
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrEntry = StrDup ("");
+  ptrNew->ptrEntry = SctAsciiStrDuplicate ("");
   if ( ptrNew->ptrEntry == NULL ) {
     _freeItem (ptrNew);
     _freeItem (ptrCur);
     return EFI_OUT_OF_RESOURCES;
   }
-  ptrNew->ptrValue = StrDup ("");
+  ptrNew->ptrValue = SctAsciiStrDuplicate ("");
   if ( ptrNew->ptrValue == NULL ) {
     _freeItem (ptrNew);
     _freeItem (ptrCur);
@@ -2150,10 +2149,10 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
-  StrCpy (tmpSection, ptrSection);
+  SctAsciiStrCpy (tmpSection, ptrSection);
   _alltrim (tmpSection);
 
   ptrSect = _searchSection (Private->Head, Order, tmpSection);
@@ -2239,17 +2238,17 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  if (WcsToMbs (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
+  if (SctUnicodeToAscii (ptrSection, Section, MAX_STRING_LEN + 1) == -1) {
     return EFI_INVALID_PARAMETER;
   }
 
-  StrCpy (tmpSection, ptrSection);
+  SctAsciiStrCpy (tmpSection, ptrSection);
   _alltrim (tmpSection);
 
   *OrderNum = 0;
   ptrCur = Private->Head;
   while (ptrCur != NULL) {
-    if (StriCmp (tmpSection, ptrCur->ptrSection) == 0) {
+    if (SctAsciiStriCmp (tmpSection, ptrCur->ptrSection) == 0) {
       ++ (*OrderNum);
     }
 
@@ -2393,28 +2392,28 @@ Routine Description:
   CHAR8 ptrValue[MAX_STRING_LEN + 1];
   INI   *ptrItem;
 
-  StrCpy (ptrLine, _alltrim (ptrLine));
+  SctAsciiStrCpy (ptrLine, _alltrim (ptrLine));
 
   if (*ptrLine == '#') {
     // it's a comment line
     _getcomment (IniFile, ptrLine, commentNo);
-  } else if ((*ptrLine == '[') && (StrChr (ptrLine, ']') != NULL)) {
+  } else if ((*ptrLine == '[') && (SctAsciiStrChr (ptrLine, ']') != NULL)) {
     // it's a section head
     _getsection (IniFile, ptrLine, ptrSection, commentNo);
     *isSectionGot = TRUE;
-  } else if (StrChr (ptrLine, '=') != NULL) {
+  } else if (SctAsciiStrChr (ptrLine, '=') != NULL) {
     _getentry (ptrLine, ptrEntry, ptrValue);
 
     if (*isSectionGot == TRUE) {
       ptrItem = (INI *)SctAllocatePool (sizeof(INI));
-      ptrItem->ptrSection = (CHAR8 *) SctAllocateZeroPool (StrLen(ptrSection) + 1);
-      ptrItem->ptrEntry   = (CHAR8 *) SctAllocateZeroPool (StrLen(ptrEntry) + 1);
-      ptrItem->ptrValue   = (CHAR8 *) SctAllocateZeroPool (StrLen(ptrValue) + 1);
+      ptrItem->ptrSection = (CHAR8 *) SctAllocateZeroPool (SctAsciiStrLen (ptrSection) + 1);
+      ptrItem->ptrEntry   = (CHAR8 *) SctAllocateZeroPool (SctAsciiStrLen (ptrEntry) + 1);
+      ptrItem->ptrValue   = (CHAR8 *) SctAllocateZeroPool (SctAsciiStrLen (ptrValue) + 1);
 
       ptrItem->commentNo = *commentNo;
-      StrCpy (ptrItem->ptrSection, ptrSection);
-      StrCpy (ptrItem->ptrEntry, ptrEntry);
-      StrCpy (ptrItem->ptrValue, ptrValue);
+      SctAsciiStrCpy (ptrItem->ptrSection, ptrSection);
+      SctAsciiStrCpy (ptrItem->ptrEntry, ptrEntry);
+      SctAsciiStrCpy (ptrItem->ptrValue, ptrValue);
 
       (*commentNo) ++;
 
@@ -2445,7 +2444,7 @@ Routine Description:
   //
   // skip '\n' & '\r' at end of comment line
   //
-  Length = (UINT32) StrLen (ptrStr);
+  Length = (UINT32) SctAsciiStrLen (ptrStr);
   for (Index = Length; Index > 0; Index --) {
     if (ptrStr[Index - 1] != '\n' && ptrStr[Index - 1] != '\r') {
       break;
@@ -2454,10 +2453,10 @@ Routine Description:
   ptrStr[Index] = '\0';
 
   ptrCommentLineNew = (COMMENTLINE *) SctAllocatePool (sizeof (COMMENTLINE));
-  ptrCommentLineNew->ptrComment = (CHAR8 *) SctAllocateZeroPool (StrLen (ptrStr) + 1);
+  ptrCommentLineNew->ptrComment = (CHAR8 *) SctAllocateZeroPool (SctAsciiStrLen (ptrStr) + 1);
 
   ptrCommentLineNew->commentNo = *commentNo;
-  StrCpy (ptrCommentLineNew->ptrComment, ptrStr);
+  SctAsciiStrCpy (ptrCommentLineNew->ptrComment, ptrStr);
 
   if (IniFile->CommentLineHead == NULL) {
     IniFile->CommentLineHead = ptrCommentLineNew;
@@ -2488,34 +2487,34 @@ Routine Description:
   CHAR8 *p, *q;
   INI   *ptrItem;
 
-  p = StrChr (ptrStr, '[');
-  q = StrChr (ptrStr, ']');
+  p = SctAsciiStrChr (ptrStr, '[');
+  q = SctAsciiStrChr (ptrStr, ']');
 
   *q = '\0' ;
 
   _alltrim (++p);
 
-  if (StrLen (p) <= MAX_STRING_LEN) {
+  if (SctAsciiStrLen (p) <= MAX_STRING_LEN) {
     if (*p == '\0') {
-      StrCpy (ptrSection, "UNKNOWN");
+      SctAsciiStrCpy (ptrSection, "UNKNOWN");
     } else {
-      StrCpy (ptrSection, p);
+      SctAsciiStrCpy (ptrSection, p);
     }
   } else {
-    StrnCpy (ptrSection, p, MAX_STRING_LEN);
+    SctAsciiStrnCpy (ptrSection, p, MAX_STRING_LEN);
     ptrSection[MAX_STRING_LEN] = '\0';
   }
 
   ptrItem = (INI *)SctAllocatePool (sizeof(INI));
 
-  ptrItem->ptrSection = (CHAR8 *) SctAllocateZeroPool (StrLen (ptrSection) + 1);
+  ptrItem->ptrSection = (CHAR8 *) SctAllocateZeroPool (SctAsciiStrLen (ptrSection) + 1);
   ptrItem->ptrEntry   = (CHAR8 *) SctAllocateZeroPool (sizeof(CHAR8));
   ptrItem->ptrValue   = (CHAR8 *) SctAllocateZeroPool (sizeof(CHAR8));
 
   ptrItem->commentNo  = *commentNo;
-  StrCpy (ptrItem->ptrSection, ptrSection);
-  StrCpy (ptrItem->ptrEntry, "");
-  StrCpy (ptrItem->ptrValue, "");
+  SctAsciiStrCpy (ptrItem->ptrSection, ptrSection);
+  SctAsciiStrCpy (ptrItem->ptrEntry, "");
+  SctAsciiStrCpy (ptrItem->ptrValue, "");
 
   (*commentNo) ++;
 
@@ -2547,7 +2546,7 @@ Routine Description:
   //
   // skip '\n' & ' ' & '\r' at end of string
   //
-  Length = (UINT32) StrLen (tmp);
+  Length = (UINT32) SctAsciiStrLen (tmp);
   for (Index = Length; Index > 0; Index --) {
     if (tmp[Index - 1] != '\n' && tmp[Index - 1] != ' ' && tmp[Index - 1] != '\r') {
       break;
@@ -2555,7 +2554,7 @@ Routine Description:
   }
 
   tmp[Index] = '\0';
-  StrCpy (ptrStr, tmp);
+  SctAsciiStrCpy (ptrStr, tmp);
 
   return ptrStr;
 }
@@ -2599,38 +2598,35 @@ Routine Description:
 --*/
 {
   CHAR8 *p, *p2;
-  UINTN Len;
 
-  p = StrChr (ptrStr, '=');
+  p = SctAsciiStrChr (ptrStr, '=');
 
   *p = '\0';
 
   _alltrim (ptrStr);
 
-  if (StrLen (ptrStr) <= MAX_STRING_LEN) {
+  if (SctAsciiStrLen (ptrStr) <= MAX_STRING_LEN) {
     if (*ptrStr == '\0') {
-      StrCpy (ptrEntry, "UNKNOWN");
+      SctAsciiStrCpy (ptrEntry, "UNKNOWN");
     } else {
-      StrCpy (ptrEntry, ptrStr);
+      SctAsciiStrCpy (ptrEntry, ptrStr);
     }
   } else {
-    StrnCpy (ptrEntry, ptrStr, MAX_STRING_LEN);
+    SctAsciiStrnCpy (ptrEntry, ptrStr, MAX_STRING_LEN);
     ptrEntry[MAX_STRING_LEN] = '\0';
   }
 
   _alltrim (++ p);
-  p2 = StrChr (p, '#');
+  p2 = SctAsciiStrChr (p, '#');
   if (p2 != NULL) {
     *p2 = '\0';
     _alltrim (p);
   }
 
-  Len = StrLen (p);
-
-  if (StrLen (p) <= MAX_STRING_LEN) {
-    StrCpy (ptrValue, p);
+  if (SctAsciiStrLen (p) <= MAX_STRING_LEN) {
+    SctAsciiStrCpy (ptrValue, p);
   } else {
-    StrnCpy (ptrValue, p, MAX_STRING_LEN);
+    SctAsciiStrnCpy (ptrValue, p, MAX_STRING_LEN);
     ptrValue[MAX_STRING_LEN] = '\0';
   }
 }
@@ -2655,7 +2651,7 @@ Routine Description:
   CurOrder = 0;
   ptrCur = Head;
   while (ptrCur != NULL) {
-    if (StriCmp (Section, ptrCur->ptrSection) == 0) {
+    if (SctAsciiStriCmp (Section, ptrCur->ptrSection) == 0) {
       if (CurOrder == Order) {
         break;
       }
@@ -2764,14 +2760,14 @@ TplStrDuplicate (
 
   Status = tBS->AllocatePool (
                   EfiBootServicesData,
-                  (EfiStrLen (String) + 1) * sizeof(CHAR16),
+                  (SctStrLen (String) + 1) * sizeof(CHAR16),
                   (VOID **)&Buffer
                   );
   if (EFI_ERROR (Status)) {
     return NULL;
   }
 
-  EfiStrCpy (Buffer, String);
+  SctStrCpy (Buffer, String);
 
   return Buffer;
 }

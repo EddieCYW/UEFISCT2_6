@@ -505,7 +505,7 @@ BBTestWriteExBasicTestCheckpoint1 (
   FileHandle   = NULL;
   FileSize     = 200;
   
-  EfiStrCpy (FileName, L"BBTestWriteExBasicTestCheckpoint1_File");
+  SctStrCpy (FileName, L"BBTestWriteExBasicTestCheckpoint1_File");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -915,7 +915,7 @@ BBTestWriteExBasicTestCheckpoint2 (
   FileSize     = 200;
   BufferSize   = 200;
   WriteContent = 0x31;
-  EfiStrCpy (FileName, L"BBTestWriteExBasicTestCheckpoint2_File");
+  SctStrCpy (FileName, L"BBTestWriteExBasicTestCheckpoint2_File");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -1226,9 +1226,9 @@ BBTestWriteExBasicTestCheckpoint3 (
   FileInfo     = NULL;
   FileSize     = 200;
   BufferSize   = 300;
-  EfiStrCpy (FileName[0], L"BBTestWriteExBasicTestCheckpoint3_File1");
-  EfiStrCpy (FileName[1], L"BBTestWriteExBasicTestCheckpoint3_File2");
-  EfiStrCpy (FileName[2], L"BBTestWriteExBasicTestCheckpoint3_File3");
+  SctStrCpy (FileName[0], L"BBTestWriteExBasicTestCheckpoint3_File1");
+  SctStrCpy (FileName[1], L"BBTestWriteExBasicTestCheckpoint3_File2");
+  SctStrCpy (FileName[2], L"BBTestWriteExBasicTestCheckpoint3_File3");
   
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -1663,9 +1663,9 @@ BBTestWriteExBasicTestCheckpoint4 (
   BufferSize         = 200;
   PositionAfterWrite = 0;
 
-  EfiStrCpy (FileName[0], L"BBTestWriteExBasicTestCheckpoint4_File1");
-  EfiStrCpy (FileName[1], L"BBTestWriteExBasicTestCheckpoint4_File2");
-  EfiStrCpy (FileName[2], L"BBTestWriteExBasicTestCheckpoint4_File3");
+  SctStrCpy (FileName[0], L"BBTestWriteExBasicTestCheckpoint4_File1");
+  SctStrCpy (FileName[1], L"BBTestWriteExBasicTestCheckpoint4_File2");
+  SctStrCpy (FileName[2], L"BBTestWriteExBasicTestCheckpoint4_File3");
   
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {

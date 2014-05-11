@@ -237,7 +237,7 @@ Routine Description:
 // --------------------------------------String utility-------------------------
 //
 VOID
-Char8StrCpy (
+Char8SctStrCpy (
   IN CHAR8   *Dest,
   IN CHAR8   *Src
   )
@@ -250,7 +250,7 @@ Char8StrCpy (
 }
 
 UINT32
-Char8StrLen (
+Char8SctStrLen (
   IN CHAR8   *s1
   )
 {
@@ -262,12 +262,12 @@ Char8StrLen (
 }
 
 VOID
-Char8StrCat (
+Char8SctStrCat (
   IN CHAR8   *Dest,
   IN CHAR8   *Src
   )
 {
-  Char8StrCpy (Dest + Char8StrLen ((CHAR8 *)Dest), Src);
+  Char8SctStrCpy (Dest + Char8SctStrLen ((CHAR8 *)Dest), Src);
 }
 
 CHAR8 *
@@ -397,9 +397,9 @@ Returns:
 --*/
 {
   EntsASPrint ((CHAR8 *)PacketBuffer, EFI_NET_ASSERTION_MAX_LEN, "|%a|", MessageHead);
-  Char8StrCpy ((CHAR8 *)PacketBuffer + Char8StrLen ((CHAR8 *)MessageHead) + 2, (CHAR8 *)MessageBody);
+  Char8SctStrCpy ((CHAR8 *)PacketBuffer + Char8SctStrLen ((CHAR8 *)MessageHead) + 2, (CHAR8 *)MessageBody);
 
-  return Char8StrLen ((CHAR8 *)PacketBuffer);
+  return Char8SctStrLen ((CHAR8 *)PacketBuffer);
 }
 
 STATIC
@@ -701,28 +701,28 @@ Returns:
   Unicode2Ascii (GuidStr, GuidUniStr);
   switch (Type) {
   case NET_EFI_TEST_ASSERTION_PASSED:
-    Char8StrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
-    Char8StrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_PASS);
+    Char8SctStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
+    Char8SctStrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_PASS);
     break;
 
   case NET_EFI_TEST_ASSERTION_WARNING:
-    Char8StrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
-    Char8StrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_WARN);
+    Char8SctStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
+    Char8SctStrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_WARN);
     break;
 
   case NET_EFI_TEST_ASSERTION_FAILED:
-    Char8StrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
-    Char8StrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_FAIL);
+    Char8SctStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
+    Char8SctStrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_FAIL);
     break;
 
   case NET_EFI_TEST_ASSERTION_CASE_BEGIN:
-    Char8StrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_CASE_BEGN);
-    Char8StrCpy (ResultStr, "BEGN");
+    Char8SctStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_CASE_BEGN);
+    Char8SctStrCpy (ResultStr, "BEGN");
     break;
 
   case NET_EFI_TEST_ASSERTION_CASE_OVER:
-    Char8StrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_CASE_OVER);
-    Char8StrCpy (ResultStr, "OVER");
+    Char8SctStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_CASE_OVER);
+    Char8SctStrCpy (ResultStr, "OVER");
     break;
 
   default:

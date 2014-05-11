@@ -134,21 +134,4 @@ MyUINTToStr (
   OUT CHAR16      *StringNum
 );
 
-VOID
-StrCpy (
-    IN CHAR16   *Dest,
-    IN CHAR16   *Src
-    );
-
-VOID
-StrCat (
-    IN CHAR16   *Dest,
-    IN CHAR16   *Src
-    );
-
-
-UINTN
-StrLen (
-    IN CHAR16   *s1
-    );
 #endif

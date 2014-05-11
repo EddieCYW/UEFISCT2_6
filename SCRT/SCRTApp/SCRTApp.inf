@@ -93,7 +93,6 @@ COMPONENT_TYPE       = APPLICATION
 
 [sources.ARM, sources.Aarch64]
   Print.c
-  String.c
 
 [includes.common]
   $(EDK_SOURCE)/Foundation

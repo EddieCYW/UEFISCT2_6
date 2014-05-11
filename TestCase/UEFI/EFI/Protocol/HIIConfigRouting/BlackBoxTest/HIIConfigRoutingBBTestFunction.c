@@ -113,7 +113,7 @@ BBTestUnitAutoTest (
   //MultiAltResp = L"GUID=970EB94AA0D449f7B980BDAA47D42527&NAME=ft894&PATH=0acf&OFFSET=3&WIDTH=4&VALUE=AABBCCDD&OFFSET=1&WIDTH=2&VALUE=EEFF&GUID=970EB94AA0D449f7B980BDAA47D42527&NAME=ft894&PATH=0acf&ALTCFG=0037&A000=ABCD&B000=EFGH";
   //MultiAltResp = L"GUID=970EB94AA0D449f7B980BDAA47D42528&NAME=ft894&PATH=0acf&A000=ABCD&B000=EFGH&GUID=970EB94AA0D449f7B980BDAA47D42528&NAME=ft894&PATH=0acf&ALTCFG=0037&OFFSET=3&WIDTH=4&VALUE=AABBCCDD&OFFSET=1&WIDTH=2&VALUE=EEFF&GUID=970EB94AA0D449f7B980BDAA47D42527&NAME=ft894&PATH=0acf&OFFSET=3&WIDTH=4&VALUE=AABBCCDD&OFFSET=1&WIDTH=2&VALUE=EEFF&GUID=970EB94AA0D449f7B980BDAA47D42527&NAME=ft894&PATH=0acf&ALTCFG=0037&A000=ABCD&B000=EFGH";
   MultiAltResp = L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000acf&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff&GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000acf&ALTCFG=0037&A000=abcd&B000=efef&GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0039&PATH=000acf&A000=abcd&B000=efef&GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0039&PATH=000acf&ALTCFG=0037&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff";
-  Len = StrLen (MultiAltResp);
+  Len = SctStrLen (MultiAltResp);
 
   MultiRequest = (EFI_STRING) SctAllocateZeroPool ( 2 * Len + 2);
   if (MultiRequest == NULL) {
@@ -409,7 +409,7 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
     return Status;
   }
   
-  Len = StrLen (MultiConfigAltResp);
+  Len = SctStrLen (MultiConfigAltResp);
 
   Request = (EFI_STRING) SctAllocateZeroPool (2 * Len + 2);
   if (Request == NULL) {
@@ -431,8 +431,8 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
                                &Progress,
                                &Results
                                );
-//  if ( (EFI_SUCCESS == Status) && (Progress == Request + StrLen (Request)) && (0 == EfiStrCmp(Results, Resp)) ) {
-  if ( (EFI_SUCCESS == Status) && (Progress == Request + StrLen (Request)) ) {
+//  if ( (EFI_SUCCESS == Status) && (Progress == Request + SctStrLen (Request)) && (0 == SctStrCmp (Results, Resp)) ) {
+  if ( (EFI_SUCCESS == Status) && (Progress == Request + SctStrLen (Request)) ) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else if ( EFI_OUT_OF_RESOURCES == Status ){
     AssertionType = EFI_TEST_ASSERTION_WARNING;
@@ -454,7 +454,7 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
   // Since ExtractConfig may not append <AltResp> at string tail.  
   // We check whether Results is a substring of MultiConfigAltResp from ExportConfig 
   //
-  if (Status == EFI_SUCCESS && EfiStrStr(MultiConfigAltResp, Results) != 0) {
+  if (Status == EFI_SUCCESS && (SctStrStr (MultiConfigAltResp, Results) != NULL)) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else if (EFI_OUT_OF_RESOURCES == Status){
     AssertionType = EFI_TEST_ASSERTION_WARNING;
@@ -509,7 +509,7 @@ BBTestExportConfigFunctionTestCheckpoint1 (
 
 
   if (EFI_SUCCESS == Status) {
-    Len = StrLen (MultiConfigAltResp);
+    Len = SctStrLen (MultiConfigAltResp);
   
     Request = (EFI_STRING) SctAllocateZeroPool (2 * Len + 2);
     if (Request == NULL) {
@@ -573,7 +573,7 @@ BBTestRouteConfigFunctionTestCheckpoint1 (
     return EFI_OUT_OF_RESOURCES;
   }
   
-  Len = StrLen (Resp1);
+  Len = SctStrLen (Resp1);
 
   Resp2 = (EFI_STRING) SctAllocateZeroPool (2 * Len + 2);
   if (Resp2 == NULL) {
@@ -597,7 +597,7 @@ BBTestRouteConfigFunctionTestCheckpoint1 (
                                &Progress
                                );
 
-  if ( (EFI_SUCCESS == Status) && (Progress == Resp2 + StrLen (Resp2)) ) {
+  if ( (EFI_SUCCESS == Status) && (Progress == Resp2 + SctStrLen (Resp2)) ) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else if ( EFI_OUT_OF_RESOURCES == Status ){
     AssertionType = EFI_TEST_ASSERTION_WARNING;
@@ -650,9 +650,9 @@ BBTestBlockToConfigFunctionTestCheckpoint1 (
                                );
 
   if ( EFI_SUCCESS == Status ) {
-    if ((Progress != (Req + StrLen(Req))) || 
-        (NULL == EfiStrStr(Config, L"OFFSET=3&WIDTH=1&VALUE=03")) ||
-        (NULL == EfiStrStr(Config, L"OFFSET=0&WIDTH=2&VALUE=0100")) ){
+    if ((Progress != (Req + SctStrLen (Req))) || 
+        (NULL == SctStrStr (Config, L"OFFSET=3&WIDTH=1&VALUE=03")) ||
+        (NULL == SctStrStr (Config, L"OFFSET=0&WIDTH=2&VALUE=0100")) ){
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -704,7 +704,7 @@ BBTestConfigToBlockFunctionTestCheckpoint1 (
   
   if ( EFI_SUCCESS == Status ) {
     if ((Block[0] != 0x55) || (Block[1] != 0xAA) || (Block[2] != 0x02) ||
-        (Block[3] != 0x07) || (Block[4] != 0x04) || (Block[5] != 0x05) || (BlockSize != 3) ||(Progress != (Resp + StrLen(Resp))))
+        (Block[3] != 0x07) || (Block[4] != 0x04) || (Block[5] != 0x05) || (BlockSize != 3) ||(Progress != (Resp + SctStrLen (Resp))))
       AssertionType = EFI_TEST_ASSERTION_FAILED;
      else
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -763,7 +763,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
                                );
   
   if ( EFI_SUCCESS == Status ) {
-    if (0 != EfiStrCmp(CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&a000=abcd&b000=efef")){
+    if (0 != SctStrCmp (CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&a000=abcd&b000=efef")){
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -803,7 +803,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
                                );
   
   if ( EFI_SUCCESS == Status ) {
-    if (0 != EfiStrCmp(CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&a000=abcd&b000=efef")){
+    if (0 != SctStrCmp (CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&a000=abcd&b000=efef")){
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -842,7 +842,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
                                );
   
   if ( EFI_SUCCESS == Status ) {
-    if (0 != EfiStrCmp(CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&a000=abcd&b000=efef")) {
+    if (0 != SctStrCmp (CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&a000=abcd&b000=efef")) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -881,7 +881,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
                                );
   
   if ( EFI_SUCCESS == Status ) {
-    if (0 != EfiStrCmp(CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&a000=abcd&b000=efef")) {
+    if (0 != SctStrCmp (CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&a000=abcd&b000=efef")) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -920,7 +920,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
                                );
   
   if ( EFI_SUCCESS == Status ) {
-    if (0 != EfiStrCmp(CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=1122")) {
+    if (0 != SctStrCmp (CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=1122")) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -959,7 +959,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
                                );
   
   if ( EFI_SUCCESS == Status ) {
-    if (0 != EfiStrCmp(CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=1122")) {
+    if (0 != SctStrCmp (CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=000ace&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=1122")) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1003,7 +1003,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
                                );
   
   if ( EFI_SUCCESS == Status ) {
-    if (0 != EfiStrCmp(CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0038&PATH=000acf&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff")) {
+    if (0 != SctStrCmp (CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0038&PATH=000acf&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff")) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1042,7 +1042,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
                                );
   
   if ( EFI_SUCCESS == Status ) {
-    if (0 != EfiStrCmp(CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0038&PATH=000acf&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff")){
+    if (0 != SctStrCmp (CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0038&PATH=000acf&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff")){
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1081,7 +1081,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
                                );
   
   if ( EFI_SUCCESS == Status ) {
-    if (0 != EfiStrCmp(CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0038&PATH=000acf&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff")) {
+    if (0 != SctStrCmp (CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0038&PATH=000acf&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff")) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1120,7 +1120,7 @@ BBTestGetAltCfgFunctionTestCheckpoint1 (
                                );
   
   if ( EFI_SUCCESS == Status ) {
-    if (0 != EfiStrCmp(CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0038&PATH=000acf&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff")) {
+    if (0 != SctStrCmp (CfgResp, L"GUID=970eb94aa0d449f7b980bdaa47d42528&NAME=006a0069006e0038&PATH=000acf&OFFSET=3&WIDTH=4&VALUE=aabbccdd&OFFSET=1&WIDTH=2&VALUE=eeff")) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_PASSED;

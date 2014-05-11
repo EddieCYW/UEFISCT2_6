@@ -325,7 +325,7 @@ _SPrint (
     POOL_PRINT      *spc;
 
     spc = Context;
-    len = StrLen(Buffer);
+    len = SctStrLen (Buffer);
 
     //
     // Is the string is over the max truncate it
@@ -367,7 +367,7 @@ _PoolPrint (
     POOL_PRINT      *spc;
 
     spc = Context;
-    newlen = spc->len + StrLen(Buffer) + 1;
+    newlen = spc->len + SctStrLen (Buffer) + 1;
 
     //
     // Is the string is over the max, grow the buffer

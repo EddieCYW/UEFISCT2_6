@@ -83,10 +83,10 @@ EFI_MEMORY_TYPE PoolAllocationType = EfiBootServicesData;
 //
 
 EFI_UNICODE_COLLATION_PROTOCOL   LibStubUnicodeInterface = {
-    NULL, //FixMe: LibStubStriCmp,
+    LibStubStriCmp,
     NULL, //FixMe: LibStubMetaiMatch,
-    NULL, //FixMe: LibStubStrLwrUpr,
-    NULL, //FixMe: LibStubStrLwrUpr,
+    LibStubStrLwrUpr,
+    LibStubStrLwrUpr,
     NULL,   // FatToStr
     NULL,   // StrToFat
     NULL    // SupportedLanguages
@@ -146,7 +146,7 @@ InitializeUnicodeSupport (
     //
 
     Languages = Ui->SupportedLanguages;
-    Length = AsciiStrLen (Languages);
+    Length = SctAsciiStrLen (Languages);
     for (Position=0; Position < Length; Position += ISO_639_2_ENTRY_SIZE) {
 
       //

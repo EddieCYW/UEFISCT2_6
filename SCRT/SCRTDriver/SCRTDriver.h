@@ -54,7 +54,7 @@ Module Name:
 #ifndef _SCRT_DRIVER_H_
 #define _SCRT_DRIVER_H_
 
-#include "Tiano.h"
+#include "SctLib.h"
 #include "EfiRuntimeLib.h"
 #include "EfiCapsule.h"
 #include "Guid.h"

@@ -888,7 +888,7 @@ PollMem_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -1891,7 +1891,7 @@ PollIo_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -2269,7 +2269,7 @@ MemRead_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -2940,7 +2940,7 @@ MemWrite_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -3667,7 +3667,7 @@ IoRead_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -4333,7 +4333,7 @@ IoWrite_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }

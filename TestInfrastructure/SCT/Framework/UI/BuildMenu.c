@@ -296,11 +296,11 @@ Returns:
   MyPage->Body.SplitPoint.Row = EFI_MENU_HEADER_ROWS + 2;
   MyPage->Body.SplitPoint.Col = mCols - EFI_MENU_DESCRIPTOR_COLS - 1;
 
-  MyPage->Body.MenuItemHeader.Text      = StrDuplicate (MenuItemHeaderText);
+  MyPage->Body.MenuItemHeader.Text      = SctStrDuplicate (MenuItemHeaderText);
   MyPage->Body.MenuItemHeader.TextColor = EFI_BLACK;
   MyPage->Body.MenuItemHeader.Align     = EFI_ALIGNMENT_MIDDLE;
 
-  MyPage->Body.DescriptionHeader.Text      = StrDuplicate (L"Description");
+  MyPage->Body.DescriptionHeader.Text      = SctStrDuplicate (L"Description");
   MyPage->Body.DescriptionHeader.TextColor = EFI_BLACK;
   MyPage->Body.DescriptionHeader.Align     = EFI_ALIGNMENT_MIDDLE;
 
@@ -476,11 +476,11 @@ Returns:
   //
   // Hot key
   //
-  HotKey->HotKeyName.Text      = StrDuplicate (HotKeyNameText);
+  HotKey->HotKeyName.Text      = SctStrDuplicate (HotKeyNameText);
   HotKey->HotKeyName.TextColor = EFI_GREEN;
   HotKey->HotKeyName.Align     = EFI_ALIGNMENT_LEFT;
 
-  HotKey->HotKeyDesc.Text      = StrDuplicate (HotKeyDescText);
+  HotKey->HotKeyDesc.Text      = SctStrDuplicate (HotKeyDescText);
   HotKey->HotKeyDesc.TextColor = EFI_WHITE;
   HotKey->HotKeyDesc.Align     = EFI_ALIGNMENT_LEFT;
 
@@ -853,7 +853,7 @@ Returns:
   //Go through meun item list to search for the required menu item according to its name.
   //
   while(MenuItem != NULL) {
-    if (StriCmp (MenuItem->ItemString.Text, ItemNameText) == 0) {
+    if (SctStriCmp (MenuItem->ItemString.Text, ItemNameText) == 0) {
 
       //
       //Find a menu item matching the name, check its type
@@ -1151,7 +1151,7 @@ Returns:
   }
   tBS->SetMem (TempValueQueue, sizeof (EFI_ITEM_VALUE_QUEUE), 0);
 
-  TempValueQueue->StringValue = StrDuplicate (StringValue);
+  TempValueQueue->StringValue = SctStrDuplicate (StringValue);
   TempValueQueue->IntValue    = IntValue;
   TempValueQueue->Next        = TempValueQueue;
   TempValueQueue->Prev        = TempValueQueue;

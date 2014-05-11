@@ -228,7 +228,7 @@ BBTestGetDriverNameConformanceTestCheckpoint1 (
     return  EFI_UNSUPPORTED;
   }
   
-  StringLength = strlena(SupportedLanguages);
+  StringLength = SctAsciiStrLen (SupportedLanguages);
   PoolAddress  = NULL;
   PoolAddress  = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL){
@@ -236,18 +236,18 @@ BBTestGetDriverNameConformanceTestCheckpoint1 (
   }	
   
   SupportedLanguagesBackup = PoolAddress;
-  EfiAsciiStrCpy(SupportedLanguagesBackup, SupportedLanguages);
+  SctAsciiStrCpy (SupportedLanguagesBackup, SupportedLanguages);
 
-  if ((StrChrAscii (SupportedLanguagesBackup, '-') == NULL) &&
-  	(StrChrAscii (SupportedLanguagesBackup, ';') == NULL) && 
-  	(EfiAsciiStrLen(SupportedLanguagesBackup) >= 3)){
+  if ((SctAsciiStrChr (SupportedLanguagesBackup, '-') == NULL) &&
+  	(SctAsciiStrChr (SupportedLanguagesBackup, ';') == NULL) && 
+  	(SctAsciiStrLen (SupportedLanguagesBackup) >= 3)){
   //ISO639-2, Which belongs to EFI1.1  
-    EfiAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
+    SctAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
     SupportedLanguagesBackup = SupportedLanguagesBackup + 3;
     Switch = 1;	
   }else{
   //RFC3066
-    Language = SplitStrAscii(&SupportedLanguagesBackup, ';');
+    Language = SctAsciiSplitStr(&SupportedLanguagesBackup, ';');
   }
   
   if ((Switch == 0 && *Language == '\0') || (Switch == 1 && Lang[0] == '\0')){
@@ -343,7 +343,7 @@ BBTestGetDriverNameConformanceTestCheckpoint2 (
     return  EFI_UNSUPPORTED;
   }
   
-  StringLength = strlena(SupportedLanguages);
+  StringLength = SctAsciiStrLen (SupportedLanguages);
   PoolAddress  = NULL;
   PoolAddress  = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL){
@@ -351,37 +351,37 @@ BBTestGetDriverNameConformanceTestCheckpoint2 (
   }	
   
   SupportedLanguagesBackup = PoolAddress;
-  EfiAsciiStrCpy(SupportedLanguagesBackup, SupportedLanguages);
+  SctAsciiStrCpy (SupportedLanguagesBackup, SupportedLanguages);
 
-  if ((StrChrAscii (SupportedLanguagesBackup, '-') == NULL) &&
-  	(StrChrAscii (SupportedLanguagesBackup, ';') == NULL) && 
-  	(EfiAsciiStrLen(SupportedLanguagesBackup) >= 3)){
+  if ((SctAsciiStrChr (SupportedLanguagesBackup, '-') == NULL) &&
+  	(SctAsciiStrChr (SupportedLanguagesBackup, ';') == NULL) && 
+  	(SctAsciiStrLen (SupportedLanguagesBackup) >= 3)){
   //ISO639-2, Which belongs to EFI1.1  
-    EfiAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
+    SctAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
     SupportedLanguagesBackup = SupportedLanguagesBackup + 3;
     Switch = 1;	
   }else{
   //RFC3066
-    Language = SplitStrAscii(&SupportedLanguagesBackup, ';');
+    Language = SctAsciiSplitStr(&SupportedLanguagesBackup, ';');
   }
   
   if (Switch == 0){
     while (*Language != '\0'){
       for (Index = 0; Index < 7; Index ++){
-        if (strncmpa(Language, CandidateCode[Index], 2) == 0){
+        if (SctAsciiStrnCmp (Language, CandidateCode[Index], 2) == 0){
           Sign[Index] = 1;
         }
       }
-      Language = SplitStrAscii (&SupportedLanguagesBackup, ';');
+      Language = SctAsciiSplitStr (&SupportedLanguagesBackup, ';');
     }
   } else {
      while (Lang[0] != '\0'){
       for (Index = 0; Index < 7; Index ++){
-        if (strncmpa(Lang, CandidateCode[Index], 2) == 0){
+        if (SctAsciiStrnCmp (Lang, CandidateCode[Index], 2) == 0){
           Sign[Index] = 1;
         }
       }
-      EfiAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
+      SctAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
       SupportedLanguagesBackup = SupportedLanguagesBackup + 3;
     } 
   }
@@ -470,7 +470,7 @@ BBTestGetControllerNameConformanceTestCheckpoint1 (
     return  EFI_UNSUPPORTED;
   }
   
-  StringLength = strlena(SupportedLanguages);
+  StringLength = SctAsciiStrLen (SupportedLanguages);
   PoolAddress  = NULL;
   PoolAddress  = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL){
@@ -478,18 +478,18 @@ BBTestGetControllerNameConformanceTestCheckpoint1 (
   }	
   
   SupportedLanguagesBackup = PoolAddress;
-  EfiAsciiStrCpy(SupportedLanguagesBackup, SupportedLanguages);
+  SctAsciiStrCpy (SupportedLanguagesBackup, SupportedLanguages);
 
-  if ((StrChrAscii (SupportedLanguagesBackup, '-') == NULL) &&
-  	(StrChrAscii (SupportedLanguagesBackup, ';') == NULL) && 
-  	(EfiAsciiStrLen(SupportedLanguagesBackup) >= 3)){
+  if ((SctAsciiStrChr (SupportedLanguagesBackup, '-') == NULL) &&
+  	(SctAsciiStrChr (SupportedLanguagesBackup, ';') == NULL) && 
+  	(SctAsciiStrLen (SupportedLanguagesBackup) >= 3)){
   //ISO639-2, Which belongs to EFI1.1  
-    EfiAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
+    SctAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
     SupportedLanguagesBackup = SupportedLanguagesBackup + 3;
     Switch = 1;	
   }else{
   //RFC3066
-    Language = SplitStrAscii(&SupportedLanguagesBackup, ';');
+    Language = SctAsciiSplitStr(&SupportedLanguagesBackup, ';');
   }
   
   if ((Switch == 0 && *Language == '\0') || (Switch == 1 && Lang[0] == '\0')) {
@@ -655,7 +655,7 @@ BBTestGetControllerNameConformanceTestCheckpoint2 (
     return  EFI_UNSUPPORTED;
   }
   
-  StringLength = strlena(SupportedLanguages);
+  StringLength = SctAsciiStrLen (SupportedLanguages);
   PoolAddress  = NULL;
   PoolAddress  = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL){
@@ -663,37 +663,37 @@ BBTestGetControllerNameConformanceTestCheckpoint2 (
   }	
   
   SupportedLanguagesBackup = PoolAddress;
-  EfiAsciiStrCpy(SupportedLanguagesBackup, SupportedLanguages);
+  SctAsciiStrCpy (SupportedLanguagesBackup, SupportedLanguages);
 
-  if ((StrChrAscii (SupportedLanguagesBackup, '-') == NULL) &&
-  	(StrChrAscii (SupportedLanguagesBackup, ';') == NULL) && 
-  	(EfiAsciiStrLen(SupportedLanguagesBackup) >= 3)){
+  if ((SctAsciiStrChr (SupportedLanguagesBackup, '-') == NULL) &&
+  	(SctAsciiStrChr (SupportedLanguagesBackup, ';') == NULL) && 
+  	(SctAsciiStrLen (SupportedLanguagesBackup) >= 3)){
   //ISO639-2, Which belongs to EFI1.1  
-    EfiAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
+    SctAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
     SupportedLanguagesBackup = SupportedLanguagesBackup + 3;
     Switch = 1;	
   }else{
   //RFC3066
-    Language = SplitStrAscii(&SupportedLanguagesBackup, ';');
+    Language = SctAsciiSplitStr(&SupportedLanguagesBackup, ';');
   }
   
   if (Switch == 0){
     while (*Language != '\0'){
       for (Index = 0; Index < 7; Index ++){
-        if (strncmpa(Language, CandidateCode[Index], 2) == 0){
+        if (SctAsciiStrnCmp (Language, CandidateCode[Index], 2) == 0){
           Sign[Index] = 1;
         }
       }
-      Language = SplitStrAscii (&SupportedLanguagesBackup, ';');
+      Language = SctAsciiSplitStr (&SupportedLanguagesBackup, ';');
     }
   } else {
      while (Lang[0] != '\0'){
       for (Index = 0; Index < 7; Index ++){
-        if (strncmpa(Lang, CandidateCode[Index], 2) == 0){
+        if (SctAsciiStrnCmp (Lang, CandidateCode[Index], 2) == 0){
           Sign[Index] = 1;
         }
       }
-      EfiAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
+      SctAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
       SupportedLanguagesBackup = SupportedLanguagesBackup + 3;
     } 
   }
@@ -782,7 +782,7 @@ BBTestGetControllerNameConformanceTestCheckpoint3 (
   //
   SupportedLanguages = ComponentName->SupportedLanguages;
 
-  StringLength = strlena(SupportedLanguages);
+  StringLength = SctAsciiStrLen (SupportedLanguages);
   PoolAddress  = NULL;
   PoolAddress  = (CHAR8 *) SctAllocateZeroPool (StringLength + 1);
   if (PoolAddress == NULL){
@@ -790,19 +790,19 @@ BBTestGetControllerNameConformanceTestCheckpoint3 (
   }	
   
   SupportedLanguagesBackup = PoolAddress;
-  EfiAsciiStrCpy(SupportedLanguagesBackup, SupportedLanguages);
+  SctAsciiStrCpy (SupportedLanguagesBackup, SupportedLanguages);
 
   
-  if ((StrChrAscii (SupportedLanguagesBackup, '-') == NULL) &&
-  	(StrChrAscii (SupportedLanguagesBackup, ';') == NULL) && 
-  	(EfiAsciiStrLen(SupportedLanguagesBackup) >= 3)){
+  if ((SctAsciiStrChr (SupportedLanguagesBackup, '-') == NULL) &&
+  	(SctAsciiStrChr (SupportedLanguagesBackup, ';') == NULL) && 
+  	(SctAsciiStrLen (SupportedLanguagesBackup) >= 3)){
   //ISO639-2, Which belongs to EFI1.1  
-    EfiAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
+    SctAsciiStrnCpy (Lang, SupportedLanguagesBackup, 3);
     SupportedLanguagesBackup = SupportedLanguagesBackup + 3;
     Switch = 1;	
   }else{
   //RFC3066
-    Language = SplitStrAscii(&SupportedLanguagesBackup, ';');
+    Language = SctAsciiSplitStr(&SupportedLanguagesBackup, ';');
   }
   
   if ((Switch == 0 && *Language == '\0') || (Switch == 1 && Lang[0] == '\0')) {
@@ -982,7 +982,7 @@ BBTestGetControllerNameConformanceTestCheckpoint4 (
   // retrieve the first supported language
   //
   SupportedLanguages = ComponentName->SupportedLanguages;
-  Language = SplitStrAscii (&SupportedLanguages, ';');
+  Language = SctAsciiSplitStr (&SupportedLanguages, ';');
   if (Language == NULL) {
     StandardLib->RecordAssertion (
                    StandardLib,

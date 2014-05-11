@@ -1990,7 +1990,7 @@ GetNextVariableNameConfTestSub5 (
       break;
     }
 
-    if ((StrCmp (VariableName, L"TestVariable")       == 0) &&
+    if ((SctStrCmp (VariableName, L"TestVariable")       == 0) &&
         (CompareGuid (&VendorGuid, &gTestVendor1Guid) == 0)) {
       Result = EFI_TEST_ASSERTION_FAILED;
       break;
@@ -3227,10 +3227,10 @@ HardwareErrorRecordConfTest (
       break;
     }
 
-    if ( (StrnCmp (GetVariableName, L"HwErrRec", 8) == 0) &&
+    if ( (SctStrnCmp (GetVariableName, L"HwErrRec", 8) == 0) &&
          (CompareGuid (&VendorGuid, &gHwErrRecGuid) == 0) ) {
-      StrnCpy (ErrorNum, &GetVariableName[8], 4);
-      Num = xtoi(ErrorNum);
+      SctStrnCpy (ErrorNum, &GetVariableName[8], 4);
+      Num = SctXtoi (ErrorNum);
       if (MaxNum < Num)
         MaxNum = Num;
     }
@@ -3239,7 +3239,7 @@ HardwareErrorRecordConfTest (
   MaxNum++;
     
   HwErrRecVariableName[0] = L'\0';
-  StrCat( HwErrRecVariableName, L"HwErrRec" );
+  SctStrCat ( HwErrRecVariableName, L"HwErrRec" );
   Myitox( MaxNum, HwErrRecVariableName+8 );
   
   //

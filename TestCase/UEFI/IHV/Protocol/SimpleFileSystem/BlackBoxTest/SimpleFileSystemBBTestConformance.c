@@ -605,9 +605,9 @@ BBTestOpenConformanceTestCheckpoint1 (
     // Create random file name
     //
     CreateRandomValue (&RandomValue);
-    EfiValueToHexStr (RandomChars, RandomValue, PREFIX_ZERO, sizeof (UINT32));
-    EfiStrCpy (NewFileName, BaseFileName);
-    EfiStrCat (NewFileName, RandomChars);
+    SctValueToHexStr (RandomChars, RandomValue, PREFIX_ZERO, sizeof (UINT32));
+    SctStrCpy (NewFileName, BaseFileName);
+    SctStrCat (NewFileName, RandomChars);
 
     //
     // open file
@@ -682,8 +682,8 @@ BBTestOpenConformanceTestCheckpoint2 (
     return Status;
   }
 
-  EfiStrCpy (FileName, L"BBTestOpenConformanceTestCheckpoint2_File");
-  EfiStrCpy (BaseDirName, L"BBTestOpenConformanceTestCheckpoint2_");
+  SctStrCpy (FileName, L"BBTestOpenConformanceTestCheckpoint2_File");
+  SctStrCpy (BaseDirName, L"BBTestOpenConformanceTestCheckpoint2_");
 
   //
   // create 100 directory name with the random name
@@ -700,9 +700,9 @@ BBTestOpenConformanceTestCheckpoint2 (
     // Create random dir name
     //
     CreateRandomValue (&RandomValue);
-    EfiValueToHexStr (RandomChars, RandomValue, PREFIX_ZERO, sizeof (UINT32));
-    EfiStrCpy (NewDirName, BaseDirName);
-    EfiStrCat (NewDirName, RandomChars);
+    SctValueToHexStr (RandomChars, RandomValue, PREFIX_ZERO, sizeof (UINT32));
+    SctStrCpy (NewDirName, BaseDirName);
+    SctStrCat (NewDirName, RandomChars);
 
     //
     // create file name: "\" + DirName + "\" + FileName
@@ -717,19 +717,19 @@ BBTestOpenConformanceTestCheckpoint2 (
     //
     // "\" + DirName
     //
-    EfiStrCat (OpenFileName, NewDirName);
+    SctStrCat (OpenFileName, NewDirName);
 
     //
     // "\" + DirName + "\"
     //
-    FileNameLength = EfiStrLen (OpenFileName);
+    FileNameLength = SctStrLen (OpenFileName);
     OpenFileName[FileNameLength] = '\\';
     OpenFileName[FileNameLength + 1] = 0;
 
     //
     // "\" + DirName + "\" + FileName
     //
-    EfiStrCat (OpenFileName, FileName);
+    SctStrCat (OpenFileName, FileName);
 
     //
     // create file
@@ -792,7 +792,7 @@ BBTestOpenConformanceTestCheckpoint3 (
                                   0xFFFFFFFFFFFFFF
                                 };
 
-  EfiStrCpy (FileName, L"BBTestOpenConformanceTestCheckpoint3_File");
+  SctStrCpy (FileName, L"BBTestOpenConformanceTestCheckpoint3_File");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -1118,8 +1118,8 @@ BBTestOpenConformanceTestCheckpoint5 (
   //
   PseudoDirHandle = NULL;
   FileHandle = NULL;
-  EfiStrCpy (FileName, L"BBTestOpenConformanceTestCheckpoint5_File");
-  EfiStrCpy (PseudoDirName, L"BBTestOpenConformanceTestCheckpoint5_Dir");
+  SctStrCpy (FileName, L"BBTestOpenConformanceTestCheckpoint5_File");
+  SctStrCpy (PseudoDirName, L"BBTestOpenConformanceTestCheckpoint5_Dir");
 
   //
   // create pseudo dir which actually is a file.
@@ -1277,7 +1277,7 @@ BBTestWriteConformanceTestCheckpoint1 (
     return Status;
   }
 
-  EfiStrCpy (DirName, L"BBTestWriteConformanceTestCheckpoint1_Dir");
+  SctStrCpy (DirName, L"BBTestWriteConformanceTestCheckpoint1_Dir");
 
   //
   // create the Dir
@@ -1359,7 +1359,7 @@ BBTestWriteConformanceTestCheckpoint2 (
     return Status;
   }
 
-  EfiStrCpy (FileName, L"BBTestWriteConformanceTestCheckpoint2_File");
+  SctStrCpy (FileName, L"BBTestWriteConformanceTestCheckpoint2_File");
 
   //
   // create the File
@@ -1462,7 +1462,7 @@ BBTestWriteConformanceTestCheckpoint3 (
     return Status;
   }
 
-  EfiStrCpy (FileName, L"BBTestWriteConformanceTestCheckpoint3_File");
+  SctStrCpy (FileName, L"BBTestWriteConformanceTestCheckpoint3_File");
 
   //
   // create the File
@@ -1570,7 +1570,7 @@ BBTestFlushConformanceTestCheckpoint1 (
     return Status;
   }
 
-  EfiStrCpy (FileName, L"BBTestFlushConformanceTestCheckpoint1_File");
+  SctStrCpy (FileName, L"BBTestFlushConformanceTestCheckpoint1_File");
 
   //
   // create the File
@@ -1670,7 +1670,7 @@ BBTestFlushConformanceTestCheckpoint2 (
     return Status;
   }
 
-  EfiStrCpy (FileName, L"BBTestFlushConformanceTestCheckpoint2_File");
+  SctStrCpy (FileName, L"BBTestFlushConformanceTestCheckpoint2_File");
 
   //
   // create the File
@@ -1777,7 +1777,7 @@ BBTestSetPositionConformanceTestCheckpoint1 (
     return Status;
   }
 
-  EfiStrCpy (DirName, L"BBTestSetPositionConformanceTestCheckpoint1_Dir");
+  SctStrCpy (DirName, L"BBTestSetPositionConformanceTestCheckpoint1_Dir");
 
   //
   // create the Dir
@@ -1857,7 +1857,7 @@ BBTestGetPositionConformanceTestCheckpoint1 (
     return Status;
   }
 
-  EfiStrCpy (DirName, L"BBTestGetPositionConformanceTestCheckpoint1_Dir");
+  SctStrCpy (DirName, L"BBTestGetPositionConformanceTestCheckpoint1_Dir");
 
   //
   // create the Dir
@@ -1940,7 +1940,7 @@ BBTestGetInfoConformanceTestCheckpoint1 (
     return Status;
   }
   
-  EfiStrCpy (FileName, L"BBTestGetInfoConformanceTestCheckpoint1_File");
+  SctStrCpy (FileName, L"BBTestGetInfoConformanceTestCheckpoint1_File");
 
   //
   // create the file
@@ -2024,8 +2024,8 @@ BBTestGetInfoConformanceTestCheckpoint2 (
     return Status;
   }
 
-  EfiStrCpy (FileName[0], L"BBTestGetInfoConformanceTestCheckpoint2_File");
-  EfiStrCpy (FileName[1], L"BBTestGetInfoConformanceTestCheckpoint2_Dir");
+  SctStrCpy (FileName[0], L"BBTestGetInfoConformanceTestCheckpoint2_File");
+  SctStrCpy (FileName[1], L"BBTestGetInfoConformanceTestCheckpoint2_Dir");
 
   //
   // init
@@ -2203,7 +2203,7 @@ BBTestSetInfoConformanceTestCheckpoint1 (
   }
   
   
-  EfiStrCpy (FileName, L"BBTestSetInfoConformanceTestCheckpoint1_File");
+  SctStrCpy (FileName, L"BBTestSetInfoConformanceTestCheckpoint1_File");
 
   //
   // create the file
@@ -2322,8 +2322,8 @@ BBTestSetInfoConformanceTestCheckpoint2 (
   //
   gtBS->SetMem (FileHandle, 2 * sizeof (EFI_FILE*), 0);
   gtBS->SetMem (OpenHandle, 2 * sizeof (EFI_FILE*), 0);
-  EfiStrCpy (FileName[0], L"BBTestSetInfoConformanceTestCheckpoint2_File");
-  EfiStrCpy (FileName[1], L"BBTestSetInfoConformanceTestCheckpoint2_Dir");
+  SctStrCpy (FileName[0], L"BBTestSetInfoConformanceTestCheckpoint2_File");
+  SctStrCpy (FileName[1], L"BBTestSetInfoConformanceTestCheckpoint2_Dir");
 
   for (Index = 0; Index < 2; Index++) {
 
@@ -2459,8 +2459,8 @@ BBTestSetInfoConformanceTestCheckpoint2 (
     // change file name
     //
 
-    EfiStrCpy (ChangeFileName, L"BBTestSetInfoConfTestCheckpoint2_File_New");
-    EfiStrCpy (FileInfo->FileName, ChangeFileName);
+    SctStrCpy (ChangeFileName, L"BBTestSetInfoConfTestCheckpoint2_File_New");
+    SctStrCpy (FileInfo->FileName, ChangeFileName);
 
     FileHandle[Index] = NULL;
     Status = Root->Open (
@@ -2584,8 +2584,8 @@ BBTestSetInfoConformanceTestCheckpoint3 (
   // init
   //
   gtBS->SetMem (FileHandle, 2 * sizeof (EFI_FILE*), 0);
-  EfiStrCpy (FileName[0], L"BBTestSetInfoConformanceTestCheckpoint3_File");
-  EfiStrCpy (FileName[1], L"BBTestSetInfoConformanceTestCheckpoint3_Dir");
+  SctStrCpy (FileName[0], L"BBTestSetInfoConformanceTestCheckpoint3_File");
+  SctStrCpy (FileName[1], L"BBTestSetInfoConformanceTestCheckpoint3_Dir");
 
   for (Index = 0; Index < 2; Index++) {
 
@@ -2834,8 +2834,8 @@ BBTestSetInfoConformanceTestCheckpoint4 (
 
   FileNumber = sizeof (UnacceptableFileName) / sizeof (*UnacceptableFileName);
 
-  EfiStrCpy (FileName[0], L"BBTestSetInfoConformanceTestCheckpoint4_File");
-  EfiStrCpy (FileName[1], L"BBTestSetInfoConformanceTestCheckpoint4_Dir");
+  SctStrCpy (FileName[0], L"BBTestSetInfoConformanceTestCheckpoint4_File");
+  SctStrCpy (FileName[1], L"BBTestSetInfoConformanceTestCheckpoint4_Dir");
 
   Attribute[0] = 0;
   Attribute[1] = EFI_FILE_DIRECTORY;
@@ -2996,7 +2996,7 @@ BBTestSetInfoConformanceTestCheckpoint4 (
   //
   for (Index = 0; Index < FileNumber; Index++) {
 
-    EfiStrCpy (FileInfo->FileName, UnacceptableFileName[Index]);
+    SctStrCpy (FileInfo->FileName, UnacceptableFileName[Index]);
 
     Status = FileHandle[0]->SetInfo (FileHandle[0], &gEfiFileInfoGuid, BufferSize, FileInfo);
 
@@ -3014,7 +3014,7 @@ BBTestSetInfoConformanceTestCheckpoint4 (
     //
     // should not match
     //
-    if (EfiStrCmp (FileInfo->FileName, UnacceptableFileName[Index])) {
+    if (SctStrCmp (FileInfo->FileName, UnacceptableFileName[Index])) {
 
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
@@ -3143,7 +3143,7 @@ BBTestSetInfoConformanceTestCheckpoint4 (
   //
   for (Index = 0; Index < FileNumber; Index++) {
 
-    EfiStrCpy (FileInfo->FileName, UnacceptableFileName[Index]);
+    SctStrCpy (FileInfo->FileName, UnacceptableFileName[Index]);
 
     Status = FileHandle[1]->SetInfo (FileHandle[1], &gEfiFileInfoGuid, BufferSize, FileInfo);
 
@@ -3161,7 +3161,7 @@ BBTestSetInfoConformanceTestCheckpoint4 (
     //
     // should not match
     //
-    if (EfiStrCmp (FileInfo->FileName, UnacceptableFileName[Index])) {
+    if (SctStrCmp (FileInfo->FileName, UnacceptableFileName[Index])) {
 
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
@@ -3392,7 +3392,7 @@ BBTestSetInfoConformanceTestCheckpoint6 (
   // init
   //
 
-  EfiStrCpy (FileName, L"BBTestSetInfoConformanceTestCheckpoint6_File");
+  SctStrCpy (FileName, L"BBTestSetInfoConformanceTestCheckpoint6_File");
 
   //
   // create the read-only file
@@ -3699,8 +3699,8 @@ BBTestSetInfoConformanceTestCheckpoint7 (
   gtBS->SetMem (FileHandle, 2 * sizeof (EFI_FILE*), 0);
 
 
-  EfiStrCpy (FileName[0], L"BBTestSetInfoConformanceTestCheckpoint7_File_One");
-  EfiStrCpy (FileName[1], L"BBTestSetInfoConformanceTestCheckpoint7_File_Two");
+  SctStrCpy (FileName[0], L"BBTestSetInfoConformanceTestCheckpoint7_File_One");
+  SctStrCpy (FileName[1], L"BBTestSetInfoConformanceTestCheckpoint7_File_Two");
 	
 
   Attribute[0] = 0;
@@ -3758,7 +3758,7 @@ BBTestSetInfoConformanceTestCheckpoint7 (
 	// change one file to a file name already exists 
 	// !! be carefull new file name should be same as or smaller than original file name 
 	// otherwise we should reallocate pool & change FileInfo->Size 
-	EfiStrCpy (FileInfo->FileName, L"BBTestSetInfoConformanceTestCheckpoint7_File_Two");
+	SctStrCpy (FileInfo->FileName, L"BBTestSetInfoConformanceTestCheckpoint7_File_Two");
 
 	Status = FileHandle[0]->SetInfo (
                             FileHandle[0],

@@ -388,7 +388,7 @@ Routine Description:
     return Status;
   }
 
-  TempApTest->Name = StrDuplicate (Buffer);
+  TempApTest->Name = SctStrDuplicate (Buffer);
 
   //
   // Load the description
@@ -400,7 +400,7 @@ Routine Description:
     return Status;
   }
 
-  TempApTest->Description = StrDuplicate (Buffer);
+  TempApTest->Description = SctStrDuplicate (Buffer);
 
   //
   // Check error
@@ -700,7 +700,7 @@ Routine Description:
     return Status;
   }
 
-  TempApEntry->Name = StrDuplicate (Buffer);
+  TempApEntry->Name = SctStrDuplicate (Buffer);
 
   //
   // Load the description
@@ -712,7 +712,7 @@ Routine Description:
     return Status;
   }
 
-  TempApEntry->Description = StrDuplicate (Buffer);
+  TempApEntry->Description = SctStrDuplicate (Buffer);
 
   //
   // Load the test level
@@ -775,7 +775,7 @@ Routine Description:
     return Status;
   }
 
-  TempApEntry->Parameters = StrDuplicate (Buffer);
+  TempApEntry->Parameters = SctStrDuplicate (Buffer);
 
   //
   // Check error

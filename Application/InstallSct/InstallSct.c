@@ -160,7 +160,7 @@ InstallSct (
     SctFileVolume = SctAllocatePool (sizeof (SCT_FILE_VOLUME));
 
     // Save the filename
-    SctCopyMem (SctFileVolume->Name, FsName, StrSize (FsName));
+    SctCopyMem (SctFileVolume->Name, FsName, SctStrSize (FsName));
 
     // Ensure it is valid file system and it has enough free space
     Status = GetFreeSpace (SctFileVolume);
@@ -188,9 +188,9 @@ InstallSct (
     mBackupPolicy = BACKUP_POLICY_NONE;
 
     for (Index = 1; Index < SI->Argc - 1; Index++) {
-      if (StrCmp (SI->Argv[Index], L"-b") == 0) {
+      if (SctStrCmp (SI->Argv[Index], L"-b") == 0) {
         mBackupPolicy = BACKUP_POLICY_BACKUP_ALL;
-      } else if (StrCmp (SI->Argv[Index], L"-r") == 0) {
+      } else if (SctStrCmp (SI->Argv[Index], L"-r") == 0) {
         mBackupPolicy = BACKUP_POLICY_REMOVE_ALL;
       } else {
         Print (L"'%s' is not a valid option.\n", SI->Argv[Index]);
@@ -376,7 +376,7 @@ GetDestination (
     //
     // Deal with the user input
     //
-    if (StriCmp (InputBuffer, L"q") == 0) {
+    if (SctStriCmp (InputBuffer, L"q") == 0) {
       return EFI_ABORTED;
     }
 

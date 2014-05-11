@@ -439,7 +439,7 @@ Returns:
     //Set Yes as default choise
     //
     DialogContext.ChooseNumber = EFI_DIALOG_SELECT_YES;
-    DialogTitle = StrDuplicate (L"Continue Run?");
+    DialogTitle = SctStrDuplicate (L"Continue Run?");
 
     //
     //Display ask dialog
@@ -654,7 +654,7 @@ DisplayReportGenerator(
   Status = DoFileDialog (DialogContext);
 
   if (EFI_ERROR (Status)) {
-    MsgDialogTitle = StrDuplicate (L"Generate Report Error!");
+    MsgDialogTitle = SctStrDuplicate (L"Generate Report Error!");
     MsgDialogContext.Type = EFI_DIALOG_TYPE_MESSAGE;
     MenuPageRefresh (Page);
     DoDialog (MsgDialogTitle, &MsgDialogContext);
@@ -663,11 +663,11 @@ DisplayReportGenerator(
     //
     //make up file name
     //
-    if (StrLen (DialogContext->FileName) > 4 &&
-      StriCmp (DialogContext->FileName + StrLen (DialogContext->FileName) - 4, L".csv") == 0) {
-      FileName = StrDuplicate (DialogContext->FileName);
-    } else if ( StrLen (DialogContext->FileName) > 1 &&
-      StriCmp (DialogContext->FileName + StrLen (DialogContext->FileName) - 1, L".") == 0) {
+    if (SctStrLen (DialogContext->FileName) > 4 &&
+      SctStriCmp (DialogContext->FileName + SctStrLen (DialogContext->FileName) - 4, L".csv") == 0) {
+      FileName = SctStrDuplicate (DialogContext->FileName);
+    } else if ( SctStrLen (DialogContext->FileName) > 1 &&
+      SctStriCmp (DialogContext->FileName + SctStrLen (DialogContext->FileName) - 1, L".") == 0) {
       FileName = PoolPrint (L"%scsv", DialogContext->FileName);
     } else {
       FileName = PoolPrint (L"%s.csv", DialogContext->FileName);
@@ -679,7 +679,7 @@ DisplayReportGenerator(
       return;
     }
 
-    MsgDialogTitle = StrDuplicate (L"Wait a few minutes...");
+    MsgDialogTitle = SctStrDuplicate (L"Wait a few minutes...");
     MsgDialogContext.Type = EFI_DIALOG_TYPE_REMINDER;
     MenuPageRefresh (Page);
     DoDialog (MsgDialogTitle, &MsgDialogContext);
@@ -704,9 +704,9 @@ DisplayReportGenerator(
                );
 
     if (EFI_ERROR (Status)) {
-      MsgDialogTitle = StrDuplicate (L"Generate Report Error!");
+      MsgDialogTitle = SctStrDuplicate (L"Generate Report Error!");
     } else {
-      MsgDialogTitle = StrDuplicate (L"Generate Report Succeed!");
+      MsgDialogTitle = SctStrDuplicate (L"Generate Report Succeed!");
     }
 
     MsgDialogContext.Type = EFI_DIALOG_TYPE_MESSAGE;
@@ -767,7 +767,7 @@ DisplayLog (
   Status = DoLogFileDialog (DialogContext);
 
   if (EFI_ERROR (Status)) {
-    MsgDialogTitle = StrDuplicate (L"Display Log Error!");
+    MsgDialogTitle = SctStrDuplicate (L"Display Log Error!");
     MsgDialogContext.Type = EFI_DIALOG_TYPE_MESSAGE;
     MenuPageRefresh (Page);
     DoDialog (MsgDialogTitle, &MsgDialogContext);
@@ -776,11 +776,11 @@ DisplayLog (
     //
     //make up file name
     //
-    if (StrLen (DialogContext->FileName) > 4 &&
-      StriCmp (DialogContext->FileName + StrLen (DialogContext->FileName) - 4, L".log") == 0) {
-      FileName = StrDuplicate (DialogContext->FileName);
-    }else if ( StrLen (DialogContext->FileName) > 1 &&
-       StriCmp (DialogContext->FileName + StrLen (DialogContext->FileName) - 1, L".") == 0) {
+    if (SctStrLen (DialogContext->FileName) > 4 &&
+      SctStriCmp (DialogContext->FileName + SctStrLen (DialogContext->FileName) - 4, L".log") == 0) {
+      FileName = SctStrDuplicate (DialogContext->FileName);
+    }else if ( SctStrLen (DialogContext->FileName) > 1 &&
+       SctStriCmp (DialogContext->FileName + SctStrLen (DialogContext->FileName) - 1, L".") == 0) {
        FileName = PoolPrint (L"%slog", DialogContext->FileName);
     }else {
       FileName = PoolPrint (L"%s.log", DialogContext->FileName);
@@ -792,7 +792,7 @@ DisplayLog (
       return;
     }
 
-    MsgDialogTitle = StrDuplicate (L"Wait a few minutes...");
+    MsgDialogTitle = SctStrDuplicate (L"Wait a few minutes...");
     MsgDialogContext.Type = EFI_DIALOG_TYPE_REMINDER;
 
     //
@@ -809,7 +809,7 @@ DisplayLog (
                  FALSE
                  );
       if (EFI_ERROR (Status)) {
-        MsgDialogTitle = StrDuplicate (L"Cannot open the log file! Please check the edit command in the configuration page.");
+        MsgDialogTitle = SctStrDuplicate (L"Cannot open the log file! Please check the edit command in the configuration page.");
         MsgDialogContext.Type = EFI_DIALOG_TYPE_MESSAGE;
 
         DoDialog (MsgDialogTitle, &MsgDialogContext);
@@ -869,7 +869,7 @@ MainMenuLoadSeqFunc (
   Status = DoFileDialog (DialogContext);
 
   if (EFI_ERROR (Status)) {
-    MsgDialogTitle = StrDuplicate (L"Load Sequence Error!");
+    MsgDialogTitle = SctStrDuplicate (L"Load Sequence Error!");
     MsgDialogContext.Type = EFI_DIALOG_TYPE_MESSAGE;
     MenuPageRefresh (Page);
     DoDialog (MsgDialogTitle, &MsgDialogContext);
@@ -878,7 +878,7 @@ MainMenuLoadSeqFunc (
     //
     //make up file name
     //
-    FileName = StrDuplicate (DialogContext->FileName);
+    FileName = SctStrDuplicate (DialogContext->FileName);
     if (FileName == NULL) {
       tBS->FreePool (DialogContext->DevicePath);
       tBS->FreePool (DialogContext->FileName);
@@ -894,9 +894,9 @@ MainMenuLoadSeqFunc (
                &gFT->TestCaseList
                );
     if (EFI_ERROR (Status)) {
-      MsgDialogTitle = StrDuplicate (L"Load Sequence Error!");
+      MsgDialogTitle = SctStrDuplicate (L"Load Sequence Error!");
     } else {
-      MsgDialogTitle = StrDuplicate (L"Load Sequence Succeed!");
+      MsgDialogTitle = SctStrDuplicate (L"Load Sequence Succeed!");
     }
 
     MsgDialogContext.Type = EFI_DIALOG_TYPE_MESSAGE;
@@ -955,7 +955,7 @@ MainMenuSaveSeqFunc (
   Status = DoFileDialog (DialogContext);
 
   if (EFI_ERROR (Status)) {
-    MsgDialogTitle = StrDuplicate (L"Save Sequence Error!");
+    MsgDialogTitle = SctStrDuplicate (L"Save Sequence Error!");
     MsgDialogContext.Type = EFI_DIALOG_TYPE_MESSAGE;
     MenuPageRefresh (Page);
     DoDialog (MsgDialogTitle, &MsgDialogContext);
@@ -964,11 +964,11 @@ MainMenuSaveSeqFunc (
     //
     //make up file name
     //
-    if (StrLen (DialogContext->FileName) > 4 &&
-      StriCmp (DialogContext->FileName + StrLen (DialogContext->FileName) - 4, L".seq") == 0) {
-      FileName = StrDuplicate (DialogContext->FileName);
-    }else if ( StrLen (DialogContext->FileName) > 1 &&
-       StriCmp (DialogContext->FileName + StrLen (DialogContext->FileName) - 1, L".") == 0) {
+    if (SctStrLen (DialogContext->FileName) > 4 &&
+      SctStriCmp (DialogContext->FileName + SctStrLen (DialogContext->FileName) - 4, L".seq") == 0) {
+      FileName = SctStrDuplicate (DialogContext->FileName);
+    }else if ( SctStrLen (DialogContext->FileName) > 1 &&
+       SctStriCmp (DialogContext->FileName + SctStrLen (DialogContext->FileName) - 1, L".") == 0) {
        FileName = PoolPrint (L"%sseq", DialogContext->FileName);
     }else {
       FileName = PoolPrint (L"%s.seq", DialogContext->FileName);
@@ -986,9 +986,9 @@ MainMenuSaveSeqFunc (
                &gFT->TestCaseList
                );
     if (EFI_ERROR (Status)) {
-      MsgDialogTitle = StrDuplicate (L"Save sequence Error!");
+      MsgDialogTitle = SctStrDuplicate (L"Save sequence Error!");
     } else {
-      MsgDialogTitle = StrDuplicate (L"Save sequence Succeed!");
+      MsgDialogTitle = SctStrDuplicate (L"Save sequence Succeed!");
     }
 
     MsgDialogContext.Type = EFI_DIALOG_TYPE_MESSAGE;
@@ -1045,7 +1045,7 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  MsgDialogTitle = StrDuplicate (L"Prepare running...");
+  MsgDialogTitle = SctStrDuplicate (L"Prepare running...");
   MsgDialogContext.Type = EFI_DIALOG_TYPE_REMINDER;
   DoDialog (MsgDialogTitle, &MsgDialogContext);
 
@@ -1081,7 +1081,7 @@ MainMenuClearFunc (
   EFI_DIALOG_CONTEXT       MsgDialogContext;
   CHAR16                  *MsgDialogTitle;
 
-  MsgDialogTitle = StrDuplicate (L"Deleting files ...");
+  MsgDialogTitle = SctStrDuplicate (L"Deleting files ...");
   MsgDialogContext.Type = EFI_DIALOG_TYPE_REMINDER;
 
   DoDialog (MsgDialogTitle, &MsgDialogContext);

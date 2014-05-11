@@ -446,7 +446,7 @@ BBTestFlushExBasicTestCheckpoint1 (
   //
   // init
   //
-  EfiStrCpy (FileName, L"BBTestFlushExBasicTestCheckpoint1_File");
+  SctStrCpy (FileName, L"BBTestFlushExBasicTestCheckpoint1_File");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -746,7 +746,7 @@ BBTestFlushExBasicTestCheckpoint2 (
   //
   // init
   //
-  EfiStrCpy (FileName, L"BBTestFlushExBasicTestCheckpoint2_File");
+  SctStrCpy (FileName, L"BBTestFlushExBasicTestCheckpoint2_File");
   
   //
   // Sync Token Init
@@ -934,9 +934,9 @@ BBTestFlushExBasicTestCheckpoint3 (
   //
   // init
   //
-  EfiStrCpy (DirName, L"BBTestFlushExBasicTestCheckpoint3_Dir");
-  EfiStrCpy (FileName[0], L"BBTestFlushExBasicTestCheckpoint3_File_0");
-  EfiStrCpy (FileName[1], L"BBTestFlushExBasicTestCheckpoint3_File_1");
+  SctStrCpy (DirName, L"BBTestFlushExBasicTestCheckpoint3_Dir");
+  SctStrCpy (FileName[0], L"BBTestFlushExBasicTestCheckpoint3_File_0");
+  SctStrCpy (FileName[1], L"BBTestFlushExBasicTestCheckpoint3_File_1");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -1226,8 +1226,8 @@ BBTestFlushExBasicTestCheckpoint4 (
   //
   // init
   //
-  EfiStrCpy (DirName, L"BBTestFlushExBasicTestCheckpoint4_Dir");
-  EfiStrCpy (FileName, L"BBTestFlushExBasicTestCheckpoint4_File");
+  SctStrCpy (DirName, L"BBTestFlushExBasicTestCheckpoint4_Dir");
+  SctStrCpy (FileName, L"BBTestFlushExBasicTestCheckpoint4_File");
   
   //
   // Sync Token Init

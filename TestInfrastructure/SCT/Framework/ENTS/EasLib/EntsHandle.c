@@ -87,7 +87,7 @@ Returns:
   EFI_HANDLE  *Handles;
 
   *Interface  = NULL;
-  Status      = EntsLibLocateHandle (ByProtocol, ProtocolGuid, NULL, &NumberHandles, &Handles);
+  Status      = EntsLocateHandle (ByProtocol, ProtocolGuid, NULL, &NumberHandles, &Handles);
   if (EFI_ERROR (Status)) {
     DEBUG ((EFI_D_INFO, "EntsLibLocateProtocol: Handle not found\n"));
     return Status;
@@ -113,7 +113,7 @@ Returns:
 }
 
 EFI_STATUS
-EntsLibLocateHandle (
+EntsLocateHandle (
   IN EFI_LOCATE_SEARCH_TYPE       SearchType,
   IN EFI_GUID                     * Protocol OPTIONAL,
   IN VOID                         *SearchKey OPTIONAL,

@@ -282,7 +282,7 @@ BBTestStressAutoTest (
 
   //
   // Assertion Point 4.2.1.2.3
-  // Stress test of StrLwr()
+  // Stress test of SctStrLwr ()
   //
 
   //
@@ -314,7 +314,7 @@ BBTestStressAutoTest (
 
   //
   // Assertion Point 4.2.1.2.4
-  // Stress test of StrUpr()
+  // Stress test of SctStrUpr ()
   //
 
   //

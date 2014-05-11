@@ -133,7 +133,7 @@ Done:
                         
   ErrorMessage = ERROR_MESSAGE_FOR_APPLICATION_4;
   
-  ExitSize = StrSize (ErrorMessage);
+  ExitSize = SctStrSize (ErrorMessage);
   
   Status = gtBS->AllocatePool (
                         EfiBootServicesData,

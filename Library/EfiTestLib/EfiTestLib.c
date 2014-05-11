@@ -56,6 +56,7 @@ Abstract:
 --*/
 #include "Efi.h"
 #include "EfiTestLib.h"
+#include "SctLib.h"
 #include EFI_GUID_DEFINITION (DxeServices)
 
 //
@@ -956,43 +957,3 @@ CheckBBTestCanRunAndRecordAssertion (
 }
 
 #endif
-
-EFI_STATUS
-EfiTestLibGetSystemConfigurationTable (
-  IN EFI_GUID *TableGuid,
-  IN OUT VOID **Table
-  )
-/*++
-
-Routine Description:
-
-  Get table from configuration table by name
-
-Arguments:
-
-  TableGuid       - Table name to search
-  
-  Table           - Pointer to the table caller wants
-
-Returns: 
-
-  EFI_NOT_FOUND   - Not found the table
-  
-  EFI_SUCCESS     - Found the table
-
---*/
-{
-  EFI_SYSTEM_TABLE  *SystemTable;
-  UINTN             Index;
-
-  SystemTable = gtST;
-  *Table = NULL;
-  for (Index = 0; Index < SystemTable->NumberOfTableEntries; Index++) {
-    if (CompareGuid (TableGuid, &(SystemTable->ConfigurationTable[Index].VendorGuid)) == 0) {
-      *Table = SystemTable->ConfigurationTable[Index].VendorTable;
-      return EFI_SUCCESS;
-    }
-  }
-
-  return EFI_NOT_FOUND;
-}

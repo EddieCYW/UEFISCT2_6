@@ -554,7 +554,7 @@ Decompress_Conf (
     //
     //allocate Decompess buffer and Decompress the compessed data.
     //
-    DecompressBuffer = SctAllocatePool (DestinationSize == 0) ? 128 : DestinationSize);
+    DecompressBuffer = SctAllocatePool ((DestinationSize == 0) ? 128 : DestinationSize);
     if (DecompressBuffer == NULL) {
       gtBS->FreePool (CompressedFileBuffer);
       Print (L"Can not allocate %xh buffer.\r\n", DestinationSize);

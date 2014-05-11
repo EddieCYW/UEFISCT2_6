@@ -242,7 +242,7 @@ Returns:
 
   SerialIo = NULL;
 
-  Status = EntsLibLocateHandle (
+  Status = EntsLocateHandle (
             ByProtocol,
             &gEfiSerialIoProtocolGuid,
             NULL,

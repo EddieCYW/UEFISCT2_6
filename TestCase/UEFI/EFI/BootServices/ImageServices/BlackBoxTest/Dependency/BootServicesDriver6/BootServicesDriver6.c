@@ -130,7 +130,7 @@ InitializeBootServicesDriver6 (
 
   ErrorMessage = ERROR_MESSAGE_FOR_BOOT_SERVICES_DRIVER_6;
 
-  ExitSize = StrSize (ErrorMessage);
+  ExitSize = SctStrSize (ErrorMessage);
 
   Status = gtBS->AllocatePool (
                    EfiBootServicesData,

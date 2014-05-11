@@ -855,59 +855,59 @@ PrintPxePacket (
     return EFI_INVALID_PARAMETER;
 
   // print the packet type
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, Title, StrLen (Title));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, Title, SctStrLen (Title));
 
   // print the raw packet
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Raw Packet]", StrLen (L"[Raw Packet]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Raw Packet]", SctStrLen (L"[Raw Packet]"));
   LOG_BUF_HEX_DFLT(LoggingLib, (CHAR16*) (Packet->Raw),1472/2);
 
   TempUint16 = (UINT16)Packet->Dhcpv4.BootpOpcode;
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Opcode]", StrLen (L"[Bootp Opcode]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Opcode]", SctStrLen (L"[Bootp Opcode]"));
   LOG_UINT16_HEX_DFLT(LoggingLib, TempUint16);
 
   TempUint16 = (UINT16)Packet->Dhcpv4.BootpHwType;
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Hw Type]", StrLen (L"[Bootp Hw Type]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Hw Type]", SctStrLen (L"[Bootp Hw Type]"));
   LOG_UINT16_HEX_DFLT(LoggingLib, TempUint16);
 
   TempUint16 = (UINT16)Packet->Dhcpv4.BootpHwAddrLen;
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Hw Addr Len]", StrLen (L"[Bootp Hw Addr Len]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Hw Addr Len]", SctStrLen (L"[Bootp Hw Addr Len]"));
   LOG_UINT16_HEX_DFLT(LoggingLib, TempUint16);
 
   TempUint16 = (UINT16)Packet->Dhcpv4.BootpGateHops;
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Gate Hop]", StrLen (L"[Bootp Gate Hop]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Gate Hop]", SctStrLen (L"[Bootp Gate Hop]"));
   LOG_UINT16_HEX_DFLT(LoggingLib, TempUint16);
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Iden]", StrLen (L"[Bootp Iden]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Iden]", SctStrLen (L"[Bootp Iden]"));
   LOG_UINT32_HEX_DFLT(LoggingLib, (Packet->Dhcpv4.BootpIdent));
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Seconds]", StrLen (L"[Bootp Seconds]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Seconds]", SctStrLen (L"[Bootp Seconds]"));
   LOG_UINT16_HEX_DFLT(LoggingLib,Packet->Dhcpv4.BootpSeconds);
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Flags]", StrLen (L"[Bootp Flags]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Flags]", SctStrLen (L"[Bootp Flags]"));
   LOG_UINT16_HEX_DFLT(LoggingLib,(Packet->Dhcpv4.BootpFlags));
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp CiAddr]", StrLen (L"[Bootp CiAddr]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp CiAddr]", SctStrLen (L"[Bootp CiAddr]"));
   LOG_IP_HEX_DFLT(LoggingLib, Packet->Dhcpv4.BootpCiAddr);
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp YiAddr]", StrLen (L"[Bootp YiAddr]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp YiAddr]", SctStrLen (L"[Bootp YiAddr]"));
   LOG_IP_HEX_DFLT(LoggingLib, Packet->Dhcpv4.BootpYiAddr);
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp SiAddr]", StrLen (L"[Bootp SiAddr]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp SiAddr]", SctStrLen (L"[Bootp SiAddr]"));
   LOG_IP_HEX_DFLT(LoggingLib, Packet->Dhcpv4.BootpSiAddr);
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp GiAddr]", StrLen (L"[Bootp GiAddr]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp GiAddr]", SctStrLen (L"[Bootp GiAddr]"));
   LOG_IP_HEX_DFLT(LoggingLib, Packet->Dhcpv4.BootpGiAddr);
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp HwAddr]", StrLen (L"[Bootp HwAddr]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp HwAddr]", SctStrLen (L"[Bootp HwAddr]"));
   LOG_BUF_HEX_DFLT(LoggingLib, (CHAR16*)(Packet->Dhcpv4.BootpSrvName), 32);
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp SrvName]", StrLen (L"[Bootp SrvName]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp SrvName]", SctStrLen (L"[Bootp SrvName]"));
   LOG_BUF_HEX_DFLT(LoggingLib, (CHAR16*)(Packet->Dhcpv4.BootpHwAddr), 8);
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp BootFile]", StrLen (L"[Bootp BootFile]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp BootFile]", SctStrLen (L"[Bootp BootFile]"));
   LOG_BUF_HEX_DFLT(LoggingLib, (CHAR16*)(Packet->Dhcpv4.BootpBootFile), 64);
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Magik]", StrLen (L"[Bootp Magik]"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Bootp Magik]", SctStrLen (L"[Bootp Magik]"));
   LOG_UINT32_HEX_DFLT(LoggingLib, Packet->Dhcpv4.DhcpMagik);
 
   return EFI_SUCCESS;
@@ -922,7 +922,7 @@ PrintArpTable (
   UINTN                  i, cnt;
   CHAR16                *Buffer;
 
-  LoggingLib->DumpBuf (LoggingLib, EFI_VERBOSE_LEVEL_DEFAULT, L"Arp Entry is", (UINT32)StrLen (L"Arp Entry is"), EFI_DUMP_ASCII);
+  LoggingLib->DumpBuf (LoggingLib, EFI_VERBOSE_LEVEL_DEFAULT, L"Arp Entry is", (UINT32)SctStrLen (L"Arp Entry is"), EFI_DUMP_ASCII);
   cnt = 0;
   for (i = 0; i < EFI_PXE_BASE_CODE_MAX_ARP_ENTRIES; i++)
   {
@@ -930,14 +930,14 @@ PrintArpTable (
     {
       cnt ++;
       Buffer = (CHAR16 *)(&Mode->ArpCache[i]);
-      LoggingLib->DumpBuf (LoggingLib, EFI_VERBOSE_LEVEL_DEFAULT, Buffer, (UINT32)StrLen (Buffer), EFI_DUMP_HEX);
+      LoggingLib->DumpBuf (LoggingLib, EFI_VERBOSE_LEVEL_DEFAULT, Buffer, (UINT32)SctStrLen (Buffer), EFI_DUMP_HEX);
     }
   }
 
   if (cnt == Mode->ArpCacheEntries)
     return EFI_SUCCESS;
 
-  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Arp Cache Unmatched", StrLen (L"Arp Cache Unmatched"));
+  LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Arp Cache Unmatched", SctStrLen (L"Arp Cache Unmatched"));
   return EFI_INVALID_PARAMETER;
 }
 
@@ -1075,32 +1075,32 @@ LogUdpPacket (
 {
   if (NULL!=DestIp)
   {
-    LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Dest IP]", StrLen (L"[Dest IP]"));
+    LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Dest IP]", SctStrLen (L"[Dest IP]"));
     //LOG_IP_HEX_DFLT (LoggingLib, DestIp->v4.Addr);
     LOG_BUF_HEX_DFLT(LoggingLib, (CHAR16*)&DestIp, sizeof (EFI_IP_ADDRESS)/2);
   }
 
   if (NULL != DestPort)
   {
-    LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Dest Port]", StrLen (L"[Dest Port]"));
+    LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Dest Port]", SctStrLen (L"[Dest Port]"));
     LOG_UINT16_HEX_DFLT(LoggingLib, *DestPort);
   }
 
   if (NULL != SrcIp)
   {
-    LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Src IP]", StrLen (L"[Src IP]"));
+    LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Src IP]", SctStrLen (L"[Src IP]"));
     //LOG_IP_HEX_DFLT (LoggingLib, SrcIp->v4.Addr);
     LOG_BUF_HEX_DFLT(LoggingLib, (CHAR16*)&SrcIp, sizeof (EFI_IP_ADDRESS)/2);
   }
 
   if (NULL != SrcPort)
   {
-    LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Src Port]", StrLen (L"[Src Port]"));
+    LOG_CHAR16_ASCII_DFLT(LoggingLib, L"[Src Port]", SctStrLen (L"[Src Port]"));
     LOG_UINT16_HEX_DFLT(LoggingLib, *SrcPort);
   }
   if (0!=BufferSize)
   {
-    LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Received UDP Packet", StrLen (L"Received UDP Packet"));
+    LOG_CHAR16_ASCII_DFLT(LoggingLib, L"Received UDP Packet", SctStrLen (L"Received UDP Packet"));
     LOG_BUF_HEX_DFLT(LoggingLib, BufferPtr, BufferSize);
   }
   return EFI_SUCCESS;

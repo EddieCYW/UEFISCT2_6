@@ -502,7 +502,7 @@ BBTestReadExBasicTestCheckpoint1 (
     return EFI_UNSUPPORTED;
   }
 
-  EfiStrCpy (FileName, L"BBTestReadExBasicTestCheckpoint1_File");
+  SctStrCpy (FileName, L"BBTestReadExBasicTestCheckpoint1_File");
 
   //
   // allocate buffer for read
@@ -875,7 +875,7 @@ BBTestReadExBasicTestCheckpoint2 (
                    );
     return EFI_UNSUPPORTED;
   }
-  EfiStrCpy (FileName, L"BBTestReadExBasicTestCheckpoint2_File");
+  SctStrCpy (FileName, L"BBTestReadExBasicTestCheckpoint2_File");
  
   //
   // allocate buffer for read
@@ -1116,8 +1116,8 @@ BBTestReadExBasicTestCheckpoint3 (
   DirHandle           = NULL;
   ListEntry           = NULL;
   FileIoReadDirEntity = NULL;
-  EfiStrCpy (FileName, L"BBTestReadExBasicTestCheckpoint3_File");
-  EfiStrCpy (DirName, L"BBTestReadExBasicTestCheckpoint3_Dir");
+  SctStrCpy (FileName, L"BBTestReadExBasicTestCheckpoint3_File");
+  SctStrCpy (DirName, L"BBTestReadExBasicTestCheckpoint3_Dir");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -1506,8 +1506,8 @@ BBTestReadExBasicTestCheckpoint4 (
   Buffer     = NULL;
   FileHandle = NULL;
   DirHandle  = NULL;
-  EfiStrCpy (FileName, L"BBTestReadBasicTestCheckpoint2_File");
-  EfiStrCpy (DirName, L"BBTestReadBasicTestCheckpoint2_Dir");
+  SctStrCpy (FileName, L"BBTestReadBasicTestCheckpoint2_File");
+  SctStrCpy (DirName, L"BBTestReadBasicTestCheckpoint2_Dir");
   
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {

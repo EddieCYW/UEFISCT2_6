@@ -718,14 +718,14 @@ Returns:
   }
   Status = tBS->AllocatePool (
                   EfiBootServicesData,
-                  (EfiStrLen (FileName) + 1) * 2,
+                  (SctStrLen (FileName) + 1) * 2,
                   (VOID **)&(Private->FileName)
                   );
   if (EFI_ERROR (Status)) {
     TrlFreePointer (Private);
     return Status;
   }
-  EfiStrCpy (Private->FileName, FileName);
+  SctStrCpy (Private->FileName, FileName);
 
   return EFI_SUCCESS;
 }

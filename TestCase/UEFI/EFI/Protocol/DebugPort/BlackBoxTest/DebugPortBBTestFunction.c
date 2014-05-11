@@ -191,7 +191,7 @@ BBTestWriteFunctionManualTest (
   // Call Write() to send data to debug port with enough time.
   //
   BufferSize = 12;
-  StrCpy (Buffer, L"Hello");
+  SctStrCpy (Buffer, L"Hello");
   Status = DebugPort->Write (DebugPort, 1000, &BufferSize, (VOID*)Buffer);
   if (EFI_ERROR(Status)) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;

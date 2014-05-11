@@ -537,11 +537,11 @@ CheckMonitorName (
 //  CHAR16 *Temp;
 //  Temp = UpperCaseString(Argv);
 
-  if ((StrCmp(Argv, L"MNP") == 0) || (StrCmp(Argv, L"mnp") == 0))
+  if ((SctStrCmp (Argv, L"MNP") == 0) || (SctStrCmp(Argv, L"mnp") == 0))
   	return EFI_SUCCESS;
-  if ((StrCmp(Argv, L"IP4") == 0) || (StrCmp(Argv, L"ip4") == 0))
+  if ((SctStrCmp (Argv, L"IP4") == 0) || (SctStrCmp(Argv, L"ip4") == 0))
   	return EFI_SUCCESS;
-  if ((StrCmp(Argv, L"SERIAL") == 0) || (StrCmp(Argv, L"serial") == 0))
+  if ((SctStrCmp (Argv, L"SERIAL") == 0) || (SctStrCmp(Argv, L"serial") == 0))
   	return EFI_SUCCESS;  
 
   return EFI_INVALID_PARAMETER;

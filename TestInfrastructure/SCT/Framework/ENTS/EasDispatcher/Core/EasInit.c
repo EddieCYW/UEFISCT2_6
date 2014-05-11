@@ -622,7 +622,7 @@ Returns:
       goto AttachErr;
     }
 
-    if (StriCmp (MonitorName, EntsMonitorInterface->MonitorName) == 0) {
+    if (SctStriCmp (MonitorName, EntsMonitorInterface->MonitorName) == 0) {
       break;
     }
   }

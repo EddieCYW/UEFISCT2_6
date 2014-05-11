@@ -1370,11 +1370,11 @@ BBTestOpenExBasicTestCheckpoint1_Test2_Async (
   
   for (Loop = 0; Loop < MaxFileName; Loop++) {
     
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (PureStrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (PureStrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     PureStrPointer += MAX_STRING_LENGTH;
     StrPointer += MAX_STRING_LENGTH;
@@ -1792,11 +1792,11 @@ BBTestOpenExBasicTestCheckpoint1_Test2_Sync (
 
   MaxFileName = FixedNameCount + TPL_ARRAY_SIZE + MaxNameIndex + MaxDirAttributesIndex + MaxAttributesIndex;
   for (Loop = 0; Loop < MaxFileName; Loop++) {
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (PureStrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (PureStrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     PureStrPointer += MAX_STRING_LENGTH;
     StrPointer += MAX_STRING_LENGTH;
@@ -2424,12 +2424,12 @@ BBTestOpenExBasicTestCheckpoint1_Test4_Async (
   PureStrPointer = PureFileNameArray;
   
   for (Loop = 0; Loop < 10; Loop++) {
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (PureStrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (PureStrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
     PureStrPointer1 = PureStrPointer + Loop * MAX_STRING_LENGTH; 
-    EfiStrCat (StrPointer, PureStrPointer1);
+    SctStrCat (StrPointer, PureStrPointer1);
     StrPointer += MAX_STRING_LENGTH;
   }
   
@@ -2790,12 +2790,12 @@ BBTestOpenExBasicTestCheckpoint1_Test4_Sync (
   PureStrPointer = PureFileNameArray;
   
   for (Loop = 0; Loop < 10; Loop++) {
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (PureStrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (PureStrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
     PureStrPointer1 = PureStrPointer + Loop * MAX_STRING_LENGTH; 
-    EfiStrCat (StrPointer, PureStrPointer1);
+    SctStrCat (StrPointer, PureStrPointer1);
     StrPointer += MAX_STRING_LENGTH;
   }
   
@@ -3045,24 +3045,24 @@ BBTestOpenExBasicTestCheckpoint1_Test5_Async (
     //
     // "\" + subdir1
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
     //
     // "\" + subdir1 + "\" + subdir2
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\" + subdir2 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
@@ -3070,7 +3070,7 @@ BBTestOpenExBasicTestCheckpoint1_Test5_Async (
     // "\" + subdir1 + "\" + subdir2 + "\" + filename
     //
     PureStrPointer1 = PureStrPointer + Loop * MAX_STRING_LENGTH; 
-    EfiStrCat (StrPointer, PureStrPointer1);
+    SctStrCat (StrPointer, PureStrPointer1);
 
     StrPointer += MAX_STRING_LENGTH;
     
@@ -3447,24 +3447,24 @@ BBTestOpenExBasicTestCheckpoint1_Test5_Sync (
     //
     // "\" + subdir1
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
     //
     // "\" + subdir1 + "\" + subdir2
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\" + subdir2 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
@@ -3472,7 +3472,7 @@ BBTestOpenExBasicTestCheckpoint1_Test5_Sync (
     // "\" + subdir1 + "\" + subdir2 + "\" + filename
     //
     PureStrPointer1 = PureStrPointer + Loop * MAX_STRING_LENGTH; 
-    EfiStrCat (StrPointer, PureStrPointer1);
+    SctStrCat (StrPointer, PureStrPointer1);
 
     StrPointer += MAX_STRING_LENGTH;
     
@@ -5099,12 +5099,12 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Async (
   PureStrPointer = PureFileNameArray;
 
   for (Loop = 0; Loop < 10; Loop++) {
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (PureStrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (PureStrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
     PureStrPointer1 = PureStrPointer + Loop * MAX_STRING_LENGTH; 
-    EfiStrCat (StrPointer, PureStrPointer1);
+    SctStrCat (StrPointer, PureStrPointer1);
     StrPointer += MAX_STRING_LENGTH;
   }
   
@@ -5773,12 +5773,12 @@ BBTestOpenExBasicTestCheckpoint2_Test2_Sync (
   PureStrPointer = PureFileNameArray;
 
   for (Loop = 0; Loop < 10; Loop++) {
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (PureStrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (PureStrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
     PureStrPointer1 = PureStrPointer + Loop * MAX_STRING_LENGTH; 
-    EfiStrCat (StrPointer, PureStrPointer1);
+    SctStrCat (StrPointer, PureStrPointer1);
     StrPointer += MAX_STRING_LENGTH;
   }
   
@@ -7485,12 +7485,12 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Async (
   PureStrPointer = PureFileNameArray;
   
   for (Loop = 0; Loop < 10; Loop++) {
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (PureStrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (PureStrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
     PureStrPointer1 = PureStrPointer + Loop * MAX_STRING_LENGTH; 
-    EfiStrCat (StrPointer, PureStrPointer1);
+    SctStrCat (StrPointer, PureStrPointer1);
     StrPointer += MAX_STRING_LENGTH;
   }
   
@@ -8230,12 +8230,12 @@ BBTestOpenExBasicTestCheckpoint2_Test4_Sync (
   PureStrPointer = PureFileNameArray;
 
   for (Loop = 0; Loop < 10; Loop++) {
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (PureStrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (PureStrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
     PureStrPointer1 = PureStrPointer + Loop * MAX_STRING_LENGTH; 
-    EfiStrCat (StrPointer, PureStrPointer1);
+    SctStrCat (StrPointer, PureStrPointer1);
     StrPointer += MAX_STRING_LENGTH;
   }
   
@@ -8903,24 +8903,24 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Async (
     //
     // "\" + subdir1
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
     //
     // "\" + subdir1 + "\" + subdir2
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\" + subdir2 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
@@ -8928,7 +8928,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Async (
     // "\" + subdir1 + "\" + subdir2 + "\" + filename
     //
     PureStrPointer1 = PureStrPointer + Loop * MAX_STRING_LENGTH; 
-    EfiStrCat (StrPointer, PureStrPointer1);
+    SctStrCat (StrPointer, PureStrPointer1);
 
     StrPointer += MAX_STRING_LENGTH;
     
@@ -9684,24 +9684,24 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Sync (
     //
     // "\" + subdir1
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
     //
     // "\" + subdir1 + "\" + subdir2
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\" + subdir2 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
@@ -9709,7 +9709,7 @@ BBTestOpenExBasicTestCheckpoint2_Test5_Sync (
     // "\" + subdir1 + "\" + subdir2 + "\" + filename
     //
     PureStrPointer1 = PureStrPointer + Loop * MAX_STRING_LENGTH; 
-    EfiStrCat (StrPointer, PureStrPointer1);
+    SctStrCat (StrPointer, PureStrPointer1);
 
     StrPointer += MAX_STRING_LENGTH;
     

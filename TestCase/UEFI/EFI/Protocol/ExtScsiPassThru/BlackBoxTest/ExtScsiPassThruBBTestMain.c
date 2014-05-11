@@ -302,8 +302,8 @@ BufToUHexString (
   for (Idx = 0; Idx < Len; Idx++) {
 
     Byte = Buf[Idx];
-    Str[Idx * 2 + 1] = NibbleToHexChar (Byte);
-    Str[Idx * 2] = NibbleToHexChar ((UINT8)(Byte >> 4));
+    Str[Idx * 2 + 1] = SctNibbleToHexChar (Byte);
+    Str[Idx * 2] = SctNibbleToHexChar ((UINT8)(Byte >> 4));
   }
 
   return EFI_SUCCESS;

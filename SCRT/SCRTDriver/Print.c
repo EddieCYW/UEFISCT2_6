@@ -92,6 +92,7 @@ Abstract:
 #include "EfiError.h"
 #include "TianoCommon.h"
 #include "EfiCommonLib.h"
+#include "SctLib.h"
 
 
 #define LEFT_JUSTIFY  0x01
@@ -1055,93 +1056,7 @@ Returns:
   return Size - 1;
 }
 
-
 STATIC
-VOID
-TestStrCpy (
-  IN CHAR8   *Destination,
-  IN CHAR8   *Source
-  )
-/*++
-
-Routine Description:
-
-  Copy the string Source to Destination.
-
-Arguments:
-
-  Destination - Location to copy string
-  Source      - String to copy
-
-Returns:
-
-  NONE
-
---*/  
-{
-  while (*Source) {
-    *(Destination++) = *(Source++);
-  }
-  *Destination = 0;
-}
-
-STATIC
-UINTN
-TestStrLen (
-  IN CHAR8   *String
-  )
-/*++
-
-Routine Description:
-
-  Return the number of Ascii characters in String. This is not the same as
-  the length of the string in bytes.
-
-Arguments:
-
-  String - String to process
-
-Returns:
-
-  Number of Ascii characters in String
-
---*/  
-{
-  UINTN Length;
-  
-  for (Length=0; *String; String++, Length++);
-  return Length;
-}
-
-
-STATIC  
-VOID
-TestStrCat (
-  IN CHAR8   *Destination,
-  IN CHAR8   *Source
-  )
-/*++
-
-Routine Description:
-
-  Concatinate Source on the end of Destination
-
-Arguments:
-
-  Destination - String to added to the end of.
-  Source      - String to concatinate.
-
-Returns:
-
-  NONE
-
---*/  
-{   
-  TestStrCpy (Destination + TestStrLen (Destination), Source);
-}
-
-
-
 EFI_STATUS
 LocalPrintf (
   IN CHAR8     *String
@@ -1234,10 +1149,10 @@ Returns:
 
   switch (Status) {
   case EFI_TEST_ASSERTION_PASSED:
-    TestStrCpy (AssertionType, "PASS");
+    SctAsciiStrCpy (AssertionType, "PASS");
     break;
   default:
-    TestStrCpy (AssertionType, "FAILURE");
+    SctAsciiStrCpy (AssertionType, "FAILURE");
     break;
   }
 
@@ -1248,8 +1163,8 @@ Returns:
   VSPrint (Buffer3, EFI_MAX_PRINT_BUFFER, Format, Marker);
   VA_END (Marker);
 
-  if (TestStrLen (Buffer3) + 5 < EFI_MAX_PRINT_BUFFER ) {
-    TestStrCat (Buffer3, "\r\n\r\n");
+  if (SctAsciiStrLen (Buffer3) + 5 < EFI_MAX_PRINT_BUFFER ) {
+    SctAsciiStrCat (Buffer3, "\r\n\r\n");
   }
 
   LocalPrintf(Buffer1);

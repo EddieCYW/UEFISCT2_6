@@ -205,7 +205,7 @@ CreateDir (
   //
   // Create the temp name
   //
-  TmpName = StrDuplicate (DirName);
+  TmpName = SctStrDuplicate (DirName);
   if (TmpName == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -338,12 +338,12 @@ BackupDirFile (
   //
   // Split to the path name and the file name
   //
-  PathName = StrDuplicate (Name);
+  PathName = SctStrDuplicate (Name);
   if (PathName == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
 
-  Length   = StrLen (PathName);
+  Length   = SctStrLen (PathName);
   FileName = PathName + Length;
 
   for (Index = 0; Index < Length; Index ++) {
@@ -450,12 +450,12 @@ CopyDirFile (
   //
   // Split to the path name
   //
-  PathName = StrDuplicate (DstName);
+  PathName = SctStrDuplicate (DstName);
   if (PathName == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
 
-  Length   = StrLen (PathName);
+  Length   = SctStrLen (PathName);
 
   for (Index = 0; Index < Length; Index ++) {
     if (PathName[Length - Index - 1] == L'\\') {
@@ -555,19 +555,19 @@ ProcessExistingSctFile (
       //
       // Deal with the user input
       //
-      if (StriCmp (InputBuffer, L"q") == 0) {
+      if (SctStriCmp (InputBuffer, L"q") == 0) {
         mBackupPolicy = BACKUP_POLICY_UNDEFINED;
         break;
-      } else if (StriCmp (InputBuffer, L"b") == 0) {
+      } else if (SctStriCmp (InputBuffer, L"b") == 0) {
         mBackupPolicy = BACKUP_POLICY_BACKUP;
         break;
-      } else if (StriCmp (InputBuffer, L"a") == 0) {
+      } else if (SctStriCmp (InputBuffer, L"a") == 0) {
         mBackupPolicy = BACKUP_POLICY_BACKUP_ALL;
         break;
-      } else if (StriCmp (InputBuffer, L"r") == 0) {
+      } else if (SctStriCmp (InputBuffer, L"r") == 0) {
         mBackupPolicy = BACKUP_POLICY_REMOVE;
         break;
-      } else if (StriCmp (InputBuffer, L"l") == 0) {
+      } else if (SctStriCmp (InputBuffer, L"l") == 0) {
         mBackupPolicy = BACKUP_POLICY_REMOVE_ALL;
         break;
       }

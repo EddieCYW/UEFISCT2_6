@@ -595,7 +595,7 @@ Returns:
   //
   // Is it TEST_ABOUT
   //
-  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_ABORT_COMMAND, StrLen (EFI_NETWORK_ABORT_COMMAND) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_ABORT_COMMAND, SctStrLen (EFI_NETWORK_ABORT_COMMAND) * 2) == 0) {
     Cmd->CmdType = ABORT;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", EFI_NETWORK_ABORT_COMMAND));
     return EFI_SUCCESS;
@@ -603,7 +603,7 @@ Returns:
   //
   // Is it TEST_EXEC
   //
-  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_EXEC_COMMAND, StrLen (EFI_NETWORK_EXEC_COMMAND) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_EXEC_COMMAND, SctStrLen (EFI_NETWORK_EXEC_COMMAND) * 2) == 0) {
     Cmd->CmdType = EXECUTE;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", EFI_NETWORK_EXEC_COMMAND));
     return EFI_SUCCESS;
@@ -611,7 +611,7 @@ Returns:
   //
   // Is it GET_FILE
   //
-  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_GET_FILE, StrLen (EFI_NETWORK_GET_FILE) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_GET_FILE, SctStrLen (EFI_NETWORK_GET_FILE) * 2) == 0) {
     Cmd->CmdType = GET_FILE;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", EFI_NETWORK_GET_FILE));
     return EFI_SUCCESS;
@@ -619,7 +619,7 @@ Returns:
   //
   // Is it PUT_FILE
   //
-  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_PUT_FILE, StrLen (EFI_NETWORK_PUT_FILE) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, EFI_NETWORK_PUT_FILE, SctStrLen (EFI_NETWORK_PUT_FILE) * 2) == 0) {
     Cmd->CmdType = PUT_FILE;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", EFI_NETWORK_PUT_FILE));
     return EFI_SUCCESS;
@@ -627,7 +627,7 @@ Returns:
   //
   // Is it RIVL_DEFTYPE
   //
-  if (SctCompareMem (Cmd->ComdName, RIVL_DEFTYPE_CMD, StrLen (RIVL_DEFTYPE_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_DEFTYPE_CMD, SctStrLen (RIVL_DEFTYPE_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_DEFTYPE;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_DEFTYPE_CMD));
     return EFI_SUCCESS;
@@ -635,7 +635,7 @@ Returns:
   //
   // Is it RIVL_CRTVAR
   //
-  if (SctCompareMem (Cmd->ComdName, RIVL_CRTVAR_CMD, StrLen (RIVL_CRTVAR_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_CRTVAR_CMD, SctStrLen (RIVL_CRTVAR_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_CRTVAR;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_CRTVAR_CMD));
     return EFI_SUCCESS;
@@ -643,7 +643,7 @@ Returns:
   //
   // Is it RIVL_DELTYPE
   //
-  if (SctCompareMem (Cmd->ComdName, RIVL_DELTYPE_CMD, StrLen (RIVL_DELTYPE_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_DELTYPE_CMD, SctStrLen (RIVL_DELTYPE_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_DELTYPE;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_DELTYPE_CMD));
     return EFI_SUCCESS;
@@ -651,7 +651,7 @@ Returns:
   //
   // Is it RIVL_DELVAR
   //
-  if (SctCompareMem (Cmd->ComdName, RIVL_DELVAR_CMD, StrLen (RIVL_DELVAR_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_DELVAR_CMD, SctStrLen (RIVL_DELVAR_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_DELVAR;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_DELVAR_CMD));
     return EFI_SUCCESS;
@@ -659,7 +659,7 @@ Returns:
   //
   // Is it RIVL_SETVAR
   //
-  if (SctCompareMem (Cmd->ComdName, RIVL_SETVAR_CMD, StrLen (RIVL_SETVAR_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_SETVAR_CMD, SctStrLen (RIVL_SETVAR_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_SETVAR;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_SETVAR_CMD));
     return EFI_SUCCESS;
@@ -667,7 +667,7 @@ Returns:
   //
   // Is it RIVL_GETVAR
   //
-  if (SctCompareMem (Cmd->ComdName, RIVL_GETVAR_CMD, StrLen (RIVL_GETVAR_CMD) * 2) == 0) {
+  if (SctCompareMem (Cmd->ComdName, RIVL_GETVAR_CMD, SctStrLen (RIVL_GETVAR_CMD) * 2) == 0) {
     Cmd->CmdType = RIVL_GETVAR;
     EFI_ENTS_DEBUG ((EFI_ENTS_D_TRACE, L"GetRemoteCmd: %s", RIVL_GETVAR_CMD));
     return EFI_SUCCESS;
@@ -718,15 +718,15 @@ Returns:
   //
   // AR: need to diff InternalSendACK and EletSendACK: how to store runtimeInfo
   //
-  Len = StrLen (CMD_ACK_KEYWORD) + 10;
+  Len = SctStrLen (CMD_ACK_KEYWORD) + 10;
   if (Cmd->ComdOutput != NULL) {
-    OutputLen = StrLen (Cmd->ComdOutput);
-    Len += StrLen (CMD_OUT_KEYWORD) + OutputLen;
+    OutputLen = SctStrLen (Cmd->ComdOutput);
+    Len += SctStrLen (CMD_OUT_KEYWORD) + OutputLen;
   }
 
   if (Cmd->ComdRuntimeInfo != NULL) {
-    RuntimeInfoLen = StrLen (Cmd->ComdRuntimeInfo);
-    Len += StrLen (CMD_LOG_KEYWORD) + RuntimeInfoLen;
+    RuntimeInfoLen = SctStrLen (Cmd->ComdRuntimeInfo);
+    Len += SctStrLen (CMD_LOG_KEYWORD) + RuntimeInfoLen;
   }
 
   AppResultTmp = EntsAllocatePool (Len * 2);
@@ -740,30 +740,30 @@ Returns:
   //
   // Add Result Message Header
   //
-  StrCat (AppResultTmp, CMD_ACK_KEYWORD);
+  SctStrCat (AppResultTmp, CMD_ACK_KEYWORD);
 
   //
   // Add PASS/FAIL
   //
   if (Cmd->ComdResult == PASS) {
-    StrCat (AppResultTmp, L"P ");
+    SctStrCat (AppResultTmp, L"P ");
   } else {
-    StrCat (AppResultTmp, L"F ");
+    SctStrCat (AppResultTmp, L"F ");
   }
   //
   // Add _OUT_
   //
   if (Cmd->ComdOutput != NULL) {
-    StrCat (AppResultTmp, CMD_OUT_KEYWORD);
-    StrCat (AppResultTmp, Cmd->ComdOutput);
+    SctStrCat (AppResultTmp, CMD_OUT_KEYWORD);
+    SctStrCat (AppResultTmp, Cmd->ComdOutput);
   }
   //
   // Add _LOG_
   //
 #ifdef ACK_SEND_LOG
   if (Cmd->ComdRuntimeInfo != NULL) {
-    StrCat (AppResultTmp, CMD_LOG_KEYWORD);
-    StrCat (AppResultTmp, Cmd->ComdRuntimeInfo);
+    SctStrCat (AppResultTmp, CMD_LOG_KEYWORD);
+    SctStrCat (AppResultTmp, Cmd->ComdRuntimeInfo);
   }
 #endif
 
@@ -911,8 +911,8 @@ Returns:
   //
   // Get Cmd Input
   //
-  if (StrLen (BufferTmp + StrLen (Cmd->ComdName)) != 0) {
-  	 TempCmdArg = BufferTmp + StrLen (Cmd->ComdName) + 1;
+  if (SctStrLen (BufferTmp + SctStrLen (Cmd->ComdName)) != 0) {
+  	 TempCmdArg = BufferTmp + SctStrLen (Cmd->ComdName) + 1;
 
     //
     // Skip ' ' & '\t' letters 
@@ -924,7 +924,7 @@ Returns:
     //
     if (SctCompareMem (Cmd->ComdName, 
     	               EFI_NETWORK_EXEC_COMMAND, 
-    	               StrLen (EFI_NETWORK_EXEC_COMMAND) * 2) == 0
+    	               SctStrLen (EFI_NETWORK_EXEC_COMMAND) * 2) == 0
     	&& (TempCmdArg[0] == L's' || TempCmdArg[0] == L'S')
     	&& (TempCmdArg[1] == L'c' || TempCmdArg[1] == L'C')
     	&& (TempCmdArg[2] == L't' || TempCmdArg[2] == L'T')     
@@ -933,13 +933,13 @@ Returns:
       //
       // screen output silent mode, add -v switch
       //
-      Cmd->ComdArg = (CHAR16 *) SctAllocateZeroPool (StrSize(TempCmdArg) + StrLen(L" -v"));
+      Cmd->ComdArg = (CHAR16 *) SctAllocateZeroPool (SctStrSize (TempCmdArg) + SctStrLen (L" -v"));
       if ( Cmd->ComdArg == NULL ){
       	 EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"GetCmdDispatch: EFI_OUT_OF_RESOURCES"));
         return  EFI_OUT_OF_RESOURCES;
       }
-      EntsCopyMem(Cmd->ComdArg, TempCmdArg, StrLen(TempCmdArg) * sizeof(*TempCmdArg));
-      EntsCopyMem(Cmd->ComdArg + StrLen(TempCmdArg), L" -v", StrSize(L" -v"));
+      EntsCopyMem(Cmd->ComdArg, TempCmdArg, SctStrLen (TempCmdArg) * sizeof(*TempCmdArg));
+      EntsCopyMem(Cmd->ComdArg + SctStrLen (TempCmdArg), L" -v", SctStrSize (L" -v"));
     } else { 
        Cmd->ComdArg = EntsStrDuplicate (TempCmdArg);
       if (Cmd->ComdArg == NULL) {
@@ -1202,7 +1202,7 @@ Returns:
     if ((gEasFT->Cmd)->ComdRuntimeInfo == NULL) {
       return EFI_OUT_OF_RESOURCES;
     }
-    (gEasFT->Cmd)->ComdRuntimeInfoSize = (StrLen (EntsProtocol->RuntimeInfo) + 1) * 2;
+    (gEasFT->Cmd)->ComdRuntimeInfoSize = (SctStrLen (EntsProtocol->RuntimeInfo) + 1) * 2;
     tBS->FreePool (EntsProtocol->RuntimeInfo);
 	EntsProtocol->RuntimeInfo = NULL;
 	EntsProtocol->RuntimeInfoSize = 0;
@@ -1274,7 +1274,7 @@ Returns:
     //
     // match the instance
     //
-    if (StrCmp (Interface->ClientName, ProtocolName) == 0) {
+    if (SctStrCmp (Interface->ClientName, ProtocolName) == 0) {
       //
       // find it
       //
@@ -1387,7 +1387,7 @@ Returns:
     //
     // match the interface
     //
-    if (StrCmp (Interface->InterfaceName, InterfaceName) == 0) {
+    if (SctStrCmp (Interface->InterfaceName, InterfaceName) == 0) {
       //
       // find it
       //

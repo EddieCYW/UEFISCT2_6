@@ -109,11 +109,11 @@ BBTestUnitTest (
   //
   HIIConfigAccess = (EFI_HII_CONFIG_ACCESS_PROTOCOL*)ClientInterface;
 
-  Request = (EFI_STRING) SctAllocateZeroPool (2 * StrLen(MultiConfigAltResp) + 2);
+  Request = (EFI_STRING) SctAllocateZeroPool (2 * SctStrLen (MultiConfigAltResp) + 2);
   if (Request == NULL)
   	return EFI_OUT_OF_RESOURCES;
 
-  Resp = (EFI_STRING) SctAllocateZeroPool (2 * StrLen(MultiConfigAltResp) + 2);
+  Resp = (EFI_STRING) SctAllocateZeroPool (2 * SctStrLen (MultiConfigAltResp) + 2);
   if (Resp == NULL) {
   	gtBS->FreePool (Request);
   	return EFI_OUT_OF_RESOURCES;
@@ -307,7 +307,7 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
     return Status;
   }
 
-  Request = (EFI_STRING) SctAllocateZeroPool ( 2 * StrLen(MultiConfigAltResp) + 2 );
+  Request = (EFI_STRING) SctAllocateZeroPool ( 2 * SctStrLen (MultiConfigAltResp) + 2 );
   if (Request == NULL) {
     gtBS->FreePool (MultiConfigAltResp);
     gtBS->FreePool (DevicePath);
@@ -332,12 +332,12 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
                   &Results
                   );
 
-  if ( (EFI_SUCCESS == Status) && (Progress == (Request + StrLen(Request))) ) {
+  if ( (EFI_SUCCESS == Status) && (Progress == (Request + SctStrLen (Request))) ) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
     if (Results == NULL) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
-      if (NULL == EfiStrStr(MultiConfigAltResp, Results)) {
+      if (NULL == SctStrStr (MultiConfigAltResp, Results)) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
       gtBS->FreePool (Results);
@@ -364,9 +364,9 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
   ConfigHdr = Request;
   while (*Request) {
     if (*Request == L'&') {
-      if (EfiStrnCmp (Request, L"&NAME=", 6) == 0) {
+      if (SctStrnCmp (Request, L"&NAME=", 6) == 0) {
         Request = Request + 6;
-      } else if (EfiStrnCmp (Request, L"&PATH=", 6) == 0) {
+      } else if (SctStrnCmp (Request, L"&PATH=", 6) == 0) {
         Request = Request + 6; 
       } else {
         *Request = 0;
@@ -389,12 +389,12 @@ BBTestExtractConfigFunctionTestCheckpoint1 (
                   &Results
                   );
 
-  if ( (EFI_SUCCESS == Status) && (Progress == (Request + StrLen(Request))) ) {
+  if ( (EFI_SUCCESS == Status) && (Progress == (Request + SctStrLen (Request))) ) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
     if (Results == NULL) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     } else {
-      if (NULL == EfiStrStr(Results, Request)) {
+      if (NULL == SctStrStr (Results, Request)) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
       gtBS->FreePool (Results);
@@ -469,7 +469,7 @@ BBTestExtractConfigFunctionTestCheckpoint2 (
     return Status;
   } else {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
-    if ( (Results != NULL) && (NULL == EfiStrStr(MultiConfigAltResp, Results)) ) {
+    if ( (Results != NULL) && (NULL == SctStrStr (MultiConfigAltResp, Results)) ) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -489,7 +489,7 @@ BBTestExtractConfigFunctionTestCheckpoint2 (
   //
   // build <MultiConfigRequest> out of <MultiConfigAltResp> 
   //
-  Len = StrLen (MultiConfigAltResp);
+  Len = SctStrLen (MultiConfigAltResp);
   Request = (EFI_STRING) SctAllocateZeroPool (2 * Len + 2);
   if (Request == NULL) {
     goto FUNC_EXIT;
@@ -511,7 +511,7 @@ BBTestExtractConfigFunctionTestCheckpoint2 (
   // Since ExtractConfig may not append <AltResp> at string tail.  
   // We check whether Results is a substring of MultiConfigAltResp from ExportConfig 
   //
-  if (Status == EFI_SUCCESS && EfiStrStr(MultiConfigAltResp, Results) != 0) {
+  if (Status == EFI_SUCCESS && SctStrStr (MultiConfigAltResp, Results) != NULL) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else if (EFI_OUT_OF_RESOURCES == Status){
     AssertionType = EFI_TEST_ASSERTION_WARNING;
@@ -577,7 +577,7 @@ BBTestRouteConfigFunctionTestCheckpoint1 (
     return Status;
   }
 
-  Resp = (EFI_STRING) SctAllocateZeroPool ( 2 * StrLen(MultiConfigAltResp) + 2 );
+  Resp = (EFI_STRING) SctAllocateZeroPool ( 2 * SctStrLen (MultiConfigAltResp) + 2 );
   if (Resp == NULL) {
     gtBS->FreePool (MultiConfigAltResp);
 	gtBS->FreePool (DevicePath);
@@ -600,7 +600,7 @@ BBTestRouteConfigFunctionTestCheckpoint1 (
                  Resp,
                  &Progress
                  );
-  if ( (EFI_SUCCESS == Status) && (Progress == Resp + StrLen(Resp)) ) {
+  if ( (EFI_SUCCESS == Status) && (Progress == Resp + SctStrLen (Resp)) ) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else if ( EFI_OUT_OF_RESOURCES == Status ) {
     AssertionType = EFI_TEST_ASSERTION_WARNING;

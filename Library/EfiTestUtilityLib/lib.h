@@ -89,24 +89,11 @@ Abstract:
 // Prototypes
 //
 
-INTN
-LibStubStriCmp (
-    IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
-    IN CHAR16                           *S1,
-    IN CHAR16                           *S2
-    );
-
 BOOLEAN
 LibStubMetaiMatch (
     IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
     IN CHAR16                           *String,
     IN CHAR16                           *Pattern
-    );
-
-VOID
-LibStubStrLwrUpr (
-    IN EFI_UNICODE_COLLATION_PROTOCOL   *This,
-    IN CHAR16                           *Str
     );
 
 BOOLEAN

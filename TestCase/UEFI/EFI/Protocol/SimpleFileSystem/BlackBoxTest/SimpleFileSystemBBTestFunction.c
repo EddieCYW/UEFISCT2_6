@@ -995,7 +995,7 @@ BBTestOpenVolumeBasicTestCheckpoint1 (
     // VolumeLable equals with EFI_FILE_SYSTEM_INFO.VolumeLabel
     //
     if (!EFI_ERROR (Status1) && !EFI_ERROR (Status2)) {
-      if (!EfiStrCmp (SystemInfo->VolumeLabel, VolumeLabel->VolumeLabel)) {
+      if (!SctStrCmp (SystemInfo->VolumeLabel, VolumeLabel->VolumeLabel)) {
         AssertionType = EFI_TEST_ASSERTION_PASSED;
       } else {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -1341,11 +1341,11 @@ BBTestOpenBasicTestCheckpoint1_Test2 (
   StrPointer = FileNameArray;
   PureStrPointer = PureFileNameArray;
   for (Loop = 0; Loop < FixedNameCount; Loop++) {
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (PureStrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (PureStrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     PureStrPointer += MAX_STRING_LENGTH;
     StrPointer += MAX_STRING_LENGTH;
@@ -1707,11 +1707,11 @@ BBTestOpenBasicTestCheckpoint1_Test4 (
   StrPointer = FileNameArray;
   PureStrPointer = PureFileNameArray;
   for (Loop = 0; Loop < FixedNameCount; Loop++) {
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (PureStrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (PureStrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     StrPointer += MAX_STRING_LENGTH;
     PureStrPointer += MAX_STRING_LENGTH;
@@ -1975,31 +1975,31 @@ BBTestOpenBasicTestCheckpoint1_Test5 (
     //
     // "\" + subdir1
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
     //
     // "\" + subdir1 + "\" + subdir2
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\" + subdir2 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
     //
     // "\" + subdir1 + "\" + subdir2 + "\" + filename
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     StrPointer += MAX_STRING_LENGTH;
     PureStrPointer += MAX_STRING_LENGTH;
@@ -2699,11 +2699,11 @@ BBTestOpenBasicTestCheckpoint2_Test2 (
   PureStrPointer = PureFileNameArray;
   for (Loop = 0; Loop < FixedNameCount; Loop++) {
 
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (StrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     StrPointer += MAX_STRING_LENGTH;
     PureStrPointer += MAX_STRING_LENGTH;
@@ -3451,13 +3451,13 @@ BBTestOpenBasicTestCheckpoint2_Test4 (
   PureStrPointer = PureFileNameArray;
   for (Loop = 0; Loop < FixedNameCount; Loop++) {
 
-    EfiStrCpy (StrPointer, PureStrPointer);
-    FileNameLength = EfiStrLen (StrPointer);
+    SctStrCpy (StrPointer, PureStrPointer);
+    FileNameLength = SctStrLen (StrPointer);
 
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     StrPointer += MAX_STRING_LENGTH;
     PureStrPointer += MAX_STRING_LENGTH;
@@ -3897,31 +3897,31 @@ BBTestOpenBasicTestCheckpoint2_Test5 (
     //
     // "\" + subdir1
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
     //
     // "\" + subdir1 + "\" + subdir2
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     //
     // "\" + subdir1 + "\" + subdir2 + "\"
     //
-    FileNameLength = EfiStrLen (StrPointer);
+    FileNameLength = SctStrLen (StrPointer);
     StrPointer[FileNameLength] = '\\';
     StrPointer[FileNameLength + 1] = 0;
 
     //
     // "\" + subdir1 + "\" + subdir2 + "\" + filename
     //
-    EfiStrCat (StrPointer, PureStrPointer);
+    SctStrCat (StrPointer, PureStrPointer);
 
     StrPointer += MAX_STRING_LENGTH;
     PureStrPointer += MAX_STRING_LENGTH;
@@ -4320,14 +4320,14 @@ BBTestCloseBasicTestCheckpoint1 (
   CHAR16                    DirName[2][100];
   EFI_GUID                  TplGuid;
 
-  EfiStrCpy (FileName[0], L"File1");
-  EfiStrCpy (FileName[1], L"File2");
-  EfiStrCpy (FileName[2], L"File3");
-  EfiStrCpy (FileName[3], L"File4");
-  EfiStrCpy (FileName[4], L"File5");
+  SctStrCpy (FileName[0], L"File1");
+  SctStrCpy (FileName[1], L"File2");
+  SctStrCpy (FileName[2], L"File3");
+  SctStrCpy (FileName[3], L"File4");
+  SctStrCpy (FileName[4], L"File5");
 
-  EfiStrCpy (DirName[0], L"Dir1");
-  EfiStrCpy (DirName[1], L"Dir2");
+  SctStrCpy (DirName[0], L"Dir1");
+  SctStrCpy (DirName[1], L"Dir2");
 
   for (TplIndex = 0; TplIndex < TPL_ARRAY_SIZE; TplIndex++) {
 
@@ -4882,7 +4882,7 @@ BBTestDeleteBasicTestCheckpoint1 (
     return Status;
   }
 
-  EfiStrCpy (FileName, L"BBTestDeleteBasicTestCheckpoint1_File1");
+  SctStrCpy (FileName, L"BBTestDeleteBasicTestCheckpoint1_File1");
 
   for (TplIndex = 0; TplIndex < TPL_ARRAY_SIZE; TplIndex++) {
 
@@ -4996,7 +4996,7 @@ BBTestDeleteBasicTestCheckpoint2 (
     return Status;
   }
 
-  EfiStrCpy (DirName, L"BBTestDeleteBasicTestCheckpoint2_Dir1");
+  SctStrCpy (DirName, L"BBTestDeleteBasicTestCheckpoint2_Dir1");
 
   for (TplIndex = 0; TplIndex < TPL_ARRAY_SIZE; TplIndex++) {
 
@@ -5112,8 +5112,8 @@ BBTestDeleteBasicTestCheckpoint3 (
     return Status;
   }
 
-  EfiStrCpy (DirName, L"BBTestDeleteBasicTestCheckpoint3_Dir1");
-  EfiStrCpy (FileName, L"BBTestDeleteBasicTestCheckpoint3_File1");
+  SctStrCpy (DirName, L"BBTestDeleteBasicTestCheckpoint3_Dir1");
+  SctStrCpy (FileName, L"BBTestDeleteBasicTestCheckpoint3_File1");
 
   for (TplIndex = 0; TplIndex < TPL_ARRAY_SIZE; TplIndex++) {
 
@@ -5269,7 +5269,7 @@ BBTestReadBasicTestCheckpoint1 (
     return Status;
   }
 
-  EfiStrCpy (FileName, L"BBTestReadBasicTestCheckpoint1_File");
+  SctStrCpy (FileName, L"BBTestReadBasicTestCheckpoint1_File");
 
   //
   // allocate buffer for read
@@ -5625,8 +5625,8 @@ BBTestReadBasicTestCheckpoint2 (
   Buffer = NULL;
   FileHandle = NULL;
   DirHandle = NULL;
-  EfiStrCpy (FileName, L"BBTestReadBasicTestCheckpoint2_File");
-  EfiStrCpy (DirName, L"BBTestReadBasicTestCheckpoint2_Dir");
+  SctStrCpy (FileName, L"BBTestReadBasicTestCheckpoint2_File");
+  SctStrCpy (DirName, L"BBTestReadBasicTestCheckpoint2_Dir");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -5701,7 +5701,7 @@ BBTestReadBasicTestCheckpoint2 (
   //
   // init ReadLength[]
   // it is used for L"." entry
-  // The exact Length for a read is SIZE_OF_EFI_FILE_INFO + StrLen (L".")
+  // The exact Length for a read is SIZE_OF_EFI_FILE_INFO + SctStrLen (L".")
   //
   ReadLength[0] = 0;  // <
   ReadLength[1] = SIZE_OF_EFI_FILE_INFO - 1;  // <
@@ -5901,7 +5901,7 @@ BBTestWriteBasicTestCheckpoint1 (
   //
   Buffer = NULL;
   FileHandle = NULL;
-  EfiStrCpy (FileName, L"BBTestWriteBasicTestCheckpoint1_File");
+  SctStrCpy (FileName, L"BBTestWriteBasicTestCheckpoint1_File");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -6285,7 +6285,7 @@ BBTestFlushBasicTestCheckpoint1 (
   //
   Buffer = NULL;
   FileHandle = NULL;
-  EfiStrCpy (FileName, L"BBTestFlushBasicTestCheckpoint1_File");
+  SctStrCpy (FileName, L"BBTestFlushBasicTestCheckpoint1_File");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -6460,8 +6460,8 @@ BBTestFlushBasicTestCheckpoint2 (
     return Status;
   }
 
-  EfiStrCpy (DirName, L"BBTestFlushBasicTestCheckpoint2_Dir");
-  EfiStrCpy (FileName, L"BBTestFlushBasicTestCheckpoint2_File");
+  SctStrCpy (DirName, L"BBTestFlushBasicTestCheckpoint2_Dir");
+  SctStrCpy (FileName, L"BBTestFlushBasicTestCheckpoint2_File");
 
   //
   // create the Dir
@@ -6596,9 +6596,9 @@ BBTestSetPositionBasicTestCheckpoint1 (
     return Status;
   }
 
-  EfiStrCpy (FileName[0], L"BBTestSetPositionBasicTestCheckpoint1_File");
-  EfiStrCpy (FileName[1], L"BBTestSetPositionBasicTestCheckpoint1_ReadOnlyOpenFile");
-  EfiStrCpy (FileName[2], L"BBTestSetPositionBasicTestCheckpoint1_ReadOnlyFile");
+  SctStrCpy (FileName[0], L"BBTestSetPositionBasicTestCheckpoint1_File");
+  SctStrCpy (FileName[1], L"BBTestSetPositionBasicTestCheckpoint1_ReadOnlyOpenFile");
+  SctStrCpy (FileName[2], L"BBTestSetPositionBasicTestCheckpoint1_ReadOnlyFile");
 
 
   //
@@ -6858,7 +6858,7 @@ BBTestSetPositionBasicTestCheckpoint2 (
     return Status;
   }
 
-  EfiStrCpy (DirName, L"BBTestSetPositionBasicTestCheckpoint2_Dir");
+  SctStrCpy (DirName, L"BBTestSetPositionBasicTestCheckpoint2_Dir");
 
   //
   // create the dir
@@ -6969,9 +6969,9 @@ BBTestGetPositionBasicTestCheckpoint1 (
     return Status;
   }
 
-  EfiStrCpy (FileName[0], L"BBTestGetPositionBasicTestCheckpoint1_File");
-  EfiStrCpy (FileName[1], L"BBTestGetPositionBasicTestCheckpoint1_File");
-  EfiStrCpy (FileName[2], L"BBTestGetPositionBasicTestCheckpoint1_ReadOnlyFile");
+  SctStrCpy (FileName[0], L"BBTestGetPositionBasicTestCheckpoint1_File");
+  SctStrCpy (FileName[1], L"BBTestGetPositionBasicTestCheckpoint1_File");
+  SctStrCpy (FileName[2], L"BBTestGetPositionBasicTestCheckpoint1_ReadOnlyFile");
 
   //
   // create the files
@@ -7358,7 +7358,7 @@ BBTestGetInfoBasicTestCheckpoint1 (
         //
         // check 4: file name check
         //
-        if (!EfiStrCmp (FileInfo->FileName, PureStrPointer)) {
+        if (!SctStrCmp (FileInfo->FileName, PureStrPointer)) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -7533,7 +7533,7 @@ BBTestGetInfoBasicTestCheckpoint3 (
 
   FileNamePool = NULL;
   ArraySize = MAX_STRING_LENGTH * 100;
-  EfiStrCpy (BasicFileName, L"BBTestGetInfoBasicTestCheckpoint3_File");
+  SctStrCpy (BasicFileName, L"BBTestGetInfoBasicTestCheckpoint3_File");
 
   Status = gtBS->AllocatePool (
                    EfiBootServicesData,
@@ -7663,7 +7663,7 @@ BBTestGetInfoBasicTestCheckpoint3 (
         && (SystemInfo[0]->ReadOnly == SystemInfo[1]->ReadOnly)
         && (SystemInfo[0]->VolumeSize == SystemInfo[1]->VolumeSize)
         && (SystemInfo[0]->BlockSize == SystemInfo[1]->BlockSize)
-        && (!EfiStrCmp (SystemInfo[0]->VolumeLabel, SystemInfo[1]->VolumeLabel))) {
+        && (!SctStrCmp (SystemInfo[0]->VolumeLabel, SystemInfo[1]->VolumeLabel))) {
 
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
@@ -7857,7 +7857,7 @@ BBTestGetInfoBasicTestCheckpoint4 (
     //
     // check 3: compare VolumeLabel with SystemInfo
     //
-    if (!EfiStrCmp (VolumeLabel->VolumeLabel, SystemInfo->VolumeLabel)) {
+    if (!SctStrCmp (VolumeLabel->VolumeLabel, SystemInfo->VolumeLabel)) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -7935,7 +7935,7 @@ BBTestSetInfoBasicTestCheckpoint1 (
     return Status;
   }
 
-  EfiStrCpy (ChangeFileName, L"BBTestSetInfoBasicTestCheckpoint1_File");
+  SctStrCpy (ChangeFileName, L"BBTestSetInfoBasicTestCheckpoint1_File");
 
   //
   // compose pure file name array
@@ -8056,7 +8056,7 @@ BBTestSetInfoBasicTestCheckpoint1 (
         // invert Attribute (do not include EFI_FILE_DIRECTORY inversion)
         //
         NewFileInfo->FileSize = 0x100;
-        EfiStrCpy (NewFileInfo->FileName, ChangeFileName);
+        SctStrCpy (NewFileInfo->FileName, ChangeFileName);
         InvertFileAttributes (NewFileInfo);
 
         OldTpl = gtBS->RaiseTPL (TplArray[Index]);
@@ -8124,7 +8124,7 @@ BBTestSetInfoBasicTestCheckpoint1 (
         // the Attribute always add EFI_FILE_ARCHIVE. <-- is it a bug?
         //
         if ((NewFileInfo->FileSize == FileInfo->FileSize)
-            && !EfiStrCmp (NewFileInfo->FileName, (FileInfo->FileName))
+            && !SctStrCmp (NewFileInfo->FileName, (FileInfo->FileName))
             && ((NewFileInfo->Attribute | EFI_FILE_ARCHIVE) == (FileInfo->Attribute | EFI_FILE_ARCHIVE))) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {
@@ -8218,7 +8218,7 @@ BBTestSetInfoBasicTestCheckpoint1 (
         }
 
         if ((NewFileInfo->FileSize == FileInfo->FileSize)
-            && !EfiStrCmp (NewFileInfo->FileName, (FileInfo->FileName))
+            && !SctStrCmp (NewFileInfo->FileName, (FileInfo->FileName))
             && ((NewFileInfo->Attribute | EFI_FILE_ARCHIVE) == (FileInfo->Attribute | EFI_FILE_ARCHIVE))) {
           AssertionType = EFI_TEST_ASSERTION_PASSED;
         } else {
@@ -8281,7 +8281,7 @@ BBTestSetInfoBasicTestCheckpoint2 (
   CHAR16                    NewVolumeLabel[11];
   EFI_GUID                  TplGuid;
 
-  EfiStrCpy (NewVolumeLabel, L"123456");
+  SctStrCpy (NewVolumeLabel, L"123456");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -8357,10 +8357,10 @@ BBTestSetInfoBasicTestCheckpoint2 (
     //
     gtBS->CopyMem (NewSystemInfo, SavedSystemInfo, BufferSize);
 
-    EfiStrCpy (NewSystemInfo->VolumeLabel, NewVolumeLabel);
+    SctStrCpy (NewSystemInfo->VolumeLabel, NewVolumeLabel);
 
     // update Size
-    NewSystemInfo->Size = SIZE_OF_EFI_FILE_SYSTEM_INFO + EfiStrSize (NewVolumeLabel);
+    NewSystemInfo->Size = SIZE_OF_EFI_FILE_SYSTEM_INFO + SctStrSize (NewVolumeLabel);
 
     OldTpl = gtBS->RaiseTPL (TplArray[Index]);
     Status = Root->SetInfo (
@@ -8422,7 +8422,7 @@ BBTestSetInfoBasicTestCheckpoint2 (
       goto NextLoop;
     }
 
-    if (!EfiStrCmp (SystemInfo->VolumeLabel, NewVolumeLabel)) {
+    if (!SctStrCmp (SystemInfo->VolumeLabel, NewVolumeLabel)) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -8488,7 +8488,7 @@ BBTestSetInfoBasicTestCheckpoint3 (
 
   EFI_GUID                  TplGuid;
 
-  EfiStrCpy (NewVolumeLabelString, L"123456789");
+  SctStrCpy (NewVolumeLabelString, L"123456789");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -8562,7 +8562,7 @@ BBTestSetInfoBasicTestCheckpoint3 (
       goto NextLoop;
     }
 
-    EfiStrCpy (NewVolumeLabel->VolumeLabel, NewVolumeLabelString);
+    SctStrCpy (NewVolumeLabel->VolumeLabel, NewVolumeLabelString);
 
     OldTpl = gtBS->RaiseTPL (TplArray[Index]);
     Status = Root->SetInfo (
@@ -8624,7 +8624,7 @@ BBTestSetInfoBasicTestCheckpoint3 (
       goto NextLoop;
     }
 
-    if (!EfiStrCmp (VolumeLabel->VolumeLabel, NewVolumeLabelString)) {
+    if (!SctStrCmp (VolumeLabel->VolumeLabel, NewVolumeLabelString)) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -8669,7 +8669,7 @@ BBTestSetInfoBasicTestCheckpoint3 (
       goto NextLoop;
     }
 
-    if (!EfiStrCmp (SystemInfo->VolumeLabel, NewVolumeLabelString)) {
+    if (!SctStrCmp (SystemInfo->VolumeLabel, NewVolumeLabelString)) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_FAILED;

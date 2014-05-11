@@ -395,12 +395,12 @@ GetSystemDevicePathStrByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
   TempStr = NULL;
-  TempStr = StrDuplicate (Buffer);
+  TempStr = SctStrDuplicate (Buffer);
   if (TempStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -452,7 +452,7 @@ GetValidBaseAddressByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
@@ -502,7 +502,7 @@ GetInvalidBaseAddressByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
@@ -552,11 +552,11 @@ GetAddressLengthByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
-  *AddressLength = (UINT32)xtoi (Buffer);
+  *AddressLength = (UINT32)SctXtoi (Buffer);
 
   return EFI_SUCCESS;
 }
@@ -602,12 +602,12 @@ GetValidEfiIoWidthByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
   for (Index = 0; Index <= IO_UINT64; Index++) {
-    if (StriCmp (WidthCode[Index], Buffer) == 0) {
+    if (SctStriCmp (WidthCode[Index], Buffer) == 0) {
       *EfiIoWidth = (EFI_IO_WIDTH)Index;
       return EFI_SUCCESS;
     }
@@ -660,12 +660,12 @@ GetInvalidEfiIoWidthByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
   for (Index = 0; Index <= IO_UINT64; Index++) {
-    if (StriCmp (WidthCode[Index], Buffer) == 0) {
+    if (SctStriCmp (WidthCode[Index], Buffer) == 0) {
       *EfiIoWidth = (EFI_IO_WIDTH)Index;
       return EFI_SUCCESS;
     }
@@ -829,7 +829,7 @@ GetDataUnitsByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   ReturnBuffer = NULL;
@@ -887,13 +887,13 @@ ConvertStringToHex (
   //skip the "0x" prefix if it really has.
   //
 
-  if (StrLen (StrPtr) >= 2) {
+  if (SctStrLen (StrPtr) >= 2) {
     if (StrPtr[0] == L'0' && (StrPtr[1] == L'x' || StrPtr[1] == L'X')) {
       StrPtr = StrPtr + 2;
     }
   }
 
-  ConvertBytes = StrLen (StrPtr) / 2;
+  ConvertBytes = SctStrLen (StrPtr) / 2;
   if (ConvertBytes > Length) {
     ConvertBytes = Length;
   }

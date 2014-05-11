@@ -260,7 +260,7 @@ Returns:
         //
         // Skip the '.' and '..' dir
         //
-        if ((StrCmp (FileInfo->FileName, L".") == 0) || (StrCmp (FileInfo->FileName, L"..") == 0)) {
+        if ((SctStrCmp (FileInfo->FileName, L".") == 0) || (SctStrCmp (FileInfo->FileName, L"..") == 0)) {
           continue;
         }
         //
@@ -379,7 +379,7 @@ Returns:
   for (Link = (gEasFT->TestAppList).Flink; Link != &(gEasFT->TestAppList); Link = Link->Flink) {
     TestFileTmp = CR (Link, EFI_NETWORK_TEST_FILE, Link, EFI_NETWORK_TEST_FILE_SIGNATURE);
 
-    if (StriCmp (TestFileTmp->CmdName, CmdName) == 0) {
+    if (SctStriCmp (TestFileTmp->CmdName, CmdName) == 0) {
       *TestFile = TestFileTmp;
       Status    = EFI_SUCCESS;
       break;

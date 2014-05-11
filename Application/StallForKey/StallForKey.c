@@ -90,7 +90,7 @@ StallForKey (
 
   Seconds = DEFAULT_WAIT_TIME;
   if (Argc > 1) {
-    Seconds = Atoi (Argv[1]);
+    Seconds = SctAtoi (Argv[1]);
   }
 
   //

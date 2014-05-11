@@ -526,7 +526,7 @@ Returns:
   //
   // Update the parent menu item select status
   //
-  if (StrCmp(Page->Parent->Body.MenuItemHeader.Text, L"Main Menu")) {
+  if (SctStrCmp (Page->Parent->Body.MenuItemHeader.Text, L"Main Menu")) {
     MenuItem = Page->Body.ItemList;
     ParentMenuItem  = Page->Parent->Body.CurrentSelected;
     SelectAll = TRUE;
@@ -574,7 +574,7 @@ Returns:
     MenuItem = Page->Body.ItemList;
     MenuItem = MenuItem -> Next;
     while (MenuItem != NULL) {
-      if (Atoi (MenuItem->ItemValue) != 0) {
+      if (SctAtoi (MenuItem->ItemValue) != 0) {
         SPrint (
           TempString,
           (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,
@@ -594,8 +594,8 @@ Returns:
         IterEqual = FALSE;
         break;
       }
-      if (Atoi (MenuItem->ItemValue) != 0) {
-        if (StrCmp(TempString, MenuItem->ItemValue)) {
+      if (SctAtoi (MenuItem->ItemValue) != 0) {
+        if (SctStrCmp (TempString, MenuItem->ItemValue)) {
           IterEqual = FALSE;
           break;
         }
@@ -739,7 +739,7 @@ Returns:
     return EFI_INVALID_PARAMETER;
   }
 
-  MsgDialogTitle = StrDuplicate (L"Prepare running...");
+  MsgDialogTitle = SctStrDuplicate (L"Prepare running...");
   MsgDialogContext.Type = EFI_DIALOG_TYPE_REMINDER;
   DoDialog (MsgDialogTitle, &MsgDialogContext);
 
@@ -1050,7 +1050,7 @@ Returns:
     //
     Buffer = MenuItem->ItemDesc.Text;
 
-    if (Buffer != NULL && StrLen (Buffer) > 0 ) {
+    if (Buffer != NULL && SctStrLen (Buffer) > 0 ) {
       //
       //Display the default description.
       //
@@ -1098,9 +1098,9 @@ Returns:
       TestNode = (EFI_SCT_TEST_NODE*)MenuItem->Context;
       Order = GetTestCaseOrder (&TestNode->Guid);
       Buffer[0] = L'\0';
-      StrCat (Buffer, L"Order:");
+      SctStrCat (Buffer, L"Order:");
       SPrint (Buffer, MAX_STRING_LEN, L"%s %d", Buffer, Order);
-      if (StrLen (Buffer) > (X1 - X0 - 7)) {
+      if (SctStrLen (Buffer) > (X1 - X0 - 7)) {
         Buffer [X1 - X0 - 7] = L'\0';
       }
       Status = TestPrintAt (X0, Y1 - 3, Buffer);
@@ -1111,9 +1111,9 @@ Returns:
       TestNode = (EFI_SCT_TEST_NODE*)MenuItem->Context;
       Passes = CalculatePassNumber(TestNode);
       Buffer[0] = L'\0';
-      StrCat (Buffer, L"Pass:");
+      SctStrCat (Buffer, L"Pass:");
       SPrint (Buffer, MAX_STRING_LEN, L"%s  %d", Buffer, Passes);
-      if (StrLen (Buffer) > (X1 - X0 - 7)) {
+      if (SctStrLen (Buffer) > (X1 - X0 - 7)) {
         Buffer [X1 - X0 - 7] = L'\0';
       }
       Status = TestPrintAt (X0, Y1 - 2, Buffer);
@@ -1124,9 +1124,9 @@ Returns:
       TestNode = (EFI_SCT_TEST_NODE*)MenuItem->Context;
       Failures = CalculateFailNumber(TestNode);
       Buffer[0] = L'\0';
-      StrCat (Buffer, L"Fail:");
+      SctStrCat (Buffer, L"Fail:");
       SPrint (Buffer, MAX_STRING_LEN, L"%s  %d", Buffer, Failures);
-      if (StrLen (Buffer) > (X1 - X0 - 7)) {
+      if (SctStrLen (Buffer) > (X1 - X0 - 7)) {
         Buffer [X1 - X0 - 7] = L'\0';
       }
       Status = TestPrintAt (X0, Y1 - 1, Buffer);
@@ -1491,7 +1491,7 @@ GetIterString(
         return EFI_SUCCESS;
       } else {
         if (Count == 0) {
-          TempValue = (UINT32) Atoi (TempString);
+          TempValue = (UINT32) SctAtoi (TempString);
           if (TempValue != 0) {
             SPrint (
               IterString,
@@ -1502,7 +1502,7 @@ GetIterString(
             Count ++; //get the first selected item and record its iterations
           }
         } else {
-          if ((Atoi (TempString) > 0 ) && TempValue != Atoi (TempString)) {
+          if ((SctAtoi (TempString) > 0 ) && TempValue != SctAtoi (TempString)) {
             SPrint (
               IterString,
               (EFI_MAX_ITER_EDIT_LENGTH + 2) * 2,

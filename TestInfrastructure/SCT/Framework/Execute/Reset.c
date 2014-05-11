@@ -596,8 +596,8 @@ Routine Description:
     //
     // Skip the '.' and '..'
     //
-    if ((StrCmp (FileInfo->FileName, L".")  == 0) ||
-        (StrCmp (FileInfo->FileName, L"..") == 0)) {
+    if ((SctStrCmp (FileInfo->FileName, L".")  == 0) ||
+        (SctStrCmp (FileInfo->FileName, L"..") == 0)) {
       continue;
     }
 

@@ -131,7 +131,7 @@ InitializeBootServicesDriver2 (
 
   ErrorMessage = ERROR_MESSAGE_FOR_BOOT_SERVICES_DRIVER_2;
 
-  ExitSize = StrSize (ErrorMessage);
+  ExitSize = SctStrSize (ErrorMessage);
 
   Status = gtBS->AllocatePool (
                         EfiBootServicesData,

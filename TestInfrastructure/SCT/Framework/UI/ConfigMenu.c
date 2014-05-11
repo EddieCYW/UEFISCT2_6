@@ -610,7 +610,7 @@ Returns:
         //
         //copy default value to menu item
         //
-        StrCpy (
+        SctStrCpy (
           MenuItem ->ItemValue,
           EditBuffer
           );
@@ -650,7 +650,7 @@ Returns:
           //found current pointed value queue
           //
           if (ValueQueue->Next!=ValueQueue ) {
-            while (StriCmp (ValueQueue->StringValue, EditBuffer) != 0) {
+            while (SctStriCmp (ValueQueue->StringValue, EditBuffer) != 0) {
               ValueQueue = ValueQueue->Next;
             }
             //
@@ -684,7 +684,7 @@ Returns:
         //
         //copy default value to menu item
         //
-        StrCpy (
+        SctStrCpy (
           MenuItem->ItemValue,
           EditBuffer
           );
@@ -709,7 +709,7 @@ Returns:
           L"%d",
           PLATFORM_NUMBER_DEFAULT
           );
-        StrCpy (
+        SctStrCpy (
           MenuItem->ItemValue,
           EditBuffer
           );
@@ -734,7 +734,7 @@ Returns:
           L"%d",
           CONFIGURATION_NUMBER_DEFAULT
           );
-        StrCpy (
+        SctStrCpy (
           MenuItem->ItemValue,
           EditBuffer
           );
@@ -759,7 +759,7 @@ Returns:
           L"%s",
           SCENARIO_STRING_DEFAULT
           );
-        StrCpy (
+        SctStrCpy (
           MenuItem->ItemValue,
           EditBuffer
           );
@@ -784,7 +784,7 @@ Returns:
           L"%s",
           EDIT_COMMAND_DEFAULT
           );
-        StrCpy (
+        SctStrCpy (
           MenuItem->ItemValue,
           EditBuffer
           );
@@ -836,7 +836,7 @@ Returns:
   while(MenuItem != NULL) {
     switch ((UINTN)MenuItem->Context) {
       case CONFIG_MENU_TEST_CASE_MAX_RUN_TIME:
-        TempValue = Atoi(MenuItem->ItemValue);
+        TempValue = SctAtoi (MenuItem->ItemValue);
         if (TempValue == (UINTN) -1) {
           TempValue = 0;
         }
@@ -847,7 +847,7 @@ Returns:
         break;
 
       case CONFIG_MENU_ENABLE_SCREEN_OUTPUT:
-        if (StriCmp (MenuItem->ItemValue, L"True") == 0) {
+        if (SctStriCmp (MenuItem->ItemValue, L"True") == 0) {
           TrueOrFalse = TRUE;
         } else {
           TrueOrFalse = FALSE;
@@ -859,17 +859,17 @@ Returns:
         break;
 
       case CONFIG_MENU_BIOSID:
-        if (StriCmp (gFT->ConfigData->BiosId, MenuItem->ItemValue) != 0) {
+        if (SctStriCmp (gFT->ConfigData->BiosId, MenuItem->ItemValue) != 0) {
           if (gFT->ConfigData->BiosId != NULL) {
             tBS->FreePool (gFT->ConfigData->BiosId);
           }
-          gFT->ConfigData->BiosId = StrDuplicate (MenuItem->ItemValue);
+          gFT->ConfigData->BiosId = SctStrDuplicate (MenuItem->ItemValue);
           ItemValueChanged = TRUE;
         }
         break;
 
       case CONFIG_MENU_PLATFORM_NUMBER:
-        TempValue = Atoi (MenuItem->ItemValue);
+        TempValue = SctAtoi (MenuItem->ItemValue);
         if (TempValue == (UINTN) -1) {
           TempValue = 0;
         }
@@ -880,7 +880,7 @@ Returns:
         break;
 
       case CONFIG_MENU_CONFIGURATION_NUMBER:
-        TempValue = Atoi (MenuItem->ItemValue);
+        TempValue = SctAtoi (MenuItem->ItemValue);
         if (TempValue == (UINTN) -1) {
           TempValue = 0;
         }
@@ -891,21 +891,21 @@ Returns:
         break;
 
       case CONFIG_MENU_SCENARIO_STRING:
-        if (StriCmp (gFT->ConfigData->ScenarioString, MenuItem->ItemValue) != 0) {
+        if (SctStriCmp (gFT->ConfigData->ScenarioString, MenuItem->ItemValue) != 0) {
           if (gFT->ConfigData->ScenarioString != NULL) {
             tBS->FreePool (gFT->ConfigData->ScenarioString);
           }
-          gFT->ConfigData->ScenarioString = StrDuplicate (MenuItem->ItemValue);
+          gFT->ConfigData->ScenarioString = SctStrDuplicate (MenuItem->ItemValue);
           ItemValueChanged = TRUE;
         }
         break;
 
       case CONFIG_MENU_EDIT_COMMAND:
-        if (StriCmp (gFT->ConfigData->EditCommandString, MenuItem->ItemValue) != 0) {
+        if (SctStriCmp (gFT->ConfigData->EditCommandString, MenuItem->ItemValue) != 0) {
           if (gFT->ConfigData->EditCommandString != NULL) {
             tBS->FreePool (gFT->ConfigData->EditCommandString);
           }
-          gFT->ConfigData->EditCommandString = StrDuplicate (MenuItem->ItemValue);
+          gFT->ConfigData->EditCommandString = SctStrDuplicate (MenuItem->ItemValue);
           ItemValueChanged = TRUE;
         }
         break;
@@ -1015,7 +1015,7 @@ Returns:
     //
 
     Buffer = MenuItem->ItemDesc.Text;
-    if (Buffer != NULL && StrLen (Buffer) > 0 ) {
+    if (Buffer != NULL && SctStrLen (Buffer) > 0 ) {
       //
       //Display the default description.
       //
@@ -1059,7 +1059,7 @@ Returns:
     //
     if (MenuItem->ItemType == EFI_ITEM_HAVE_COMBOLIST) {
       Buffer[0] = L'\0';
-      StrCat (Buffer, L"Please change value by press <Right> or <Left> key.");
+      SctStrCat (Buffer, L"Please change value by press <Right> or <Left> key.");
       Status = DisplayMessage(X0, Y1 - 3, X1, Y1, Buffer);
     }
     if ((MenuItem->ItemType & EFI_EDIT_SUB_TYPE_MASK) == EFI_ITEM_EDIT_NUMBER
@@ -1069,14 +1069,14 @@ Returns:
       //display Value range.
       //
       Buffer[0] = L'\0';
-      StrCat (Buffer, L"Value Range:");
+      SctStrCat (Buffer, L"Value Range:");
 
       Status = TestPrintAt (X0, Y1 - 3, Buffer);
 
       MaxValue = MenuItem->MaxValue;
 
       Buffer[0] = L'\0';
-      StrCat (Buffer, L"Max:");
+      SctStrCat (Buffer, L"Max:");
       SPrint (Buffer, MAX_STRING_LEN, L"%s   %d", Buffer, MaxValue);
 
       Status = TestPrintAt (X0, Y1 - 2, Buffer);
@@ -1084,7 +1084,7 @@ Returns:
       MinValue = MenuItem->MinValue;;
 
       Buffer[0] = L'\0';
-      StrCat (Buffer, L"Min:");
+      SctStrCat (Buffer, L"Min:");
       SPrint (Buffer, MAX_STRING_LEN, L"%s   %d", Buffer, MinValue);
 
       Status = TestPrintAt (X0, Y1 - 1, Buffer);

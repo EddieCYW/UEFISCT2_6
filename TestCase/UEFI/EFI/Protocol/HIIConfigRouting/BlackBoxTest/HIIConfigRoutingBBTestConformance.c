@@ -676,7 +676,7 @@ BBTestExtractConfigConformanceTestCheckpoint4(
   if ( EFI_SUCCESS != Status )
   	return Status;
 
-  Len = StrLen (Resp);
+  Len = SctStrLen (Resp);
 
   Request = (EFI_STRING) SctAllocateZeroPool (2 * Len + 2);
   if (Request == NULL) {
@@ -697,8 +697,8 @@ BBTestExtractConfigConformanceTestCheckpoint4(
   Pointer = Request;
   while (*Pointer) {
   	Pointer++;
-    if ( (*Pointer == L'&') && ( (EfiStrnCmp(Pointer, L"&GUID=", 6) != 0) &&
-      (EfiStrnCmp(Pointer, L"&NAME=", 6) != 0) && (EfiStrnCmp(Pointer, L"&PATH=", 6) != 0) ) ) {
+    if ( (*Pointer == L'&') && ( (SctStrnCmp (Pointer, L"&GUID=", 6) != 0) &&
+      (SctStrnCmp (Pointer, L"&NAME=", 6) != 0) && (SctStrnCmp (Pointer, L"&PATH=", 6) != 0) ) ) {
       Pointer = Pointer + 1;
       (*Pointer)++;
       break;
@@ -1182,7 +1182,7 @@ BBTestConfigToBlockConformanceTestCheckpoint3(
                                &Progress
                                );
 
-  if ( (EFI_INVALID_PARAMETER != Status) || (EfiStrnCmp(Progress, L"&a9=qin9", 8) != 0) || 
+  if ( (EFI_INVALID_PARAMETER != Status) || (SctStrnCmp (Progress, L"&a9=qin9", 8) != 0) || 
   	(Block[5] != 0x57) || (Block[7] != 0x55) || (Block[8] != 0xAA)) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   } else {

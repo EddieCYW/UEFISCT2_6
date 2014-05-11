@@ -7538,7 +7538,7 @@ BBTestExitInterfaceTestCheckPoint6 (
     //
     // Step 4: check the returned Exit Data
     //
-    if (!StrCmp (ExitData, ERROR_MESSAGE_FOR_APPLICATION_4)) {
+    if (!SctStrCmp (ExitData, ERROR_MESSAGE_FOR_APPLICATION_4)) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -8230,7 +8230,7 @@ BBTestExitInterfaceTestCheckPoint8 (
     //
     // Step 4: check the returned Exit Data
     //
-    if (!StrCmp (ExitData, ERROR_MESSAGE_FOR_BOOT_SERVICES_DRIVER_6)) {
+    if (!SctStrCmp (ExitData, ERROR_MESSAGE_FOR_BOOT_SERVICES_DRIVER_6)) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -8926,7 +8926,7 @@ BBTestExitInterfaceTestCheckPoint10 (
     //
     // Step 4: check the returned Exit Data
     //
-    if (!StrCmp (ExitData, ERROR_MESSAGE_FOR_RUNTIME_SERVICES_DRIVER_6)) {
+    if (!SctStrCmp (ExitData, ERROR_MESSAGE_FOR_RUNTIME_SERVICES_DRIVER_6)) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_FAILED;

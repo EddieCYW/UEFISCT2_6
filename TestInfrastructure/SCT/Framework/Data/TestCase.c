@@ -760,7 +760,7 @@ Returns:
         // Initialize the items of test case
         //
         SctCopyMem (&TestCase->Guid, &BbEntry->EntryId, sizeof(EFI_GUID));
-        TestCase->Name = StrDuplicate (BbEntry->Name);
+        TestCase->Name = SctStrDuplicate (BbEntry->Name);
 
         //
         // Insert the test case into the test case list
@@ -790,7 +790,7 @@ Returns:
         // Initialize the items of test case
         //
         SctCopyMem (&TestCase->Guid, &WbEntry->EntryId, sizeof(EFI_GUID));
-        TestCase->Name = StrDuplicate (WbEntry->Name);
+        TestCase->Name = SctStrDuplicate (WbEntry->Name);
 
         //
         // Insert the test case into the test case list
@@ -821,7 +821,7 @@ Returns:
         // Initialize the items of test case
         //
         SctCopyMem (&TestCase->Guid, &ApEntry->EntryId, sizeof(EFI_GUID));
-        TestCase->Name = StrDuplicate (ApEntry->Name);
+        TestCase->Name = SctStrDuplicate (ApEntry->Name);
 
         //
         // Insert the test case into the test case list
@@ -1107,7 +1107,7 @@ Routine Description:
     return Status;
   }
 
-  TempTestCase->Name = StrDuplicate (Buffer);
+  TempTestCase->Name = SctStrDuplicate (Buffer);
 
   //
   // Load the order
@@ -1363,7 +1363,7 @@ Routine Description:
     return Status;
   }
 
-  TempTestCase->Name = StrDuplicate (Buffer);
+  TempTestCase->Name = SctStrDuplicate (Buffer);
 
   //
   // Load the order

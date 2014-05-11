@@ -106,7 +106,7 @@ EfiDebugPrint (
 //
   VA_START (Marker, Format);
   FormatUnicode = SctAllocatePool(SctAsciiStrSize (Format) * sizeof (CHAR16));
-  FormatUnicode = SctAsciiToUnicode (Format, FormatUnicode);
+  SctAsciiToUnicode (FormatUnicode, Format, SctAsciiStrSize (Format));
   SctVSPrint (Buffer, MAX_DEBUG_MESSAGE_LENGTH, FormatUnicode, Marker);
   VA_END (Marker);
 

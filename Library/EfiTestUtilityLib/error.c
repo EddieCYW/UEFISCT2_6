@@ -155,7 +155,7 @@ Notes:
   // Otherwise SPrint the hex value into their buffer.
   //
   if (EMsg != NULL) {
-    StrCpy (Buffer, EMsg);
+    SctStrCpy (Buffer, EMsg);
   } else {
     SPrint (Buffer, 0, L"%X", Status);
   }

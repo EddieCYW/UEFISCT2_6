@@ -211,7 +211,7 @@ Returns:
   Status = ConfigGetString (IniFile, L"BiosId", Buffer);
   if (!EFI_ERROR (Status)) {
     tBS->FreePool (ConfigData->BiosId);
-    ConfigData->BiosId = StrDuplicate (Buffer);
+    ConfigData->BiosId = SctStrDuplicate (Buffer);
   }
 
   //
@@ -236,7 +236,7 @@ Returns:
   Status = ConfigGetString (IniFile, L"ScenarioString", Buffer);
   if (!EFI_ERROR (Status)) {
     tBS->FreePool (ConfigData->ScenarioString);
-    ConfigData->ScenarioString = StrDuplicate (Buffer);
+    ConfigData->ScenarioString = SctStrDuplicate (Buffer);
   }
 
   //
@@ -245,7 +245,7 @@ Returns:
   Status = ConfigGetString (IniFile, L"EditCommandString", Buffer);
   if (!EFI_ERROR (Status)) {
     tBS->FreePool (ConfigData->EditCommandString);
-    ConfigData->EditCommandString = StrDuplicate (Buffer);
+    ConfigData->EditCommandString = SctStrDuplicate (Buffer);
   }
 
   //
@@ -508,12 +508,12 @@ Routine Description:
   ConfigData->TestCaseMaxRunTime  = TEST_CASE_MAX_RUN_TIME_DEFAULT;
   ConfigData->EnableScreenOutput  = ENABLE_SCREEN_OUTPUT_DEFAULT;
 
-  ConfigData->BiosId              = StrDuplicate (BIOS_ID_DEFAULT);
+  ConfigData->BiosId              = SctStrDuplicate (BIOS_ID_DEFAULT);
   ConfigData->PlatformNumber      = PLATFORM_NUMBER_DEFAULT;
   ConfigData->ConfigurationNumber = CONFIGURATION_NUMBER_DEFAULT;
-  ConfigData->ScenarioString      = StrDuplicate (SCENARIO_STRING_DEFAULT);
+  ConfigData->ScenarioString      = SctStrDuplicate (SCENARIO_STRING_DEFAULT);
 
-  ConfigData->EditCommandString   = StrDuplicate (EDIT_COMMAND_DEFAULT);
+  ConfigData->EditCommandString   = SctStrDuplicate (EDIT_COMMAND_DEFAULT);
 
   ConfigData->TestLevel           = EFI_TEST_LEVEL_MINIMAL | EFI_TEST_LEVEL_DEFAULT;
   ConfigData->VerboseLevel        = EFI_VERBOSE_LEVEL_DEFAULT;

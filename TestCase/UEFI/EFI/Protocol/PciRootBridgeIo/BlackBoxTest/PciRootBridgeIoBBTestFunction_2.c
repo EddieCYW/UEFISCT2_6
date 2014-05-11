@@ -271,7 +271,7 @@ PciRead_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -957,7 +957,7 @@ PciWrite_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -1706,7 +1706,7 @@ CopyMem_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (PciDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }

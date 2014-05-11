@@ -368,11 +368,11 @@ Routine Description:
   if (!SctStrEndWith (FileName, L".ekl")) {
     return EFI_INVALID_PARAMETER;
   }
-  if (StrLen(FileName) <= StrLen(L"XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX.ekl")) {
+  if (SctStrLen (FileName) <= SctStrLen(L"XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX.ekl")) {
     return EFI_INVALID_PARAMETER;
   }
 
-  String = FileName + StrLen(FileName) - StrLen(L"XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX.ekl");
+  String = FileName + SctStrLen (FileName) - SctStrLen(L"XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX.ekl");
 
   //
   // Check the last '_'
@@ -424,36 +424,6 @@ Routine Description:
   return EFI_SUCCESS;
 }
 
-
-EFI_STATUS
-UnicodeToAscii (
-  IN CHAR16                       *UnicodeStr,
-  OUT CHAR8                       *AsciiStr
-  )
-/*++
-
-Routine Description:
-
-  Convert the unicode string to ASCII string.
-
---*/
-{
-  if ((UnicodeStr == NULL) || (AsciiStr == NULL)) {
-    return EFI_INVALID_PARAMETER;
-  }
-
-  while (*UnicodeStr != L'\0') {
-    *AsciiStr = (CHAR8) *UnicodeStr;
-    UnicodeStr ++;
-    AsciiStr ++;
-  }
-
-  *AsciiStr = '\0';
-
-  return EFI_SUCCESS;
-}
-
-
 EFI_STATUS
 AutoStrCat (
   IN OUT CHAR16                   **DstBuffer,
@@ -477,7 +447,7 @@ Routine Description:
     return EFI_INVALID_PARAMETER;
   }
 
-  if (StrLen(SrcBuffer) >= EFI_SCT_LOG_BUFFER_SIZE) {
+  if (SctStrLen (SrcBuffer) >= EFI_SCT_LOG_BUFFER_SIZE) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -508,7 +478,7 @@ Routine Description:
   //
   // Need to enlarge a new buffer
   //
-  if (mReportBufferUsedSize + StrLen(SrcBuffer) >= mReportBufferMaxSize) {
+  if (mReportBufferUsedSize + SctStrLen (SrcBuffer) >= mReportBufferMaxSize) {
     //
     // Allocate buffer for the destination data
     //
@@ -542,8 +512,8 @@ Routine Description:
   //
   // Append the source data to the destination data
   //
-  StrCpy (mReportBuffer + mReportBufferUsedSize, SrcBuffer);
-  mReportBufferUsedSize += StrLen(SrcBuffer);
+  SctStrCpy (mReportBuffer + mReportBufferUsedSize, SrcBuffer);
+  mReportBufferUsedSize += SctStrLen (SrcBuffer);
 
   //
   // Done

@@ -153,19 +153,19 @@ Returns:
   //
   // Initialize Configuration File Name
   //
-  UnicodeStrCpy (InfFileName, L"");
+  SctStrCpy (InfFileName, L"");
 
   //
   // Parse the arguments
   //
   ArgIndex = (UINT32)SI->Argc;
 
-  if ((ArgIndex != 3) || ((UnicodeStrCmp(SI->Argv[1], L"-f")) && (UnicodeStrCmp(SI->Argv[1], L"-g")))) {
+  if ((ArgIndex != 3) || ((SctStrCmp (SI->Argv[1], L"-f")) && (SctStrCmp(SI->Argv[1], L"-g")))) {
     Print(L"SCRTApp: invalid option\n");
     PrintUsage ();
     return EFI_INVALID_PARAMETER;
   } else {
-    UnicodeStrCpy (InfFileName, SI->Argv[2]);
+    SctStrCpy (InfFileName, SI->Argv[2]);
   }
 
 

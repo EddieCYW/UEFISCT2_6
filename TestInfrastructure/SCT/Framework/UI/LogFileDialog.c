@@ -221,7 +221,7 @@ LogProccessFileName (
     return EFI_SUCCESS;
   }
 
-  Length = (INTN)StrLen (FileName);
+  Length = (INTN)SctStrLen (FileName);
 
   //
   //replace "xx\xx\.." with "xx"
@@ -230,7 +230,7 @@ LogProccessFileName (
     if (FileName[Length - 1] == L'.' && FileName[Length - 2] == L'.' &&
         FileName[Length - 3] == L'\\' ) {
       FileName[Length - 3] = '\0';
-      Length = (INTN)StrLen (FileName);
+      Length = (INTN)SctStrLen (FileName);
       for (Index = (Length - 1);Index >= 0; Index --) {
         if (FileName[Index] == L'\\') {
           FileName[Index] = '\0';
@@ -252,8 +252,8 @@ LogProccessFileName (
   //
   //make sure the file name begin with "\"
   //
-  if (StrLen (FileName) == 0) {
-    StrCat (FileName, L"\\");
+  if (SctStrLen (FileName) == 0) {
+    SctStrCat (FileName, L"\\");
   }
   return EFI_SUCCESS;
 }
@@ -488,7 +488,7 @@ Returns:
   //
   //display ItemName.
   //
-  if (StrLen (TempDialogItem->ItemName) > (X1 - X0 - 1)) {
+  if (SctStrLen (TempDialogItem->ItemName) > (X1 - X0 - 1)) {
     tBS->CopyMem (
       Buffer,
       TempDialogItem->ItemName,
@@ -500,8 +500,8 @@ Returns:
       return Status;
     }
   } else {
-    StrCpy (Buffer, TempDialogItem->ItemName);
-    for (Index = StrLen (Buffer); Index < X1 - X0 - 1; Index++ ) {
+    SctStrCpy (Buffer, TempDialogItem->ItemName);
+    for (Index = SctStrLen (Buffer); Index < X1 - X0 - 1; Index++ ) {
       Buffer[Index] = L' ';
     }
     Buffer[Index] = L'\0';
@@ -550,7 +550,7 @@ Returns:
 
   Xpos = LogFileDialog -> BodyRect.TopLeft.Col + 20;
   Ypos = LogFileDialog -> BodyRect.BottomRight.Row + 1;
-  Length = StrLen (LogFileDialog->FileName);
+  Length = SctStrLen (LogFileDialog->FileName);
   if (Length > EFI_MAX_ITEM_VALUE_LENGTH) {
     tBS->CopyMem (
       Buffer,
@@ -739,14 +739,14 @@ Returns:
         ShortName = NULL;
         ShortName = SctGetShortFileNameAndExt (Context->FileName);
         if (ShortName != NULL) {
-          StrCpy (LogFileDialog->FileName, ShortName);
+          SctStrCpy (LogFileDialog->FileName, ShortName);
         } else {
           return EFI_OUT_OF_RESOURCES;
         }
         //
         //display File Name.
         //
-        if (StrLen (LogFileDialog->FileName) > EFI_MAX_ITEM_VALUE_LENGTH) {
+        if (SctStrLen (LogFileDialog->FileName) > EFI_MAX_ITEM_VALUE_LENGTH) {
           tBS->CopyMem (
             Buffer,
             LogFileDialog->FileName,
@@ -822,7 +822,7 @@ Returns:
                     );
     }
 
-    if (StrLen (DialogItem->ItemName) > (X1 - X0 - 1)) {
+    if (SctStrLen (DialogItem->ItemName) > (X1 - X0 - 1)) {
       tBS->CopyMem (
         Buffer,
         DialogItem->ItemName,
@@ -837,8 +837,8 @@ Returns:
 
     } else {
 
-      StrCpy (Buffer, DialogItem->ItemName);
-      for ( Index = StrLen (Buffer); Index < X1 - X0 - 1; Index++ ) {
+      SctStrCpy (Buffer, DialogItem->ItemName);
+      for ( Index = SctStrLen (Buffer); Index < X1 - X0 - 1; Index++ ) {
         Buffer[Index] = L' ';
       }
       Buffer[Index] = L'\0';
@@ -949,7 +949,7 @@ Returns:
     ShortName = NULL;
     ShortName = SctGetShortFileNameAndExt (Context->FileName);
     if (ShortName != NULL) {
-      StrCpy (LogFileDialog->FileName, ShortName);
+      SctStrCpy (LogFileDialog->FileName, ShortName);
     } else {
       return EFI_OUT_OF_RESOURCES;
     }
@@ -995,7 +995,7 @@ Returns:
       ShortName = NULL;
       ShortName = SctGetShortFileNameAndExt (Context->FileName);
       if (ShortName != NULL) {
-        StrCpy (LogFileDialog->FileName, ShortName);
+        SctStrCpy (LogFileDialog->FileName, ShortName);
       } else {
         return EFI_OUT_OF_RESOURCES;
       }
@@ -1105,7 +1105,7 @@ Returns:
     ShortName = NULL;
     ShortName = SctGetShortFileNameAndExt (Context->FileName);
     if (ShortName != NULL) {
-      StrCpy (LogFileDialog->FileName, ShortName);
+      SctStrCpy (LogFileDialog->FileName, ShortName);
     } else {
       return EFI_OUT_OF_RESOURCES;
     }
@@ -1147,7 +1147,7 @@ Returns:
       ShortName = NULL;
       ShortName = SctGetShortFileNameAndExt (Context->FileName);
       if (ShortName != NULL) {
-        StrCpy (LogFileDialog->FileName, ShortName);
+        SctStrCpy (LogFileDialog->FileName, ShortName);
       } else {
         return EFI_OUT_OF_RESOURCES;
       }
@@ -1271,7 +1271,7 @@ Returns:
   ShortName = NULL;
   ShortName = SctGetShortFileNameAndExt (Context->FileName);
   if (ShortName != NULL) {
-    StrCpy (LogFileDialog->FileName, ShortName);
+    SctStrCpy (LogFileDialog->FileName, ShortName);
   } else {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1391,7 +1391,7 @@ Returns:
   ShortName = NULL;
   ShortName = SctGetShortFileNameAndExt (Context->FileName);
   if (ShortName != NULL) {
-    StrCpy (LogFileDialog->FileName, ShortName);
+    SctStrCpy (LogFileDialog->FileName, ShortName);
   } else {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1456,11 +1456,11 @@ Returns:
   Ypos  = LogFileDialog->BodyRect.BottomRight.Row + 1;
   XLeft = LogFileDialog->BodyRect.TopLeft.Col + 20;
 
-  CurrentLength = StrLen (LogFileDialog->FileName);
+  CurrentLength = SctStrLen (LogFileDialog->FileName);
   //
   //save the filename in buffer
   //
-  StrCpy (Buffer, LogFileDialog->FileName);
+  SctStrCpy (Buffer, LogFileDialog->FileName);
 
   XOffSetInScreen = 0;
   XOffSetInBuffer = 0;
@@ -1497,7 +1497,7 @@ Returns:
           //
           //save the input value in FileName
           //
-          StrCpy (LogFileDialog->FileName, Buffer);
+          SctStrCpy (LogFileDialog->FileName, Buffer);
           //
           //disable cursor.
           //
@@ -1770,7 +1770,7 @@ Returns:
             //
             //save the input value in FileName
             //
-            StrCpy (LogFileDialog->FileName, Buffer);
+            SctStrCpy (LogFileDialog->FileName, Buffer);
 
             tST->ConOut->EnableCursor (tST->ConOut, FALSE);
 
@@ -1855,7 +1855,7 @@ Returns:
             //
             //save the input value in FileName
             //
-            StrCpy (LogFileDialog->FileName, Buffer);
+            SctStrCpy (LogFileDialog->FileName, Buffer);
 
             tST->ConOut->EnableCursor (tST->ConOut, FALSE);
 
@@ -2093,12 +2093,12 @@ Returns:
         //
         //check if the file name is all space
         //
-        for (Length = 0; Length < StrLen (Dialog->FileName); Length++) {
+        for (Length = 0; Length < SctStrLen (Dialog->FileName); Length++) {
           if (Dialog->FileName[Length] != L' ') {
             break;
           }
         }
-        if (Length < StrLen (Dialog->FileName)) {
+        if (Length < SctStrLen (Dialog->FileName)) {
           Stopped = TRUE;
         }
         break;
@@ -2161,12 +2161,12 @@ Returns:
             //
             //check if the file name is all space
             //
-            for (Length = 0; Length < StrLen (Dialog->FileName); Length++) {
+            for (Length = 0; Length < SctStrLen (Dialog->FileName); Length++) {
               if (Dialog->FileName[Length] != L' ') {
                 break;
               }
             }
-            if (Length < StrLen (Dialog->FileName)) {
+            if (Length < SctStrLen (Dialog->FileName)) {
               Stopped = TRUE;
             }
             break;
@@ -2196,12 +2196,12 @@ Returns:
             //
             //check if the file name is all space
             //
-            for (Length = 0; Length < StrLen (Dialog->FileName); Length++) {
+            for (Length = 0; Length < SctStrLen (Dialog->FileName); Length++) {
               if (Dialog->FileName[Length] != L' ') {
                 break;
               }
             }
-            if (Length < StrLen (Dialog->FileName)) {
+            if (Length < SctStrLen (Dialog->FileName)) {
               Stopped = TRUE;
             }
             break;
@@ -2279,7 +2279,7 @@ Returns:
 
   DialogItem->Prev      = NULL;
   DialogItem->Next      = NULL;
-  DialogItem->ItemName  = StrDuplicate (String);
+  DialogItem->ItemName  = SctStrDuplicate (String);
 
   if (DialogItem->ItemName == NULL) {
     tBS->FreePool (DialogItem);
@@ -2338,14 +2338,14 @@ Returns:
     return TRUE;
   }
 
-  if (StrLen (FileName) < StrLen (FileTypeInfo[FileType].FileTypeSuffix)) {
+  if (SctStrLen (FileName) < SctStrLen (FileTypeInfo[FileType].FileTypeSuffix)) {
     return FALSE;
   }
   Temp = FileTypeInfo[FileType].FileTypeSuffix;
 
-  Str = FileName + StrLen (FileName) - StrLen (Temp);
+  Str = FileName + SctStrLen (FileName) - SctStrLen (Temp);
 
-  if (StriCmp(Temp,Str) == 0) {
+  if (SctStriCmp (Temp,Str) == 0) {
     return TRUE;
   } else {
     return FALSE;
@@ -2382,8 +2382,8 @@ Returns:
   CHAR16     *LastSlash;
   EFI_STATUS Status;
 
-  Size1 = StrSize(Str1);
-  Size2 = StrSize(Str2);
+  Size1 = SctStrSize (Str1);
+  Size2 = SctStrSize (Str2);
   Status = tBS->AllocatePool (
           EfiBootServicesData,
           Size1 + Size2 + sizeof(CHAR16),
@@ -2394,9 +2394,9 @@ Returns:
   }
   tBS->SetMem (Str, Size1 + Size2 + sizeof(CHAR16), 0);
 
-  StrCat (Str, Str1);
+  SctStrCat (Str, Str1);
   if ( !((*Str == '\\') && (*(Str + 1) == 0)) ) {
-    StrCat (Str, L"\\");
+    SctStrCat (Str, L"\\");
   }
 
   //
@@ -2406,7 +2406,7 @@ Returns:
     Str2 = Str2 +1;
   }
 
-  StrCat (Str, Str2);
+  SctStrCat (Str, Str2);
 
   Ptr = Str;
   LastSlash = Str;
@@ -2418,14 +2418,14 @@ Returns:
       //  DO NOT convert the .. if it is at the end of the string. This will
       //  break the .. behavior in changing directories.
       //
-      StrCpy (LastSlash, Ptr+3);
+      SctStrCpy (LastSlash, Ptr+3);
       Ptr = LastSlash;
     } else if (*Ptr == '\\' && *(Ptr+1) == '.' && *(Ptr + 2) == '\\') {
 
       //
       // Convert a '\.\' to a '\'
       //
-      StrCpy (Ptr, Ptr+2);
+      SctStrCpy (Ptr, Ptr+2);
       Ptr = LastSlash;
     } else if (*Ptr == '\\') {
       LastSlash = Ptr;
@@ -2744,14 +2744,14 @@ Returns:
         //set the FileName and DevicePath
         //
         if (SctStrBeginWith (DirDialog->FileName, L"\\")) {
-          DialogContext->FileName = StrDuplicate (DirDialog->FileName);
+          DialogContext->FileName = SctStrDuplicate (DirDialog->FileName);
         } else {
 
           //
           //first remove the last file name in ResultContext->FileName
           // get current directory
           //
-          Length = StrLen (ResultContext->FileName);
+          Length = SctStrLen (ResultContext->FileName);
           if (Length > 0) {
             TempName = ResultContext->FileName;
             for (Index = Length- 1; Index >= 0; Index --) {
@@ -2807,14 +2807,14 @@ Returns:
           //
           DialogContext->DevicePath = DuplicateDevicePath (ResultContext->DevicePath);
           if (SctStrBeginWith (DirDialog->FileName, L"\\")) {
-            DialogContext->FileName = StrDuplicate (DirDialog->FileName);
+            DialogContext->FileName = SctStrDuplicate (DirDialog->FileName);
           } else {
 
             //
             //first remove the last file name in ResultContext->FileName
             //get current directory
             //
-            Length = StrLen (ResultContext->FileName);
+            Length = SctStrLen (ResultContext->FileName);
             if (Length > 0) {
               TempName = ResultContext->FileName;
               for (Index = Length- 1;Index >= 0; Index --) {
@@ -2890,13 +2890,13 @@ Returns:
         //set the file name
         //
         if (SctStrBeginWith (DirDialog->FileName, L"\\")) {
-          ContextCopy.FileName = StrDuplicate (DirDialog->FileName);
+          ContextCopy.FileName = SctStrDuplicate (DirDialog->FileName);
         } else {
           //
           //first remove the last file name in ResultContext->FileName
           //get current directory
           //
-          Length = StrLen (ResultContext->FileName);
+          Length = SctStrLen (ResultContext->FileName);
           TempName = ResultContext->FileName;
           if (Length > 0) {
             for (Index = Length- 1;Index >= 0; Index --) {
@@ -2959,13 +2959,13 @@ Returns:
         //set the FileName and DevicePath
         //
         if (SctStrBeginWith (DirDialog->FileName, L"\\")) {
-          DialogContext->FileName = StrDuplicate (DirDialog->FileName);
+          DialogContext->FileName = SctStrDuplicate (DirDialog->FileName);
         } else {
           //
           //first remove the last file name in ResultContext->FileName
           //get current directory
           //
-          Length = StrLen (ResultContext->FileName);
+          Length = SctStrLen (ResultContext->FileName);
           TempName = ResultContext->FileName;
           if (Length>0) {
             for (Index = Length- 1;Index >= 0; Index --) {
@@ -3166,7 +3166,7 @@ Returns:
     Context->FHandle        = LibOpenRoot (Context->Handle);
     Context->DevicePath     = DevicePathFromHandle (Context->Handle);
     Context->DevicePathStr  = LibDevicePathToStr (Context->DevicePath);
-    Context->FileName       = StrDuplicate (L"\\");
+    Context->FileName       = SctStrDuplicate (L"\\");
     Context->IsDir          = TRUE;
     Context->RootContext    = TRUE;
 
@@ -3234,7 +3234,7 @@ Returns:
     Context->FHandle       = LibOpenRoot (Context->Handle);
     Context->DevicePath    = DevicePathFromHandle (Context->Handle);
     Context->DevicePathStr = LibDevicePathToStr (Context->DevicePath);
-    Context->FileName      = StrDuplicate (L"\\");
+    Context->FileName      = SctStrDuplicate (L"\\");
     Context->IsDir         = TRUE;
     Context->RootContext   = TRUE;
 
@@ -3335,7 +3335,7 @@ Returns:
         tBS->FreePool (DialogContext->FileName);
       }
       DialogContext->DevicePath = DuplicateDevicePath (ResultContext->DevicePath);
-      DialogContext->FileName   = StrDuplicate(L"\\");
+      DialogContext->FileName   = SctStrDuplicate (L"\\");
       break;
     }
 
@@ -3488,7 +3488,7 @@ Returns:
   } else if (DialogContext->FileType == EFI_FILTER_FILE_TYPE_LOG) {
     Context->FileName       = PoolPrint(L"%s\\%s", gFT->FilePath, EFI_SCT_PATH_LOG);
   } else {
-    Context->FileName       = StrDuplicate (gFT->FilePath);
+    Context->FileName       = SctStrDuplicate (gFT->FilePath);
   }
 
   Context->IsDir          = TRUE;
@@ -3541,7 +3541,7 @@ Returns:
 
     default:
       FileSystemDialog->Type  = EFI_FILE_DIALOG_TYPE_OPEN_FILE;
-      FileSystemDialog->Title = StrDuplicate (L"Open File");
+      FileSystemDialog->Title = SctStrDuplicate (L"Open File");
       break;
   }
 

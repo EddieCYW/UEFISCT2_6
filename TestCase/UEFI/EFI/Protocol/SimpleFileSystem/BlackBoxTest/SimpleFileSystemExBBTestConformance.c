@@ -493,9 +493,9 @@ BBTestOpenExConformanceTestCheckpoint1 (
       // Create random file name
       //
       CreateRandomValueFileIo2 (&RandomValue);
-      EfiValueToHexStr (RandomChars, RandomValue, PREFIX_ZERO, sizeof (UINT32));
-      EfiStrCpy (NewFileName, BaseFileName);
-      EfiStrCat (NewFileName, RandomChars);
+      SctValueToHexStr (RandomChars, RandomValue, PREFIX_ZERO, sizeof (UINT32));
+      SctStrCpy (NewFileName, BaseFileName);
+      SctStrCat (NewFileName, RandomChars);
     
       //
       // Sync Call OpenEx 
@@ -660,8 +660,8 @@ BBTestOpenExConformanceTestCheckpoint2 (
   
   FileIoTokenAsync.Status = EFI_NOT_READY;
 
-  EfiStrCpy (FileName, L"BBTestOpenConformanceTestCheckpoint2_File");
-  EfiStrCpy (BaseDirName, L"BBTestOpenConformanceTestCheckpoint2_");
+  SctStrCpy (FileName, L"BBTestOpenConformanceTestCheckpoint2_File");
+  SctStrCpy (BaseDirName, L"BBTestOpenConformanceTestCheckpoint2_");
 
   //
   // create directory name with the random name
@@ -678,9 +678,9 @@ BBTestOpenExConformanceTestCheckpoint2 (
       // Create random dir name
       //
       CreateRandomValueFileIo2 (&RandomValue);
-      EfiValueToHexStr (RandomChars, RandomValue, PREFIX_ZERO, sizeof (UINT32));
-      EfiStrCpy (NewDirName, BaseDirName);
-      EfiStrCat (NewDirName, RandomChars);
+      SctValueToHexStr (RandomChars, RandomValue, PREFIX_ZERO, sizeof (UINT32));
+      SctStrCpy (NewDirName, BaseDirName);
+      SctStrCat (NewDirName, RandomChars);
     
       //
       // create file name: "\" + DirName + "\" + FileName
@@ -695,19 +695,19 @@ BBTestOpenExConformanceTestCheckpoint2 (
       //
       // "\" + DirName
       //
-      EfiStrCat (OpenFileName, NewDirName);
+      SctStrCat (OpenFileName, NewDirName);
     
       //
       // "\" + DirName + "\"
       //
-      FileNameLength = EfiStrLen (OpenFileName);
+      FileNameLength = SctStrLen (OpenFileName);
       OpenFileName[FileNameLength] = '\\';
       OpenFileName[FileNameLength + 1] = 0;
     
       //
       // "\" + DirName + "\" + FileName
       //
-      EfiStrCat (OpenFileName, FileName);
+      SctStrCat (OpenFileName, FileName);
     
       //
       // Sync create file 
@@ -838,7 +838,7 @@ BBTestOpenExConformanceTestCheckpoint3 (
     return EFI_UNSUPPORTED;
   }
 
-  EfiStrCpy (FileName, L"BBTestOpenConformanceTestCheckpoint3_File");
+  SctStrCpy (FileName, L"BBTestOpenConformanceTestCheckpoint3_File");
   
   //
   // Initialize File IO OpenEx token event
@@ -1067,7 +1067,7 @@ BBTestWriteExConformanceTestCheckpoint1 (
   
   FileIoTokenAsync.Status = EFI_NOT_READY;
 
-  EfiStrCpy (DirName, L"BBTestWriteExConformanceTestCheckpoint1_Dir");
+  SctStrCpy (DirName, L"BBTestWriteExConformanceTestCheckpoint1_Dir");
 
   //
   // create the Dir
@@ -1235,7 +1235,7 @@ BBTestWriteExConformanceTestCheckpoint2 (
   FileIoTokenAsync.Status = EFI_NOT_READY;
 
 
-  EfiStrCpy (FileName, L"BBTestWriteExConformanceTestCheckpoint2_File");
+  SctStrCpy (FileName, L"BBTestWriteExConformanceTestCheckpoint2_File");
 
   //
   // create the File
@@ -1450,7 +1450,7 @@ BBTestWriteExConformanceTestCheckpoint3 (
    
   FileIoTokenAsync.Status = EFI_NOT_READY;
 
-  EfiStrCpy (FileName, L"BBTestWriteExConformanceTestCheckpoint3_File");
+  SctStrCpy (FileName, L"BBTestWriteExConformanceTestCheckpoint3_File");
 
   //
   // create the File
@@ -1649,7 +1649,7 @@ BBTestFlushExConformanceTestCheckpoint1 (
     
   FileIoTokenAsync.Status = EFI_NOT_READY;
 
-  EfiStrCpy (FileName, L"BBTestFlushExConformanceTestCheckpoint1_File");
+  SctStrCpy (FileName, L"BBTestFlushExConformanceTestCheckpoint1_File");
 
   //
   // create the File
@@ -1863,7 +1863,7 @@ BBTestReadExConformanceTestCheckpoint1 (
    
   FileIoTokenAsync.Status = EFI_NOT_READY;
 
-  EfiStrCpy (FileName, L"BBTestReadExConformanceTestCheckpoint1_File");
+  SctStrCpy (FileName, L"BBTestReadExConformanceTestCheckpoint1_File");
 
   //
   // create the File
@@ -2081,7 +2081,7 @@ BBTestReadExConformanceTestCheckpoint2 (
    
   FileIoTokenAsync.Status = EFI_NOT_READY;
 
-  EfiStrCpy (FileName, L"BBTestReadExConformanceTestCheckpoint2_File");
+  SctStrCpy (FileName, L"BBTestReadExConformanceTestCheckpoint2_File");
 
   //
   // create the File

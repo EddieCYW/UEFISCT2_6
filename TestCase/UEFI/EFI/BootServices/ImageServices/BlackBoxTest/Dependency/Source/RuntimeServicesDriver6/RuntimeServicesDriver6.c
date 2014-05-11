@@ -131,7 +131,7 @@ InitializeRuntimeServicesDriver6 (
   
   ErrorMessage = ERROR_MESSAGE_FOR_RUNTIME_SERVICES_DRIVER_6;
   
-  ExitSize = StrSize (ErrorMessage);
+  ExitSize = SctStrSize (ErrorMessage);
   
   Status = gtBS->AllocatePool (
                         EfiBootServicesData,

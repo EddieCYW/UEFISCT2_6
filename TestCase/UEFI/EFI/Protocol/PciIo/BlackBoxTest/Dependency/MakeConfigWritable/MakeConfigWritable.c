@@ -353,7 +353,7 @@ WriteMaskBytes (
     return EFI_ABORTED;
   }
 
-  Offset = (UINT8) Xtoi (&Buffer[Index]);
+  Offset = (UINT8) SctXtoi (&Buffer[Index]);
   Offset = (UINT8) (Offset & 0xfc);
 
   //
@@ -374,7 +374,7 @@ WriteMaskBytes (
     return EFI_ABORTED;
   }
 
-  Length = (UINT8) Xtoi (&Buffer[Index]);
+  Length = (UINT8) SctXtoi (&Buffer[Index]);
   Length = (UINT8) (Length & 0xfc);
 
   BaseAddress = (UINT32)(NC_ROM_TOP_ADDRESS + NC_BYTES_PER_FUNCTION + Offset);

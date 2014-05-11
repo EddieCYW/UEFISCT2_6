@@ -191,12 +191,6 @@ GetIndexFromFileName (
   );
 
 EFI_STATUS
-UnicodeToAscii (
-  IN CHAR16                       *UnicodeStr,
-  OUT CHAR8                       *AsciiStr
-  );
-
-EFI_STATUS
 AutoStrCat (
   IN OUT CHAR16                   **DstBuffer,
   IN CHAR16                       *SrcBuffer

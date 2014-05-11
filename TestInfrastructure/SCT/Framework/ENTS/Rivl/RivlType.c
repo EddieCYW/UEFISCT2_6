@@ -366,7 +366,7 @@ Returns:
   //
   // Fill Type
   //
-  StrCpy (NewRivlType->Type, Type);
+  SctStrCpy (NewRivlType->Type, Type);
 
   //
   // Fill MemberNumber
@@ -533,7 +533,7 @@ Returns:
 
   RivlType = gRivlTypeList;
   while (RivlType != NULL) {
-    if (StrCmp (RivlType->Type, Type) == 0) {
+    if (SctStrCmp (RivlType->Type, Type) == 0) {
       //
       // Find it
       //
@@ -570,7 +570,7 @@ Returns:
 
   RivlInternalType = gRivlInternalTypeArray;
   while (RivlInternalType->Type[0] != L'\0') {
-    if (StrCmp (RivlInternalType->Type, Type) == 0) {
+    if (SctStrCmp (RivlInternalType->Type, Type) == 0) {
       //
       // Find it
       //
@@ -609,7 +609,7 @@ Returns:
 
   RivlMember = RivlType->Member;
   while (RivlMember->Name[0] != L'\0') {
-    if (StrCmp (RivlMember->Name, Name) == 0) {
+    if (SctStrCmp (RivlMember->Name, Name) == 0) {
       //
       // Find it
       //
@@ -659,12 +659,12 @@ Returns:
   //
   // Fill Name
   //
-  StrCpy (RivlMember->Name, Name);
+  SctStrCpy (RivlMember->Name, Name);
 
   //
   // Fill Type
   //
-  StrCpy (RivlMember->Type, Type);
+  SctStrCpy (RivlMember->Type, Type);
 
   //
   // Fill Offset
@@ -674,7 +674,7 @@ Returns:
   //
   // Fill TypeSize and ArrayNumber
   //
-  if (StrCmp (Type, L"\0") == 0) {
+  if (SctStrCmp (Type, L"\0") == 0) {
     return EFI_SUCCESS;
   }
 

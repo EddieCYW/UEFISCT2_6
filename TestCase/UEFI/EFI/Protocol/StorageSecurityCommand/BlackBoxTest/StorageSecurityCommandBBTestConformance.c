@@ -206,7 +206,7 @@ BBTestReceiveDataConformanceAutoTest (
                                                   FALSE,
                                                   FALSE
                                                   );
-          if ((DevicePathNodeStr != NULL) && ((EfiStrStr(DevicePathNodeStr, L"Ata(") != NULL) || (EfiStrStr(DevicePathNodeStr, L"Sata(") != NULL))) {
+          if ((DevicePathNodeStr != NULL) && ((SctStrStr (DevicePathNodeStr, L"Ata(") != NULL) || (SctStrStr (DevicePathNodeStr, L"Sata(") != NULL))) {
             IsAtaDevice = TRUE;
             SctFreePool (DevicePathNodeStr);
             DevicePathNodeStr = NULL;

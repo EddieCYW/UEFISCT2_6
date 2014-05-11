@@ -53,10 +53,13 @@ BASE_NAME       = SctLib
 COMPONENT_TYPE  = LIBRARY
 
 [sources.common]
-  Debug.c
-  Init.c
   Alloc.c
+  Debug.c
+  Handle.c
+  Init.c
   Mem.c
+  Misc.c
+  String.c
 
 [sources.Arm]
   Arm/SctLibPlat.h
@@ -101,6 +104,7 @@ COMPONENT_TYPE  = LIBRARY
   EfiGuidLib
   EdkProtocolLib
   EfiProtocolLib
+  EdkFrameworkGuidLib
 
 [nmake.common]
   C_STD_INCLUDE=

@@ -188,7 +188,7 @@ QueryGoOnTesting (
     return FALSE;
   }
 
-  if (StrLen (InputBuffer) == 0) {
+  if (SctStrLen (InputBuffer) == 0) {
     gtBS->FreePool (InputBuffer);
     return FALSE;
   }
@@ -386,7 +386,7 @@ GetDataUnits (
     return Status;
   }
 
-  if (StrLen (InputBuffer) == 0) {
+  if (SctStrLen (InputBuffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
@@ -557,12 +557,12 @@ GetSystemDevicePathByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
   TempStr = NULL;
-  TempStr = StrDuplicate (Buffer);
+  TempStr = SctStrDuplicate (Buffer);
   if (TempStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -613,7 +613,7 @@ GetAddressByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
@@ -664,7 +664,7 @@ GetDataUnitsByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   ReturnBuffer = NULL;
@@ -725,7 +725,7 @@ GetAddressLengthByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
@@ -775,12 +775,12 @@ GetRootBridgeIoWidthByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
   for (Index = 0; Index < EfiPciWidthMaximum; Index++) {
-    if (StriCmp (WidthCode[Index], Buffer) == 0) {
+    if (SctStriCmp (WidthCode[Index], Buffer) == 0) {
       *RootBridgeIoWidth = (EFI_PCI_ROOT_BRIDGE_IO_PROTOCOL_WIDTH)Index;
       return EFI_SUCCESS;
     }
@@ -834,7 +834,7 @@ GetTargetValueByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
@@ -884,7 +884,7 @@ GetAlternateValueByFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
@@ -930,13 +930,13 @@ ConvertStringToHex (
   //skip the "0x" prefix if it really has.
   //
 
-  if (StrLen (StrPtr) >= 2) {
+  if (SctStrLen (StrPtr) >= 2) {
     if (StrPtr[0] == L'0' && (StrPtr[1] == L'x' || StrPtr[1] == L'X')) {
       StrPtr = StrPtr + 2;
     }
   }
 
-  ConvertBytes = StrLen (StrPtr) / 2;
+  ConvertBytes = SctStrLen (StrPtr) / 2;
   if (ConvertBytes > Length) {
     ConvertBytes = Length;
   }

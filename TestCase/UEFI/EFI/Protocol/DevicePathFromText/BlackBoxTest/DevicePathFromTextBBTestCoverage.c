@@ -118,7 +118,7 @@ StrToBuf (
 
   for(Index = 0; Index < StrLength; Index++, Str++) {
 
-    IsHexDigit (&Digit, *Str);
+    SctIsHexDigit (&Digit, *Str);
 
     //
     // For odd charaters, write the upper nibble for each buffer byte,
@@ -150,9 +150,9 @@ StrToUInt8Array (
   UINT8    Digit;
   UINT8    Byte;
 
-  StrTrim (Str, L' ');
+  SctStrTrim (Str, L' ');
 
-  StrLength = StrLen (Str);
+  StrLength = SctStrLen (Str);
   //
   // Check hex prefix '0x'
   //
@@ -163,7 +163,7 @@ StrToUInt8Array (
 
   for(Index = 0; Index < StrLength; Index++, Str++) {
 
-    IsHexDigit (&Digit, *Str);
+    SctIsHexDigit (&Digit, *Str);
 
     //
     // For odd charaters, write the upper nibble for each buffer byte,
@@ -183,27 +183,6 @@ StrToUInt8Array (
 }
 
 STATIC
-UINTN
-Xtoi (
-  IN CHAR16  *Str
-  )
-{
-  UINTN   u;
-  UINTN   Length;
-
-  ASSERT (Str != NULL);
-
-  //
-  // convert hex digits
-  //
-  u = 0;
-  Length = sizeof (UINTN);
-  HexStringToBuf ((UINT8 *) &u, &Length, TrimHexStr (Str), NULL);
-
-  return u;
-}
-
-STATIC
 VOID
 Xtoi64 (
   IN CHAR16  *Str,
@@ -214,29 +193,7 @@ Xtoi64 (
 
   *Data = 0;
   Length = sizeof (UINT64);
-  HexStringToBuf ((UINT8 *) Data, &Length, TrimHexStr (Str), NULL);
-}
-
-STATIC
-EFI_STATUS
-UnicodeToAscii (
-  IN CHAR16                       *UnicodeStr,
-  OUT CHAR8                       *AsciiStr
-  )
-{
-  if ((UnicodeStr == NULL) || (AsciiStr == NULL)) {
-    return EFI_INVALID_PARAMETER;
-  }
-
-  while (*UnicodeStr != L'\0') {
-    *AsciiStr = (CHAR8) *UnicodeStr;
-    UnicodeStr ++;
-    AsciiStr ++;
-  }
-
-  *AsciiStr = '\0';
-
-  return EFI_SUCCESS;
+  SctHexStringToBuf ((UINT8 *) Data, &Length, TrimHexStr (Str), NULL);
 }
 
 STATIC
@@ -251,7 +208,7 @@ StrToGuid (
   EFI_STATUS  Status;
 
   BufferLength = sizeof (Guid->Data1);
-  Status = HexStringToBuf ((UINT8 *) &Guid->Data1, &BufferLength, Str, &ConvertedStrLen);
+  Status = SctHexStringToBuf ((UINT8 *) &Guid->Data1, &BufferLength, Str, &ConvertedStrLen);
   if (EFI_ERROR (Status)) {
     return Status;
   }
@@ -263,7 +220,7 @@ StrToGuid (
   }
 
   BufferLength = sizeof (Guid->Data2);
-  Status = HexStringToBuf ((UINT8 *) &Guid->Data2, &BufferLength, Str, &ConvertedStrLen);
+  Status = SctHexStringToBuf ((UINT8 *) &Guid->Data2, &BufferLength, Str, &ConvertedStrLen);
   if (EFI_ERROR (Status)) {
     return Status;
   }
@@ -275,7 +232,7 @@ StrToGuid (
   }
 
   BufferLength = sizeof (Guid->Data3);
-  Status = HexStringToBuf ((UINT8 *) &Guid->Data3, &BufferLength, Str, &ConvertedStrLen);
+  Status = SctHexStringToBuf ((UINT8 *) &Guid->Data3, &BufferLength, Str, &ConvertedStrLen);
   if (EFI_ERROR (Status)) {
     return Status;
   }
@@ -365,9 +322,9 @@ ConvertFromTextVendor (
   UINTN               Length;
   VENDOR_DEVICE_PATH  *Vendor;
 
-  GuidStr = SplitStr (&TextDeviceNode, L',');
-  DataStr = SplitStr (&TextDeviceNode, L',');
-  Length = EfiStrLen (DataStr);
+  GuidStr = SctSplitStr (&TextDeviceNode, L',');
+  DataStr = SctSplitStr (&TextDeviceNode, L',');
+  Length = SctStrLen (DataStr);
   //
   // Two hex characters make up 1 buffer byte
   //
@@ -415,26 +372,26 @@ ConvertFromTextUsbClass (
                                             sizeof (USB_CLASS_DEVICE_PATH)
                                             );
 
-  VIDStr      = SplitStr (&TextDeviceNode, L',');
-  PIDStr      = SplitStr (&TextDeviceNode, L',');
+  VIDStr      = SctSplitStr (&TextDeviceNode, L',');
+  PIDStr      = SctSplitStr (&TextDeviceNode, L',');
   if (UsbClassText->ClassExist) {
-    ClassStr = SplitStr (&TextDeviceNode, L',');
-    UsbClass->DeviceClass = (UINT8) StrToUInt (ClassStr);
+    ClassStr = SctSplitStr (&TextDeviceNode, L',');
+    UsbClass->DeviceClass = (UINT8) SctStrToUInt (ClassStr);
   } else {
     UsbClass->DeviceClass = UsbClassText->Class;
   }
   if (UsbClassText->SubClassExist) {
-    SubClassStr = SplitStr (&TextDeviceNode, L',');
-    UsbClass->DeviceSubClass = (UINT8) StrToUInt (SubClassStr);
+    SubClassStr = SctSplitStr (&TextDeviceNode, L',');
+    UsbClass->DeviceSubClass = (UINT8) SctStrToUInt (SubClassStr);
   } else {
     UsbClass->DeviceSubClass = UsbClassText->SubClass;
   }  
 
-  ProtocolStr = SplitStr (&TextDeviceNode, L',');
+  ProtocolStr = SctSplitStr (&TextDeviceNode, L',');
 
-  UsbClass->VendorId        = (UINT16) StrToUInt (VIDStr);
-  UsbClass->ProductId       = (UINT16) StrToUInt (PIDStr);
-  UsbClass->DeviceProtocol  = (UINT8) StrToUInt (ProtocolStr);
+  UsbClass->VendorId        = (UINT16) SctStrToUInt (VIDStr);
+  UsbClass->ProductId       = (UINT16) SctStrToUInt (PIDStr);
+  UsbClass->DeviceProtocol  = (UINT8) SctStrToUInt (ProtocolStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) UsbClass;
 }
@@ -451,14 +408,14 @@ CreatePcCardDeviceNode (
   CHAR16              *FunctionNumberStr;
   PCCARD_DEVICE_PATH  *Pccard;
 
-  FunctionNumberStr = SplitStr (&TextDeviceNode, L',');
+  FunctionNumberStr = SctSplitStr (&TextDeviceNode, L',');
   Pccard            = (PCCARD_DEVICE_PATH *) CreateDeviceNode (
   	                                           PcCardNodeType, 
   	                                           PcCardNodeSubType, 
   	                                           sizeof(PCCARD_DEVICE_PATH)
                                                );
 
-  Pccard->FunctionNumber  = (UINT8) StrToUInt (FunctionNumberStr);
+  Pccard->FunctionNumber  = (UINT8) SctStrToUInt (FunctionNumberStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Pccard;
 }
@@ -477,17 +434,17 @@ CreateMemMapDeviceNode (
   CHAR16              *EndingAddressStr;
   MEMMAP_DEVICE_PATH  *MemMap;
 
-  MemoryTypeStr      = SplitStr (&TextDeviceNode, L',');
-  StartingAddressStr = SplitStr (&TextDeviceNode, L',');
-  EndingAddressStr   = SplitStr (&TextDeviceNode, L',');
+  MemoryTypeStr      = SctSplitStr (&TextDeviceNode, L',');
+  StartingAddressStr = SctSplitStr (&TextDeviceNode, L',');
+  EndingAddressStr   = SctSplitStr (&TextDeviceNode, L',');
   MemMap             = (MEMMAP_DEVICE_PATH *) CreateDeviceNode (
   	                                            MemMapNodeType, 
   	                                            MemMapNodeSubType, 
                                                 sizeof (MEMMAP_DEVICE_PATH)
                                                 );
-  MemMap->MemoryType = (UINT32) StrToUInt(MemoryTypeStr);
-  StrToUInt64 (StartingAddressStr, &MemMap->StartingAddress);
-  StrToUInt64 (EndingAddressStr, &MemMap->EndingAddress);
+  MemMap->MemoryType = (UINT32) SctStrToUInt (MemoryTypeStr);
+  SctStrToUInt64 (StartingAddressStr, &MemMap->StartingAddress);
+  SctStrToUInt64 (EndingAddressStr, &MemMap->EndingAddress);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) MemMap;
 }
@@ -520,13 +477,13 @@ CreateCtrlDeviceNode (
   CHAR16                  *ControllerStr;
   CONTROLLER_DEVICE_PATH  *Controller;
 
-  ControllerStr = SplitStr (&TextDeviceNode, L',');
+  ControllerStr = SctSplitStr (&TextDeviceNode, L',');
   Controller    = (CONTROLLER_DEVICE_PATH *) CreateDeviceNode (
                                                CtrlNodeType,
                                                CtrlNodeSubType,
                                                sizeof (CONTROLLER_DEVICE_PATH)
                                                );
-  Controller->Controller  = (UINT32) StrToUInt (ControllerStr);
+  Controller->Controller  = (UINT32) SctStrToUInt (ControllerStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Controller;
 }
@@ -543,14 +500,14 @@ CreatePciRootDeviceNode (
   CHAR16                  *PciRootStr;
   ACPI_HID_DEVICE_PATH    *PciRoot;
 
-  PciRootStr = SplitStr (&TextDeviceNode, L',');
+  PciRootStr = SctSplitStr (&TextDeviceNode, L',');
   PciRoot    = (ACPI_HID_DEVICE_PATH *) CreateDeviceNode (
                                           AcpiNodeType,
                                           AcpiNodeSubType,
                                           sizeof (ACPI_HID_DEVICE_PATH)
                                           );
   PciRoot->HID  = 0x0A0341d0;
-  PciRoot->UID  = (UINT32) StrToUInt (PciRootStr);
+  PciRoot->UID  = (UINT32) SctStrToUInt (PciRootStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) PciRoot;
 }
@@ -564,14 +521,14 @@ CreatePcieRootDeviceNode (
   CHAR16                  *PcieRootStr;
   ACPI_HID_DEVICE_PATH    *PcieRoot;
 
-  PcieRootStr = SplitStr (&TextDeviceNode, L',');
+  PcieRootStr = SctSplitStr (&TextDeviceNode, L',');
   PcieRoot    = (ACPI_HID_DEVICE_PATH *) CreateDeviceNode (
                                            AcpiNodeType,
                                            AcpiNodeSubType,
                                            sizeof (ACPI_HID_DEVICE_PATH)
                                            );
   PcieRoot->HID  = 0x0A0841d0;
-  PcieRoot->UID  = (UINT32) StrToUInt (PcieRootStr);
+  PcieRoot->UID  = (UINT32) SctStrToUInt (PcieRootStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) PcieRoot;
 }
@@ -585,14 +542,14 @@ CreateFloppyDeviceNode (
   CHAR16                  *FloppyStr;
   ACPI_HID_DEVICE_PATH    *Floppy;
 
-  FloppyStr = SplitStr (&TextDeviceNode, L',');
+  FloppyStr = SctSplitStr (&TextDeviceNode, L',');
   Floppy    = (ACPI_HID_DEVICE_PATH *) CreateDeviceNode (
                                          AcpiNodeType,
                                          AcpiNodeSubType,
                                          sizeof (ACPI_HID_DEVICE_PATH)
                                          );
   Floppy->HID  = 0x060441d0;
-  Floppy->UID  = (UINT32) StrToUInt (FloppyStr);
+  Floppy->UID  = (UINT32) SctStrToUInt (FloppyStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Floppy;
 }
@@ -606,14 +563,14 @@ CreateKeyboardDeviceNode (
   CHAR16                  *KeyboardStr;
   ACPI_HID_DEVICE_PATH    *Keyboard;
 
-  KeyboardStr = SplitStr (&TextDeviceNode, L',');
+  KeyboardStr = SctSplitStr (&TextDeviceNode, L',');
   Keyboard    = (ACPI_HID_DEVICE_PATH *) CreateDeviceNode (
                                            AcpiNodeType,
                                            AcpiNodeSubType,
                                            sizeof (ACPI_HID_DEVICE_PATH)
                                            );
   Keyboard->HID  = 0x030141d0;
-  Keyboard->UID  = (UINT32) StrToUInt (KeyboardStr);
+  Keyboard->UID  = (UINT32) SctStrToUInt (KeyboardStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Keyboard;
 }
@@ -627,14 +584,14 @@ CreateSerialDeviceNode (
   CHAR16                  *SerialStr;
   ACPI_HID_DEVICE_PATH    *Serial;
 
-  SerialStr = SplitStr (&TextDeviceNode, L',');
+  SerialStr = SctSplitStr (&TextDeviceNode, L',');
   Serial    = (ACPI_HID_DEVICE_PATH *) CreateDeviceNode (
                                          AcpiNodeType,
                                          AcpiNodeSubType,
                                          sizeof (ACPI_HID_DEVICE_PATH)
                                          );
   Serial->HID  = 0x050141d0;
-  Serial->UID  = (UINT32) StrToUInt (SerialStr);
+  Serial->UID  = (UINT32) SctStrToUInt (SerialStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Serial;
 }
@@ -648,14 +605,14 @@ CreateParallelPortDeviceNode (
   CHAR16                  *ParallelPortStr;
   ACPI_HID_DEVICE_PATH    *ParallelPort;
 
-  ParallelPortStr = SplitStr (&TextDeviceNode, L',');
+  ParallelPortStr = SctSplitStr (&TextDeviceNode, L',');
   ParallelPort    = (ACPI_HID_DEVICE_PATH *) CreateDeviceNode (
                                                AcpiNodeType,
                                                AcpiNodeSubType,
                                                sizeof (ACPI_HID_DEVICE_PATH)
                                                );
   ParallelPort->HID  = 0x040141d0;
-  ParallelPort->UID  = (UINT32) StrToUInt (ParallelPortStr);
+  ParallelPort->UID  = (UINT32) SctStrToUInt (ParallelPortStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) ParallelPort;
 }
@@ -680,9 +637,9 @@ CreateAcpiExtDeviceNode (
 
 
   Length    = sizeof (ACPI_EXTENDED_HID_DEVICE_PATH) + 
-                  (UINT16) EfiStrLen (HIDSTRStr) + 1 +
-                  (UINT16) EfiStrLen (UIDSTRStr) + 1 +
-                  (UINT16) EfiStrLen (CIDSTRStr) + 1;
+                  (UINT16) SctStrLen (HIDSTRStr) + 1 +
+                  (UINT16) SctStrLen (UIDSTRStr) + 1 +
+                  (UINT16) SctStrLen (CIDSTRStr) + 1;
   AcpiExt = (ACPI_EXTENDED_HID_DEVICE_PATH_WITH_STR *) CreateDeviceNode (
                                                          AcpiExtNodeType,
                                                          AcpiExtNodeSubType,
@@ -691,24 +648,24 @@ CreateAcpiExtDeviceNode (
 
   if ((HIDStr[0] == L'P') && (HIDStr[1] == L'N') && (HIDStr[2] == L'P')) {
     HIDStr += 3;
-    AcpiExt->HID = EISA_PNP_ID (Xtoi (HIDStr));
+    AcpiExt->HID = EISA_PNP_ID (SctXtoi (HIDStr));
   } else {
-    AcpiExt->HID = (UINT32) Xtoi (HIDStr);
+    AcpiExt->HID = (UINT32) SctXtoi (HIDStr);
   }
 
   if ((CIDStr[0] == L'P') && (CIDStr[1] == L'N') && (CIDStr[2] == L'P')) {
     CIDStr += 3;
-    AcpiExt->CID = EISA_PNP_ID (Xtoi (CIDStr));
+    AcpiExt->CID = EISA_PNP_ID (SctXtoi (CIDStr));
   } else {
-    AcpiExt->CID = (UINT32) Xtoi (CIDStr);
+    AcpiExt->CID = (UINT32) SctXtoi (CIDStr);
   }
 
-  AcpiExt->UID  = (UINT32) Xtoi (UIDStr);
+  AcpiExt->UID  = (UINT32) SctXtoi (UIDStr);
 
   AsciiStr = AcpiExt->HidUidCidStr;
-  StrToAscii (HIDSTRStr, AsciiStr);
-  StrToAscii (UIDSTRStr, AsciiStr + (UINT16) EfiStrLen (HIDSTRStr) + 1);
-  StrToAscii (CIDSTRStr, AsciiStr + (UINT16) EfiStrLen (HIDSTRStr) + 1 + (UINT16) EfiStrLen (UIDSTRStr) + 1);
+  SctStrToAscii (HIDSTRStr, AsciiStr);
+  SctStrToAscii (UIDSTRStr, AsciiStr + (UINT16) SctStrLen (HIDSTRStr) + 1);
+  SctStrToAscii (CIDSTRStr, AsciiStr + (UINT16) SctStrLen (HIDSTRStr) + 1 + (UINT16) SctStrLen (UIDSTRStr) + 1);
   
   return (EFI_DEVICE_PATH_PROTOCOL *) AcpiExt;
 }
@@ -725,7 +682,7 @@ CreateAcpiExpDeviceNode (
   UINT16                                  Length;
   ACPI_EXTENDED_HID_DEVICE_PATH_WITH_STR  *AcpiExt;
 
-  Length    = sizeof (ACPI_EXTENDED_HID_DEVICE_PATH) + (UINT16) EfiStrLen (UIDSTRStr) + 3;
+  Length    = sizeof (ACPI_EXTENDED_HID_DEVICE_PATH) + (UINT16) SctStrLen (UIDSTRStr) + 3;
   AcpiExt   = (ACPI_EXTENDED_HID_DEVICE_PATH_WITH_STR *) CreateDeviceNode (
                                                            AcpiExtNodeType,
                                                            AcpiExtNodeSubType,
@@ -734,16 +691,16 @@ CreateAcpiExpDeviceNode (
 
   if ((HIDStr[0] == L'P') && (HIDStr[1] == L'N') && (HIDStr[2] == L'P')) {
     HIDStr += 3;
-    AcpiExt->HID = EISA_PNP_ID (Xtoi (HIDStr));
+    AcpiExt->HID = EISA_PNP_ID (SctXtoi (HIDStr));
   } else {
-    AcpiExt->HID = (UINT32) Xtoi (HIDStr);
+    AcpiExt->HID = (UINT32) SctXtoi (HIDStr);
   }
 
   if ((CIDStr[0] == L'P') && (CIDStr[1] == L'N') && (CIDStr[2] == L'P')) {
     CIDStr += 3;
-    AcpiExt->CID = EISA_PNP_ID (Xtoi (CIDStr));
+    AcpiExt->CID = EISA_PNP_ID (SctXtoi (CIDStr));
   } else {
-    AcpiExt->CID = (UINT32) Xtoi (CIDStr);
+    AcpiExt->CID = (UINT32) SctXtoi (CIDStr);
   }
 
   AcpiExt->UID = 0;
@@ -757,11 +714,11 @@ CreateAcpiExpDeviceNode (
   // Convert UID string
   //
   AsciiStr++;
-  StrToAscii (UIDSTRStr, AsciiStr);
+  SctStrToAscii (UIDSTRStr, AsciiStr);
   //
   // CID string is NULL
   //
-  AsciiStr += EfiStrLen(UIDSTRStr) + 1;
+  AsciiStr += SctStrLen (UIDSTRStr) + 1;
   *AsciiStr = 0;
 
   return (EFI_DEVICE_PATH_PROTOCOL *) AcpiExt;
@@ -780,13 +737,13 @@ CreateAcpiAdrDeviceNode (
   CHAR16                        *DisplayDeviceStr;
   ACPI_ADR_DEVICE_PATH          *AcpiAdr;
 
-  DisplayDeviceStr = SplitStr (&TextDeviceNode, L',');
+  DisplayDeviceStr = SctSplitStr (&TextDeviceNode, L',');
   AcpiAdr          = (ACPI_ADR_DEVICE_PATH *) CreateDeviceNode (
                                                 AcpiAdrNodeType,
                                                 AcpiAdrNodeSubtype,
                                                 sizeof (ACPI_ADR_DEVICE_PATH)
                                                 );
-  AcpiAdr->ADR = (UINT32) StrToUInt (DisplayDeviceStr);
+  AcpiAdr->ADR = (UINT32) SctStrToUInt (DisplayDeviceStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) AcpiAdr;
 }
@@ -805,16 +762,16 @@ CreateScsiDeviceNode (
   CHAR16            *LunStr;
   SCSI_DEVICE_PATH  *Scsi;
 
-  PunStr = SplitStr (&TextDeviceNode, L',');
-  LunStr = SplitStr (&TextDeviceNode, L',');
+  PunStr = SctSplitStr (&TextDeviceNode, L',');
+  LunStr = SctSplitStr (&TextDeviceNode, L',');
   Scsi   = (SCSI_DEVICE_PATH *) CreateDeviceNode (
                                    ScsiNodeType,
                                    ScsiNodeSubtype,
                                    sizeof (SCSI_DEVICE_PATH)
                                    );
 
-  Scsi->Pun = (UINT16) StrToUInt (PunStr);
-  Scsi->Lun = (UINT16) StrToUInt (LunStr);
+  Scsi->Pun = (UINT16) SctStrToUInt (PunStr);
+  Scsi->Lun = (UINT16) SctStrToUInt (LunStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Scsi;
 }
@@ -832,16 +789,16 @@ CreateFibreDeviceNode (
   CHAR16                    *LunStr;
   FIBRECHANNEL_DEVICE_PATH  *Fibre;
 
-  WWNStr = SplitStr (&TextDeviceNode, L',');
-  LunStr = SplitStr (&TextDeviceNode, L',');
+  WWNStr = SctSplitStr (&TextDeviceNode, L',');
+  LunStr = SctSplitStr (&TextDeviceNode, L',');
   Fibre  = (FIBRECHANNEL_DEVICE_PATH *) CreateDeviceNode (
                                           FibreNodeType,
                                           FibreNodeSubType,
                                           sizeof (FIBRECHANNEL_DEVICE_PATH)
                                           );
   Fibre->Reserved = 0;
-  StrToUInt64 (WWNStr, &Fibre->WWN);
-  StrToUInt64 (LunStr, &Fibre->Lun);
+  SctStrToUInt64 (WWNStr, &Fibre->WWN);
+  SctStrToUInt64 (LunStr, &Fibre->Lun);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Fibre;
 }
@@ -858,7 +815,7 @@ CreateI1394DeviceNode (
   CHAR16            *GuidStr;
   F1394_DEVICE_PATH *F1394;
 
-  GuidStr = SplitStr (&TextDeviceNode, L',');
+  GuidStr = SctSplitStr (&TextDeviceNode, L',');
   F1394  = (F1394_DEVICE_PATH *) CreateDeviceNode (
                                    I1394NodeType,
                                    I1394NodeSubType,
@@ -883,16 +840,16 @@ CreateUsbDeviceNode (
   CHAR16          *InterfaceStr;
   USB_DEVICE_PATH *Usb;
 
-  PortStr               = SplitStr (&TextDeviceNode, L',');
-  InterfaceStr          = SplitStr (&TextDeviceNode, L',');
+  PortStr               = SctSplitStr (&TextDeviceNode, L',');
+  InterfaceStr          = SctSplitStr (&TextDeviceNode, L',');
   Usb = (USB_DEVICE_PATH *) CreateDeviceNode (
                               UsbNodeType,
                               UsbNodeSubType,
                               sizeof (USB_DEVICE_PATH)
                               );
 
-  Usb->ParentPortNumber = (UINT8) StrToUInt (PortStr);
-  Usb->InterfaceNumber  = (UINT8) StrToUInt (InterfaceStr);
+  Usb->ParentPortNumber = (UINT8) SctStrToUInt (PortStr);
+  Usb->InterfaceNumber  = (UINT8) SctStrToUInt (InterfaceStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Usb;
 }
@@ -909,13 +866,13 @@ CreateI2ODeviceNode (
   CHAR16          *TIDStr;
   I2O_DEVICE_PATH *I2O;
 
-  TIDStr    = SplitStr (&TextDeviceNode, L',');
+  TIDStr    = SctSplitStr (&TextDeviceNode, L',');
   I2O = (I2O_DEVICE_PATH *) CreateDeviceNode (
                               I2ONodeType,
                               I2ONodeSubType,
                               sizeof (I2O_DEVICE_PATH)
                               );
-  I2O->Tid  = (UINT32) StrToUInt (TIDStr);
+  I2O->Tid  = (UINT32) SctStrToUInt (TIDStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) I2O;
 }
@@ -937,22 +894,22 @@ CreateInfiniBandDeviceNode (
   EFI_GUID                PortGid;
   INFINIBAND_DEVICE_PATH  *InfiniBand;
 
-  FlagsStr   = SplitStr (&TextDeviceNode, L',');
-  GuidStr    = SplitStr (&TextDeviceNode, L',');
-  SidStr     = SplitStr (&TextDeviceNode, L',');
-  TidStr     = SplitStr (&TextDeviceNode, L',');
-  DidStr     = SplitStr (&TextDeviceNode, L',');
+  FlagsStr   = SctSplitStr (&TextDeviceNode, L',');
+  GuidStr    = SctSplitStr (&TextDeviceNode, L',');
+  SidStr     = SctSplitStr (&TextDeviceNode, L',');
+  TidStr     = SctSplitStr (&TextDeviceNode, L',');
+  DidStr     = SctSplitStr (&TextDeviceNode, L',');
   InfiniBand = (INFINIBAND_DEVICE_PATH *) CreateDeviceNode (
                                             InfiniBandNodeType,
                                             InfiniBandNodeSubType,
                                             sizeof (INFINIBAND_DEVICE_PATH)
                                             );
-  InfiniBand->ResourceFlags = (UINT32) StrToUInt (FlagsStr);
+  InfiniBand->ResourceFlags = (UINT32) SctStrToUInt (FlagsStr);
   StrToGuid (GuidStr, &PortGid);
   SctCopyMem (InfiniBand->PortGid, &PortGid, sizeof (EFI_GUID));
-  StrToUInt64 (SidStr, &InfiniBand->ServiceId);
-  StrToUInt64 (TidStr, &InfiniBand->TargetPortId);
-  StrToUInt64 (DidStr, &InfiniBand->DeviceId);
+  SctStrToUInt64 (SidStr, &InfiniBand->ServiceId);
+  SctStrToUInt64 (TidStr, &InfiniBand->TargetPortId);
+  SctStrToUInt64 (DidStr, &InfiniBand->DeviceId);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) InfiniBand;
 }
@@ -991,16 +948,16 @@ CreateUartFlowCtrlDeviceNode (
   CHAR16                        *ValueStr;
   UART_FLOW_CONTROL_DEVICE_PATH *UartFlowControl;
 
-  ValueStr        = SplitStr (&TextDeviceNode, L',');
+  ValueStr        = SctSplitStr (&TextDeviceNode, L',');
   UartFlowControl = (UART_FLOW_CONTROL_DEVICE_PATH *) CreateDeviceNode (
                                                         UartFlowCtrlNodeType,
                                                         UartFlowCtrlNodeSubtype,
                                                         sizeof (UART_FLOW_CONTROL_DEVICE_PATH)
                                                         );
   UartFlowControl->Guid = mEfiDevicePathMessagingUartFlowControlGuid;
-  if (EfiStrCmp (ValueStr, L"XonXoff") == 0) {
+  if (SctStrCmp (ValueStr, L"XonXoff") == 0) {
     UartFlowControl->FlowControlMap = 2;
-  } else if (EfiStrCmp (ValueStr, L"Hardware") == 0) {
+  } else if (SctStrCmp (ValueStr, L"Hardware") == 0) {
     UartFlowControl->FlowControlMap = 1;
   } else {
     UartFlowControl->FlowControlMap = 0;
@@ -1031,14 +988,14 @@ CreateSASDeviceNode (
   UINT16          Info;
   SAS_DEVICE_PATH *Sas;
 
-  AddressStr  = SplitStr (&TextDeviceNode, L',');
-  LunStr      = SplitStr (&TextDeviceNode, L',');
-  RTPStr      = SplitStr (&TextDeviceNode, L',');
-  SASSATAStr  = SplitStr (&TextDeviceNode, L',');
-  LocationStr = SplitStr (&TextDeviceNode, L',');
-  ConnectStr  = SplitStr (&TextDeviceNode, L',');
-  DriveBayStr = SplitStr (&TextDeviceNode, L',');
-  ReservedStr = SplitStr (&TextDeviceNode, L',');
+  AddressStr  = SctSplitStr (&TextDeviceNode, L',');
+  LunStr      = SctSplitStr (&TextDeviceNode, L',');
+  RTPStr      = SctSplitStr (&TextDeviceNode, L',');
+  SASSATAStr  = SctSplitStr (&TextDeviceNode, L',');
+  LocationStr = SctSplitStr (&TextDeviceNode, L',');
+  ConnectStr  = SctSplitStr (&TextDeviceNode, L',');
+  DriveBayStr = SctSplitStr (&TextDeviceNode, L',');
+  ReservedStr = SctSplitStr (&TextDeviceNode, L',');
   Info        = 0x0000;
   Sas         = (SAS_DEVICE_PATH *) CreateDeviceNode (
                                       SASNodeType,
@@ -1046,32 +1003,32 @@ CreateSASDeviceNode (
                                       sizeof (SAS_DEVICE_PATH)
                                       );
   Sas->Guid         = mEfiDevicePathMessagingSASGuid;
-  StrToUInt64 (AddressStr, &Sas->SasAddress);
-  StrToUInt64 (LunStr, &Sas->Lun);
-  Sas->RelativeTargetPort = (UINT16) StrToUInt (RTPStr);
-  if (EfiStrCmp (SASSATAStr, L"NoTopology") == 0)
+  SctStrToUInt64 (AddressStr, &Sas->SasAddress);
+  SctStrToUInt64 (LunStr, &Sas->Lun);
+  Sas->RelativeTargetPort = (UINT16) SctStrToUInt (RTPStr);
+  if (SctStrCmp (SASSATAStr, L"NoTopology") == 0)
     ;
   else {
-    if (EfiStrCmp (DriveBayStr, L"0") == 0) {
+    if (SctStrCmp (DriveBayStr, L"0") == 0) {
       Info |= 0x0001;
     } else {
       Info |= 0x0002;
-      Info |= ((StrToUInt (DriveBayStr) - 1) << 8);
+      Info |= ((SctStrToUInt (DriveBayStr) - 1) << 8);
     }
 
-    if (EfiStrCmp (SASSATAStr, L"SATA") == 0) {
+    if (SctStrCmp (SASSATAStr, L"SATA") == 0) {
       Info |= 0x0010;
     }
-    if (EfiStrCmp (LocationStr, L"External") == 0) {
+    if (SctStrCmp (LocationStr, L"External") == 0) {
       Info |= 0x0020;
     }
-    if (EfiStrCmp (ConnectStr, L"Expanded") == 0) {
+    if (SctStrCmp (ConnectStr, L"Expanded") == 0) {
       Info |= 0x0040;
     }
   }
 
   Sas->DeviceTopology = Info;
-  Sas->Reserved       = (UINT32) StrToUInt (ReservedStr);
+  Sas->Reserved       = (UINT32) SctStrToUInt (ReservedStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Sas;
 }
@@ -1095,13 +1052,13 @@ CreateSASExDeviceNode (
   UINT16               Info;
   SASEX_DEVICE_PATH    *SasEx;
 
-  AddressStr  = SplitStr (&TextDeviceNode, L',');
-  LunStr      = SplitStr (&TextDeviceNode, L',');
-  RTPStr      = SplitStr (&TextDeviceNode, L',');
-  SASSATAStr  = SplitStr (&TextDeviceNode, L',');
-  LocationStr = SplitStr (&TextDeviceNode, L',');
-  ConnectStr  = SplitStr (&TextDeviceNode, L',');
-  DriveBayStr = SplitStr (&TextDeviceNode, L',');
+  AddressStr  = SctSplitStr (&TextDeviceNode, L',');
+  LunStr      = SctSplitStr (&TextDeviceNode, L',');
+  RTPStr      = SctSplitStr (&TextDeviceNode, L',');
+  SASSATAStr  = SctSplitStr (&TextDeviceNode, L',');
+  LocationStr = SctSplitStr (&TextDeviceNode, L',');
+  ConnectStr  = SctSplitStr (&TextDeviceNode, L',');
+  DriveBayStr = SctSplitStr (&TextDeviceNode, L',');
   Info        = 0x0000;
   SasEx       = (SASEX_DEVICE_PATH *) CreateDeviceNode (
                                         SASExNodeType,
@@ -1111,24 +1068,24 @@ CreateSASExDeviceNode (
   
   StrToUInt8Array (AddressStr, SasEx->SasAddress);
   StrToUInt8Array (LunStr, SasEx->Lun);
-  SasEx->RelativeTargetPort = (UINT16) StrToUInt (RTPStr);
-  if (EfiStrCmp (SASSATAStr, L"NoTopology") == 0)
+  SasEx->RelativeTargetPort = (UINT16) SctStrToUInt (RTPStr);
+  if (SctStrCmp (SASSATAStr, L"NoTopology") == 0)
     ;
   else {
-    if (EfiStrCmp (DriveBayStr, L"0") == 0) {
+    if (SctStrCmp (DriveBayStr, L"0") == 0) {
       Info |= 0x0001;
     } else {
       Info |= 0x0002;
-      Info |= ((StrToUInt (DriveBayStr) - 1) << 8);
+      Info |= ((SctStrToUInt (DriveBayStr) - 1) << 8);
     }
 
-    if (EfiStrCmp (SASSATAStr, L"SATA") == 0) {
+    if (SctStrCmp (SASSATAStr, L"SATA") == 0) {
       Info |= 0x0010;
     }
-    if (EfiStrCmp (LocationStr, L"External") == 0) {
+    if (SctStrCmp (LocationStr, L"External") == 0) {
       Info |= 0x0020;
     }
-    if (EfiStrCmp (ConnectStr, L"Expanded") == 0) {
+    if (SctStrCmp (ConnectStr, L"Expanded") == 0) {
       Info |= 0x0040;
     }
   }
@@ -1178,14 +1135,14 @@ CreateMACDeviceNode (
   UINTN                 Length;
   MAC_ADDR_DEVICE_PATH  *MAC;
 
-  AddressStr    = SplitStr (&TextDeviceNode, L',');
-  IfTypeStr     = SplitStr (&TextDeviceNode, L',');
+  AddressStr    = SctSplitStr (&TextDeviceNode, L',');
+  IfTypeStr     = SctSplitStr (&TextDeviceNode, L',');
   MAC           = (MAC_ADDR_DEVICE_PATH *) CreateDeviceNode (
                                              MACNodeType,
                                              MACNodeSubType,
                                              sizeof (MAC_ADDR_DEVICE_PATH)
                                              );
-  MAC->IfType   = (UINT8) StrToUInt (IfTypeStr);
+  MAC->IfType   = (UINT8) SctStrToUInt (IfTypeStr);
   Length = sizeof (EFI_MAC_ADDRESS);
   StrToBuf (&MAC->MacAddress.Addr[0], Length, AddressStr);
 
@@ -1209,30 +1166,30 @@ CreateIPv4DeviceNode (
   CHAR16            *SubnetStr;
   IPV4_DEVICE_PATH  *IPv4;
 
-  RemoteIPStr           = SplitStr (&TextDeviceNode, L',');
-  ProtocolStr           = SplitStr (&TextDeviceNode, L',');
-  TypeStr               = SplitStr (&TextDeviceNode, L',');
-  LocalIPStr            = SplitStr (&TextDeviceNode, L',');
-  GatewayStr            = SplitStr (&TextDeviceNode, L',');
-  SubnetStr             = SplitStr (&TextDeviceNode, L',');
+  RemoteIPStr           = SctSplitStr (&TextDeviceNode, L',');
+  ProtocolStr           = SctSplitStr (&TextDeviceNode, L',');
+  TypeStr               = SctSplitStr (&TextDeviceNode, L',');
+  LocalIPStr            = SctSplitStr (&TextDeviceNode, L',');
+  GatewayStr            = SctSplitStr (&TextDeviceNode, L',');
+  SubnetStr             = SctSplitStr (&TextDeviceNode, L',');
   IPv4                  = (IPV4_DEVICE_PATH *) CreateDeviceNode (
                                                  Ipv4NodeType,
                                                  Ipv4NodeSubType,
                                                  sizeof (IPV4_DEVICE_PATH)
                                                  );
 
-  StrToIPv4Addr (&RemoteIPStr, &IPv4->RemoteIpAddress);
-  IPv4->Protocol = (EfiStrCmp (ProtocolStr, L"UDP") == 0) ? (UINT16) 0x11 : (UINT16) 0x06;
-  if (EfiStrCmp (TypeStr, L"Static") == 0) {
+  SctStrToIPv4Addr (&RemoteIPStr, &IPv4->RemoteIpAddress);
+  IPv4->Protocol = (SctStrCmp (ProtocolStr, L"UDP") == 0) ? (UINT16) 0x11 : (UINT16) 0x06;
+  if (SctStrCmp (TypeStr, L"Static") == 0) {
     IPv4->StaticIpAddress = TRUE;
   } else {
     IPv4->StaticIpAddress = FALSE;
   }
-  StrToIPv4Addr (&LocalIPStr, &IPv4->LocalIpAddress);
+  SctStrToIPv4Addr (&LocalIPStr, &IPv4->LocalIpAddress);
   IPv4->LocalPort       = 0;
   IPv4->RemotePort      = 0;
-  StrToIPv4Addr (&GatewayStr, &IPv4->GatewayIPAddress);
-  StrToIPv4Addr (&SubnetStr,  &IPv4->SubnetMask);
+  SctStrToIPv4Addr (&GatewayStr, &IPv4->GatewayIPAddress);
+  SctStrToIPv4Addr (&SubnetStr,  &IPv4->SubnetMask);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) IPv4;
 }
@@ -1254,26 +1211,26 @@ CreateIPv6DeviceNode (
   CHAR16            *GatewayIPAddressStr;
   IPV6_DEVICE_PATH  *IPv6;
 
-  RemoteIPStr           = SplitStr (&TextDeviceNode, L',');
-  ProtocolStr           = SplitStr (&TextDeviceNode, L',');
-  IPAddressOriginStr    = SplitStr (&TextDeviceNode, L',');
-  LocalIPStr            = SplitStr (&TextDeviceNode, L',');
-  PrefixLengthStr       = SplitStr (&TextDeviceNode, L',');
-  GatewayIPAddressStr   = SplitStr (&TextDeviceNode, L',');
+  RemoteIPStr           = SctSplitStr (&TextDeviceNode, L',');
+  ProtocolStr           = SctSplitStr (&TextDeviceNode, L',');
+  IPAddressOriginStr    = SctSplitStr (&TextDeviceNode, L',');
+  LocalIPStr            = SctSplitStr (&TextDeviceNode, L',');
+  PrefixLengthStr       = SctSplitStr (&TextDeviceNode, L',');
+  GatewayIPAddressStr   = SctSplitStr (&TextDeviceNode, L',');
   IPv6                  = (IPV6_DEVICE_PATH *) CreateDeviceNode (
                                                  Ipv6NodeType,
                                                  Ipv6NodeSubType,
                                                  sizeof (IPV6_DEVICE_PATH)
                                                  );
-  StrToIPv6Addr (&RemoteIPStr, &IPv6->RemoteIpAddress);
-  IPv6->Protocol        = (EfiStrCmp (ProtocolStr, L"UDP") == 0) ? (UINT16) 0x11 : (UINT16) 0x06;
+  SctStrToIPv6Addr (&RemoteIPStr, &IPv6->RemoteIpAddress);
+  IPv6->Protocol        = (SctStrCmp (ProtocolStr, L"UDP") == 0) ? (UINT16) 0x11 : (UINT16) 0x06;
 
-  IPv6->IPAddressOrigin = (StrCmp(IPAddressOriginStr, L"Static") == 0) ? 0 : (StrCmp(IPAddressOriginStr, L"StatelessAutoConfigure") == 0) ? 1 : 2;
-  StrToIPv6Addr (&LocalIPStr, &IPv6->LocalIpAddress);
+  IPv6->IPAddressOrigin = (SctStrCmp (IPAddressOriginStr, L"Static") == 0) ? 0 : (SctStrCmp(IPAddressOriginStr, L"StatelessAutoConfigure") == 0) ? 1 : 2;
+  SctStrToIPv6Addr (&LocalIPStr, &IPv6->LocalIpAddress);
   IPv6->LocalPort       = 0;
   IPv6->RemotePort      = 0;
-  IPv6->PrefixLength    = (UINT8) StrToUInt (PrefixLengthStr);
-  StrToIPv6Addr (&GatewayIPAddressStr, &IPv6->GatewayIPAddress);
+  IPv6->PrefixLength    = (UINT8) SctStrToUInt (PrefixLengthStr);
+  SctStrToIPv6Addr (&GatewayIPAddressStr, &IPv6->GatewayIPAddress);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) IPv6;
 }
@@ -1293,17 +1250,17 @@ CreateUartDeviceNode (
   CHAR16            *StopBitsStr;
   UART_DEVICE_PATH  *Uart;
 
-  BaudStr         = SplitStr (&TextDeviceNode, L',');
-  DataBitsStr     = SplitStr (&TextDeviceNode, L',');
-  ParityStr       = SplitStr (&TextDeviceNode, L',');
-  StopBitsStr     = SplitStr (&TextDeviceNode, L',');
+  BaudStr         = SctSplitStr (&TextDeviceNode, L',');
+  DataBitsStr     = SctSplitStr (&TextDeviceNode, L',');
+  ParityStr       = SctSplitStr (&TextDeviceNode, L',');
+  StopBitsStr     = SctSplitStr (&TextDeviceNode, L',');
   Uart            = (UART_DEVICE_PATH *) CreateDeviceNode (
                                            UartNodeType,
                                            UartNodeSubType,
                                            sizeof(UART_DEVICE_PATH)
                                            );
-  Uart->BaudRate  = (EfiStrCmp (BaudStr, L"DEFAULT") == 0) ? 115200 : (UINT64) Atoi (BaudStr);
-  Uart->DataBits  = (EfiStrCmp (DataBitsStr, L"DEFAULT") == 0) ? (UINT8) 8 : (UINT8) Atoi (DataBitsStr);
+  Uart->BaudRate  = (SctStrCmp (BaudStr, L"DEFAULT") == 0) ? 115200 : (UINT64) SctAtoi (BaudStr);
+  Uart->DataBits  = (SctStrCmp (DataBitsStr, L"DEFAULT") == 0) ? (UINT8) 8 : (UINT8) SctAtoi (DataBitsStr);
   switch (*ParityStr) {
   case L'D':
     Uart->Parity = 0;
@@ -1327,13 +1284,13 @@ CreateUartDeviceNode (
     Uart->Parity = 0xff;
   }
 
-  if (EfiStrCmp (StopBitsStr, L"D") == 0) {
+  if (SctStrCmp (StopBitsStr, L"D") == 0) {
     Uart->StopBits = (UINT8) 0;
-  } else if (EfiStrCmp (StopBitsStr, L"1") == 0) {
+  } else if (SctStrCmp (StopBitsStr, L"1") == 0) {
     Uart->StopBits = (UINT8) 1;
-  } else if (EfiStrCmp (StopBitsStr, L"1.5") == 0) {
+  } else if (SctStrCmp (StopBitsStr, L"1.5") == 0) {
     Uart->StopBits = (UINT8) 2;
-  } else if (EfiStrCmp (StopBitsStr, L"2") == 0) {
+  } else if (SctStrCmp (StopBitsStr, L"2") == 0) {
     Uart->StopBits = (UINT8) 3;
   } else {
     Uart->StopBits = 0xff;
@@ -1354,13 +1311,13 @@ CreateVlanDeviceNode (
   CHAR16                        *VlanIdStr;
   VLAN_DEVICE_PATH              *Vlan;
 
-  VlanIdStr = SplitStr (&TextDeviceNode, L',');
+  VlanIdStr = SctSplitStr (&TextDeviceNode, L',');
   Vlan = (VLAN_DEVICE_PATH *) CreateDeviceNode (
                                 VlanNodeType,
                                 VlanNodeSubtype,
                                 sizeof (VLAN_DEVICE_PATH)
                                 );
-  Vlan->VlanId = (UINT16) StrToUInt (VlanIdStr);
+  Vlan->VlanId = (UINT16) SctStrToUInt (VlanIdStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Vlan;
 }
@@ -1378,8 +1335,8 @@ CreateFibreExDeviceNode (
   CHAR16                      *LunStr;
   FIBRECHANNELEX_DEVICE_PATH  *FibreEx;
 
-  WWNStr  = SplitStr (&TextDeviceNode, L',');
-  LunStr  = SplitStr (&TextDeviceNode, L',');
+  WWNStr  = SctSplitStr (&TextDeviceNode, L',');
+  LunStr  = SctSplitStr (&TextDeviceNode, L',');
   FibreEx = (FIBRECHANNELEX_DEVICE_PATH *) CreateDeviceNode (
                                              FibreExNodeType,
                                              FibreExNodeSubType,
@@ -1452,13 +1409,13 @@ CreateUnitDeviceNode (
   CHAR16                          *LunStr;
   DEVICE_LOGICAL_UNIT_DEVICE_PATH *LogicalUnit;
 
-  LunStr      = SplitStr (&TextDeviceNode, L',');
+  LunStr      = SctSplitStr (&TextDeviceNode, L',');
   LogicalUnit = (DEVICE_LOGICAL_UNIT_DEVICE_PATH *) CreateDeviceNode (
                                                       UnitNodeType,
                                                       UnitNodeSubType,
                                                       sizeof (DEVICE_LOGICAL_UNIT_DEVICE_PATH)
                                                       );
-  LogicalUnit->Lun  = (UINT8) StrToUInt (LunStr);
+  LogicalUnit->Lun  = (UINT8) SctStrToUInt (LunStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) LogicalUnit;
 }
@@ -1483,38 +1440,38 @@ CreateiScsiDeviceNode (
   UINT64                      LunNum;
   ISCSI_DEVICE_PATH_WITH_NAME *iSCSI;
 
-  NameStr           = SplitStr (&TextDeviceNode, L',');
-  PortalGroupStr    = SplitStr (&TextDeviceNode, L',');
-  LunStr            = SplitStr (&TextDeviceNode, L',');
-  HeaderDigestStr   = SplitStr (&TextDeviceNode, L',');
-  DataDigestStr     = SplitStr (&TextDeviceNode, L',');
-  AuthenticationStr = SplitStr (&TextDeviceNode, L',');
-  ProtocolStr       = SplitStr (&TextDeviceNode, L',');
+  NameStr           = SctSplitStr (&TextDeviceNode, L',');
+  PortalGroupStr    = SctSplitStr (&TextDeviceNode, L',');
+  LunStr            = SctSplitStr (&TextDeviceNode, L',');
+  HeaderDigestStr   = SctSplitStr (&TextDeviceNode, L',');
+  DataDigestStr     = SctSplitStr (&TextDeviceNode, L',');
+  AuthenticationStr = SctSplitStr (&TextDeviceNode, L',');
+  ProtocolStr       = SctSplitStr (&TextDeviceNode, L',');
   iSCSI             = (ISCSI_DEVICE_PATH_WITH_NAME *) CreateDeviceNode (
                                                         iSCSINodeType,
                                                         iSCSINodeSubType,
-                                                        sizeof (ISCSI_DEVICE_PATH_WITH_NAME) + (UINT16) EfiStrLen (NameStr)
+                                                        sizeof (ISCSI_DEVICE_PATH_WITH_NAME) + (UINT16) SctStrLen (NameStr)
                                                         );
-  UnicodeToAscii (NameStr, iSCSI->iSCSITargetName);
-  iSCSI->TargetPortalGroupTag = (UINT16) StrToUInt (PortalGroupStr);
-  StrToUInt64 (LunStr, &LunNum);
+  SctUnicodeToAscii (iSCSI->iSCSITargetName, NameStr, SctStrLen (NameStr));
+  iSCSI->TargetPortalGroupTag = (UINT16) SctStrToUInt (PortalGroupStr);
+  SctStrToUInt64 (LunStr, &LunNum);
   iSCSI->Lun = LunNum;
 
   Options = 0x0000;
-  if (EfiStrCmp (HeaderDigestStr, L"CRC32C") == 0) {
+  if (SctStrCmp (HeaderDigestStr, L"CRC32C") == 0) {
     Options |= 0x0002;
   }
-  if (EfiStrCmp (DataDigestStr, L"CRC32C") == 0) {
+  if (SctStrCmp (DataDigestStr, L"CRC32C") == 0) {
     Options |= 0x0008;
   }
-  if (EfiStrCmp (AuthenticationStr, L"None") == 0) {
+  if (SctStrCmp (AuthenticationStr, L"None") == 0) {
     Options |= 0x0800;
   }
-  if (EfiStrCmp (AuthenticationStr, L"CHAP_UNI") == 0) {
+  if (SctStrCmp (AuthenticationStr, L"CHAP_UNI") == 0) {
     Options |= 0x1000;
   }
   iSCSI->LoginOption      = (UINT16) Options;
-  iSCSI->NetworkProtocol  = (UINT16) EfiStrCmp (ProtocolStr, L"TCP");
+  iSCSI->NetworkProtocol  = (UINT16) SctStrCmp (ProtocolStr, L"TCP");
 
   return (EFI_DEVICE_PATH_PROTOCOL *) iSCSI;
 }
@@ -1565,40 +1522,40 @@ CreateHdDeviceNode (
   EFI_GUID              SignatureGuid;
   HARDDRIVE_DEVICE_PATH *Hd;
 
-  PartitionStr        = SplitStr (&TextDeviceNode, L',');
-  TypeStr             = SplitStr (&TextDeviceNode, L',');
-  SignatureStr        = SplitStr (&TextDeviceNode, L',');
-  StartStr            = SplitStr (&TextDeviceNode, L',');
-  SizeStr             = SplitStr (&TextDeviceNode, L',');
+  PartitionStr        = SctSplitStr (&TextDeviceNode, L',');
+  TypeStr             = SctSplitStr (&TextDeviceNode, L',');
+  SignatureStr        = SctSplitStr (&TextDeviceNode, L',');
+  StartStr            = SctSplitStr (&TextDeviceNode, L',');
+  SizeStr             = SctSplitStr (&TextDeviceNode, L',');
   Hd                  = (HARDDRIVE_DEVICE_PATH *) CreateDeviceNode (
                                                     HdNodeType,
                                                     HdNodeSubType,
                                                     sizeof (HARDDRIVE_DEVICE_PATH)
                                                     );
 
-  Hd->PartitionNumber = (UINT32) Atoi (PartitionStr);
+  Hd->PartitionNumber = (UINT32) SctAtoi (PartitionStr);
 
   SctZeroMem (Hd->Signature, 16);
   Hd->MBRType = (UINT8) 0;
 
-  if (EfiStrCmp (TypeStr, L"MBR") == 0) {
+  if (SctStrCmp (TypeStr, L"MBR") == 0) {
     Hd->SignatureType = SIGNATURE_TYPE_MBR;
     Hd->MBRType       = 0x01;
 
-    Signature32       = (UINT32) StrToUInt (SignatureStr);
+    Signature32       = (UINT32) SctStrToUInt (SignatureStr);
     SctCopyMem (Hd->Signature, &Signature32, sizeof (UINT32));
-  } else if (EfiStrCmp (TypeStr, L"GPT") == 0) {
+  } else if (SctStrCmp (TypeStr, L"GPT") == 0) {
     Hd->SignatureType = SIGNATURE_TYPE_GUID;
     Hd->MBRType       = 0x02;
 
     StrToGuid (SignatureStr, &SignatureGuid);
     SctCopyMem (Hd->Signature, &SignatureGuid, sizeof (EFI_GUID));
   } else {
-    Hd->SignatureType = (UINT8) StrToUInt(TypeStr);
+    Hd->SignatureType = (UINT8) SctStrToUInt (TypeStr);
   }
 
-  StrToUInt64 (StartStr, &Hd->PartitionStart);
-  StrToUInt64 (SizeStr, &Hd->PartitionSize);
+  SctStrToUInt64 (StartStr, &Hd->PartitionStart);
+  SctStrToUInt64 (SizeStr, &Hd->PartitionSize);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Hd;
 }
@@ -1617,17 +1574,17 @@ CreateCdromDeviceNode (
   CHAR16            *SizeStr;
   CDROM_DEVICE_PATH *CDROM;
 
-  EntryStr              = SplitStr (&TextDeviceNode, L',');
-  StartStr              = SplitStr (&TextDeviceNode, L',');
-  SizeStr               = SplitStr (&TextDeviceNode, L',');
+  EntryStr              = SctSplitStr (&TextDeviceNode, L',');
+  StartStr              = SctSplitStr (&TextDeviceNode, L',');
+  SizeStr               = SctSplitStr (&TextDeviceNode, L',');
   CDROM                 = (CDROM_DEVICE_PATH *) CreateDeviceNode (
                                                   MEDIA_DEVICE_PATH,
                                                   MEDIA_CDROM_DP,
                                                   sizeof (CDROM_DEVICE_PATH)
                                                   );
-  CDROM->BootEntry      = (UINT32) StrToUInt (EntryStr);
-  StrToUInt64 (StartStr, &CDROM->PartitionStart);
-  StrToUInt64 (SizeStr, &CDROM->PartitionSize);
+  CDROM->BootEntry      = (UINT32) SctStrToUInt (EntryStr);
+  SctStrToUInt64 (StartStr, &CDROM->PartitionStart);
+  SctStrToUInt64 (SizeStr, &CDROM->PartitionSize);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) CDROM;
 }
@@ -1646,10 +1603,10 @@ CreateTextFileDeviceNode (
   File = (FILEPATH_DEVICE_PATH *) CreateDeviceNode (
                                     TextFileNodeType,
                                     TextFileNodeSubType,
-                                    sizeof (FILEPATH_DEVICE_PATH) + (UINT16) (EfiStrLen (TextDeviceNode) * 2)
+                                    sizeof (FILEPATH_DEVICE_PATH) + (UINT16) (SctStrLen (TextDeviceNode) * 2)
                                     );
 
-  EfiStrCpy (File->PathName, TextDeviceNode);
+  SctStrCpy (File->PathName, TextDeviceNode);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) File;
 }
@@ -1667,7 +1624,7 @@ CreateMediaDeviceNode (
   CHAR16                      *GuidStr;
   MEDIA_PROTOCOL_DEVICE_PATH  *Media;
 
-  GuidStr = SplitStr (&TextDeviceNode, L',');
+  GuidStr = SctSplitStr (&TextDeviceNode, L',');
   Media   = (MEDIA_PROTOCOL_DEVICE_PATH *) CreateDeviceNode (
                                              VenMEDIANodeType,
                                              VenMEDIANodeSubType,
@@ -1693,31 +1650,31 @@ CreateBBSDeviceNode (
   CHAR16              *FlagsStr;
   BBS_BBS_DEVICE_PATH *Bbs;
 
-  TypeStr   = SplitStr (&TextDeviceNode, L',');
-  IdStr     = SplitStr (&TextDeviceNode, L',');
-  FlagsStr  = SplitStr (&TextDeviceNode, L',');
+  TypeStr   = SctSplitStr (&TextDeviceNode, L',');
+  IdStr     = SctSplitStr (&TextDeviceNode, L',');
+  FlagsStr  = SctSplitStr (&TextDeviceNode, L',');
   Bbs       = (BBS_BBS_DEVICE_PATH *) CreateDeviceNode (
                                         BbsNodeType,
                                         BbsNodeSubType,
-                                        sizeof (BBS_BBS_DEVICE_PATH) + (UINT16) (EfiStrLen (IdStr))
+                                        sizeof (BBS_BBS_DEVICE_PATH) + (UINT16) (SctStrLen (IdStr))
                                         );
-  if (EfiStrCmp (TypeStr, L"Floppy") == 0) {
+  if (SctStrCmp (TypeStr, L"Floppy") == 0) {
     Bbs->DeviceType = BBS_TYPE_FLOPPY;
-  } else if (EfiStrCmp (TypeStr, L"HD") == 0) {
+  } else if (SctStrCmp (TypeStr, L"HD") == 0) {
     Bbs->DeviceType = BBS_TYPE_HARDDRIVE;
-  } else if (EfiStrCmp (TypeStr, L"CDROM") == 0) {
+  } else if (SctStrCmp (TypeStr, L"CDROM") == 0) {
     Bbs->DeviceType = BBS_TYPE_CDROM;
-  } else if (EfiStrCmp (TypeStr, L"PCMCIA") == 0) {
+  } else if (SctStrCmp (TypeStr, L"PCMCIA") == 0) {
     Bbs->DeviceType = BBS_TYPE_PCMCIA;
-  } else if (EfiStrCmp (TypeStr, L"USB") == 0) {
+  } else if (SctStrCmp (TypeStr, L"USB") == 0) {
     Bbs->DeviceType = BBS_TYPE_USB;
-  } else if (EfiStrCmp (TypeStr, L"Network") == 0) {
+  } else if (SctStrCmp (TypeStr, L"Network") == 0) {
     Bbs->DeviceType = BBS_TYPE_EMBEDDED_NETWORK;
   } else {
     Bbs->DeviceType = BBS_TYPE_UNKNOWN;
   }
-  StrToAscii (IdStr, Bbs->String);
-  Bbs->StatusFlag = (UINT16) StrToUInt (FlagsStr);
+  SctStrToAscii (IdStr, Bbs->String);
+  Bbs->StatusFlag = (UINT16) SctStrToUInt (FlagsStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Bbs;
 }
@@ -1732,8 +1689,8 @@ CreateMediaRelativeOffsetRangeDeviceNode (
   CHAR16                    *EndingOffsetStr;
   MEDIA_OFFSET_DEVICE_PATH  *Offset;
 
-  StartingOffsetStr = SplitStr (&TextDeviceNode, L',');
-  EndingOffsetStr   = SplitStr (&TextDeviceNode, L',');
+  StartingOffsetStr = SctSplitStr (&TextDeviceNode, L',');
+  EndingOffsetStr   = SctSplitStr (&TextDeviceNode, L',');
   Offset            = (MEDIA_OFFSET_DEVICE_PATH *) CreateDeviceNode (
                                                      MEDIA_DEVICE_PATH,
                                                      MEDIA_RELATIVE_OFFSET_RANGE_DP,
@@ -1741,8 +1698,8 @@ CreateMediaRelativeOffsetRangeDeviceNode (
                                                      );
 
   Offset->Reserved = 0;
-  StrToUInt64 (StartingOffsetStr, &Offset->StartingOffset);
-  StrToUInt64 (EndingOffsetStr, &Offset->EndingOffset);
+  SctStrToUInt64 (StartingOffsetStr, &Offset->StartingOffset);
+  SctStrToUInt64 (EndingOffsetStr, &Offset->EndingOffset);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Offset;
 }
@@ -1805,10 +1762,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.1
   //
-  StrCpy (text, L"0x2A");
+  SctStrCpy (text, L"0x2A");
   pDevicePath = CreatePcCardDeviceNode(text);
 
-  StrCpy (text, L"PcCard(0x2A)");
+  SctStrCpy (text, L"PcCard(0x2A)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1857,10 +1814,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.3
   //
-  StrCpy (text, L"5AF6C71E-1261-4637-9838-C4E9913D1DBB,0123456789ABCDEF");
+  SctStrCpy (text, L"5AF6C71E-1261-4637-9838-C4E9913D1DBB,0123456789ABCDEF");
   pDevicePath = CreateVenHwDeviceNode(text);
 
-  StrCpy (text, L"VenHw(5AF6C71E-1261-4637-9838-C4E9913D1DBB,0123456789ABCDEF)");
+  SctStrCpy (text, L"VenHw(5AF6C71E-1261-4637-9838-C4E9913D1DBB,0123456789ABCDEF)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1883,10 +1840,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.4
   //
-  StrCpy (text, L"0x1234ABCD");
+  SctStrCpy (text, L"0x1234ABCD");
   pDevicePath = CreateCtrlDeviceNode(text);
 
-  StrCpy (text, L"Ctrl(0x1234ABCD)");
+  SctStrCpy (text, L"Ctrl(0x1234ABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1909,7 +1866,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.5
   //
-  StrCpy (text, L"AcpiEx(PNPABCD,PNP0000,0,,1234,5678)");
+  SctStrCpy (text, L"AcpiEx(PNPABCD,PNP0000,0,,1234,5678)");
   pDevicePath = CreateAcpiExtDeviceNode(
                       L"PNPABCD", 
                       L"PNP0000", 
@@ -1942,7 +1899,7 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.6
   //
-  StrCpy (text, L"AcpiExp(PNPABCD,PNP0001,5678)");
+  SctStrCpy (text, L"AcpiExp(PNPABCD,PNP0001,5678)");
   pDevicePath = CreateAcpiExpDeviceNode(
                       L"PNPABCD", 
                       L"PNP0001",
@@ -1972,10 +1929,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.7
   //
-  StrCpy (text, L"1234,0xABCD");
+  SctStrCpy (text, L"1234,0xABCD");
   pDevicePath = CreateScsiDeviceNode(text);
 
-  StrCpy (text, L"Scsi(1234,0xABCD)");
+  SctStrCpy (text, L"Scsi(1234,0xABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1998,10 +1955,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.8
   //
-  StrCpy (text, L"0x123456789ABCDEF0,0xABCDEF1234567890");
+  SctStrCpy (text, L"0x123456789ABCDEF0,0xABCDEF1234567890");
   pDevicePath = CreateFibreDeviceNode(text);
 
-  StrCpy (text, L"Fibre(0x123456789ABCDEF0,0xABCDEF1234567890)");
+  SctStrCpy (text, L"Fibre(0x123456789ABCDEF0,0xABCDEF1234567890)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2024,10 +1981,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.9
   //
-  StrCpy (text, L"ACDE48234567ABCD");
+  SctStrCpy (text, L"ACDE48234567ABCD");
   pDevicePath = CreateI1394DeviceNode(text);
 
-  StrCpy (text, L"I1394(ACDE48234567ABCD)");
+  SctStrCpy (text, L"I1394(ACDE48234567ABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2050,10 +2007,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.10
   //
-  StrCpy (text, L"12,0xAB");
+  SctStrCpy (text, L"12,0xAB");
   pDevicePath = CreateUsbDeviceNode(text);
 
-  StrCpy (text, L"USB(12,0xAB)");
+  SctStrCpy (text, L"USB(12,0xAB)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2076,10 +2033,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.11
   //
-  StrCpy (text, L"0x1234ABCD");
+  SctStrCpy (text, L"0x1234ABCD");
   pDevicePath = CreateI2ODeviceNode(text);
 
-  StrCpy (text, L"I2O(0x1234ABCD)");
+  SctStrCpy (text, L"I2O(0x1234ABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2102,10 +2059,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.12
   //
-  StrCpy (text, L"10,A1ED07B9-5BDC-4741-ADCF-CA1E8681DD1A,1234,5678,0xABCD");
+  SctStrCpy (text, L"10,A1ED07B9-5BDC-4741-ADCF-CA1E8681DD1A,1234,5678,0xABCD");
   pDevicePath = CreateInfiniBandDeviceNode(text);
 
-  StrCpy (text, L"Infiniband(10,A1ED07B9-5BDC-4741-ADCF-CA1E8681DD1A,1234,5678,0xABCD)");
+  SctStrCpy (text, L"Infiniband(10,A1ED07B9-5BDC-4741-ADCF-CA1E8681DD1A,1234,5678,0xABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2128,10 +2085,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.13
   //
-  StrCpy (text, L"");
+  SctStrCpy (text, L"");
   pDevicePath = CreateVenPcAnsiDeviceNode(text);
 
-  StrCpy (text, L"VenPcAnsi()");
+  SctStrCpy (text, L"VenPcAnsi()");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2154,10 +2111,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.14
   //
-  StrCpy (text, L"Hardware");
+  SctStrCpy (text, L"Hardware");
   pDevicePath = CreateUartFlowCtrlDeviceNode(text);
 
-  StrCpy (text, L"UartFlowCtrl(Hardware)");
+  SctStrCpy (text, L"UartFlowCtrl(Hardware)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2180,10 +2137,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.15
   //
-  StrCpy (text, L"1234567890,0xABCDEF,2000,SAS,External,Direct,0x6A,0");
+  SctStrCpy (text, L"1234567890,0xABCDEF,2000,SAS,External,Direct,0x6A,0");
   pDevicePath = CreateSASDeviceNode(text);
 
-  StrCpy (text, L"SAS(1234567890,0xABCDEF,2000,SAS,External,Direct,0x6A,0)");
+  SctStrCpy (text, L"SAS(1234567890,0xABCDEF,2000,SAS,External,Direct,0x6A,0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2205,10 +2162,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.16
   //
-  StrCpy (text, L"");
+  SctStrCpy (text, L"");
   pDevicePath = CreateDebugPortDeviceNode(text);
 
-  StrCpy (text, L"DebugPort()");
+  SctStrCpy (text, L"DebugPort()");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2231,10 +2188,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.17
   //
-  StrCpy (text, L"12345678ABCD12345678ABCD12345678ABCD12345678ABCD12345678ABCD1234,2");
+  SctStrCpy (text, L"12345678ABCD12345678ABCD12345678ABCD12345678ABCD12345678ABCD1234,2");
   pDevicePath = CreateMACDeviceNode(text);
 
-  StrCpy (text, L"MAC(12345678ABCD12345678ABCD12345678ABCD12345678ABCD12345678ABCD1234,2)");
+  SctStrCpy (text, L"MAC(12345678ABCD12345678ABCD12345678ABCD12345678ABCD12345678ABCD1234,2)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2257,10 +2214,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.18
   //
-  StrCpy (text, L"12.34.56.78,TCP,Static,192.168.67.89,192.168.67.1,255.255.255.0");
+  SctStrCpy (text, L"12.34.56.78,TCP,Static,192.168.67.89,192.168.67.1,255.255.255.0");
   pDevicePath = CreateIPv4DeviceNode(text);
 
-  StrCpy (text, L"IPv4(12.34.56.78,TCP,Static,192.168.67.89,192.168.67.1,255.255.255.0)");
+  SctStrCpy (text, L"IPv4(12.34.56.78,TCP,Static,192.168.67.89,192.168.67.1,255.255.255.0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2283,10 +2240,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.19
   //
-  StrCpy (text, L"1234:5678:ABCD:1234:5678:ABCD:1234:5678,UDP,Static,5678:ABCD:1234:5678:ABCD:1234:5678:ABCD,8,5678:ABCD:1234:5678:ABCD:1234:5678:ABCD");
+  SctStrCpy (text, L"1234:5678:ABCD:1234:5678:ABCD:1234:5678,UDP,Static,5678:ABCD:1234:5678:ABCD:1234:5678:ABCD,8,5678:ABCD:1234:5678:ABCD:1234:5678:ABCD");
   pDevicePath = CreateIPv6DeviceNode(text);
 
-  StrCpy (text, L"IPv6(1234:5678:ABCD:1234:5678:ABCD:1234:5678,UDP,Static,5678:ABCD:1234:5678:ABCD:1234:5678:ABCD,8,5678:ABCD:1234:5678:ABCD:1234:5678:ABCD)");
+  SctStrCpy (text, L"IPv6(1234:5678:ABCD:1234:5678:ABCD:1234:5678,UDP,Static,5678:ABCD:1234:5678:ABCD:1234:5678:ABCD,8,5678:ABCD:1234:5678:ABCD:1234:5678:ABCD)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2309,10 +2266,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.20
   //
-  StrCpy (text, L"115200,8,D,1.5");
+  SctStrCpy (text, L"115200,8,D,1.5");
   pDevicePath = CreateUartDeviceNode(text);
 
-  StrCpy (text, L"Uart(115200,8,D,1.5)");
+  SctStrCpy (text, L"Uart(115200,8,D,1.5)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2335,10 +2292,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.21
   //
-  StrCpy (text, L"1234,5678,14,1,0");
+  SctStrCpy (text, L"1234,5678,14,1,0");
   pDevicePath = CreateUsbClassDeviceNode(text);
 
-  StrCpy (text, L"UsbClass(1234,5678,14,1,0)");
+  SctStrCpy (text, L"UsbClass(1234,5678,14,1,0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2361,10 +2318,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.22
   //
-  StrCpy (text, L"1234,5678,1,0");
+  SctStrCpy (text, L"1234,5678,1,0");
   pDevicePath = CreateUsbVideoDeviceNode(text);
 
-  StrCpy (text, L"UsbVideo(1234,5678,1,0)");
+  SctStrCpy (text, L"UsbVideo(1234,5678,1,0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2387,10 +2344,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.23
   //
-  StrCpy (text, L"1234,5678,1");
+  SctStrCpy (text, L"1234,5678,1");
   pDevicePath = CreateUsbTestAndMeasurementDeviceNode(text);
 
-  StrCpy (text, L"UsbTestAndMeasurement(1234,5678,1)");
+  SctStrCpy (text, L"UsbTestAndMeasurement(1234,5678,1)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2412,10 +2369,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.25
   //
-  StrCpy (text, L"0xAB");
+  SctStrCpy (text, L"0xAB");
   pDevicePath = CreateUnitDeviceNode(text);
 
-  StrCpy (text, L"Unit(0xAB)");
+  SctStrCpy (text, L"Unit(0xAB)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2437,10 +2394,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.26
   //
-  StrCpy (text, L"MyTargetName,0x12AB,5678,CRC32C,None,CHAP_BI,TCP");
+  SctStrCpy (text, L"MyTargetName,0x12AB,5678,CRC32C,None,CHAP_BI,TCP");
   pDevicePath = CreateiScsiDeviceNode(text);
 
-  StrCpy (text, L"iSCSI(MyTargetName,0x12AB,5678,CRC32C,None,CHAP_BI,TCP)");
+  SctStrCpy (text, L"iSCSI(MyTargetName,0x12AB,5678,CRC32C,None,CHAP_BI,TCP)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2463,10 +2420,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.27
   //
-  StrCpy (text, L"6,GPT,E8AAED38-1815-4E4F-BCB5-2E3DBD160C9C,12345678,0xABCD1234");
+  SctStrCpy (text, L"6,GPT,E8AAED38-1815-4E4F-BCB5-2E3DBD160C9C,12345678,0xABCD1234");
   pDevicePath = CreateHdDeviceNode(text);
 
-  StrCpy (text, L"HD(6,GPT,E8AAED38-1815-4E4F-BCB5-2E3DBD160C9C,12345678,0xABCD1234)");
+  SctStrCpy (text, L"HD(6,GPT,E8AAED38-1815-4E4F-BCB5-2E3DBD160C9C,12345678,0xABCD1234)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2489,10 +2446,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.28
   //
-  StrCpy (text, L"6,MBR,0x56789ABC,12345678,0xABCD1234");
+  SctStrCpy (text, L"6,MBR,0x56789ABC,12345678,0xABCD1234");
   pDevicePath = CreateHdDeviceNode(text);
 
-  StrCpy (text, L"HD(6,MBR,0x56789ABC,12345678,0xABCD1234)");
+  SctStrCpy (text, L"HD(6,MBR,0x56789ABC,12345678,0xABCD1234)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2515,10 +2472,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.29
   //
-  StrCpy (text, L"12340000,12345678,0xABCD1234");
+  SctStrCpy (text, L"12340000,12345678,0xABCD1234");
   pDevicePath = CreateCdromDeviceNode(text);
 
-  StrCpy (text, L"CDROM(12340000,12345678,0xABCD1234)");
+  SctStrCpy (text, L"CDROM(12340000,12345678,0xABCD1234)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2541,10 +2498,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.30
   //
-  StrCpy (text, L"MyFilePath\\filepath");
+  SctStrCpy (text, L"MyFilePath\\filepath");
   pDevicePath = CreateTextFileDeviceNode(text);
 
-  StrCpy (text, L"MyFilePath\\filepath");
+  SctStrCpy (text, L"MyFilePath\\filepath");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2567,10 +2524,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.31
   //
-  StrCpy (text, L"BA3A77E6-39A2-4375-A39A-108BFFCCE1AA");
+  SctStrCpy (text, L"BA3A77E6-39A2-4375-A39A-108BFFCCE1AA");
   pDevicePath = CreateMediaDeviceNode(text);
 
-  StrCpy (text, L"Media(BA3A77E6-39A2-4375-A39A-108BFFCCE1AA)");
+  SctStrCpy (text, L"Media(BA3A77E6-39A2-4375-A39A-108BFFCCE1AA)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2593,10 +2550,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // TDS 3.10.1.2.32
   //
-  StrCpy (text, L"Floppy,MyId,0x12AB");
+  SctStrCpy (text, L"Floppy,MyId,0x12AB");
   pDevicePath = CreateBBSDeviceNode(text);
 
-  StrCpy (text, L"BBS(Floppy,MyId,0x12AB)");
+  SctStrCpy (text, L"BBS(Floppy,MyId,0x12AB)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2616,10 +2573,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
                 (UINTN)__LINE__
                 );
 
-  StrCpy (text, L"0xFF, 0xFFFF");
+  SctStrCpy (text, L"0xFF, 0xFFFF");
   pDevicePath = CreateMediaRelativeOffsetRangeDeviceNode(text);
 
-  StrCpy (text, L"Offset(0xFF, 0xFFFF)");
+  SctStrCpy (text, L"Offset(0xFF, 0xFFFF)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2642,10 +2599,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // Vlan 
   //
-  StrCpy (text, L"0x12");
+  SctStrCpy (text, L"0x12");
   pDevicePath = CreateVlanDeviceNode(text);
 
-  StrCpy (text, L"Vlan(0x12)");
+  SctStrCpy (text, L"Vlan(0x12)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2668,10 +2625,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // AcpiAdr(0x80010100)
   //
-  StrCpy (text, L"0x80010100");
+  SctStrCpy (text, L"0x80010100");
   pDevicePath = CreateAcpiAdrDeviceNode(text);
 
-  StrCpy (text, L"AcpiAdr(0x80010100)");
+  SctStrCpy (text, L"AcpiAdr(0x80010100)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2694,10 +2651,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // PciRoot(0x0)
   //
-  StrCpy (text, L"0x0");
+  SctStrCpy (text, L"0x0");
   pDevicePath = CreatePciRootDeviceNode(text);
 
-  StrCpy (text, L"PciRoot(0x0)");
+  SctStrCpy (text, L"PciRoot(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2720,10 +2677,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // PcieRoot(0x0)
   //
-  StrCpy (text, L"0x0");
+  SctStrCpy (text, L"0x0");
   pDevicePath = CreatePcieRootDeviceNode(text);
 
-  StrCpy (text, L"PcieRoot(0x0)");
+  SctStrCpy (text, L"PcieRoot(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2746,10 +2703,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // Floppy(0x0)
   //
-  StrCpy (text, L"0x0");
+  SctStrCpy (text, L"0x0");
   pDevicePath = CreateFloppyDeviceNode(text);
 
-  StrCpy (text, L"Floppy(0x0)");
+  SctStrCpy (text, L"Floppy(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2772,10 +2729,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // Keyboard(0x0)
   //
-  StrCpy (text, L"0x0");
+  SctStrCpy (text, L"0x0");
   pDevicePath = CreateKeyboardDeviceNode(text);
 
-  StrCpy (text, L"Keyboard(0x0)");
+  SctStrCpy (text, L"Keyboard(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2798,10 +2755,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // Serial(0x0)
   //
-  StrCpy (text, L"0x0");
+  SctStrCpy (text, L"0x0");
   pDevicePath = CreateSerialDeviceNode(text);
 
-  StrCpy (text, L"Serial(0x0)");
+  SctStrCpy (text, L"Serial(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2824,10 +2781,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // ParallelPort(0x0)
   //
-  StrCpy (text, L"0x0");
+  SctStrCpy (text, L"0x0");
   pDevicePath = CreateParallelPortDeviceNode(text);
 
-  StrCpy (text, L"ParallelPort(0x0)");
+  SctStrCpy (text, L"ParallelPort(0x0)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2850,10 +2807,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // FibreEx(0x123456789ABCDEF0,0xABCDEF1234567890)
   //
-  StrCpy (text, L"0x123456789ABCDEF0,0xABCDEF1234567890");
+  SctStrCpy (text, L"0x123456789ABCDEF0,0xABCDEF1234567890");
   pDevicePath = CreateFibreExDeviceNode(text);
 
-  StrCpy (text, L"FibreEx(0x123456789ABCDEF0,0xABCDEF1234567890)");
+  SctStrCpy (text, L"FibreEx(0x123456789ABCDEF0,0xABCDEF1234567890)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2876,10 +2833,10 @@ DevicePathFromTextConvertTextToDeviceNodeCoverageTest (
   //
   // SasEx(0x1234567890ABCDEF,0x1234567890ABCDEF,2000,SAS,External,Direct,0x6A)
   //
-  StrCpy (text, L"0x1234567890ABCDEF,0x1234567890ABCDEF,2000,SAS,External,Direct,0x6A");
+  SctStrCpy (text, L"0x1234567890ABCDEF,0x1234567890ABCDEF,2000,SAS,External,Direct,0x6A");
   pDevicePath = CreateSASExDeviceNode(text);
 
-  StrCpy (text, L"SasEx(0x1234567890ABCDEF,0x1234567890ABCDEF,2000,SAS,External,Direct,0x6A)");
+  SctStrCpy (text, L"SasEx(0x1234567890ABCDEF,0x1234567890ABCDEF,2000,SAS,External,Direct,0x6A)");
   pReDevicePath = DevicePathFromText->ConvertTextToDeviceNode (text);
   if (SctCompareMem (pDevicePath, pReDevicePath, DevicePathNodeLength ((EFI_DEVICE_PATH_PROTOCOL *) pReDevicePath)) == 0) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -2941,11 +2898,11 @@ ConvertDevNodeFromTextPciRoot (
   ACPI_HID_DEVICE_PATH  *Acpi;
   CHAR16                *UIDStr;
 
-  UIDStr = SplitStr (&TextDeviceNode, L',');
+  UIDStr = SctSplitStr (&TextDeviceNode, L',');
   Acpi   = (ACPI_HID_DEVICE_PATH *) DevicePathUtilities->CreateDeviceNode (2, 1, sizeof (ACPI_HID_DEVICE_PATH));
 
   Acpi->HID = EISA_PNP_ID(0x0a03);
-  Acpi->UID = (UINT32) StrToUInt (UIDStr);
+  Acpi->UID = (UINT32) SctStrToUInt (UIDStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Acpi;
 }
@@ -2961,12 +2918,12 @@ ConvertDevNodeFromTextPci (
   CHAR16          *DeviceStr;
   PCI_DEVICE_PATH *Pci;
 
-  FunctionStr = SplitStr (&TextDeviceNode, L',');
-  DeviceStr   = SplitStr (&TextDeviceNode, L',');
+  FunctionStr = SctSplitStr (&TextDeviceNode, L',');
+  DeviceStr   = SctSplitStr (&TextDeviceNode, L',');
   Pci         = (PCI_DEVICE_PATH *) DevicePathUtilities->CreateDeviceNode (1, 1, sizeof (PCI_DEVICE_PATH));
 
-  Pci->Function = (UINT8) StrToUInt (FunctionStr);
-  Pci->Device   = (UINT8) StrToUInt (DeviceStr);
+  Pci->Function = (UINT8) SctStrToUInt (FunctionStr);
+  Pci->Device   = (UINT8) SctStrToUInt (DeviceStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Pci;
 }
@@ -2981,11 +2938,11 @@ ConvertDevNodeFromTextFloppy (
   CHAR16                *UIDStr;
   ACPI_HID_DEVICE_PATH  *Acpi;
 
-  UIDStr = SplitStr (&TextDeviceNode, L',');
+  UIDStr = SctSplitStr (&TextDeviceNode, L',');
   Acpi   = (ACPI_HID_DEVICE_PATH *) DevicePathUtilities->CreateDeviceNode (2, 1, sizeof (ACPI_HID_DEVICE_PATH));
 
   Acpi->HID = EISA_PNP_ID(0x0604);
-  Acpi->UID = (UINT32) StrToUInt (UIDStr);
+  Acpi->UID = (UINT32) SctStrToUInt (UIDStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Acpi;
 }
@@ -3070,7 +3027,7 @@ DevicePathFromTextConvertTextToDevicePathCoverageTest (
   //
   // TDS 3.10.2.2.1
   //
-  StrCpy (text, L"PciRoot(0)/Pci(0,10)/Floppy(0)");
+  SctStrCpy (text, L"PciRoot(0)/Pci(0,10)/Floppy(0)");
   pDevicePath = CreateFloppyDevicePath(DevicePathUtilities);
 
   pReDevicePath = DevicePathFromText->ConvertTextToDevicePath (text);

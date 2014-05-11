@@ -723,9 +723,9 @@ Returns:
   Ypos   = MenuPage->Body.SplitPoint.Row + Index;
   XLeft  = MenuPage->Body.SplitPoint.Col - 2 - EFI_MAX_ITEM_VALUE_LENGTH;
 
-  CurrentLength = StrLen (MenuPage->Body.CurrentSelected->ItemValue);
+  CurrentLength = SctStrLen (MenuPage->Body.CurrentSelected->ItemValue);
 
-  StrCpy (Buffer, MenuPage->Body.CurrentSelected->ItemValue);
+  SctStrCpy (Buffer, MenuPage->Body.CurrentSelected->ItemValue);
 
   XOffSetInScreen = 0;
   XOffSetInBuffer = 0;
@@ -789,7 +789,7 @@ Returns:
         //
         //save the string value into orginal buffer
         //
-        TempValue = Atoi(Buffer);
+        TempValue = SctAtoi (Buffer);
         if ((MenuPage->Body.CurrentSelected->ItemType & EFI_EDIT_SUB_TYPE_MASK) == EFI_ITEM_EDIT_NUMBER
           && MenuPage->Body.CurrentSelected->CheckValue == TRUE) {
           MaxValue = MenuPage->Body.CurrentSelected->MaxValue;
@@ -815,7 +815,7 @@ Returns:
                 break;
               }
             }
-            StrCpy (
+            SctStrCpy (
               MenuPage->Body.CurrentSelected->ItemValue,
               Buffer
               );
@@ -847,7 +847,7 @@ Returns:
             XOffSetInScreen = 0;
             XOffSetInBuffer = 0;
             FirstInDisplay  = 0;
-            CurrentLength = StrLen (Buffer);
+            CurrentLength = SctStrLen (Buffer);
             if (CurrentLength > EFI_MAX_ITEM_VALUE_LENGTH) {
               LastInDisplay = EFI_MAX_ITEM_VALUE_LENGTH - 1;
             } else if (CurrentLength  > 0) {
@@ -874,7 +874,7 @@ Returns:
         }
         if ((MenuPage->Body.CurrentSelected->ItemType & EFI_EDIT_SUB_TYPE_MASK)
                == EFI_ITEM_EDIT_NUMBER) {
-          TempValue = Atoi (Buffer);
+          TempValue = SctAtoi (Buffer);
           SPrint (
               Buffer,
               EFI_MAX_EDIT_LENGTH + 1,
@@ -882,7 +882,7 @@ Returns:
               TempValue
               );
         }
-        StrCpy (
+        SctStrCpy (
           MenuPage->Body.CurrentSelected->ItemValue,
           Buffer
           );
@@ -1909,11 +1909,11 @@ Returns:
   CHAR16            *TempStr;
   CHAR16            *OneLine;
 
-  if (Str == NULL || StrLen (Str) == 0) {
+  if (Str == NULL || SctStrLen (Str) == 0) {
     return EFI_SUCCESS;
   }
 
-  Buffer = StrDuplicate (Str);
+  Buffer = SctStrDuplicate (Str);
   if (Buffer == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -1946,12 +1946,12 @@ Returns:
       }
     }
 
-    if (StrLen (TempStr) + CurrentXpos > X1 + 1 ) {
+    if (SctStrLen (TempStr) + CurrentXpos > X1 + 1 ) {
       //
       //if the word length less or equal X1-X0-1,
       //it will be displayed in one line.
       //
-      if (StrLen (TempStr) <= X1 - X0 + 1) {
+      if (SctStrLen (TempStr) <= X1 - X0 + 1) {
         CurrentXpos = X0;
         CurrentYpos = CurrentYpos + 1;
         if (CurrentYpos > Y1) {
@@ -1962,7 +1962,7 @@ Returns:
           tBS->FreePool (Buffer);
           return Status;
         }
-        CurrentXpos = CurrentXpos + StrLen (TempStr) + 1 ;
+        CurrentXpos = CurrentXpos + SctStrLen (TempStr) + 1 ;
 
       } else {
         //
@@ -2006,7 +2006,7 @@ Returns:
          CurrentYpos = CurrentYpos + 1;
         }
 
-        while ((StrLen (TempStr) > X1 - X0 + 1)&& CurrentYpos <= Y1 ) {
+        while ((SctStrLen (TempStr) > X1 - X0 + 1)&& CurrentYpos <= Y1 ) {
 
           tBS->CopyMem (OneLine, TempStr, (X1 - X0) * sizeof(CHAR16));
           OneLine[X1 - X0]     = L'-';
@@ -2035,7 +2035,7 @@ Returns:
         }
 
         tBS->FreePool (OneLine);
-        CurrentXpos = CurrentXpos + StrLen (TempStr) + 1 ;
+        CurrentXpos = CurrentXpos + SctStrLen (TempStr) + 1 ;
       }
     } else {
       //
@@ -2046,7 +2046,7 @@ Returns:
         tBS->FreePool (Buffer);
         return Status;
       }
-      CurrentXpos = CurrentXpos + StrLen (TempStr) + 1;
+      CurrentXpos = CurrentXpos + SctStrLen (TempStr) + 1;
     }
 
     if (Space != NULL) {
@@ -2129,7 +2129,7 @@ Returns:
   }
   if (MenuItem == Page->Body.CurrentSelected) {
 
-    if (StrLen (Buffer) == 0 ) {
+    if (SctStrLen (Buffer) == 0 ) {
       return EFI_SUCCESS;
     } else {
       //
@@ -2149,7 +2149,7 @@ Returns:
       return Status;
     }
   } else {
-    if (StrLen (Buffer) == 0) {
+    if (SctStrLen (Buffer) == 0) {
       return EFI_SUCCESS;
     }
     //
@@ -2263,9 +2263,9 @@ Returns:
   Ypos   = MenuPage->Body.SplitPoint.Row + Index;
   XLeft  = X0 + EFI_ITEM_TYPE_TAG_LENGTH + 2 + EFI_MAX_CASE_ITEM_NAME_LENGTH;
 
-  CurrentLength = StrLen (MenuPage->Body.CurrentSelected->ItemValue);
+  CurrentLength = SctStrLen (MenuPage->Body.CurrentSelected->ItemValue);
 
-  StrCpy (Buffer, MenuPage->Body.CurrentSelected->ItemValue);
+  SctStrCpy (Buffer, MenuPage->Body.CurrentSelected->ItemValue);
 
   XOffSetInBuffer = 0;
 
@@ -2324,7 +2324,7 @@ Returns:
         //save the string value into orginal buffer
         //
 
-        StrCpy (
+        SctStrCpy (
           MenuPage->Body.CurrentSelected->ItemValue,
           Buffer
           );
@@ -2540,7 +2540,7 @@ Returns:
         switch (Key.UnicodeChar) {
           case L' ':
           case CHAR_CARRIAGE_RETURN:
-            StrCpy (
+            SctStrCpy (
               MenuPage->Body.CurrentSelected->ItemValue,
               Buffer
               );
@@ -2720,11 +2720,11 @@ Returns:
     //Update iteration number
     //
     if (BufferChanged) {
-      StrCpy (
+      SctStrCpy (
           MenuPage->Body.CurrentSelected->ItemValue,
           Buffer
           );
-      TempValue = (UINT32) Atoi(Buffer);
+      TempValue = (UINT32) SctAtoi (Buffer);
       tST->ConOut->EnableCursor (tST->ConOut, FALSE);
       Status = UpdateIter (MenuPage, MenuItem, TempValue);
       if (EFI_ERROR (Status)) {
@@ -2785,13 +2785,13 @@ CompareNumberString (
   //
   //Compare length first
   //
-  if (StrLen (str1) < StrLen (str2)) {
+  if (SctStrLen (str1) < SctStrLen (str2)) {
     return -1;
-  } else if (StrLen (str1) > StrLen (str2)) {
+  } else if (SctStrLen (str1) > SctStrLen (str2)) {
     return 1;
   }
 
-  for (Index = 0; Index < StrLen (str1); Index ++) {
+  for (Index = 0; Index < SctStrLen (str1); Index ++) {
     if (str1[Index] < str2[Index]) {
       return -1;
     }

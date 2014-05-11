@@ -133,7 +133,7 @@ DevicePathFromTextConvertTextToDeviceNodeFunctionTest (
   //
   // TDS 3.8.1.2.1
   //
-  StrCpy (text1, L"PciRoot(0)");
+  SctStrCpy (text1, L"PciRoot(0)");
 
   pDevicePath1 = (ACPI_HID_DEVICE_PATH *) DevicePathUtilities->CreateDeviceNode (
                                                                 PCIRootNodeType,
@@ -167,7 +167,7 @@ DevicePathFromTextConvertTextToDeviceNodeFunctionTest (
   //
   // TDS 3.8.1.2.2
   //
-  StrCpy (text2, L"Pci(0,0x10)");
+  SctStrCpy (text2, L"Pci(0,0x10)");
 
   pDevicePath2            = (PCI_DEVICE_PATH *) DevicePathUtilities->CreateDeviceNode (PCINodeType, PCINodeSubType, PCINodeLength);
   pDevicePath2->Device    = 0x00;
@@ -197,7 +197,7 @@ DevicePathFromTextConvertTextToDeviceNodeFunctionTest (
   //
   // TDS 3.8.1.2.3
   //
-  StrCpy (text3, L"Ata(Primary,Master,0)");
+  SctStrCpy (text3, L"Ata(Primary,Master,0)");
 
   pDevicePath3 = (ATAPI_DEVICE_PATH *) DevicePathUtilities->CreateDeviceNode (
                                                               ATAPINodeType,
@@ -284,7 +284,7 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   //
   // TDS 3.8.2.2.1
   //
-  StrCpy (text1, L"PciRoot(0)/Pci(0,0x10)/Floppy(0)");
+  SctStrCpy (text1, L"PciRoot(0)/Pci(0,0x10)/Floppy(0)");
 
   pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {
@@ -337,7 +337,7 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   //
   // TDS 3.8.2.2.2
   //
-  StrCpy (text2, L"PciRoot(0)/Pci(1,0x10)/Ata(Primary,Master,0)");
+  SctStrCpy (text2, L"PciRoot(0)/Pci(1,0x10)/Ata(Primary,Master,0)");
 
   pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {
@@ -391,7 +391,7 @@ DevicePathFromTextConvertTextToDevicePathFunctionTest (
   //
   // TDS 3.8.2.2.3
   //
-  StrCpy (text3, L"PciRoot(0)/Pci(0,0xC)/Pci(0,0)");
+  SctStrCpy (text3, L"PciRoot(0)/Pci(0,0xC)/Pci(0,0)");
 
   pDevicePath1 = (EFI_DEVICE_PATH *) SctAllocatePool (END_DEVICE_PATH_LENGTH);
   if (pDevicePath1 == NULL) {

@@ -367,7 +367,7 @@ PageBreakPrint (
   //
   // Compare with the current Row number
   //
-  Length  = StrLen (String);
+  Length  = SctStrLen (String);
   if (Row + (Length + MaxColumns - 1) / MaxColumns >= MaxRows) {
     Row = 0;
     Print (L"  Press 'q' to exit, any other key to continue");

@@ -61,7 +61,7 @@ Abstract:
 //
 // Include
 //
-#include "Efi.h"
+#include "SctLib.h"
 
 //
 // ImageTestNoInterfaceProtocol1

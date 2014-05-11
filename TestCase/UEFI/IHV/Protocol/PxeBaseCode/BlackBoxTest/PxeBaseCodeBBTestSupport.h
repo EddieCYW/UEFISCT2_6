@@ -67,11 +67,11 @@ extern CHAR16                          *gFilePath;
 
 #define STR_TO_UINT8(Buffer) \
         1 ? \
-        (UINT8)(xtoi (Buffer)) : (UINT8)(Atoi (Buffer))
+        (UINT8)(SctXtoi (Buffer)) : (UINT8)(SctAtoi (Buffer))
 
 #define STR_TO_INT(Buffer) \
         (Buffer[0] == '0' && ((Buffer[1] == 'x') || (Buffer[1] == 'X'))) ? \
-        (UINT32)xtoi (Buffer) : (UINT32)Atoi (Buffer)
+        (UINT32)SctXtoi (Buffer) : (UINT32)SctAtoi (Buffer)
 
 //
 //suppot function protypes.

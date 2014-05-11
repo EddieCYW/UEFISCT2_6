@@ -301,8 +301,8 @@ Returns:
         //
         // Skip the '.' and '..' dir
         //
-        if ((StrCmp (FileInfo->FileName, L".")  == 0) ||
-            (StrCmp (FileInfo->FileName, L"..") == 0)) {
+        if ((SctStrCmp (FileInfo->FileName, L".")  == 0) ||
+            (SctStrCmp (FileInfo->FileName, L"..") == 0)) {
           continue;
         }
 
@@ -897,7 +897,7 @@ Routine Description:
   (*TestFile)->Revision     = EFI_SCT_TEST_FILE_REVISION;
 
   (*TestFile)->DevicePath   = DuplicateDevicePath (DevicePath);
-  (*TestFile)->FileName     = StrDuplicate (FileName);
+  (*TestFile)->FileName     = SctStrDuplicate (FileName);
   (*TestFile)->ImageHandle  = ImageHandle;
   (*TestFile)->Type         = Type;
   (*TestFile)->Context      = Context;

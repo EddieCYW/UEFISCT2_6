@@ -98,7 +98,7 @@ Returns:
 {
   UINTN Index;
 
-  for (Index = 0; Index < StrLen (Src); Index++) {
+  for (Index = 0; Index < SctStrLen (Src); Index++) {
     Dst[Index] = (CHAR8) (Src[Index] & 0xff);
   }
 
@@ -552,7 +552,7 @@ Returns:
 
   SctCopyMem (ModeStr, "octet", 6);
 
-  if (StrLen ((gEasFT->Cmd)->ComdArg) > MAX_FILENAME_LEN) {
+  if (SctStrLen ((gEasFT->Cmd)->ComdArg) > MAX_FILENAME_LEN) {
     Print (L"Too long Filename.\n");
     goto Cleanup2;
   }

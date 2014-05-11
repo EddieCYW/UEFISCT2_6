@@ -258,11 +258,11 @@ Returns:
       Index               = (UINTN) -1;
       SctGuidToStr (CategoryGuid, CategoryGuidStr);
       CategoryName        = PoolPrint (L"Unknown\\%s", CategoryGuidStr);
-      CategoryDescription = StrDuplicate (L"");
+      CategoryDescription = SctStrDuplicate (L"");
     } else {
       Index               = Category->Index;
-      CategoryName        = StrDuplicate (Category->Name);
-      CategoryDescription = StrDuplicate (Category->Description);
+      CategoryName        = SctStrDuplicate (Category->Name);
+      CategoryDescription = SctStrDuplicate (Category->Description);
     }
 
     if ((CategoryName        == NULL) ||
@@ -628,7 +628,7 @@ Routine Description:
   // Initialize
   //
   IsEnd    = FALSE;
-  TempName = StrDuplicate (Name);
+  TempName = SctStrDuplicate (Name);
   Token    = TempName;
   End      = TempName;
   SubList  = TestNodeList;
@@ -652,7 +652,7 @@ Routine Description:
       End ++;
     }
 
-    if (StrLen (Token) == 0) {
+    if (SctStrLen (Token) == 0) {
       continue;
     }
 
@@ -758,8 +758,8 @@ Routine Description:
   // Set the items of test node
   //
   TempTestNode->Index       = Index;
-  TempTestNode->Name        = StrDuplicate (Name);
-  TempTestNode->Description = StrDuplicate (Description);
+  TempTestNode->Name        = SctStrDuplicate (Name);
+  TempTestNode->Description = SctStrDuplicate (Description);
   TempTestNode->Type        = Type;
   SctCopyMem (&TempTestNode->Guid, Guid, sizeof(EFI_GUID));
 
@@ -773,7 +773,7 @@ Routine Description:
       break;
     }
 
-    if ((Last->Index == Index) && (StriCmp (Last->Name, Name) > 0)) {
+    if ((Last->Index == Index) && (SctStriCmp (Last->Name, Name) > 0)) {
       break;
     }
   }
@@ -818,7 +818,7 @@ Routine Description:
   for (Link = TestNodeList->Flink; Link != TestNodeList; Link = Link->Flink) {
     TempTestNode = CR (Link, EFI_SCT_TEST_NODE, Link, EFI_SCT_TEST_NODE_SIGNATURE);
 
-    if (StriCmp (TempTestNode->Name, Name) == 0) {
+    if (SctStriCmp (TempTestNode->Name, Name) == 0) {
       //
       // Got it!
       //
@@ -1093,7 +1093,7 @@ Routine Description:
   CHAR16                TempFullName[1024];
   
   Status = EFI_SUCCESS;
-  StrCpy (TempFullName, L"");
+  SctStrCpy (TempFullName, L"");
 
   if (Root == NULL) {
     return EFI_INVALID_PARAMETER;
@@ -1115,11 +1115,11 @@ Routine Description:
       // Record the node path
       //
       for (LoopIndex = 0; LoopIndex < TempLevel; LoopIndex++) {
-        StrCat (TempFullName, PathName[LoopIndex]);
-        StrCat (TempFullName, L"\\");
+        SctStrCat (TempFullName, PathName[LoopIndex]);
+        SctStrCat (TempFullName, L"\\");
       }
       
-      StrCat (TempFullName, TempNode->Name);
+      SctStrCat (TempFullName, TempNode->Name);
       
       //
       // Save a single test case node
@@ -1142,7 +1142,7 @@ Routine Description:
       // Recusion on vertical node (right node)
       //
       if (!IsListEmpty(TempLink1)){
-        SctCopyMem (PathName[TempLevel], TempNode->Name, StrSize(TempNode->Name));
+        SctCopyMem (PathName[TempLevel], TempNode->Name, SctStrSize (TempNode->Name));
         TempLevel++;
         
         Status = WalkThroughSave (

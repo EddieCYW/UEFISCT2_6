@@ -257,13 +257,13 @@ Returns:
     }
 
     if (Context->Type == EFI_DIALOG_TYPE_MESSAGE) {
-      StrCpy (Buffer, L"[ OK ]");
+      SctStrCpy (Buffer, L"[ OK ]");
       Status = TestPrintAt (X0 + (X1 - X0) / 2 - 2 , Y1 - 2, Buffer);
     }
 
     if (Context->Type == EFI_DIALOG_TYPE_YES_OR_NO) {
       if (Context -> ChooseNumber == 1) {
-        StrCpy (Buffer, L"[ No ]");
+        SctStrCpy (Buffer, L"[ No ]");
         Status = TestPrintAt (X0 + (X1 - X0) / 4 * 3 - 4, Y1 - 2, Buffer);
         if (EFI_ERROR (Status)) {
           return Status;
@@ -273,7 +273,7 @@ Returns:
             EFI_TEXT_ATTR(EFI_YELLOW,
             Dialog->BackColor)
             );
-        StrCpy (Buffer, L"[ Yes ]");
+        SctStrCpy (Buffer, L"[ Yes ]");
         Status = TestPrintAt (X0+ (X1 - X0) / 4 - 2, Y1 - 2, Buffer);
         if (EFI_ERROR (Status)) {
           return Status;
@@ -284,7 +284,7 @@ Returns:
             Dialog->BackColor)
             );
       } else {
-        StrCpy (Buffer, L"[ Yes ]");
+        SctStrCpy (Buffer, L"[ Yes ]");
         Status = TestPrintAt (X0 + (X1 - X0) / 4 - 2, Y1 - 2, Buffer);
         if (EFI_ERROR (Status)) {
           return Status;
@@ -295,7 +295,7 @@ Returns:
             Dialog->BackColor)
             );
 
-        StrCpy (Buffer, L"[ No ]");
+        SctStrCpy (Buffer, L"[ No ]");
         Status = TestPrintAt (X0 + (X1 - X0) / 4 * 3 - 4, Y1 - 2, Buffer);
         if (EFI_ERROR (Status)) {
           return Status;
@@ -315,7 +315,7 @@ Returns:
           Dialog->BackColor)
           );
     if (Context -> ChooseNumber == 1) {
-      StrCpy (Buffer, L"[ No ]");
+      SctStrCpy (Buffer, L"[ No ]");
       Status = TestPrintAt (X0 + (X1 - X0) / 4 * 3 - 4, Y1 - 2, Buffer);
       if (EFI_ERROR (Status)) {
         return Status;
@@ -325,7 +325,7 @@ Returns:
           EFI_TEXT_ATTR(EFI_YELLOW,
           Dialog->BackColor)
           );
-      StrCpy (Buffer, L"[ Yes ]");
+      SctStrCpy (Buffer, L"[ Yes ]");
       Status = TestPrintAt (X0 + (X1 - X0) / 4 - 2 , Y1 - 2, Buffer);
       if (EFI_ERROR (Status)) {
         return Status;
@@ -336,7 +336,7 @@ Returns:
           Dialog->BackColor)
           );
     } else {
-      StrCpy (Buffer, L"[ Yes ]");
+      SctStrCpy (Buffer, L"[ Yes ]");
       Status = TestPrintAt (X0 + (X1 - X0) / 4 - 2, Y1 - 2, Buffer);
 
       if (EFI_ERROR (Status)) {
@@ -347,7 +347,7 @@ Returns:
           EFI_TEXT_ATTR(EFI_YELLOW,
           Dialog->BackColor)
           );
-      StrCpy (Buffer, L"[ No ]");
+      SctStrCpy (Buffer, L"[ No ]");
       Status = TestPrintAt (X0 + (X1 - X0) / 4 * 3 - 4, Y1 - 2, Buffer);
       if (EFI_ERROR (Status)) {
         return Status;

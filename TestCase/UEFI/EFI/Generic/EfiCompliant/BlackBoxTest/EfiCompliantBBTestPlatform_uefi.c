@@ -633,7 +633,7 @@ CheckConsoleProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -711,7 +711,7 @@ CheckHiiProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -753,7 +753,7 @@ CheckHiiProtocols (
                           String,
                           &MaxLength
                           );
-      if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+      if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
     }
@@ -853,7 +853,7 @@ CheckGraphicalConsoleProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -924,7 +924,7 @@ CheckPointerProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -1038,7 +1038,7 @@ CheckBootFromDiskProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -1182,7 +1182,7 @@ CheckBootFromNetworkProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -1219,7 +1219,7 @@ CheckBootFromNetworkProtocols (
                           String,
                           &MaxLength
                           );
-      if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+      if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
     }
@@ -1290,7 +1290,7 @@ CheckUartProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -1375,7 +1375,7 @@ CheckPciProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -1460,7 +1460,7 @@ CheckUsbProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -1530,7 +1530,7 @@ CheckScsiProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -1614,7 +1614,7 @@ CheckDebugProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -1684,7 +1684,7 @@ CheckDriverOverrideProtocols (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -1772,7 +1772,7 @@ CheckUefiNetworkApplication (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
     StandardLib->RecordAssertion (
@@ -1891,7 +1891,7 @@ CheckUefiNetworkApplication (
                           String,
                           &MaxLength
                           );
-      if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+      if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
     }
@@ -2002,7 +2002,7 @@ CheckBootFromScsi (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -2040,7 +2040,7 @@ CheckBootFromScsi (
                           String,
                           &MaxLength
                         );
-      if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+      if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
     }
@@ -2126,7 +2126,7 @@ CheckBootFromIScsi (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
@@ -2203,12 +2203,12 @@ CheckEbcProtocol (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
   }
 
-  if (StriCmp (String, L"yes") == 0) {
+  if (SctStriCmp (String, L"yes") == 0) {
     AssertString = L"UEFI Compliant - EBC Interpreter protocol must exist in this platform";
   } else {
     AssertString = L"UEFI Compliant - EBC Interpreter protocol is optional in this platform";
@@ -2346,7 +2346,7 @@ CheckUefiV6NetworkApplication (
                         String,
                         &MaxLength
                         );
-    if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+    if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
       AssertionType = EFI_TEST_ASSERTION_FAILED;
     }
     StandardLib->RecordAssertion (
@@ -2457,7 +2457,7 @@ CheckUefiV6NetworkApplication (
                           String,
                           &MaxLength
                           );
-      if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+      if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
         AssertionType = EFI_TEST_ASSERTION_FAILED;
       }
     }
@@ -2514,7 +2514,7 @@ CheckUefiV6NetworkApplication (
                             String,
                             &MaxLength
                             );
-        if (!EFI_ERROR (Status) && (StriCmp (String, L"yes") == 0)) {
+        if (!EFI_ERROR (Status) && (SctStriCmp (String, L"yes") == 0)) {
           AssertionType = EFI_TEST_ASSERTION_FAILED;
         }
       }

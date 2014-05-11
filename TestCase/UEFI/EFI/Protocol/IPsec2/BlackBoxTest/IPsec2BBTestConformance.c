@@ -98,7 +98,7 @@ BBTestProcessExtConformanceTest (
   //
   // Open IPSEC_CONFIG_PROTOCOL
   //
-  LibLocateProtocol(
+  SctLocateProtocol(
     &gEfiIPsecConfigProtocolGuid,
     &IpSecConf
     );

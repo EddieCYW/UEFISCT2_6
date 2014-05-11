@@ -159,7 +159,7 @@ Returns:
   OutputFile = Private->OutputFileList;
   while (OutputFile != NULL) {
     if ((SctDevicePathCompare (DevicePath, OutputFile->DevicePath) == 0) &&
-        (StrCmp (FileName, OutputFile->FileName)                   == 0)) {
+        (SctStrCmp (FileName, OutputFile->FileName)                   == 0)) {
       break;
     }
     OutputFile = OutputFile->Next;
@@ -331,7 +331,7 @@ Returns:
       tBS->FreePool (OutputFile);
       return EFI_OUT_OF_RESOURCES;
     }
-    OutputFile->FileName = StrDuplicate (FileName);
+    OutputFile->FileName = SctStrDuplicate (FileName);
     if (OutputFile->FileName == NULL) {
       Handle->Close (Handle);
       tBS->FreePool (OutputFile->DevicePath);
@@ -472,7 +472,7 @@ Returns:
   //
   // Write the String to the file
   //
-  BufSize = StrLen(String) * 2;
+  BufSize = SctStrLen (String) * 2;
   Status = FileHandle->Write (FileHandle, &BufSize, String);
   if (EFI_ERROR (Status)) {
     return Status;

@@ -332,7 +332,7 @@ BBTestMetaiMatchFunctionAutoTest (
 }
 
 /**
- *  Entrypoint for EFI_UNICODE_COLLATOIN2_PROTOCOL.StrLwr() Function Test.
+ *  Entrypoint for EFI_UNICODE_COLLATOIN2_PROTOCOL.StrLwr () Function Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
  *  @param ClientInterface a pointer to the interface to be tested.
  *  @param TestLevel test "thoroughness" control.
@@ -454,7 +454,7 @@ BBTestStrLwrFunctionAutoTest (
 }
 
 /**
- *  Entrypoint for EFI_UNICODE_COLLATOIN2_PROTOCOL.StrUpr() Function Test.
+ *  Entrypoint for EFI_UNICODE_COLLATOIN2_PROTOCOL.StrUpr () Function Test.
  *  @param This a pointer of EFI_BB_TEST_PROTOCOL.
  *  @param ClientInterface a pointer to the interface to be tested.
  *  @param TestLevel test "thoroughness" control.

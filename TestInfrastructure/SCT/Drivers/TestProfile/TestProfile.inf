@@ -62,7 +62,6 @@ COMPONENT_TYPE       = BS_DRIVER
 
 [sources.common]
   TestProfile.c
-  TestProfileSupport.c
 
 [includes.common]
   .

@@ -330,32 +330,6 @@ Returns:
 --*/
 ;
 
-EFI_STATUS
-EfiTestLibGetSystemConfigurationTable (
-  IN EFI_GUID *TableGuid,
-  IN OUT VOID **Table
-  )
-/*++
-
-Routine Description:
-
-  Get table from configuration table by name
-
-Arguments:
-
-  TableGuid       - Table name to search
-  
-  Table           - Pointer to the table caller wants
-
-Returns: 
-
-  EFI_NOT_FOUND   - Not found the table
-  
-  EFI_SUCCESS     - Found the table
-
---*/
-;
-
 //
 // GUIDs for special usage
 //

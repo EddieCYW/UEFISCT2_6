@@ -306,7 +306,7 @@ GetIpAddrFromFile (
 
   i = 0;
   Addr[i] = Buffer;
-  Len = StrLen (Buffer);
+  Len = SctStrLen (Buffer);
   for (j=1; j < Len; j++)
   {
     //NP_Print (L"i=%d, Buffer[%d]=%c\n", i, j, Buffer[j]);
@@ -329,10 +329,10 @@ GetIpAddrFromFile (
   {
     NP_Print (L"i=%d, Addr[0]=%s, Addr[1]=%s, Addr[2]=%s, Addr[3]=%s\n",
               i, Addr[0], Addr[1], Addr[2], Addr[3]);
-    Ip->v4.Addr[0] = (UINT8)Atoi (Addr[0]);
-    Ip->v4.Addr[1] = (UINT8)Atoi (Addr[1]);
-    Ip->v4.Addr[2] = (UINT8)Atoi (Addr[2]);
-    Ip->v4.Addr[3] = (UINT8)Atoi (Addr[3]);
+    Ip->v4.Addr[0] = (UINT8)SctAtoi (Addr[0]);
+    Ip->v4.Addr[1] = (UINT8)SctAtoi (Addr[1]);
+    Ip->v4.Addr[2] = (UINT8)SctAtoi (Addr[2]);
+    Ip->v4.Addr[3] = (UINT8)SctAtoi (Addr[3]);
 
     return EFI_SUCCESS;
   }
@@ -374,11 +374,11 @@ GetBooleanVarFromFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
-  if (StriCmp (Buffer, L"TRUE"))
+  if (SctStriCmp (Buffer, L"TRUE"))
     *Val = FALSE;
   else
     *Val = TRUE;
@@ -420,7 +420,7 @@ GetUINT32VarFromFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
@@ -510,18 +510,18 @@ GetAsciiStringFromFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
   // Allocate Pool
   TempStr = NULL;
-  TempStr = SctAllocatePool (StrLen (Buffer)+1);
+  TempStr = SctAllocatePool (SctStrLen (Buffer)+1);
   if (TempStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
 
-  for (i=0; i< StrLen (Buffer);i++)
+  for (i=0; i< SctStrLen (Buffer);i++)
   {
     TempStr[i] = (CHAR8)(Buffer[i]);
     NP_Print (L"%c", TempStr[i]);
@@ -567,12 +567,12 @@ GetUnicodeStringFromFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
   TempStr = NULL;
-  TempStr = StrDuplicate (Buffer);
+  TempStr = SctStrDuplicate (Buffer);
   if (TempStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -619,17 +619,17 @@ GetRawDataFromFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
   TempData[2]='\0';
   TempPtr = BufferPtr;
-  for (i=0;i<StrLen (Buffer);i+=2)
+  for (i=0;i<SctStrLen (Buffer);i+=2)
   {
     TempData[0] = Buffer[i];
     TempData[1] = Buffer[i+1];
-    TempVal = (UINT8)(xtoi (TempData));
+    TempVal = (UINT8)(SctXtoi (TempData));
     TempPtr[i/2] = TempVal;
     NP_Print (L"TempPtr[%d]=%d\n", i/2, TempPtr[i/2]);
   }

@@ -492,7 +492,7 @@ Routine Description:
     return Status;
   }
 
-  TempCategory->Name = StrDuplicate (Buffer);
+  TempCategory->Name = SctStrDuplicate (Buffer);
 
   //
   // Load the description
@@ -504,7 +504,7 @@ Routine Description:
     return Status;
   }
 
-  TempCategory->Description = StrDuplicate (Buffer);
+  TempCategory->Description = SctStrDuplicate (Buffer);
 
   //
   // Check error

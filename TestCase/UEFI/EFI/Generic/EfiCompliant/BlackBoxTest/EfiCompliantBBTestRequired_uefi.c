@@ -989,7 +989,7 @@ CheckGloballyDefinedVariables(
       Found = FALSE;
       
       for (Index = 0; Index < GlobalVariableNum; Index++) {
-        if ((StrCmp (VariableNamePtr, VariableArray[Index].Name) == 0)) {
+        if ((SctStrCmp (VariableNamePtr, VariableArray[Index].Name) == 0)) {
           Found  = TRUE;
           Status = gtRT->GetVariable (
                             VariableName,
@@ -1039,11 +1039,11 @@ CheckGloballyDefinedVariables(
           } else {
             break;
           }
-        } else if (StrnCmp (VariableNamePtr, L"Boot", 4) == 0) {
-          if ((StrnCmp (VariableNamePtr, L"BootOrder", 9) == 0) ||
-            (StrnCmp (VariableNamePtr, L"BootNext", 8) == 0) ||
-            (StrnCmp (VariableNamePtr, L"BootCurrent", 11) == 0) ||
-            (StrnCmp (VariableNamePtr, L"BootOptionSupport", 17) == 0)) {
+        } else if (SctStrnCmp (VariableNamePtr, L"Boot", 4) == 0) {
+          if ((SctStrnCmp (VariableNamePtr, L"BootOrder", 9) == 0) ||
+            (SctStrnCmp (VariableNamePtr, L"BootNext", 8) == 0) ||
+            (SctStrnCmp (VariableNamePtr, L"BootCurrent", 11) == 0) ||
+            (SctStrnCmp (VariableNamePtr, L"BootOptionSupport", 17) == 0)) {
             continue;
             }
 
@@ -1127,8 +1127,8 @@ CheckGloballyDefinedVariables(
               break;
             }
           }
-        } else if (StrnCmp (VariableNamePtr, L"Driver", 6) == 0) {
-          if (StrnCmp (VariableNamePtr, L"DriverOrder", 11) == 0) {
+        } else if (SctStrnCmp (VariableNamePtr, L"Driver", 6) == 0) {
+          if (SctStrnCmp (VariableNamePtr, L"DriverOrder", 11) == 0) {
             continue;
           } 
 
@@ -1213,7 +1213,7 @@ CheckGloballyDefinedVariables(
               break;
             }
           }
-        } else if (StrnCmp (VariableNamePtr, L"Key", 3) == 0) {
+        } else if (SctStrnCmp (VariableNamePtr, L"Key", 3) == 0) {
 
           Found = TRUE;
 

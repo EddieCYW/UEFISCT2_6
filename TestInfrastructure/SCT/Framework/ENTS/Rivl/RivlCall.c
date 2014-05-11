@@ -309,7 +309,7 @@ Returns:
   //
   // Handle if Arg Length > sizeof(UINTN)
   //
-  while (StrLen (TmpName) > sizeof (UINTN)) {
+  while (SctStrLen (TmpName) > sizeof (UINTN)) {
     StringToMem (TmpName + sizeof (UINTN), Arg + 1, sizeof (UINTN));
     *ArgOffset += 1;
     TmpName += sizeof (UINTN);

@@ -429,40 +429,40 @@ GetCorrespondingRequest (
   ReqPtr = Request;
   RespPtr = MultiConfigAltResp;
 
-  Len = StrLen(MultiConfigAltResp);
+  Len = SctStrLen (MultiConfigAltResp);
   
-  if (EfiStrnCmp (MultiConfigAltResp, L"GUID=", 5) != 0) {
+  if (SctStrnCmp (MultiConfigAltResp, L"GUID=", 5) != 0) {
     return EFI_INVALID_PARAMETER;
   }
   
-  if (EfiStrStr(MultiConfigAltResp, DevicePath) == NULL) {
+  if (SctStrStr (MultiConfigAltResp, DevicePath) == NULL) {
     return EFI_NOT_FOUND;
   }
 
-  SingleResp = (EFI_STRING) SctAllocateZeroPool ( 2 * StrLen(MultiConfigAltResp) + 2 );
+  SingleResp = (EFI_STRING) SctAllocateZeroPool ( 2 * SctStrLen (MultiConfigAltResp) + 2 );
   if (SingleResp == NULL) {
 	return EFI_OUT_OF_RESOURCES;
   }
   SingleRespPtr = SingleResp;
 
   while (*MultiConfigAltResp != 0) {
-    while ((*MultiConfigAltResp != 0) && (EfiStrnCmp (MultiConfigAltResp, L"&GUID=", 6) != 0)) {
+    while ((*MultiConfigAltResp != 0) && (SctStrnCmp (MultiConfigAltResp, L"&GUID=", 6) != 0)) {
       *(SingleResp++) = *(MultiConfigAltResp++);
     }
 	SingleResp = SingleRespPtr;
-	if (EfiStrStr(SingleResp, DevicePath) != NULL)
+	if (SctStrStr (SingleResp, DevicePath) != NULL)
       break;
 	SctZeroMem (SingleRespPtr, 2 * Len + 2);
 	if (*MultiConfigAltResp != 0)
       MultiConfigAltResp++;
   }
 
-  if (EfiStrStr(SingleResp, DevicePath) == NULL)
+  if (SctStrStr (SingleResp, DevicePath) == NULL)
   	return EFI_NOT_FOUND;
 
-  if (EfiStrStr(SingleResp, L"VALUE=") == NULL){
+  if (SctStrStr (SingleResp, L"VALUE=") == NULL){
     while (*SingleResp != 0) {
-      while ((*SingleResp != 0) && (EfiStrnCmp (SingleResp, L"&PATH=", 6) != 0)) {
+      while ((*SingleResp != 0) && (SctStrnCmp (SingleResp, L"&PATH=", 6) != 0)) {
         *(Request++) = *(SingleResp++);
 	  }
 	  *(Request++) = *(SingleResp++);
@@ -481,7 +481,7 @@ GetCorrespondingRequest (
     }
   } else {
     while (*SingleResp != 0) {
-      while ((*SingleResp != 0) && (EfiStrnCmp (SingleResp, L"&VALUE=", 7)) != 0) {
+      while ((*SingleResp != 0) && (SctStrnCmp (SingleResp, L"&VALUE=", 7)) != 0) {
         *(Request++) = *(SingleResp++);
       }
 	  SingleResp++;
@@ -512,29 +512,29 @@ GetCorrespondingResp (
   ReqPtr = Resp;
   RespPtr = MultiConfigAltResp;
 
-  Len = StrLen(MultiConfigAltResp);
+  Len = SctStrLen (MultiConfigAltResp);
   
-  if (EfiStrnCmp (MultiConfigAltResp, L"GUID=", 5) != 0) {
+  if (SctStrnCmp (MultiConfigAltResp, L"GUID=", 5) != 0) {
     return EFI_INVALID_PARAMETER;
   }
   
-  if (EfiStrStr(MultiConfigAltResp, DevicePath) == NULL) {
+  if (SctStrStr (MultiConfigAltResp, DevicePath) == NULL) {
     return EFI_NOT_FOUND;
   }
 
   while (*MultiConfigAltResp != 0) {
-    while ((*MultiConfigAltResp != 0) && (EfiStrnCmp (MultiConfigAltResp, L"&GUID=", 6) != 0)) {
+    while ((*MultiConfigAltResp != 0) && (SctStrnCmp (MultiConfigAltResp, L"&GUID=", 6) != 0)) {
       *(Resp++) = *(MultiConfigAltResp++);
     }
 	Resp = ReqPtr;
-	if (EfiStrStr(Resp, DevicePath) != NULL)
+	if (SctStrStr (Resp, DevicePath) != NULL)
       break;
 	SctZeroMem (ReqPtr, 2 * Len + 2);
 	if (*MultiConfigAltResp != 0)
       MultiConfigAltResp++;
   }
 
-  if (EfiStrStr(Resp, DevicePath) == NULL)
+  if (SctStrStr (Resp, DevicePath) == NULL)
   	return EFI_NOT_FOUND;
   
   return EFI_SUCCESS;
@@ -597,79 +597,79 @@ MultiAltRespToMultiReq (
   EFI_STRING FreePtr = NULL;
   CHAR8      Flag = 0;
 
-  if (EfiStrnCmp (Pointer1, L"GUID=", 5) != 0) {    
+  if (SctStrnCmp (Pointer1, L"GUID=", 5) != 0) {    
     return EFI_INVALID_PARAMETER;
   }
 
-  Pointer2 = (EFI_STRING) SctAllocateZeroPool (2 * StrLen(Resp) + 2);
+  Pointer2 = (EFI_STRING) SctAllocateZeroPool (2 * SctStrLen (Resp) + 2);
   if (Pointer2 == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
   FreePtr = Pointer2;
   
   while (*Pointer1) {
-    if (EfiStrnCmp (Pointer1, L"GUID=", 5) == 0) {
+    if (SctStrnCmp (Pointer1, L"GUID=", 5) == 0) {
       CfgHdr = Pointer2;
       *(Pointer2++) = *(Pointer1++);
 	  while (*Pointer1 != L'&') {
         *(Pointer2++) = *(Pointer1++);
       }
     }
-	if (EfiStrnCmp (Pointer1, L"&GUID=", 6) == 0) {
+	if (SctStrnCmp (Pointer1, L"&GUID=", 6) == 0) {
       *(Pointer2++) = *(Pointer1++);
       CfgHdr = Pointer2;
 	  while (*Pointer1 != L'&') {
         *(Pointer2++) = *(Pointer1++);
       }
 	}
-	if (EfiStrnCmp (Pointer1, L"&NAME=", 6) == 0) {
+	if (SctStrnCmp (Pointer1, L"&NAME=", 6) == 0) {
       *(Pointer2++) = *(Pointer1++);
 	  while (*Pointer1 != L'&') {
         *(Pointer2++) = *(Pointer1++);
       }
 	}
-	if (EfiStrnCmp (Pointer1, L"&PATH=", 6) == 0) {
+	if (SctStrnCmp (Pointer1, L"&PATH=", 6) == 0) {
       *(Pointer2++) = *(Pointer1++);
 	  while (*Pointer1 != L'&') {
         *(Pointer2++) = *(Pointer1++);
       }
-	  if (NULL == EfiStrStr(Req, CfgHdr)){
+	  if (NULL == SctStrStr (Req, CfgHdr)){
 		if (*Req == L'G')
           *(Pointer3++) = L'&';
-        EfiStrCat(Req, CfgHdr);
-        Pointer3 += StrLen(CfgHdr);
+        SctStrCat (Req, CfgHdr);
+        Pointer3 += SctStrLen (CfgHdr);
 		Flag = 1;
 	  } else {
         Flag = 0;
 	  }  
     }
-    while ((Flag == 1) && (EfiStrnCmp (Pointer1, L"&GUID=", 6) != 0) && *Pointer1) {
-      if (EfiStrnCmp (Pointer1, L"&OFFSET=", 8) == 0) {
+    while ((Flag == 1) && (SctStrnCmp (Pointer1, L"&GUID=", 6) != 0) && *Pointer1) {
+      if (SctStrnCmp (Pointer1, L"&OFFSET=", 8) == 0) {
         *(Pointer3++) = *(Pointer1++);
     	while (*Pointer1 != L'&') {
           *(Pointer3++) = *(Pointer1++);
         }
       }
-      if (EfiStrnCmp (Pointer1, L"&WIDTH=", 7) == 0) {
+      if (SctStrnCmp (Pointer1, L"&WIDTH=", 7) == 0) {
         *(Pointer3++) = *(Pointer1++);
 	    while (*Pointer1 != L'&') {
           *(Pointer3++) = *(Pointer1++);
         }
 	  }
-	  if (EfiStrnCmp (Pointer1, L"&VALUE=", 7) == 0) {
+	  if (SctStrnCmp (Pointer1, L"&VALUE=", 7) == 0) {
         Pointer1 += 7;
 	    while (*Pointer1 != L'&' && *Pointer1) {
 	      Pointer1++;
 	    }
 	  }
-	  if (EfiStrnCmp (Pointer1, L"&ALTCFG=", 8) == 0) {
+	  if (SctStrnCmp (Pointer1, L"&ALTCFG=", 8) == 0) {
         Pointer1 += 8;
   	    while (*Pointer1 != L'&' && *Pointer1) {
 	      Pointer1++;
 	    }
 	  }
-	  if ((*Pointer1 == L'&') && (EfiStrnCmp (Pointer1, L"&GUID=", 6) != 0) && 
-		  (EfiStrnCmp (Pointer1, L"&OFFSET=", 8) != 0) && (EfiStrnCmp (Pointer1, L"&WIDTH=", 7) != 0)) {
+	  if ((*Pointer1 == L'&') && (SctStrnCmp (Pointer1, L"&GUID=", 6) != 0) && 
+		  (SctStrnCmp (Pointer1, L"&OFFSET=", 8) != 0) && (SctStrnCmp (Pointer1, L"&WIDTH=", 7) != 0)) {
         *(Pointer3++) = *(Pointer1++);
 	    while (*Pointer1 != L'=') {
           *(Pointer3++) = *(Pointer1++);

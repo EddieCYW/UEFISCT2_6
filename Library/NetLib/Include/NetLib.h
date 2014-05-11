@@ -151,8 +151,8 @@ NetCommonLibSetMem (
 
 
 
-#define NetAsciiStrLen        EfiAsciiStrLen
-#define NetAsciiStrCpy        EfiAsciiStrCpy
+#define NetAsciiStrLen        SctAsciiStrLen
+#define NetAsciiStrCpy        SctAsciiStrCpy
 
 #define NetMultU64x32         MultU64x32
 

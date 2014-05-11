@@ -56,6 +56,7 @@ Abstract:
 --*/
 #include "Efi.h"
 #include "EntsLib.h"
+#include "SctLib.h"
 
 #define MAX_FILENAME_LEN                   128
 #define MAX_RECORD_LEN                     512
@@ -74,66 +75,6 @@ typedef struct _EFI_PASSIVE_TEST_CONTEXT {
   IN UINT64                                        Attributes;
 }EFI_PASSIVE_TEST_CONTEXT;
 
-/*--------------------------Internal string library function---------------------------*/
-STATIC
-UINTN
-StrLen(
-  CHAR8       *str
-  )
-{
-  CHAR8 *s;
-
-  for (s = str; *s; ++s)
-    ;
-  return (UINTN)(s - str);
-}
-
-STATIC
-CHAR8 *
-StrCpy(
-  CHAR8       *to,
-  CHAR8       *from
-  )
-{
-  CHAR8 *save;
-
-  save = to;
-  for (; (*to = *from) != 0 ; ++from, ++to)
-    ;
-  return(save);
-}
-
-STATIC
-INTN
-StrCmp(
-  CHAR8       *s1,
-  CHAR8       *s2
-  )
-{
-  while (*s1 == *s2++) {
-    if (*s1++ == 0)
-      return 0;
-  }
-  return (*s1 - *s2 - 1);
-}
-
-STATIC
-CHAR8 *
-StrChr (
-  CHAR8       *p,
-  INTN        ch
-  )
-{
-  for (; ; ++p) {
-    if (*p == ch)
-      return((CHAR8 *)p);
-    if (!*p)
-      return((CHAR8 *)NULL);
-  }
-  /* NOTREACHED */
-}
-
-/*-------------------------------------------------------------------------------------*/
 STATIC
 EFI_STATUS
 ContextReopen (
@@ -168,7 +109,7 @@ ParseRecordLine (
   VOID                                     *ValueBuf;
   UINTN                                    ValueSize;
 
-  TmpStr  = StrChr(LineBuf, '|');
+  TmpStr  = SctAsciiStrChr (LineBuf, '|');
   if (TmpStr == NULL) {
     return EFI_INVALID_PARAMETER;
   }
@@ -177,7 +118,7 @@ ParseRecordLine (
   if (KeyBuf == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
-  StrCpy (KeyBuf, LineBuf);
+  SctAsciiStrCpy (KeyBuf, LineBuf);
   TmpStr++;
   EntsCopyMem(&ValueSize, TmpStr, sizeof(UINTN));
   ValueBuf = (VOID *)EntsAllocateZeroPool (ValueSize);
@@ -327,8 +268,8 @@ WriteRecordsToFile(
   FileHandle = Context->FileHandle;
 
   for (Record = RecordListHead; Record != NULL; Record = Record->Next) {
-    StrCpy(Buffer, Record->Key);
-    Index = StrLen(Record->Key);
+    SctStrCpy (Buffer, Record->Key);
+    Index = SctStrLen (Record->Key);
     Buffer[Index++] = '|';
     EntsCopyMem(Buffer + Index, &Record->Size, sizeof(UINTN));
     Index += sizeof(UINTN);
@@ -365,7 +306,7 @@ SetRecord (
   }
 
   for (Record = RecordListHead; Record != NULL; Record = Record->Next) {
-  	if (StrCmp(Key, Record->Key) == 0) {
+  	if (SctStrCmp (Key, Record->Key) == 0) {
       break;
     }
   }
@@ -380,7 +321,7 @@ SetRecord (
       Status = EFI_OUT_OF_RESOURCES;
       goto FreeAndReturn;
     }
-    KeyBuf = (CHAR8 *)EntsAllocateZeroPool (StrLen(Key) + 1);
+    KeyBuf = (CHAR8 *)EntsAllocateZeroPool (SctStrLen (Key) + 1);
     if (KeyBuf == NULL) {
       EntsFreePool(Record);
       Status = EFI_OUT_OF_RESOURCES;
@@ -393,7 +334,7 @@ SetRecord (
       Status = EFI_OUT_OF_RESOURCES;
       goto FreeAndReturn;
     }
-    StrCpy(KeyBuf, Key);
+    SctStrCpy (KeyBuf, Key);
 	EntsCopyMem(ValueBuf, RecordValue, RecordSize);
     Record->Key    = KeyBuf;
     Record->Size   = RecordSize;
@@ -456,7 +397,7 @@ GetRecord (
   // the records in the list are same as the ones in file
   //
   for (Record = RecordListHead; Record != NULL; Record = Record->Next) {
-    if (StrCmp(Record->Key, Key) == 0) {
+    if (SctStrCmp (Record->Key, Key) == 0) {
       break;
     }
   }
@@ -506,12 +447,12 @@ DelRecord (
   if (RecordListHead == NULL) {
     return EFI_NOT_FOUND;
   } else {
-    if (StrCmp(Key, RecordListHead->Key) == 0) {
+    if (SctStrCmp (Key, RecordListHead->Key) == 0) {
       Record = RecordListHead;
 	  RecordListHead = RecordListHead->Next;
     } else {
       for (Record = RecordListHead; Record->Next != NULL; Record = Record->Next) {
-        if (StrCmp(Key, Record->Next->Key) == 0) {
+        if (SctStrCmp (Key, Record->Next->Key) == 0) {
           break;
         }
       }
@@ -852,11 +793,11 @@ SetContextRecord (
   }
 
   Unicode2Ascii(AsciiKey, Key);
-  if (StrLen(AsciiKey) + Size + 1 > MAX_RECORD_LEN) {
+  if (SctStrLen (AsciiKey) + Size + 1 > MAX_RECORD_LEN) {
     return EFI_INVALID_PARAMETER;
   }
 
-  if (StrChr(AsciiKey, '=') != NULL) {
+  if (SctStrChr (AsciiKey, '=') != NULL) {
     EFI_ENTS_DEBUG((EFI_ENTS_D_ERROR, L"The KEY of record can not contain ="));
     return EFI_INVALID_PARAMETER;
   }

@@ -371,10 +371,10 @@ BBTestCLPCommandAutoTest (
 
     AssertionType = EFI_TEST_ASSERTION_PASSED;
     for(Index=0;Index<Num_CLPCmdVerb;Index++){
-       if(StrCmp((CHAR16*)CLPCmd->CLPCmdVerb,StandardClpCmdVerb[Index])==0){
+       if(SctStrCmp ((CHAR16*)CLPCmd->CLPCmdVerb,StandardClpCmdVerb[Index])==0){
           //Index = Num_CLPCmdVerb;
           for(Index1=0;Index1<Num_CLPCmdOption;Index1++){
-             if(StrCmp((CHAR16*)CLPCmd->CLPCmdOption,StandardClpCmdOption[Index1])==0){
+             if(SctStrCmp ((CHAR16*)CLPCmd->CLPCmdOption,StandardClpCmdOption[Index1])==0){
                  if((Index !=4) && (Index1 ==5||Index1==6||(Index1 >=9&&Index1<=12)||Index1==15||Index1==16||(Index1 >=18&&Index1<=21))){
                        AssertionType = EFI_TEST_ASSERTION_PASSED;
 			  Index = Num_CLPCmdVerb;
@@ -657,10 +657,10 @@ BBTestCLPReturnStringAutoTest (
        //
        Status = ParseCLPCommandLine( EfiClpParameterBlock, CLPCmd);
 	
-       if(StrCmp((CHAR16*)CLPCmd->CLPCmdOption, StandardClpCmdOption[15])==0||
-	 	StrCmp((CHAR16*)CLPCmd->CLPCmdOption ,StandardClpCmdOption[16])==0){
+       if(SctStrCmp ((CHAR16*)CLPCmd->CLPCmdOption, StandardClpCmdOption[15])==0||
+	 	SctStrCmp ((CHAR16*)CLPCmd->CLPCmdOption ,StandardClpCmdOption[16])==0){
 	 	for(Index=0;Index<CLPCmd->CLPCmdTargetLength;Index++){
-                     if(StrnCmp((CHAR16*)(CLPCmd->CLPCmdTarget + Index),L"format=keyword" ,sizeof(L"format=keyword"))==0){
+                     if(SctStrnCmp ((CHAR16*)(CLPCmd->CLPCmdTarget + Index),L"format=keyword" ,sizeof(L"format=keyword"))==0){
                            AssertionType = EFI_TEST_ASSERTION_PASSED;
 			      StandardLib->RecordAssertion (
                                                             StandardLib,

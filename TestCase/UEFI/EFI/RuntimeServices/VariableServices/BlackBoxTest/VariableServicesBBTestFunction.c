@@ -742,7 +742,7 @@ GetNextVariableNameFuncTestSub1 (
           break;
         }
 
-        if ((StrCmp (VariableName, L"TestVariable")       == 0) &&
+        if ((SctStrCmp (VariableName, L"TestVariable")       == 0) &&
             (CompareGuid (&VendorGuid, &gTestVendor1Guid) == 0)) {
           Result = EFI_TEST_ASSERTION_PASSED;
           break;
@@ -3034,10 +3034,10 @@ HardwareErrorRecordFuncTest (
       break;
     }
 
-    if ( (StrnCmp (GetVariableName, L"HwErrRec", 8) == 0) &&
+    if ( (SctStrnCmp (GetVariableName, L"HwErrRec", 8) == 0) &&
          (CompareGuid (&VendorGuid, &gHwErrRecGuid) == 0) ) {
-      StrnCpy (ErrorNum, &GetVariableName[8], 4);
-      Num = xtoi(ErrorNum);
+      SctStrnCpy (ErrorNum, &GetVariableName[8], 4);
+      Num = SctXtoi (ErrorNum);
       if (MaxNum < Num)
         MaxNum = Num;
     }
@@ -3046,7 +3046,7 @@ HardwareErrorRecordFuncTest (
   MaxNum++;
     
   HwErrRecVariableName[0] = L'\0';
-  StrCat( HwErrRecVariableName, L"HwErrRec" );
+  SctStrCat ( HwErrRecVariableName, L"HwErrRec" );
   Myitox( MaxNum, HwErrRecVariableName+8 );
   
   //
@@ -3069,7 +3069,7 @@ HardwareErrorRecordFuncTest (
   // Write reset record
   //
   RecoveryData[0] = 2;
-  StrnCpy( (CHAR16*)(&RecoveryData[2]), HwErrRecVariableName, 12 );
+  SctStrnCpy ( (CHAR16*)(&RecoveryData[2]), HwErrRecVariableName, 12 );
   RecoveryLib->WriteResetRecord( RecoveryLib, 13*sizeof(CHAR16)+2, RecoveryData );
   
   //
@@ -3085,7 +3085,7 @@ HardwareErrorRecordFuncTest (
   //
 step2:
   DataSize = 255;
-  StrnCpy( HwErrRecVariableName, (CHAR16*)(RecoveryData+2), 12 );
+  SctStrnCpy ( HwErrRecVariableName, (CHAR16*)(RecoveryData+2), 12 );
   Status = RT->GetVariable (
                         HwErrRecVariableName,
                         &gHwErrRecGuid,
@@ -3098,7 +3098,7 @@ step2:
     return Status;
   }
   
-  if ( StrCmp( HwErrRecGetVariable, HwErrRecVariable ) ) {
+  if ( SctStrCmp ( HwErrRecGetVariable, HwErrRecVariable ) ) {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   } else {
     AssertionType = EFI_TEST_ASSERTION_PASSED;

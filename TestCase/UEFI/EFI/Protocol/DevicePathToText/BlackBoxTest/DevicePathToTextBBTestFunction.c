@@ -156,16 +156,16 @@ DevicePathCmp(
   ASSERT(S1);
   ASSERT(S2);
 
-  Str1 = (CHAR16 *)SctAllocatePool (2 * StrLen(S1) + 2);
-  Str2 = (CHAR16 *)SctAllocatePool (2 * StrLen(S2) + 2);
-  StrCpy(Str1, S1);
-  StrCpy(Str2, S2);
+  Str1 = (CHAR16 *)SctAllocatePool (2 * SctStrLen (S1) + 2);
+  Str2 = (CHAR16 *)SctAllocatePool (2 * SctStrLen (S2) + 2);
+  SctStrCpy (Str1, S1);
+  SctStrCpy (Str2, S2);
 
   //
   // convert the characters in the two strings to upper case
   //
-  StrUpr(Str1);
-  StrUpr(Str2);
+  SctStrUpr (Str1);
+  SctStrUpr (Str2);
 
   RetCode = 0;
   Idx1 = Idx2 = 0; 

@@ -1974,9 +1974,9 @@ Routine Description:
   // Set the test category and device path info
   //
   if (ExecuteInfo->Category != NULL) {
-    ConfigData->TestCategory = StrDuplicate (ExecuteInfo->Category->Name);
+    ConfigData->TestCategory = SctStrDuplicate (ExecuteInfo->Category->Name);
   } else {
-    ConfigData->TestCategory = StrDuplicate (L"Unknown");
+    ConfigData->TestCategory = SctStrDuplicate (L"Unknown");
   }
 
   if (Handle != NULL_HANDLE) {
@@ -1984,10 +1984,10 @@ Routine Description:
     if (DevicePath != NULL) {
       ConfigData->DevicePath = LibDevicePathToStr (DevicePath);
     } else {
-      ConfigData->DevicePath = StrDuplicate (L"No device path");
+      ConfigData->DevicePath = SctStrDuplicate (L"No device path");
     }
   } else {
-    ConfigData->DevicePath = StrDuplicate (L"No device path");
+    ConfigData->DevicePath = SctStrDuplicate (L"No device path");
   }
 
   //

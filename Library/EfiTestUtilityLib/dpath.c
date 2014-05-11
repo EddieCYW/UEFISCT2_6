@@ -390,7 +390,7 @@ Returns:
   FILEPATH_DEVICE_PATH        *FilePath;
   EFI_DEVICE_PATH_PROTOCOL    *Eop, *DevicePath;
 
-  Size = StrSize(FileName);
+  Size = SctStrSize (FileName);
   FilePath = SctAllocateZeroPool (Size + SIZE_OF_FILEPATH_DEVICE_PATH + sizeof(EFI_DEVICE_PATH_PROTOCOL));
   DevicePath = NULL;
 
@@ -1471,7 +1471,7 @@ GetFilePathByName (
   if (Name == NULL || DevicePath == NULL || FilePath == NULL) {
     return EFI_INVALID_PARAMETER;
   }
-  if (StrLen (Name) == 0) {
+  if (SctStrLen (Name) == 0) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -1529,17 +1529,17 @@ GetFilePathByName (
     while (!IsDevicePathEnd(TempDeviceNode)) {
       if ((DevicePathType(TempDeviceNode) == MEDIA_DEVICE_PATH) &&
           (DevicePathSubType(TempDeviceNode) == MEDIA_FILEPATH_DP)) {
-        StrCat(FullFilePath, L"\\");
+        SctStrCat (FullFilePath, L"\\");
         TempFilePath = ((FILEPATH_DEVICE_PATH *)TempDeviceNode)->PathName;
 
-        if (StrLen (TempFilePath) == 1 && TempFilePath[0] == '\\') {
+        if (SctStrLen (TempFilePath) == 1 && TempFilePath[0] == '\\') {
           //
           //if this the "\\" path then we need not append it,or else there will
           //have 3 '\\' in the device path.
           //
           ;
         } else {
-          StrCat(FullFilePath, TempFilePath);
+          SctStrCat (FullFilePath, TempFilePath);
         }
       }
       TempDeviceNode = NextDevicePathNode (TempDeviceNode);
@@ -1547,13 +1547,13 @@ GetFilePathByName (
 
     tBS->FreePool (TempDevicePath);
 
-    if (StrLen (FullFilePath) <= StrLen (Name)) {
+    if (SctStrLen (FullFilePath) <= SctStrLen (Name)) {
       continue;
     }
 
-    TempFilePath = FullFilePath + (StrLen(FullFilePath) - StrLen(Name));
+    TempFilePath = FullFilePath + (SctStrLen (FullFilePath) - SctStrLen(Name));
 
-    if ((*(TempFilePath - 1)) == L'\\' && StriCmp (TempFilePath, Name) == 0) {
+    if ((*(TempFilePath - 1)) == L'\\' && SctStriCmp (TempFilePath, Name) == 0) {
 
       TempFilePath[0] = '\0';
       //
@@ -1585,9 +1585,9 @@ GetFilePathByName (
   //
   // If the file path is only a root directory "\\", remove it
   //
-  if (StrLen(FullFilePath) > 1) {
-    if (FullFilePath[StrLen(FullFilePath) - 1] == L'\\') {
-     FullFilePath[StrLen(FullFilePath) - 1] = '\0';
+  if (SctStrLen (FullFilePath) > 1) {
+    if (FullFilePath[SctStrLen (FullFilePath) - 1] == L'\\') {
+     FullFilePath[SctStrLen (FullFilePath) - 1] = '\0';
     }
   }
 
@@ -1598,7 +1598,7 @@ GetFilePathByName (
   //
   //skip the first '\\'.
   //
-  *FilePath = StrDuplicate (FullFilePath + 1);
+  *FilePath = SctStrDuplicate (FullFilePath + 1);
   if (*FilePath == NULL) {
     tBS->FreePool (*DevicePath);
     *DevicePath = NULL;

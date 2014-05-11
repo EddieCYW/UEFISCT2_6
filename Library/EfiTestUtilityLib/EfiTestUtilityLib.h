@@ -170,156 +170,6 @@ CalculateCrc (
   UINTN Size
   );
 
-INTN
-StrCmp (
-  IN CHAR16                         *s1,
-  IN CHAR16                         *s2
-  );
-
-INTN
-StrnCmp (
-  IN CHAR16                         *s1,
-  IN CHAR16                         *s2,
-  IN UINTN                          len
-  );
-
-INTN
-StriCmp (
-  IN CHAR16                         *s1,
-  IN CHAR16                         *s2
-  );
-
-VOID
-StrLwr (
-  IN CHAR16                         *Str
-  );
-
-VOID
-StrUpr (
-  IN CHAR16                         *Str
-  );
-
-VOID
-StrCpy (
-  IN CHAR16                         *Dest,
-  IN CHAR16                         *Src
-  );
-
-VOID
-StrnCpy (
-  OUT CHAR16                   *Dst,
-  IN  CHAR16                   *Src,
-  IN  UINTN                    Length
-  );
-
-VOID
-StrTrim (
-  IN OUT CHAR16                     *str,
-  IN     CHAR16                     c
-  );
-
-VOID
-StrCat (
-  IN CHAR16                         *Dest,
-  IN CHAR16                         *Src
-  );
-
-CHAR16 *
-StrChr (
-  IN  CHAR16  *Str,
-  IN  CHAR16  c
-  );
-
-CHAR8 *
-StrChrAscii (
-  IN  CHAR8  *Str,
-  IN  CHAR8  c
-  );
-
-UINTN
-StrLen (
-  IN CHAR16                         *s1
-  );
-
-UINTN
-StrSize (
-  IN CHAR16                         *s1
-  );
-
-CHAR16 *
-StrDuplicate (
-  IN CHAR16                         *Src
-  );
-
-UINTN
-strlena (
-  IN CHAR8                          *s1
-  );
-
-UINTN
-strcmpa (
-  IN CHAR8                          *s1,
-  IN CHAR8                          *s2
-  );
-
-UINTN
-strncmpa (
-  IN CHAR8                          *s1,
-  IN CHAR8                          *s2,
-  IN UINTN                          len
-  );
-
-UINTN
-xtoi (
-  CHAR16                            *str
-  );
-
-UINTN
-Atoi (
-  CHAR16                            *str
-  );
-
-UINTN
-StrToUInt (
-  IN  CHAR16       *Str
-  );
-
-VOID
-StrToUInt64 (
-  IN  CHAR16       *Str,
-  OUT UINT64       *Result
-  );
-
-VOID
-StrToAscii (
-  IN CHAR16 *Str,
-  IN CHAR8  *AsciiStr
-  );
-
-CHAR16 *
-SplitStr (
-  IN OUT CHAR16 **List,
-  IN     CHAR16 Separator
-  );
-
-CHAR8 *
-SplitStrAscii (
-  IN OUT CHAR8 **List,
-  IN     CHAR8 Separator
-  );
-
-VOID
-StrToIPv4Addr (
-  IN OUT CHAR16           **Str,
-  OUT    EFI_IPv4_ADDRESS *IPv4Addr
-  );
-
-VOID
-StrToIPv6Addr (
-  IN OUT CHAR16           **Str,
-  OUT    EFI_IPv6_ADDRESS *IPv6Addr
-  );
-
 BOOLEAN
 MetaMatch (
   IN CHAR16                         *String,
@@ -494,13 +344,6 @@ DumpHex (
   IN VOID                           *UserData
   );
 
-BOOLEAN
-GrowBuffer(
-  IN OUT EFI_STATUS                 *Status,
-  IN OUT VOID                       **Buffer,
-  IN UINTN                          BufferSize
-  );
-
 EFI_MEMORY_DESCRIPTOR *
 LibMemoryMap (
   OUT UINTN                         *NoEntries,
@@ -520,21 +363,6 @@ LibGetVariableAndSize (
   IN CHAR16                         *Name,
   IN EFI_GUID                       *VendorGuid,
   OUT UINTN                         *VarSize
-  );
-
-EFI_STATUS
-LibLocateProtocol (
-  IN  EFI_GUID                      *ProtocolGuid,
-  OUT VOID                          **Interface
-  );
-
-EFI_STATUS
-LibLocateHandle (
-  IN EFI_LOCATE_SEARCH_TYPE         SearchType,
-  IN EFI_GUID                       *Protocol OPTIONAL,
-  IN VOID                           *SearchKey OPTIONAL,
-  IN OUT UINTN                      *NoHandles,
-  OUT EFI_HANDLE                    **Buffer
   );
 
 EFI_STATUS
@@ -640,36 +468,6 @@ GetFilePathByName (
   IN CHAR16                       *Name,
   OUT EFI_DEVICE_PATH_PROTOCOL    **DevicePath,
   OUT CHAR16                      **FilePath
-  );
-
-EFI_STATUS
-LibGetSystemConfigurationTable(
-  IN EFI_GUID                       *TableGuid,
-  IN OUT VOID                       **Table
-  );
-
-#define EFI_HANDLE_TYPE_UNKNOWN                      0x000
-#define EFI_HANDLE_TYPE_IMAGE_HANDLE                 0x001
-#define EFI_HANDLE_TYPE_DRIVER_BINDING_HANDLE        0x002
-#define EFI_HANDLE_TYPE_DEVICE_DRIVER                0x004
-#define EFI_HANDLE_TYPE_BUS_DRIVER                   0x008
-#define EFI_HANDLE_TYPE_DRIVER_CONFIGURATION_HANDLE  0x010
-#define EFI_HANDLE_TYPE_DRIVER_DIAGNOSTICS_HANDLE    0x020
-#define EFI_HANDLE_TYPE_COMPONENT_NAME_HANDLE        0x040
-#define EFI_HANDLE_TYPE_DEVICE_HANDLE                0x080
-#define EFI_HANDLE_TYPE_PARENT_HANDLE                0x100
-#define EFI_HANDLE_TYPE_CONTROLLER_HANDLE            0x200
-#define EFI_HANDLE_TYPE_CHILD_HANDLE                 0x400
-
-EFI_STATUS
-LibScanHandleDatabase (
-  EFI_HANDLE  DriverBindingHandle,       OPTIONAL
-  UINT32      *DriverBindingHandleIndex, OPTIONAL
-  EFI_HANDLE  ControllerHandle,          OPTIONAL
-  UINT32      *ControllerHandleIndex,    OPTIONAL
-  UINTN       *HandleCount,
-  EFI_HANDLE  **HandleBuffer,
-  UINT32      **HandleType
   );
 
 EFI_STATUS

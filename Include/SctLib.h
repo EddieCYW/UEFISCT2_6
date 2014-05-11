@@ -190,4 +190,280 @@ SctScanHandleDatabase (
   UINT32      **HandleType
   );
 
+//
+// String API
+//
+
+#define LEFT_JUSTIFY  0x01
+#define PREFIX_SIGN   0x02
+#define PREFIX_BLANK  0x04
+#define COMMA_TYPE    0x08
+#define LONG_TYPE     0x10
+#define PREFIX_ZERO   0x20
+
+INTN
+SctStrCmp (
+  IN CONST CHAR16                   *s1,
+  IN CONST CHAR16                   *s2
+  );
+
+INTN
+SctStrnCmp (
+  IN CONST CHAR16                   *s1,
+  IN CONST CHAR16                   *s2,
+  IN UINTN                          len
+  );
+
+INTN
+SctStriCmp (
+  IN CONST CHAR16                   *s1,
+  IN CONST CHAR16                   *s2
+  );
+
+VOID
+SctStrLwr (
+  IN CONST CHAR16                   *Str
+  );
+
+VOID
+SctStrUpr (
+  IN CONST CHAR16                   *Str
+  );
+
+VOID
+SctStrCpy (
+  IN CHAR16                         *Dest,
+  IN CONST CHAR16                   *Src
+  );
+
+VOID
+SctStrnCpy (
+  OUT CHAR16                   *Dst,
+  IN  CONST CHAR16             *Src,
+  IN  UINTN                    Length
+  );
+
+VOID
+StrTrim (
+  IN OUT CHAR16                     *str,
+  IN     CHAR16                     c
+  );
+
+VOID
+SctStrCat (
+  IN CHAR16                         *Dest,
+  IN CONST CHAR16                   *Src
+  );
+
+CHAR16 *
+SctStrChr (
+  IN  CHAR16  *Str,
+  IN  CHAR16  c
+  );
+
+UINTN
+SctStrLen (
+  IN CONST CHAR16                   *s1
+  );
+
+UINTN
+SctStrSize (
+  IN CONST CHAR16                   *s1
+  );
+
+CHAR16 *
+SctStrDuplicate (
+  IN CONST CHAR16                   *Src
+  );
+
+CHAR16*
+SctStrStr (
+  IN  CONST CHAR16  *Str,
+  IN  CONST CHAR16  *Pat
+  );
+
+CHAR8 *
+SctAsciiStrDuplicate (
+  CHAR8 CONST  *str
+  );
+
+CHAR8 *
+EFIAPI
+SctAsciiStrCpy (
+  OUT     CHAR8                     *Destination,
+  IN      CONST CHAR8               *Source
+  );
+
+CHAR8 *
+SctAsciiStrnCpy (
+  CHAR8       *dst,
+  CHAR8       *src,
+  UINTN       n
+  );
+
+UINTN
+EFIAPI
+SctAsciiStrLen (
+  IN      CONST CHAR8               *String
+  );
+
+UINTN
+SctAsciiStrSize (
+  IN CONST CHAR8   *String
+  );
+
+INTN
+SctAsciiStriCmp (
+  IN CONST CHAR8       *s1,
+  IN CONST CHAR8       *s2
+  );
+
+CHAR8 *
+EFIAPI
+SctAsciiStrCat (
+  IN OUT CHAR8    *Destination,
+  IN CONST CHAR8  *Source
+  );
+
+UINTN
+SctAsciiStrCmp (
+  IN CHAR8                          *s1,
+  IN CHAR8                          *s2
+  );
+
+UINTN
+SctAsciiStrnCmp (
+  IN CHAR8                          *s1,
+  IN CHAR8                          *s2,
+  IN UINTN                          len
+  );
+
+CHAR8*
+EFIAPI
+SctAsciiStrChr (
+  IN  CHAR8  *String,
+  IN  CHAR8  c
+  );
+
+CHAR8*
+EFIAPI
+SctAsciiStrStr (
+  IN  CHAR8  *String,
+  IN  CHAR8  *StrCharSet
+  );
+
+UINTN
+SctXtoi (
+  CHAR16                            *str
+  );
+
+UINTN
+SctAtoi (
+  CHAR16                            *str
+  );
+
+UINTN
+SctStrToUInt (
+  IN  CHAR16       *Str
+  );
+
+VOID
+SctStrToUInt64 (
+  IN  CHAR16       *Str,
+  OUT UINT64       *Result
+  );
+
+VOID
+SctValueToHexStr (
+  IN CHAR16      *Buffer,
+  IN UINT64      v,
+  IN UINTN       Flags,
+  IN UINTN       Width
+  );
+
+VOID
+SctStrToAscii (
+  IN CHAR16 *Str,
+  IN CHAR8  *AsciiStr
+  );
+
+CHAR16 *
+SctSplitStr (
+  IN OUT CHAR16 **List,
+  IN     CHAR16 Separator
+  );
+
+CHAR8 *
+SctAsciiSplitStr (
+  IN OUT CHAR8 **List,
+  IN     CHAR8 Separator
+  );
+
+VOID
+SctStrToIPv4Addr (
+  IN OUT CHAR16           **Str,
+  OUT    EFI_IPv4_ADDRESS *IPv4Addr
+  );
+
+VOID
+SctStrToIPv6Addr (
+  IN OUT CHAR16           **Str,
+  OUT    EFI_IPv6_ADDRESS *IPv6Addr
+  );
+
+VOID
+SctValueToHexStr (
+  IN CHAR16      *Buffer,
+  IN UINT64      v,
+  IN UINTN       Flags,
+  IN UINTN       Width
+  );
+
+BOOLEAN
+SctIsHexDigit (
+  OUT UINT8      *Digit,
+  IN  CHAR16      Char
+  );
+
+CHAR16
+SctNibbleToHexChar (
+  IN UINT8      Nibble
+  );
+
+EFI_STATUS
+SctHexStringToBuf (
+  IN OUT UINT8                     *Buf,
+  IN OUT UINTN                    *Len,
+  IN     CHAR16                    *Str,
+  OUT    UINTN                     *ConvertedStrLen  OPTIONAL
+  );
+
+EFI_STATUS
+SctBufToHexString (
+  IN OUT CHAR16                    *Str,
+  IN OUT UINTN                     *HexStringBufferLength,
+  IN     UINT8                     *Buf,
+  IN     UINTN                      Len
+  );
+
+UINTN
+SctUnicodeToAscii (
+  CHAR8       *s,
+  CHAR16      *pwcs,
+  UINTN       n
+  );
+
+UINTN
+SctAsciiToUnicode (
+  CHAR16      *pwcs,
+  CHAR8       *s,
+  UINTN       n
+  );
+
+VOID
+SctStrTrim (
+  IN OUT CHAR16   *str,
+  IN     CHAR16   c
+  );
+
 #endif

@@ -275,12 +275,12 @@ Returns:
   //
   // Fill Name
   //
-  StrCpy (NewRivlVariable->Name, Name);
+  SctStrCpy (NewRivlVariable->Name, Name);
 
   //
   // Fill Type
   //
-  StrCpy (NewRivlVariable->Type, Type);
+  SctStrCpy (NewRivlVariable->Type, Type);
 
   //
   // Fill ArrayNumber
@@ -505,7 +505,7 @@ Returns:
 
   RivlVariable = gRivlVariableList;
   while (RivlVariable != NULL) {
-    if (StrCmp (RivlVariable->Name, Name) == 0) {
+    if (SctStrCmp (RivlVariable->Name, Name) == 0) {
       //
       // Find it
       //
@@ -1008,7 +1008,7 @@ Returns:
   }
 
 Done:
-  StrCpy (VarBuf, TmpBuf);
+  SctStrCpy (VarBuf, TmpBuf);
   EntsFreePool (TmpBuf);
 
   return Status;
@@ -1125,7 +1125,7 @@ Returns:
   }
 
 Done:
-  StrCpy (VarBuf, TmpBuf);
+  SctStrCpy (VarBuf, TmpBuf);
   EntsFreePool (TmpBuf);
 
   return Status;

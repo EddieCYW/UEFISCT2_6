@@ -231,7 +231,7 @@ StrToBuf (
 
   for(Index = 0; Index < StrLength; Index++, Str++) {
 
-    IsHexDigit (&Digit, *Str);
+    SctIsHexDigit (&Digit, *Str);
 
     //
     // For odd charaters, write the upper nibble for each buffer byte,
@@ -263,9 +263,9 @@ StrToUInt16 (
   UINT8     Digit;
   UINT16    Base;
 
-  StrTrim (Str, L' ');
+  SctStrTrim (Str, L' ');
 
-  StrLength = StrLen (Str);
+  StrLength = SctStrLen (Str);
   Base      = 10;
   //
   // Check hex prefix '0x'
@@ -277,15 +277,15 @@ StrToUInt16 (
   }
 
   for(Index = 0; Index < StrLength; Index++) {
-    if (IsHexDigit (&Digit, Str[Index]) == FALSE) {
+    if (SctIsHexDigit (&Digit, Str[Index]) == FALSE) {
       return EFI_INVALID_PARAMETER;
     }
   }
 
   if (Base == 10) {
-    *Result = (UINT16) Atoi(Str);
+    *Result = (UINT16) SctAtoi (Str);
   } else {
-    *Result = (UINT16) xtoi(Str);
+    *Result = (UINT16) SctXtoi (Str);
   }
 
   return EFI_SUCCESS;
@@ -304,7 +304,7 @@ StrToGuid (
   EFI_STATUS  Status;
 
   BufferLength = sizeof (Guid->Data1);
-  Status = HexStringToBuf ((UINT8 *) &Guid->Data1, &BufferLength, Str, &ConvertedStrLen);
+  Status = SctHexStringToBuf ((UINT8 *) &Guid->Data1, &BufferLength, Str, &ConvertedStrLen);
   if (EFI_ERROR (Status)) {
     return Status;
   }
@@ -316,7 +316,7 @@ StrToGuid (
   }
 
   BufferLength = sizeof (Guid->Data2);
-  Status = HexStringToBuf ((UINT8 *) &Guid->Data2, &BufferLength, Str, &ConvertedStrLen);
+  Status = SctHexStringToBuf ((UINT8 *) &Guid->Data2, &BufferLength, Str, &ConvertedStrLen);
   if (EFI_ERROR (Status)) {
     return Status;
   }
@@ -328,7 +328,7 @@ StrToGuid (
   }
 
   BufferLength = sizeof (Guid->Data3);
-  Status = HexStringToBuf ((UINT8 *) &Guid->Data3, &BufferLength, Str, &ConvertedStrLen);
+  Status = SctHexStringToBuf ((UINT8 *) &Guid->Data3, &BufferLength, Str, &ConvertedStrLen);
   if (EFI_ERROR (Status)) {
     return Status;
   }
@@ -370,28 +370,6 @@ Xtoi64 (
 }
 
 STATIC
-EFI_STATUS
-UnicodeToAscii (
-  IN CHAR16                       *UnicodeStr,
-  OUT CHAR8                       *AsciiStr
-  )
-{
-  if ((UnicodeStr == NULL) || (AsciiStr == NULL)) {
-    return EFI_INVALID_PARAMETER;
-  }
-
-  while (*UnicodeStr != L'\0') {
-    *AsciiStr = (CHAR8) *UnicodeStr;
-    UnicodeStr ++;
-    AsciiStr ++;
-  }
-
-  *AsciiStr = '\0';
-
-  return EFI_SUCCESS;
-}
-
-STATIC
 VOID
 EUI64StrToUInt64 (
   IN  CHAR16 *EUIStr, 
@@ -429,7 +407,7 @@ GetIdentifierStrAndValue (
   *ParamIdentifierStr = NULL;
   *ParamIdentifierVal = ParamStr;
 
-  ValStr = StrChr(ParamStr, L'=');
+  ValStr = SctStrChr (ParamStr, L'=');
   if (ValStr != NULL) {
     *ValStr = L'\0';
     *ParamIdentifierStr = ParamStr;
@@ -457,7 +435,7 @@ GetNextRequiredParam (
     return EFI_SUCCESS;
   }
 
-  Str = StrChr(*ParamStr, L',');
+  Str = SctStrChr (*ParamStr, L',');
   if (Str != NULL) {
     *Str = L'\0';
     GetIdentifierStrAndValue(*ParamStr, ParamIdentifierStr, ParamIdentifierVal);
@@ -470,7 +448,7 @@ GetNextRequiredParam (
     *ParamStr = NULL;
   }
 
-  if ((*ParamIdentifierStr != NULL) && (StrCmp(*ParamIdentifierStr, IdentiferStr) != 0)) {
+  if ((*ParamIdentifierStr != NULL) && (SctStrCmp (*ParamIdentifierStr, IdentiferStr) != 0)) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -495,7 +473,7 @@ GetNextOptionalParam (
     return ;
   }
 
-  Str = StrChr(*ParamStr, L',');
+  Str = SctStrChr (*ParamStr, L',');
   if (Str != NULL) {
     *Str = L'\0';
     GetIdentifierStrAndValue(*ParamStr, ParamIdentifierStr, ParamIdentifierVal);
@@ -523,7 +501,7 @@ GetParamTotalNum (
   Num = 0;
 
   while ((Str != NULL) && (*Str != L'\0')) {
-    Str = StrChr(Str, L',');
+    Str = SctStrChr (Str, L',');
     if (Str != NULL) {
       Str++;
     }
@@ -545,9 +523,9 @@ StrToUInt8Array (
   UINT8    Digit;
   UINT8    Byte;
 
-  StrTrim (Str, L' ');
+  SctStrTrim (Str, L' ');
 
-  StrLength = StrLen (Str);
+  StrLength = SctStrLen (Str);
   //
   // Check hex prefix '0x'
   //
@@ -558,7 +536,7 @@ StrToUInt8Array (
 
   for(Index = 0; Index < StrLength; Index++, Str++) {
 
-    IsHexDigit (&Digit, *Str);
+    SctIsHexDigit (&Digit, *Str);
 
     //
     // For odd charaters, write the upper nibble for each buffer byte,
@@ -587,7 +565,7 @@ CheckParamIdentiferValid (
   )
 {
   if ((ExpectOptionalParamIndex > CurrentOptionalParamIndex) || 
-  	  ((Identifier != NULL) && StrCmp(ParamIdentifierStr, Identifier) != 0)) {
+  	  ((Identifier != NULL) && SctStrCmp (ParamIdentifierStr, Identifier) != 0)) {
     return FALSE;
   }
 
@@ -642,9 +620,9 @@ ConvertEisaIDFromStr (
   )
 {
   if ((Str[0] == L'P') && (Str[1] == L'N') && (Str[2] == L'P')) {
-    return EISA_PNP_ID(xtoi(Str + 3));
+    return EISA_PNP_ID(SctXtoi (Str + 3));
   }
-  return (UINT32)xtoi(Str);
+  return (UINT32)SctXtoi (Str);
 }
 
 STATIC
@@ -672,14 +650,14 @@ ConvertFromTextAcpi (
     if (ParamIdentifierStr != NULL) {
       if (CheckParamIdentiferValid (ParamIdentifierStr, L"UID", OptionalParamIndex, 0)) {
         OptionalParamIndex = 0;
-        Acpi->UID = (UINT32) StrToUInt (ParamIdentifierVal);
+        Acpi->UID = (UINT32) SctStrToUInt (ParamIdentifierVal);
       } else {
         goto InValidText;
       }
     } else if (ParamIdentifierVal != NULL) {
       switch(OptionalParamIndex) {
       case 0:  // UID
-        Acpi->UID = (UINT32) StrToUInt (ParamIdentifierVal);
+        Acpi->UID = (UINT32) SctStrToUInt (ParamIdentifierVal);
         break;
 
       default:
@@ -770,14 +748,14 @@ BuildPciDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Device", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    Pci->Device = (UINT8) StrToUInt (ParamIdentifierVal);
+    Pci->Device = (UINT8) SctStrToUInt (ParamIdentifierVal);
   } else {
     goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Function", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    Pci->Function = (UINT8) StrToUInt (ParamIdentifierVal);
+    Pci->Function = (UINT8) SctStrToUInt (ParamIdentifierVal);
   } else {
     goto InValidText;
   }
@@ -806,7 +784,7 @@ BuildPcCardDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Function", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    Pccard->FunctionNumber = (UINT8) StrToUInt (ParamIdentifierVal);
+    Pccard->FunctionNumber = (UINT8) SctStrToUInt (ParamIdentifierVal);
   } else {
     goto InValidText;
   }
@@ -835,21 +813,21 @@ BuildMemoryMappedDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"EfiMemoryType", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    MemMap->MemoryType = (UINT32) StrToUInt (ParamIdentifierVal);
+    MemMap->MemoryType = (UINT32) SctStrToUInt (ParamIdentifierVal);
   } else {
     goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"StartingAddress", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToUInt64 (ParamIdentifierVal, &MemMap->StartingAddress);
+    SctStrToUInt64 (ParamIdentifierVal, &MemMap->StartingAddress);
   } else {
     goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"EndingAddress", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToUInt64 (ParamIdentifierVal, &MemMap->EndingAddress);
+    SctStrToUInt64 (ParamIdentifierVal, &MemMap->EndingAddress);
   } else {
     goto InValidText;
   }
@@ -878,7 +856,7 @@ BuildCtrlDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Controller", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    Controller->Controller = (UINT32) StrToUInt(ParamIdentifierVal);
+    Controller->Controller = (UINT32) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
@@ -920,14 +898,14 @@ BuildAcpiDeviceNode (
     if (ParamIdentifierStr != NULL) {
       if (CheckParamIdentiferValid (ParamIdentifierStr, L"UID", OptionalParamIndex, 0)) {
         OptionalParamIndex = 0;
-	    Acpi->UID = (UINT32) StrToUInt(ParamIdentifierVal);
+	    Acpi->UID = (UINT32) SctStrToUInt (ParamIdentifierVal);
       } else {
         goto InValidText;
       }
     } else if (ParamIdentifierVal != NULL) {
       switch(OptionalParamIndex) {
       case 0:  // UID
-	    Acpi->UID = (UINT32) StrToUInt(ParamIdentifierVal);
+	    Acpi->UID = (UINT32) SctStrToUInt (ParamIdentifierVal);
         break;
 
       default:
@@ -1004,7 +982,7 @@ BuildAcpiExDeviceNode (
     CIDSTRStr = L"\0";
   }
 
-  if (0 == StrToUInt(UIDStr)) {
+  if (0 == SctStrToUInt (UIDStr)) {
     Status = GetNextRequiredParam(&TextDeviceNode, L"UIDSTR", &ParamIdentifierStr, &ParamIdentifierVal);
     if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
       UIDSTRStr = ParamIdentifierVal;
@@ -1016,9 +994,9 @@ BuildAcpiExDeviceNode (
   }
 
   Length    = sizeof (ACPI_EXTENDED_HID_DEVICE_PATH) + 
-                  (UINT16) EfiStrLen (HIDSTRStr) + 1 +
-                  (UINT16) EfiStrLen (UIDSTRStr) + 1 +
-                  (UINT16) EfiStrLen (CIDSTRStr) + 1;
+                  (UINT16) SctStrLen (HIDSTRStr) + 1 +
+                  (UINT16) SctStrLen (UIDSTRStr) + 1 +
+                  (UINT16) SctStrLen (CIDSTRStr) + 1;
 
   AcpiExt = (ACPI_EXTENDED_HID_DEVICE_PATH_WITH_STR *) CreateDeviceNode (0x2, 0x2, Length);
   if (AcpiExt == NULL) {
@@ -1027,11 +1005,11 @@ BuildAcpiExDeviceNode (
 
   AcpiExt->HID  = ConvertEisaIDFromStr(HIDStr);
   AcpiExt->CID  = ConvertEisaIDFromStr(CIDStr);
-  AcpiExt->UID  = (UINT32) StrToUInt (UIDStr);
+  AcpiExt->UID  = (UINT32) SctStrToUInt (UIDStr);
 
-  StrToAscii (HIDSTRStr, AcpiExt->HidUidCidStr);
-  StrToAscii (CIDSTRStr, AcpiExt->HidUidCidStr + (UINT16) EfiStrLen (HIDSTRStr) + 1);
-  StrToAscii (UIDSTRStr, AcpiExt->HidUidCidStr + (UINT16) EfiStrLen (CIDSTRStr) + 1);
+  SctStrToAscii (HIDSTRStr, AcpiExt->HidUidCidStr);
+  SctStrToAscii (CIDSTRStr, AcpiExt->HidUidCidStr + (UINT16) SctStrLen (HIDSTRStr) + 1);
+  SctStrToAscii (UIDSTRStr, AcpiExt->HidUidCidStr + (UINT16) SctStrLen (CIDSTRStr) + 1);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) AcpiExt;
 InValidText:
@@ -1095,7 +1073,7 @@ BuildAcpiExpDeviceNode (
     goto InValidText;
   }
 
-  Length    = sizeof (ACPI_EXTENDED_HID_DEVICE_PATH) + (UINT16) EfiStrLen (UIDSTRStr) + 3;
+  Length    = sizeof (ACPI_EXTENDED_HID_DEVICE_PATH) + (UINT16) SctStrLen (UIDSTRStr) + 3;
 
   AcpiExp   = (ACPI_EXTENDED_HID_DEVICE_PATH_WITH_STR *) CreateDeviceNode (0x2, 0x2, Length);
   if (AcpiExp == NULL) {
@@ -1106,8 +1084,8 @@ BuildAcpiExpDeviceNode (
   AcpiExp->CID = ConvertEisaIDFromStr(CIDStr);
   AcpiExp->UID = 0;                               // UID = 0
   AcpiExp->HidUidCidStr[0] = '\0';                // HIDSTR = empty
-  StrToAscii (UIDSTRStr, &AcpiExp->HidUidCidStr[1]);
-  AcpiExp->HidUidCidStr[2+(UINT16) EfiStrLen (UIDSTRStr)] = '\0';    // CIDSTR = empty
+  SctStrToAscii (UIDSTRStr, &AcpiExp->HidUidCidStr[1]);
+  AcpiExp->HidUidCidStr[2+(UINT16) SctStrLen (UIDSTRStr)] = '\0';    // CIDSTR = empty
   
 
   return (EFI_DEVICE_PATH_PROTOCOL *) AcpiExp;
@@ -1133,7 +1111,7 @@ BuildAcpiAdrDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"DisplayDevice", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    AcpiAdr->ADR = (UINT32) StrToUInt (ParamIdentifierVal);
+    AcpiAdr->ADR = (UINT32) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
@@ -1164,9 +1142,9 @@ BuildAtaDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Controller", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-  	if ((StrCmp (ParamIdentifierVal, L"Primary") == 0) || (StrCmp(ParamIdentifierVal, L"0"))) {
+  	if ((SctStrCmp (ParamIdentifierVal, L"Primary") == 0) || (SctStrCmp(ParamIdentifierVal, L"0"))) {
       Atapi->PrimarySecondary = 0;
-    } else if ((StrCmp (ParamIdentifierVal, L"Secondary") == 0) || (StrCmp(ParamIdentifierVal, L"1"))) {
+    } else if ((SctStrCmp (ParamIdentifierVal, L"Secondary") == 0) || (SctStrCmp(ParamIdentifierVal, L"1"))) {
       Atapi->PrimarySecondary = 1;
     } else {
       goto InValidText;
@@ -1177,9 +1155,9 @@ BuildAtaDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Drive", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-  	if ((StrCmp (ParamIdentifierVal, L"Master") == 0) || (StrCmp(ParamIdentifierVal, L"0"))) {
+  	if ((SctStrCmp (ParamIdentifierVal, L"Master") == 0) || (SctStrCmp(ParamIdentifierVal, L"0"))) {
       Atapi->SlaveMaster = 0;
-    } else if ((StrCmp (ParamIdentifierVal, L"Slave") == 0) || (StrCmp(ParamIdentifierVal, L"1"))) {
+    } else if ((SctStrCmp (ParamIdentifierVal, L"Slave") == 0) || (SctStrCmp(ParamIdentifierVal, L"1"))) {
       Atapi->SlaveMaster = 1;
     } else {
       goto InValidText;
@@ -1190,7 +1168,7 @@ BuildAtaDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"LUN", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    Atapi->Lun = (UINT16) StrToUInt (ParamIdentifierVal);
+    Atapi->Lun = (UINT16) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
@@ -1219,14 +1197,14 @@ BuildScsiDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"PUN", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    Scsi->Pun = (UINT16) StrToUInt (ParamIdentifierVal);
+    Scsi->Pun = (UINT16) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"LUN", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    Scsi->Lun = (UINT16) StrToUInt (ParamIdentifierVal);
+    Scsi->Lun = (UINT16) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
@@ -1257,14 +1235,14 @@ BuildFibreDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"WWN", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToUInt64(ParamIdentifierVal, &Fibre->WWN);
+    SctStrToUInt64 (ParamIdentifierVal, &Fibre->WWN);
   } else {
   	goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"LUN", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToUInt64 (ParamIdentifierVal, &Fibre->Lun);
+    SctStrToUInt64 (ParamIdentifierVal, &Fibre->Lun);
   } else {
   	goto InValidText;
   }
@@ -1333,7 +1311,7 @@ Build1394DeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"GUID", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToUInt64(ParamIdentifierVal, &F1394->Guid);
+    SctStrToUInt64 (ParamIdentifierVal, &F1394->Guid);
   } else {
   	goto InValidText;
   }
@@ -1361,14 +1339,14 @@ BuildUsbDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Port", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    Usb->ParentPortNumber = (UINT8) StrToUInt (ParamIdentifierVal);
+    Usb->ParentPortNumber = (UINT8) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Interface", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    Usb->InterfaceNumber  = (UINT8) StrToUInt (ParamIdentifierVal);
+    Usb->InterfaceNumber  = (UINT8) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
@@ -1397,7 +1375,7 @@ BuildI2ODeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"TID", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    I2O->Tid = (UINT32) StrToUInt (ParamIdentifierVal);
+    I2O->Tid = (UINT32) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
@@ -1426,7 +1404,7 @@ BuildVlanDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"VlanId", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    Vlan->VlanId = (UINT16) StrToUInt (ParamIdentifierVal);
+    Vlan->VlanId = (UINT16) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
@@ -1457,7 +1435,7 @@ BuildInfinibandDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Flags", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    InfiniBand->ResourceFlags = (UINT32) StrToUInt (ParamIdentifierVal);
+    InfiniBand->ResourceFlags = (UINT32) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
@@ -1472,21 +1450,21 @@ BuildInfinibandDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"ServiceId", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToUInt64(ParamIdentifierVal, &InfiniBand->ServiceId);
+    SctStrToUInt64 (ParamIdentifierVal, &InfiniBand->ServiceId);
   } else {
   	goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"TargetId", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToUInt64(ParamIdentifierVal, &InfiniBand->TargetPortId);
+    SctStrToUInt64 (ParamIdentifierVal, &InfiniBand->TargetPortId);
   } else {
   	goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"DeviceId", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToUInt64(ParamIdentifierVal, &InfiniBand->DeviceId);
+    SctStrToUInt64 (ParamIdentifierVal, &InfiniBand->DeviceId);
   } else {
   	goto InValidText;
   }
@@ -1531,7 +1509,7 @@ ConvertFromTextVendor (
       if (CheckParamIdentiferValid(ParamIdentifierStr, L"Data", OptionalParamIndex, 0)) {
         OptionalParamIndex = 0;
         DataStr = ParamIdentifierVal;
-        Length = (EfiStrLen (DataStr) + 1) / 2;
+        Length = (SctStrLen (DataStr) + 1) / 2;
       } else {
         goto InValidText;
       }
@@ -1539,7 +1517,7 @@ ConvertFromTextVendor (
       switch(OptionalParamIndex) {
       case 0:  // Data
         DataStr = ParamIdentifierVal;
-        Length = (EfiStrLen (DataStr) + 1) / 2;
+        Length = (SctStrLen (DataStr) + 1) / 2;
 		break;
 
       default:
@@ -1686,11 +1664,11 @@ BuildUartFlowCtrlDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Value", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    if ((StrCmp(ParamIdentifierVal, L"XonXoff") == 0) || (StrCmp(ParamIdentifierVal, L"2") == 0)) {
+    if ((SctStrCmp (ParamIdentifierVal, L"XonXoff") == 0) || (SctStrCmp(ParamIdentifierVal, L"2") == 0)) {
       UartFlowControl->FlowControlMap = 2;
-    } else if ((StrCmp(ParamIdentifierVal, L"Hardware") == 0) || (StrCmp(ParamIdentifierVal, L"1") == 0)) {
+    } else if ((SctStrCmp (ParamIdentifierVal, L"Hardware") == 0) || (SctStrCmp(ParamIdentifierVal, L"1") == 0)) {
       UartFlowControl->FlowControlMap = 1;
-    } else if ((StrCmp(ParamIdentifierVal, L"None") == 0) || (StrCmp(ParamIdentifierVal, L"0") == 0)) {
+    } else if ((SctStrCmp (ParamIdentifierVal, L"None") == 0) || (SctStrCmp(ParamIdentifierVal, L"0") == 0)) {
       UartFlowControl->FlowControlMap = 0;
     } else {
       goto InValidText;
@@ -1749,14 +1727,14 @@ BuildMACDeviceNode (
     if (ParamIdentifierStr != NULL) {
       if (CheckParamIdentiferValid(ParamIdentifierStr, L"IfType", OptionalParamIndex, 0)) {
         OptionalParamIndex = 0;
-        MAC->IfType = (UINT8) StrToUInt (ParamIdentifierVal);
+        MAC->IfType = (UINT8) SctStrToUInt (ParamIdentifierVal);
       } else {
         goto InValidText;
       }
     } else if (ParamIdentifierVal != NULL) {
       switch(OptionalParamIndex) {
       case 0:  // IfType
-        MAC->IfType = (UINT8) StrToUInt (ParamIdentifierVal);
+        MAC->IfType = (UINT8) SctStrToUInt (ParamIdentifierVal);
 		break;
 
       default:
@@ -1795,14 +1773,14 @@ BuildIPv4DeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"RemoteIp", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToIPv4Addr (&ParamIdentifierVal, &IPv4->RemoteIpAddress);
+    SctStrToIPv4Addr (&ParamIdentifierVal, &IPv4->RemoteIpAddress);
   } else {
   	goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Protocol", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    IPv4->Protocol = (StrCmp (ParamIdentifierVal, L"UDP") == 0) ? (UINT16) 17 : (UINT16) 6;
+    IPv4->Protocol = (SctStrCmp (ParamIdentifierVal, L"UDP") == 0) ? (UINT16) 17 : (UINT16) 6;
   } else {
   	goto InValidText;
   }
@@ -1816,29 +1794,29 @@ BuildIPv4DeviceNode (
     if (ParamIdentifierStr != NULL) {
       if (CheckParamIdentiferValid(ParamIdentifierStr, L"Type", OptionalParamIndex, 0)) {
         OptionalParamIndex = 0;
-        IPv4->StaticIpAddress = (StrCmp(ParamIdentifierVal, L"Static") == 0) ? TRUE : FALSE;
+        IPv4->StaticIpAddress = (SctStrCmp (ParamIdentifierVal, L"Static") == 0) ? TRUE : FALSE;
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"LocalIp", OptionalParamIndex, 1)) {
         OptionalParamIndex = 1;
-        StrToIPv4Addr (&ParamIdentifierVal, &IPv4->LocalIpAddress);
+        SctStrToIPv4Addr (&ParamIdentifierVal, &IPv4->LocalIpAddress);
       } else {
         goto InValidText;
       }
     } else if (ParamIdentifierVal != NULL) {
       switch(OptionalParamIndex) {
       case 0:  // IfType
-        IPv4->StaticIpAddress = (StrCmp(ParamIdentifierVal, L"Static") == 0) ? TRUE : FALSE;
+        IPv4->StaticIpAddress = (SctStrCmp (ParamIdentifierVal, L"Static") == 0) ? TRUE : FALSE;
         break;
 
       case 1:  // LocalIp
-        StrToIPv4Addr (&ParamIdentifierVal, &IPv4->LocalIpAddress);
+        SctStrToIPv4Addr (&ParamIdentifierVal, &IPv4->LocalIpAddress);
         break;
 
       case 2:  //Gateway
-        StrToIPv4Addr (&ParamIdentifierVal, &IPv4->GatewayIPAddress);
+        SctStrToIPv4Addr (&ParamIdentifierVal, &IPv4->GatewayIPAddress);
         break;
 
       case 3:  //Subnet
-        StrToIPv4Addr (&ParamIdentifierVal, &IPv4->SubnetMask);
+        SctStrToIPv4Addr (&ParamIdentifierVal, &IPv4->SubnetMask);
         break;
 
       default:
@@ -1878,14 +1856,14 @@ BuildIPv6DeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"RemoteIp", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToIPv6Addr (&ParamIdentifierVal, &IPv6->RemoteIpAddress);
+    SctStrToIPv6Addr (&ParamIdentifierVal, &IPv6->RemoteIpAddress);
   } else {
   	goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Protocol", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    IPv6->Protocol = (StrCmp (ParamIdentifierVal, L"UDP") == 0) ? (UINT16) 17 : (UINT16) 6;
+    IPv6->Protocol = (SctStrCmp (ParamIdentifierVal, L"UDP") == 0) ? (UINT16) 17 : (UINT16) 6;
   } else {
   	goto InValidText;
   }
@@ -1901,18 +1879,18 @@ BuildIPv6DeviceNode (
         OptionalParamIndex = 0;
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"LocalIp", OptionalParamIndex, 1)) {
         OptionalParamIndex = 1;
-        StrToIPv6Addr (&ParamIdentifierVal, &IPv6->LocalIpAddress);
+        SctStrToIPv6Addr (&ParamIdentifierVal, &IPv6->LocalIpAddress);
       } else {
         goto InValidText;
       }
     } else if (ParamIdentifierVal != NULL) {
       switch(OptionalParamIndex) {
       case 0:  // IPAddressOrigin
-        IPv6->IPAddressOrigin = (StrCmp(ParamIdentifierVal, L"Static") == 0) ? 0 : (StrCmp(ParamIdentifierVal, L"StatelessAutoConfigure") == 0) ? 1 : 2;
+        IPv6->IPAddressOrigin = (SctStrCmp (ParamIdentifierVal, L"Static") == 0) ? 0 : (SctStrCmp(ParamIdentifierVal, L"StatelessAutoConfigure") == 0) ? 1 : 2;
         break;
 
       case 1:  // LocalIp
-        StrToIPv6Addr (&ParamIdentifierVal, &IPv6->LocalIpAddress);
+        SctStrToIPv6Addr (&ParamIdentifierVal, &IPv6->LocalIpAddress);
         break;
 
       case 2:  // PrefixLength 
@@ -1924,7 +1902,7 @@ BuildIPv6DeviceNode (
         break;
 
       case 3:  // GatewayIPAddress 
-        StrToIPv6Addr (&ParamIdentifierVal, &IPv6->GatewayIPAddress);
+        SctStrToIPv6Addr (&ParamIdentifierVal, &IPv6->GatewayIPAddress);
         break;
 
       default:
@@ -1968,10 +1946,10 @@ BuildUartDeviceNode (
     if (ParamIdentifierStr != NULL) {
       if (CheckParamIdentiferValid(ParamIdentifierStr, L"Baud", OptionalParamIndex, 0)) {
         OptionalParamIndex = 0;
-        Uart->BaudRate  = (StrCmp (ParamIdentifierVal, L"DEFAULT") == 0) ? 115200 : Atoi (ParamIdentifierVal);
+        Uart->BaudRate  = (SctStrCmp (ParamIdentifierVal, L"DEFAULT") == 0) ? 115200 : SctAtoi (ParamIdentifierVal);
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"DataBits", OptionalParamIndex, 1)) {
         OptionalParamIndex = 1;
-        Uart->DataBits  = (StrCmp (ParamIdentifierVal, L"DEFAULT") == 0) ? (UINT8) 8 : (UINT8) Atoi (ParamIdentifierVal);
+        Uart->DataBits  = (SctStrCmp (ParamIdentifierVal, L"DEFAULT") == 0) ? (UINT8) 8 : (UINT8) SctAtoi (ParamIdentifierVal);
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"Parity", OptionalParamIndex, 2)) {
         OptionalParamIndex = 2;
         switch (*ParamIdentifierVal) {
@@ -1985,13 +1963,13 @@ BuildUartDeviceNode (
         }
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"StopBits", OptionalParamIndex, 3)) {
         OptionalParamIndex = 3;
-        if (StrCmp (ParamIdentifierVal, L"D") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"D") == 0) {
           Uart->StopBits = (UINT8) 0;
-        } else if (StrCmp (ParamIdentifierVal, L"1") == 0) {
+        } else if (SctStrCmp (ParamIdentifierVal, L"1") == 0) {
           Uart->StopBits = (UINT8) 1;
-        } else if (StrCmp (ParamIdentifierVal, L"1.5") == 0) {
+        } else if (SctStrCmp (ParamIdentifierVal, L"1.5") == 0) {
           Uart->StopBits = (UINT8) 2;
-        } else if (StrCmp (ParamIdentifierVal, L"2") == 0) {
+        } else if (SctStrCmp (ParamIdentifierVal, L"2") == 0) {
           Uart->StopBits = (UINT8) 3;
         } else {
           Uart->StopBits = 0xff;
@@ -2002,11 +1980,11 @@ BuildUartDeviceNode (
     } else if (ParamIdentifierVal != NULL) {
       switch(OptionalParamIndex) {
       case 0:  // Baud
-        Uart->BaudRate  = (StrCmp (ParamIdentifierVal, L"DEFAULT") == 0) ? 115200 : Atoi (ParamIdentifierVal);
+        Uart->BaudRate  = (SctStrCmp (ParamIdentifierVal, L"DEFAULT") == 0) ? 115200 : SctAtoi (ParamIdentifierVal);
 		break;
 
       case 1:  // DataBits
-        Uart->DataBits  = (StrCmp (ParamIdentifierVal, L"DEFAULT") == 0) ? (UINT8) 8 : (UINT8) Atoi (ParamIdentifierVal);
+        Uart->DataBits  = (SctStrCmp (ParamIdentifierVal, L"DEFAULT") == 0) ? (UINT8) 8 : (UINT8) SctAtoi (ParamIdentifierVal);
         break;
 
       case 2:  // Parity
@@ -2022,13 +2000,13 @@ BuildUartDeviceNode (
         break;
 
       case 3:  // StopBits
-        if (StrCmp (ParamIdentifierVal, L"D") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"D") == 0) {
           Uart->StopBits = (UINT8) 0;
-        } else if (StrCmp (ParamIdentifierVal, L"1") == 0) {
+        } else if (SctStrCmp (ParamIdentifierVal, L"1") == 0) {
           Uart->StopBits = (UINT8) 1;
-        } else if (StrCmp (ParamIdentifierVal, L"1.5") == 0) {
+        } else if (SctStrCmp (ParamIdentifierVal, L"1.5") == 0) {
           Uart->StopBits = (UINT8) 2;
-        } else if (StrCmp (ParamIdentifierVal, L"2") == 0) {
+        } else if (SctStrCmp (ParamIdentifierVal, L"2") == 0) {
           Uart->StopBits = (UINT8) 3;
         } else {
           Uart->StopBits = 0xff;
@@ -2087,55 +2065,55 @@ ConvertFromTextUsbClass (
     if (ParamIdentifierStr != NULL) {
       if (CheckParamIdentiferValid(ParamIdentifierStr, L"VID", OptionalParamIndex, 0)) {
         OptionalParamIndex = 0;
-        UsbClass->VendorId = (UINT16) StrToUInt (ParamIdentifierVal);
+        UsbClass->VendorId = (UINT16) SctStrToUInt (ParamIdentifierVal);
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"PID", OptionalParamIndex, 1)) {
         OptionalParamIndex = 1;
-        UsbClass->ProductId = (UINT16) StrToUInt (ParamIdentifierVal);
+        UsbClass->ProductId = (UINT16) SctStrToUInt (ParamIdentifierVal);
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"Class", OptionalParamIndex, 2)) {
         OptionalParamIndex = 2;
         if ((UsbClassText->ClassExist == FALSE) && 
-			((ParamIdentifierStr != NULL) && StrCmp(ParamIdentifierStr, L"Class") == 0)) {
+			((ParamIdentifierStr != NULL) && SctStrCmp (ParamIdentifierStr, L"Class") == 0)) {
           goto InValidText;
         }
-        UsbClass->DeviceClass = (UINT8) StrToUInt (ParamIdentifierVal);
+        UsbClass->DeviceClass = (UINT8) SctStrToUInt (ParamIdentifierVal);
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"SubClass", OptionalParamIndex, 3)) {
         OptionalParamIndex = 3;
         if ((UsbClassText->SubClassExist == FALSE) &&
-			((ParamIdentifierStr != NULL) && StrCmp(ParamIdentifierStr, L"SubClass") == 0)) {
+			((ParamIdentifierStr != NULL) && SctStrCmp (ParamIdentifierStr, L"SubClass") == 0)) {
           goto InValidText;
         }
-		UsbClass->DeviceSubClass = (UINT8) StrToUInt (ParamIdentifierVal);
+		UsbClass->DeviceSubClass = (UINT8) SctStrToUInt (ParamIdentifierVal);
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"Protocol", OptionalParamIndex, 4)) {
         OptionalParamIndex = 4;
-        UsbClass->DeviceProtocol = (UINT8) StrToUInt (ParamIdentifierVal);
+        UsbClass->DeviceProtocol = (UINT8) SctStrToUInt (ParamIdentifierVal);
       } else {
         goto InValidText;
       }
     } else if (ParamIdentifierVal != NULL) {
       switch(OptionalParamIndex) {
       case 0:  // VID
-        UsbClass->VendorId = (UINT16) StrToUInt (ParamIdentifierVal);
+        UsbClass->VendorId = (UINT16) SctStrToUInt (ParamIdentifierVal);
 		break;
 
       case 1:  // PID
-        UsbClass->ProductId = (UINT16) StrToUInt (ParamIdentifierVal);
+        UsbClass->ProductId = (UINT16) SctStrToUInt (ParamIdentifierVal);
         break;
 
       case 2:  // Class
         OptionalParamIndex = 2;
         if (UsbClassText->ClassExist == TRUE) {
-          UsbClass->DeviceClass    = (UINT8) StrToUInt (ParamIdentifierVal);
+          UsbClass->DeviceClass    = (UINT8) SctStrToUInt (ParamIdentifierVal);
           continue;
         }
       case 3:  // SubClass
         OptionalParamIndex = 3;
         if (UsbClassText->SubClassExist == TRUE) {
-		  UsbClass->DeviceSubClass = (UINT8) StrToUInt (ParamIdentifierVal);
+		  UsbClass->DeviceSubClass = (UINT8) SctStrToUInt (ParamIdentifierVal);
           continue;
         }
       case 4:  // Protocol
         OptionalParamIndex = 4;
-        UsbClass->DeviceProtocol = (UINT8) StrToUInt (ParamIdentifierVal);
+        UsbClass->DeviceProtocol = (UINT8) SctStrToUInt (ParamIdentifierVal);
         break;
 
       default:
@@ -2412,7 +2390,7 @@ BuildUnitDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"LUN", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    LogicalUnit->Lun = (UINT8) StrToUInt (ParamIdentifierVal);
+    LogicalUnit->Lun = (UINT8) SctStrToUInt (ParamIdentifierVal);
   } else {
   	goto InValidText;
   }
@@ -2462,7 +2440,7 @@ BuildiSCSIDeviceNode (
   	return NULL;
   }
 
-  Length = sizeof (ISCSI_DEVICE_PATH_WITH_NAME) + (UINT16) (EfiStrLen (NameStr) * 2 + 2);
+  Length = sizeof (ISCSI_DEVICE_PATH_WITH_NAME) + (UINT16) (SctStrLen (NameStr) * 2 + 2);
   iSCSI = (ISCSI_DEVICE_PATH_WITH_NAME *) CreateDeviceNode (0x3, 0x13, Length);
   if (iSCSI == NULL) {
   	return NULL;
@@ -2475,20 +2453,20 @@ BuildiSCSIDeviceNode (
     if (ParamIdentifierStr != NULL) {
       if (CheckParamIdentiferValid(ParamIdentifierStr, L"HeaderDigest", OptionalParamIndex, 0)) {
         OptionalParamIndex = 0;
-        if (StrCmp (ParamIdentifierVal, L"CRC32C") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"CRC32C") == 0) {
           Options |= 0x0002;
         }
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"DataDigest", OptionalParamIndex, 1)) {
         OptionalParamIndex = 1;
-        if (StrCmp (ParamIdentifierVal, L"CRC32C") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"CRC32C") == 0) {
           Options |= 0x0008;
         }
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"Authentication", OptionalParamIndex, 2)) {
         OptionalParamIndex = 2;
-        if (StrCmp (ParamIdentifierVal, L"None") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"None") == 0) {
           Options |= 0x0800;
         }
-        if (StrCmp (ParamIdentifierVal, L"CHAP_UNI") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"CHAP_UNI") == 0) {
           Options |= 0x1000;
         }
       } else if (CheckParamIdentiferValid(ParamIdentifierStr, L"Protocol", OptionalParamIndex, 3)) {
@@ -2499,28 +2477,28 @@ BuildiSCSIDeviceNode (
     } else if (ParamIdentifierVal != NULL) {
       switch(OptionalParamIndex) {
       case 0:  // HeaderDigest
-        if (StrCmp (ParamIdentifierVal, L"CRC32C") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"CRC32C") == 0) {
           Options |= 0x0002;
         }
 		break;
 
       case 1:  // DataDigest
-        if (StrCmp (ParamIdentifierVal, L"CRC32C") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"CRC32C") == 0) {
           Options |= 0x0008;
         }
         break;
 
       case 2:  // Authentication
-        if (StrCmp (ParamIdentifierVal, L"None") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"None") == 0) {
           Options |= 0x0800;
         }
-        if (StrCmp (ParamIdentifierVal, L"CHAP_UNI") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"CHAP_UNI") == 0) {
           Options |= 0x1000;
         }
         break;
 
       case 3:  // Protocol
-        iSCSI->NetworkProtocol  = (UINT16) StrCmp (ParamIdentifierVal, L"TCP");
+        iSCSI->NetworkProtocol  = (UINT16) SctStrCmp (ParamIdentifierVal, L"TCP");
         break;
 
       default:
@@ -2534,9 +2512,9 @@ BuildiSCSIDeviceNode (
     goto InValidText;
   }
 
-  UnicodeToAscii (NameStr, iSCSI->iSCSITargetName);
-  iSCSI->TargetPortalGroupTag = (UINT16) StrToUInt (PortalGroupStr);
-  StrToUInt64 (LunStr, &LunNum);
+  SctUnicodeToAscii (iSCSI->iSCSITargetName, NameStr, SctStrLen (NameStr));
+  iSCSI->TargetPortalGroupTag = (UINT16) SctStrToUInt (PortalGroupStr);
+  SctStrToUInt64 (LunStr, &LunNum);
   iSCSI->Lun = LunNum;
   iSCSI->LoginOption = (UINT16) Options;
 
@@ -2585,20 +2563,20 @@ BuildHDDeviceNode (
     GetNextOptionalParam(&TextDeviceNode, &ParamIdentifierStr, &ParamIdentifierVal);
     if (ParamIdentifierVal == NULL) {
       goto InValidText;
-    } else if (StrCmp(ParamIdentifierVal, L"0") == 0) {
-      if ((ParamIdentifierStr != NULL) && (StrCmp(ParamIdentifierStr, L"Partition") != 0)) {
+    } else if (SctStrCmp (ParamIdentifierVal, L"0") == 0) {
+      if ((ParamIdentifierStr != NULL) && (SctStrCmp (ParamIdentifierStr, L"Partition") != 0)) {
         goto InValidText;
       }
-    } else if ((StrCmp(ParamIdentifierVal, L"1") == 0) || (StrCmp(ParamIdentifierVal, L"MBR") == 0)) {
-      if ((ParamIdentifierStr != NULL) && (StrCmp(ParamIdentifierStr, L"Type") != 0)) {
+    } else if ((SctStrCmp (ParamIdentifierVal, L"1") == 0) || (SctStrCmp(ParamIdentifierVal, L"MBR") == 0)) {
+      if ((ParamIdentifierStr != NULL) && (SctStrCmp (ParamIdentifierStr, L"Type") != 0)) {
         goto InValidText;
       }
       Hd->SignatureType = SIGNATURE_TYPE_MBR;
       Hd->MBRType       = 0x01;
-      Signature32       = (UINT32) StrToUInt (ParamIdentifierVal);
+      Signature32       = (UINT32) SctStrToUInt (ParamIdentifierVal);
       SctCopyMem (Hd->Signature, &Signature32, sizeof (UINT32));
-    } else if ((StrCmp(ParamIdentifierVal, L"2") == 0) || (StrCmp(ParamIdentifierVal, L"GPT") == 0)) {
-      if ((ParamIdentifierStr != NULL) && (StrCmp(ParamIdentifierStr, L"Type") != 0)) {
+    } else if ((SctStrCmp (ParamIdentifierVal, L"2") == 0) || (SctStrCmp(ParamIdentifierVal, L"GPT") == 0)) {
+      if ((ParamIdentifierStr != NULL) && (SctStrCmp (ParamIdentifierStr, L"Type") != 0)) {
         goto InValidText;
       }
       Hd->SignatureType = SIGNATURE_TYPE_GUID;
@@ -2620,20 +2598,20 @@ BuildHDDeviceNode (
 
   case 3: // HD(Partition == 0,Type,Signature)
     GetNextOptionalParam(&TextDeviceNode, &ParamIdentifierStr, &ParamIdentifierVal);
-    if ((ParamIdentifierVal == NULL) || (StrCmp(ParamIdentifierVal, L"0") != 0) ||
-        ((ParamIdentifierStr != NULL) && (StrCmp(ParamIdentifierStr, L"Partition") != 0))) {
+    if ((ParamIdentifierVal == NULL) || (SctStrCmp (ParamIdentifierVal, L"0") != 0) ||
+        ((ParamIdentifierStr != NULL) && (SctStrCmp (ParamIdentifierStr, L"Partition") != 0))) {
       goto InValidText;
     }
 
     GetNextOptionalParam(&TextDeviceNode, &ParamIdentifierStr, &ParamIdentifierVal);
 	if ((ParamIdentifierVal == NULL) ||
-		((ParamIdentifierStr != NULL) && (StrCmp(ParamIdentifierStr, L"Type") != 0))) {
+		((ParamIdentifierStr != NULL) && (SctStrCmp (ParamIdentifierStr, L"Type") != 0))) {
       goto InValidText;
 	}
-    if ((StrCmp(ParamIdentifierVal, L"1") == 0) || (StrCmp(ParamIdentifierVal, L"MBR") == 0)) {
+    if ((SctStrCmp (ParamIdentifierVal, L"1") == 0) || (SctStrCmp(ParamIdentifierVal, L"MBR") == 0)) {
       Hd->SignatureType = SIGNATURE_TYPE_MBR;
       Hd->MBRType       = 0x01;
-    } else if ((StrCmp(ParamIdentifierVal, L"2") == 0) || (StrCmp(ParamIdentifierVal, L"GPT") == 0)) {
+    } else if ((SctStrCmp (ParamIdentifierVal, L"2") == 0) || (SctStrCmp(ParamIdentifierVal, L"GPT") == 0)) {
       Hd->SignatureType = SIGNATURE_TYPE_GUID;
       Hd->MBRType       = 0x02;
     } else {
@@ -2651,11 +2629,11 @@ BuildHDDeviceNode (
 
   case 4: // HD(Partition != 0,Signature,Start, Size)
     GetNextOptionalParam(&TextDeviceNode, &ParamIdentifierStr, &ParamIdentifierVal);
-    if ((ParamIdentifierVal == NULL) || (StrCmp(ParamIdentifierVal, L"0") == 0) ||
-		((ParamIdentifierStr != NULL) && (StrCmp(ParamIdentifierStr, L"Partition") != 0))) {
+    if ((ParamIdentifierVal == NULL) || (SctStrCmp (ParamIdentifierVal, L"0") == 0) ||
+		((ParamIdentifierStr != NULL) && (SctStrCmp (ParamIdentifierStr, L"Partition") != 0))) {
       goto InValidText;
     }
-    Hd->PartitionNumber = (UINT32) StrToUInt(ParamIdentifierVal);
+    Hd->PartitionNumber = (UINT32) SctStrToUInt (ParamIdentifierVal);
 
     Status = GetNextRequiredParam(&TextDeviceNode, L"Signature", &ParamIdentifierStr, &ParamIdentifierVal);
     if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
@@ -2666,13 +2644,13 @@ BuildHDDeviceNode (
     }
     Status = GetNextRequiredParam(&TextDeviceNode, L"Start", &ParamIdentifierStr, &ParamIdentifierVal);
     if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-      StrToUInt64 (ParamIdentifierVal, &Hd->PartitionStart);
+      SctStrToUInt64 (ParamIdentifierVal, &Hd->PartitionStart);
     } else {
       goto InValidText;
     }
     Status = GetNextRequiredParam(&TextDeviceNode, L"Size", &ParamIdentifierStr, &ParamIdentifierVal);
     if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-      StrToUInt64 (ParamIdentifierVal, &Hd->PartitionSize);
+      SctStrToUInt64 (ParamIdentifierVal, &Hd->PartitionSize);
     } else {
       goto InValidText;
     }
@@ -2681,21 +2659,21 @@ BuildHDDeviceNode (
 
   case 5: // HD(Partition != 0,Type,Signature,Start, Size)
     GetNextOptionalParam(&TextDeviceNode, &ParamIdentifierStr, &ParamIdentifierVal);
-    if ((ParamIdentifierVal == NULL) || (StrCmp(ParamIdentifierVal, L"0") == 0) || 
-		((ParamIdentifierStr != NULL) && (StrCmp(ParamIdentifierStr, L"Partition") != 0))) {
+    if ((ParamIdentifierVal == NULL) || (SctStrCmp (ParamIdentifierVal, L"0") == 0) || 
+		((ParamIdentifierStr != NULL) && (SctStrCmp (ParamIdentifierStr, L"Partition") != 0))) {
       goto InValidText;
     }
-    Hd->PartitionNumber = (UINT32) StrToUInt(ParamIdentifierVal);
+    Hd->PartitionNumber = (UINT32) SctStrToUInt (ParamIdentifierVal);
 
     GetNextOptionalParam(&TextDeviceNode, &ParamIdentifierStr, &ParamIdentifierVal);
     if ((ParamIdentifierVal == NULL) ||
-		((ParamIdentifierStr != NULL) && (StrCmp(ParamIdentifierStr, L"Type") != 0))) {
+		((ParamIdentifierStr != NULL) && (SctStrCmp (ParamIdentifierStr, L"Type") != 0))) {
       goto InValidText;
     }
-    if ((StrCmp(ParamIdentifierVal, L"1") == 0) || (StrCmp(ParamIdentifierVal, L"MBR") == 0)) {
+    if ((SctStrCmp (ParamIdentifierVal, L"1") == 0) || (SctStrCmp(ParamIdentifierVal, L"MBR") == 0)) {
       Hd->SignatureType = SIGNATURE_TYPE_MBR;
       Hd->MBRType       = 0x01;
-    } else if ((StrCmp(ParamIdentifierVal, L"2") == 0) || (StrCmp(ParamIdentifierVal, L"GPT") == 0)) {
+    } else if ((SctStrCmp (ParamIdentifierVal, L"2") == 0) || (SctStrCmp(ParamIdentifierVal, L"GPT") == 0)) {
       Hd->SignatureType = SIGNATURE_TYPE_GUID;
       Hd->MBRType       = 0x02;
     } else {
@@ -2711,13 +2689,13 @@ BuildHDDeviceNode (
     }
     Status = GetNextRequiredParam(&TextDeviceNode, L"Start", &ParamIdentifierStr, &ParamIdentifierVal);
     if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-      StrToUInt64 (ParamIdentifierVal, &Hd->PartitionStart);
+      SctStrToUInt64 (ParamIdentifierVal, &Hd->PartitionStart);
     } else {
       goto InValidText;
     }
     Status = GetNextRequiredParam(&TextDeviceNode, L"Size", &ParamIdentifierStr, &ParamIdentifierVal);
     if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-      StrToUInt64 (ParamIdentifierVal, &Hd->PartitionSize);
+      SctStrToUInt64 (ParamIdentifierVal, &Hd->PartitionSize);
     } else {
       goto InValidText;
     }
@@ -2755,10 +2733,10 @@ BuildCDROMDeviceNode (
   switch (TotalParamNum) {
   case 3: // CDROM(Entry,Start,Size)
     GetNextOptionalParam(&TextDeviceNode, &ParamIdentifierStr, &ParamIdentifierVal);
-    if ((ParamIdentifierStr != NULL) && (StrCmp(L"Entry", ParamIdentifierStr) != 0)) {
+    if ((ParamIdentifierStr != NULL) && (SctStrCmp (L"Entry", ParamIdentifierStr) != 0)) {
       goto InValidText;
     } else {
-      CDROM->BootEntry = (UINT32) StrToUInt (ParamIdentifierVal);
+      CDROM->BootEntry = (UINT32) SctStrToUInt (ParamIdentifierVal);
     }
     break;
 
@@ -2772,14 +2750,14 @@ BuildCDROMDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Start", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToUInt64 (ParamIdentifierVal, &CDROM->PartitionStart);
+    SctStrToUInt64 (ParamIdentifierVal, &CDROM->PartitionStart);
   } else {
     goto InValidText;
   }
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Size", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToUInt64 (ParamIdentifierVal, &CDROM->PartitionSize);
+    SctStrToUInt64 (ParamIdentifierVal, &CDROM->PartitionSize);
   } else {
     goto InValidText;
   }
@@ -2873,28 +2851,28 @@ BuildBBSDeviceNode (
     goto InValidText;
   }
 
-  Bbs = (BBS_BBS_DEVICE_PATH *) CreateDeviceNode (0x5, 0x1, sizeof (BBS_BBS_DEVICE_PATH) + (UINT16) (EfiStrLen (IdStr)));
+  Bbs = (BBS_BBS_DEVICE_PATH *) CreateDeviceNode (0x5, 0x1, sizeof (BBS_BBS_DEVICE_PATH) + (UINT16) (SctStrLen (IdStr)));
   if (Bbs == NULL) {
     return NULL;
   }
 
-  if (StrCmp (TypeStr, L"Floppy") == 0) {
+  if (SctStrCmp (TypeStr, L"Floppy") == 0) {
     Bbs->DeviceType = BBS_TYPE_FLOPPY;
-  } else if (StrCmp (TypeStr, L"HD") == 0) {
+  } else if (SctStrCmp (TypeStr, L"HD") == 0) {
     Bbs->DeviceType = BBS_TYPE_HARDDRIVE;
-  } else if (StrCmp (TypeStr, L"CDROM") == 0) {
+  } else if (SctStrCmp (TypeStr, L"CDROM") == 0) {
     Bbs->DeviceType = BBS_TYPE_CDROM;
-  } else if (StrCmp (TypeStr, L"PCMCIA") == 0) {
+  } else if (SctStrCmp (TypeStr, L"PCMCIA") == 0) {
     Bbs->DeviceType = BBS_TYPE_PCMCIA;
-  } else if (StrCmp (TypeStr, L"USB") == 0) {
+  } else if (SctStrCmp (TypeStr, L"USB") == 0) {
     Bbs->DeviceType = BBS_TYPE_USB;
-  } else if (StrCmp (TypeStr, L"Network") == 0) {
+  } else if (SctStrCmp (TypeStr, L"Network") == 0) {
     Bbs->DeviceType = BBS_TYPE_EMBEDDED_NETWORK;
   } else {
     Bbs->DeviceType = BBS_TYPE_UNKNOWN;
   }
-  StrToAscii (IdStr, &Bbs->String[0]);
-  Bbs->StatusFlag = (UINT16) StrToUInt (FlagsStr);
+  SctStrToAscii (IdStr, &Bbs->String[0]);
+  Bbs->StatusFlag = (UINT16) SctStrToUInt (FlagsStr);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Bbs;
 InValidText:
@@ -2909,8 +2887,8 @@ BuildTextFileDeviceNode (
 {
   FILEPATH_DEVICE_PATH            *File;
 
-  File = (FILEPATH_DEVICE_PATH *) CreateDeviceNode (0x4, 0x4, sizeof (FILEPATH_DEVICE_PATH) + (UINT16) (EfiStrLen (TextDeviceNode) * 2));
-  EfiStrCpy (File->PathName, TextDeviceNode);
+  File = (FILEPATH_DEVICE_PATH *) CreateDeviceNode (0x4, 0x4, sizeof (FILEPATH_DEVICE_PATH) + (UINT16) (SctStrLen (TextDeviceNode) * 2));
+  SctStrCpy (File->PathName, TextDeviceNode);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) File;
 }
@@ -2949,8 +2927,8 @@ BuildMediaRelativeOffsetRangeDeviceNode (
                                                      );
 
   Offset->Reserved = 0;
-  StrToUInt64 (StartingOffsetStr, &Offset->StartingOffset);
-  StrToUInt64 (EndingOffsetStr, &Offset->EndingOffset);
+  SctStrToUInt64 (StartingOffsetStr, &Offset->StartingOffset);
+  SctStrToUInt64 (EndingOffsetStr, &Offset->EndingOffset);
 
   return (EFI_DEVICE_PATH_PROTOCOL *) Offset;
 
@@ -2981,7 +2959,7 @@ BuildSASDeviceNode (
 
   Status = GetNextRequiredParam(&TextDeviceNode, L"Address", &ParamIdentifierStr, &ParamIdentifierVal);
   if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-    StrToUInt64 (ParamIdentifierVal, &SAS->SasAddress);
+    SctStrToUInt64 (ParamIdentifierVal, &SAS->SasAddress);
   } else {
   	goto InValidText;
   }
@@ -2991,7 +2969,7 @@ BuildSASDeviceNode (
     if (ParamIdentifierVal != NULL) {
       switch(OptionalParamIndex) {
       case 0:  // LUN
-        StrToUInt64 (ParamIdentifierVal, &SAS->Lun);
+        SctStrToUInt64 (ParamIdentifierVal, &SAS->Lun);
         break;
 
       case 1:  // RTP
@@ -3002,14 +2980,14 @@ BuildSASDeviceNode (
         break;
 
       case 2:
-        if (StrCmp (ParamIdentifierVal, L"NoTopology") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"NoTopology") == 0) {
           SAS->DeviceTopology = 0x0000;
-        } else if(StrCmp (ParamIdentifierVal, L"SAS") == 0) {
+        } else if(SctStrCmp (ParamIdentifierVal, L"SAS") == 0) {
           Status = GetNextRequiredParam(&TextDeviceNode, L"Location", &ParamIdentifierStr, &ParamIdentifierVal);
           if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-            if ((StrCmp (ParamIdentifierVal, L"Internal") == 0) || (StrCmp (ParamIdentifierVal, L"0") == 0)) {
+            if ((SctStrCmp (ParamIdentifierVal, L"Internal") == 0) || (SctStrCmp (ParamIdentifierVal, L"0") == 0)) {
               SAS->DeviceTopology |= 0x0000;
-            } else if ((StrCmp (ParamIdentifierVal, L"External") == 0) || (StrCmp (ParamIdentifierVal, L"1") == 0)) {
+            } else if ((SctStrCmp (ParamIdentifierVal, L"External") == 0) || (SctStrCmp (ParamIdentifierVal, L"1") == 0)) {
               SAS->DeviceTopology |= 0x0020;
             } else {
               goto InValidText;
@@ -3020,9 +2998,9 @@ BuildSASDeviceNode (
 
           Status = GetNextRequiredParam(&TextDeviceNode, L"Connect", &ParamIdentifierStr, &ParamIdentifierVal);
           if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-            if ((StrCmp (ParamIdentifierVal, L"Direct") == 0) || (StrCmp (ParamIdentifierVal, L"0") == 0)) {
+            if ((SctStrCmp (ParamIdentifierVal, L"Direct") == 0) || (SctStrCmp (ParamIdentifierVal, L"0") == 0)) {
               SAS->DeviceTopology |= 0x0000;
-            } else if ((StrCmp (ParamIdentifierVal, L"Expanded") == 0) || (StrCmp (ParamIdentifierVal, L"1") == 0)) {
+            } else if ((SctStrCmp (ParamIdentifierVal, L"Expanded") == 0) || (SctStrCmp (ParamIdentifierVal, L"1") == 0)) {
               SAS->DeviceTopology |= 0x0040;
             } else {
               goto InValidText;
@@ -3043,12 +3021,12 @@ BuildSASDeviceNode (
             SAS->DeviceTopology |= 0x0001;
           }
 
-        } else if (StrCmp (ParamIdentifierVal, L"SATA") == 0) {
+        } else if (SctStrCmp (ParamIdentifierVal, L"SATA") == 0) {
           Status = GetNextRequiredParam(&TextDeviceNode, L"Location", &ParamIdentifierStr, &ParamIdentifierVal);
           if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-            if ((StrCmp (ParamIdentifierVal, L"Internal") == 0) || (StrCmp (ParamIdentifierVal, L"0") == 0)) {
+            if ((SctStrCmp (ParamIdentifierVal, L"Internal") == 0) || (SctStrCmp (ParamIdentifierVal, L"0") == 0)) {
               SAS->DeviceTopology |= 0x0010;
-            } else if ((StrCmp (ParamIdentifierVal, L"External") == 0) || (StrCmp (ParamIdentifierVal, L"1") == 0)) {
+            } else if ((SctStrCmp (ParamIdentifierVal, L"External") == 0) || (SctStrCmp (ParamIdentifierVal, L"1") == 0)) {
               SAS->DeviceTopology |= 0x0030;
             } else {
               goto InValidText;
@@ -3059,9 +3037,9 @@ BuildSASDeviceNode (
 
           Status = GetNextRequiredParam(&TextDeviceNode, L"Connect", &ParamIdentifierStr, &ParamIdentifierVal);
           if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-            if ((StrCmp (ParamIdentifierVal, L"Direct") == 0) || (StrCmp (ParamIdentifierVal, L"0") == 0)) {
+            if ((SctStrCmp (ParamIdentifierVal, L"Direct") == 0) || (SctStrCmp (ParamIdentifierVal, L"0") == 0)) {
               SAS->DeviceTopology |= 0x0000;
-            } else if ((StrCmp (ParamIdentifierVal, L"Expanded") == 0) || (StrCmp (ParamIdentifierVal, L"1") == 0)) {
+            } else if ((SctStrCmp (ParamIdentifierVal, L"Expanded") == 0) || (SctStrCmp (ParamIdentifierVal, L"1") == 0)) {
               SAS->DeviceTopology |= 0x0040;
             } else {
               goto InValidText;
@@ -3159,14 +3137,14 @@ BuildSASExDeviceNode (
         break;
 
       case 2:
-        if (StrCmp (ParamIdentifierVal, L"NoTopology") == 0) {
+        if (SctStrCmp (ParamIdentifierVal, L"NoTopology") == 0) {
           SASEx->DeviceTopology = 0x0000;
-        } else if(StrCmp (ParamIdentifierVal, L"SAS") == 0) {
+        } else if(SctStrCmp (ParamIdentifierVal, L"SAS") == 0) {
           Status = GetNextRequiredParam(&TextDeviceNode, L"Location", &ParamIdentifierStr, &ParamIdentifierVal);
           if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-            if ((StrCmp (ParamIdentifierVal, L"Internal") == 0) || (StrCmp (ParamIdentifierVal, L"0") == 0)) {
+            if ((SctStrCmp (ParamIdentifierVal, L"Internal") == 0) || (SctStrCmp (ParamIdentifierVal, L"0") == 0)) {
               SASEx->DeviceTopology |= 0x0000;
-            } else if ((StrCmp (ParamIdentifierVal, L"External") == 0) || (StrCmp (ParamIdentifierVal, L"1") == 0)) {
+            } else if ((SctStrCmp (ParamIdentifierVal, L"External") == 0) || (SctStrCmp (ParamIdentifierVal, L"1") == 0)) {
               SASEx->DeviceTopology |= 0x0020;
             } else {
               goto InValidText;
@@ -3177,9 +3155,9 @@ BuildSASExDeviceNode (
 
           Status = GetNextRequiredParam(&TextDeviceNode, L"Connect", &ParamIdentifierStr, &ParamIdentifierVal);
           if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-            if ((StrCmp (ParamIdentifierVal, L"Direct") == 0) || (StrCmp (ParamIdentifierVal, L"0") == 0)) {
+            if ((SctStrCmp (ParamIdentifierVal, L"Direct") == 0) || (SctStrCmp (ParamIdentifierVal, L"0") == 0)) {
               SASEx->DeviceTopology |= 0x0000;
-            } else if ((StrCmp (ParamIdentifierVal, L"Expanded") == 0) || (StrCmp (ParamIdentifierVal, L"1") == 0)) {
+            } else if ((SctStrCmp (ParamIdentifierVal, L"Expanded") == 0) || (SctStrCmp (ParamIdentifierVal, L"1") == 0)) {
               SASEx->DeviceTopology |= 0x0040;
             } else {
               goto InValidText;
@@ -3200,12 +3178,12 @@ BuildSASExDeviceNode (
             SASEx->DeviceTopology |= 0x0001;
           }
 
-        } else if (StrCmp (ParamIdentifierVal, L"SATA") == 0) {
+        } else if (SctStrCmp (ParamIdentifierVal, L"SATA") == 0) {
           Status = GetNextRequiredParam(&TextDeviceNode, L"Location", &ParamIdentifierStr, &ParamIdentifierVal);
           if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-            if ((StrCmp (ParamIdentifierVal, L"Internal") == 0) || (StrCmp (ParamIdentifierVal, L"0") == 0)) {
+            if ((SctStrCmp (ParamIdentifierVal, L"Internal") == 0) || (SctStrCmp (ParamIdentifierVal, L"0") == 0)) {
               SASEx->DeviceTopology |= 0x0010;
-            } else if ((StrCmp (ParamIdentifierVal, L"External") == 0) || (StrCmp (ParamIdentifierVal, L"1") == 0)) {
+            } else if ((SctStrCmp (ParamIdentifierVal, L"External") == 0) || (SctStrCmp (ParamIdentifierVal, L"1") == 0)) {
               SASEx->DeviceTopology |= 0x0030;
             } else {
               goto InValidText;
@@ -3216,9 +3194,9 @@ BuildSASExDeviceNode (
 
           Status = GetNextRequiredParam(&TextDeviceNode, L"Connect", &ParamIdentifierStr, &ParamIdentifierVal);
           if ((!EFI_ERROR(Status)) && (ParamIdentifierVal != NULL)) {
-            if ((StrCmp (ParamIdentifierVal, L"Direct") == 0) || (StrCmp (ParamIdentifierVal, L"0") == 0)) {
+            if ((SctStrCmp (ParamIdentifierVal, L"Direct") == 0) || (SctStrCmp (ParamIdentifierVal, L"0") == 0)) {
               SASEx->DeviceTopology |= 0x0000;
-            } else if ((StrCmp (ParamIdentifierVal, L"Expanded") == 0) || (StrCmp (ParamIdentifierVal, L"1") == 0)) {
+            } else if ((SctStrCmp (ParamIdentifierVal, L"Expanded") == 0) || (SctStrCmp (ParamIdentifierVal, L"1") == 0)) {
               SASEx->DeviceTopology |= 0x0040;
             } else {
               goto InValidText;
@@ -3450,8 +3428,8 @@ GetDevicePathTypeAndParam (
     return EFI_INVALID_PARAMETER;
   }
 
-  ParamStart = StrChr(DevicePathStr, L'(');
-  ParamEnd   = StrChr(DevicePathStr, L')');
+  ParamStart = SctStrChr (DevicePathStr, L'(');
+  ParamEnd   = SctStrChr (DevicePathStr, L')');
 
   if ((ParamStart == NULL) && (ParamEnd == NULL)) {
     *DevicePathTypeStr  = L"TextFile";
@@ -3528,7 +3506,7 @@ SctConvertTextToDeviceNode (
   }
 
   DeviceNode           = NULL;
-  DeviceNodeStr        = StrDuplicate (TextDevicePath);
+  DeviceNodeStr        = SctStrDuplicate (TextDevicePath);
   BuildDevPathNodeFunc = NULL;
 
   Status = GetDevicePathTypeAndParam(DeviceNodeStr, &DeviceNodeTypeStr, &DeviceNodeParamStr);
@@ -3538,7 +3516,7 @@ SctConvertTextToDeviceNode (
 
   if (DeviceNodeTypeStr != NULL) {
     for (BuildDevPathNodeFunc = NULL, Index = 0; BuildDevPathNodeFuncTable[Index].DevicePathNodeText != NULL; Index++) {
-      if (StrCmp(BuildDevPathNodeFuncTable[Index].DevicePathNodeText, DeviceNodeTypeStr) == 0) {
+      if (SctStrCmp (BuildDevPathNodeFuncTable[Index].DevicePathNodeText, DeviceNodeTypeStr) == 0) {
         BuildDevPathNodeFunc = BuildDevPathNodeFuncTable[Index].Function;
         break;
       }
@@ -3572,7 +3550,7 @@ SctConvertTextToDevicePath (
   }
 
   DevicePath       = CreateEndDeviceNode();
-  DevicePathStr    = StrDuplicate (TextDevicePath);
+  DevicePathStr    = SctStrDuplicate (TextDevicePath);
   DevicePathTmpStr = DevicePathStr;
 
   while ((DeviceNodeStr = GetNextDeviceNodeStr (&DevicePathTmpStr)) != NULL) {

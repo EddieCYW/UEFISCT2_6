@@ -129,8 +129,8 @@ BBTestSimpleFileSytemExtensiveTest5 (
   NewFileHandle = NULL;
   gtBS->SetMem (OpenFileHandle, 100 * sizeof (EFI_FILE*), 0);
   gtBS->SetMem (OpenDirHandle, 100 * sizeof (EFI_FILE*), 0);
-  EfiStrCpy (FileName, L"BBTestSimpleFileSytemExtensiveTest5_File");
-  EfiStrCpy (DirName, L"BBTestSimpleFileSytemExtensiveTest5_Dir");
+  SctStrCpy (FileName, L"BBTestSimpleFileSytemExtensiveTest5_File");
+  SctStrCpy (DirName, L"BBTestSimpleFileSytemExtensiveTest5_Dir");
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {
@@ -807,7 +807,7 @@ BBTestSimpleFileSytemExtensiveTest6_ReadWriteInternal (
   UINTN                     Loop;
   EFI_TEST_ASSERTION        AssertionType;
 
-  EfiStrCpy (FileName, L"BBTestSimpleFileSytemExtensiveTest6_File");
+  SctStrCpy (FileName, L"BBTestSimpleFileSytemExtensiveTest6_File");
 
   //
   // Create a new file

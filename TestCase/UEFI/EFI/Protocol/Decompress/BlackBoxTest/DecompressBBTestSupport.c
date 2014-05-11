@@ -343,11 +343,11 @@ GetUncompressedFileSize (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
-  *FileSize = (UINT32)Atoi (Buffer);
+  *FileSize = (UINT32)SctAtoi (Buffer);
 
   return EFI_SUCCESS;
 }
@@ -470,12 +470,12 @@ GetStringItemFromFile (
     return Status;
   }
 
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
   TempStr = NULL;
-  TempStr = StrDuplicate (Buffer);
+  TempStr = SctStrDuplicate (Buffer);
   if (TempStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }

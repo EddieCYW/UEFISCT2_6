@@ -159,59 +159,6 @@ Returns:
 --*/
 ;
 
-VOID
-EFIAPI
-UnicodeStrCpy (
-  IN   CHAR16       *Destination,
-  IN   CHAR16       *Source
-  )
-/*++
-
-Routine Description:
-  
-  Copies one Null-terminated unicode string to another Null-terminated unicode
-  string and returns the new unicode string.
-  
-Arguments: 
-  
-  Destination - Pointer to a Null-terminated unicode string.
-  Source      - Pointer to a Null-terminated unicode string.
-  
-Returns:
-
-  NONE
-
---*/   
-;
-
-
-INTN
-EFIAPI
-UnicodeStrCmp (
-  IN  CHAR16     *FirstString,
-  IN  CHAR16     *SecondString
-  )
-/*++
-
-Routine Description:
-  
-  Compares two Null-terminated Unicode strings, and returns the difference
-  between the first mismatched Unicode characters.  
-  
-Arguments: 
-  
-  FirstString  - Pointer to a Null-terminated Unicode string.
-  SecondString - Pointer to a Null-terminated Unicode string.
-  
-Returns:
-
-  0      FirstString is identical to SecondString..
-  !=0    FirstString is not identical to SecondString.
-
---*/    
-;
-
-
 EFI_STATUS
 RuntimeHandOff (
   IN CONF_INFO               *ConfInfo,

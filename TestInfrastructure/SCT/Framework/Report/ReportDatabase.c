@@ -266,7 +266,7 @@ Routine Description:
   // Search the GUID database
   //
   for (Index = 0; Index < mGuidDatabaseUsedSize; Index ++) {
-    if (StrCmp (GuidStr, mGuidDatabase[Index].Guid) == 0) {
+    if (SctStrCmp (GuidStr, mGuidDatabase[Index].Guid) == 0) {
       SctStrnCpy (TitleStr, mGuidDatabase[Index].Title, EFI_SCT_TITLE_LEN);
       SctStrnCpy (IndexStr, mGuidDatabase[Index].Index, EFI_SCT_INDEX_LEN);
       return EFI_SUCCESS;
@@ -363,7 +363,7 @@ Routine Description:
       //
       // Ignore the generic GUID
       //
-      if (StrCmp (GuidStr, GenericGuidStr) == 0) {
+      if (SctStrCmp (GuidStr, GenericGuidStr) == 0) {
         LineBuffer = StrTokenLine (NULL, L"\n\r");
         continue;
       }
@@ -378,9 +378,9 @@ Routine Description:
       continue;
     }
 
-    if (StrCmp (AssertionStr, L"PASS") == 0) {
+    if (SctStrCmp (AssertionStr, L"PASS") == 0) {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_PASS;
-    } else if (StrCmp (AssertionStr, L"FAILURE") == 0) {
+    } else if (SctStrCmp (AssertionStr, L"FAILURE") == 0) {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_FAIL;
     } else {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_WARN;
@@ -656,7 +656,7 @@ Routine Description:
     //
     // Ignore the generic GUID
     //
-    if (StrCmp (GuidStr, GenericGuidStr) == 0) {
+    if (SctStrCmp (GuidStr, GenericGuidStr) == 0) {
       LineBuffer = StrTokenLine (NULL, L"\n\r");
       continue;
     }
@@ -670,9 +670,9 @@ Routine Description:
       continue;
     }
 
-    if (StrCmp (AssertionStr, L"PASS") == 0) {
+    if (SctStrCmp (AssertionStr, L"PASS") == 0) {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_PASS;
-    } else if (StrCmp (AssertionStr, L"FAILURE") == 0) {
+    } else if (SctStrCmp (AssertionStr, L"FAILURE") == 0) {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_FAIL;
     } else {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_WARN;
@@ -682,15 +682,15 @@ Routine Description:
     // Get the Title
     //
     TitleStr = StrTokenField (NULL, L":");
-    if (StrCmp (GuidStr, SystemHangGuidStr) == 0) {
-      TitleStr = StrDuplicate (L"System hangs or stops abnormally.");
+    if (SctStrCmp (GuidStr, SystemHangGuidStr) == 0) {
+      TitleStr = SctStrDuplicate (L"System hangs or stops abnormally.");
     }
 
     //
     // Get the runtime information
     //
     RuntimeInforStr = StrTokenField (NULL, L"\n\r");
-    if (StrCmp (GuidStr, SystemHangGuidStr) == 0) {
+    if (SctStrCmp (GuidStr, SystemHangGuidStr) == 0) {
       RuntimeInforStr = PoolPrint (L"System hang in %s - %s", TestCategoryStr, CaseNameStr);
     }
 
@@ -713,14 +713,14 @@ Routine Description:
                );
     if (EFI_ERROR (Status)) {
       EFI_SCT_DEBUG ((EFI_SCT_D_ERROR, L"Set report item - %r", Status));
-      if (StrCmp (GuidStr, SystemHangGuidStr) == 0) {
+      if (SctStrCmp (GuidStr, SystemHangGuidStr) == 0) {
         tBS->FreePool (TitleStr);
         tBS->FreePool (RuntimeInforStr);
       }
       return Status;
     }
 
-    if (StrCmp (GuidStr, SystemHangGuidStr) == 0) {
+    if (SctStrCmp (GuidStr, SystemHangGuidStr) == 0) {
       tBS->FreePool (TitleStr);
       tBS->FreePool (RuntimeInforStr);
     }
@@ -1125,12 +1125,12 @@ Routine Description:
   //
   // Remove the duplicate GUID assertion
   //
-  if (!Duplicate && (StrCmp (SystemHangGuidStr, GuidStr) != 0)) {
+  if (!Duplicate && (SctStrCmp (SystemHangGuidStr, GuidStr) != 0)) {
     //
     // Seach the GUID assertion, from the last one for performance
     //
     for (Index = (INTN)mGuidAssertionUsedSize - 1; Index >= 0; Index --) {
-      if (StrCmp (mGuidAssertion[Index].Guid, GuidStr) != 0) {
+      if (SctStrCmp (mGuidAssertion[Index].Guid, GuidStr) != 0) {
         continue;
       }
 
@@ -1283,7 +1283,7 @@ Routine Description:
   //
   ReportItem = mReportInfor.ReportItem;
   while (ReportItem != NULL) {
-    if (StrCmp (ReportItem->TestName, TestNameStr) != 0) {
+    if (SctStrCmp (ReportItem->TestName, TestNameStr) != 0) {
       ReportItem = ReportItem->Next;
       continue;
     }
@@ -1302,7 +1302,7 @@ Routine Description:
       LastAssertionInfor = NULL;
 
       while (AssertionInfor != NULL) {
-        if (StrCmp (AssertionInfor->Guid, GuidStr) == 0) {
+        if (SctStrCmp (AssertionInfor->Guid, GuidStr) == 0) {
           //
           // Found it
           //

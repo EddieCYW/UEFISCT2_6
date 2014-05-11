@@ -1253,7 +1253,7 @@ Returns:
 ;
 
 EFI_STATUS
-EntsLibLocateHandle (
+EntsLocateHandle (
   IN EFI_LOCATE_SEARCH_TYPE       SearchType,
   IN EFI_GUID                     * Protocol OPTIONAL,
   IN VOID                         *SearchKey OPTIONAL,

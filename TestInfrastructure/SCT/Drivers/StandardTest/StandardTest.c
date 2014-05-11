@@ -601,7 +601,7 @@ Returns:
   //
   // Check the parameter
   //
-  if (EfiStrLen (Description) + 14 > EFI_MAX_PRINT_BUFFER) {
+  if (SctStrLen (Description) + 14 > EFI_MAX_PRINT_BUFFER) {
     return EFI_BAD_BUFFER_SIZE;
   }
 
@@ -610,15 +610,15 @@ Returns:
   //
   switch (Type) {
   case EFI_TEST_ASSERTION_PASSED:
-    EfiStrCpy (AssertionType, L"PASS");
+    SctStrCpy (AssertionType, L"PASS");
     Private->PassCount ++;
     break;
   case EFI_TEST_ASSERTION_WARNING:
-    EfiStrCpy (AssertionType, L"WARNING");
+    SctStrCpy (AssertionType, L"WARNING");
     Private->WarningCount ++;
     break;
   case EFI_TEST_ASSERTION_FAILED:
-    EfiStrCpy (AssertionType, L"FAILURE");
+    SctStrCpy (AssertionType, L"FAILURE");
     Private->FailCount ++;
     break;
   default:
@@ -642,8 +642,8 @@ Returns:
   VSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Detail, Marker);
   VA_END (Marker);
 
-  if ( EfiStrLen (Buffer) + 5 < EFI_MAX_PRINT_BUFFER ) {
-    EfiStrCat (Buffer, L"\r\n\r\n");
+  if ( SctStrLen (Buffer) + 5 < EFI_MAX_PRINT_BUFFER ) {
+    SctStrCat (Buffer, L"\r\n\r\n");
   }
 
   Status = StslWriteLogFile (Private, Buffer);
@@ -671,8 +671,8 @@ Returns:
   VSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Detail, Marker);
   VA_END (Marker);
 
-  if ( EfiStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER ) {
-    EfiStrCat (Buffer, L"\r\n");
+  if ( SctStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER ) {
+    SctStrCat (Buffer, L"\r\n");
   }
 
   Status = StslWriteKeyFile (Private, Buffer);
@@ -726,8 +726,8 @@ Returns:
     VSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Message, Marker);
     VA_END (Marker);
 
-    if ( EfiStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER ) {
-      EfiStrCat (Buffer, L"\r\n");
+    if ( SctStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER ) {
+      SctStrCat (Buffer, L"\r\n");
     }
     Status = StslWriteLogFile (Private, Buffer);
   }
@@ -1338,19 +1338,19 @@ Returns:
   MunitesElapsed  = SecondsElapsed / SECS_PER_MIN;
   SecondsElapsed -= MunitesElapsed * SECS_PER_MIN;
 
-  StrCpy (Buffer1, L"Elapsed Time: ");
+  SctStrCpy (Buffer1, L"Elapsed Time: ");
   MyUINTToStr (DaysElapsed, Str);
-  StrCat (Buffer1, Str);
-  StrCat (Buffer1, L" Days ");
+  SctStrCat (Buffer1, Str);
+  SctStrCat (Buffer1, L" Days ");
   MyUINTToStr (HoursElapsed, Str);
-  StrCat (Buffer1, Str);
-  StrCat (Buffer1, L":");
+  SctStrCat (Buffer1, Str);
+  SctStrCat (Buffer1, L":");
   MyUINTToStr (MunitesElapsed, Str);
-  StrCat (Buffer1, Str);
-  StrCat (Buffer1, L":");
+  SctStrCat (Buffer1, Str);
+  SctStrCat (Buffer1, L":");
   MyUINTToStr (SecondsElapsed, Str);
-  StrCat (Buffer1, Str);
-  StrCat (Buffer1, L"\n");
+  SctStrCat (Buffer1, Str);
+  SctStrCat (Buffer1, L"\n");
 
   //To do: investigate the Sprint()
   //SPrint (Buffer, EFI_MAX_PRINT_BUFFER,
@@ -1807,14 +1807,14 @@ StslStrDuplicate (
 
   Status = tBS->AllocatePool (
                   EfiBootServicesData,
-                  (EfiStrLen (String) + 1) * sizeof(CHAR16),
+                  (SctStrLen (String) + 1) * sizeof(CHAR16),
                   (VOID **)&Buffer
                   );
   if (EFI_ERROR (Status)) {
     return NULL;
   }
 
-  EfiStrCpy (Buffer, String);
+  SctStrCpy (Buffer, String);
 
   return Buffer;
 }
@@ -1913,38 +1913,4 @@ MyUINTToStr (
   StringNum[2] = '\0';
   
   return EFI_SUCCESS;
-}
-
-VOID
-StrCpy (
-    IN CHAR16   *Dest,
-    IN CHAR16   *Src
-    )
-// copy strings
-{
-    while (*Src) {
-        *(Dest++) = *(Src++);
-    }
-    *Dest = 0;
-}
-
-VOID
-StrCat (
-    IN CHAR16   *Dest,
-    IN CHAR16   *Src
-    )
-{
-    StrCpy(Dest+StrLen(Dest), Src);
-}
-
-UINTN
-StrLen (
-    IN CHAR16   *s1
-    )
-// string length
-{
-    UINTN        len;
-
-    for (len=0; *s1; s1+=1, len+=1) ;
-    return len;
 }

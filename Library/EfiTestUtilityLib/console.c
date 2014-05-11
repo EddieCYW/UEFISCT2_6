@@ -379,7 +379,7 @@ Returns:
     //
     if (Update != -1) {
       PrintAt (Column, Row, L"%s%.*s", InStr + Update, Delete, L"");
-      Len = StrLen (InStr);
+      Len = SctStrLen (InStr);
 
       if (Delete) {
         SctSetMem (InStr+Len, Delete * sizeof(CHAR16), 0x00);

@@ -54,37 +54,6 @@ Module Name:
 #include "ParseConf.h"
 
 STATIC
-UINT32
-InternalStrLen (
-  UINT8 *string
-  )
-/*++
-
-Routine Description:
-  
-  Get the length of a string.
-  
-Arguments: 
-  
-  String   -  Null-terminated string. 
-  
-Returns:
-
-  Returns the number of characters in string.
-
---*/    
-{
-  UINT32  count;
-
-  count = 0;
-  while (string[count] != '\0') {
-    count++;
-  }
-  return count;
-}
-
-
-STATIC
 CHAR8 *
 EFIAPI
 AsciiStrtok(
@@ -149,220 +118,6 @@ cont:
   }
 }
 
-
-STATIC
-CHAR8*
-EFIAPI    
-AsciiStrChr (
-  IN  CHAR8  *String,
-  IN  CHAR8  c
-  )
-/*++
-
-Routine Description:
-  
-  Find a character in a string.
-  
-Arguments: 
-  
-  String      - Null-terminated source string. .
-  c           - Character to be located. 
-  
-Returns:
-
-  Returns a pointer to the first occurrence of c in string.
-  
---*/    
-{
-  while (*String != '\0') {
-    if (*String == c) {
-      return String;
-    }
-    String ++;
-  }
-  return NULL;
-}
-
-
-STATIC
-CHAR8*
-EFIAPI    
-AsciiStrStr (
-  IN  CHAR8  *String,
-  IN  CHAR8  *StrCharSet
-  )
-/*++
-
-Routine Description:
-  
-  Find a Ascii substring.
-  
-Arguments: 
-  
-  String      - Null-terminated Ascii string to search.
-  StrCharSet  - Null-terminated Ascii string to search for.
-  
-Returns:
-
-  The address of the first occurrence of the matching Ascii substring if successful, or NULL otherwise.
-
---*/
-{
-  CHAR8 *Src;
-  CHAR8 *Sub;
-   
-  Src = String;
-  Sub = StrCharSet;
-  
-  while ((*String != '\0') && (*StrCharSet != '\0')) {
-    if (*String++ != *StrCharSet++) {
-      String = ++Src;
-      StrCharSet = Sub;
-    }
-  }
-  if (*StrCharSet == '\0') {
-    return Src;
-  } else {
-    return NULL;
-  }
-}
-
-
-STATIC
-INTN
-EFIAPI
-AsciiStrCmp (
-  IN  CHAR8     *FirstString,
-  IN  CHAR8     *SecondString
-  )
-/*++
-
-Routine Description:
-  
-  Compares two Null-terminated ASCII strings, and returns the difference
-  between the first mismatched ASCII characters.  
-  
-Arguments: 
-  
-  FirstString  - Pointer to a Null-terminated ASCII string.
-  SecondString - Pointer to a Null-terminated ASCII string.
-  
-Returns:
-
-  0      FirstString is identical to SecondString..
-  !=0    FirstString is not identical to SecondString.
-
---*/    
-{
-  while ((*FirstString != '\0') && (*FirstString == *SecondString)) {
-    FirstString++;
-    SecondString++;
-  }
-  return *FirstString - *SecondString;
-}
-
-
-INTN
-EFIAPI
-UnicodeStrCmp (
-  IN  CHAR16     *FirstString,
-  IN  CHAR16     *SecondString
-  )
-/*++
-
-Routine Description:
-  
-  Compares two Null-terminated Unicode strings, and returns the difference
-  between the first mismatched Unicode characters.  
-  
-Arguments: 
-  
-  FirstString  - Pointer to a Null-terminated Unicode string.
-  SecondString - Pointer to a Null-terminated Unicode string.
-  
-Returns:
-
-  0      FirstString is identical to SecondString..
-  !=0    FirstString is not identical to SecondString.
-
---*/    
-{
-  while ((*FirstString != L'\0') && (*FirstString == *SecondString)) {
-    FirstString++;
-    SecondString++;
-  }
-  return *FirstString - *SecondString;
-}
-
-
-STATIC
-CHAR8 *
-EFIAPI
-AsciiStrCpy (
-  IN   CHAR8    *Destination,
-  IN   CHAR8    *Source
-  )
-/*++
-
-Routine Description:
-  
-  Copies one Null-terminated ASCII string to another Null-terminated ASCII
-  string and returns the new ASCII string.
-  
-Arguments: 
-  
-  Destination - Pointer to a Null-terminated ASCII string.
-  Source      - Pointer to a Null-terminated ASCII string.
-  
-Returns:
-
-  return Destination
-
---*/   
-{
-  CHAR8    *ReturnValue;
-
-  ReturnValue = Destination;
-  while (*Source) {
-    *(Destination++) = *(Source++);
-  }
-  *Destination = 0;
-  return ReturnValue;
-}
-
-
-VOID
-EFIAPI
-UnicodeStrCpy (
-  IN   CHAR16       *Destination,
-  IN   CHAR16       *Source
-  )
-/*++
-
-Routine Description:
-  
-  Copies one Null-terminated unicode string to another Null-terminated unicode
-  string and returns the new unicode string.
-  
-Arguments: 
-  
-  Destination - Pointer to a Null-terminated unicode string.
-  Source      - Pointer to a Null-terminated unicode string.
-  
-Returns:
-
-  NONE
-
---*/   
-{
-  while (*Source) {
-    *(Destination++) = *(Source++);
-  }
-  *Destination = 0;
-}
-
-
-
 STATIC
 CHAR8 *
 AsciiReadLine (
@@ -407,7 +162,7 @@ Returns:
   //
   // Find the next newline char
   //
-  EndOfLine = AsciiStrChr (InputFile->CurrentFilePointer, '\n');
+  EndOfLine = SctAsciiStrChr (InputFile->CurrentFilePointer, '\n');
 
   //
   // Determine the number of characters to copy.
@@ -453,7 +208,7 @@ Returns:
   //
   // Strip any comments
   //
-  CharPtr = AsciiStrStr (InputBuffer, "//");
+  CharPtr = SctAsciiStrStr (InputBuffer, "//");
   if (CharPtr != 0) {
     CharPtr[0] = 0;
   }
@@ -509,7 +264,7 @@ Returns:
     //
     // Check if the section is found
     //
-    CurrentToken = AsciiStrStr (InputBuffer, Section);
+    CurrentToken = SctAsciiStrStr (InputBuffer, Section);
     if (CurrentToken != NULL) {
       return TRUE;
     }
@@ -566,9 +321,9 @@ Returns:
       InputFile->Eof == NULL ||
       InputFile->CurrentFilePointer == NULL ||
       Section == NULL ||
-      InternalStrLen ((UINT8 *)Section) == 0 ||
+      SctAsciiStrLen (Section) == 0 ||
       Token == NULL ||
-      InternalStrLen ((UINT8 *)Token) == 0 ||
+      SctAsciiStrLen (Token) == 0 ||
       Value == NULL
       ) {
     return EFI_INVALID_PARAMETER;
@@ -619,7 +374,7 @@ Returns:
       //
       // Compare the current token with the desired token
       //
-      if (AsciiStrCmp (CurrentToken, Token) == 0) {
+      if (SctAsciiStrCmp (CurrentToken, Token) == 0) {
         //
         // Found it
         //
@@ -640,7 +395,7 @@ Returns:
             //
             // Copy the current token to the output value
             //
-            AsciiStrCpy (Value, CurrentToken);
+            SctAsciiStrCpy (Value, CurrentToken);
             return EFI_SUCCESS;
           }
         } else {
@@ -713,7 +468,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.GetVariable = 0x1;
     } 
   }
@@ -727,7 +482,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.SetVariable = 0x1;
     } 
   }
@@ -742,7 +497,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.GetNextVariable = 0x1;
     } 
   }
@@ -757,7 +512,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.QueryVariable = 0x1;
     } 
   }
@@ -772,7 +527,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.GetTime = 0x1;
     } 
   }
@@ -787,7 +542,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.SetTime = 0x1;
     } 
   }
@@ -802,7 +557,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.GetWakeupTime = 0x1;
     } 
   }
@@ -817,7 +572,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.SetWakeupTime = 0x1;
     } 
   }
@@ -832,7 +587,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.UpdateCapsule  = 0x1;
     } 
   }
@@ -847,7 +602,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.QueryCapsule = 0x1;
     } 
   }
@@ -862,7 +617,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.GetNextCount = 0x1;
     } 
   }
@@ -876,7 +631,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.ColdReset = 0x1;
     } 
   }
@@ -890,7 +645,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.WarmReset = 0x1;
     } 
   }
@@ -904,7 +659,7 @@ Returns:
     //
     // Update attribute
     //
-    if (AsciiStrCmp (Value, TRUE_STRING) == 0) {
+    if (SctAsciiStrCmp (Value, TRUE_STRING) == 0) {
       FileInfo->BitMap.ShutDown = 0x1;
     } 
   }

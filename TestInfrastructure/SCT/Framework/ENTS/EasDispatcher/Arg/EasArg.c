@@ -245,7 +245,7 @@ BOOL:
     break;
 
   case POINTER:
-    if (StrCmp (Name, L"NULL") == 0) {
+    if (SctStrCmp (Name, L"NULL") == 0) {
       *(VOID **) (ArgField->Data) = 0;
     } else {
       StringToMem (Name, ArgField->Data, sizeof (UINTN));

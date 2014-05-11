@@ -300,8 +300,8 @@ Returns:
         //
         // Skip the '.' and '..' dir
         //
-        if ((StrCmp (FileInfo->FileName, L".")  == 0) ||
-            (StrCmp (FileInfo->FileName, L"..") == 0)) {
+        if ((SctStrCmp (FileInfo->FileName, L".")  == 0) ||
+            (SctStrCmp (FileInfo->FileName, L"..") == 0)) {
           continue;
         }
 
@@ -878,7 +878,7 @@ Routine Description:
   (*SupportFile)->Revision    = EFI_SCT_TEST_FILE_REVISION;
 
   (*SupportFile)->DevicePath  = DuplicateDevicePath (DevicePath);
-  (*SupportFile)->FileName    = StrDuplicate (FileName);
+  (*SupportFile)->FileName    = SctStrDuplicate (FileName);
   (*SupportFile)->ImageHandle = ImageHandle;
   (*SupportFile)->Type        = EFI_SCT_TEST_FILE_TYPE_SUPPORT;
   (*SupportFile)->Context     = Context;
@@ -1258,8 +1258,8 @@ Returns:
         //
         // Skip the '.' and '..' dir
         //
-        if ((StrCmp (FileInfo->FileName, L".")  == 0) ||
-            (StrCmp (FileInfo->FileName, L"..") == 0)) {
+        if ((SctStrCmp (FileInfo->FileName, L".")  == 0) ||
+            (SctStrCmp (FileInfo->FileName, L"..") == 0)) {
           continue;
         }
 
@@ -1528,7 +1528,7 @@ Routine Description:
   (*ProxyFile)->Revision    = EFI_SCT_TEST_FILE_REVISION;
 
   (*ProxyFile)->DevicePath  = DuplicateDevicePath (DevicePath);
-  (*ProxyFile)->FileName    = StrDuplicate (FileName);
+  (*ProxyFile)->FileName    = SctStrDuplicate (FileName);
   (*ProxyFile)->ImageHandle = ImageHandle;
   (*ProxyFile)->Type        = EFI_SCT_TEST_FILE_TYPE_SUPPORT;
   (*ProxyFile)->Context     = Context;

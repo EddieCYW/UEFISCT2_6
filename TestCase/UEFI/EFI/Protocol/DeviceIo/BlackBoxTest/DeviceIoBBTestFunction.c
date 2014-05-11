@@ -206,7 +206,7 @@ MemRead_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -550,7 +550,7 @@ MemWrite_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -983,7 +983,7 @@ IoRead_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -1329,7 +1329,7 @@ IoWrite_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -1764,7 +1764,7 @@ PciRead_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -2086,7 +2086,7 @@ PciWrite_Func (
     //if the device path not equal then ignore this test section.
     //
 
-    if (StriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
+    if (SctStriCmp (DevIoDevicePathStr, TempDevicePathStr) != 0) {
       gtBS->FreePool (TempDevicePathStr);
       continue;
     }
@@ -3754,7 +3754,7 @@ PciDevicePath_Func (
     return Status;
   }
 
-  DevicePathStrLength = StrLen (DevIoDevicePathStr);
+  DevicePathStrLength = SctStrLen (DevIoDevicePathStr);
 
   //
   //get all pci Io Protocol Interface.
@@ -3864,7 +3864,7 @@ PciDevicePath_Func (
 
     if (SctCompareMem (TempDevPathStr,
                     PciDevPathStr,
-                    StrLen(TempDevPathStr) * sizeof(CHAR16)) == 0) {
+                    SctStrLen (TempDevPathStr) * sizeof(CHAR16)) == 0) {
       AssertionType = EFI_TEST_ASSERTION_PASSED;
     } else {
       AssertionType = EFI_TEST_ASSERTION_FAILED;

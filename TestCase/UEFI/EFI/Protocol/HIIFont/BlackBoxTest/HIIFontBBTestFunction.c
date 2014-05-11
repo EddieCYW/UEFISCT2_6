@@ -797,7 +797,7 @@ BBTestStringToImageFunctionTestCheckpoint4 (
     return EFI_LOAD_ERROR;
   }
 
-  InfoSize = sizeof (EFI_FONT_DISPLAY_INFO) - sizeof (CHAR16) + StrSize (L"testfont");
+  InfoSize = sizeof (EFI_FONT_DISPLAY_INFO) - sizeof (CHAR16) + SctStrSize (L"testfont");
   StringInfo = (EFI_FONT_DISPLAY_INFO *) SctAllocateZeroPool (InfoSize);
   if (StringInfo == NULL) {
   	 StandardLib->RecordAssertion (
@@ -824,7 +824,7 @@ BBTestStringToImageFunctionTestCheckpoint4 (
 
   StringInfo->FontInfo.FontSize = 19;
   StringInfo->FontInfo.FontStyle = 0;  
-  StrCpy (StringInfo->FontInfo.FontName, L"testfont");
+  SctStrCpy (StringInfo->FontInfo.FontName, L"testfont");
   
   Blt = (EFI_IMAGE_OUTPUT *) SctAllocateZeroPool (sizeof(EFI_IMAGE_OUTPUT));
   if ( Blt == NULL ){
@@ -1768,7 +1768,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
     return EFI_LOAD_ERROR;
   }
 
-  InfoSize = sizeof (EFI_FONT_DISPLAY_INFO) - sizeof (CHAR16) + StrSize (L"testfont");
+  InfoSize = sizeof (EFI_FONT_DISPLAY_INFO) - sizeof (CHAR16) + SctStrSize (L"testfont");
   StringInfo = (EFI_FONT_DISPLAY_INFO *) SctAllocateZeroPool (InfoSize);
   if (StringInfo == NULL) {
     StandardLib->RecordAssertion (
@@ -1796,7 +1796,7 @@ BBTestStringToImageFunctionTestCheckpoint6 (
 
   StringInfo->FontInfo.FontSize = 19;
   StringInfo->FontInfo.FontStyle = 0;  
-  StrCpy (StringInfo->FontInfo.FontName, L"testfont");
+  SctStrCpy (StringInfo->FontInfo.FontName, L"testfont");
   
   // 
   // Get Character 'T'  default system font as test character  

@@ -562,7 +562,7 @@ Returns:
     for (Index = 0; Index < Length; Index ++) {
       Buffer[Index] = L'-';
     }
-    EfiStrCat (Buffer, L"\r\n");
+    SctStrCat (Buffer, L"\r\n");
     Status = TllWriteLogFile (Private, Buffer);
   }
 
@@ -615,8 +615,8 @@ Returns:
     VSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Fmt, Marker);
     VA_END (Marker);
 
-    if (EfiStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER) {
-      EfiStrCat (Buffer, L"\r\n");
+    if (SctStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER) {
+      SctStrCat (Buffer, L"\r\n");
     }
     Status = TllWriteLogFile (Private, Buffer);
   }
@@ -670,8 +670,8 @@ Returns:
     VSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Fmt, Marker);
     VA_END (Marker);
 
-    if (EfiStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER) {
-      EfiStrCat (Buffer, L"\r\n");
+    if (SctStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER) {
+      SctStrCat (Buffer, L"\r\n");
     }
     Status = TllWriteLogFile (Private, Buffer);
   }
@@ -733,9 +733,9 @@ Returns:
       }
     }
     if (Buffer[0] == L'\0') {
-      EfiStrCpy (Buffer, L"none\r\n");
+      SctStrCpy (Buffer, L"none\r\n");
     } else {
-      EfiStrCat (Buffer, L"\r\n");
+      SctStrCat (Buffer, L"\r\n");
     }
     Status = TllWriteLogFile (Private, Buffer);
   }
@@ -1298,14 +1298,14 @@ TllStrDuplicate (
 
   Status = tBS->AllocatePool (
                   EfiBootServicesData,
-                  (EfiStrLen (String) + 1) * sizeof(CHAR16),
+                  (SctStrLen (String) + 1) * sizeof(CHAR16),
                   (VOID **)&Buffer
                   );
   if (EFI_ERROR (Status)) {
     return NULL;
   }
 
-  EfiStrCpy (Buffer, String);
+  SctStrCpy (Buffer, String);
 
   return Buffer;
 }

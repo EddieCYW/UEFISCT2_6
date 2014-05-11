@@ -87,13 +87,6 @@ SctDevicePathCompare (
   IN EFI_DEVICE_PATH_PROTOCOL     *DevicePath2
   );
 
-VOID
-SctStrnCpy (
-  OUT CHAR16                      *Dst,
-  IN CHAR16                       *Src,
-  IN UINTN                        Length
-  );
-
 CHAR16 *
 SctGetShortFilePathAndName (
   IN CHAR16                       *FileName,

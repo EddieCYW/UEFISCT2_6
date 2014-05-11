@@ -394,7 +394,7 @@ Returns:
     //
     //now we only support one line Head Name String to be displayed.
     //
-    if (StrLen (MenuPage->Header.HeaderString.Text) > (X1 - X0 + 1)) {
+    if (SctStrLen (MenuPage->Header.HeaderString.Text) > (X1 - X0 + 1)) {
       MenuPage->Header.HeaderString.Text[X1 - X0 + 1] = L'\0';
     }
     switch (MenuPage->Header.HeaderString.Align) {
@@ -402,10 +402,10 @@ Returns:
         Xpos = MenuPage->Header.HeaderRect.TopLeft.Col;
         break;
       case  EFI_ALIGNMENT_RIGHT:
-        Xpos = X1 - StrLen (MenuPage->Header.HeaderString.Text) + 1;
+        Xpos = X1 - SctStrLen (MenuPage->Header.HeaderString.Text) + 1;
         break;
       default:
-        Xpos = (X1 + X0 + 1) / 2 - StrLen (MenuPage->Header.HeaderString.Text) / 2;
+        Xpos = (X1 + X0 + 1) / 2 - SctStrLen (MenuPage->Header.HeaderString.Text) / 2;
         break;
     }
 
@@ -600,7 +600,7 @@ Returns:
             tST->ConOut,
             EFI_MENUPAGE_ITEM_COMMON_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
             );
-      if(StrLen (MenuPage->Body.MenuItemHeader.Text) > X2 -X0 - 1) {
+      if(SctStrLen (MenuPage->Body.MenuItemHeader.Text) > X2 -X0 - 1) {
         MenuPage->Body.MenuItemHeader.Text[ X2 - X0 - 1] = L'\0';
       }
 
@@ -614,14 +614,14 @@ Returns:
           break;
         case EFI_ALIGNMENT_RIGHT:
           Status = TestPrintAt (
-                     X2 -1 - StrLen (MenuPage->Body.MenuItemHeader.Text),
+                     X2 -1 - SctStrLen (MenuPage->Body.MenuItemHeader.Text),
                      (Y0 + Y2) / 2,
                      MenuPage->Body.MenuItemHeader.Text
                      );
           break;
         default:
           Status = TestPrintAt (
-                    (X2 + X0) / 2 - StrLen (MenuPage->Body.MenuItemHeader.Text) / 2,
+                    (X2 + X0) / 2 - SctStrLen (MenuPage->Body.MenuItemHeader.Text) / 2,
                     (Y0 + Y2)/ 2,
                     MenuPage->Body.MenuItemHeader.Text
                     );
@@ -640,7 +640,7 @@ Returns:
             tST->ConOut,
             EFI_ITEM_DESC_FORECOLOR | EFI_MENUPAGE_BODY_BGCOLOR
             );
-      if (StrLen (MenuPage->Body.DescriptionHeader.Text) > X1 - X2 - 1) {
+      if (SctStrLen (MenuPage->Body.DescriptionHeader.Text) > X1 - X2 - 1) {
         MenuPage->Body.DescriptionHeader.Text[X1 - X2 - 1] = L'\0';
       }
       switch (MenuPage->Body.DescriptionHeader.Align)   {
@@ -653,14 +653,14 @@ Returns:
           break;
         case EFI_ALIGNMENT_RIGHT:
           Status = TestPrintAt (
-                     X1 -1 - StrLen (MenuPage->Body.DescriptionHeader.Text),
+                     X1 -1 - SctStrLen (MenuPage->Body.DescriptionHeader.Text),
                      (Y0 + Y2) / 2,
                      MenuPage->Body.DescriptionHeader.Text
                      );
           break;
         default:
           Status = TestPrintAt (
-                     (X2 + X1) / 2 - StrLen (MenuPage->Body.DescriptionHeader.Text) / 2,
+                     (X2 + X1) / 2 - SctStrLen (MenuPage->Body.DescriptionHeader.Text) / 2,
                      (Y0 + Y2) / 2,
                      MenuPage->Body.DescriptionHeader.Text
                      );
@@ -871,7 +871,7 @@ Returns:
               tST->ConOut,
               EFI_MENUPAGE_FOOTER_HOTKEY_FORECOLOR | EFI_MENUPAGE_FOOTER_BGCOLOR
               );
-        if (StrLen (HotKey->HotKeyName.Text) > EFI_HOTKEY_NAME_SPAN) {
+        if (SctStrLen (HotKey->HotKeyName.Text) > EFI_HOTKEY_NAME_SPAN) {
           HotKey->HotKeyName.Text[EFI_HOTKEY_NAME_SPAN] = L'\0';
         }
         TestPrintAt (Xpos, Ypos, HotKey->HotKeyName.Text);
@@ -885,7 +885,7 @@ Returns:
               tST->ConOut,
               EFI_MENUPAGE_FOOTER_DESC_FORECOLOR | EFI_MENUPAGE_FOOTER_BGCOLOR
               );
-        if (StrLen (HotKey->HotKeyDesc.Text) > EFI_HOTKEY_DESC_SPAN) {
+        if (SctStrLen (HotKey->HotKeyDesc.Text) > EFI_HOTKEY_DESC_SPAN) {
           HotKey->HotKeyDesc.Text[EFI_HOTKEY_DESC_SPAN] = L'\0';
         }
         Status = TestPrintAt (Xpos, Ypos, HotKey->HotKeyDesc.Text);
@@ -1212,7 +1212,7 @@ Returns:
       //print Item Value
       //
       if (MenuItem->ItemValue != NULL) {
-        if (StrLen ((CHAR16 *)MenuItem->ItemValue) <= 20) {
+        if (SctStrLen ((CHAR16 *)MenuItem->ItemValue) <= 20) {
           Status = TestPrintAt (X2 -22, Ypos, (CHAR16  *)MenuItem->ItemValue);
         } else {
           for  (Index = 0; Index < 20; Index++) {
@@ -1260,7 +1260,7 @@ Returns:
         //
         //display item value.
         //
-        if (StrLen ((CHAR16 *)MenuItem->ItemValue) < 20) {
+        if (SctStrLen ((CHAR16 *)MenuItem->ItemValue) < 20) {
           Status = TestPrintAt (X2 - 22, Ypos, MenuItem->ItemValue);
         } else {
           for  (Index = 0; Index < 20; Index++) {
@@ -1311,7 +1311,7 @@ Returns:
          //
         //display Item Value
         //
-        if(StrLen (MenuItem->ItemValue) <= 20) {
+        if(SctStrLen (MenuItem->ItemValue) <= 20) {
           Status = TestPrintAt (X2 - 22, Ypos, MenuItem->ItemValue);
         } else {
           for  (Index = 0; Index < 20; Index++)  {
@@ -1452,7 +1452,7 @@ Returns:
         //
         //display item value.
         //
-        if (StrLen ((CHAR16 *)MenuItem->ItemValue) < EFI_MAX_CASE_ITEM_VALUE_LENGTH) {
+        if (SctStrLen ((CHAR16 *)MenuItem->ItemValue) < EFI_MAX_CASE_ITEM_VALUE_LENGTH) {
           Status = TestPrintAt (X0 + EFI_ITEM_TYPE_TAG_LENGTH + 1 + EFI_MAX_CASE_ITEM_NAME_LENGTH + 1, Ypos, MenuItem->ItemValue);
         }
         if (EFI_ERROR (Status)) {
@@ -1478,7 +1478,7 @@ Returns:
   switch (MENU_ITEM_TYPE (MenuItem->ItemType)) {
     case EFI_ITEM_HAVE_EDIT:
     case EFI_ITEM_HAVE_COMBOLIST:
-      if (StrLen (MenuItem->ItemString.Text) <= EFI_MAX_EDIT_ITEM_NAME_LENGTH) {
+      if (SctStrLen (MenuItem->ItemString.Text) <= EFI_MAX_EDIT_ITEM_NAME_LENGTH) {
         Status = TestPrintAt (
                    X0 + EFI_ITEM_TYPE_TAG_LENGTH + 1,
                    Ypos,
@@ -1500,7 +1500,7 @@ Returns:
       }
       break;
     case EFI_ITEM_CASE:
-      if (StrLen (MenuItem->ItemString.Text) <= EFI_MAX_CASE_ITEM_NAME_LENGTH) {
+      if (SctStrLen (MenuItem->ItemString.Text) <= EFI_MAX_CASE_ITEM_NAME_LENGTH) {
         Status = TestPrintAt (
                    X0 + EFI_ITEM_TYPE_TAG_LENGTH + 1,
                    Ypos,
@@ -1522,7 +1522,7 @@ Returns:
       }
       break;
     default:
-      if (StrLen (MenuItem->ItemString.Text) <= EFI_MAX_ITEM_NAME_LENGTH) {
+      if (SctStrLen (MenuItem->ItemString.Text) <= EFI_MAX_ITEM_NAME_LENGTH) {
         Status = TestPrintAt (
                    X0 + EFI_ITEM_TYPE_TAG_LENGTH + 1,
                    Ypos,
@@ -1759,7 +1759,7 @@ Returns:
         //
         //display item value.
         //
-        if (StrLen ((CHAR16 *)MenuItem->ItemValue) < EFI_MAX_CASE_ITEM_VALUE_LENGTH) {
+        if (SctStrLen ((CHAR16 *)MenuItem->ItemValue) < EFI_MAX_CASE_ITEM_VALUE_LENGTH) {
           Status = TestPrintAt (X0 + EFI_ITEM_TYPE_TAG_LENGTH + 1 + EFI_MAX_CASE_ITEM_NAME_LENGTH + 1, Ypos, MenuItem->ItemValue);
         }
         if (EFI_ERROR (Status)) {

@@ -142,8 +142,8 @@ Returns:
   for (Link = SkippedCaseList->Flink; Link != SkippedCaseList; Link = Link->Flink) {
     TempSkippedCase = CR (Link, EFI_SCT_SKIPPED_CASE, Link, EFI_SCT_SKIPPED_CASE_SIGNATURE);
 
-	if ( (StrCmp (TempSkippedCase->CaseName, ExecuteInfo->TestCase->Name) == 0) && \
-		(StrCmp (TempSkippedCase->ProtocolName, ExecuteInfo->Category->Name) == 0) )
+	if ( (SctStrCmp (TempSkippedCase->CaseName, ExecuteInfo->TestCase->Name) == 0) && \
+		(SctStrCmp (TempSkippedCase->ProtocolName, ExecuteInfo->Category->Name) == 0) )
       return EFI_ABORTED;
 
 	Order++;
@@ -151,8 +151,8 @@ Returns:
 
   Status = CreateSkippedCase(&SkippedCase, Order);
   if ( !EFI_ERROR(Status) ) {
-    SkippedCase->CaseName = StrDuplicate (ExecuteInfo->TestCase->Name);
-    SkippedCase->ProtocolName = StrDuplicate (ExecuteInfo->Category->Name);
+    SkippedCase->CaseName = SctStrDuplicate (ExecuteInfo->TestCase->Name);
+    SkippedCase->ProtocolName = SctStrDuplicate (ExecuteInfo->Category->Name);
   }
 
   ExecuteInfo->SkippedCase = SkippedCase;
@@ -569,10 +569,10 @@ Routine Description:
   }
 
   SkippedCaseGetStringByOrder (IniFile, Order, L"CaseName", Buffer);
-  TempSkippedCase->CaseName = StrDuplicate (Buffer);
+  TempSkippedCase->CaseName = SctStrDuplicate (Buffer);
   
   SkippedCaseGetStringByOrder (IniFile, Order, L"ProtocolName", Buffer);
-  TempSkippedCase->ProtocolName = StrDuplicate (Buffer);
+  TempSkippedCase->ProtocolName = SctStrDuplicate (Buffer);
   //
   // Done
   //

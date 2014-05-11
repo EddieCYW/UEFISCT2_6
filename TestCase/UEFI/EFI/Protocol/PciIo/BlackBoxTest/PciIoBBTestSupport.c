@@ -205,7 +205,7 @@ QueryGoOnTesting (
     return FALSE;
   }
 
-  if (StrLen (InputBuffer) == 0) {
+  if (SctStrLen (InputBuffer) == 0) {
     gtBS->FreePool (InputBuffer);
     return FALSE;
   }
@@ -553,7 +553,7 @@ GetDataUnits (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (InputBuffer) == 0) {
+  if (SctStrLen (InputBuffer) == 0) {
     return EFI_NOT_FOUND;
   }
 
@@ -751,11 +751,11 @@ GetSystemDevicePathByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   TempStr = NULL;
-  TempStr = StrDuplicate (Buffer);
+  TempStr = SctStrDuplicate (Buffer);
   if (TempStr == NULL) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -801,7 +801,7 @@ GetBarIndexByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   *BarIndex = (UINT8)AToUint64 (Buffer);
@@ -845,7 +845,7 @@ GetSrcBarIndexByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   *SrcBarIndex = (UINT8)AToUint64 (Buffer);
@@ -890,7 +890,7 @@ GetDestBarIndexByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   *DestBarIndex = (UINT8)AToUint64 (Buffer);
@@ -934,7 +934,7 @@ GetAddressOffsetByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   *AddressOffset = (UINT64)XToUint64 (Buffer);
@@ -978,7 +978,7 @@ GetSrcAddressOffsetByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   *SrcAddressOffset = (UINT64)XToUint64 (Buffer);
@@ -1022,7 +1022,7 @@ GetDestAddressOffsetByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   *DestAddressOffset = (UINT64)XToUint64 (Buffer);
@@ -1068,7 +1068,7 @@ GetDataUnitsByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   ReturnBuffer = NULL;
@@ -1122,7 +1122,7 @@ GetAddressLengthByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   *AddressLength = (UINT32)XToUint64 (Buffer);
@@ -1166,11 +1166,11 @@ GetPciIoWidthByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   for (Index = 0; Index < EfiPciIoWidthMaximum; Index++) {
-    if (StriCmp (WidthCode[Index], Buffer) == 0) {
+    if (SctStriCmp (WidthCode[Index], Buffer) == 0) {
       *PciIoWidth = (EFI_PCI_IO_PROTOCOL_WIDTH)Index;
       return EFI_SUCCESS;
     }
@@ -1218,7 +1218,7 @@ GetTargetValueByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   *TargetValue = (UINT64)XToUint64 (Buffer);
@@ -1262,7 +1262,7 @@ GetAlternateValueByFile (
   if (EFI_ERROR(Status)) {
     return Status;
   }
-  if (StrLen (Buffer) == 0) {
+  if (SctStrLen (Buffer) == 0) {
     return EFI_NOT_FOUND;
   }
   *AlternateValue = (UINT64)XToUint64 (Buffer);
@@ -1303,13 +1303,13 @@ ConvertStringToHex (
   //
   //skip the "0x" prefix if it really has.
   //
-  if (StrLen (StrPtr) >= 2) {
+  if (SctStrLen (StrPtr) >= 2) {
     if (StrPtr[0] == L'0' && (StrPtr[1] == L'x' || StrPtr[1] == L'X')) {
       StrPtr = StrPtr + 2;
     }
   }
 
-  ConvertBytes = StrLen (StrPtr) / 2;
+  ConvertBytes = SctStrLen (StrPtr) / 2;
   if (ConvertBytes > Length) {
     ConvertBytes = Length;
   }
@@ -1325,7 +1325,7 @@ ConvertStringToHex (
   for (Index = 0; Index < ConvertBytes; Index++) {
     Buffer[0] = StrPtr[Index * 2];
     Buffer[1] = StrPtr[Index * 2 + 1];
-    TempBuffer[Index] = (UINT8) xtoi (Buffer);
+    TempBuffer[Index] = (UINT8) SctXtoi (Buffer);
   }
   if (ConvertBytes < Length) {
     for (Index = ConvertBytes; Index < Length; Index++) {
