@@ -107,14 +107,7 @@ UnloadBBTestAcpiTableProtocol (
 
 UINT8
 EFIAPI
-CalculateSum8 (
-  IN      CONST UINT8                *Buffer,
-  IN      UINTN                      Length
-  );
-
-UINT8
-EFIAPI
-CalculateCheckSum8 (
+TestCalculateCheckSum8 (
   IN      CONST UINT8                *Buffer,
   IN      UINTN                      Length
   );

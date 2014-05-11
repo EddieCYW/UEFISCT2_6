@@ -185,6 +185,7 @@ UnloadBBTestAcpiTableProtocol (
   @return Sum       The sum of Buffer with carry bits dropped during additions.
 
 **/
+STATIC
 UINT8
 EFIAPI
 CalculateSum8 (
@@ -227,7 +228,7 @@ CalculateSum8 (
 **/
 UINT8
 EFIAPI
-CalculateCheckSum8 (
+TestCalculateCheckSum8 (
   IN      CONST UINT8             *Buffer,
   IN      UINTN                   Length
   )

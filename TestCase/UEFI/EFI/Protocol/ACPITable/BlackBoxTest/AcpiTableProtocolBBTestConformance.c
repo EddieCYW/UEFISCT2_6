@@ -191,7 +191,7 @@ BBTestInstallAcpiTableConformanceTestCheckpoint2 (
 
   ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Length = (UINT32) AcpiTableBufferSize;
 
-  ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Checksum = CalculateCheckSum8((UINT8 *)AcpiTableBuffer, AcpiTableBufferSize);
+  ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Checksum = TestCalculateCheckSum8((UINT8 *)AcpiTableBuffer, AcpiTableBufferSize);
   
   Status = AcpiTable->InstallAcpiTable (
                         AcpiTable,
@@ -241,7 +241,7 @@ BBTestInstallAcpiTableConformanceTestCheckpoint3 (
  
   ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Length = (UINT32) (AcpiTableBufferSize-1);
 
-  ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Checksum = CalculateCheckSum8((UINT8 *)AcpiTableBuffer, AcpiTableBufferSize);
+  ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Checksum = TestCalculateCheckSum8((UINT8 *)AcpiTableBuffer, AcpiTableBufferSize);
   
   Status = AcpiTable->InstallAcpiTable (
                         AcpiTable,
@@ -292,7 +292,7 @@ BBTestUninstallAcpiTableConformanceTestCheckpoint1 (
 
   ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Length = (UINT32) AcpiTableBufferSize;
 
-  ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Checksum = CalculateCheckSum8((UINT8 *)AcpiTableBuffer, AcpiTableBufferSize);
+  ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Checksum = TestCalculateCheckSum8((UINT8 *)AcpiTableBuffer, AcpiTableBufferSize);
 
   //
   //Install a Acpi table, to get a valid TableKey

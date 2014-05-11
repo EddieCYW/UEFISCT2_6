@@ -184,7 +184,7 @@ BBTestInstallAcpiTableFunctionTestCheckpoint1 (
   ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Signature = UEFI_SCTT_TABLE_SIGNATURE;
   ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Length    = (UINT32) AcpiTableBufferSize;
 
-  ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Checksum = CalculateCheckSum8((UINT8 *)AcpiTableBuffer, AcpiTableBufferSize);
+  ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Checksum = TestCalculateCheckSum8((UINT8 *)AcpiTableBuffer, AcpiTableBufferSize);
   
   Status = AcpiTable->InstallAcpiTable (
                         AcpiTable,
@@ -286,14 +286,14 @@ BBTestInstallAcpiTableFunctionTestCheckpoint1 (
       if (LinkedTable != NULL) {
         AcpiCheckSum = ((EFI_ACPI_DESCRIPTION_HEADER *) LinkedTable)->Checksum;
         ((EFI_ACPI_DESCRIPTION_HEADER *) LinkedTable)->Checksum = 0;
-        AcpiCheckSum1 = CalculateCheckSum8((UINT8 *) LinkedTable, ((EFI_ACPI_DESCRIPTION_HEADER *) LinkedTable)->Length);
+        AcpiCheckSum1 = TestCalculateCheckSum8((UINT8 *) LinkedTable, ((EFI_ACPI_DESCRIPTION_HEADER *) LinkedTable)->Length);
         ((EFI_ACPI_DESCRIPTION_HEADER *) LinkedTable)->Checksum = AcpiCheckSum;
 
         if (((EFI_ACPI_DESCRIPTION_HEADER *) LinkedTable)->Checksum == AcpiCheckSum1) {
           if (RSDTTable == TRUE) {
             CheckSum       = RSDT->Checksum;
             RSDT->Checksum = 0;
-            if (CheckSum == CalculateCheckSum8((UINT8 *)RSDT, RSDT->Length)) {
+            if (CheckSum == TestCalculateCheckSum8((UINT8 *)RSDT, RSDT->Length)) {
               AssertionType = EFI_TEST_ASSERTION_PASSED;
             } else {
               AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -303,7 +303,7 @@ BBTestInstallAcpiTableFunctionTestCheckpoint1 (
             XSDT           = (EFI_ACPI_DESCRIPTION_HEADER *)(UINTN)(RSDP->XSDTAddress);
             CheckSum       = XSDT->Checksum;
             XSDT->Checksum = 0;
-            if (CheckSum == CalculateCheckSum8((UINT8 *)XSDT, XSDT->Length)) {
+            if (CheckSum == TestCalculateCheckSum8((UINT8 *)XSDT, XSDT->Length)) {
               AssertionType = EFI_TEST_ASSERTION_PASSED;
             } else {
               AssertionType = EFI_TEST_ASSERTION_FAILED;
@@ -371,7 +371,7 @@ BBTestUninstallAcpiTableFunctionTestCheckpoint1 (
 
   ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Length = (UINT32) AcpiTableBufferSize;
 
-  ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Checksum = CalculateCheckSum8((UINT8 *)AcpiTableBuffer, AcpiTableBufferSize);
+  ((EFI_ACPI_DESCRIPTION_HEADER *) AcpiTableBuffer)->Checksum = TestCalculateCheckSum8((UINT8 *)AcpiTableBuffer, AcpiTableBufferSize);
   
   //
   //Install a Acpi table, to get a valid TableKey
