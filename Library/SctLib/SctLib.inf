@@ -103,6 +103,7 @@
 [sources.x64]
   X64/SctLibPlat.h
   X64/EfiLibPlat.c
+  X64/CpuX64.S | GCC
 
 [Packages]
   MdePkg/MdePkg.dec

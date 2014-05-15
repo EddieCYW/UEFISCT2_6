@@ -66,3 +66,13 @@ InitializeLibPlatform (
 {
   // No platform-specific initializations
 }
+
+/*UINT64
+SctReadTsc (
+  VOID
+  )
+{
+  __asm {
+    rdtsc
+  }
+}*/

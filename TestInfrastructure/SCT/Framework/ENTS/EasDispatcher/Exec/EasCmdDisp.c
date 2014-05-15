@@ -59,10 +59,6 @@ Abstract:
 #include "Eas.h"
 #include "Cpu.h"
 
-#if !defined(EFIARM) & !defined(EFIAARCH64)
-#include "CpuFuncs.h"
-#endif
-
 #include EFI_TEST_PROTOCOL_DEFINITION (EntsMonitorProtocol)
 #include "EftpImplement.h"
 #include "Sct.h"
@@ -1080,21 +1076,13 @@ Returns:
       //
       // It is an application
       //
-#if defined(EFIARM) | defined(EFIAARCH64)
-      StartTick = 0;
-#else 
-      StartTick = EfiReadTsc ();
-#endif
+      StartTick = SctReadTsc ();
       Status = tBS->StartImage (
                     ImageHandle,
                     &ExitDataSize,
                     &ExitData
                     );
-#if defined(EFIARM) | defined(EFIAARCH64)
-      StopTick = 0;
-#else 
-      StopTick = EfiReadTsc ();
-#endif
+      StopTick = SctReadTsc ();
       RecordExecTime (StartTick, StopTick);
       if (EFI_ERROR (Status)) {
         EFI_ENTS_DEBUG ((EFI_ENTS_D_ERROR, L"Error in ExecElet: Start image - %r\n", Status));
@@ -1185,17 +1173,9 @@ Returns:
   //
   // Call the entry point
   //
-#if defined(EFIARM) | defined(EFIAARCH64)
-      StartTick = 0;
-#else 
-      StartTick = EfiReadTsc ();
-#endif
+  StartTick = SctReadTsc ();
   TestStatus  = EntsInterface->EntsInterfaceEntry (EntsProtocol->ClientInterface);
-#if defined(EFIARM) | defined(EFIAARCH64)
-      StopTick = 0;
-#else 
-      StopTick = EfiReadTsc ();
-#endif
+  StopTick = SctReadTsc ();
   RecordExecTime (StartTick, StopTick);
 
   if (EntsProtocol->RuntimeInfo != NULL) {

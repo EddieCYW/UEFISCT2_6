@@ -66,3 +66,11 @@ InitializeLibPlatform (
 {
   // No platform-specific initializations
 }
+
+UINT64
+SctReadTsc (
+  VOID
+  )
+{
+  return 0;
+}

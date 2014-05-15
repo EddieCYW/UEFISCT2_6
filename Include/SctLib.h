@@ -515,6 +515,10 @@ SctWriteUnaligned32 (
   IN  UINT32                    Value
   );
 
+UINT64
+SctReadTsc (
+  VOID
+  );
 
 //
 // Print API
