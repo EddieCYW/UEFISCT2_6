@@ -72,15 +72,6 @@ COMPONENT_TYPE       = BS_DRIVER
   SimpleFileSystemExBBTestFunction_WriteEx.c
   SimpleFileSystemExBBTestFunction_FlushEx.c
   SimpleFileSystemExBBTestFunction_OpenEx.c
-  
-[sources.IA32]
-  SimpleFileSystemProtocol.c
-
-[sources.X64]
-  SimpleFileSystemProtocol.c
-
-[sources.IPF]
-  SimpleFileSystemProtocol.c
 
 [includes.common]
   .

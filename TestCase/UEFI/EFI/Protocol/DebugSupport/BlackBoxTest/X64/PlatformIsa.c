@@ -54,8 +54,9 @@ Abstract:
   Platform related Isa definition.
 
 --*/
+
 #include "Efi.h"
-#include <UEFI/Protocol/DebugSupport.h>
+#include EFI_PROTOCOL_DEFINITION (DebugSupport)
 
 EFI_INSTRUCTION_SET_ARCHITECTURE PlatformIsa = IsaX64;
 

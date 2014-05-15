@@ -64,13 +64,12 @@
   ENTRY_POINT          = InitializeBBTestExeMode
 
 [Sources.common]
-  Guid.c
+  guid.c
   ExeModeBBTestMain.c
   ExeModeBBTestRequired.c
 
-
 [sources.ia32]
-  IA32/AsmFuncs.asm
+  Ia32/AsmFuncs.asm
 
 [sources.x64]
   X64/AsmFuncs.asm

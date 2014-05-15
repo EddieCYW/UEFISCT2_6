@@ -70,10 +70,10 @@
   Guid.c
 
 [sources.ia32]
-  ia32/AsmFuncs.asm
-  ia32/PlatformIsa.c
-  ia32/DebugSupportBBTestExceptionCallbackFunction.c
-  ia32/DebugSupportBBTestCacheFunction.c
+  IA32/AsmFuncs.asm
+  IA32/PlatformIsa.c
+  IA32/DebugSupportBBTestExceptionCallbackFunction.c
+  IA32/DebugSupportBBTestCacheFunction.c
 
 [sources.ipf]
   ipf/AsmFuncs.s
@@ -82,10 +82,10 @@
   ipf/DebugSupportBBTestCacheFunction.c
 
 [sources.x64]
-  x64/AsmFuncs.asm
-  x64/PlatformIsa.c
-  x64/DebugSupportBBTestExceptionCallbackFunction.c
-  x64/DebugSupportBBTestCacheFunction.c
+  X64/AsmFuncs.asm
+  X64/PlatformIsa.c
+  X64/DebugSupportBBTestExceptionCallbackFunction.c
+  X64/DebugSupportBBTestCacheFunction.c
 
 [sources.Arm]
   Arm/PlatformIsa.c

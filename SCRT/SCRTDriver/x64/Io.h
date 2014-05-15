@@ -53,9 +53,10 @@ Module Name:
 #ifndef _X64_IO_ACCESS_H
 #define _X64_IO_ACCESS_H
 
-#include "EfiCommon.h"
-#include "EfiApi.h"
-#include EFI_PROTOCOL_DEFINITION (CpuIo)
+#include "SctLib.h"
+
+#include <PiPei.h>
+#include <Ppi/CpuIo.h>
 
 #define VIRT_TO_PHYS_OFFSET       (0x800000000)    //32G
 

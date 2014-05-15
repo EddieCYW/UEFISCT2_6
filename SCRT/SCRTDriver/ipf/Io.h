@@ -53,9 +53,10 @@ Module Name:
 #ifndef _IPF_IO_ACCESS_H
 #define _IPF_IO_ACCESS_H
 
-#include "EfiCommon.h"
-#include "EfiApi.h"
-#include EFI_PROTOCOL_DEFINITION (CpuIo)
+#include "SctLib.h"
+
+#include <PiPei.h>
+#include <Ppi/CpuIo.h>
 
 //#define VIRT_TO_PHYS_OFFSET       (0x10000000000)  //1T, 1024G.
 #define VIRT_TO_PHYS_OFFSET         (0x10000000000000)

@@ -100,7 +100,7 @@ Returns:
   // For FiFo type, the target address won't increase during the access,
   // so treat count as 1
   //
-  if (Width >= EfiPeiCpuWidthFifoUint8 && Width <= EfiPeiCpuWidthFifoUint64) {
+  if (Width >= EfiPeiCpuIoWidthFifoUint8 && Width <= EfiPeiCpuIoWidthFifoUint64) {
     Count = 1;
   }
 
@@ -158,7 +158,7 @@ Returns:
 
   Buffer.buf = (UINT8 *) UserBuffer;
 
-  if (Width >= EfiPeiCpuWidthMaximum) {
+  if (Width >= EfiPeiCpuIoWidthMaximum) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -170,11 +170,11 @@ Returns:
   Address   = (UINTN) UserAddress;
   InStride  = (UINTN)1 << (Width & 0x03);
   OutStride = InStride;
-  if (Width >= EfiPeiCpuWidthFifoUint8 && Width <= EfiPeiCpuWidthFifoUint64) {
+  if (Width >= EfiPeiCpuIoWidthFifoUint8 && Width <= EfiPeiCpuIoWidthFifoUint64) {
     InStride = 0;
   }
 
-  if (Width >= EfiPeiCpuWidthFillUint8 && Width <= EfiPeiCpuWidthFillUint64) {
+  if (Width >= EfiPeiCpuIoWidthFillUint8 && Width <= EfiPeiCpuIoWidthFillUint64) {
     OutStride = 0;
   }
 
@@ -190,13 +190,13 @@ Returns:
     }
     break;
 
-  case EfiPeiCpuWidthUint16:
+  case EfiPeiCpuIoWidthUint16:
     for (; Count > 0; Count--, Buffer.buf += OutStride, Address += InStride) {
       *Buffer.ui16 = CpuIoRead16 ((UINT16) Address);
     }
     break;
 
-  case EfiPeiCpuWidthUint32:
+  case EfiPeiCpuIoWidthUint32:
     for (; Count > 0; Count--, Buffer.buf += OutStride, Address += InStride) {
       *Buffer.ui32 = CpuIoRead32 ((UINT16) Address);
     }
@@ -250,7 +250,7 @@ Returns:
 
   Buffer.buf = (UINT8 *) UserBuffer;
 
-  if (Width >= EfiPeiCpuWidthMaximum) {
+  if (Width >= EfiPeiCpuIoWidthMaximum) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -262,11 +262,11 @@ Returns:
   Address   = (UINTN) UserAddress;
   InStride  = (UINTN)1 << (Width & 0x03);
   OutStride = InStride;
-  if (Width >= EfiPeiCpuWidthFifoUint8 && Width <= EfiPeiCpuWidthFifoUint64) {
+  if (Width >= EfiPeiCpuIoWidthFifoUint8 && Width <= EfiPeiCpuIoWidthFifoUint64) {
     InStride = 0;
   }
 
-  if (Width >= EfiPeiCpuWidthFillUint8 && Width <= EfiPeiCpuWidthFillUint64) {
+  if (Width >= EfiPeiCpuIoWidthFillUint8 && Width <= EfiPeiCpuIoWidthFillUint64) {
     OutStride = 0;
   }
 
@@ -282,13 +282,13 @@ Returns:
     }
     break;
 
-  case EfiPeiCpuWidthUint16:
+  case EfiPeiCpuIoWidthUint16:
     for (; Count > 0; Count--, Buffer.buf += OutStride, Address += InStride) {
       CpuIoWrite16 ((UINT16) Address, *Buffer.ui16);
     }
     break;
 
-  case EfiPeiCpuWidthUint32:
+  case EfiPeiCpuIoWidthUint32:
     for (; Count > 0; Count--, Buffer.buf += OutStride, Address += InStride) {
       CpuIoWrite32 ((UINT16) Address, *Buffer.ui32);
     }

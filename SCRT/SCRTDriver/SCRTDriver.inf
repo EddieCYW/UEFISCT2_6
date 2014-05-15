@@ -65,7 +65,7 @@
   ia32/Io.c
   ia32/Io.h
   ia32/IoAccess.asm
-  ia32/port80.asm
+  ia32/Port80.asm
   ia32/Dump.c
   ia32/Debug.c
     
@@ -74,8 +74,8 @@
   x64/Io.h
   x64/IoAccess.asm
   x64/IoAccess.S | GCC
-  x64/port80.asm
-  x64/port80.S | GCC
+  x64/Port80.asm
+  x64/Port80.S | GCC
   x64/Dump.c
   x64/Debug.c
 

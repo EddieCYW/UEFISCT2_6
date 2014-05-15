@@ -66,15 +66,6 @@ COMPONENT_TYPE       = BS_DRIVER
   SimpleTextInputExBBTestMain.c
   Guid.c
 
-[sources.IA32]
-  SimpleTextInputEx.c
-
-[sources.X64]
-  SimpleTextInputEx.c
-
-[sources.IPF]
-  SimpleTextInputEx.c
-  
 [includes.common]
   .
   $(WORKSPACE)/SctPkg

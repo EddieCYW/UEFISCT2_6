@@ -86,15 +86,6 @@
 [LibraryClasses]
   SctLib
 
-[LibraryClasses.ipf]
-  CpuIa64Lib
-
-[LibraryClasses.ia32]
-  CpuIa32lib
-
-[LibraryClasses.X64]
-  CpuIa32lib
-
 [Protocols]
   gEfiDriverBindingProtocolGuid
   gEfiDriverConfigurationProtocolGuid

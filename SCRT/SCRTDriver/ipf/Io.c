@@ -105,11 +105,11 @@ Returns:
   AddressStride = (UINTN)1 << (Width & 0x03);
   BufferStride  = AddressStride;
 
-  if (Width >= EfiPeiCpuWidthFifoUint8 && Width <= EfiPeiCpuWidthFifoUint64) {
+  if (Width >= EfiPeiCpuIoWidthFifoUint8 && Width <= EfiPeiCpuIoWidthFifoUint64) {
     AddressStride = 0;
   }
 
-  if (Width >= EfiPeiCpuWidthFillUint8 && Width <= EfiPeiCpuWidthFillUint64) {
+  if (Width >= EfiPeiCpuIoWidthFillUint8 && Width <= EfiPeiCpuIoWidthFillUint64) {
     BufferStride = 0;
   }
 
@@ -118,12 +118,12 @@ Returns:
   BufferAlignedFlag = (BOOLEAN) (Buffer.Value & AlignMask) == 0;
 
   //
-  // Do count transfers of Width size. If EfiPeiCpuIoWidthUint8, EfiPeiCpuWidthUint16,
-  // EfiPeiCpuWidthUint32, or EfiPeiCpuWidthUint64 increment Address and the buffer by Width after every
-  // transaction. If EfiPeiCpuWidthFifoUint8, EfiPeiCpuWidthFifoUint16, EfiPeiCpuWidthFifoUint32,
-  // or EfiPeiCpuWidthFifoUint64 repeat the accesses to the same Address but increment the buffer after
-  // every transaction. If EfiPeiCpuWidthFillUint8, EfiPeiCpuWidthFillUint16, EfiPeiCpuWidthFillUint32,
-  // or EfiPeiCpuWidthFillUint64 increament the Address, but not the buffer after every transaction.
+  // Do count transfers of Width size. If EfiPeiCpuIoWidthUint8, EfiPeiCpuIoWidthUint16,
+  // EfiPeiCpuIoWidthUint32, or EfiPeiCpuIoWidthUint64 increment Address and the buffer by Width after every
+  // transaction. If EfiPeiCpuIoWidthFifoUint8, EfiPeiCpuIoWidthFifoUint16, EfiPeiCpuIoWidthFifoUint32,
+  // or EfiPeiCpuIoWidthFifoUint64 repeat the accesses to the same Address but increment the buffer after
+  // every transaction. If EfiPeiCpuIoWidthFillUint8, EfiPeiCpuIoWidthFillUint16, EfiPeiCpuIoWidthFillUint32,
+  // or EfiPeiCpuIoWidthFillUint64 increament the Address, but not the buffer after every transaction.
   //
   // If Buffer is not aligned on a Width boundry we read data into a local
   // variable and byte copy it into the callers non aligned buffer.
@@ -148,7 +148,7 @@ Returns:
       *Buffer.Uint8 = *Address.Uint8;
       break;
 
-    case EfiPeiCpuWidthUint16:
+    case EfiPeiCpuIoWidthUint16:
       if (BufferAlignedFlag) {
         *Buffer.Uint16 = *Address.Uint16;
       } else {
@@ -162,7 +162,7 @@ Returns:
       }
       break;
 
-    case EfiPeiCpuWidthUint32:
+    case EfiPeiCpuIoWidthUint32:
       if (BufferAlignedFlag) {
         *Buffer.Uint32 = *Address.Uint32;
       } else {
@@ -178,7 +178,7 @@ Returns:
       }
       break;
 
-    case EfiPeiCpuWidthUint64:
+    case EfiPeiCpuIoWidthUint64:
       if (BufferAlignedFlag) {
         *Buffer.Uint64++ = *Address.Uint64;
       } else {
@@ -263,11 +263,11 @@ Returns:
   AddressStride = (UINTN)1 << (Width & 0x03);
   BufferStride  = AddressStride;
 
-  if (Width >= EfiPeiCpuWidthFifoUint8 && Width <= EfiPeiCpuWidthFifoUint64) {
+  if (Width >= EfiPeiCpuIoWidthFifoUint8 && Width <= EfiPeiCpuIoWidthFifoUint64) {
     AddressStride = 0;
   }
 
-  if (Width >= EfiPeiCpuWidthFillUint8 && Width <= EfiPeiCpuWidthFillUint64) {
+  if (Width >= EfiPeiCpuIoWidthFillUint8 && Width <= EfiPeiCpuIoWidthFillUint64) {
     BufferStride = 0;
   }
 
@@ -276,12 +276,12 @@ Returns:
   BufferAlignedFlag = (BOOLEAN) (Buffer.Value & AlignMask) == 0;
 
   //
-  // Do count transfers of Width size. If EfiPeiCpuIoWidthUint8, EfiPeiCpuWidthUint16,
-  // EfiPeiCpuWidthUint32, or EfiPeiCpuWidthUint64 increment Address and the buffer by Width after every
-  // transaction. If EfiPeiCpuWidthFifoUint8, EfiPeiCpuWidthFifoUint16, EfiPeiCpuWidthFifoUint32,
-  // or EfiPeiCpuWidthFifoUint64 repeat the accesses to the same Address but increment the buffer after
-  // every transaction. If EfiPeiCpuWidthFillUint8, EfiPeiCpuWidthFillUint16, EfiPeiCpuWidthFillUint32,
-  // or EfiPeiCpuWidthFillUint64 increament the Address, but not the buffer after every transaction.
+  // Do count transfers of Width size. If EfiPeiCpuIoWidthUint8, EfiPeiCpuIoWidthUint16,
+  // EfiPeiCpuIoWidthUint32, or EfiPeiCpuIoWidthUint64 increment Address and the buffer by Width after every
+  // transaction. If EfiPeiCpuIoWidthFifoUint8, EfiPeiCpuIoWidthFifoUint16, EfiPeiCpuIoWidthFifoUint32,
+  // or EfiPeiCpuIoWidthFifoUint64 repeat the accesses to the same Address but increment the buffer after
+  // every transaction. If EfiPeiCpuIoWidthFillUint8, EfiPeiCpuIoWidthFillUint16, EfiPeiCpuIoWidthFillUint32,
+  // or EfiPeiCpuIoWidthFillUint64 increament the Address, but not the buffer after every transaction.
   // If Buffer is not aligned on a Width boundry we read data into a local
   // variable and byte copy it into the callers non aligned buffer.
   //
@@ -304,7 +304,7 @@ Returns:
       *Address.Uint8 = *Buffer.Uint8;
       break;
 
-    case EfiPeiCpuWidthUint16:
+    case EfiPeiCpuIoWidthUint16:
       if (BufferAlignedFlag) {
         *Address.Uint16 = *Buffer.Uint16;
       } else {
@@ -318,7 +318,7 @@ Returns:
       }
       break;
 
-    case EfiPeiCpuWidthUint32:
+    case EfiPeiCpuIoWidthUint32:
       if (BufferAlignedFlag) {
         *Address.Uint32 = *Buffer.Uint32;
       } else {
@@ -334,7 +334,7 @@ Returns:
       }
       break;
 
-    case EfiPeiCpuWidthUint64:
+    case EfiPeiCpuIoWidthUint64:
       if (BufferAlignedFlag) {
         *Address.Uint64 = *Buffer.Uint64;
       } else {

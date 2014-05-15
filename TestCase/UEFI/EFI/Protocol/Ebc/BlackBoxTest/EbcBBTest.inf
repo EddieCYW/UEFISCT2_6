@@ -68,15 +68,6 @@ COMPONENT_TYPE       = BS_DRIVER
   EbcProtocol.h
   guid.c
   guid.h
-  
-[sources.IA32]
-  EbcProtocol.c
-
-[sources.X64]
-  EbcProtocol.c
-
-[sources.IPF]
-  EbcProtocol.c  
 
 [includes.common]
   .

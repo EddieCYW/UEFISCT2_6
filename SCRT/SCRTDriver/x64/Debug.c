@@ -56,6 +56,14 @@ Module Name:
 UINTN                 mHandOffPtr        =  0;
 EFI_PHYSICAL_ADDRESS  mIoPortSpaceAddress = 0;
 
+VOID
+EFIAPI
+MemoryFence (
+  VOID
+  )
+{
+  //TODO: Please implement me!
+}
 
 VOID
 UartReadWrite (

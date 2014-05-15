@@ -87,8 +87,8 @@
   Aarch64/initplat.c
 
 [sources.ia32]
-  Ia32/SctLibPlat.h
-  Ia32/initplat.c
+  ia32/SctLibPlat.h
+  ia32/initplat.c
 
 [sources.ipf]
   Ipf/SctLibPlat.h

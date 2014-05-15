@@ -68,15 +68,6 @@ COMPONENT_TYPE       = BS_DRIVER
   SimpleTextInBBTestStress.c
   SimpleTextInBBTestData.c
   Guid.c
-  
-[sources.IA32]
-  SimpleTextInProtocol.c
-
-[sources.X64]
-  SimpleTextInProtocol.c
-
-[sources.IPF]
-  SimpleTextInProtocol.c  
 
 [includes.common]
   .

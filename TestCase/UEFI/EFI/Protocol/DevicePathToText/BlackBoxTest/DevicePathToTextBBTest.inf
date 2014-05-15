@@ -67,15 +67,6 @@ COMPONENT_TYPE   = BS_DRIVER
   DevicePathToTextBBTestConformance.c
   DevicePathToTextBBTestCoverage.c
   Guid.c
-  
-[sources.IA32]
-  DevicePathToTextProtocol.c
-
-[sources.X64]
-  DevicePathToTextProtocol.c
-
-[sources.IPF]
-  DevicePathToTextProtocol.c  
 
 [includes.common]
   .
