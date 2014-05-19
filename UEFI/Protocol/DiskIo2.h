@@ -58,7 +58,7 @@ Abstract:
 #ifndef _EFI_DISK_IO2_FOR_TEST_H_
 #define _EFI_DISK_IO2_FOR_TEST_H_
 
-#include "DiskIoProtocol.h"
+#include <UEFI/Protocol/DiskIo.h>
 
 #define EFI_DISK_IO2_PROTOCOL_GUID \
   { 0x151c8eae, 0x7f2c, 0x472c, 0x9e, 0x54, 0x98, 0x28, 0x19, 0x4f, 0x6a, 0x88}
@@ -115,6 +115,6 @@ typedef struct _EFI_DISK_IO2_PROTOCOL {
   EFI_DISK_FLUSH_EX 				FlushDiskEx;
 } EFI_DISK_IO2_PROTOCOL;
 
-extern EFI_GUID                           gEfiDiskIo2ProtocolGuid;
+extern EFI_GUID                           gBlackBoxEfiDiskIo2ProtocolGuid;
 
 #endif

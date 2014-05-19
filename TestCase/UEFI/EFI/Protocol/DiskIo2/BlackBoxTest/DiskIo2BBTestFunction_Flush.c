@@ -478,7 +478,7 @@ BBTestFlushDiskExFunctionAutoTest (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiDiskIo2ProtocolGuid,
+                   &gBlackBoxEfiDiskIo2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -486,7 +486,7 @@ BBTestFlushDiskExFunctionAutoTest (
   for (Index = 0; Index < NoHandles; Index++) {
      Status = gtBS->HandleProtocol (
                       HandleBuffer[Index],
-                      &gEfiDiskIo2ProtocolGuid,
+                      &gBlackBoxEfiDiskIo2ProtocolGuid,
                       &DiskIo2Temp
                       );
     if (Status == EFI_SUCCESS && DiskIo2Temp == DiskIo2) {

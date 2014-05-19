@@ -495,7 +495,7 @@ BBTestWriteDiskExFunctionAutoTest (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiDiskIo2ProtocolGuid,
+                   &gBlackBoxEfiDiskIo2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -503,14 +503,14 @@ BBTestWriteDiskExFunctionAutoTest (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiDiskIo2ProtocolGuid,
+                     &gBlackBoxEfiDiskIo2ProtocolGuid,
                      &DiskIo2Temp
                      );
 
     if (Status == EFI_SUCCESS && DiskIo2Temp == DiskIo2) {
       Status = gtBS->HandleProtocol (
                        HandleBuffer[Index],
-                       &gEfiDiskIoProtocolGuid,
+                       &gBlackBoxEfiDiskIoProtocolGuid,
                        &DiskIo
                        );
       if (Status != EFI_SUCCESS) {
@@ -840,7 +840,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint1(
         //
         // Set test data pattern into Write Buffer  
         //
-        MemSet(WriteBuffer, ASYNC_WRITE_TEST_PATTERN, DiskIo2EntityRead->BufferSize);
+        SctSetMem (WriteBuffer, DiskIo2EntityRead->BufferSize, ASYNC_WRITE_TEST_PATTERN);
         //
         // Write specified buffer2 differ from buffer to the device
         // write info comes from previous read info list
@@ -887,7 +887,7 @@ END_WAIT:
                 &WaitIndex
                 );
         IndexI++;
-        SctPrint(L".");
+        SctPrint (L".");
         SctAcquireLock (&gAsyncWriteQueueLock);
       }
       SctReleaseLock (&gAsyncWriteQueueLock);
@@ -1437,7 +1437,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint2(
         //
         // Set test data pattern into Write Buffer  
         //
-        MemSet(WriteBuffer, SYNC_WRITE_TEST_PATTERN, DiskIo2EntityRead->BufferSize);
+        SctSetMem (WriteBuffer, DiskIo2EntityRead->BufferSize, SYNC_WRITE_TEST_PATTERN);
         //
         // Write specified buffer2 differ from buffer to the device
         // write info comes from previous read info list
@@ -1952,7 +1952,7 @@ BBTestWriteDiskExFunctionAutoTestCheckpoint3(
           goto END;
         }
         
-        MemSet(DiskIo2EntityWrite->Buffer, ASYNC_WRITE_TEST_PATTERN, DiskIo2EntityWrite->BufferSize);
+        SctSetMem (DiskIo2EntityWrite->Buffer, DiskIo2EntityWrite->BufferSize, ASYNC_WRITE_TEST_PATTERN);
         
         //
         // Last list node handled
@@ -2110,7 +2110,7 @@ END:
   // Do logging & clean up Write list
   //
   while(!SctIsListEmpty(&WriteListHeader)) {
-    DiskIo2EntityWrite = CR(WriteListHeader.ForwardLink, DiskIO2_Task, ListEntry, DiskIO2ENTITY_SIGNATURE);
+    DiskIo2EntityWrite = CR(WriteListHeader.ForwardLink, DiskIO2_Task, ListEntry, DISKIO2ENTITY_SIGNATURE);
     SctRemoveEntryList(&DiskIo2EntityWrite->ListEntry);
     
     if (MemoryAllocFail == FALSE) {

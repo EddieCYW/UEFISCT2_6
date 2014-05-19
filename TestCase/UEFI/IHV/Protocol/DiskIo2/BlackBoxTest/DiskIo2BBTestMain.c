@@ -242,7 +242,7 @@ LocateBlockIo2FromDiskIo2(
   //
   Status = gtBS->LocateHandleBuffer(
                    ByProtocol,
-                   &gEfiDiskIo2ProtocolGuid,
+                   &gBlackBoxEfiDiskIo2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -280,7 +280,7 @@ LocateBlockIo2FromDiskIo2(
   for (Index = 0; Index < NoHandles; Index++) {
       Status = gtBS->HandleProtocol(
                        HandleBuffer[Index],
-                       &gEfiDiskIo2ProtocolGuid,
+                       &gBlackBoxEfiDiskIo2ProtocolGuid,
                        &OtherDiskIo2
                        );
     if (EFI_ERROR (Status)) {
@@ -319,7 +319,7 @@ LocateBlockIo2FromDiskIo2(
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[Index],
-                   &gEfiBlockIo2ProtocolGuid,
+                   &gBlackBoxEfiBlockIo2ProtocolGuid,
                    BlockIo2
                    );
   if (EFI_ERROR(Status)) {
@@ -372,7 +372,7 @@ LocateDevicePathFromDiskIo2(
   //
   Status = gtBS->LocateHandleBuffer(
                    ByProtocol,
-                   &gEfiDiskIo2ProtocolGuid,
+                   &gBlackBoxEfiDiskIo2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -410,7 +410,7 @@ LocateDevicePathFromDiskIo2(
   for (Index = 0; Index < NoHandles; Index++) {
       Status = gtBS->HandleProtocol(
                        HandleBuffer[Index],
-                       &gEfiDiskIo2ProtocolGuid,
+                       &gBlackBoxEfiDiskIo2ProtocolGuid,
                        &OtherDiskIo2
                        );
     if (EFI_ERROR (Status)) {
@@ -476,45 +476,3 @@ LocateDevicePathFromDiskIo2(
 
   return EFI_SUCCESS;
 }
-
-
-
-INTN
-MemCmp(
-  UINT8        *s1,
-  UINT8        *s2,
-  UINTN       n
-  )
-{
-  UINT8 *p1, *p2;
-
-  p1 = s1;
-  p2 = s2;
-  if (n != 0) {
-    do {
-      if (*p1++ != *p2++)
-        return (*--p1 - *--p2);
-    } while (--n != 0);
-  }
-  return (0);
-}
-
-
-VOID *
-MemSet(
-  UINT8        *b,
-  UINT8        c,
-  UINTN       len
-  )
-{
-  UINT8 *p;
-  UINTN i;
-
-  p = b;
-  for (i = 0; i < len; i++) {
-    p[i] = c;
-  }
-  return (p);
-}
-
-

@@ -56,11 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = IhvDiskIo2BBTest
-FILE_GUID            = A4F89C37-4Df7-430E-81FE-814019F69440
-COMPONENT_TYPE       = BS_DRIVER
-
-
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = IhvDiskIo2BBTest
+  FILE_GUID            = A4F89C37-4Df7-430E-81FE-814019F69440
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDiskIo2
 
 [sources.common]
   DiskIo2BBTestMain.c
@@ -70,24 +71,19 @@ COMPONENT_TYPE       = BS_DRIVER
   DiskIo2BBTestFunction_Write.c
   DiskIo2BBTestFunction_Flush.c
   guid.c
-  
-[includes.common]
-  .
-  $(EDK_SOURCE)/Foundation
-  $(EDK_SOURCE)/Foundation/Efi
-  $(EDK_SOURCE)/Foundation/Include
-  $(EDK_SOURCE)/Foundation/Efi/Include
-  $(EDK_SOURCE)/Foundation/Framework/Include
-  $(EDK_SOURCE)/Foundation/Include/IndustryStandard
-  $(EDK_SOURCE)/Foundation/Library/Dxe/Include
-  $(WORKSPACE)/
-  $(WORKSPACE)/SctPkg/Include
-  $(WORKSPACE)/SctPkg/Library/EfiTestLib
 
-[libraries.common]
-  EfiProtocolLib
-  TestProtocolLib
+[Packages]
+  MdePkg/MdePkg.dec
+  SctPkg/SctPkg.dec
+  SctPkg/UEFI/UEFI.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  SctLib
   EfiTestLib
 
-[nmake.common]
-  IMAGE_ENTRY_POINT = InitializeBBTestDiskIo2
+[Protocols]
+  gEfiDevicePathProtocolGuid
+  gBlackBoxEfiBlockIo2ProtocolGuid
+  gBlackBoxEfiDiskIoProtocolGuid
+  gBlackBoxEfiDiskIo2ProtocolGuid

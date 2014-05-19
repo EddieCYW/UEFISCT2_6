@@ -122,11 +122,7 @@ SCT_LIST_ENTRY  SyncReadFailListHead = INITIALIZE_SCT_LIST_HEAD_VARIABLE(SyncRea
 //
 // Mixed Sync & Async Read lock
 //
-<<<<<<< HEAD
-SCT_LOCK  gMixedReadQueueLock = EFI_INITIALIZE_LOCK_VARIABLE (EFI_TPL_CALLBACK);
-=======
 SCT_LOCK  gMixedReadQueueLock = SCT_INITIALIZE_LOCK_VARIABLE (TPL_CALLBACK);
->>>>>>> TestCase/UEFI: Ported Protocol Tests to EDK2
 
 //
 // Async signal
@@ -751,7 +747,7 @@ BBTestReadDiskExFunctionAutoTest (
   //
   Status = gtBS->LocateHandleBuffer (
                    ByProtocol,
-                   &gEfiDiskIo2ProtocolGuid,
+                   &gBlackBoxEfiDiskIo2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -759,13 +755,13 @@ BBTestReadDiskExFunctionAutoTest (
   for (Index = 0; Index < NoHandles; Index++) {
     Status = gtBS->HandleProtocol (
                      HandleBuffer[Index],
-                     &gEfiDiskIo2ProtocolGuid,
+                     &gBlackBoxEfiDiskIo2ProtocolGuid,
                      &DiskIo2Temp
                      );
      if (Status == EFI_SUCCESS && DiskIo2Temp == DiskIo2) {
        Status = gtBS->HandleProtocol (
                         HandleBuffer[Index],
-                        &gEfiDiskIoProtocolGuid,
+                        &gBlackBoxEfiDiskIoProtocolGuid,
                         &DiskIo
                         );
        if (Status != EFI_SUCCESS) {
@@ -1125,7 +1121,7 @@ END_WAIT:
           DiskIo2Entity->AssertionType = EFI_TEST_ASSERTION_FAILED;
  
           if (StatusSync == EFI_SUCCESS) {
-            DiskIo2Entity->ComparedVal = MemCmp(
+            DiskIo2Entity->ComparedVal = SctCompareMem (
                                             DiskIo2Entity->Buffer,
                                             BufferSync,
                                             DiskIo2Entity->BufferSize
@@ -1580,7 +1576,7 @@ BBTestReadDiskExFunctionAutoTestCheckpoint2(
           AssertionType = EFI_TEST_ASSERTION_FAILED;
           
           if (Status == EFI_SUCCESS) {
-            CompareVal = MemCmp(DiskIo2BufferSync, DiskIoBuffer, NewBufferSize);
+            CompareVal = SctCompareMem (DiskIo2BufferSync, DiskIoBuffer, NewBufferSize);
             MemCompared = TRUE;
             if (CompareVal == 0) {
               AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -1989,7 +1985,7 @@ END:
           DiskIo2Entity->AssertionType = EFI_TEST_ASSERTION_FAILED;
   
           if (DiskIoStatus == EFI_SUCCESS) {
-            DiskIo2Entity->ComparedVal = MemCmp(
+            DiskIo2Entity->ComparedVal = SctCompareMem (
                                            DiskIo2Entity->Buffer,
                                            DiskIoBuffer,
                                            DiskIo2Entity->BufferSize
@@ -2390,7 +2386,7 @@ END_WAIT:
               DiskIo2Entity->MemCompared     = TRUE;
               DiskIo2EntitySync->MemCompared = TRUE;
   
-              DiskIo2EntitySync->ComparedVal = MemCmp (
+              DiskIo2EntitySync->ComparedVal = SctCompareMem (
                                                   DiskIo2Entity->Buffer,
                                                   DiskIo2EntitySync->Buffer,
                                                   DiskIo2Entity->BufferSize

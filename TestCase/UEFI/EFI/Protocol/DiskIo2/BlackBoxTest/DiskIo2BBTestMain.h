@@ -175,22 +175,6 @@ LocateBlockIo2FromDiskIo2(
   );
 
 
-
-INTN
-MemCmp(
-  UINT8        *s1,
-  UINT8        *s2,
-  UINTN       n
-  );
-
-VOID *
-MemSet(
-  UINT8        *b,
-  UINT8        c,
-  UINTN       len
-  );
-
-
 //
 // record every Disk IO 2 Async call status
 //

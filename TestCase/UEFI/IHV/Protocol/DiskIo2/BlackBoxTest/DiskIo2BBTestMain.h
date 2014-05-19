@@ -60,7 +60,7 @@ Abstract:
 #define _DISK_IO2_BBTEST_H_
 
 
-#include "Efi.h"
+#include "SctLib.h"
 #include <UEFI/Protocol/DiskIo2.h>
 #include "Guid.h"
 #include <Library/EfiTestLib.h>
@@ -180,22 +180,6 @@ LocateBlockIo2FromDiskIo2(
   );
 
 
-
-INTN
-MemCmp(
-  UINT8        *s1,
-  UINT8        *s2,
-  UINTN       n
-  );
-
-VOID *
-MemSet(
-  UINT8        *b,
-  UINT8        c,
-  UINTN       len
-  );
-
-
 //
 // record every Disk IO 2 Async call status
 //
@@ -258,10 +242,6 @@ typedef struct {
 
 #define DISK_IO2_PROTOCOL_WRITEDISKEX_FUNCTION_AUTO_GUID \
   {0xfb7b94af, 0x368, 0x4a66, { 0xaf, 0x52, 0x31, 0x0, 0x8a, 0xf1, 0xd5, 0xc7 } }
-  
-
-
-
 
 #endif
 
