@@ -52,7 +52,7 @@ Abstract:
     for EFI Simple File System Protocol and EFI_FILE Protocol Black Box Test
 
 --*/
-#include "SctLib.h"
+
 #include "SimpleFileSystemBBTest.h"
 
 EFI_EVENT TimerEvent = NULL;

@@ -58,7 +58,7 @@ Abstract:
 #define _SIMPLE_FILE_SYSTEM_TEST_H
 
 
-#include "Efi.h"
+#include "SctLib.h"
 #include <Library/EfiTestLib.h>
 #include <UEFI/Protocol/SimpleFileSystem.h>
 #include "guid.h"

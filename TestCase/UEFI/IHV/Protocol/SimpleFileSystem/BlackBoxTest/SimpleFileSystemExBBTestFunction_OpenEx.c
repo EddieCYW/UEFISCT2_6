@@ -55,7 +55,7 @@ Abstract:
 --*/
 
 
-#include "SimpleFileSystemExProtocol.h"
+#include "SimpleFileSystemBBTest.h"
 
 #define VALID_DIRECTORY_ATTRIBUTES_INDEX_FOR_CREATE    8   // zero-based
 #define ALL_ATTRIBUTES_COUNT_FOR_CREATE                16
