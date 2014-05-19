@@ -782,12 +782,12 @@ Returns:
   //
   // Read the entire file into a Buffer
   //
-  Status = tBS->AllocatePages (AllocateAnyPages, EfiBootServicesData, EFI_SIZE_TO_PAGES (FileInfo->FileSize), &BufferPhysicalAddress);
+  Status = tBS->AllocatePages (AllocateAnyPages, EfiBootServicesData, EFI_SIZE_TO_PAGES ((UINTN) FileInfo->FileSize), &BufferPhysicalAddress);
   if (EFI_ERROR (Status)) {
     goto EXIT_FREE_FILEINFO;
   }
 
-  BufSize = FileInfo->FileSize;
+  BufSize = (UINTN) FileInfo->FileSize;
   Buffer = (UINT8*)(UINTN)BufferPhysicalAddress;
 
   //
@@ -852,7 +852,7 @@ Returns:
   Status = EFI_SUCCESS;
 
 EXIT_FREE_BUFFER:
-  tBS->FreePages (BufferPhysicalAddress, EFI_SIZE_TO_PAGES (FileInfo->FileSize));
+  tBS->FreePages (BufferPhysicalAddress, EFI_SIZE_TO_PAGES ((UINTN) FileInfo->FileSize));
 EXIT_FREE_FILEINFO:
   tBS->FreePool (FileInfo);
 EXIT_CLOSE_HANDLE:

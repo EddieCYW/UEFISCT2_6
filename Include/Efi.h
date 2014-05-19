@@ -87,7 +87,12 @@ Abstract:
   // EdkCompatibilityPkg definitions
   //
   #define EFI_DBUG_MASK   (EFI_D_ERROR | EFI_D_INFO | EFI_D_WARN)
-  #define EFI_BAD_POINTER          (UINTN)0xAFAFAFAFAFAFAFAF
+  
+  #if defined(EFI32) | defined(EFIARM)
+    #define EFI_BAD_POINTER          (UINTN)0xAFAFAFAF
+  #else
+    #define EFI_BAD_POINTER          (UINTN)0xAFAFAFAFAFAFAFAF
+  #endif
 
   #define VOLATILE volatile
 
