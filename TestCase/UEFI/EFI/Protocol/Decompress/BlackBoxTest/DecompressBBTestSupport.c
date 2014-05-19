@@ -545,7 +545,7 @@ OpenFileAndGetSize (
   //
   if (FileSize != NULL) {
     FileInfo = NULL;
-    Status = SctGetFileInfo (FHandle, &FileHandle);
+    Status = SctGetFileInfo (FHandle, &FileInfo);
 
     if (EFI_ERROR (Status)) {
       return Status;
