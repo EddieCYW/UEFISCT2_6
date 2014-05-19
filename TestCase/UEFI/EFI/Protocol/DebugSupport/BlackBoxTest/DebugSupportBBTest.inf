@@ -56,12 +56,9 @@
 #--*/
 
 [defines]
-  INF_VERSION          = 0x00010005
   BASE_NAME            = DebugSupportBBTest
   FILE_GUID            = 4D72D5AB-34F3-4d47-A1CD-119B20D7371C
-  MODULE_TYPE          = UEFI_DRIVER
-  VERSION_STRING       = 1.0
-  ENTRY_POINT          = InitializeBBTestDebugSupport
+  COMPONENT_TYPE       = BS_DRIVER
 
 [sources.common]
   DebugSupportBBTestMain.c
@@ -97,14 +94,19 @@
   Aarch64/DebugSupportBBTestExceptionCallbackFunction.c
   Aarch64/DebugSupportBBTestCacheFunction.c
 
-[Packages]
-  MdePkg/MdePkg.dec
-  SctPkg/SctPkg.dec
-  SctPkg/UEFI/UEFI.dec
+[includes.common]
+  .
+  $(WORKSPACE)/SctPkg
+  $(WORKSPACE)/SctPkg/UEFI
+  $(WORKSPACE)/SctPkg/Include
+  $(WORKSPACE)/MdePkg/Include
 
-[LibraryClasses]
-  UefiDriverEntryPoint
+[libraries.common]
   SctLib
+  SctGuidLib
   EfiTestLib
+  BaseDebugLibNull
+  CompilerIntrinsicsLib
 
-[Protocols]
+[nmake.common]
+  IMAGE_ENTRY_POINT = InitializeBBTestDebugSupport

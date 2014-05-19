@@ -59,10 +59,7 @@ Abstract:
 #ifndef _DEBUG_SUPPORT_BBTEST_H_
 #define _DEBUG_SUPPORT_BBTEST_H_
 
-// To prevent the inclusion of the default debug support
-#define __PI_STATUS_CODE_H__
-#define __DEBUG_SUPPORT_H__
-
+#include <Base.h>
 #include "SctLib.h"
 #include <UEFI/Protocol/DebugSupport.h>
 #include "Guid.h"

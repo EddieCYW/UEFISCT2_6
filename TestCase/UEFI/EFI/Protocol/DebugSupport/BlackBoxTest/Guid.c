@@ -55,8 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "Guid.h"
+#include "DebugSupportBBTestMain.h"
 
 
 EFI_GUID gDebugSupportBBTestFunctionAssertionGuid001 = EFI_TEST_DEBUGSUPPORTBBTESTFUNCTION_ASSERTION_001_GUID;
