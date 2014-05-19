@@ -59,7 +59,8 @@ Abstract:
 #ifndef _EBC_H_
 #define _EBC_H_
 
-#include "Efi.h"
+#include <Base.h>
+#include "SctLib.h"
 #include "guid.h"
 #include <Library/EfiTestLib.h>
 #include <UEFI/Protocol/Ebc.h>

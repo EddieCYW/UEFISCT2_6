@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "EbcBBTestMain.h"
 
 EFI_PEI_FLUSH_INSTRUCTION_CACHE_PROTOCOL  *gEfiPeiFlushInstructionCache = NULL;

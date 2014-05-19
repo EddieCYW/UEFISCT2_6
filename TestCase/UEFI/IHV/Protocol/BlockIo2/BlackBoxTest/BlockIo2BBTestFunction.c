@@ -830,7 +830,7 @@ BlockIo2MixedSyncAsyncWriteData (
       FreeAlignedPool(BufferSync);
       return Status;
     }
-    SctSetMem (BufferSync, SYNC_WRITE_TEST_PATTERN, BufferSize);
+    SctSetMem (BufferSync, BufferSize, SYNC_WRITE_TEST_PATTERN);
 
     //
     // Record  Sync execution Info to Block IO 2 entity 
@@ -2965,7 +2965,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint1(
         //
         // Set test data pattern into Write Buffer  
         //
-        SctSetMem (WriteBuffer, ASYNC_WRITE_TEST_PATTERN, BlockIo2Entity->BufferSize);
+        SctSetMem (WriteBuffer, BlockIo2Entity->BufferSize, ASYNC_WRITE_TEST_PATTERN);
         //
         // Write specified buffer2 differ from buffer to the device
         // write info comes from previous read info list
@@ -3463,7 +3463,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint2(
         //
         // Set test data pattern into Write Buffer  
         //
-        SctSetMem (WriteBuffer, SYNC_WRITE_TEST_PATTERN, BlockIo2Entity->BufferSize);
+        SctSetMem (WriteBuffer, BlockIo2Entity->BufferSize, SYNC_WRITE_TEST_PATTERN);
         //
         // Write specified buffer2 differ from buffer to the device
         // write info comes from previous read info list
@@ -3806,7 +3806,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint3(
           goto END;
         }
         
-        SctSetMem (BlockIo2WriteEntity->Buffer, ASYNC_WRITE_TEST_PATTERN, BlockIo2WriteEntity->BufferSize);
+        SctSetMem (BlockIo2WriteEntity->Buffer, BlockIo2WriteEntity->BufferSize, ASYNC_WRITE_TEST_PATTERN);
 
         //
         // Last list node handled
@@ -4190,7 +4190,7 @@ BBTestWriteBlocksExFunctionAutoTestCheckpoint4(
         //
         // Set test data pattern into Write Buffer  
         //
-        SctSetMem (WriteBuffer, ASYNC_WRITE_TEST_PATTERN, BlockIo2Entity->BufferSize);
+        SctSetMem (WriteBuffer, BlockIo2Entity->BufferSize, ASYNC_WRITE_TEST_PATTERN);
         //
         // Async & Sync Write specified buffer2 differ from buffer to the device
         // write info comes from previous read info list

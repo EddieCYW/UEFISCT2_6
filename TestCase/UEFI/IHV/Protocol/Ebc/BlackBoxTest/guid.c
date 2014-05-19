@@ -55,8 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "guid.h"
+#include "EbcBBTestMain.h"
 
 
 EFI_GUID gEbcBBTestConformanceAssertionGuid001 = EFI_TEST_EBCBBTESTCONFORMANCE_ASSERTION_001_GUID;

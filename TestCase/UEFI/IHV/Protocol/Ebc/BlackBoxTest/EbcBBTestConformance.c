@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "EbcBBTestMain.h"
 
 /**

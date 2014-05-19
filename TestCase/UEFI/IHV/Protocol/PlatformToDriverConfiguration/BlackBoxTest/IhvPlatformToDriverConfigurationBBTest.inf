@@ -69,7 +69,7 @@
   PlatformToDriverConfigurationBBTestFunction.c
   PlatformToDriverConfigurationBBTestConformance.c
   ConfigureClpParameterBlkBBTestFunction.c
-  Guid.c
+  guid.c
 
 [Packages]
   MdePkg/MdePkg.dec

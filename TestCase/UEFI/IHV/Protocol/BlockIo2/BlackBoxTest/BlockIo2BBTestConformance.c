@@ -117,7 +117,7 @@ BBTestReadBlocksExConformanceAutoTest (
   CHAR16                               *DevicePathStr = NULL;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenSync;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenAsync;
-  EFI_STRING                           ErrorOutput = L"";
+  CHAR16                               *ErrorOutput = L"";
 
 
   //
@@ -257,7 +257,7 @@ BBTestReadBlocksExConformanceAutoTest (
   //
   // poisoned data buffer for debug
   //
-  SctSetMem ((VOID *)Buffer, 0xAB, BufferSize);
+  SctSetMem ((VOID *)Buffer, BufferSize, 0xAB);
   
 
   //
@@ -1081,7 +1081,7 @@ BBTestWriteBlocksExConformanceAutoTest (
   CHAR16                               *DevicePathStr;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenSync;
   EFI_BLOCK_IO2_TOKEN                  BlkIo2TokenAsync;
-  EFI_STRING                           ErrorOutput = L"";
+  CHAR16                               *ErrorOutput = L"";
 
 
   //
@@ -1223,7 +1223,7 @@ BBTestWriteBlocksExConformanceAutoTest (
   //
   // poisoned data buffer for debug
   //
-  SctSetMem ((VOID *)Buffer, 0xAB, BufferSize);
+  SctSetMem ((VOID *)Buffer, BufferSize, 0xAB);
   
   //
   // Assertion Points 4.3.2.1

@@ -68,7 +68,7 @@
   UnicodeCollation2BBTestMain.h
   UnicodeCollation2BBTestFunction.c
   UnicodeCollation2BBTestStress.c
-  Guid.c
+  guid.c
 
 [Packages]
   MdePkg/MdePkg.dec

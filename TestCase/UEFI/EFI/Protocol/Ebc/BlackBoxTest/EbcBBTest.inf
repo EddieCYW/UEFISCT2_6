@@ -65,9 +65,8 @@ COMPONENT_TYPE       = BS_DRIVER
   EbcBBTestFunction.c
   EbcBBTestMain.c
   EbcBBTestMain.h
-  EbcProtocol.h
-  guid.c
-  guid.h
+  Guid.c
+  Guid.h
 
 [includes.common]
   .

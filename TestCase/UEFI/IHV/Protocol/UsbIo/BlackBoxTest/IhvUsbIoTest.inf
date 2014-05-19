@@ -68,8 +68,8 @@
   UsbIoTest.h
   UsbIoTestMain.c
   UsbIoTestConformance.c
-  Guid.c
-  Guid.h
+  guid.c
+  guid.h
 
 [Packages]
   MdePkg/MdePkg.dec

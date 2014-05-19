@@ -68,7 +68,7 @@
   ScsiIoBBTestMain.h
   ScsiIoBBTestFunction.c
   ScsiIoBBTestConformance.c
-  Guid.c
+  guid.c
 
 [Packages]
   MdePkg/MdePkg.dec

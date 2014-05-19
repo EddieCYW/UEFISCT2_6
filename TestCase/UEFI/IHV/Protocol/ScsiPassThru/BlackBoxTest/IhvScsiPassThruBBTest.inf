@@ -68,7 +68,7 @@
   ScsiPassThruBBTestMain.h
   ScsiPassThruBBTestFunction.c
   ScsiPassThruBBTestConformance.c
-  Guid.c
+  guid.c
 
 [Packages]
   MdePkg/MdePkg.dec

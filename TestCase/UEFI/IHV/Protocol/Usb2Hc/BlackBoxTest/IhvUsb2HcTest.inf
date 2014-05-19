@@ -68,8 +68,8 @@
   Usb2HcTestMain.c
   Usb2HcTestConformance.c
   Usb2HcTestBasic.c
-  Guid.h
-  Guid.c
+  guid.h
+  guid.c
 
 [sources.x64]
   x64/TimerInterrupt.asm
@@ -78,7 +78,7 @@
   ipf/TimerInterrupt.c
 
 [sources.ia32]    
-  ia32/TimerInterrupt.c
+  Ia32/TimerInterrupt.c
 
 [Packages]
   MdePkg/MdePkg.dec

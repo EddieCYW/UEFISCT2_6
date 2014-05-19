@@ -86,54 +86,71 @@
   0|DEFAULT              # The entry: 0|DEFAULT is reserved and always required.
 
 [BuildOptions]
-  *_*_IA32_CC_FLAGS    = /D EFI_SPECIFICATION_VERSION=0x00020028 /D TIANO_RELEASE_VERSION=0x00080006 /D EFI32 /wd4133  /D MDE_CPU_IA32
-  *_*_IA32_ASM_FLAGS   = /DEFI32
-  *_*_IA32_VFRPP_FLAGS = /D EFI_SPECIFICATION_VERSION=0x00020028 /D TIANO_RELEASE_VERSION=0x00080006 /D EFI32
-  *_*_IA32_APP_FLAGS   = /D EFI_SPECIFICATION_VERSION=0x00020028 /D TIANO_RELEASE_VERSION=0x00080006 /D EFI32
-  *_*_IA32_PP_FLAGS    = /D EFI_SPECIFICATION_VERSION=0x00020028 /D TIANO_RELEASE_VERSION=0x00080006 /D EFI32
+  MSFT:*_*_IA32_CC_FLAGS    = /D TIANO_RELEASE_VERSION=0x00080006 /D EFI32 /wd4133 /Od
+  MSFT:*_*_IA32_ASM_FLAGS   = /DEFI32
+  MSFT:*_*_IA32_VFRPP_FLAGS = /D EFI_SPECIFICATION_VERSION=0x00020028 /D TIANO_RELEASE_VERSION=0x00080006 /D EFI32
+  MSFT:*_*_IA32_APP_FLAGS   = /D EFI_SPECIFICATION_VERSION=0x00020028 /D TIANO_RELEASE_VERSION=0x00080006 /D EFI32
+  MSFT:*_*_IA32_PP_FLAGS    = /D EFI_SPECIFICATION_VERSION=0x00020028 /D TIANO_RELEASE_VERSION=0x00080006 /D EFI32
 
-  *_*_X64_CC_FLAGS    = /D EFI_SPECIFICATION_VERSION=0x00020028  /D TIANO_RELEASE_VERSION=0x00080006 /D EFIX64 /wd4133  /D MDE_CPU_X64
-  *_*_X64_ASM_FLAGS   = /DEFIX64
-  *_*_X64_VFRPP_FLAGS = /D EFI_SPECIFICATION_VERSION=0x00020028  /D TIANO_RELEASE_VERSION=0x00080006 /D EFIX64
-  *_*_X64_APP_FLAGS   = /D EFI_SPECIFICATION_VERSION=0x00020028  /D TIANO_RELEASE_VERSION=0x00080006 /D EFIX64
-  *_*_X64_PP_FLAGS    = /D EFI_SPECIFICATION_VERSION=0x00020028  /D TIANO_RELEASE_VERSION=0x00080006 /D EFIX64
-  
-  *_*_IPF_CC_FLAGS = /Od /D EFI_SPECIFICATION_VERSION=0x00020028 /D TIANO_RELEASE_VERSION=0x00080006  /D EFIX64 /D MDE_CPU_IPF
+  MSFT:*_*_X64_CC_FLAGS    = /D TIANO_RELEASE_VERSION=0x00080006 /D EFIX64 /wd4133 /Od
+  MSFT:*_*_X64_ASM_FLAGS   = /DEFIX64
+  MSFT:*_*_X64_VFRPP_FLAGS = /D EFI_SPECIFICATION_VERSION=0x00020028  /D TIANO_RELEASE_VERSION=0x00080006 /D EFIX64
+  MSFT:*_*_X64_APP_FLAGS   = /D EFI_SPECIFICATION_VERSION=0x00020028  /D TIANO_RELEASE_VERSION=0x00080006 /D EFIX64
+  MSFT:*_*_X64_PP_FLAGS    = /D EFI_SPECIFICATION_VERSION=0x00020028  /D TIANO_RELEASE_VERSION=0x00080006 /D EFIX64
+
+  MSFT:*_*_IPF_CC_FLAGS    = /Od /D TIANO_RELEASE_VERSION=0x00080006 /D EFI64
 
 [Libraries]
+  SctPkg/Library/SctLib/SctLib.inf
+  SctPkg/Library/SctGuidLib/SctGuidLib.inf
+  SctPkg/Library/EfiTestLib/EfiTestLib.inf
 
-EdkCompatibilityPkg/Foundation/Library/CompilerStub/CompilerStubLib.inf
-EdkCompatibilityPkg/Foundation/Guid/EdkGuidLib.inf
-EdkCompatibilityPkg/Foundation/Framework/Guid/EdkFrameworkGuidLib.inf
-EdkCompatibilityPkg/Foundation/Efi/Guid/EfiGuidLib.inf
-EdkCompatibilityPkg/Foundation/Library/EfiCommonLib/EfiCommonLib.inf
-EdkCompatibilityPkg/Foundation/Cpu/Pentium/CpuIA32Lib/CpuIA32Lib.inf
+  SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib.inf
 
-EdkCompatibilityPkg/Foundation/Protocol/EdkProtocolLib.inf
-EdkCompatibilityPkg/Foundation/Framework/Protocol/EdkFrameworkProtocolLib.inf
-EdkCompatibilityPkg/Foundation/Efi/Protocol/EfiProtocolLib.inf
-EdkCompatibilityPkg/Foundation/Core/Dxe/ArchProtocol/ArchProtocolLib.inf
-EdkCompatibilityPkg/Foundation/Library/RuntimeDxe/EfiRuntimeLib/EfiRuntimeLib.inf
-EdkCompatibilityPkg/Foundation/Library/Dxe/Graphics/Graphics.inf
-EdkCompatibilityPkg/Foundation/Library/EdkIIGlueLib/Library/BaseLib/BaseLib.inf
+  MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
 
-SctPkg/Protocol/TestProtocolLib.inf
-SctPkg/Library/EfiTestLib/EfiTestLib.inf
+[Libraries.ARM]
+  ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
 
-SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib.inf
-SctPkg/Protocol/EntsProtocol/EntsProtocolLib.inf
-SctPkg/Protocol/Eftp/EftpProtocolLib.inf
-SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas.inf
-SctPkg/Library/NetLib/Network/NetLib.inf
-SctPkg/Library/SctLib/SctLib.inf
+[Libraries.AARCH64]
+  ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
 
 [Libraries.IPF]
-EdkCompatibilityPkg/Foundation/Cpu/Itanium/CpuIa64Lib/CpuIA64Lib.inf
+  EdkCompatibilityPkg/Foundation/Cpu/Itanium/CpuIa64Lib/CpuIA64Lib.inf
 
+[Libraries.IPF,Libraries.IA32,Libraries.X64]
+  EdkCompatibilityPkg/Foundation/Library/CompilerStub/CompilerStubLib.inf
+  EdkCompatibilityPkg/Foundation/Library/EdkIIGlueLib/Library/BaseLib/BaseLib.inf
 
+[LibraryClasses.common]
+  UefiApplicationEntryPoint|MdePkg/Library/UefiApplicationEntryPoint/UefiApplicationEntryPoint.inf
+  UefiDriverEntryPoint|MdePkg/Library/UefiDriverEntryPoint/UefiDriverEntryPoint.inf
+  UefiBootServicesTableLib|MdePkg/Library/UefiBootServicesTableLib/UefiBootServicesTableLib.inf
+  BaseLib|MdePkg/Library/BaseLib/BaseLib.inf
+  BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
+  DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
+  PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
+  
+  SctLib|SctPkg/Library/SctLib/SctLib.inf
+  NetLib|SctPkg/Library/NetLib/NetLib.inf
+  EntsLib|SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasLib/EntsLib.inf
+  EasLib|SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas.inf
+  EfiTestLib|SctPkg/Library/EfiTestLib/EfiTestLib.inf
+
+[LibraryClasses.ARM]
+  NULL|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
+
+[LibraryClasses.AARCH64]
+  NULL|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
+
+[LibraryClasses.IA32]
+  NULL|EdkCompatibilityPkg/Foundation/Library/CompilerStub/CompilerStubLib.inf
+
+###############################################################################
 #
 # These are the components that will be built by the master makefile
 #
+###############################################################################
 
 [Components]
 

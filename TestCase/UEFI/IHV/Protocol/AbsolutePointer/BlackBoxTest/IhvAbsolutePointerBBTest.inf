@@ -125,7 +125,7 @@
   AbsolutePointerBBTestMain.h
   AbsolutePointerBBTestFunction.c
   AbsolutePointerBBTestConformance.c
-  Guid.c
+  guid.c
 
 [Packages]
   MdePkg/MdePkg.dec

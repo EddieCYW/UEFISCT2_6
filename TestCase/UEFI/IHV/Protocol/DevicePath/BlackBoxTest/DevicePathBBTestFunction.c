@@ -55,7 +55,6 @@ Abstract:
 
 --*/
 
-#include "SctLib.h"
 #include "DevicePathBBTestMain.h"
 
 EFI_GUID  gBlackBoxEfiDevicePathMessagingUartFlowControlGuid  = DEVICE_PATH_MESSAGING_UART_FLOW_CONTROL;

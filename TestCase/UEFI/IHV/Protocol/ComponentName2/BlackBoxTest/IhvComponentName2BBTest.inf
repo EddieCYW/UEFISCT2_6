@@ -80,3 +80,4 @@
   EfiTestLib
 
 [Protocols]
+  gBlackBoxEfiComponentName2ProtocolGuid

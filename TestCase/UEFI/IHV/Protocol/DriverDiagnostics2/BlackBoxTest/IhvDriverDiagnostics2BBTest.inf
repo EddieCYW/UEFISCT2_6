@@ -65,7 +65,7 @@
   ENTRY_POINT          = InitializeBBTestDriverDiagnostics2
 
 [sources.common]
-  Guid.c
+  guid.c
   DriverDiagnostics2BBTestMain.c
   DriverDiagnostics2BBTestConformance.c
   DriverDiagnostics2BBTestFunction.c
