@@ -70,7 +70,6 @@
   List.c
   Lock.c
   Match.c
-  Math.c
   Mem.c
   Misc.c
   Print.c
@@ -81,29 +80,35 @@
 [sources.Arm]
   Arm/SctLibPlat.h
   Arm/initplat.c
+  Math.c
 
 [sources.Aarch64]
   Aarch64/SctLibPlat.h
   Aarch64/initplat.c
+  Math.c
 
 [sources.ia32]
   ia32/SctLibPlat.h
   ia32/initplat.c
+  ia32/Math.c
 
 [sources.ipf]
   Ipf/SctLibPlat.h
   Ipf/initplat.c
   Ipf/salpal.c
   Ipf/libsalpal.h
+  Math.c
 
 [sources.ebc]
   ebc/SctLibPlat.h
   ebc/EfiLibPlat.c
+  Math.c
 
 [sources.x64]
   X64/SctLibPlat.h
   X64/EfiLibPlat.c
   X64/CpuX64.S | GCC
+  Math.c
 
 [Packages]
   MdePkg/MdePkg.dec
