@@ -504,6 +504,140 @@ struct {
 } EFI_SYSTEM_CONTEXT_IPF;
 
 
+///
+///  ARM processor exception types.
+///
+#define EXCEPT_ARM_RESET                    0
+#define EXCEPT_ARM_UNDEFINED_INSTRUCTION    1
+#define EXCEPT_ARM_SOFTWARE_INTERRUPT       2
+#define EXCEPT_ARM_PREFETCH_ABORT           3
+#define EXCEPT_ARM_DATA_ABORT               4
+#define EXCEPT_ARM_RESERVED                 5
+#define EXCEPT_ARM_IRQ                      6
+#define EXCEPT_ARM_FIQ                      7
+
+///
+/// For coding convenience, define the maximum valid ARM exception.
+///
+#define MAX_ARM_EXCEPTION EXCEPT_ARM_FIQ
+
+///
+///  ARM processor context definition.
+///
+typedef struct {
+  UINT32  R0;
+  UINT32  R1;
+  UINT32  R2;
+  UINT32  R3;
+  UINT32  R4;
+  UINT32  R5;
+  UINT32  R6;
+  UINT32  R7;
+  UINT32  R8;
+  UINT32  R9;
+  UINT32  R10;
+  UINT32  R11;
+  UINT32  R12;
+  UINT32  SP;
+  UINT32  LR;
+  UINT32  PC;
+  UINT32  CPSR;
+  UINT32  DFSR;
+  UINT32  DFAR;
+  UINT32  IFSR;
+  UINT32  IFAR;
+} EFI_SYSTEM_CONTEXT_ARM;
+
+
+///
+///  AARCH64 processor exception types.
+///
+#define EXCEPT_AARCH64_SYNCHRONOUS_EXCEPTIONS    0
+#define EXCEPT_AARCH64_IRQ                       1
+#define EXCEPT_AARCH64_FIQ                       2
+#define EXCEPT_AARCH64_SERROR                    3
+
+///
+/// For coding convenience, define the maximum valid ARM exception.
+///
+#define MAX_AARCH64_EXCEPTION EXCEPT_AARCH64_SERROR
+
+typedef struct {
+  // General Purpose Registers
+  UINT64  X0;
+  UINT64  X1;
+  UINT64  X2;
+  UINT64  X3;
+  UINT64  X4;
+  UINT64  X5;
+  UINT64  X6;
+  UINT64  X7;
+  UINT64  X8;
+  UINT64  X9;
+  UINT64  X10;
+  UINT64  X11;
+  UINT64  X12;
+  UINT64  X13;
+  UINT64  X14;
+  UINT64  X15;
+  UINT64  X16;
+  UINT64  X17;
+  UINT64  X18;
+  UINT64  X19;
+  UINT64  X20;
+  UINT64  X21;
+  UINT64  X22;
+  UINT64  X23;
+  UINT64  X24;
+  UINT64  X25;
+  UINT64  X26;
+  UINT64  X27;
+  UINT64  X28;
+  UINT64  FP;   // x29 - Frame pointer
+  UINT64  LR;   // x30 - Link Register
+  UINT64  SP;   // x31 - Stack pointer
+
+  // FP/SIMD Registers
+  UINT64  V0[2];
+  UINT64  V1[2];
+  UINT64  V2[2];
+  UINT64  V3[2];
+  UINT64  V4[2];
+  UINT64  V5[2];
+  UINT64  V6[2];
+  UINT64  V7[2];
+  UINT64  V8[2];
+  UINT64  V9[2];
+  UINT64  V10[2];
+  UINT64  V11[2];
+  UINT64  V12[2];
+  UINT64  V13[2];
+  UINT64  V14[2];
+  UINT64  V15[2];
+  UINT64  V16[2];
+  UINT64  V17[2];
+  UINT64  V18[2];
+  UINT64  V19[2];
+  UINT64  V20[2];
+  UINT64  V21[2];
+  UINT64  V22[2];
+  UINT64  V23[2];
+  UINT64  V24[2];
+  UINT64  V25[2];
+  UINT64  V26[2];
+  UINT64  V27[2];
+  UINT64  V28[2];
+  UINT64  V29[2];
+  UINT64  V30[2];
+  UINT64  V31[2];
+
+  UINT64  ELR;  // Exception Link Register
+  UINT64  SPSR; // Saved Processor Status Register
+  UINT64  FPSR; // Floating Point Status Register
+  UINT64  ESR;  // Exception syndrome register
+  UINT64  FAR;  // Fault Address Register
+} EFI_SYSTEM_CONTEXT_AARCH64;
+
 //
 // Universal EFI_SYSTEM_CONTEXT definition
 //
@@ -513,6 +647,8 @@ union {
   EFI_SYSTEM_CONTEXT_IA32                 *SystemContextIa32;
   EFI_SYSTEM_CONTEXT_X64                  *SystemContextX64;
   EFI_SYSTEM_CONTEXT_IPF                  *SystemContextIpf;
+  EFI_SYSTEM_CONTEXT_ARM                  *SystemContextArm;
+  EFI_SYSTEM_CONTEXT_AARCH64              *SystemContextAArch64;
 } EFI_SYSTEM_CONTEXT;
 
 //
@@ -534,17 +670,21 @@ VOID
 //
 // Machine type definition
 //
-#define IMAGE_FILE_MACHINE_I386 0x014C
-#define IMAGE_FILE_MACHINE_X64  0x8664
-#define IMAGE_FILE_MACHINE_IA64 0x0200
-#define IMAGE_FILE_MACHINE_EBC  0x0EBC
+#define IMAGE_FILE_MACHINE_I386            0x014C
+#define IMAGE_FILE_MACHINE_X64             0x8664
+#define IMAGE_FILE_MACHINE_IA64            0x0200
+#define IMAGE_FILE_MACHINE_EBC             0x0EBC
+#define IMAGE_FILE_MACHINE_ARMTHUMB_MIXED  0x01c2
+#define IMAGE_FILE_MACHINE_ARM64           0xAA64
 
 typedef
 enum {
   IsaIa32 = IMAGE_FILE_MACHINE_I386,
   IsaX64  = IMAGE_FILE_MACHINE_X64,  	
   IsaIpf  = IMAGE_FILE_MACHINE_IA64,
-  IsaEbc  = IMAGE_FILE_MACHINE_EBC
+  IsaEbc  = IMAGE_FILE_MACHINE_EBC,
+  IsaArm  = IMAGE_FILE_MACHINE_ARMTHUMB_MIXED, ///< 0x01c2
+  IsaAArch64  = IMAGE_FILE_MACHINE_ARM64       ///< 0xAA64
 } EFI_INSTRUCTION_SET_ARCHITECTURE;
 
 typedef struct _EFI_DEBUG_SUPPORT_PROTOCOL EFI_DEBUG_SUPPORT_PROTOCOL;;

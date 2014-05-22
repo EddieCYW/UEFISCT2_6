@@ -54,7 +54,7 @@ Abstract:
   Platform related Isa definition.
 
 --*/
-#include "Efi.h"
-#include EFI_PROTOCOL_DEFINITION (DebugSupport)
+
+#include "DebugSupportBBTestMain.h"
 
 EFI_INSTRUCTION_SET_ARCHITECTURE PlatformIsa = IsaArm;
