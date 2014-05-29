@@ -61,7 +61,7 @@ Module Name:
 #include <PiPei.h>
 #include <Ppi/CpuIo.h>
 
-#include <Library/BaseLib.h>
+#include <Protocol/StandardTestLibrary.h>
 
 extern EFI_RUNTIME_SERVICES            *VRT;
 
@@ -101,15 +101,6 @@ typedef struct {
 
 #define SCRT_STUB_TABLE_SIGNATURE          0x5AA55AA5
 #define CONFIGURE_INFO_SIGNATURE          0x5AA5
-
-//
-// EFI Test Assertion Types
-//
-typedef enum {
-  EFI_TEST_ASSERTION_PASSED,
-  EFI_TEST_ASSERTION_WARNING,
-  EFI_TEST_ASSERTION_FAILED
-} EFI_TEST_ASSERTION;
 
 //
 // Configuration File Info
