@@ -382,7 +382,10 @@ Routine Description:
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_PASS;
     } else if (SctStrCmp (AssertionStr, L"FAILURE") == 0) {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_FAIL;
+    } else if (SctStrCmp (AssertionStr, L"WARN") == 0) {
+      AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_WARN;
     } else {
+      ASSERT (0);
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_WARN;
     }
 
@@ -674,7 +677,10 @@ Routine Description:
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_PASS;
     } else if (SctStrCmp (AssertionStr, L"FAILURE") == 0) {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_FAIL;
+    } else if (SctStrCmp (AssertionStr, L"WARN") == 0) {
+      AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_WARN;
     } else {
+      ASSERT (0);
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_WARN;
     }
 
@@ -829,7 +835,7 @@ Routine Description:
   AutoStrCat (
     Buffer,
     L"\"Self Certification Test Report\"\n"
-    L"\"Service\\Protocol Name\",\"Total\",\"Failed\",\"Passed\"\n"
+    L"\"Service\\Protocol Name\",\"Total\",\"Failed\",\"Passed\",\"Warned\"\n"
     );
 
   //
@@ -843,11 +849,12 @@ Routine Description:
 
   while (ReportItem != NULL) {
     TempBuffer = SctPoolPrint (
-                   L"\"%s\",\"%d\",\"%d\",\"%d\"\n",
+                   L"\"%s\",\"%d\",\"%d\",\"%d\",\"%d\"\n",
                    ReportItem->TestCategory,
-                   ReportItem->PassNumber + ReportItem->FailNumber,
+                   ReportItem->PassNumber + ReportItem->FailNumber + ReportItem->WarnNumber,
                    ReportItem->FailNumber,
-                   ReportItem->PassNumber
+                   ReportItem->PassNumber,
+                   ReportItem->WarnNumber
                    );
     if (TempBuffer == NULL) {
       break;
@@ -863,10 +870,11 @@ Routine Description:
   // Total summary
   //
   TempBuffer = SctPoolPrint (
-                 L"\"Total service\\Protocol\",\"%d\",\"%d\",\"%d\"\n",
-                 mReportInfor.TotalPass + mReportInfor.TotalFail,
+                 L"\"Total service\\Protocol\",\"%d\",\"%d\",\"%d\",\"%d\"\n",
+                 mReportInfor.TotalPass + mReportInfor.TotalFail + mReportInfor.TotalPass,
                  mReportInfor.TotalFail,
-                 mReportInfor.TotalPass
+                 mReportInfor.TotalPass,
+                 mReportInfor.TotalWarn
                  );
   if (TempBuffer == NULL) {
     return EFI_OUT_OF_RESOURCES;

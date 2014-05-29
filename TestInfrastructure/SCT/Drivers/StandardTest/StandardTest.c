@@ -627,8 +627,8 @@ Returns:
     Private->FailCount ++;
     break;
   default:
+    ASSERT (0);
     return EFI_INVALID_PARAMETER;
-    break;
   }
 
   SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER,

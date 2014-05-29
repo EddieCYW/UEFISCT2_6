@@ -129,7 +129,14 @@ Returns:
   case EFI_TEST_ASSERTION_PASSED:
     SctAsciiStrCpy (AssertionType, "PASS");
     break;
+  case EFI_TEST_ASSERTION_WARNING:
+    SctAsciiStrCpy (AssertionType, "WARNING");
+    break;
+  case EFI_TEST_ASSERTION_FAILED:
+    SctAsciiStrCpy (AssertionType, "FAILURE");
+    break;
   default:
+    ASSERT (0);
     SctAsciiStrCpy (AssertionType, "FAILURE");
     break;
   }
