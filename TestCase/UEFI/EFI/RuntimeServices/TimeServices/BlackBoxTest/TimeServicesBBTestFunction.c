@@ -365,6 +365,8 @@ BBTestSetTimeInterfaceTest (
                     L"System will cold reset after 1 second..."
                     );
     }
+
+    SctPrint (L"System will cold reset after 1 second...");
     gtBS->Stall (1000000);
     gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
 
@@ -476,6 +478,8 @@ step1:
                     L"System will cold reset after 1 second..."
                     );
     }
+
+    SctPrint (L"System will cold reset after 1 second...");
     gtBS->Stall (1000000);
     gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
 
@@ -587,6 +591,8 @@ step2:
                     L"System will cold reset after 1 second..."
                     );
     }
+
+    SctPrint (L"System will cold reset after 1 second...");
     gtBS->Stall (1000000);
     gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
 
@@ -693,7 +699,8 @@ step3:
                     L"System will cold reset after 1 second..."
                     );
     }
-//	SctPrint (L"System will cold reset after 1 second...");
+
+    SctPrint (L"System will cold reset after 1 second...");
     gtBS->Stall (1000000);
     gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
 
@@ -1048,6 +1055,8 @@ BBTestSetWakeupTimeInterfaceTest (
                     L"System will cold reset after 1 second..."
                     );
     }
+
+    SctPrint (L"System will cold reset after 1 second...");
     gtBS->Stall (1000000);
     gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
 
@@ -1211,6 +1220,8 @@ step1:
                     L"System will cold reset after 1 second..."
                     );
     }
+
+    SctPrint (L"System will cold reset after 1 second...");
     gtBS->Stall (1000000);
     gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
 	

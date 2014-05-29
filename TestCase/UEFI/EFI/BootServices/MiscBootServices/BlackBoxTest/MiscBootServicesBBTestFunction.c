@@ -388,6 +388,8 @@ SetWatchdogTimerStep2:
       return Status;
     }
     AssertionType = EFI_TEST_ASSERTION_FAILED;
+
+    SctPrint (L"System will reset after 6.5 second...");
     gtBS->Stall (
             6500000
             );
@@ -627,6 +629,8 @@ SetWatchdogTimerStep4:
       return Status;
     }
     AssertionType = EFI_TEST_ASSERTION_FAILED;
+
+    SctPrint (L"System will reset after 11.5 second...");
     gtBS->Stall (
             11500000
             );
