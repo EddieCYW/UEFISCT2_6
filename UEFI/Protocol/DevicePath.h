@@ -66,6 +66,8 @@ Abstract:
   }
 #endif
 
+#pragma pack(1)
+
 /**
   This protocol can be used on any device handle to obtain generic path/location
   information concerning the physical device or logical device. If the handle does
@@ -780,6 +782,8 @@ typedef struct {
   ///
   UINT32                          ControllerNumber;
 } CONTROLLER_DEVICE_PATH;
+
+#pragma pack()
 
 #define END_DEVICE_PATH_TYPE                 0x7f
 #define END_ENTIRE_DEVICE_PATH_SUBTYPE       0xFF
