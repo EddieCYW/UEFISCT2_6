@@ -175,6 +175,7 @@ SctCloseFile (
   )
 {
   //TODO: Fixme
+  ASSERT (0);
   return EFI_UNSUPPORTED;
 }
 
@@ -186,6 +187,7 @@ SctReadFile (
   )
 {
   //TODO: Fixme
+  ASSERT (0);
   return EFI_UNSUPPORTED;
 }
 
@@ -197,6 +199,7 @@ SctWriteFile (
   )
 {
   //TODO: Fixme
+  ASSERT (0);
   return EFI_UNSUPPORTED;
 }
 
@@ -206,6 +209,7 @@ SctFlushFile (
   )
 {
   //TODO: Fixme
+  ASSERT (0);
   return EFI_UNSUPPORTED;
 }
 
