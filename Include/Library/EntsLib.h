@@ -1187,12 +1187,6 @@ typedef struct _NET_DEBUG_CACHE_BUFFER {
 //
 #define EFI_FIELD_OFFSET(TYPE, Field) ((UINTN)(&(((TYPE *) 0)->Field)))
 
-CHAR8 *
-Unicode2Ascii (
-  OUT CHAR8          *AsciiStr,
-  IN  CHAR16         *UnicodeStr
-  );
-
 EFI_STATUS
 NetAssertionUtilityInstall (
   VOID

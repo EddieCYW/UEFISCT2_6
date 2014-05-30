@@ -188,11 +188,6 @@ TllFreePointer (
   TEST_LOGGING_PRIVATE_DATA                 *Private
   );
 
-CHAR16 *
-TllStrDuplicate (
-  IN CHAR16             *String
-  );
-
 EFI_GUID *
 TllGuidsDuplicate (
   IN EFI_GUID           *Guids
@@ -899,7 +894,7 @@ Returns:
       return EFI_OUT_OF_RESOURCES;
     }
 
-    PrivateFileConf->FileName = TllStrDuplicate (FileConf->FileName);
+    PrivateFileConf->FileName = SctStrDuplicate (FileConf->FileName);
     if (PrivateFileConf->FileName == NULL) {
       TllFreePointer (Private);
       return EFI_OUT_OF_RESOURCES;
@@ -924,7 +919,7 @@ Returns:
       return EFI_OUT_OF_RESOURCES;
     }
 
-    PrivateFileConf->FileName = TllStrDuplicate (FileConf->FileName);
+    PrivateFileConf->FileName = SctStrDuplicate (FileConf->FileName);
     if (PrivateFileConf->FileName == NULL) {
       TllFreePointer (Private);
       return EFI_OUT_OF_RESOURCES;
@@ -937,7 +932,7 @@ Returns:
   //
   // BiosId
   //
-  Private->BiosId = TllStrDuplicate (Config->BiosId);
+  Private->BiosId = SctStrDuplicate (Config->BiosId);
   if (Private->BiosId == NULL) {
     TllFreePointer (Private);
     return EFI_OUT_OF_RESOURCES;
@@ -952,7 +947,7 @@ Returns:
   //
   // ScenarioString
   //
-  Private->ScenarioString = TllStrDuplicate (Config->ScenarioString);
+  Private->ScenarioString = SctStrDuplicate (Config->ScenarioString);
   if (Private->ScenarioString == NULL) {
     TllFreePointer (Private);
     return EFI_OUT_OF_RESOURCES;
@@ -963,7 +958,7 @@ Returns:
   //
   Private->TestRevision = Config->TestRevision;
 
-  Private->TestName = TllStrDuplicate (Config->TestName);
+  Private->TestName = SctStrDuplicate (Config->TestName);
   if (Private->TestName == NULL) {
     TllFreePointer (Private);
     return EFI_OUT_OF_RESOURCES;
@@ -971,13 +966,13 @@ Returns:
 
   SctCopyMem (&Private->EntryId, Config->EntryId, sizeof(EFI_GUID));
 
-  Private->EntryName = TllStrDuplicate (Config->EntryName);
+  Private->EntryName = SctStrDuplicate (Config->EntryName);
   if (Private->EntryName == NULL) {
     TllFreePointer (Private);
     return EFI_OUT_OF_RESOURCES;
   }
 
-  Private->EntryDescription = TllStrDuplicate (Config->EntryDescription);
+  Private->EntryDescription = SctStrDuplicate (Config->EntryDescription);
   if (Private->EntryDescription == NULL) {
     TllFreePointer (Private);
     return EFI_OUT_OF_RESOURCES;
@@ -1282,32 +1277,6 @@ TllFreePointer (
   }
 
   return EFI_SUCCESS;
-}
-
-CHAR16 *
-TllStrDuplicate (
-  IN CHAR16             *String
-  )
-{
-  EFI_STATUS  Status;
-  CHAR16      *Buffer;
-
-  if (String == NULL) {
-    return NULL;
-  }
-
-  Status = tBS->AllocatePool (
-                  EfiBootServicesData,
-                  (SctStrLen (String) + 1) * sizeof(CHAR16),
-                  (VOID **)&Buffer
-                  );
-  if (EFI_ERROR (Status)) {
-    return NULL;
-  }
-
-  SctStrCpy (Buffer, String);
-
-  return Buffer;
 }
 
 EFI_GUID *

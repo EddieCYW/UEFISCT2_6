@@ -792,7 +792,7 @@ SetContextRecord (
     return EFI_INVALID_PARAMETER;
   }
 
-  Unicode2Ascii(AsciiKey, Key);
+  SctUnicodeToAscii (AsciiKey, Key, MAX_RECORD_LEN);
   if (SctAsciiStrLen (AsciiKey) + Size + 1 > MAX_RECORD_LEN) {
     return EFI_INVALID_PARAMETER;
   }
@@ -868,7 +868,7 @@ GetContextRecord (
     return EFI_INVALID_PARAMETER;
   }
 
-  Unicode2Ascii(AsciiKey, Key);
+  SctUnicodeToAscii (AsciiKey, Key, MAX_RECORD_LEN);
 
   //
   // Open the file

@@ -229,70 +229,7 @@ Routine Description:
   return EFI_SUCCESS;
 }
 
-//
-// --------------------------------------String utility-------------------------
-//
-VOID
-Char8SctStrCpy (
-  IN CHAR8   *Dest,
-  IN CHAR8   *Src
-  )
-{
-  while (*Src) {
-    *(Dest++) = *(Src++);
-  }
 
-  *Dest = 0;
-}
-
-UINT32
-Char8SctStrLen (
-  IN CHAR8   *s1
-  )
-{
-  UINT32  len;
-
-  for (len = 0; *s1; s1 += 1, len += 1)
-    ;
-  return len;
-}
-
-VOID
-Char8SctStrCat (
-  IN CHAR8   *Dest,
-  IN CHAR8   *Src
-  )
-{
-  Char8SctStrCpy (Dest + Char8SctStrLen ((CHAR8 *)Dest), Src);
-}
-
-CHAR8 *
-Unicode2Ascii (
-  OUT CHAR8          *AsciiStr,
-  IN  CHAR16         *UnicodeStr
-  )
-/*++
-
-Routine Description:
-  Converts ASCII characters to Unicode.
-  Assumes that the Unicode characters are only these defined in the ASCII set.
-
-Arguments:
-  AsciiStr   - The ASCII string to be written to. The buffer must be large enough.
-  UnicodeStr - the Unicode string to be converted.
-
-Returns:
-  The address to the ASCII string - same as AsciiStr.
-
---*/
-{
-  while (TRUE) {
-    *AsciiStr = (CHAR8) *UnicodeStr++;
-    if (*AsciiStr++ == '\0') {
-      return AsciiStr;
-    }
-  }
-}
 //
 // --------------------------------------Computing check sum--------------------
 //
@@ -393,9 +330,9 @@ Returns:
 --*/
 {
   EntsASPrint ((CHAR8 *)PacketBuffer, EFI_NET_ASSERTION_MAX_LEN, "|%a|", MessageHead);
-  Char8SctStrCpy ((CHAR8 *)PacketBuffer + Char8SctStrLen ((CHAR8 *)MessageHead) + 2, (CHAR8 *)MessageBody);
+  SctAsciiStrCpy ((CHAR8 *)PacketBuffer + SctAsciiStrLen ((CHAR8 *)MessageHead) + 2, (CHAR8 *)MessageBody);
 
-  return Char8SctStrLen ((CHAR8 *)PacketBuffer);
+  return SctAsciiStrLen ((CHAR8 *)PacketBuffer);
 }
 
 STATIC
@@ -693,32 +630,32 @@ Returns:
   //
 
   SctGuidToStr (&EventId, GuidUniStr);
-  
-  Unicode2Ascii (GuidStr, GuidUniStr);
+
+  SctUnicodeToAscii (GuidStr, GuidUniStr, GUID_STRING_LEN);
   switch (Type) {
   case NET_EFI_TEST_ASSERTION_PASSED:
-    Char8SctStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
-    Char8SctStrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_PASS);
+    SctAsciiStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
+    SctAsciiStrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_PASS);
     break;
 
   case NET_EFI_TEST_ASSERTION_WARNING:
-    Char8SctStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
-    Char8SctStrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_WARN);
+    SctAsciiStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
+    SctAsciiStrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_WARN);
     break;
 
   case NET_EFI_TEST_ASSERTION_FAILED:
-    Char8SctStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
-    Char8SctStrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_FAIL);
+    SctAsciiStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_ASSERTION);
+    SctAsciiStrCpy (ResultStr, EFI_NET_ASSERTION_RESULT_FAIL);
     break;
 
   case NET_EFI_TEST_ASSERTION_CASE_BEGIN:
-    Char8SctStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_CASE_BEGN);
-    Char8SctStrCpy (ResultStr, "BEGN");
+    SctAsciiStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_CASE_BEGN);
+    SctAsciiStrCpy (ResultStr, "BEGN");
     break;
 
   case NET_EFI_TEST_ASSERTION_CASE_OVER:
-    Char8SctStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_CASE_OVER);
-    Char8SctStrCpy (ResultStr, "OVER");
+    SctAsciiStrCpy (TypeStr, EFI_NET_ASSERTION_TYPE_CASE_OVER);
+    SctAsciiStrCpy (ResultStr, "OVER");
     break;
 
   default:
@@ -753,7 +690,7 @@ Returns:
     ResultStr
     );
 
-  Unicode2Ascii (MessageBodyBuffer, Description);
+  SctUnicodeToAscii (MessageBodyBuffer, Description, NET_ASSERTION_MSG_LEN);
   MessageLength = (UINT16) AssertionPacketGen (
                              (UINT8 *)MessageHeaderBuffer,
                              (UINT8 *)MessageBodyBuffer,
