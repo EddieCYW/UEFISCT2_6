@@ -587,8 +587,9 @@ Returns:
   VA_LIST                         Marker;
   CHAR16                          Buffer[EFI_MAX_PRINT_BUFFER];
   CHAR16                          AssertionDetail[EFI_MAX_PRINT_BUFFER];
-  CHAR16                          AssertionType[10];
+  CHAR16                          *AssertionType;
   STANDARD_TEST_PRIVATE_DATA      *Private;
+  UINTN                           Length;
 
   Private = STANDARD_TEST_PRIVATE_DATA_FROM_STSL (This);
 
@@ -603,10 +604,10 @@ Returns:
   // Build assertion detail string
   //
   VA_START(Marker, Detail);
-  SctVSPrint (AssertionDetail, EFI_MAX_PRINT_BUFFER, Detail, Marker);
+  Length = SctVSPrint (AssertionDetail, EFI_MAX_PRINT_BUFFER, Detail, Marker);
   VA_END (Marker);
 
-  if ( SctStrLen (AssertionDetail) + 5 < EFI_MAX_PRINT_BUFFER) {
+  if (Length + 5 < EFI_MAX_PRINT_BUFFER) {
     SctStrCat (AssertionDetail, L"\r\n");
   }
 
@@ -615,15 +616,15 @@ Returns:
   //
   switch (Type) {
   case EFI_TEST_ASSERTION_PASSED:
-    SctStrCpy (AssertionType, L"PASS");
+    AssertionType = L"PASS";
     Private->PassCount ++;
     break;
   case EFI_TEST_ASSERTION_WARNING:
-    SctStrCpy (AssertionType, L"WARNING");
+    AssertionType = L"WARNING";
     Private->WarningCount ++;
     break;
   case EFI_TEST_ASSERTION_FAILED:
-    SctStrCpy (AssertionType, L"FAILURE");
+    AssertionType = L"FAILURE";
     Private->FailCount ++;
     break;
   default:
@@ -647,22 +648,17 @@ Returns:
   // Send assertion to remotion computer if the network 
   // record assertion utility installed.
   //
-  NetRecordAssertion((NET_EFI_TEST_ASSERTION) Type, EventId, Buffer);
-  
+  NetRecordAssertion ((NET_EFI_TEST_ASSERTION) Type, EventId, Buffer);
+
   //
   // write key file detail line
   //
-  SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%g:%s|%s:%s",
+  Length = SctSPrint (Buffer, EFI_MAX_PRINT_BUFFER, L"%g:%s|%s:%s",
           &EventId, AssertionType, Description, AssertionDetail);
-  if ( SctStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER ) {
+  if (Length + 3 < EFI_MAX_PRINT_BUFFER ) {
     SctStrCat (Buffer, L"\r\n");
   }
-  Status = StslWriteKeyFile (Private, Buffer);
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
-
-  return Status;
+  return StslWriteKeyFile (Private, Buffer);
 }
 
 EFI_STATUS
@@ -699,16 +695,17 @@ Returns:
   VA_LIST                         Marker;
   CHAR16                          Buffer[EFI_MAX_PRINT_BUFFER];
   STANDARD_TEST_PRIVATE_DATA      *Private;
+  UINTN                           Length;
 
   Status = EFI_SUCCESS;
   Private = STANDARD_TEST_PRIVATE_DATA_FROM_STSL (This);
 
   if (VerboseLevel <= Private->VerboseLevel) {
     VA_START(Marker, Message);
-    SctVSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Message, Marker);
+    Length = SctVSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Message, Marker);
     VA_END (Marker);
 
-    if ( SctStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER ) {
+    if (Length + 3 < EFI_MAX_PRINT_BUFFER ) {
       SctStrCat (Buffer, L"\r\n");
     }
     Status = StslWriteLogFile (Private, Buffer);

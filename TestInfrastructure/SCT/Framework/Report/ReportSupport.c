@@ -307,7 +307,8 @@ Routine Description:
     return Status;
   }
 
-  SctZeroMem (TempBuffer, TempBufferSize);
+  // Set the last 16bit to 0
+  *(UINT16*)(TempBuffer + (UINTN) FileInfo->FileSize) = L'\0';
 
   tBS->FreePool (FileInfo);
 

@@ -598,6 +598,7 @@ Returns:
   VA_LIST                         Marker;
   CHAR16                          Buffer[EFI_MAX_PRINT_BUFFER];
   TEST_LOGGING_PRIVATE_DATA       *Private;
+  UINTN                           Length;
 
   Status = EFI_SUCCESS;
   Private = TEST_LOGGING_PRIVATE_DATA_FROM_TLL (This);
@@ -610,10 +611,10 @@ Returns:
     }
 
     VA_START(Marker, Fmt);
-    SctVSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Fmt, Marker);
+    Length = SctVSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Fmt, Marker);
     VA_END (Marker);
 
-    if (SctStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER) {
+    if (Length + 3 < EFI_MAX_PRINT_BUFFER) {
       SctStrCat (Buffer, L"\r\n");
     }
     Status = TllWriteLogFile (Private, Buffer);
@@ -653,6 +654,7 @@ Returns:
   VA_LIST                         Marker;
   CHAR16                          Buffer[EFI_MAX_PRINT_BUFFER];
   TEST_LOGGING_PRIVATE_DATA       *Private;
+  UINTN                           Length;
 
   Status = EFI_SUCCESS;
   Private = TEST_LOGGING_PRIVATE_DATA_FROM_TLL (This);
@@ -665,10 +667,10 @@ Returns:
     }
 
     VA_START(Marker, Fmt);
-    SctVSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Fmt, Marker);
+    Length = SctVSPrint (Buffer, EFI_MAX_PRINT_BUFFER, Fmt, Marker);
     VA_END (Marker);
 
-    if (SctStrLen (Buffer) + 3 < EFI_MAX_PRINT_BUFFER) {
+    if (Length + 3 < EFI_MAX_PRINT_BUFFER) {
       SctStrCat (Buffer, L"\r\n");
     }
     Status = TllWriteLogFile (Private, Buffer);
