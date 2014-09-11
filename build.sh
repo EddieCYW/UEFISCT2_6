@@ -78,7 +78,7 @@ PrintUsage() {
 	#
 	echo "Usage:"
 	echo "    $0 <architecture (ARM, AARCH64, X64, etc)> \
-<toolchain name (RVCT or ARMGCC or GCC)> \
+<toolchain name (RVCT or ARMGCC or GCC*)> \
 [build type (RELEASE OR DEBUG, DEFAULT: DEBUG)]"
 }
 
@@ -118,25 +118,9 @@ case `uname` in
 		ARMGCC | armgcc)
 			TARGET_TOOLS=ARMGCC
 		;;
-		
-		GCC | gcc)
-			gcc_version=$(gcc -v 2>&1 | tail -1 | awk '{print $3}')
-			if [ "$SCT_TARGET_ARCH" == "ARM" ]; then
-				gcc_version=$(${GCC47_ARM_PREFIX}gcc -v 2>&1 | tail -1 | awk '{print $3}')
-			elif [ "$SCT_TARGET_ARCH" == "AARCH64" ]; then
-				gcc_version=$(${GCC47_AARCH64_PREFIX}gcc -v 2>&1 | tail -1 | awk '{print $3}')
-			fi
-			case $gcc_version in
-				4.6.*)
-					TARGET_TOOLS=GCC46
-					;;
-				4.[789].*)
-					TARGET_TOOLS=GCC47
-					;;
-				*)
-					TARGET_TOOLS=GCC47
-					;;
-			esac
+
+		GCC*)
+			TARGET_TOOLS=$2
 		;;
 
 		*)
