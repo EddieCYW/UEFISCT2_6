@@ -890,9 +890,18 @@ Routine Description:
     return EFI_NOT_FOUND;
   }
 
-  // Append RelativePath to Cwd
+  //
+  // Append RelativePath to Cwd. Depending on the version of the Shell,
+  // the path of the current directory is ended with a '\' or not.
+  // Thus, we check for this here to add a '\' between the current directory
+  // path and the relative path if and only if this is necessary.
+  //
 
-  *FileName = SctPoolPrint (L"%s\\%s", Cwd, RelativePath);
+  if (Cwd[SctStrLen (Cwd) - 1] == L"\\") {
+    *FileName = SctPoolPrint (L"%s%s", Cwd, RelativePath);
+  } else {
+    *FileName = SctPoolPrint (L"%s\\%s", Cwd, RelativePath);
+  }
 
   return EFI_SUCCESS;
 }
