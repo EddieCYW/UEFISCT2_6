@@ -2269,6 +2269,7 @@ BBTestSetInfoConformanceTestCheckpoint2 (
   EFI_FILE                  *FileHandle[2];
   EFI_FILE                  *OpenHandle[2];
   CHAR16                    FileName[2][100];
+  UINTN                     FileNameSize;
   CHAR16                    ChangeFileName[100];
   UINTN                     BufferSize;
   UINTN                     Index;
@@ -2459,18 +2460,28 @@ BBTestSetInfoConformanceTestCheckpoint2 (
     // change file name
     //
 
-    SctStrCpy (ChangeFileName, L"BBTestSetInfoConfTestCheckpoint2_File_New");
-    SctStrCpy (FileInfo->FileName, ChangeFileName);
+    //
+    // Compute a new name for the file
+    //
+    FileNameSize = SctStrLen (FileInfo->FileName);
+    SctStrCpy (ChangeFileName, FileInfo->FileName);
+    if (ChangeFileName[FileNameSize - 1] != L'2') {
+      ChangeFileName[FileNameSize - 1] = L'2';
+    } else {
+      ChangeFileName[FileNameSize - 1] = L'1';
+    }
 
+    //
+    // If a file exists with the new name, delete it.
+    //
     FileHandle[Index] = NULL;
     Status = Root->Open (
                      Root,
                      &FileHandle[Index],
                      ChangeFileName,
-                     EFI_FILE_MODE_READ|EFI_FILE_MODE_WRITE|EFI_FILE_MODE_CREATE,
+                     EFI_FILE_MODE_READ,
                      Attribute[Index]
                      );
-
     if (FileHandle[Index] != NULL) {
       FileHandle[Index]->Delete (FileHandle[Index]);
     }
