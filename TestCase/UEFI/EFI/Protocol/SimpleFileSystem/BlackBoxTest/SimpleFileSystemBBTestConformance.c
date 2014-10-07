@@ -3659,7 +3659,9 @@ BBTestSetInfoConformanceTestCheckpoint7 (
   UINTN                     BufferSize;
   UINTN                     Index;
   UINT64                    Attribute[2];
-  EFI_FILE_INFO             *FileInfo = NULL;
+  EFI_FILE_INFO             *FileInfo[2];
+  UINTN                     NewFileInfoSize;
+  EFI_FILE_INFO             *NewFileInfo = NULL;
   EFI_FILE_SYSTEM_INFO      *FileSystemInfo = NULL;
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
@@ -3676,7 +3678,7 @@ BBTestSetInfoConformanceTestCheckpoint7 (
                    );
     return Status;
   }
- 
+
   Status = InternalGetInfo (Root, &FileSystemInfo, &BufferSize, &gBlackBoxEfiFileSystemInfoGuid);
   if (EFI_ERROR (Status)) {
     StandardLib->RecordAssertion (
@@ -3694,7 +3696,7 @@ BBTestSetInfoConformanceTestCheckpoint7 (
 
   //
   //  Read-only media, Bypass checkpoint 7
-  // 
+  //
   if (FileSystemInfo->ReadOnly == TRUE) {
     gtBS->FreePool (FileSystemInfo);
     return EFI_SUCCESS;
@@ -3702,7 +3704,6 @@ BBTestSetInfoConformanceTestCheckpoint7 (
     gtBS->FreePool (FileSystemInfo);
     FileSystemInfo = NULL;
   }
-  
 
   //
   // init
@@ -3712,18 +3713,17 @@ BBTestSetInfoConformanceTestCheckpoint7 (
 
   SctStrCpy (FileName[0], L"BBTestSetInfoConformanceTestCheckpoint7_File_One");
   SctStrCpy (FileName[1], L"BBTestSetInfoConformanceTestCheckpoint7_File_Two");
-	
 
   Attribute[0] = 0;
   Attribute[1] = 0;
 
+  FileInfo[0] = NULL;
+  FileInfo[1] = NULL;
 
   for (Index = 0; Index < 2; Index++) {
 
-    FileInfo = NULL;
-
     //
-    // create the file (directory)
+    // create the file
     //
     Status = Root->Open (
                      Root,
@@ -3748,10 +3748,10 @@ BBTestSetInfoConformanceTestCheckpoint7 (
     }
   }
 
-	//
+  //
   // get info first
   //
-  Status = InternalGetInfo (FileHandle[0], &FileInfo, &BufferSize, &gBlackBoxEfiFileInfoGuid);
+  Status = InternalGetInfo (FileHandle[0], &FileInfo[0], &BufferSize, &gBlackBoxEfiFileInfoGuid);
   if (EFI_ERROR (Status)) {
     StandardLib->RecordAssertion (
                    StandardLib,
@@ -3765,20 +3765,66 @@ BBTestSetInfoConformanceTestCheckpoint7 (
                    );
     goto Done;
   }
-	
-	// change one file to a file name already exists 
-	// !! be carefull new file name should be same as or smaller than original file name 
-	// otherwise we should reallocate pool & change FileInfo->Size 
-	SctStrCpy (FileInfo->FileName, L"BBTestSetInfoConformanceTestCheckpoint7_File_Two");
 
-	Status = FileHandle[0]->SetInfo (
+  //
+  // get info second
+  //
+  Status = InternalGetInfo (FileHandle[1], &FileInfo[1], &BufferSize, &gBlackBoxEfiFileInfoGuid);
+  if (EFI_ERROR (Status)) {
+    StandardLib->RecordAssertion (
+                   StandardLib,
+                   EFI_TEST_ASSERTION_FAILED,
+                   gTestGenericFailureGuid,
+                   L"InternalGetInfo fail",
+                   L"%a:%d: Status - %r",
+                   __FILE__,
+                   (UINTN)__LINE__,
+                   Status
+                   );
+    goto Done;
+  }
+
+  //
+  // Build a EFI_FILE_INFO structure that is a copy of the EFI_FILE_INFO
+  // structure returned by GetInfo() for the first file but with the
+  // name of the second file. We do not make any assumption here about
+  // the name of the second file (he could have been truncated). We use
+  // the name returned by GetInfo() for the second file.
+  //
+  NewFileInfoSize = SIZE_OF_EFI_FILE_INFO + SctStrSize (FileInfo[1]->FileName);
+  Status = gtBS->AllocatePool (
+             EfiBootServicesData,
+             NewFileInfoSize,
+             (VOID**)&NewFileInfo
+             );
+  if (EFI_ERROR (Status)) {
+    StandardLib->RecordAssertion (
+                   StandardLib,
+                   EFI_TEST_ASSERTION_FAILED,
+                   gTestGenericFailureGuid,
+                   L"AllocatePool fail",
+                   L"%a:%d: Status - %r",
+                   __FILE__,
+                   (UINTN)__LINE__,
+                   Status
+                   );
+    goto Done;
+  }
+  SctCopyMem (NewFileInfo, FileInfo[0], SIZE_OF_EFI_FILE_INFO);
+  SctStrCpy (NewFileInfo->FileName, FileInfo[1]->FileName);
+  NewFileInfo->Size = NewFileInfoSize;
+
+  //
+  // Change the name of the file.
+  //
+  Status = FileHandle[0]->SetInfo (
                             FileHandle[0],
                             &gBlackBoxEfiFileInfoGuid,
                             BufferSize,
-                            FileInfo
+                            NewFileInfo
                             );
 
-	// according to UEFI 2.3 spec, interface must return EFI_ACCESS_DENIED
+  // according to UEFI 2.3 spec, interface must return EFI_ACCESS_DENIED
   if (Status == EFI_ACCESS_DENIED) {
     AssertionType = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -3794,13 +3840,18 @@ BBTestSetInfoConformanceTestCheckpoint7 (
                  (UINTN)__LINE__,
                  Status
                  );
-	
 
 Done:
-  if (FileInfo != NULL) {
-    gtBS->FreePool (FileInfo);
+  if (FileInfo[0] != NULL) {
+    gtBS->FreePool (FileInfo[0]);
   }
- 
+  if (FileInfo[1] != NULL) {
+    gtBS->FreePool (FileInfo[1]);
+  }
+  if (NewFileInfo != NULL) {
+    gtBS->FreePool (NewFileInfo);
+  }
+
   for (Index = 0; Index < 2; Index++) {
     if (FileHandle[Index] != NULL) {
       FileHandle[Index]->Delete (FileHandle[Index]);
