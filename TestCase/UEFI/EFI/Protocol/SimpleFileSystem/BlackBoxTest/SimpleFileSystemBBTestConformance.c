@@ -860,9 +860,10 @@ BBTestOpenConformanceTestCheckpoint3 (
                    AssertionType,
                    gSimpleFileSystemConformanceTestAssertionGuid003,
                    L"Open() Conformance Test - checkpoint3",
-                   L"%a:%d: Status - %r",
+                   L"%a:%d: Invalid Mode - 0x%x, Status - %r",
                    __FILE__,
                    (UINTN)__LINE__,
+                   InvalidMode[ModeIndex],
                    Status
                    );
     if (OpenHandle != NULL) {
