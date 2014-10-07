@@ -206,6 +206,7 @@ InitializeBBTestTimeServices (
   IN EFI_SYSTEM_TABLE     *SystemTable
   )
 {
+  SctInitializeLib (ImageHandle, SystemTable);
   EfiInitializeTestLib (ImageHandle, SystemTable);
 
   return EfiInitAndInstallBBTestInterface (
