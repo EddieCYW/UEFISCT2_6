@@ -1102,9 +1102,17 @@ _Print (
               Item.Pad = '0';
           case 'x':
               Item.Item.u.pw = Item.Scratch;
+              //
+              // 'x', and 'X' that are not preceded by 'l' or 'L' are assumed to be type "int".
+              // This assumption is made so the format string definition is compatible with the ANSI C
+              // Specification for formatted strings.  It is recommended that the Base Types be used
+              // everywhere, but in this one case, compliance with ANSI C is more important, and
+              // provides an implementation that is compatible with that largest possible set of CPU
+              // architectures.  This is why the type "unsigned int" is used in this one case.
+              //
               SctValueToHexStr (
                   Item.Item.u.pw,
-                  Item.Long ? VA_ARG (ps->args, UINT64) : VA_ARG (ps->args, UINTN),
+                  Item.Long ? VA_ARG (ps->args, UINT64) : (unsigned int)VA_ARG (ps->args, int),
                   PREFIX_ZERO,
                   Item.Long ? sizeof(UINT64) : sizeof(UINTN)
                   );
@@ -1122,10 +1130,18 @@ _Print (
 
           case 'd':
               Item.Item.u.pw = Item.Scratch;
+              //
+              // 'd' that are not preceded by 'l' or 'L' are assumed to be type "int".
+              // This assumption is made so the format string definition is compatible with the ANSI C
+              // Specification for formatted strings.  It is recommended that the Base Types be used
+              // everywhere, but in this one case, compliance with ANSI C is more important, and
+              // provides an implementation that is compatible with that largest possible set of CPU
+              // architectures.  This is why the type "int" is used in this one case.
+              //
               ValueToString (
                   Item.Item.u.pw,
                   Item.Comma,
-                  Item.Long ? VA_ARG (ps->args, UINT64) : VA_ARG (ps->args, UINTN)
+                  Item.Long ? VA_ARG (ps->args, UINT64) : VA_ARG (ps->args, int)
                   );
               break
                   ;
