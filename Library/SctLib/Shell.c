@@ -897,7 +897,7 @@ Routine Description:
   // path and the relative path if and only if this is necessary.
   //
 
-  if (Cwd[SctStrLen (Cwd) - 1] == L"\\") {
+  if (Cwd[SctStrLen (Cwd) - 1] == L'\\') {
     *FileName = SctPoolPrint (L"%s%s", Cwd, RelativePath);
   } else {
     *FileName = SctPoolPrint (L"%s\\%s", Cwd, RelativePath);
