@@ -50,7 +50,7 @@ Module Name:
   CpuIva.c
 
 --*/
-
+#include "SctLib.h"
 #include "IpfDefines.h"
 #include "CpuIva.h"
 

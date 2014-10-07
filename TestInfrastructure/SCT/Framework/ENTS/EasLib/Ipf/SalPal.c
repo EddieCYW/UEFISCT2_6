@@ -55,7 +55,7 @@ Abstract:
 
 --*/
 
-#include "lib.h"
+#include "Sctlib.h"
 #include <Library/EntsLib.h>
 #include "Libsalpal.h"
 

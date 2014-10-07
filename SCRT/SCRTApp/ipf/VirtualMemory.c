@@ -54,7 +54,7 @@ Module Name:
 #include "SCRTApp.h"
 #include "ParseConf.h"
 #include "CpuIva.h"
-#include "IpfDefines.h"
+//#include "IpfDefines.h"
 
 
 //#define VIRT_TO_PHYS_OFFSET       (0x10000000000)  //1T, 1024G.
@@ -245,7 +245,7 @@ Returns:
     // virtual address = (physical address + VIRT_TO_PHYS_OFFSET)
     //
     if (MemoryMap->Attribute & EFI_MEMORY_RUNTIME) {
-      CopyMem ((VOID *) VirtualMemoryMap, (VOID *) MemoryMap, DescriptorSize);
+      SctCopyMem ((VOID *) VirtualMemoryMap, (VOID *) MemoryMap, DescriptorSize);
       *VirtualMapSize += DescriptorSize;
       VirtualMemoryMap->VirtualStart  = VirtualMemoryMap->PhysicalStart + VIRT_TO_PHYS_OFFSET;
       VirtualMemoryMap                = NextMemoryDescriptor (VirtualMemoryMap, DescriptorSize);
@@ -273,7 +273,7 @@ Returns:
         //
         // Pal Code Size is too big to support !!!
         //
-    	  CpuDeadLoop ();
+    	  while (1);
       }
     }
     

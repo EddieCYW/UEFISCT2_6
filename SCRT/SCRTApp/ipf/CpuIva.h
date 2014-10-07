@@ -54,9 +54,9 @@ Module Name:
 #ifndef   _CPU_IVA_H_
 #define   _CPU_IVA_H_
 
-#include "EfiRuntimeLib.h"
-#include "EfiDebug.h"
-#include "LibSalPal.h"
+//#include "EfiRuntimeLib.h"
+//#include "EfiDebug.h"
+//#include "LibSalPal.h"
 
 extern EFI_PLABEL     mPalProcPlabel;
 
