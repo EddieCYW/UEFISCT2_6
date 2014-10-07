@@ -8058,6 +8058,12 @@ BBTestSetInfoBasicTestCheckpoint1 (
         SctStrCpy (NewFileInfo->FileName, ChangeFileName);
         InvertFileAttributes (NewFileInfo);
 
+        //
+        // As the size of the file name has changed, update the size of
+        // the EFI_FILE_INFO data structure.
+        //
+        NewFileInfo->Size = SIZE_OF_EFI_FILE_INFO + SctStrSize (ChangeFileName);
+
         OldTpl = gtBS->RaiseTPL (TplArray[Index]);
 
 
