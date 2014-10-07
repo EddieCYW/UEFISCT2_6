@@ -261,6 +261,7 @@ SctPkg/TestCase/UEFI/EFI/Protocol/DevicePathUtilities/BlackBoxTest/DevicePathUti
 SctPkg/TestCase/UEFI/EFI/Protocol/DevicePathToText/BlackBoxTest/DevicePathToTextBBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/DevicePathFromText/BlackBoxTest/DevicePathFromTextBBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/DiskIo/BlackBoxTest/DiskIoBBTest.inf
+SctPkg/TestCase/UEFI/EFI/Protocol/DiskIo2/BlackBoxTest/DiskIo2BBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/Ebc/BlackBoxTest/EbcBBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/LoadedImage/BlackBoxTest/LoadedImageBBTest.inf
 SctPkg/TestCase/UEFI/EFI/Protocol/LoadFile/BlackBoxTest/LoadFileBBTest.inf

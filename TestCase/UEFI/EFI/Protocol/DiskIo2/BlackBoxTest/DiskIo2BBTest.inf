@@ -56,9 +56,12 @@
 #--*/
 
 [defines]
-BASE_NAME            = DiskIo2BBTest
-FILE_GUID            = 38C754D4-8AFF-4cdd-9E20-34EA561CEBE1
-COMPONENT_TYPE       = BS_DRIVER
+  INF_VERSION          = 0x00010005
+  BASE_NAME            = DiskIo2BBTest
+  FILE_GUID            = 38C754D4-8AFF-4cdd-9E20-34EA561CEBE1
+  MODULE_TYPE          = UEFI_DRIVER
+  VERSION_STRING       = 1.0
+  ENTRY_POINT          = InitializeBBTestDiskIo2
 
 [sources.common]
   DiskIo2BBTestMain.c
@@ -82,4 +85,5 @@ COMPONENT_TYPE       = BS_DRIVER
 [Protocols]
   gEfiDevicePathProtocolGuid
   gBlackBoxEfiBlockIo2ProtocolGuid
+  gBlackBoxEfiDiskIoProtocolGuid
   gBlackBoxEfiDiskIo2ProtocolGuid

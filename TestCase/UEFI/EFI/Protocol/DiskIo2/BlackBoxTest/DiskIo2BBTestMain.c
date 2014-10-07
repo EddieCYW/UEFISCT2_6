@@ -242,7 +242,7 @@ LocateBlockIo2FromDiskIo2(
   //
   Status = gtBS->LocateHandleBuffer(
                    ByProtocol,
-                   &gEfiDiskIo2ProtocolGuid,
+                   &gBlackBoxEfiDiskIo2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -280,7 +280,7 @@ LocateBlockIo2FromDiskIo2(
   for (Index = 0; Index < NoHandles; Index++) {
       Status = gtBS->HandleProtocol(
                        HandleBuffer[Index],
-                       &gEfiDiskIo2ProtocolGuid,
+                       &gBlackBoxEfiDiskIo2ProtocolGuid,
                        &OtherDiskIo2
                        );
     if (EFI_ERROR (Status)) {
@@ -319,7 +319,7 @@ LocateBlockIo2FromDiskIo2(
 
   Status = gtBS->HandleProtocol (
                    HandleBuffer[Index],
-                   &gEfiBlockIo2ProtocolGuid,
+                   &gBlackBoxEfiBlockIo2ProtocolGuid,
                    BlockIo2
                    );
   if (EFI_ERROR(Status)) {
@@ -372,7 +372,7 @@ LocateDevicePathFromDiskIo2(
   //
   Status = gtBS->LocateHandleBuffer(
                    ByProtocol,
-                   &gEfiDiskIo2ProtocolGuid,
+                   &gBlackBoxEfiDiskIo2ProtocolGuid,
                    NULL,
                    &NoHandles,
                    &HandleBuffer
@@ -410,7 +410,7 @@ LocateDevicePathFromDiskIo2(
   for (Index = 0; Index < NoHandles; Index++) {
       Status = gtBS->HandleProtocol(
                        HandleBuffer[Index],
-                       &gEfiDiskIo2ProtocolGuid,
+                       &gBlackBoxEfiDiskIo2ProtocolGuid,
                        &OtherDiskIo2
                        );
     if (EFI_ERROR (Status)) {
