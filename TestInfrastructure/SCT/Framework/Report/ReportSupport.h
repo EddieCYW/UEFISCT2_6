@@ -152,6 +152,7 @@ struct _EFI_SCT_REPORT_ITEM {
   CHAR16                          TestCategory[EFI_SCT_NAME_LEN];
   EFI_SCT_ASSERTION_INFOR         *FailAssertion;
   EFI_SCT_ASSERTION_INFOR         *PassAssertion;
+  EFI_SCT_ASSERTION_INFOR         *WarnAssertion;
 };
 
 //

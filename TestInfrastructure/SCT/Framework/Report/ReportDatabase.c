@@ -789,6 +789,18 @@ Routine Description:
       AssertionInfor = NextAssertionInfor;
     }
 
+    //
+    // For each warning assertion
+    //
+    AssertionInfor     = ReportItem->WarnAssertion;
+    NextAssertionInfor = NULL;
+
+    while (AssertionInfor != NULL) {
+      NextAssertionInfor = AssertionInfor->Next;
+      tBS->FreePool (AssertionInfor);
+      AssertionInfor = NextAssertionInfor;
+    }
+
     NextReportItem = ReportItem->Next;
     tBS->FreePool (ReportItem);
     ReportItem = NextReportItem;
@@ -913,6 +925,62 @@ Routine Description:
     while (AssertionInfor != NULL) {
       TempBuffer = SctPoolPrint (
                      L"\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"FAIL\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
+                     ReportItem->TestCategory,
+                     AssertionInfor->Index,
+                     AssertionInfor->CaseIndex,
+                     AssertionInfor->CaseIteration,
+                     AssertionInfor->Guid,
+                     AssertionInfor->Title,
+                     AssertionInfor->RuntimeInfor,
+                     AssertionInfor->CaseRevision,
+                     AssertionInfor->CaseGuid,
+                     AssertionInfor->DevicePath,
+                     AssertionInfor->FileName
+                     );
+      if (TempBuffer == NULL) {
+        break;
+      }
+
+      AutoStrCat (Buffer, TempBuffer);
+      tBS->FreePool (TempBuffer);
+
+      AssertionInfor = AssertionInfor->Prev;
+    }
+
+    ReportItem = ReportItem->Prev;
+  }
+
+  //
+  // Add warned head:
+  // "Service\Protocol Name", "Index","Instance","Iteration","Guid","Result","Title","Runtime Information","Case Revision","Case GUID","Device Path","Logfile Name"
+  //
+  AutoStrCat (
+    Buffer,
+    L"\n\"Service\\Protocol Name\",\"Index\",\"Instance\",\"Iteration\",\"Guid\",\"Result\",\"Title\",\"Runtime Information\",\"Case Revision\",\"Case GUID\",\"Device Path\",\"Logfile Name\"\n"
+    );
+
+  //
+  // For each report item, from the last one
+  //
+  ReportItem = mReportInfor.ReportItem;
+
+  while ((ReportItem != NULL) && (ReportItem->Next != NULL)) {
+    ReportItem = ReportItem->Next;
+  }
+
+  while (ReportItem != NULL) {
+    //
+    // For each failed assertion, from the last one
+    //
+    AssertionInfor = ReportItem->WarnAssertion;
+
+    while ((AssertionInfor != NULL) && (AssertionInfor->Next != NULL)) {
+      AssertionInfor = AssertionInfor->Next;
+    }
+
+    while (AssertionInfor != NULL) {
+      TempBuffer = SctPoolPrint (
+                     L"\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"WARN\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
                      ReportItem->TestCategory,
                      AssertionInfor->Index,
                      AssertionInfor->CaseIndex,
@@ -1259,13 +1327,6 @@ Routine Description:
   }
 
   //
-  // Skip the warning assertions
-  //
-  if (AssertionType == EFI_SCT_GUID_ASSERTION_TYPE_WARN) {
-    return EFI_SUCCESS;
-  }
-
-  //
   // Insert the GUID assertion
   //
   Status = InsertGuidAssertion (
@@ -1374,6 +1435,9 @@ Routine Description:
   if (AssertionType == EFI_SCT_GUID_ASSERTION_TYPE_PASS) {
     mReportInfor.TotalPass ++;
     ReportItem->PassNumber ++;
+  } else if (AssertionType == EFI_SCT_GUID_ASSERTION_TYPE_WARN) {
+    mReportInfor.TotalWarn ++;
+    ReportItem->WarnNumber ++;
   } else {
     mReportInfor.TotalFail ++;
     ReportItem->FailNumber ++;
@@ -1442,6 +1506,10 @@ Routine Description:
   if (AssertionType == EFI_SCT_GUID_ASSERTION_TYPE_PASS) {
     AssertionInfor = ReportItem->PassAssertion;
     ReportItem->PassAssertion = NewAssertionInfor;
+  }
+  else if (AssertionType == EFI_SCT_GUID_ASSERTION_TYPE_WARN) {
+    AssertionInfor = ReportItem->WarnAssertion;
+    ReportItem->WarnAssertion = NewAssertionInfor;
   } else {
     AssertionInfor = ReportItem->FailAssertion;
     ReportItem->FailAssertion = NewAssertionInfor;
