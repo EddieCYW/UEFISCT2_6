@@ -99,7 +99,7 @@ FindMatchedBusHandle (
   OUT EFI_HANDLE                            *ValidBusHandle
   );
 
-static
+STATIC
 UINTN
 GetNumberOfSupportedLanguages (
   OUT CHAR8         *SupportedLanguages

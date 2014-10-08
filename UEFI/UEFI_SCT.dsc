@@ -138,7 +138,7 @@
 # 68:   "integer conversion resulted in a change of sign" ("if (Status == -1)")
 # 111:  "statement is unreachable" (invariably "break;" after "return X;" in case statement)
 # 177:  "function <static function> was declared but never referenced"
-  RVCT:*_*_ARM_CC_FLAGS    = --diag_remark=167 --diag_suppress=167,1295,188,550,1,68,111,177
+  RVCT:*_*_ARM_CC_FLAGS    = --no_protect_stack --diag_remark=167 --diag_suppress=167,1295,188,550,1,68,111,177
 
   *_*_AARCH64_CC_FLAGS         = -D EFIAARCH64 -I$(WORKSPACE)/MdePkg/Include/AArch64 $(GCC_VER_MACRO)
   GCC:*_*_AARCH64_CC_FLAGS     = -D EFIAARCH64 $(GCC_VER_MACRO) -ffreestanding -nostdinc -nostdlib -Wno-error=unused-function -Wno-error=unused-but-set-variable -Wno-error
@@ -159,10 +159,7 @@
 
   MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
 
-[Libraries.ARM]
-  ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
-
-[Libraries.AARCH64]
+[Libraries.ARM, Libraries.AARCH64]
   ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
 
 [Libraries.IPF]
@@ -187,10 +184,7 @@
   EasLib|SctPkg/TestInfrastructure/SCT/Framework/ENTS/EasDispatcher/Eas.inf
   EfiTestLib|SctPkg/Library/EfiTestLib/EfiTestLib.inf
 
-[LibraryClasses.ARM]
-  NULL|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
-
-[LibraryClasses.AARCH64]
+[LibraryClasses.ARM, LibraryClasses.AARCH64]
   NULL|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
 
 [LibraryClasses.IA32]

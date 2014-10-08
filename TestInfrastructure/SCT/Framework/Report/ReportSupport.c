@@ -308,7 +308,7 @@ Routine Description:
   }
 
   // Set the last 16bit to 0
-  *(UINT16*)(TempBuffer + (UINTN) FileInfo->FileSize) = L'\0';
+  *(UINT16*)(UINTN)((UINTN)TempBuffer + FileInfo->FileSize) = L'\0';
 
   tBS->FreePool (FileInfo);
 

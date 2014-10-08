@@ -88,61 +88,6 @@ EftpRrqTxCallback (
   IN VOID       *Context
   );
 
-STATIC
-VOID
-NumToAsciiStr (
-  IN UINTN  Number,
-  IN UINT8  *Buffer,
-  OUT UINTN *Length
-  )
-/*++
-
-Routine Description:
-  Convert number to ASCII value
-
-Arguments:
-  Number  - Numeric value to convert to decimal ASCII value.
-  Buffer  - Buffer to place ASCII version of the Number
-  Length  - Length of Buffer.
-
-Returns:
-  None
-
---*/
-{
-  UINTN Remainder;
-  UINTN Index;
-  UINTN Count;
-  CHAR8 Temp[20];
-
-  Index = 0;
-  Count = 0;
-
-  while (Number != 0) {
-    Remainder = Number % 10;
-    Number /= 10;
-    Temp[Count] = (UINT8) ('0' + Remainder);
-    Count++;
-  }
-
-  while (Count != 0) {
-    Buffer[Index] = Temp[Count - 1];
-    Index++;
-    Count--;
-  }
-  //
-  // Deal the situation that the value of number is 0
-  //
-  if (Index == 0) {
-    Buffer[Index] = '0';
-    Index++;
-  }
-
-  Buffer[Index] = 0;
-  *Length       = Index;
-  return ;
-}
-
 EFTP_RRQ_STATE *
 EftpInitRrqState (
   IN EFTP_IO_PRIVATE*Private
@@ -870,14 +815,15 @@ Returns:
     // Don't restart timer here, we will transit to TIMEWAIT once timeout
     //
     return EFI_SUCCESS;
-    break;
 
   case EFTP_TIME_WAIT:
     //
     // ignore the data block and stop restart receiving
     //
     return EFI_ABORTED;
-    break;
+
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
   }
 
   return EFI_SUCCESS;
@@ -926,8 +872,6 @@ Returns:
     RRQ_SILENT_SHUTDOWN (Private);
     return EFI_ABORTED;
 
-    break;
-
   case EFTP_RRQ_ESTABLISHED:
 
     ASSERT (EFTP_PROGRAM_ERROR);
@@ -938,6 +882,9 @@ Returns:
     // ignore the error packet in time wait states
     //
     return EFI_ABORTED;
+
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
     break;
   }
 
@@ -1187,6 +1134,9 @@ Returns:
     EftpRrqCleanUp (Private);
     break;
 
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
+    break;
   }
 
   return ;
@@ -1319,13 +1269,14 @@ Returns:
     //
     return EFI_SUCCESS;
 
-    break;
-
   case EFTP_TIME_WAIT:
     //
     // returen EFI_ABORTED to stop receiving
     //
     return EFI_ABORTED;
+
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
     break;
   }
 
@@ -1601,6 +1552,9 @@ Returns:
     EftpRrqCleanUp (Private);
     return ;
 
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
+    break;
   }
 
   return ;

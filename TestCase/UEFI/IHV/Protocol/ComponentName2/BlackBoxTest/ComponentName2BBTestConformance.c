@@ -85,20 +85,6 @@ FindMatchedBusHandle (
   OUT EFI_HANDLE                            *ValidBusHandle
   );
 
-static
-UINTN
-GetNumberOfSupportedLanguages (
-  OUT CHAR8         *SupportedLanguages
-  );
-
-STATIC
-EFI_STATUS
-SearchNextUnsupportedLanguageCode (
-  IN OUT CHAR8         *SupportedLanguageCodeList,
-  IN OUT UINTN         *NextHandle,
-     OUT CHAR8         *UnsupportedLanguageCode
-  );
-
 //
 // global variables
 //

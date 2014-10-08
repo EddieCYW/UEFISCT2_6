@@ -503,6 +503,10 @@ Returns:
     }
 
     break;
+
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
+    break;
   }
 
 }
@@ -629,11 +633,13 @@ Returns:
     EFTP_DEBUG_VERBOSE ((L"EftpWrqTimer: timeout in closing state, init silent shutdown\n"));
     goto SilentShutdown;
 
-    break;
-
   case EFTP_TIME_WAIT:
 
     EftpWrqCleanUp (Private);
+    break;
+
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
     break;
   }
 
@@ -800,8 +806,6 @@ Returns:
     EftpSetTimer (Private, Private->Timeout, 0);
     return EFI_SUCCESS;
 
-    break;
-
   case EFTP_WRQ_CLOSEING:
     Buf = (Private->LastCtrl ? Private->LastCtrl : Private->WrqState->LastData);
 
@@ -822,13 +826,15 @@ Returns:
     // Don't restart timer here, we will transit to TIMEWAIT once timeout
     //
     return EFI_SUCCESS;
-    break;
 
   case EFTP_TIME_WAIT:
     //
     // Return an error to make EftpWrqRxCallback NOT to start receive again
     //
     return EFI_ABORTED;
+
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
     break;
   }
 
@@ -883,13 +889,15 @@ Returns:
     Private->Result = EFI_TFTP_ERROR;
     WRQ_SILENT_SHUTDOWN (Private);
     return EFI_SUCCESS;
-    break;
 
   case EFTP_TIME_WAIT:
     //
     // Return an error to make EftpWrqRxCallback NOT to start receive again
     //
     return EFI_ABORTED;
+
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
     break;
   }
 
@@ -975,20 +983,21 @@ Returns:
     FakeAck.Ack.Block   = 0;
 
     return EftpWrqRcvAck (Private, &FakeAck, EFTP_HEADER_LEN);
-    break;
 
   case EFTP_WRQ_ESTABLISHED:
   case EFTP_WRQ_CLOSEING:
     EFTP_DEBUG_VERBOSE ((L"EftpWrqRcvOack: ignore the OACK in state %d\n", Private->State));
 
     return EFI_SUCCESS;
-    break;
 
   case EFTP_TIME_WAIT:
     //
     // Return an error packet to stop sending
     //
     return EFI_ABORTED;
+
+  default:
+    ASSERT (EFTP_PROGRAM_ERROR);
     break;
   }
 
