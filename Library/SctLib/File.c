@@ -174,9 +174,8 @@ SctCloseFile (
   IN EFI_FILE_HANDLE     FileHandle
   )
 {
-  //TODO: Fixme
-  ASSERT (0);
-  return EFI_UNSUPPORTED;
+  ASSERT (FileHandle != NULL);
+  return FileHandle->Close (FileHandle);
 }
 
 EFI_STATUS
@@ -186,9 +185,8 @@ SctReadFile (
   OUT VOID                *Buffer
   )
 {
-  //TODO: Fixme
-  ASSERT (0);
-  return EFI_UNSUPPORTED;
+  ASSERT (FileHandle != NULL);
+  return FileHandle->Read (FileHandle, ReadSize, Buffer);
 }
 
 EFI_STATUS
@@ -198,9 +196,12 @@ SctWriteFile (
   OUT VOID              *Buffer
   )
 {
-  //TODO: Fixme
-  ASSERT (0);
-  return EFI_UNSUPPORTED;
+  ASSERT (FileHandle != NULL);
+  return FileHandle->Write (
+                      FileHandle,
+                      BufferSize,
+                      Buffer
+                      );
 }
 
 EFI_STATUS
@@ -208,9 +209,8 @@ SctFlushFile (
   IN EFI_FILE_HANDLE FileHandle
   )
 {
-  //TODO: Fixme
-  ASSERT (0);
-  return EFI_UNSUPPORTED;
+  ASSERT (FileHandle != NULL);
+  return FileHandle->Flush (FileHandle);
 }
 
 /*++

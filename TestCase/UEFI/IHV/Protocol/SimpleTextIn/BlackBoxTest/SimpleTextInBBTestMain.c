@@ -316,7 +316,7 @@ LocateDevicePathFromSimpleTextIn (
 
   Status = gtBS->HandleProtocol (
                       HandleBuffer[Index],
-                      &gEfiDevicePathProtocolGuid,
+                      &gBlackBoxEfiDevicePathProtocolGuid,
                       DevicePath
                       );
 

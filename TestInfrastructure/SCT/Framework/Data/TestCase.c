@@ -902,6 +902,10 @@ Returns:
           DstTestCase->Passes = SrcTestCase->Passes;
         }
 
+        if (SrcTestCase->Warnings != EFI_SCT_TEST_CASE_INVALID) {
+          DstTestCase->Warnings = SrcTestCase->Warnings;
+        }
+
         if (SrcTestCase->Failures != EFI_SCT_TEST_CASE_INVALID) {
           DstTestCase->Failures = SrcTestCase->Failures;
         }
@@ -1155,6 +1159,23 @@ Routine Description:
   }
 
   //
+  // Load the warnings
+  //
+  Status = TestCaseGetString (IniFile, Order, L"Warnings", Buffer);
+  if (EFI_ERROR (Status)) {
+    EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Without warnings"));
+    FreeSingleTestCase (TempTestCase);
+    return Status;
+  }
+
+  Status = SctHexStrToShort (Buffer, &TempTestCase->Warnings);
+  if (EFI_ERROR (Status)) {
+    EFI_SCT_DEBUG ((EFI_SCT_D_DEBUG, L"Invalid warnings"));
+    FreeSingleTestCase (TempTestCase);
+    return Status;
+  }
+
+  //
   // Load the failures
   //
   Status = TestCaseGetString (IniFile, Order, L"Failures", Buffer);
@@ -1255,6 +1276,14 @@ Routine Description:
   Status = SctShortToHexStr (TestCase->Passes, Buffer);
   if (!EFI_ERROR (Status)) {
     TestCaseSetString (IniFile, Order, L"Passes", Buffer);
+  }
+
+  //
+  // Save the warnings
+  //
+  Status = SctShortToHexStr (TestCase->Warnings, Buffer);
+  if (!EFI_ERROR (Status)) {
+    TestCaseSetString (IniFile, Order, L"Warnings", Buffer);
   }
 
   //
@@ -1532,6 +1561,7 @@ Routine Description:
   TempTestCase->Order      = EFI_SCT_TEST_CASE_INVALID;
   TempTestCase->Iterations = EFI_SCT_TEST_CASE_INVALID;
   TempTestCase->Passes     = EFI_SCT_TEST_CASE_INVALID;
+  TempTestCase->Warnings   = EFI_SCT_TEST_CASE_INVALID;
   TempTestCase->Failures   = EFI_SCT_TEST_CASE_INVALID;
 
   //

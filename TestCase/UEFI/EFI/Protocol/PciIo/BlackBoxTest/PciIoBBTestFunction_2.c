@@ -4267,13 +4267,27 @@ GetBarAttributes_Func (
   //
   //found a Bar.
   //
-  BarIndex = 0;
+  BarIndex = REGNUM;
 
   for (Index = 0; Index < REGNUM; Index++) {
     if (PciIoDevice->BarHasEffect[Index]) {
       BarIndex = (UINT8)Index;
       break;
     }
+  }
+
+  if (BarIndex == REGNUM) {
+    StandardLib->RecordAssertion (
+                   StandardLib,
+                   EFI_TEST_ASSERTION_WARNING,
+                   gTestGenericFailureGuid,
+                   L"EFI_PCI_IO_PROTOCOL.SetBarAttributes - Not found a valid Bar.",
+                   L"%a:%d",
+                   __FILE__,
+                   (UINTN)__LINE__
+                   );
+
+    return EFI_SUCCESS;
   }
 
   BarOriginalAttributes = 0;

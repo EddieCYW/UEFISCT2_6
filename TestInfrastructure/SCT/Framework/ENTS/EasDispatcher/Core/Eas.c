@@ -35,12 +35,12 @@
   DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF     
   THE POSSIBILITY OF SUCH DAMAGES.                              
                                                                 
-  Copyright 2006 - 2012 Unified EFI, Inc. All  
+  Copyright 2006 - 2014 Unified EFI, Inc. All  
   Rights Reserved, subject to all existing rights in all        
   matters included within this Test Suite, to which United      
   EFI, Inc. makes no claim of right.                            
                                                                 
-  Copyright (c) 2010 - 2012, Intel Corporation. All rights reserved.<BR>   
+  Copyright (c) 2010 - 2014, Intel Corporation. All rights reserved.<BR>   
    
 --*/
 /*++
@@ -100,7 +100,8 @@ Arguments:
   
   ImageHandle           - The image handle.
   SystemTable           - The system table.
-  TestCaseListHead      - Head point of the test case list.
+  DevicePath            - The device path of the image handle.
+  FilePath              - The file path of the image handle.
   MonitorName           - Monitor name for Communication layer, current we 
                           define the following three types: Mnp  Ip4  Serial
 Returns:
@@ -118,6 +119,8 @@ Returns:
   Status = InitResources (
              gFT->ImageHandle,
              gFT->SystemTable,
+             gFT->DevicePath,
+             gFT->FilePath,
              gFT->MonitorName
              );
   if (EFI_ERROR (Status)) {

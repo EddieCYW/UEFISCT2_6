@@ -41,6 +41,7 @@
   EFI, Inc. makes no claim of right.                            
                                                                 
   Copyright (c) 2010 - 2012, Intel Corporation. All rights reserved.<BR>   
+  Portions of Copyright (c) 2014, ARM Ltd. All rights reserved.<BR>   
    
 --*/
 /*++

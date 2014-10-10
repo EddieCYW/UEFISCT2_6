@@ -82,4 +82,5 @@
   EfiTestLib
 
 [Protocols]
+  gBlackBoxEfiPlatformToDriverConfigurationProtocolGuid
   gBlackBoxEfiPlatformToDriverConfigurationClpGuid

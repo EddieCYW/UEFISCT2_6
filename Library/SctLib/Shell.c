@@ -35,11 +35,12 @@
   DOCUMENT, WHETHER OR NOT SUCH PARTY HAD ADVANCE NOTICE OF
   THE POSSIBILITY OF SUCH DAMAGES.
 
-  Copyright 2006 - 2012 Unified EFI, Inc. All
+  Copyright 2006 - 2014 Unified EFI, Inc. All
   Rights Reserved, subject to all existing rights in all
   matters included within this Test Suite, to which United
   EFI, Inc. makes no claim of right.
 
+  Copyright (c) 2014, Intel Corporation. All rights reserved.<BR>
   Copyright (c) 2013-2014, ARM Ltd. All rights reserved.
 
 --*/
@@ -394,13 +395,22 @@ SctShellMapToDevicePath (
     if (Name[NameLength - 1] == L':') {
       InternalName = SctAllocateCopyPool (NameLength * sizeof (CHAR16), Name);
       InternalName[NameLength - 1] = L'\0';
-      Status = mEfiShellEnvironment2->GetFsDevicePath (InternalName, DevicePath);
+      *DevicePath = (EFI_DEVICE_PATH_PROTOCOL *) mEfiShellEnvironment2->GetMap (InternalName);
+      if (*DevicePath == NULL) {
+        Status = EFI_NOT_FOUND;
+      }else {
+        Status = EFI_SUCCESS;
+      }
       SctFreePool (InternalName);
       return Status;
     } else {
-      return mEfiShellEnvironment2->GetFsDevicePath (Name, DevicePath);
+      *DevicePath = (EFI_DEVICE_PATH_PROTOCOL *) mEfiShellEnvironment2->GetMap (Name);
+      if (*DevicePath == NULL) {
+        return EFI_NOT_FOUND;
+      }else {
+        return EFI_SUCCESS;
+      }
     }
-
   }
 }
 
@@ -409,7 +419,39 @@ SctShellGetExecutionBreak (
   IN VOID
   )
 {
-  return TRUE; //TODO: Implement me...
+  //
+  // Check for UEFI Shell 2.0 protocols
+  //
+  if (gEfiShellProtocol != NULL) {
+
+    //
+    // We are using UEFI Shell 2.0; see if the event has been triggered
+    //
+    if (tBS->CheckEvent(gEfiShellProtocol->ExecutionBreak) != EFI_SUCCESS) {
+      return (FALSE);
+    }
+    return (TRUE);
+  }
+
+  //
+  // using EFI Shell; call the function to check
+  //
+  if (mEfiShellEnvironment2 != NULL) {
+    return (mEfiShellEnvironment2->GetExecutionBreak());
+  }
+
+  return (FALSE);
+}
+
+VOID
+SctShellFreeArgInfo (
+  IN EFI_SHELL_ARG_INFO       *ArgInfo
+  )
+{
+  //
+  // in case there gonna be changes of EFI_SHELL_ARG_INFO
+  //
+  return ;
 }
 
 EFI_STATUS
@@ -417,7 +459,117 @@ SctShellFilterNullArgs (
   VOID
   )
 {
-  return EFI_SUCCESS; //TODO: Implement me...
+  CHAR16              **Argv;
+  EFI_SHELL_ARG_INFO  *ArgInfo = NULL;
+  UINTN               Argc;
+  UINTN               Index;
+  UINTN               Index2;
+  EFI_STATUS          Status;
+
+  Status  = EFI_SUCCESS;
+
+  if (USING_UEFI_SHELL) {
+    Argc = gEfiShellParametersProtocol->Argc;
+    
+    Index2  = 0;
+    for (Index = 0; Index < gEfiShellParametersProtocol->Argc; Index++) {
+      if (!gEfiShellParametersProtocol->Argv[Index][0]) {
+        Argc--;
+      }
+    }
+
+    Argv    = SctAllocateZeroPool (Argc * sizeof (CHAR16 *));
+    if (NULL == Argv) {
+      Status = EFI_OUT_OF_RESOURCES;
+      goto Done;
+    }
+
+    for (Index = 0; Index < gEfiShellParametersProtocol->Argc; Index++) {
+      if (!gEfiShellParametersProtocol->Argv[Index][0]) {
+        continue;
+      }
+
+      Argv[Index2] = SctStrDuplicate (gEfiShellParametersProtocol->Argv[Index]);
+      if (NULL == Argv[Index2]) {
+        Status = EFI_OUT_OF_RESOURCES;
+        goto Done;
+      }
+
+      Index2++;
+    }
+
+    for (Index = 0; Index < gEfiShellParametersProtocol->Argc; Index++) {
+      SctFreePool (gEfiShellParametersProtocol->Argv[Index]);
+    }
+
+    SctFreePool (gEfiShellParametersProtocol->Argv);
+    gEfiShellParametersProtocol->Argv = Argv;
+    gEfiShellParametersProtocol->Argc = Argc;
+    Argv        = NULL;
+  } else {
+    Argc = mEfiShellInterface->Argc;
+
+    Index2  = 0;
+    for (Index = 0; Index < mEfiShellInterface->Argc; Index++) {
+      if (!mArgv[Index][0]) {
+        Argc--;
+      }
+    }
+    
+    Argv    = SctAllocateZeroPool (Argc * sizeof (CHAR16 *));
+    ArgInfo = SctAllocateZeroPool (Argc * sizeof (EFI_SHELL_ARG_INFO));
+    if (NULL == Argv || NULL == ArgInfo) {
+      Status = EFI_OUT_OF_RESOURCES;
+      goto Done;
+    }
+
+    for (Index = 0; Index < mEfiShellInterface->Argc; Index++) {
+      if (!mArgv[Index][0]) {
+        continue;
+      }
+
+      Argv[Index2] = SctStrDuplicate (mArgv[Index]);
+      if (NULL == Argv[Index2]) {
+        Status = EFI_OUT_OF_RESOURCES;
+        goto Done;
+      }
+
+      ArgInfo[Index2].Attributes = mEfiShellInterface->ArgInfo[Index].Attributes;
+      Index2++;
+    }
+
+    for (Index = 0; Index < mEfiShellInterface->Argc; Index++) {
+      SctShellFreeArgInfo (&mEfiShellInterface->ArgInfo[Index]);
+      SctFreePool (mArgv[Index]);
+    }
+
+    SctFreePool (mEfiShellInterface->ArgInfo);
+    SctFreePool (mArgv);
+    mEfiShellInterface->ArgInfo = ArgInfo;
+    mArgv    = Argv;
+    mEfiShellInterface->Argc    = Argc;
+    ArgInfo     = NULL;
+    Argv        = NULL;
+  }
+
+Done:
+  if (ArgInfo) {
+    for (Index = 0; Index < Index2; Index++) {
+      SctShellFreeArgInfo (&ArgInfo[Index]);
+    }
+
+    SctFreePool (ArgInfo);
+  }
+
+  if (Argv) {
+    for (Index = 0; Index < Index2; Index++) {
+      SctFreePool (&Argv[Index]);
+    }
+    
+    SctFreePool (Argv);
+  }
+
+  return Status;
 }
 
 EFI_DEVICE_PATH_PROTOCOL *

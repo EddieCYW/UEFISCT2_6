@@ -671,14 +671,21 @@ Returns:
       EFI_SUCCESS
       );
     //
-    // Set the system wakeup alarm clock time to 1 hour later.
+    // Set the system wakeup alarm clock time for testing.
     //
-    Port80(0x72);    
-    Time.Hour += 1;
-    Status = VRT->SetWakeupTime (
-                    TRUE,
-                    &Time
-                    );
+    Port80(0x72);
+    if (Time.Hour == 23 ){
+      Status = VRT->SetWakeupTime (
+                      FALSE,
+                      NULL
+                      );
+    } else {
+      Time.Hour += 1;
+      Status = VRT->SetWakeupTime (
+                      TRUE,
+                      &Time
+                      );
+    }
 
     if (EFI_SUCCESS == Status) 
       AssertionType = EFI_TEST_ASSERTION_PASSED;
@@ -688,7 +695,7 @@ Returns:
     RecordAssertion (
       AssertionType,
       gSCRTAssertionGuid72,
-      "RT.SetWakeupTime - Set Wakeup time in 1 hour later from now on, should be EFI_SUCCESS",
+      "RT.SetWakeupTime - Set Wakeup time for testing, should be EFI_SUCCESS",
       "%a:%d:Status - %r, Expected - %r",
       __FILE__,
       __LINE__,

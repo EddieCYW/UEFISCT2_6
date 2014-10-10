@@ -2432,7 +2432,6 @@ BBTestQueryModeFunctionAutoTest (
   // Backup Mode
   //
   BackupMode (SimpleOut, &ModeOrg);
-  BackupMode (SimpleOut, &ModeExpected);
 
   //
   // Assertion Points 4.1.5.2.1
@@ -2443,7 +2442,7 @@ BBTestQueryModeFunctionAutoTest (
   // For all available mode , perform test
   //
   for (Index = 0; Index < (UINTN)SimpleOut->Mode->MaxMode; Index++) {
-
+    BackupMode (SimpleOut, &ModeExpected);
     Status = SimpleOut->QueryMode (SimpleOut, Index, &Column, &Row);
 
     //

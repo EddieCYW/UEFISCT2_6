@@ -167,6 +167,22 @@ SctAcquireLockOrFail (
   IN SCT_LOCK  *Lock
   )
 {
-  //TODO: FixMe
-  return EFI_UNSUPPORTED;
+  if (Lock->Lock != 0) {
+    //
+    // Lock is already owned, so bail out
+    //
+    return EFI_ACCESS_DENIED;
+  }
+
+  if (tBS) {
+    if (tBS->RestoreTPL != NULL) {
+      Lock->OwnerTpl = tBS->RaiseTPL (Lock->Tpl);
+    }
+  } else {
+    // Unsupported
+    ASSERT(0);
+  }
+
+  Lock->Lock += 1;
+  return EFI_SUCCESS;
 }
