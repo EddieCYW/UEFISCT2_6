@@ -704,7 +704,12 @@ BBTestReceiveFilterConformanceTest (
   //
   //  Call ReceiveFilters with invalide MCastFilterCnt
   //
-  StatusBuf[3] = SnpInterface->ReceiveFilters (SnpInterface, 0, 0, FALSE, SnpInterface->Mode->MaxMCastFilterCount + 1, NULL);
+  StatusBuf[3] = SnpInterface->ReceiveFilters (
+                                 SnpInterface,
+                                 EFI_SIMPLE_NETWORK_RECEIVE_MULTICAST, 0, FALSE,
+                                 SnpInterface->Mode->MaxMCastFilterCount + 1,
+                                 NULL
+                                 );
   if (StatusBuf[3] == EFI_INVALID_PARAMETER) {
     AssertionType[3] = EFI_TEST_ASSERTION_PASSED;
   } else {
@@ -714,7 +719,11 @@ BBTestReceiveFilterConformanceTest (
   //
   //  Call ReceiveFilters with MCastFilterCnt not match MCastFilter
   //
-  StatusBuf[4] = SnpInterface->ReceiveFilters (SnpInterface, 0, 0, FALSE, 1, NULL);
+  StatusBuf[4] = SnpInterface->ReceiveFilters (
+                                 SnpInterface,
+                                 EFI_SIMPLE_NETWORK_RECEIVE_MULTICAST,
+                                 0, FALSE, 1, NULL
+                                 );
   if (StatusBuf[4] == EFI_INVALID_PARAMETER) {
     AssertionType[4] = EFI_TEST_ASSERTION_PASSED;
   } else {
