@@ -843,7 +843,7 @@ Routine Description:
   //
   // Add summary head:
   // "Self Certification Test Report"
-  // "Service\Protocol Name", "Total", "Failed", "Passed"
+  // "Service\Protocol Name", "Total", "Failed", "Passed", "Warned"
   //
   AutoStrCat (
     Buffer,
@@ -884,7 +884,7 @@ Routine Description:
   //
   TempBuffer = SctPoolPrint (
                  L"\"Total service\\Protocol\",\"%d\",\"%d\",\"%d\",\"%d\"\n",
-                 mReportInfor.TotalPass + mReportInfor.TotalFail + mReportInfor.TotalPass,
+                 mReportInfor.TotalPass + mReportInfor.TotalFail + mReportInfor.TotalWarn,
                  mReportInfor.TotalFail,
                  mReportInfor.TotalPass,
                  mReportInfor.TotalWarn
