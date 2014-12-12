@@ -40,7 +40,8 @@
   matters included within this Test Suite, to which United      
   EFI, Inc. makes no claim of right.                            
                                                                 
-  Copyright (c) 2010, Intel Corporation. All rights reserved.<BR>   
+  Copyright (c) 2010, Intel Corporation. All rights reserved.<BR>
+  Copyright (c) 2014, ARM Ltd. All rights reserved.<BR>
    
 --*/
 /*++
@@ -166,7 +167,7 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestPciIoEntryField[] = {
   {
    { 0xca3fbc52, 0x6974, 0x4b68, { 0xb2, 0xb1, 0x55, 0x3a, 0x3d, 0x13, 0x92, 0xd6 } },
    L"AllocateBuffer_Func",
-   L"tes the functionality of PciIo AllocateBuffer() interface automatically",
+   L"test the functionality of PciIo AllocateBuffer() interface automatically",
    EFI_TEST_LEVEL_DEFAULT,
    gSupportProtocolGuid1,
    EFI_TEST_CASE_AUTO,
@@ -175,7 +176,7 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestPciIoEntryField[] = {
   {
    { 0xd6803bd4, 0xa251, 0x4270, { 0xb7, 0xad, 0xdf, 0x60, 0x7f, 0x83, 0xe1, 0x91 } },
    L"FreeBuffer_Func",
-   L"tes the functionality of PciIo FreeBuffer()interface automatically",
+   L"test the functionality of PciIo FreeBuffer()interface automatically",
    EFI_TEST_LEVEL_DEFAULT,
    gSupportProtocolGuid1,
    EFI_TEST_CASE_AUTO,

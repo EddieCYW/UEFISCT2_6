@@ -40,7 +40,8 @@
   matters included within this Test Suite, to which United      
   EFI, Inc. makes no claim of right.                            
                                                                 
-  Copyright (c) 2010, Intel Corporation. All rights reserved.<BR>   
+  Copyright (c) 2010, Intel Corporation. All rights reserved.<BR>
+  Copyright (c) 2014, ARM Ltd. All rights reserved.<BR>
    
 --*/
 /*++
@@ -4112,7 +4113,7 @@ PciWrite_Conf (
                  StandardLib,
                  AssertionType,
                  gPciIoBBTestConformanceAssertionGuid050,
-                 L"EFI_PCI_IO_PROTOCOL.Pci.Write - Read with invalid Width as -1 the return status must be EFI_INVALID_PARAMETER",
+                 L"EFI_PCI_IO_PROTOCOL.Pci.Write - Write with invalid Width as -1 the return status must be EFI_INVALID_PARAMETER",
                  L"%a:%d:Status - %r",
                  __FILE__,
                  (UINTN)__LINE__,
@@ -4143,7 +4144,7 @@ PciWrite_Conf (
                  StandardLib,
                  AssertionType,
                  gPciIoBBTestConformanceAssertionGuid051,
-                 L"EFI_PCI_IO_PROTOCOL.Pci.Write - Read with Width as EfiPciIoWidthMaximum the return status must be EFI_INVALID_PARAMETER",
+                 L"EFI_PCI_IO_PROTOCOL.Pci.Write - Write with Width as EfiPciIoWidthMaximum the return status must be EFI_INVALID_PARAMETER",
                  L"%a:%d:Status - %r",
                  __FILE__,
                  (UINTN)__LINE__,
@@ -4173,7 +4174,7 @@ PciWrite_Conf (
                  StandardLib,
                  AssertionType,
                  gPciIoBBTestConformanceAssertionGuid052,
-                 L"EFI_PCI_IO_PROTOCOL.Pci.Write - Read with Buffer as NULL the return status must be EFI_INVALID_PARAMETER",
+                 L"EFI_PCI_IO_PROTOCOL.Pci.Write - Write with Buffer as NULL the return status must be EFI_INVALID_PARAMETER",
                  L"%a:%d:Status - %r",
                  __FILE__,
                  (UINTN)__LINE__,
@@ -4213,7 +4214,7 @@ PciWrite_Conf (
                  StandardLib,
                  AssertionType,
                  gPciIoBBTestConformanceAssertionGuid053,
-                 L"EFI_PCI_IO_PROTOCOL.Pci.Write - Read with Offset + Count * Width > 255  the return status must be EFI_UNSUPPORTED",
+                 L"EFI_PCI_IO_PROTOCOL.Pci.Write - Write with Offset + Count * Width > 255  the return status must be EFI_UNSUPPORTED",
                  L"%a:%d:Status - %r, Offset - %8xh, Count - %xh, PciIoWidth - %s",
                  __FILE__,
                  __LINE__,
@@ -4246,7 +4247,7 @@ PciWrite_Conf (
                  StandardLib,
                  AssertionType,
                  gPciIoBBTestConformanceAssertionGuid054,
-                 L"EFI_PCI_IO_PROTOCOL.Pci.Write - Read with Offset + Count * Width > 255  the return status must be EFI_UNSUPPORTED",
+                 L"EFI_PCI_IO_PROTOCOL.Pci.Write - Write with Offset + Count * Width > 255  the return status must be EFI_UNSUPPORTED",
                  L"%a:%d:Status - %r, Offset - %8xh, Count - %xh, PciIoWidth - %s",
                  __FILE__,
                  __LINE__,
@@ -5675,7 +5676,7 @@ AllocateBuffer_Conf (
       StandardLib->RecordMessage (
                      StandardLib,
                      EFI_VERBOSE_LEVEL_DEFAULT,
-                     L"EFI_PCI_IO_PROTOCOL.AllocateBuffer - with invalid Attributes Status must be EFI_INVALID_PARAMETER.\r\n"
+                     L"EFI_PCI_IO_PROTOCOL.AllocateBuffer - with invalid Attributes Status must be EFI_UNSUPPORTED.\r\n"
                      L"%a:%d:Status - %r, Attributes - %lXh\r\n",
                      __FILE__,
                      (UINTN)__LINE__,
