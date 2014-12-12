@@ -646,30 +646,33 @@ _IPrint (
   SctZeroMem (&ps, sizeof(ps));
   ps.Context = Out;
   ps.Output  = (INTN (*)(VOID *, CONST CHAR16 *)) Out->OutputString;
-  ps.SetAttr = (INTN (*)(VOID *, UINTN))  Out->SetAttribute;
+  ps.SetAttr = (INTN (*)(VOID *, UINTN)) Out->SetAttribute;
   ASSERT(NULL != Out->Mode);
   ps.Attr = Out->Mode->Attribute;
 
   back = (ps.Attr >> 4) & 0xF;
-  ps.AttrNorm = EFI_TEXT_ATTR(EFI_LIGHTGRAY, back);
-  ps.AttrHighlight = EFI_TEXT_ATTR(EFI_WHITE, back);
-  ps.AttrError = EFI_TEXT_ATTR(EFI_YELLOW, back);
+  ps.AttrNorm = EFI_TEXT_ATTR (EFI_LIGHTGRAY, back);
+  ps.AttrHighlight = EFI_TEXT_ATTR (EFI_WHITE, back);
+  ps.AttrError = EFI_TEXT_ATTR (EFI_YELLOW, back);
 
-  if (fmt) {
-      ps.fmt.u.pw = SctStrDuplicate (fmt);
+  if (fmt != NULL) {
+    ps.fmt.u.pw = SctStrDuplicate (fmt);
   } else {
-      ps.fmt.Ascii = TRUE;
-      ps.fmt.u.pc = fmta;
+    ps.fmt.Ascii = TRUE;
+    ps.fmt.u.pc = fmta;
   }
 
   ps.args = args;
 
   if (Column != (UINTN) -1) {
-      Out->SetCursorPosition(Out, Column, Row);
+    Out->SetCursorPosition (Out, Column, Row);
   }
 
   ret = _Print (&ps);
-  SctFreePool(ps.fmt.u.pw);
+  if (fmt != NULL) {
+    SctFreePool (ps.fmt.u.pw);
+  }
+
   return ret;
 }
 
