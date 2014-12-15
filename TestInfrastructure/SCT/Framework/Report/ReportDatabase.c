@@ -64,11 +64,11 @@ Abstract:
 // Modular variables
 //
 
-EFI_SCT_GUID_DATABASE   *mGuidDatabase          = NULL;
+EFI_SCT_GUID_DATABASE   *mGuidDatabase         = NULL;
 UINTN                   mGuidDatabaseMaxSize   = 0;
 UINTN                   mGuidDatabaseUsedSize  = 0;
 
-EFI_SCT_GUID_ASSERTION  *mGuidAssertion         = NULL;
+EFI_SCT_GUID_ASSERTION  *mGuidAssertion        = NULL;
 UINTN                   mGuidAssertionMaxSize  = 0;
 UINTN                   mGuidAssertionUsedSize = 0;
 
@@ -383,7 +383,7 @@ Routine Description:
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_PASS;
     } else if (SctStrCmp (AssertionStr, L"FAILURE") == 0) {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_FAIL;
-    } else if (SctStrCmp (AssertionStr, L"WARN") == 0) {
+    } else if (SctStrCmp (AssertionStr, L"WARNING") == 0) {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_WARN;
     } else {
       ASSERT (0);
@@ -678,7 +678,7 @@ Routine Description:
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_PASS;
     } else if (SctStrCmp (AssertionStr, L"FAILURE") == 0) {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_FAIL;
-    } else if (SctStrCmp (AssertionStr, L"WARN") == 0) {
+    } else if (SctStrCmp (AssertionStr, L"WARNING") == 0) {
       AssertionType = EFI_SCT_GUID_ASSERTION_TYPE_WARN;
     } else {
       ASSERT (0);
