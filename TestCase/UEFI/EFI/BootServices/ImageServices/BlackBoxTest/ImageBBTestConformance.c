@@ -57,6 +57,7 @@ Abstract:
 
 #include "SctLib.h"
 #include "Misc.h"
+#include <Protocol/TestRecoveryLibrary.h>
 
 #define TEST_VENDOR1_GUID                         \
   { 0xF6FAB04F, 0xACAF, 0x4af3, { 0xB9, 0xFA, 0xDC, 0xF9, 0x7F, 0xB4, 0x42, 0x6F } }
@@ -817,13 +818,14 @@ BBTestExitBootServicesConsistencyTest (
   )
 {
   EFI_STANDARD_TEST_LIBRARY_PROTOCOL   *StandardLib;
+  EFI_TEST_RECOVERY_LIBRARY_PROTOCOL   *RecoveryLib;
+  UINTN                                Buffer[1024 / sizeof (UINTN)];
+  UINTN                                Size;
   EFI_STATUS                           Status;
   EFI_TEST_ASSERTION                   AssertionType;
   UINTN                                MapKey;
 
   UINTN                                Numbers;
-  UINTN                                DataSize;
-  UINT8                                Data[MAX_BUFFER_SIZE];
   EFI_STATUS                           ReturnStatus;
 
   //
@@ -843,8 +845,31 @@ BBTestExitBootServicesConsistencyTest (
     return Status;
   }
 
+  //
+  // Get the Recovery Library Interface
+  //
+  Status = gtBS->HandleProtocol (
+                   SupportHandle,
+                   &gEfiTestRecoveryLibraryGuid,
+                   (VOID **) &RecoveryLib
+                   );
+
+  if (EFI_ERROR (Status)) {
+    StandardLib->RecordAssertion (
+                   StandardLib,
+                   EFI_TEST_ASSERTION_FAILED,
+                   gTestGenericFailureGuid,
+                   L"BS.HandleProtocol - Handle recovery library",
+                   L"%a:%d:Status - %r",
+                   __FILE__,
+                   (UINTN)__LINE__,
+                   Status
+                   );
+    return Status;
+  }
+
   Status = ImageTestCheckForCleanEnvironment (&Numbers);
-  if (EFI_ERROR(Status)) {
+  if (EFI_ERROR (Status)) {
     StandardLib->RecordAssertion (
                    StandardLib,
                    EFI_TEST_ASSERTION_FAILED,
@@ -859,23 +884,23 @@ BBTestExitBootServicesConsistencyTest (
     return Status;
   }
 
-  DataSize = MAX_BUFFER_SIZE;
-  Status = gtRT->GetVariable (
-                 L"ExitBootServicesTestVariable",             // VariableName
-                 &gTestVendor1Guid,                           // VendorGuid
-                 NULL,                                        // Attributes
-                 &DataSize,                                   // DataSize
-                 &ReturnStatus                                // Data
-                 );
-
-  if (Status == EFI_SUCCESS) {
+  //
+  // Read reset record
+  //
+  Status = RecoveryLib->ReadResetRecord (
+                          RecoveryLib,
+                          &Size,
+                          Buffer
+                          );
+  if ((!EFI_ERROR (Status)) && (Size == sizeof (EFI_STATUS))) {
+    ReturnStatus = *((EFI_STATUS*)Buffer);
     goto CheckResult;
   }
 
   //
   // Print out some information to avoid the user thought it is an error
   //
-  SctPrint (L"System will cold reset after 2 second. please run this test again...");
+  SctPrint (L"System will cold reset after 2 second.");
   gtBS->Stall (2000000);
 
   //
@@ -913,20 +938,32 @@ BBTestExitBootServicesConsistencyTest (
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  
-  Status = gtRT->SetVariable (
-                     L"ExitBootServicesTestVariable",                                                           // VariableName
-                     &gTestVendor1Guid,                                                                         // VendorGuid
-                     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS | EFI_VARIABLE_RUNTIME_ACCESS, // Attributes
-                     sizeof(EFI_STATUS),                        // DataSize
-                     &ReturnStatus                              // Data
+
+  *((EFI_STATUS*)Buffer) = ReturnStatus;
+  Status = RecoveryLib->WriteResetRecord (
+                          RecoveryLib,
+                          sizeof (EFI_STATUS),
+                          Buffer
+                          );
+  if (EFI_ERROR (Status)) {
+      StandardLib->RecordAssertion (
+                     StandardLib,
+                     EFI_TEST_ASSERTION_FAILED,
+                     gTestGenericFailureGuid,
+                     L"TestRecoveryLib - WriteResetRecord",
+                     L"%a:%d:Status - %r",
+                     __FILE__,
+                     (UINTN)__LINE__,
+                     Status
                      );
+      return Status;
+    }
 
-  //reset system
+  //
+  // Reset system
+  //
   gtRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
-  
 
-  // get var to get the status
 CheckResult:
 
   if (ReturnStatus == EFI_INVALID_PARAMETER) {
@@ -934,7 +971,7 @@ CheckResult:
   } else {
     AssertionType = EFI_TEST_ASSERTION_FAILED;
   }
-  
+
   StandardLib->RecordAssertion (
                  StandardLib,
                  AssertionType,
@@ -946,15 +983,6 @@ CheckResult:
                  ReturnStatus,
                  EFI_INVALID_PARAMETER
                  );
-
-  Status = gtRT->SetVariable (
-                     L"ExitBootServicesTestVariable",                                                           // VariableName
-                     &gTestVendor1Guid,                                                                         // VendorGuid
-                     EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS | EFI_VARIABLE_RUNTIME_ACCESS, // Attributes
-                     0,                               // DataSize
-                     Data                             // Data
-                     );
-  
 
   Status = ImageTestCheckForCleanEnvironment (&Numbers);
   if (EFI_ERROR(Status)) {
@@ -972,4 +1000,3 @@ CheckResult:
   }
   return EFI_SUCCESS;
 }
-
