@@ -55,8 +55,6 @@ Abstract:
 
 --*/
 
-
-#include "SctLib.h"
 #include "SimpleTextInBBTestMain.h"
 
 EFI_EVENT              TimerEvent;

@@ -1038,7 +1038,7 @@ BBTestPassThruConformanceAutoTest (
                    );
   	return EFI_UNSUPPORTED;
   }
-
+/*
   //
   // Assertion Point 4.6.2.1
   // Call PassThru() with too long InTransferLength.
@@ -1093,7 +1093,7 @@ BBTestPassThruConformanceAutoTest (
                  Lun,
                  Packet.InTransferLength
                  );
-
+*/
   //
   // Assertion Point 4.6.2.3
   // Call PassThru() with invalid parameter.
@@ -1251,7 +1251,7 @@ BBTestPassThruConformanceAutoTest (
   }
 
   EnterEvent = 0;
-
+/*
   BufToUHexString (Target2, &StringLength, Target, TARGET_MAX_BYTES);
   
   //
@@ -1301,7 +1301,7 @@ BBTestPassThruConformanceAutoTest (
                  Lun,
                  Packet.InTransferLength
                  );
-
+*/
   //
   // Assertion Point 4.6.2.3
   // Call PassThru() with invalid parameter.

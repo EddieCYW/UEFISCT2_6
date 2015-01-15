@@ -55,8 +55,7 @@ Abstract:
 
 --*/
 
-#include "Efi.h"
-#include "guid_uefi.h"
+#include "SimpleTextOutBBTestMain_uefi.h"
 
 
 EFI_GUID gSimpleTextOutputAssertionGuid001 = EFI_TEST_SIMPLETEXTOUTPUT_ASSERTION_001_GUID;

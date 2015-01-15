@@ -192,6 +192,7 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
     EFI_TEST_CASE_AUTO,
     BBTestSetCursorPositionConformanceAutoTest
   },
+/*  
   {
     SIMPLE_TEXT_OUTPUT_PROTOCOL_SETATTRIBUTE_CONFORMANCE_AUTO_GUID,
     L"SetAttribute_Conf",
@@ -201,7 +202,7 @@ EFI_BB_TEST_ENTRY_FIELD gBBTestEntryField[] = {
     EFI_TEST_CASE_AUTO,
     BBTestSetAttributeConformanceAutoTest
   },
-
+*/
 #ifdef EFI_TEST_EXHAUSTIVE
   {
     SIMPLE_TEXT_OUTPUT_PROTOCOL_RESET_FUNCTION_MANUAL_GUID,

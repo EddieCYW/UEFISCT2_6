@@ -59,10 +59,12 @@ Abstract:
 #define _DRIVER_BINDING_TEST_H
 
 
+#include "Efi.h"
 #include "SctLib.h"
 #include <Library/EfiTestLib.h>
 #include <UEFI/Protocol/DriverBinding.h>
 #include "guid.h"
+#include "Print.h"
 
 #include EFI_TEST_PROTOCOL_DEFINITION(TestProfileLibrary)
 

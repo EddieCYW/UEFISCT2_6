@@ -293,7 +293,7 @@ BBTestExecuteScsiCommandConformanceAutoTest (
 
   ScsiIo = (EFI_SCSI_IO_PROTOCOL *)ClientInterface;
   Data = SctAllocatePool (ScsiIo->IoAlign + 96);
-
+/*
   //
   // Assertion Point 3.2.3.2.1
   // Call ExecuteScsiCommand() with too long InTransferLength.
@@ -344,7 +344,7 @@ BBTestExecuteScsiCommandConformanceAutoTest (
                  Status,
                  Packet.InTransferLength
                  );
-  
+*/
   //
   // Create Event
   //
@@ -369,7 +369,7 @@ BBTestExecuteScsiCommandConformanceAutoTest (
                    );
     return Status;
   }
-
+/*
   EnterEvent = 0;
   
   SctZeroMem (&Packet, sizeof (EFI_SCSI_IO_SCSI_REQUEST_PACKET));
@@ -414,7 +414,7 @@ BBTestExecuteScsiCommandConformanceAutoTest (
                  Status,
                  Packet.InTransferLength
                  );
-
+*/
   //
   // Assertion Point 3.2.3.2.2
   // Call ExecuteScsiCommand() with invalid parameter.

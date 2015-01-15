@@ -1118,7 +1118,7 @@ Returns:
   //
   // Data transfer direction indicated by EndPointAddress is not EfiUsbDataIn.
   //
-  Status = Usb2HcSyncInterruptTransferConformanceSubTest1 (Usb2Hc, StandardLib, LoggingLib);
+  //Status = Usb2HcSyncInterruptTransferConformanceSubTest1 (Usb2Hc, StandardLib, LoggingLib);
 
   //
   // Call SyncInterruptTransfer() with Invalid Parameters

@@ -187,8 +187,6 @@ InitializeBBTestPlatformToDriverConfiguration (
   EfiInitializeTestLib (ImageHandle, SystemTable);
   SctInitializeLib (ImageHandle, SystemTable);
 
-  DriverImageHandle = ImageHandle;
-
   return EfiInitAndInstallIHVBBTestInterface (
            &ImageHandle,
            &gBBTestProtocolField,
