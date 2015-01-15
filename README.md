@@ -1,7 +1,40 @@
 UEFI-SCT
 ========
 
-# Build of the UEFI Self Certification Tests for ARM or AARCH64 architecture on Linux
+1. The branches/sct-next wants to provide one solution to run SCT on Shell2.0
+2. The user need to patch 3 files in ShellPkg of EDKII to make the SCT run. The 
+   files are provided in the Doc/ShellPkg
+
+Build UEFI Shell
+----------------
+
+1. Please replace the 3 files with the new files provided in "ShellPkg Patch" folder.
+    *   ShellPkg\Application\Shell\Shell.c  
+    *   ShellPkg\Application\Shell\ShellProtocol.c  
+    *   ShellPkg\Application\Shell\ShellProtocol.h
+2. Execute "edksetup.bat"
+3. Execute "build -p ShellPkg\ShellPkg.dsc -a X64 -t VS2008x86"
+4. The shell.efi will be generated and located at C:WorkSpace\Build\Shell\DEBUG_VS2008x86\X64
+
+How to accelerate SCT execution
+-------------------------------
+
+Some tips to accelerate SCT execution:
+
+*   Always execute SCT on HDD, SSD is preferred.
+*   Execute the SCT on platform release build image if it is possible.
+*   Tuning the platform boot performance. Many reboot may occurc in the SCT execution.
+*   "-v" parameter could accelerate the execution about 70-80%, "sct -a -v".
+
+Expect the tips could help you. If you have other experience on acceleration, please feel free to contact eric.jin@intel.com
+
+Build of the UEFI Self Certification Tests for X64
+--------------------------------------------------
+
+Please refer to the "How to build SCT in UDK2014.txt" for build instructions.
+
+Build of the UEFI Self Certification Tests for ARM or AARCH64 architecture on Linux
+-----------------------------------------------------------------------------------
 
 *   The present UEFI-SCT repository has to be located in the root directory
     of the edk2 repository to test and named SctPkg. The absolute path to the
@@ -28,3 +61,6 @@ UEFI-SCT
     `GCC48_AARCH64_PREFIX` has to be defined as :
 
     `export GCC48_AARCH64_PREFIX=/work/gcc-linaro-aarch64-none-elf-4.8-2013.11_linux/bin/aarch64-none-elf-`
+
+
+Note: To build with ARM RealView Compiler on MS Windows execute RVCT31.bat
