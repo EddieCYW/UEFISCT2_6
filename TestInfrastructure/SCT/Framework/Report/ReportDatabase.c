@@ -808,6 +808,11 @@ Routine Description:
   }
 
   mReportInfor.ReportItem = NULL;
+
+  mReportInfor.TotalPass = 0;
+  mReportInfor.TotalWarn = 0;
+  mReportInfor.TotalFail = 0;
+  
   return EFI_SUCCESS;
 }
 
