@@ -59,6 +59,11 @@ extern UINTN                            EfiDebugMask;
 extern EFI_GUID                         mEfiUnknownDeviceGuid;
 
 //
+// Cache the Image Handle for SctLib
+//
+extern EFI_HANDLE         				tImageHandle;
+
+//
 // Default pool allocation type
 //
 extern EFI_MEMORY_TYPE PoolAllocationType;

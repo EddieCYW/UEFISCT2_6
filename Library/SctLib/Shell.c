@@ -1169,7 +1169,7 @@ SctShellOpenFileByDevicePath(
   Status = tBS->OpenProtocol(*DeviceHandle,
                              &gEfiSimpleFileSystemProtocolGuid,
                              (VOID**)&EfiSimpleFileSystemProtocol,
-                             gImageHandle,
+                             tImageHandle,
                              NULL,
                              EFI_OPEN_PROTOCOL_GET_PROTOCOL);
   if (EFI_ERROR (Status)) {

@@ -74,6 +74,11 @@ EFI_BOOT_SERVICES       *tBS;
 EFI_RUNTIME_SERVICES    *tRT;
 
 //
+// Cache the Image Handle for SctLib
+//
+EFI_HANDLE         		tImageHandle;
+
+//
 // Default pool allocation type
 //
 EFI_MEMORY_TYPE PoolAllocationType = EfiBootServicesData;
@@ -178,6 +183,8 @@ SctInitializeLib (
     tBS = SystemTable->BootServices;
     tRT = SystemTable->RuntimeServices;
 
+    tImageHandle = ImageHandle;
+
     //
     // Initialize pool allocation type
     //
@@ -249,6 +256,8 @@ Returns:
 
   tBS = tST->BootServices;
   tRT = tST->RuntimeServices;
+
+  tImageHandle = ImageHandle;
 
   ASSERT (tBS != NULL);
   ASSERT (tRT != NULL);
