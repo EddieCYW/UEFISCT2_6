@@ -168,6 +168,7 @@ then
 	
 	cp $ProcessorType/BisBBTest.efi                            $Framework/Test/ > NUL
 	cp $ProcessorType/BlockIoBBTest.efi                        $Framework/Test/ > NUL
+	cp $ProcessorType/BlockIo2BBTest.efi                       $Framework/Test/ > NUL
 	cp $ProcessorType/BusSpecificDriverOverrideBBTest.efi      $Framework/Test/ > NUL
 #   cp $ProcessorType/ComponentNameBbTest.efi                  $Framework/Test/ > NUL
 	cp $ProcessorType/DebugPortBBTest.efi                      $Framework/Test/ > NUL
@@ -193,6 +194,7 @@ then
 #	cp $ProcessorType/ScsiPassThruBbTest.efi                   $Framework/Test/ > NUL
 	cp $ProcessorType/ScsiIoBBTest.efi                         $Framework/Test/ > NUL
 	cp $ProcessorType/ExtScsiPassThruBBTest.efi                $Framework/Test/ > NUL
+	cp $ProcessorType/AtaPassThruBBTest.efi                    $Framework/Test/ > NUL
 	cp $ProcessorType/iScsiInitiatorNameBBTest.efi             $Framework/Test/ > NUL
 	cp $ProcessorType/SerialIoBbTest.efi                       $Framework/Test/ > NUL
 	cp $ProcessorType/SimpleFileSystemBBTest.efi               $Framework/Test/ > NUL
@@ -229,8 +231,17 @@ then
 	cp $ProcessorType/HIIConfigRoutingBBTest.efi               $Framework/Test/ > NUL
 	cp $ProcessorType/VlanConfigBBTest.efi                     $Framework/Test/ > NUL
 	cp $ProcessorType/IPsecConfigBBTest.efi                    $Framework/Test/ > NUL
-    cp $ProcessorType/IPsec2BBTest.efi                         $Framework/Test/ > NUL
+        cp $ProcessorType/IPsec2BBTest.efi                         $Framework/Test/ > NUL
 	cp $ProcessorType/StorageSecurityCommandBBTest.efi  	   $Framework/Test/ > NUL
+
+	cp $ProcessorType/FirmwareManagementBBTest.efi  	   $Framework/Test/ > NUL
+
+	cp $ProcessorType/AdapterInfoBBTest.efi           	   $Framework/Test/ > NUL
+	cp $ProcessorType/DiskIo2BBTest.efi  	                   $Framework/Test/ > NUL
+	cp $ProcessorType/TimeStampBBTest.efi  	                   $Framework/Test/ > NUL
+	cp $ProcessorType/RandomNumberBbTest.efi  	           $Framework/Test/ > NUL
+
+
 	# *********************************************
 	# Copy ENTS binary
 	# *********************************************
@@ -286,6 +297,7 @@ then
   # *********************************************
 
   cp $ProcessorType/IhvBlockIoBbTest.efi                     $Framework/Test/ > NUL
+  cp $ProcessorType/IhvBlockIo2BbTest.efi                    $Framework/Test/ > NUL
   cp $ProcessorType/IhvComponentNameBbTest.efi               $Framework/Test/ > NUL
   cp $ProcessorType/IhvComponentName2BbTest.efi              $Framework/Test/ > NUL
   cp $ProcessorType/IhvBusSpecificDriverOverrideBbTest.efi   $Framework/Test/ > NUL
@@ -330,6 +342,9 @@ then
   # *********************************************
   # Copy the test dependency files
   # *********************************************
+
+  cp $ProcessorType/IhvAdapterInfoBBTest.efi                 $Framework/Test/ > NUL
+  cp $ProcessorType/IhvDiskIo2BBTest.efi                     $Framework/Test/ > NUL
 
   CopyDependency DeviceIo
   CopyDependency Ebc
