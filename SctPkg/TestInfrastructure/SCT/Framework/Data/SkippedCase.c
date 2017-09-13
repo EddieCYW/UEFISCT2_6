@@ -130,7 +130,10 @@ Returns:
   EFI_STATUS              Status;
   UINT32                  Order = 0;
 
-  if (ExecuteInfo == NULL) {
+  if ( (ExecuteInfo == NULL) ||
+       (ExecuteInfo->TestCase == NULL) ||
+       (ExecuteInfo->Category == NULL) ||
+       (ExecuteInfo->SkippedCase == NULL) ) {
     return EFI_INVALID_PARAMETER;
   }
 
@@ -333,10 +336,16 @@ Returns:
   //
   // Check parameters
   //
-  if ((DevicePath == NULL) || (FileName == NULL) || (ExecuteInfo == NULL)) {
+  if ( (DevicePath == NULL) || (FileName == NULL) ) {
     return EFI_INVALID_PARAMETER;
   }
 
+  if ( (ExecuteInfo == NULL) ||
+       (ExecuteInfo->TestCase == NULL) ||
+       (ExecuteInfo->Category == NULL) ||
+       (ExecuteInfo->SkippedCase == NULL) ) {
+    return EFI_INVALID_PARAMETER;
+  }
   //
   // Debug information
   //
