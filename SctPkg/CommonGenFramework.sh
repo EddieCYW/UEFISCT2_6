@@ -417,4 +417,7 @@ then
     # Copy the test dependency files
     # *********************************************
 
+    CopyDependency EfiCompliant
+    CopyDependency ProtocolHandlerServices
+    CopyDependency ImageServices
 fi
